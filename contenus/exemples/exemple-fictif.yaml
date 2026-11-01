@@ -1,0 +1,75 @@
+# EXEMPLE TECHNIQUE — DONNÉES FICTIVES, À NE PAS PUBLIER.
+# Sert uniquement à tester la chaîne de production. Les chiffres, pays et
+# sources ci-dessous sont inventés ; la fiche reste volontairement en brouillon.
+
+id: exemple-fictif
+theme: demographie
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+chiffre_cle:
+  valeur: 1234567
+  suffixe: {fr: "", en: ""}
+  unite: {fr: "habitants à Exempleville", en: "people live in Sampletown"}
+
+contexte:
+  periode: "2025"
+  perimetre: {fr: "Exempleville (ville fictive)", en: "Sampletown (fictional city)"}
+  definition: {fr: "Population résidente au 1er janvier (donnée fictive)",
+               en: "Resident population on 1 January (fictional figure)"}
+
+sources:
+  - nom: "Institut fictif de statistique"
+    url: "https://example.org/donnees-fictives"
+    publication: "2025"
+    date_consultation: "2026-11-01"
+
+donnees:
+  unite: {fr: "Population, en millions (fictif)", en: "Population, millions (fictional)"}
+  decimales: 1
+  points:
+    - {label: {fr: "Ville A", en: "City A"}, valeur: 3.4}
+    - {label: {fr: "Ville B", en: "City B"}, valeur: 2.1}
+    - {label: "Exempleville", valeur: 1.2, mis_en_avant: true}
+    - {label: {fr: "Ville C", en: "City C"}, valeur: 0.8}
+
+editions:
+  fr:
+    titre: "Exempleville : une ville qui n'existe pas en chiffres"
+    legende: |
+      Exemple technique pour tester la mise en page. Toutes les données sont fictives.
+    hashtags: [donnees, demographie, exemple]
+    scenes:
+      - type: accroche
+        texte: "Combien d'habitants dans une ville qui n'existe pas ?"
+      - type: chiffre
+        texte: "C'est la population fictive d'Exempleville en 2025."
+      - type: graphique
+        texte: "Exempleville face à ses voisines (fictives)"
+      - type: texte
+        texte: "Un seul fichier YAML produit la vidéo, le carrousel, les sous-titres et la légende, en français et en anglais."
+      - type: source
+        texte: "D'où vient ce chiffre ?"
+      - type: fin
+        texte: "Abonnez-vous pour comprendre le monde, un chiffre à la fois."
+  en:
+    titre: "Sampletown: a city that doesn't exist, in numbers"
+    legende: |
+      Technical sample to test the layout. All figures are fictional.
+    hashtags: [data, demographics, sample]
+    scenes:
+      - type: accroche
+        texte: "How many people live in a city that doesn't exist?"
+      - type: chiffre
+        texte: "That's Sampletown's fictional population in 2025."
+      - type: graphique
+        texte: "Sampletown vs. its (fictional) neighbours"
+      - type: texte
+        texte: "One YAML file produces the video, the carousel, the subtitles and the caption, in English and French."
+      - type: source
+        texte: "Where does this number come from?"
+      - type: fin
+        texte: "Follow to understand the world, one number at a time."

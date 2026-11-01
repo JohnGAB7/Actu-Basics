@@ -1,0 +1,13 @@
+# Rendus : trop lourds pour Git (artefacts GitHub Actions ou Drive)
+sortie/
+# Secrets : jamais dans Git
+.env
+*.env
+!.env.example
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+# Polices locales (licences à vérifier avant tout ajout)
+production/polices/*
+!production/polices/LISEZMOI.md

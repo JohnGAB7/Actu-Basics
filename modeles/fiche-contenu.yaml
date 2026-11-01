@@ -1,0 +1,77 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# MODÈLE DE FICHE DE CONTENU — Le Monde en chiffres / The World in Numbers
+#
+# Une fiche = un sujet = 1 vidéo verticale + 1 carrousel, en FR et en EN.
+# Rédaction et faits : direction éditoriale (ChatGPT + propriétaire).
+# La production refuse toute fiche dont validation.statut ≠ "valide".
+#
+# Copier ce fichier dans contenus/fiches/AAAA-MM-JJ-sujet-court.yaml
+# Vérifier : python production/produire.py contenus/fiches/<fichier>.yaml --verifier
+# ─────────────────────────────────────────────────────────────────────────────
+
+id: AAAA-MM-JJ-sujet-court          # identique au nom du fichier, sans accents ni espaces
+theme: demographie                  # demographie | economie | technologie | science | societe
+
+validation:
+  statut: brouillon                 # brouillon -> valide (seule la direction éditoriale passe à "valide")
+  valide_par: ""                    # ex. "JG" ; vide = non validé
+  date: ""                          # AAAA-MM-JJ
+
+chiffre_cle:
+  valeur: 0                         # nombre brut, point décimal, sans espace ni unité (ex. 8.2)
+  decimales: 1                      # facultatif : nombre de décimales affichées
+  prefixe: ""                       # facultatif, ex. "+" ou {fr: "", en: "$"}
+  suffixe: {fr: "", en: ""}         # ex. {fr: " %", en: "%"} — le FR met une espace avant %
+  unite: {fr: "", en: ""}           # ex. {fr: "milliards d'habitants", en: "billion people"}
+
+contexte:                           # chaîne commune ou {fr: ..., en: ...}
+  periode: ""                       # ex. "2024" ou "1950–2024"
+  perimetre: {fr: "", en: ""}       # ex. {fr: "Monde", en: "World"}
+  definition: {fr: "", en: ""}      # définition exacte de l'indicateur
+
+sources:
+  - nom: ""                         # ex. "ONU, World Population Prospects 2024"
+    url: "https://"
+    publication: ""                 # facultatif : année ou édition
+    date_consultation: ""           # AAAA-MM-JJ
+
+# Facultatif : nécessaire uniquement pour une scène "graphique" (barres horizontales).
+donnees:
+  unite: {fr: "", en: ""}
+  decimales: 0
+  points:
+    - {label: {fr: "", en: ""}, valeur: 0}
+    - {label: {fr: "", en: ""}, valeur: 0, mis_en_avant: true}   # barre en couleur d'accent
+
+editions:
+  fr:
+    titre: ""                       # ≤ 100 caractères (titre YouTube Shorts)
+    legende: |                      # la source, la période et les hashtags sont ajoutés automatiquement
+
+    hashtags: []                    # 3 à 5 conseillés, ex. [demographie, données]
+    audio: null                     # facultatif : chemin relatif vers la voix off, ex. audio/sujet-fr.mp3
+    scenes:                         # 5 à 7 scènes ≈ 20–40 s ; types : accroche | chiffre | texte | graphique | source | fin
+      - type: accroche
+        texte: ""                   # ce qui s'affiche
+        voix_off: ""                # facultatif : ce qui est dit (sinon = texte affiché)
+      - type: chiffre               # affiche chiffre_cle (animé en vidéo) + ce texte dessous
+        texte: ""
+      - type: texte
+        texte: ""
+      - type: source                # obligatoire : sources, période, périmètre, définition
+        texte: ""
+      - type: fin
+        texte: ""                   # appel à l'action
+        # duree: 3                  # facultatif sur chaque scène, en secondes
+  en:
+    titre: ""
+    legende: |
+
+    hashtags: []
+    audio: null
+    scenes:
+      - {type: accroche, texte: ""}
+      - {type: chiffre, texte: ""}
+      - {type: texte, texte: ""}
+      - {type: source, texte: ""}
+      - {type: fin, texte: ""}
