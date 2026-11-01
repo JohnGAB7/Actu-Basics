@@ -71,7 +71,8 @@ resume.md                          résumé (identique à celui affiché dans Gi
 | « Astérisque non fermé » | `*mot` sans second `*` | Fermer la mise en valeur |
 | « Narration impossible (openai) : Variable OPENAI_API_KEY absente » | Secret non configuré | Ajouter le secret (voir [voix-off.md](voix-off.md)) ou choisir `piper` |
 | « … a répondu 401 / 429 » | Clé invalide / quota ou crédit épuisé | Vérifier la clé ou le crédit chez le fournisseur ; relancer plus tard ; ou `piper` |
-| « … (limite non confirmée par une source officielle …) » | La limite de plateforme dépassée n'est pas officielle | Raccourcir, ou vérifier la limite actuelle et mettre à jour `plateformes.yaml` |
+| ⚠️ « … plafond interne de production, non confirmé … » | Un plafond prudent (non officiel) est dépassé ; ce n'est pas bloquant | Raccourcir, ou vérifier la limite actuelle sur la plateforme et mettre à jour `plateformes.yaml` |
+| « … doit être un nombre fini » | `.nan`, `.inf` ou texte à la place d'un nombre | Écrire le nombre (point décimal, sans unité) |
 | « Modèle Piper introuvable » | Voix non téléchargée (en local) | `python production/telecharger_voix.py` |
 | « Voix « test » réservée aux tests » | Fournisseur de test utilisé | Choisir `piper`, `openai` ou `elevenlabs` |
 | « Texte trop long (…) » | Le texte ne tient pas, même réduit | Raccourcir la scène (décision éditoriale si le sens change) |

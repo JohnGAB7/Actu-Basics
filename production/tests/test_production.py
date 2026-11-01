@@ -5,6 +5,7 @@ Tous les tests tournent sans clé d'API ni modèle de voix (fournisseur « test 
 import copy
 import datetime as dt
 import json
+import math
 import os
 import subprocess
 import sys
@@ -170,7 +171,8 @@ def test_aucun_plantage_sur_des_valeurs_quelconques(tmp_path):
     """Remplace chaque champ de la fiche réelle par des valeurs de types variés :
     seules FicheInvalide (message lisible) ou un chargement réussi sont acceptables."""
     base = fiche_reelle()
-    valeurs = [None, 0, -3, 1.5, True, "", "x", [], [1, "a"], {}, {"fr": None}, {"fr": [1]}, dt.date(2026, 1, 1)]
+    valeurs = [None, 0, -3, 1.5, True, "", "x", [], [1, "a"], {}, {"fr": None}, {"fr": [1]}, dt.date(2026, 1, 1),
+               dt.datetime(2026, 1, 1, 12, 0), float("nan"), float("inf")]
 
     def chemins(o, p=()):
         if p:
@@ -385,6 +387,64 @@ def test_asterisques(tmp_path):
     assert any("non fermé" in b for b in bloquants)
 
 
+@pytest.mark.parametrize("valeur", [
+    dt.datetime(2026, 10, 15, 9, 30),          # YAML : 2026-10-15 09:30:00 → datetime
+    "2026-10-15T09:30:00Z",
+    "2026-10-15 09:30:00",
+])
+def test_date_de_consultation_horodatee(tmp_path, valeur):
+    brut = valider(brut_exemple())
+    brut["sources"][0]["date_consultation"] = valeur
+    bloquants, avert = constats(tmp_path, brut)
+    assert bloquants == [] and not any("consultation" in a for a in avert)
+
+
+def test_dates_horodatees_dans_le_futur_et_validation(tmp_path):
+    brut = valider(brut_exemple())
+    brut["sources"][0]["date_consultation"] = dt.datetime(2027, 1, 2, 8, 0)
+    brut["validation"]["date"] = dt.datetime(2026, 11, 1, 18, 45)     # même jour, heure ignorée
+    bloquants, _ = constats(tmp_path, brut)
+    assert any("futur" in b and "consultation" in b.lower() for b in bloquants), bloquants
+    assert not any("validation" in b.lower() and "futur" in b for b in bloquants)
+    # écrit tel quel en YAML (sans guillemets), comme le ferait un humain
+    f = ecrire(tmp_path, valider(brut_exemple()))
+    f.write_text(f.read_text(encoding="utf-8").replace("date_consultation: '2026-11-01'",
+                                                       "date_consultation: 2026-10-15 09:30:00"), encoding="utf-8")
+    assert isinstance(yaml.safe_load(f.read_text(encoding="utf-8"))["sources"][0]["date_consultation"], dt.datetime)
+    r = Rapport()
+    controler_fiche(charger_fiche(f), r, AUJOURD_HUI)
+    assert not r.bloquants
+
+
+def test_controle_avec_un_aujourd_hui_horodate(tmp_path):
+    r = Rapport()
+    controler_fiche(charger_fiche(ecrire(tmp_path, valider(brut_exemple()))), r, dt.datetime(2026, 11, 1, 23, 59))
+    assert not r.bloquants
+
+
+@pytest.mark.parametrize("chemin, yaml_brut", [
+    (("chiffre_cle", "valeur"), ".nan"),
+    (("chiffre_cle", "valeur"), ".inf"),
+    (("chiffre_cle", "valeur"), "-.inf"),
+    (("donnees", "points", 0, "valeur"), ".nan"),
+    (("donnees", "points", 1, "valeur"), ".Inf"),
+])
+def test_nan_et_infini_refuses(tmp_path, chemin, yaml_brut):
+    brut = brut_exemple()
+    o = brut
+    for k in chemin[:-1]:
+        o = o[k]
+    o[chemin[-1]] = "@@VALEUR@@"
+    f = ecrire(tmp_path, brut)
+    f.write_text(f.read_text(encoding="utf-8").replace("'@@VALEUR@@'", yaml_brut), encoding="utf-8")
+    lu = yaml.safe_load(f.read_text(encoding="utf-8"))
+    for k in chemin:
+        lu = lu[k]
+    assert isinstance(lu, float) and not math.isfinite(lu)      # YAML a bien lu NaN / infini
+    with pytest.raises(FicheInvalide, match="nombre fini"):
+        charger_fiche(f)
+
+
 def test_source_consultee_dans_le_futur(tmp_path):
     brut = valider(brut_exemple())
     brut["sources"][0]["date_consultation"] = "2027-05-01"
@@ -395,8 +455,11 @@ def test_source_consultee_dans_le_futur(tmp_path):
 def test_limites_par_plateforme():
     r = Rapport()
     controler_plateformes("fr", 200, "x" * 100, "titre", 3, CHARTE, PLATEFORMES, r)
-    noms = " ".join(str(c) for c in r.bloquants)
-    assert "Instagram Reels" in noms and "YouTube Shorts" in noms and "TikTok" not in noms
+    bloq = " ".join(str(c) for c in r.bloquants)
+    avert = " ".join(str(c) for c in r.avertissements)
+    assert "YouTube Shorts" in bloq                      # 3 min : limite officielle → bloquant
+    assert "Instagram Reels" not in bloq and "Instagram Reels" in avert   # plafond interne → avertissement
+    assert "TikTok" not in bloq
     r = Rapport()
     controler_plateformes("fr", 75, "x", "titre", 3, CHARTE, PLATEFORMES, r)
     assert not r.bloquants and any("conseillée" in str(c) for c in r.avertissements)
@@ -418,12 +481,21 @@ def test_chaque_limite_de_plateforme_a_une_reference():
                 assert str(ref.get("source", "")).startswith("https://"), f"{cle}.{champ} : source manquante"
 
 
-def test_limite_non_officielle_signalee():
+def test_plafond_non_confirme_jamais_bloquant():
     r = Rapport()
-    controler_plateformes("fr", 200, "x" * 100, "titre", 3, CHARTE, PLATEFORMES, r)
-    reels = next(str(c) for c in r.bloquants if "Instagram Reels" in str(c))
-    shorts = next(str(c) for c in r.bloquants if "YouTube Shorts" in str(c))
-    assert "non confirmée" in reels and "non confirmée" not in shorts
+    controler_plateformes("fr", 700, "x" * 2300, "t" * 120, 70, CHARTE, PLATEFORMES, r)
+    for c in r.bloquants:   # chaque bloquant repose sur une limite marquée « officiel »
+        assert "plafond interne" not in str(c)
+    tiktok = [str(c) for c in r.constats if "TikTok : durée" in str(c)]
+    reels = [str(c) for c in r.constats if "Instagram Reels : durée" in str(c)]
+    assert tiktok and reels
+    assert all(c in map(str, r.avertissements) and "plafond interne de production" in c for c in tiktok + reels)
+    assert any("TikTok : légende" in str(c) for c in r.bloquants)       # 2 200 : officiel (API)
+    assert any("YouTube Shorts : titre" in str(c) for c in r.bloquants)
+    assert any("⚠️ durée (plafond interne)" in l[3] for l in r.plateformes if l[1] == "TikTok")
+    # cohérence avec plateformes.yaml : les durées TikTok et Reels sont bien « non_confirme »
+    for cle in ("tiktok", "instagram_reels"):
+        assert PLATEFORMES["plateformes"][cle]["references"]["duree_max_s"]["statut"] == "non_confirme"
 
 
 # --------------------------------------------------------------------------- voix

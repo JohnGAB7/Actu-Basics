@@ -2,9 +2,12 @@
 # Modifiable sans code. Les plateformes changent souvent leurs règles : revérifier
 # chaque valeur au moins tous les 3 mois et mettre à jour « verifie_le ».
 #
-# duree_max_s        : au-delà, refus ou sortie du format court (erreur bloquante)
+# duree_max_s        : au-delà, refus ou sortie du format court
 # duree_conseillee_s : fourchette visée pour la rétention (avertissement seulement)
-# legende_max, titre_max, hashtags_max : limites de texte (erreur bloquante)
+# legende_max, titre_max, hashtags_max : limites de texte
+#   → dépassement d'une limite « officiel » : erreur BLOQUANTE
+#   → dépassement d'une valeur « non_confirme » ou « estimation » : AVERTISSEMENT seulement ; c'est un
+#     plafond interne de production (choix prudent de la direction technique), pas une règle officielle
 # hashtags_conseilles: au-delà, simple remarque dans le tableau
 # zone_ui            : marges (px, image 1080x1920) masquées par l'interface de l'application
 #
@@ -13,13 +16,14 @@
 #           non_confirme  valeur courante, mais aucune page officielle consultée ne la confirme
 #           estimation    choix de la direction technique (gabarits, captures) : aucune source officielle
 #   verifie_le: date à laquelle la page a été lue (AAAA-MM-JJ)
-# Une erreur bloquante fondée sur une valeur qui n'est pas « officiel » le signale dans le rapport.
+# Pour rendre bloquant un plafond interne, confirmer la valeur sur une page officielle, puis passer son
+# statut à « officiel » avec la source et la date.
 cibles: [tiktok, instagram_reels, youtube_shorts]
 
 plateformes:
   tiktok:
     nom: TikTok
-    duree_max_s: 600
+    duree_max_s: 600          # plafond interne (non_confirme) : avertissement seulement
     duree_conseillee_s: [15, 60]
     legende_max: 2200
     hashtags_conseilles: 5
@@ -45,7 +49,7 @@ plateformes:
 
   instagram_reels:
     nom: Instagram Reels
-    duree_max_s: 180
+    duree_max_s: 180          # plafond interne (non_confirme) : avertissement seulement
     duree_conseillee_s: [15, 60]
     legende_max: 2200
     hashtags_max: 30

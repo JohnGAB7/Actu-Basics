@@ -69,10 +69,24 @@ class Rapport:
 
 # --------------------------------------------------------------------------- outils
 def _date(valeur) -> dt.date | None:
+    """Toute date de la fiche ramenée à un `date` simple (jamais un `datetime`).
+
+    YAML peut produire un `datetime` (« 2026-11-01 10:30:00 ») qui hérite de `date` :
+    le comparer à un `date` lèverait une exception. On garde le jour, on ignore l'heure.
+    """
+    if isinstance(valeur, dt.datetime):
+        return valeur.date()
     if isinstance(valeur, dt.date):
         return valeur
+    texte = str(valeur or "").strip()
+    if not texte:
+        return None
     try:
-        return dt.date.fromisoformat(str(valeur).strip())
+        return dt.date.fromisoformat(texte)
+    except ValueError:
+        pass
+    try:
+        return dt.datetime.fromisoformat(texte.replace("Z", "+00:00")).date()
     except ValueError:
         return None
 
@@ -388,7 +402,7 @@ def _coherence_textes(fiche: Fiche, r: Rapport) -> None:
 
 
 def controler_fiche(fiche: Fiche, r: Rapport, aujourd_hui: dt.date | None = None) -> None:
-    aujourd_hui = aujourd_hui or dt.date.today()
+    aujourd_hui = _date(aujourd_hui) or dt.date.today()
     if fiche.chemin.stem != fiche.id:
         r.avertir(f"L'identifiant « {fiche.id} » diffère du nom du fichier « {fiche.chemin.stem} »")
     if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", fiche.id):
@@ -400,13 +414,21 @@ def controler_fiche(fiche: Fiche, r: Rapport, aujourd_hui: dt.date | None = None
 
 
 # --------------------------------------------------------------------------- rendus
-def _reserve(p: dict, champ: str) -> str:
-    """Précision ajoutée à une erreur quand la limite n'est pas confirmée par une source officielle."""
-    statut = ((p.get("references") or {}).get(champ) or {}).get("statut")
-    if statut == "officiel":
-        return ""
-    return (" (limite non confirmée par une source officielle : voir production/plateformes.yaml, "
-            f"références de « {champ} »)")
+def _officielle(p: dict, champ: str) -> bool:
+    return ((p.get("references") or {}).get(champ) or {}).get("statut") == "officiel"
+
+
+def _depassement(r: Rapport, p: dict, champ: str, message: str, langue: str, notes: list, etiquette: str) -> None:
+    """Limite officielle dépassée = bloquant. Plafond non officiel = avertissement, présenté comme
+    un choix interne de production (voir plateformes.yaml, « references »)."""
+    if _officielle(p, champ):
+        r.bloquant(message, langue)
+        notes.append(f"❌ {etiquette}")
+    else:
+        r.avertir(f"{message} — plafond interne de production, non confirmé par une source officielle "
+                  f"(production/plateformes.yaml, références de « {champ} ») : vérifier la limite actuelle "
+                  "avant de publier", langue)
+        notes.append(f"⚠️ {etiquette} (plafond interne)")
 
 
 def controler_plateformes(langue: str, duree: float, legende: str, titre: str, nb_hashtags: int,
@@ -417,23 +439,22 @@ def controler_plateformes(langue: str, duree: float, legende: str, titre: str, n
         nom = p["nom"]
         notes = []
         if duree > p["duree_max_s"]:
-            r.bloquant(f"{nom} : durée {duree:.0f} s > maximum {p['duree_max_s']} s{_reserve(p, 'duree_max_s')}", langue)
-            notes.append("❌ durée")
+            _depassement(r, p, "duree_max_s", f"{nom} : durée {duree:.0f} s > maximum {p['duree_max_s']} s",
+                         langue, notes, "durée")
         else:
             lo, hi = p.get("duree_conseillee_s", [0, 1e9])
             if not lo <= duree <= hi:
                 r.avertir(f"{nom} : durée {duree:.0f} s hors de la fourchette conseillée {lo}–{hi} s", langue)
                 notes.append("⚠️ durée")
         if len(legende) > p.get("legende_max", 1e9):
-            r.bloquant(f"{nom} : légende de {len(legende)} caractères > {p['legende_max']}"
-                       f"{_reserve(p, 'legende_max')}", langue)
-            notes.append("❌ légende")
+            _depassement(r, p, "legende_max", f"{nom} : légende de {len(legende)} caractères > {p['legende_max']}",
+                         langue, notes, "légende")
         if "titre_max" in p and len(titre) > p["titre_max"]:
-            r.bloquant(f"{nom} : titre de {len(titre)} caractères > {p['titre_max']}{_reserve(p, 'titre_max')}", langue)
-            notes.append("❌ titre")
+            _depassement(r, p, "titre_max", f"{nom} : titre de {len(titre)} caractères > {p['titre_max']}",
+                         langue, notes, "titre")
         if nb_hashtags > p.get("hashtags_max", 1e9):
-            r.bloquant(f"{nom} : {nb_hashtags} hashtags > {p['hashtags_max']}{_reserve(p, 'hashtags_max')}", langue)
-            notes.append("❌ hashtags")
+            _depassement(r, p, "hashtags_max", f"{nom} : {nb_hashtags} hashtags > {p['hashtags_max']}",
+                         langue, notes, "hashtags")
         elif nb_hashtags > p.get("hashtags_conseilles", 1e9):
             notes.append(f"⚠️ {nb_hashtags} hashtags (≤ {p['hashtags_conseilles']} conseillés)")
         ui = p["zone_ui"]

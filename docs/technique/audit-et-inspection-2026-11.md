@@ -64,3 +64,11 @@ Rendu d'aperçu FR et EN avec voix Piper, filigrane « brouillon » car la fiche
 | Plateformes | Référence, date de lecture et statut (`officiel`, `non_confirme`, `estimation`) pour chaque limite. Corrections : légende TikTok 4 000 → 2 200 (API officielle), carrousel 20 → 10 images (API officielle), YouTube 60 hashtags au maximum | Toute limite doit avoir une référence datée ; une erreur fondée sur une limite non officielle le signale |
 
 La fiche démographique n'a pas été modifiée.
+
+### Deuxième revue de JG
+
+| Demande | Traitement | Tests |
+|---|---|---|
+| Dates YAML horodatées (`datetime` comparé à `date`) | `_date()` ramène toute date au jour (`datetime` → `date`, formats ISO avec heure et `Z` acceptés) ; la date du jour l'est aussi | Date de consultation horodatée (objet YAML, ISO `T…Z`, avec espace), horodatée dans le futur, validation horodatée le jour même, « aujourd'hui » horodaté |
+| NaN et infini | `math.isfinite()` exigé pour le chiffre clé, les valeurs du graphique et les durées | `.nan`, `.inf`, `-.inf`, `.Inf` refusés avec un message explicite ; ajoutés aux variantes aléatoires |
+| Limites `non_confirme` | Plus jamais bloquantes : avertissement « plafond interne de production, non confirmé par une source officielle ». Seules les limites `officiel` bloquent | Durée TikTok et Reels en avertissement, légende TikTok et titre YouTube (officiels) bloquants |

@@ -8,6 +8,7 @@ Aucun module ne vérifie la véracité d'un chiffre : c'est un contrôle humain.
 from __future__ import annotations
 
 import datetime as dt
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -110,7 +111,8 @@ def _liste(valeur, contexte: str, erreurs: list[str]) -> list:
 
 
 def _est_nombre(v) -> bool:
-    return isinstance(v, (int, float)) and not isinstance(v, bool)
+    """Vrai nombre fini : refuse les booléens, NaN (.nan) et l'infini (.inf) que YAML sait lire."""
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
 
 
 def _texte(valeur, contexte: str, erreurs: list[str], bilingue: bool = True):
@@ -174,7 +176,8 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
     if chiffre:
         v = _exiger(chiffre, "valeur", "chiffre_cle", erreurs)
         if v is not None and not _est_nombre(v):
-            erreurs.append(f"chiffre_cle.valeur doit être un nombre (sans unité ni espace), pas « {v} »")
+            erreurs.append(f"chiffre_cle.valeur doit être un nombre fini (sans unité, ni espace, ni .nan/.inf), "
+                           f"pas « {v} »")
         for cle in ("unite", "suffixe", "prefixe"):
             _texte(chiffre.get(cle), f"chiffre_cle.{cle}", erreurs)
         d = chiffre.get("decimales")
@@ -213,7 +216,7 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
                 erreurs.append(f"donnees.points[{i}] doit être un bloc {{label: …, valeur: …}}, pas {_nom_type(p)}")
                 continue
             if not _est_nombre(p.get("valeur")):
-                erreurs.append(f"donnees.points[{i}].valeur doit être un nombre")
+                erreurs.append(f"donnees.points[{i}].valeur doit être un nombre fini (ni .nan ni .inf)")
             if _vide(p.get("label")):
                 erreurs.append(f"donnees.points[{i}] : champ « label » manquant ou vide")
             else:

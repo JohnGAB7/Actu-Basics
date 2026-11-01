@@ -12,7 +12,7 @@ Trois niveaux, toujours séparés dans `rapport-qc.md` :
 
 Champs obligatoires présents **et réellement renseignés**. Une valeur laissée du modèle comme `https://`, `AAAA-MM-JJ` ou une chaîne vide compte comme absente. Le chiffre clé et les points du graphique doivent être des nombres, les types de scènes doivent être connus, aucun texte de scène ne peut être vide, le statut doit être `brouillon` ou `valide`, et les éditions FR et EN doivent toutes deux exister.
 
-**Types et structure.** Chaque bloc est contrôlé : un bloc attendu (`validation`, `chiffre_cle`, `editions.fr`…) écrit comme un simple texte, une liste à la place d'un texte, un texte à la place d'une liste (`hashtags`, `sources`, `scenes`, `points`), une langue inconnue dans `{fr: …, en: …}`, un `oui` à la place de `true`, une durée écrite « 3 s »… Tout cela produit une **liste d'erreurs en français** qui nomme le champ, jamais une trace d'erreur Python. Un YAML illisible indique la ligne et la colonne. En dernier recours, un cas imprévu est rapporté comme « Structure inattendue » ; une erreur du programme lui-même est rapportée comme « erreur inattendue du programme », sans arrêter les autres fiches. Un test automatique remplace chaque champ de la fiche réelle par 13 valeurs de types différents (environ 1 600 variantes) et vérifie qu'aucune ne fait planter le programme.
+**Types et structure.** Chaque bloc est contrôlé : un bloc attendu (`validation`, `chiffre_cle`, `editions.fr`…) écrit comme un simple texte, une liste à la place d'un texte, un texte à la place d'une liste (`hashtags`, `sources`, `scenes`, `points`), une langue inconnue dans `{fr: …, en: …}`, un `oui` à la place de `true`, une durée écrite « 3 s »… Tout cela produit une **liste d'erreurs en français** qui nomme le champ, jamais une trace d'erreur Python. Un YAML illisible indique la ligne et la colonne. En dernier recours, un cas imprévu est rapporté comme « Structure inattendue » ; une erreur du programme lui-même est rapportée comme « erreur inattendue du programme », sans arrêter les autres fiches. Les nombres doivent être finis : `.nan` et `.inf`, que YAML sait lire, sont refusés pour le chiffre clé et les valeurs du graphique. Les dates horodatées (`2026-10-15 09:30:00`, `2026-10-15T09:30:00Z`) sont acceptées et ramenées au jour. Un test automatique remplace chaque champ de la fiche réelle par 16 valeurs de types différents (environ 2 000 variantes) et vérifie qu'aucune ne fait planter le programme.
 
 ## 2. Fiche : contrôles automatiques
 
@@ -63,7 +63,7 @@ La machine compare des **nombres** et reconnaît les **mots d'échelle** (millie
 | Voix de test utilisée | ❌ |
 | Durée imposée trop courte pour la voix (allongée automatiquement) | ⚠️ |
 | Vidéo 1080×1920, H.264, piste audio présente | ❌ |
-| Durée, légende, titre, hashtags **par plateforme** ([`plateformes.yaml`](../../production/plateformes.yaml)) | ❌ au-delà du maximum, ⚠️ hors fourchette conseillée |
+| Durée, légende, titre, hashtags **par plateforme** ([`plateformes.yaml`](../../production/plateformes.yaml)) | ❌ au-delà d'une limite **officielle** ; ⚠️ au-delà d'un **plafond interne** (limite non confirmée) ; ⚠️ hors fourchette conseillée |
 | Zone de texte qui empiète sur l'interface d'une plateforme | ⚠️ |
 | Texte qui ne tient pas dans sa zone malgré la réduction | ⚠️ |
 | Texte principal < 34 px (illisible sur téléphone) | ⚠️ |
@@ -75,7 +75,7 @@ Les limites par plateforme se règlent dans `production/plateformes.yaml`, sans 
 - `non_confirme` : valeur courante qu'aucune page officielle lue ne confirme (ex. TikTok 10 minutes, Reels 3 minutes) ;
 - `estimation` : choix technique sans source officielle (zones d'interface, durées conseillées).
 
-Une erreur bloquante fondée sur une valeur qui n'est pas `officiel` le dit dans le rapport. Les références ont été lues le 1er novembre 2026 ; à revérifier au moins tous les 3 mois. Un test refuse toute limite sans référence ni date.
+Seules les limites `officiel` sont bloquantes. Une valeur `non_confirme` ou `estimation` est un **plafond interne de production** (choix prudent, pas une règle de la plateforme) : son dépassement donne un avertissement qui le dit explicitement. Aujourd'hui, c'est le cas des durées maximales TikTok (600 s) et Instagram Reels (180 s). Pour rendre un plafond bloquant, confirmer la valeur sur une page officielle et passer son statut à `officiel`. Les références ont été lues le 1er novembre 2026 ; à revérifier au moins tous les 3 mois. Un test refuse toute limite sans référence ni date.
 
 ## 4. Contrôles humains
 
