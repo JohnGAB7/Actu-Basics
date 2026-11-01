@@ -11,3 +11,5 @@ __pycache__/
 # Polices locales (licences à vérifier avant tout ajout)
 production/polices/*
 !production/polices/LISEZMOI.md
+!production/polices/Anton-Regular.ttf
+!production/polices/OFL-Anton.txt

@@ -6,13 +6,13 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from .fiche import Edition, Scene
 from .rendu import Rendu
 
 FONDU_S = 0.25          # fondu enchaîné entre scènes
-ANIMATION_S = 1.2       # compteur du chiffre / croissance des barres
+HAUTEUR_BARRE = 10      # barre de progression (pixels)
 DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0}
 
 
@@ -64,17 +64,23 @@ def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: P
     proc = subprocess.Popen(commande, stdin=subprocess.PIPE)
     precedente: Image.Image | None = None
     n_scenes = len(edition.scenes)
+    n_total = round(total * fps)
+    accent = rendu.c["accent"]
+    image_globale = 0
     try:
         for i, (scene, duree) in enumerate(zip(edition.scenes, durees)):
             n_images = round(duree * fps)
-            anime = scene.type in ("chiffre", "graphique")
             n_fondu = round(FONDU_S * fps) if precedente is not None else 0
-            n_anim = round(ANIMATION_S * fps) if anime else 0
-            statique = rendu.dessiner(scene, i, n_scenes, 1.0)
+            n_anim = round(rendu.duree_animation(scene) * fps) + 1
+            statique = rendu.dessiner(scene, i, n_scenes, None)
             for k in range(n_images):
-                image = rendu.dessiner(scene, i, n_scenes, k / n_anim) if k < n_anim else statique
+                image = rendu.dessiner(scene, i, n_scenes, k / fps) if k < n_anim else statique.copy()
                 if k < n_fondu:
                     image = Image.blend(precedente, image, (k + 1) / (n_fondu + 1))
+                # Barre de progression en haut : incite à regarder jusqu'au bout.
+                image_globale += 1
+                ImageDraw.Draw(image).rectangle(
+                    (0, 0, round(rendu.largeur * image_globale / n_total), HAUTEUR_BARRE), fill=accent)
                 proc.stdin.write(image.tobytes())
             precedente = statique
         proc.stdin.close()

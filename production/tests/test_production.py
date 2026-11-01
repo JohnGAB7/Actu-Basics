@@ -65,3 +65,10 @@ def test_production_carrousel(tmp_path):
         assert len(list((d / "carrousel").glob("*.png"))) == 6
         for nom in ("legende.txt", "sous-titres.srt", "metadonnees.json", "script-voix-off.txt"):
             assert (d / nom).stat().st_size > 0
+
+
+def test_mise_en_valeur():
+    from lmec.rendu import mots_riches
+    mots = mots_riches("Dans *63 pays*, dont la Chine")
+    assert mots[:4] == [("Dans", False, False), ("63", True, False), ("pays", True, False), (",", False, True)]
+    assert mots_riches("Pourquoi ?") == [("Pourquoi ?", False, False)]

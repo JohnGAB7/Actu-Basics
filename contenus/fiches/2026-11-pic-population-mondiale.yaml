@@ -1,0 +1,78 @@
+# Premier sujet proposé par la direction technique, en attente de validation éditoriale.
+# Chiffres repris mot pour mot de l'ONU (WPP 2024, Key Messages), vérifiés le 2026-11-01.
+# À contrôler avant validation : qu'aucune édition plus récente des WPP n'est parue.
+
+id: 2026-11-pic-population-mondiale
+theme: demographie
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+chiffre_cle:
+  valeur: 10.3
+  decimales: 1
+  unite: {fr: "milliards d'humains au maximum", en: "billion people at the peak"}
+
+contexte:
+  periode: {fr: "2024–2100 (projection)", en: "2024–2100 (projection)"}
+  perimetre: {fr: "Monde", en: "World"}
+  definition:
+    fr: "Population mondiale totale, projection de l'ONU (variante moyenne). Pic attendu vers le milieu des années 2080."
+    en: "Total world population, UN projection (medium variant). Peak expected in the mid-2080s."
+
+sources:
+  - nom: "ONU DESA, World Population Prospects 2024"
+    url: "https://population.un.org/WPP/Publications/Files/WPP2024_Key-Messages.pdf"
+    date_consultation: "2026-11-01"
+
+donnees:
+  unite: {fr: "Population mondiale, en milliards", en: "World population, billions"}
+  decimales: 1
+  points:
+    - {label: "2024", valeur: 8.2}
+    - {label: {fr: "Pic, milieu des années 2080", en: "Peak, mid-2080s"}, valeur: 10.3, mis_en_avant: true}
+    - {label: "2100", valeur: 10.2}
+
+editions:
+  fr:
+    titre: "La population mondiale va bientôt arrêter de grimper"
+    legende: |
+      Nous sommes 8,2 milliards. Selon l'ONU, la population mondiale devrait plafonner vers 10,3 milliards au milieu des années 2080, puis reculer légèrement. En cause : la baisse de la fécondité, passée de 3,3 enfants par femme en 1990 à 2,3 aujourd'hui.
+    hashtags: [demographie, population, onu, donnees]
+    scenes:
+      - type: accroche
+        texte: "La population mondiale va *bientôt arrêter* de grimper"
+      - type: chiffre
+        texte: "C'est le maximum attendu par l'ONU, vers le milieu des années 2080. Nous sommes 8,2 milliards aujourd'hui."
+      - type: graphique
+        texte: "Un pic, puis un léger recul"
+      - type: texte
+        texte: "Dans *63 pays*, dont la Chine, l'Allemagne et le Japon, la population a déjà atteint son maximum."
+      - type: texte
+        texte: "La raison : la fécondité mondiale est passée de *3,3* enfants par femme en 1990 à *2,3* aujourd'hui."
+      - type: source
+        texte: "D'où viennent ces chiffres ?"
+      - type: fin
+        texte: "Abonnez-vous pour comprendre le monde, un chiffre à la fois."
+  en:
+    titre: "World population is about to stop growing"
+    legende: |
+      There are 8.2 billion of us. According to the UN, world population should top out at around 10.3 billion in the mid-2080s, then edge down. The driver: falling fertility, from 3.3 births per woman in 1990 to 2.3 today.
+    hashtags: [demographics, population, un, data]
+    scenes:
+      - type: accroche
+        texte: "World population is *about to stop* growing"
+      - type: chiffre
+        texte: "That's the UN's expected peak, in the mid-2080s. Today we are 8.2 billion."
+      - type: graphique
+        texte: "A peak, then a slight decline"
+      - type: texte
+        texte: "In *63 countries*, including China, Germany and Japan, population has already peaked."
+      - type: texte
+        texte: "Why: global fertility fell from *3.3* births per woman in 1990 to *2.3* today."
+      - type: source
+        texte: "Where do these numbers come from?"
+      - type: fin
+        texte: "Follow to understand the world, one number at a time."

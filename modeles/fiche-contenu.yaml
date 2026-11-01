@@ -50,6 +50,8 @@ editions:
 
     hashtags: []                    # 3 à 5 conseillés, ex. [demographie, données]
     audio: null                     # facultatif : chemin relatif vers la voix off, ex. audio/sujet-fr.mp3
+    # Mise en valeur : entourer un ou plusieurs mots d'astérisques, ex. "va *bientôt arrêter* de grimper"
+    # (bandeau jaune dans l'accroche, texte jaune ailleurs ; retiré des sous-titres et de la voix).
     scenes:                         # 5 à 7 scènes ≈ 20–40 s ; types : accroche | chiffre | texte | graphique | source | fin
       - type: accroche
         texte: ""                   # ce qui s'affiche
