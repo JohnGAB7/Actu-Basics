@@ -265,7 +265,11 @@ def test_fiche_reelle_coherente_sans_tout_affirmer(tmp_path):
     r = Rapport()
     controler_fiche(charger_fiche(ecrire(tmp_path, fiche_reelle(), "2026-11-pic-population-mondiale")), r, AUJOURD_HUI)
     assert [str(c) for c in r.bloquants] == ["Fiche non validée (statut « brouillon ») : aucun rendu final possible"]
-    assert "Chiffre clé égal au point mis en avant du graphique" in r.ok
+    # Ne dépend pas du contenu éditorial de la fiche (qui peut changer de graphique) :
+    brut = fiche_reelle()
+    mis_en_avant = [p["valeur"] for p in brut["donnees"]["points"] if p.get("mis_en_avant")]
+    egal = mis_en_avant == [brut["chiffre_cle"]["valeur"]]
+    assert ("Chiffre clé égal au point mis en avant du graphique" in r.ok) == egal
     # la machine ne prétend pas avoir vérifié la grandeur mesurée : c'est renvoyé à l'humain
     assert any("même grandeur" in a for a in r.a_verifier)
 
@@ -355,7 +359,7 @@ def test_annees_des_libelles_differentes_fr_en(tmp_path):
 def test_plusieurs_points_mis_en_avant_et_arrondi(tmp_path):
     brut = valider(fiche_reelle())
     brut["donnees"]["points"][0]["mis_en_avant"] = True
-    brut["donnees"]["points"][2]["valeur"] = 10.25
+    brut["donnees"]["points"][-1]["valeur"] = 10.25
     _, avert = constats(tmp_path, brut)
     assert any("2 points mis en avant" in a for a in avert)
     assert any("arrondies" in a for a in avert)
