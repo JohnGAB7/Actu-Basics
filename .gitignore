@@ -13,3 +13,6 @@ production/polices/*
 !production/polices/LISEZMOI.md
 !production/polices/Anton-Regular.ttf
 !production/polices/OFL-Anton.txt
+# Modèles de voix (lourds) et cache de synthèse
+production/voix/
+.cache-tts/

@@ -25,5 +25,5 @@ formats:
   carrousel: {largeur: 1080, hauteur: 1350}
 # Zones de sécurité vidéo (pixels) : l'interface TikTok / Reels / Shorts
 # recouvre le bas et la droite de l'écran.
-zones_securite_video: {haut: 250, bas: 420, gauche: 90, droite: 150}
+zones_securite_video: {haut: 250, bas: 480, gauche: 90, droite: 190}  # couvre TikTok, Reels et Shorts (plateformes.yaml)
 marges_carrousel: {haut: 150, bas: 150, gauche: 100, droite: 100}

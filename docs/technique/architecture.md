@@ -1,6 +1,6 @@
 # Architecture technique — Le Monde en chiffres
 
-*Proposition de la direction technique, novembre 2026. Les prix sont indicatifs et à revérifier au moment de souscrire.*
+*Proposition de la direction technique, novembre 2026 (mise à jour LMEC-2026-003 : voix off, contrôles renforcés, workflows aperçu / final). Les prix sont indicatifs et à revérifier au moment de souscrire.*
 
 ## 1. Audit du dépôt (avant modification)
 
@@ -33,8 +33,8 @@ Pourquoi un fichier YAML plutôt qu'un outil graphique :
 | Fiches, modèles, historique | Dépôt GitHub | 0 € | — |
 | Rendu images (carrousel, images de vidéo) | Python + Pillow (`production/lmec/rendu.py`) ; polices Anton (affichage) et Inter (texte), licence libre OFL | 0 € | Remotion ou Canva API si besoin d'animations riches |
 | Montage vidéo | ffmpeg (H.264, AAC, 30 i/s, 1080×1920) | 0 € | — |
-| Sous-titres | `.srt` généré depuis les textes de la fiche | 0 € | Incrustation dans l'image (ffmpeg + libass) en phase 2 |
-| Voix off | Optionnelle : fichier audio fourni (voix enregistrée ou synthèse) | 0 € à ~5–22 €/mois | Synthèse automatique en phase 2 (voir §6) |
+| Sous-titres | `.srt` calé sur les temps réels de chaque phrase prononcée | 0 € | Incrustation dans l'image (ffmpeg + libass) plus tard |
+| Voix off | Synthèse automatique, fournisseur interchangeable : Piper (local), OpenAI, ElevenLabs, enregistrement manuel | 0 € (Piper) ; ≈ 1 $/mois (OpenAI) ; 6–22 $/mois (ElevenLabs) | Voir [voix-off.md](voix-off.md) |
 | Exécution | Sur l'ordinateur du propriétaire **ou** GitHub Actions | 0 € (dépôt public) ; 2 000 min/mois gratuites (dépôt privé) | n8n en phase 3 |
 | Stockage des rendus | Artefacts GitHub Actions (14 jours) | 0 € | Archivage Google Drive (15 Go gratuits) |
 | Programmation des publications | Outils natifs : Meta Business Suite (Instagram/Facebook), TikTok Studio, YouTube Studio | 0 € | Metricool / Buffer (plans gratuits limités, payants ~10–20 €/mois) |
@@ -50,15 +50,17 @@ Pourquoi un fichier YAML plutôt qu'un outil graphique :
 | 2 | Rédaction de la fiche YAML FR + EN selon le modèle | ChatGPT | [consignes-chatgpt.md](consignes-chatgpt.md) | ✅ Opérationnel |
 | 3 | Validation : `validation.statut: valide`, `valide_par`, `date` | Propriétaire | Édition du fichier | ✅ Opérationnel |
 | 4 | Dépôt dans `contenus/fiches/` (interface web GitHub, « Add file ») | Propriétaire | GitHub | ✅ Opérationnel |
-| 5 | Contrôle de structure + rendu FR/EN + rapport qualité | Automatique | `produire.py` via GitHub Actions | ✅ Opérationnel |
+| 5 | Aperçu automatique : contrôles + rendu FR/EN avec voix Piper + images d'inspection | Automatique | Workflow « Aperçu des contenus » | ✅ Opérationnel |
+| 5 bis | Rendu final (refuse tout ce qui n'est pas prêt) | Propriétaire (1 clic) | Workflow « Validation finale » | ✅ Opérationnel (voix payante : secret à configurer) |
 | 6 | Relecture humaine (planche d'aperçu, vidéo, légende) | Propriétaire | Rapport `rapport-qc.md` | ✅ Opérationnel |
 | 7 | Programmation de la publication | Propriétaire | Outils natifs des plateformes | ⚙️ À configurer (comptes) |
 | 8 | Déplacement de la fiche vers `contenus/publie/` | Propriétaire | GitHub | ✅ Opérationnel |
 
 Garde-fous intégrés :
 
-- `produire.py` **refuse** de produire une fiche non validée. L'option `--brouillon-autorise` existe pour les aperçus, mais chaque image porte alors un filigrane « BROUILLON · NON VALIDÉ ».
-- Une fiche sans scène `source` ou sans URL de source est bloquée.
+- Deux modes : `apercu` accepte les brouillons mais filigrane tout rendu qui a une erreur bloquante ; `final` refuse toute fiche non validée ou avec une erreur bloquante, y compris une voix manquante ou de test.
+- Une vidéo sans voix n'est jamais présentée comme prête, sauf choix éditorial explicite (`narration: false`).
+- Les contrôles distinguent bloquants, avertissements et contrôles humains ; la vérification factuelle reste humaine ([controles-qualite.md](controles-qualite.md)).
 - Rien n'est jamais publié automatiquement : la chaîne s'arrête au fichier prêt à publier.
 
 ## 5. Orchestration : options évaluées
@@ -86,36 +88,28 @@ Ces démarches prennent de quelques jours à plusieurs semaines et peuvent être
 
 ## 6. Voix off
 
-La vidéo fonctionne sans voix (texte animé + piste silencieuse, musique ajoutée depuis la bibliothèque libre de la plateforme). Si une voix est souhaitée, `produire.py` génère `script-voix-off.txt` ; on fournit ensuite le fichier audio via le champ `audio` de la fiche, et la vidéo s'allonge pour ne jamais couper la voix.
+Voix générée automatiquement à partir des textes de la fiche, phrase par phrase, avec un fournisseur interchangeable (Piper gratuit par défaut, OpenAI, ElevenLabs, enregistrement manuel). Les scènes s'allongent pour ne jamais couper une phrase et les sous-titres suivent les temps réels. Détails, comparatif des coûts, secrets et mode manuel : [voix-off.md](voix-off.md).
 
-| Option | Coût indicatif | Qualité | Remarque |
-|---|---|---|---|
-| Voix du propriétaire (téléphone) | 0 € | Authentique | ~2 min par langue |
-| ElevenLabs | ~5–22 €/mois selon volume | Très bonne, FR et EN | Clé API hors Git |
-| OpenAI TTS / Azure Neural TTS | Quelques €/mois à ce volume | Bonne | Azure propose un palier gratuit mensuel |
-| Piper (local, libre) | 0 € | Correcte | Aucun compte, moins naturelle |
-
-Les plateformes exigent de signaler certains contenus générés par IA : à intégrer dans la checklist de publication si une voix synthétique est utilisée.
+Les plateformes exigent de signaler certains contenus générés par IA : point inclus dans la checklist humaine.
 
 ## 7. Ce qui est opérationnel / ce qui reste à configurer
 
-**Opérationnel dans cette PR**
+**Opérationnel**
 
-- Modèle de fiche FR/EN (`modeles/fiche-contenu.yaml`) et consignes pour ChatGPT.
-- `production/produire.py` : contrôle de la fiche, carrousels PNG 1080×1350, vidéos MP4 1080×1920 avec texte qui apparaît mot à mot, mots mis en valeur, chiffre animé, graphique en barres et barre de progression, sous-titres `.srt`, légendes prêtes à copier, `metadonnees.json`, script de voix off, miniature, planche d'aperçu, rapport qualité.
-- Formatage FR/EN des nombres (8,2 / 8.2 ; 1 234 / 1,234) et typographie française (espaces insécables).
-- GitHub Actions : tests + rendu automatique à chaque ajout de fiche, résultats téléchargeables.
-- Exemple fictif (`contenus/exemples/exemple-fictif.yaml`) pour tester sans toucher aux vrais contenus.
+- Modèle de fiche FR/EN, consignes pour ChatGPT, exemple fictif.
+- `production/produire.py` : contrôles renforcés, carrousels 1080×1350, vidéos 1080×1920 animées **avec voix**, sous-titres synchronisés, légendes, métadonnées, script de voix off, miniature, images d'inspection (planche, aperçu mobile, zones TikTok / Reels / Shorts), rapport qualité en trois niveaux.
+- Voix Piper gratuite (FR et EN) ; intégrations OpenAI et ElevenLabs écrites et testées sans clé (gestion des erreurs), **non testées avec une vraie clé**.
+- Workflows GitHub : « Aperçu des contenus » (automatique) et « Validation finale » (manuel, refuse ce qui n'est pas prêt).
+- 35 tests automatisés.
 
 **À configurer par le propriétaire**
 
-1. Fusionner la PR, puis vérifier que l'onglet *Actions* du dépôt est activé.
-2. Valider ou modifier la charte (`production/charte.yaml`) : couleurs, polices, nom affiché.
-3. Créer les comptes sur les plateformes retenues et tester une programmation manuelle.
-4. Donner à ChatGPT le texte de [consignes-chatgpt.md](consignes-chatgpt.md).
-5. Pour lancer le script en local (mode de secours) : installer Python 3.10+, ffmpeg et la police Inter, puis `pip install -r production/requirements.txt`.
+1. Choisir la voix de publication (voir [voix-off.md](voix-off.md)). Pour OpenAI ou ElevenLabs : créer le compte et ajouter le secret GitHub correspondant.
+2. Valider ou modifier la charte (`production/charte.yaml`) et les limites des plateformes (`production/plateformes.yaml`).
+3. Créer les comptes sur les plateformes retenues et tester une publication manuelle.
+4. Pour le mode local de secours : Python 3.10+, ffmpeg, `pip install -r production/requirements.txt -r production/requirements-voix.txt`, `python production/telecharger_voix.py`.
 
-**Points à arbitrer par la direction éditoriale** (propositions techniques, pas des décisions) : charte graphique, structure type des scènes, formule d'appel à l'action, politique de hashtags, voix ou pas de voix, plateformes et rythme de publication.
+**Points à arbitrer par la direction éditoriale** : charte graphique, structure type des scènes, appel à l'action, politique de hashtags, voix publiée, plateformes et rythme de publication.
 
 ## 8. Feuille de route
 
@@ -123,7 +117,7 @@ Les plateformes exigent de signaler certains contenus générés par IA : à int
 |---|---|---|
 | **0 — MVP** (cette PR) | Fiche → fichiers prêts à publier, publication manuelle | Aucun |
 | **1 — Rodage** (2–4 semaines) | 10 à 20 vraies fiches, ajustement de la charte et des durées, choix de la voix | Charte et plateformes arbitrées |
-| **2 — Confort** | Voix de synthèse automatique, sous-titres incrustés, copie automatique vers Drive, e-mail « prêt à relire » | Clé API de synthèse vocale dans les secrets GitHub |
+| **2 — Confort** | ✅ Voix de synthèse automatique (fait). Restent : sous-titres incrustés, copie automatique vers Drive, e-mail « prêt à relire » | Choix de la voix de publication |
 | **3 — Orchestration** | n8n : approbation par bouton, puis publication API **après clic humain** | Accès API accordés, ≥ 2 contenus/jour |
 
 ## 9. Risques et parades
@@ -141,7 +135,9 @@ Les plateformes exigent de signaler certains contenus générés par IA : à int
 ## 10. Arborescence ajoutée
 
 ```
-.github/workflows/production.yml   Rendu automatique (GitHub Actions)
+.github/workflows/apercu.yml       Aperçu automatique (brouillons acceptés, filigrane)
+.github/workflows/validation-finale.yml  Rendu final manuel (refuse ce qui n'est pas prêt)
+.env.example                       Modèle de fichier de clés local (le vrai .env n'est jamais versionné)
 contenus/fiches/                   Fiches à produire (une par sujet)
 contenus/publie/                   Fiches publiées (archive)
 contenus/exemples/                 Exemple fictif de test
@@ -149,6 +145,9 @@ docs/technique/                    Architecture, contrôles qualité, guide quot
 modeles/fiche-contenu.yaml         Modèle de fiche FR/EN
 production/produire.py             Point d'entrée
 production/charte.yaml             Couleurs, polices, formats, zones de sécurité
-production/lmec/                   Code (fiche, rendu, vidéo, carrousel, textes, qualité)
+production/plateformes.yaml        Limites et zones d'interface par plateforme
+production/tts.yaml                Fournisseur et voix FR/EN, lexique de prononciation
+production/telecharger_voix.py     Téléchargement des voix Piper (production/voix/, non versionné)
+production/lmec/                   Code (fiche, rendu, vidéo, carrousel, textes, qualité, tts, narration, inspection)
 production/tests/                  Tests automatiques
 ```

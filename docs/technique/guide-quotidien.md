@@ -1,38 +1,100 @@
-# Guide quotidien (objectif : 10 minutes)
+# Guide d'utilisation (sans toucher au code)
 
-## Routine normale
+Tout se fait depuis le site GitHub. Aucune installation n'est nécessaire.
 
-| Min. | Action |
-|---|---|
-| 2 | Récupérer la fiche YAML préparée par ChatGPT, la relire, mettre `statut: valide`, `valide_par` et la date. |
-| 1 | Sur GitHub : `contenus/fiches/` → *Add file* → *Create new file* → nom `AAAA-MM-JJ-sujet.yaml` → coller → *Commit*. |
-| 1 | Attendre le rendu (~1 à 2 min) : onglet *Actions* → dernière exécution → *Artifacts* → télécharger le zip. |
-| 3 | Ouvrir `rapport-qc.md`, regarder `apercu-carrousel.png`, visionner `video.mp4` FR et EN, cocher la checklist. |
-| 3 | Programmer : vidéo + `legende.txt` (FR puis EN) dans les outils natifs ; carrousel (images `carrousel/`) sur Instagram. Puis déplacer la fiche vers `contenus/publie/`. |
+## 1. Produire un contenu
 
-Astuce : le résumé de l'exécution GitHub Actions affiche directement le rapport qualité, sans rien télécharger.
+| Étape | Où | Action |
+|---|---|---|
+| 1. Déposer la fiche | `contenus/fiches/` → *Add file* → *Create new file* | Nom `AAAA-MM-JJ-sujet.yaml`, coller la fiche de ChatGPT, *Commit* |
+| 2. Regarder l'aperçu | Onglet *Actions* → « Aperçu des contenus » → dernière exécution | Le résumé s'affiche directement. Les fichiers sont en bas, dans *Artifacts* (`apercu-…`) |
+| 3. Vérifier les faits | Hors machine | Section 1 du rapport : chaque chiffre retrouvé dans la source |
+| 4. Valider la fiche | Éditer la fiche (icône crayon) | `statut: valide`, `valide_par: "JG"`, `date: AAAA-MM-JJ` (date du jour), *Commit* |
+| 5. Rendu final | *Actions* → « Validation finale » → *Run workflow* | Chemin de la fiche + fournisseur de voix → *Run* |
+| 6. Relire | Artefact `final-…` | `rapport-qc.md` sections 1 et 5, regarder les vidéos son activé |
+| 7. Publier | Applications des plateformes | Vidéo + `legende.txt` ; carrousel = images `carrousel/` ; activer la mention IA si voix de synthèse |
+| 8. Archiver | GitHub | Déplacer la fiche vers `contenus/publie/` |
 
-## Modes de secours
+**Règle simple** : un fichier qui porte le filigrane « BROUILLON · NON VALIDÉ » ne se publie jamais. Seul l'artefact `final-…` contient des fichiers à publier.
 
-**GitHub Actions indisponible** — en local, depuis le dossier du dépôt :
+## 2. Contenu d'un artefact
 
-```bash
-pip install -r production/requirements.txt     # une seule fois (et installer ffmpeg + police Inter)
-python production/produire.py contenus/fiches/AAAA-MM-JJ-sujet.yaml
-# résultats dans sortie/AAAA-MM-JJ-sujet/
+```
+resume.md                          résumé (identique à celui affiché dans GitHub)
+<id>/rapport-qc.md                 rapport qualité complet
+<id>/fr/ et <id>/en/
+  video.mp4                        vidéo 1080×1920 avec voix
+  narration.wav                    voix seule (pour réécouter ou remixer)
+  sous-titres.srt                  à importer dans YouTube / TikTok si souhaité
+  script-voix-off.txt              texte lu, scène par scène (sert aussi au mode manuel)
+  carrousel/01-….png …             images 1080×1350
+  apercu-carrousel.png             toutes les diapositives sur une image
+  miniature.jpg
+  legende.txt                      légende prête à coller (source + hashtags inclus)
+  metadonnees.json
+  inspection/planche-video.png     chaque scène en cours d'animation puis à l'état final
+  inspection/apercu-mobile.png     taille réelle d'un téléphone
+  inspection/zones-*.png           interface TikTok / Reels / Shorts simulée en rouge
 ```
 
-Sans ffmpeg : ajouter `--sans-video` pour obtenir au moins les carrousels et les légendes.
+## 3. Lire le rapport qualité
 
-**Script inutilisable** — mode entièrement manuel : la fiche contient tous les textes. Les recopier dans un modèle Canva ou CapCut aux mêmes formats (1080×1920 vidéo, 1080×1350 carrousel), en respectant la charte (`production/charte.yaml`) et en gardant la diapositive « source ». Les contrôles humains restent obligatoires.
+| Section | Sens | Que faire |
+|---|---|---|
+| État ✅ / ⚠️ / ❌ | Synthèse | ❌ = ne pas publier |
+| 1. Vérification factuelle | **La machine ne vérifie pas la vérité des chiffres** | Cocher chaque point vous-même |
+| 2. Erreurs bloquantes | Empêchent le rendu final | Corriger la fiche, puis relancer |
+| 3. Avertissements | À regarder, n'empêchent rien | Décider : corriger ou assumer |
+| 4. Compatibilité plateformes | Durée, légende, titre, hashtags, zones par plateforme | ⚠️ = possible mais pas idéal |
+| 5. Contrôles humains | Visuel et audio | Cocher après avoir regardé |
+| 6. Production | Durées, voix utilisée, temps de rendu | Information |
+| 7. Contrôles réussis | Liste détaillée (dépliable) | Information |
 
-**Plateforme ou outil de programmation en panne** — publier directement depuis l'application mobile au créneau prévu, ou décaler ; ne jamais publier une version non relue pour rattraper le retard.
+## 4. Erreurs courantes
 
-## Commandes utiles
+| Message | Cause | Solution |
+|---|---|---|
+| « Fiche inexploitable : … champ manquant » | Champ absent ou laissé vide dans la fiche | Compléter le champ cité |
+| « Fiche non validée (statut « brouillon ») » | Normal avant validation | Étape 4 du §1 |
+| « Statut « valide » mais la date de validation est absente » | `date:` vide | Mettre la date du jour `AAAA-MM-JJ` |
+| « Date … dans le futur » | Faute de frappe | Corriger la date |
+| « Scène obligatoire « fin » absente » | Scène manquante dans une langue | Ajouter la scène (accroche, chiffre, source, fin) |
+| « Nombres différents entre FR et EN » | Un chiffre n'apparaît que dans une langue | Vérifier : oubli ou erreur de traduction ? |
+| « Nombre au format anglais dans le texte français » | « 8.2 » au lieu de « 8,2 » | Corriger |
+| « Astérisque non fermé » | `*mot` sans second `*` | Fermer la mise en valeur |
+| « Narration impossible (openai) : Variable OPENAI_API_KEY absente » | Secret non configuré | Ajouter le secret (voir [voix-off.md](voix-off.md)) ou choisir `piper` |
+| « … a répondu 401 / 429 » | Clé invalide / quota ou crédit épuisé | Vérifier la clé ou le crédit chez le fournisseur ; relancer plus tard ; ou `piper` |
+| « Modèle Piper introuvable » | Voix non téléchargée (en local) | `python production/telecharger_voix.py` |
+| « Voix « test » réservée aux tests » | Fournisseur de test utilisé | Choisir `piper`, `openai` ou `elevenlabs` |
+| « Texte trop long (…) » | Le texte ne tient pas, même réduit | Raccourcir la scène (décision éditoriale si le sens change) |
+| « durée … > maximum » | Vidéo trop longue pour une plateforme | Raccourcir les textes ou retirer une scène |
+
+## 5. Mode de secours
+
+**GitHub Actions indisponible** — sur un ordinateur avec Python 3.10+ et ffmpeg :
 
 ```bash
-python production/produire.py FICHE --verifier              # structure seulement, rien n'est produit
-python production/produire.py FICHE --brouillon-autorise    # aperçu filigrané d'une fiche non validée
-python production/produire.py FICHE --langues fr            # une seule langue
-python -m pytest production/tests -q                        # tests
+pip install -r production/requirements.txt -r production/requirements-voix.txt
+python production/telecharger_voix.py
+python production/produire.py contenus/fiches/AAAA-MM-JJ-sujet.yaml                 # aperçu
+python production/produire.py contenus/fiches/AAAA-MM-JJ-sujet.yaml --mode final    # fichiers à publier
+```
+
+**Voix de synthèse en panne** (quota, réseau, clé) — trois options, par ordre de préférence :
+1. Relancer avec `--voix piper` (gratuit, hors ligne) ;
+2. Enregistrer la voix soi-même (`--voix manuel`, voir [voix-off.md](voix-off.md#mode-manuel-secours-ou-voix-humaine)) ;
+3. Décider éditorialement d'une vidéo sans voix : `narration: false` dans la fiche.
+
+Ne jamais publier un aperçu filigrané pour « rattraper » un retard.
+
+**Script inutilisable** — mode entièrement manuel : la fiche contient tous les textes. Les recopier dans un modèle Canva ou CapCut (1080×1920 vidéo, 1080×1350 carrousel), garder la diapositive « source », enregistrer la voix à partir du script, et faire les contrôles humains de [controles-qualite.md](controles-qualite.md).
+
+## 6. Commandes utiles (pour qui utilise le terminal)
+
+```bash
+python production/produire.py FICHE --verifier          # contrôle la fiche, ne produit rien (quelques secondes)
+python production/produire.py FICHE --voix openai       # change de fournisseur de voix
+python production/produire.py FICHE --langues fr        # une seule langue (aperçu uniquement)
+python production/produire.py FICHE --sans-video        # carrousels et textes seulement
+python -m pytest production/tests -q                    # tests automatiques
 ```

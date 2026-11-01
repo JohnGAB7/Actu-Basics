@@ -1,0 +1,37 @@
+# Limites et repères par plateforme, utilisés par le rapport qualité.
+# Valeurs relevées en novembre 2026 à partir de la documentation publique et des
+# gabarits courants : À REVÉRIFIER régulièrement, les plateformes les changent souvent.
+#
+# duree_max_s       : au-delà, la plateforme refuse ou ne classe plus la vidéo comme format court (bloquant)
+# duree_conseillee_s: fourchette visée pour la rétention (avertissement si hors fourchette)
+# zone_ui           : marges (px, image 1080x1920) masquées par l'interface de l'application
+cibles: [tiktok, instagram_reels, youtube_shorts]
+
+plateformes:
+  tiktok:
+    nom: TikTok
+    duree_max_s: 600
+    duree_conseillee_s: [15, 60]
+    legende_max: 4000
+    hashtags_conseilles: 5
+    zone_ui: {haut: 160, bas: 480, gauche: 60, droite: 170}
+  instagram_reels:
+    nom: Instagram Reels
+    duree_max_s: 180
+    duree_conseillee_s: [15, 60]
+    legende_max: 2200
+    hashtags_max: 30
+    hashtags_conseilles: 5
+    zone_ui: {haut: 220, bas: 420, gauche: 60, droite: 140}
+  youtube_shorts:
+    nom: YouTube Shorts
+    duree_max_s: 180
+    duree_conseillee_s: [15, 60]
+    titre_max: 100
+    legende_max: 5000
+    hashtags_conseilles: 3
+    zone_ui: {haut: 200, bas: 400, gauche: 60, droite: 190}
+  instagram_carrousel:
+    nom: Instagram (carrousel)
+    images_max: 20
+    legende_max: 2200

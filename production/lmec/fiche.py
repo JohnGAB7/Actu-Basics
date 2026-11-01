@@ -1,7 +1,9 @@
 """Chargement et validation d'une fiche de contenu (YAML).
 
 La fiche est le contrat entre l'éditorial (ChatGPT + propriétaire) et la
-production. Ce module vérifie sa structure ; il ne juge jamais le fond.
+production. Ce module vérifie qu'elle est exploitable (structure, types,
+champs réellement renseignés). Les contrôles de cohérence sont dans qc.py.
+Aucun module ne vérifie la véracité d'un chiffre : c'est un contrôle humain.
 """
 from __future__ import annotations
 
@@ -12,6 +14,9 @@ import yaml
 
 LANGUES = ("fr", "en")
 TYPES_SCENE = ("accroche", "chiffre", "texte", "graphique", "source", "fin")
+STATUTS = ("brouillon", "valide")
+# Valeurs laissées par le modèle qui ne comptent pas comme « renseignées ».
+VALEURS_VIDES = {"", "https://", "http://", "AAAA-MM-JJ", "AAAA-MM-JJ-sujet-court"}
 
 
 class FicheInvalide(Exception):
@@ -34,6 +39,7 @@ class Edition:
     hashtags: list[str]
     scenes: list[Scene]
     audio: str | None = None
+    narration: bool = True  # False = choix éditorial explicite d'une vidéo sans voix
 
 
 @dataclass
@@ -51,6 +57,7 @@ class Fiche:
     sources: list[dict]
     donnees: dict | None
     editions: dict[str, Edition] = field(default_factory=dict)
+    brut: dict = field(default_factory=dict, repr=False)
 
     def contexte(self, cle: str, langue: str) -> str:
         """periode / perimetre / definition : chaîne commune ou {fr: ..., en: ...}."""
@@ -64,7 +71,7 @@ class Fiche:
 
 def _exiger(dico: dict, cle: str, contexte: str, erreurs: list[str]):
     valeur = dico.get(cle) if isinstance(dico, dict) else None
-    if valeur in (None, "", []):
+    if valeur is None or valeur == [] or (isinstance(valeur, str) and valeur.strip() in VALEURS_VIDES):
         erreurs.append(f"{contexte} : champ « {cle} » manquant ou vide")
     return valeur
 
@@ -84,7 +91,8 @@ def charger_fiche(chemin: str | Path) -> Fiche:
     chiffre = _exiger(brut, "chiffre_cle", "fiche", erreurs) or {}
     if chiffre:
         _exiger(chiffre, "valeur", "chiffre_cle", erreurs)
-        if not isinstance(chiffre.get("valeur", 0), (int, float)):
+        v = chiffre.get("valeur", 0)
+        if isinstance(v, bool) or not isinstance(v, (int, float)):
             erreurs.append("chiffre_cle.valeur doit être un nombre (sans unité ni espace)")
     contexte = brut.get("contexte") or {}
     for cle in ("periode", "perimetre", "definition"):
@@ -100,7 +108,7 @@ def charger_fiche(chemin: str | Path) -> Fiche:
         if not points:
             erreurs.append("donnees : « points » manquant")
         for i, p in enumerate(points):
-            if not isinstance(p.get("valeur"), (int, float)):
+            if isinstance(p.get("valeur"), bool) or not isinstance(p.get("valeur"), (int, float)):
                 erreurs.append(f"donnees.points[{i}].valeur doit être un nombre")
 
     editions: dict[str, Edition] = {}
@@ -122,22 +130,28 @@ def charger_fiche(chemin: str | Path) -> Fiche:
                 continue
             if t == "graphique" and not donnees:
                 erreurs.append(f"{ctx}.scenes[{i}] : scène graphique sans bloc « donnees »")
-            scenes.append(Scene(type=t, texte=str(s.get("texte", "")).strip(),
-                                voix_off=str(s.get("voix_off", "")).strip(),
+            if t not in ("source",) and not str(s.get("texte") or "").strip():
+                erreurs.append(f"{ctx}.scenes[{i}] ({t}) : texte vide")
+            scenes.append(Scene(type=t, texte=str(s.get("texte") or "").strip(),
+                                voix_off=str(s.get("voix_off") or "").strip(),
                                 duree=s.get("duree")))
         editions[langue] = Edition(
             langue=langue, titre=str(titre or ""), legende=str(legende or "").strip(),
             hashtags=[h if h.startswith("#") else f"#{h}" for h in (ed.get("hashtags") or [])],
-            scenes=scenes, audio=ed.get("audio"))
+            scenes=scenes, audio=ed.get("audio"), narration=ed.get("narration", True) is not False)
+
+    statut = str(validation.get("statut") or "brouillon").strip()
+    if statut not in STATUTS:
+        erreurs.append(f"validation.statut « {statut} » inconnu ({' | '.join(STATUTS)})")
 
     if erreurs:
         raise FicheInvalide("\n".join(f"- {e}" for e in erreurs))
 
     return Fiche(
         chemin=chemin, id=str(ident), theme=str(brut.get("theme", "")),
-        statut=str(validation.get("statut", "brouillon")),
+        statut=statut,
         valide_par=str(validation.get("valide_par") or ""),
         date_validation=str(validation.get("date") or ""),
         chiffre=chiffre, periode=contexte["periode"],
         perimetre=contexte["perimetre"], definition=contexte["definition"],
-        sources=sources, donnees=donnees, editions=editions)
+        sources=sources, donnees=donnees, editions=editions, brut=brut)

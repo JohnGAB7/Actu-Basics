@@ -1,0 +1,84 @@
+# VALIDATION FINALE — lancée à la main : onglet Actions → « Validation finale » → Run workflow.
+# Refuse toute fiche non validée ou avec une erreur bloquante, y compris une voix absente
+# ou de test. Seuls les fichiers produits ici sont prêts à publier (publication toujours manuelle).
+name: Validation finale
+
+on:
+  workflow_dispatch:
+    inputs:
+      fiche:
+        description: "Chemin de la fiche validée (ex. contenus/fiches/2026-11-pic-population-mondiale.yaml)"
+        required: true
+      voix:
+        description: "Fournisseur de voix"
+        type: choice
+        options: [piper, openai, elevenlabs]
+        default: piper
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: production/requirements*.txt
+
+      - name: Outils système (ffmpeg, police Inter)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-inter
+
+      - name: Dépendances Python
+        run: pip install -r production/requirements.txt -r production/requirements-voix.txt pytest
+
+      - name: Tests
+        run: python -m pytest production/tests -q
+
+      - name: Modèles de voix (cache)
+        if: github.event.inputs.voix == 'piper'
+        uses: actions/cache@v4
+        with:
+          path: production/voix
+          key: voix-${{ hashFiles('production/tts.yaml') }}
+
+      - name: Téléchargement des voix manquantes
+        if: github.event.inputs.voix == 'piper'
+        run: python production/telecharger_voix.py
+
+      - name: Rendu final (refuse tout ce qui n'est pas prêt)
+        env:
+          FICHE: ${{ github.event.inputs.fiche }}
+          VOIX: ${{ github.event.inputs.voix }}
+          # Secrets : Settings → Secrets and variables → Actions. Jamais dans le dépôt.
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        run: python production/produire.py "$FICHE" --mode final --voix "$VOIX"
+
+      - name: Résumé lisible dans GitHub
+        if: always()
+        run: |
+          if [ -f sortie/resume.md ]; then cat sortie/resume.md >> "$GITHUB_STEP_SUMMARY"; else echo "Aucun résumé produit." >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Fichiers prêts à publier
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-${{ github.run_number }}
+          path: sortie/
+          retention-days: 30
+
+      - name: Rapport de refus
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: refus-${{ github.run_number }}
+          path: sortie/**/rapport-qc.md
+          retention-days: 14

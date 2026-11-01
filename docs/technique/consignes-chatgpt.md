@@ -21,4 +21,4 @@ Texte à donner à ChatGPT (instructions personnalisées ou début de conversati
 
 ---
 
-Vérification rapide avant dépôt : `python production/produire.py la-fiche.yaml --verifier --brouillon-autorise`.
+Vérification rapide avant dépôt : `python production/produire.py la-fiche.yaml --verifier` (une fiche en brouillon affiche une seule erreur bloquante, « Fiche non validée », c'est normal).

@@ -28,22 +28,17 @@ def duree_audio(chemin: Path) -> float:
     return float(json.loads(sortie.stdout)["format"]["duration"])
 
 
-def duree_scene(scene: Scene) -> float:
+def duree_scene(scene: Scene, animation_s: float = 0.0) -> float:
+    """Durée visuelle minimale : temps d'apparition du texte + temps de lecture."""
     if scene.duree:
         return float(scene.duree)
     minimum = DUREES_MIN.get(scene.type, 2.5)
-    if scene.voix_off:  # ~150 mots/minute à l'oral
-        return max(minimum, len(scene.voix_off.split()) / 2.5 + 0.6)
-    return max(minimum, len(scene.texte.split()) / 3.0 + 1.0)  # lecture à l'écran
+    lecture = len(scene.texte.split()) / 3.0 + 1.0
+    return max(minimum, lecture, animation_s + 1.5)
 
 
-def calculer_durees(edition: Edition, audio: Path | None) -> list[float]:
-    durees = [duree_scene(s) for s in edition.scenes]
-    if audio:
-        manque = duree_audio(audio) + 0.5 - sum(durees)
-        if manque > 0:  # on ne coupe jamais la voix : la dernière scène s'allonge
-            durees[-1] += manque
-    return durees
+def durees_visuelles(edition: Edition, rendu: Rendu | None = None) -> list[float]:
+    return [duree_scene(s, rendu.duree_animation(s) if rendu else 0.0) for s in edition.scenes]
 
 
 def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: Path | None,
