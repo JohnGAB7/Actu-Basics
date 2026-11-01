@@ -53,6 +53,16 @@ jobs:
         if: github.event.inputs.voix == 'piper'
         run: python production/telecharger_voix.py
 
+      # Cache des phrases déjà synthétisées, un par fournisseur : relancer un rendu dont le
+      # texte n'a pas changé ne refacture rien. Fichiers nommés par l'empreinte
+      # (fournisseur + configuration complète de la voix + texte exact envoyé).
+      - name: Cache des voix déjà synthétisées (restauration)
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache-tts
+          key: tts-${{ github.event.inputs.voix }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: tts-${{ github.event.inputs.voix }}-
+
       - name: Rendu final (refuse tout ce qui n'est pas prêt)
         env:
           FICHE: ${{ github.event.inputs.fiche }}
@@ -61,6 +71,14 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
         run: python production/produire.py "$FICHE" --mode final --voix "$VOIX"
+
+      # Sauvegardé même en cas de refus : une voix payée n'est jamais perdue.
+      - name: Cache des voix déjà synthétisées (sauvegarde)
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache-tts
+          key: tts-${{ github.event.inputs.voix }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Résumé lisible dans GitHub
         if: always()

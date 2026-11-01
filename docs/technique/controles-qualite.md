@@ -12,6 +12,8 @@ Trois niveaux, toujours séparés dans `rapport-qc.md` :
 
 Champs obligatoires présents **et réellement renseignés**. Une valeur laissée du modèle comme `https://`, `AAAA-MM-JJ` ou une chaîne vide compte comme absente. Le chiffre clé et les points du graphique doivent être des nombres, les types de scènes doivent être connus, aucun texte de scène ne peut être vide, le statut doit être `brouillon` ou `valide`, et les éditions FR et EN doivent toutes deux exister.
 
+**Types et structure.** Chaque bloc est contrôlé : un bloc attendu (`validation`, `chiffre_cle`, `editions.fr`…) écrit comme un simple texte, une liste à la place d'un texte, un texte à la place d'une liste (`hashtags`, `sources`, `scenes`, `points`), une langue inconnue dans `{fr: …, en: …}`, un `oui` à la place de `true`, une durée écrite « 3 s »… Tout cela produit une **liste d'erreurs en français** qui nomme le champ, jamais une trace d'erreur Python. Un YAML illisible indique la ligne et la colonne. En dernier recours, un cas imprévu est rapporté comme « Structure inattendue » ; une erreur du programme lui-même est rapportée comme « erreur inattendue du programme », sans arrêter les autres fiches. Un test automatique remplace chaque champ de la fiche réelle par 13 valeurs de types différents (environ 1 600 variantes) et vérifie qu'aucune ne fait planter le programme.
+
 ## 2. Fiche : contrôles automatiques
 
 | Contrôle | Gravité |
@@ -31,13 +33,27 @@ Champs obligatoires présents **et réellement renseignés**. Une valeur laissé
 | Hashtag avec espace | ❌ |
 | Légende < 40 caractères ; aucun hashtag | ⚠️ |
 | Unité, préfixe, suffixe ou contexte renseigné dans une seule langue | ❌ |
-| Point mis en avant du graphique ≠ chiffre clé ; chiffre clé absent du graphique | ⚠️ |
-| Année d'un libellé du graphique hors de la période annoncée | ⚠️ |
+| Unité du chiffre clé de nature ou d'échelle différente entre FR et EN (« milliards » / « million », « % » d'un seul côté) | ❌ |
+| Unité du graphique de nature ou d'échelle différente entre FR et EN | ❌ |
+| Chiffre clé ≠ point mis en avant du graphique, **après conversion d'échelle** (1 234 567 = 1,2 million) | ⚠️ |
+| Chiffre clé absent du graphique ; plusieurs points mis en avant | ⚠️ |
+| Chiffre clé et graphique de natures différentes (pourcentage contre valeur) | ⚠️ |
+| Pourcentage hors de 0–100 (chiffre clé ou graphique) | ⚠️ |
+| Valeur plus précise que les décimales affichées (arrondi visible) | ⚠️ |
+| Période : années différentes entre FR et EN | ❌ |
+| Période sans aucune année (contrôle des années impossible) | ⚠️ |
+| Année citée avec le chiffre clé (unité, scène « chiffre ») hors de la période | ⚠️ |
+| Libellé du graphique : années différentes entre FR et EN | ❌ |
+| Libellé du graphique : année hors de la période annoncée | ⚠️ |
 | Nombres différents entre les textes FR et EN | ⚠️ |
 | « 8.2 » dans le texte FR ; « 8,2 » dans le texte EN | ⚠️ |
 | Nombre de scènes différent entre FR et EN | ⚠️ |
 | Identifiant ≠ nom du fichier | ⚠️ |
 | Vidéo sans voix par choix éditorial (`narration: false`) | ⚠️ |
+
+### Ce que les contrôles de cohérence ne prouvent pas
+
+La machine compare des **nombres** et reconnaît les **mots d'échelle** (milliers, millions, milliards / thousand, million, billion, trillion, en tenant compte du faux ami « billion »), les pourcentages et les « pour mille ». Elle ne sait pas si deux nombres mesurent **la même grandeur** avec **la même définition**. Le rapport n'écrit donc « Chiffre clé égal au point mis en avant » que lorsque la comparaison a vraiment été faite, précise « après conversion d'échelle » ou « en supposant des unités simples » quand c'est le cas, et liste en tête de la section 1 les points qu'elle n'a pas pu vérifier (cases à cocher par une personne).
 
 ## 3. Rendus : contrôles automatiques
 
@@ -53,7 +69,13 @@ Champs obligatoires présents **et réellement renseignés**. Une valeur laissé
 | Texte principal < 34 px (illisible sur téléphone) | ⚠️ |
 | Durées FR et EN très différentes (> 35 %), ou scène deux fois plus longue dans une langue | ⚠️ |
 
-Les limites par plateforme se règlent dans `production/plateformes.yaml`, sans toucher au code. Elles ont été relevées en novembre 2026 et sont à revérifier régulièrement.
+Les limites par plateforme se règlent dans `production/plateformes.yaml`, sans toucher au code. Chaque valeur y a une **référence** : lien vers la page officielle, date de lecture (`verifie_le`) et statut :
+
+- `officiel` : écrit tel quel sur une page officielle (ex. YouTube : 3 minutes, titre 100 caractères, description 5 000) ;
+- `non_confirme` : valeur courante qu'aucune page officielle lue ne confirme (ex. TikTok 10 minutes, Reels 3 minutes) ;
+- `estimation` : choix technique sans source officielle (zones d'interface, durées conseillées).
+
+Une erreur bloquante fondée sur une valeur qui n'est pas `officiel` le dit dans le rapport. Les références ont été lues le 1er novembre 2026 ; à revérifier au moins tous les 3 mois. Un test refuse toute limite sans référence ni date.
 
 ## 4. Contrôles humains
 

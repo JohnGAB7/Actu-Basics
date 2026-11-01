@@ -98,7 +98,8 @@ Les plateformes exigent de signaler certains contenus générés par IA : point 
 
 - Modèle de fiche FR/EN, consignes pour ChatGPT, exemple fictif.
 - `production/produire.py` : contrôles renforcés, carrousels 1080×1350, vidéos 1080×1920 animées **avec voix**, sous-titres synchronisés, légendes, métadonnées, script de voix off, miniature, images d'inspection (planche, aperçu mobile, zones TikTok / Reels / Shorts), rapport qualité en trois niveaux.
-- Voix Piper gratuite (FR et EN) ; intégrations OpenAI et ElevenLabs écrites et testées sans clé (gestion des erreurs), **non testées avec une vraie clé**.
+- Voix Piper gratuite (FR et EN) pour les aperçus ; intégrations OpenAI et ElevenLabs écrites et testées avec des réponses simulées (requête, gestion des erreurs), **jamais appelées avec une vraie clé : non validées en production**. Aucune voix n'est validée à l'oreille pour la publication.
+- Cache des voix persistant entre exécutions GitHub (aucune phrase payée deux fois).
 - Workflows GitHub : « Aperçu des contenus » (automatique) et « Validation finale » (manuel, refuse ce qui n'est pas prêt).
 - 35 tests automatisés.
 

@@ -4,8 +4,20 @@
 
 - La voix est **générée automatiquement** à partir des textes de la fiche, en FR et en EN.
 - Le fournisseur est **interchangeable** sans toucher au code : `piper` (gratuit, local), `openai`, `elevenlabs`, `manuel` (vos enregistrements), `test` (bip, pour les tests uniquement).
-- Par défaut : **Piper**, gratuit et sans compte. Aucune dépense n'a été engagée.
+- Par défaut : **Piper**, gratuit et sans compte, **pour les aperçus**. Aucune dépense n'a été engagée.
+- **La qualité de publication n'est validée pour aucune voix.** Elle se juge à l'oreille, par une personne, sur la vidéo finale (voir l'état ci-dessous).
 - Une vidéo **sans voix n'est jamais présentée comme prête** : si la voix échoue, le rapport passe en ❌ BLOQUÉ, l'aperçu porte le filigrane et le mode final refuse de produire.
+
+## État réel des intégrations (novembre 2026)
+
+| Fournisseur | Ce qui a été testé | Ce qui ne l'a pas été | Usage |
+|---|---|---|---|
+| Piper | Synthèse réelle FR et EN, en local et dans GitHub Actions ; durées, sous-titres et montage vérifiés | **Écoute humaine** : la prononciation n'a pas été jugée à l'oreille | ✅ Aperçus. Publication : seulement après écoute et accord |
+| OpenAI | Le code est écrit d'après la documentation de l'API. Tests automatiques : clé absente, erreurs réseau et HTTP (refus clair, jamais de vidéo muette présentée comme prête) | **Aucun appel réel** : pas de clé, aucune dépense engagée. Format de réponse, qualité FR et coût réel non vérifiés | ⚠️ Non validé en production. Premier essai à faire sur un aperçu, puis écoute |
+| ElevenLabs | Idem : code écrit d'après la documentation, erreurs testées sans clé | **Aucun appel réel** (pas d'abonnement) | ⚠️ Non validé en production |
+| Manuel | Assemblage de fichiers enregistrés, erreur si une prise manque | Qualité de vos enregistrements | ✅ Secours |
+
+Avant d'utiliser OpenAI ou ElevenLabs pour une publication : lancer un aperçu avec la clé (`--voix openai`), vérifier que la vidéo est produite sans erreur, l'écouter en entier, puis seulement passer en validation finale.
 
 ## Ce qui est dit
 
@@ -42,9 +54,24 @@ Volume estimé : 1 sujet par jour × 2 langues × ~550 caractères ≈ **33 000 
 | Hors ligne / panne | Fonctionne hors ligne | Dépend du service | Dépend du service |
 | Licence des voix | Modèles CC BY 4.0 (siwis FR, LibriTTS EN) ; logiciel GPL-3.0 | Conditions OpenAI | Conditions ElevenLabs |
 
-Prix relevés en novembre 2026 sur des comparateurs tiers ([CostGoat](https://costgoat.com/pricing/openai-tts), [NoCode MBA](https://www.nocode.mba/articles/elevenlabs-pricing)) : **à revérifier sur les pages officielles avant de souscrire.** Un cache évite de refacturer une phrase déjà synthétisée (relancer un rendu ne coûte rien si le texte n'a pas changé).
+Prix relevés en novembre 2026 sur des comparateurs tiers ([CostGoat](https://costgoat.com/pricing/openai-tts), [NoCode MBA](https://www.nocode.mba/articles/elevenlabs-pricing)) : **à revérifier sur les pages officielles avant de souscrire.** Les qualités indiquées pour OpenAI et ElevenLabs sont des réputations, non vérifiées à l'écoute (voir l'état des intégrations).
 
-**Recommandation technique.** Garder Piper pour les aperçus. Pour la publication, OpenAI offre le meilleur rapport qualité/prix : environ 1 $ par mois. ElevenLabs donne une voix française plus naturelle, mais pour 6 à 22 $ par mois. Le choix de la voix publiée est éditorial et reste à votre décision.
+## Cache : ne jamais payer deux fois la même phrase
+
+Chaque phrase synthétisée est gardée dans `.cache-tts/` (jamais versionné). Le nom du fichier est une empreinte SHA-256 de :
+
+- le fournisseur et la langue ;
+- **toute** la configuration de la voix dans `tts.yaml` (voix, modèle, consignes, vitesse, réglages…) ;
+- pour Piper, le nom et la taille du modèle téléchargé ;
+- le **texte exact envoyé** à la synthèse, après le lexique de prononciation.
+
+Changer un mot, une virgule, une voix, une consigne ou une règle de prononciation produit une nouvelle empreinte : un ancien audio n'est jamais réutilisé pour un texte différent. Relancer un rendu sans changement ne coûte rien.
+
+Dans GitHub Actions, le dossier est conservé entre les exécutions (`actions/cache`), séparément pour chaque fournisseur, et sauvegardé **même quand la validation finale refuse** la fiche : une voix déjà payée n'est pas perdue. Les audios inutilisés depuis 90 jours sont supprimés automatiquement. Le rapport indique, par langue, combien de phrases ont été synthétisées, combien viennent du cache et combien de caractères ont été facturables.
+
+GitHub supprime de lui-même un cache inutilisé pendant 7 jours : après une longue pause, la première exécution resynthétise tout (coût OpenAI estimé : quelques centimes).
+
+**Recommandation technique.** Garder Piper pour les aperçus. Pour la publication, OpenAI semble offrir le meilleur rapport qualité/prix (environ 1 $ par mois d'après les tarifs publics) ; ElevenLabs a la réputation d'une voix française plus naturelle, pour 6 à 22 $ par mois. **Ces appréciations de qualité viennent de la réputation des services, pas d'une écoute faite ici** : aucune des deux intégrations n'a été appelée avec une vraie clé. Le choix de la voix publiée est éditorial, se fait à l'oreille, et reste à votre décision.
 
 ## Configurer un fournisseur
 

@@ -20,6 +20,7 @@ import os
 import shutil
 import sys
 import time
+import traceback
 from pathlib import Path
 
 import yaml
@@ -39,6 +40,8 @@ from lmec.video import durees_visuelles, produire_video, sonder_video  # noqa: E
 
 RACINE = Path(__file__).resolve().parent
 DEPOT = RACINE.parent
+# Phrases déjà synthétisées (non versionné ; persisté entre exécutions GitHub par actions/cache).
+DOSSIER_CACHE = Path(os.environ.get("LMEC_CACHE_TTS", DEPOT / ".cache-tts"))
 
 
 def _yaml(chemin: Path) -> dict:
@@ -79,7 +82,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
         return False
 
     nom_voix = args.voix or os.environ.get("LMEC_TTS") or config_tts.get("fournisseur", "piper")
-    cache = Cache(DEPOT / ".cache-tts")
+    cache = Cache(DOSSIER_CACHE)
     lexique = config_tts.get("prononciation") or {}
     durees_langues: dict[str, list[float]] = {}
     lignes_resume: list[list[str]] = []
@@ -117,6 +120,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
                              "config": fournisseur.config}
                 rapport.ok.append(f"[{langue}] Narration produite ({narration.fournisseur}) : "
                                   f"{narration.synthese} phrase(s) synthétisée(s), "
+                                  f"{narration.depuis_cache} reprise(s) du cache, "
                                   f"{narration.caracteres} caractères facturables")
                 if not narration.publiable:
                     rapport.bloquant(f"Voix « {narration.fournisseur} » réservée aux tests : non publiable", langue)
@@ -216,7 +220,19 @@ def main() -> int:
     charger_env(DEPOT / ".env")
     charte, plateformes, config_tts = _yaml(args.charte), _yaml(RACINE / "plateformes.yaml"), _yaml(RACINE / "tts.yaml")
     resume = [f"## Production — mode {args.mode}", ""]
-    resultats = [produire(f, args, charte, plateformes, config_tts, resume) for f in args.fiches]
+    resultats = []
+    for f in args.fiches:
+        try:
+            resultats.append(produire(f, args, charte, plateformes, config_tts, resume))
+        except Exception as exc:  # anomalie non prévue : rapportée lisiblement, les autres fiches continuent
+            traceback.print_exc()
+            print(f"❌ Erreur inattendue sur {f} : {type(exc).__name__} : {exc}")
+            resume += [f"### ❌ `{f}` — erreur inattendue du programme", "",
+                       f"`{type(exc).__name__} : {exc}`", "",
+                       "Ce n'est probablement pas une erreur de la fiche : transmettre ce message à la "
+                       "direction technique.", ""]
+            resultats.append(False)
+    Cache(DOSSIER_CACHE).nettoyer()
     Path(args.sortie).mkdir(parents=True, exist_ok=True)
     (Path(args.sortie) / "resume.md").write_text("\n".join(resume), encoding="utf-8")
     return 0 if all(resultats) else 1

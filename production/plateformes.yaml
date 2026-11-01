@@ -1,10 +1,19 @@
 # Limites et repères par plateforme, utilisés par le rapport qualité.
-# Valeurs relevées en novembre 2026 à partir de la documentation publique et des
-# gabarits courants : À REVÉRIFIER régulièrement, les plateformes les changent souvent.
+# Modifiable sans code. Les plateformes changent souvent leurs règles : revérifier
+# chaque valeur au moins tous les 3 mois et mettre à jour « verifie_le ».
 #
-# duree_max_s       : au-delà, la plateforme refuse ou ne classe plus la vidéo comme format court (bloquant)
-# duree_conseillee_s: fourchette visée pour la rétention (avertissement si hors fourchette)
-# zone_ui           : marges (px, image 1080x1920) masquées par l'interface de l'application
+# duree_max_s        : au-delà, refus ou sortie du format court (erreur bloquante)
+# duree_conseillee_s : fourchette visée pour la rétention (avertissement seulement)
+# legende_max, titre_max, hashtags_max : limites de texte (erreur bloquante)
+# hashtags_conseilles: au-delà, simple remarque dans le tableau
+# zone_ui            : marges (px, image 1080x1920) masquées par l'interface de l'application
+#
+# Chaque valeur a une référence dans « references » :
+#   statut: officiel      la valeur est écrite telle quelle sur une page officielle de la plateforme
+#           non_confirme  valeur courante, mais aucune page officielle consultée ne la confirme
+#           estimation    choix de la direction technique (gabarits, captures) : aucune source officielle
+#   verifie_le: date à laquelle la page a été lue (AAAA-MM-JJ)
+# Une erreur bloquante fondée sur une valeur qui n'est pas « officiel » le signale dans le rapport.
 cibles: [tiktok, instagram_reels, youtube_shorts]
 
 plateformes:
@@ -12,9 +21,28 @@ plateformes:
     nom: TikTok
     duree_max_s: 600
     duree_conseillee_s: [15, 60]
-    legende_max: 4000
+    legende_max: 2200
     hashtags_conseilles: 5
     zone_ui: {haut: 160, bas: 480, gauche: 60, droite: 170}
+    references:
+      duree_max_s:
+        statut: non_confirme
+        source: https://newsroom.tiktok.com/en-us/longer-videos
+        verifie_le: 2026-11-01
+        note: >-
+          La seule page officielle lue annonce « jusqu'à 3 minutes » (juillet 2021, ancienne).
+          Les 10 minutes à l'import sont couramment citées mais n'ont pas été confirmées sur une page officielle.
+      legende_max:
+        statut: officiel
+        source: https://developers.tiktok.com/docs/en/content-posting-api-reference-direct-post
+        verifie_le: 2026-11-01
+        note: >-
+          « The maximum length is 2200 in UTF-16 runes » (légende, API de publication, page mise à jour
+          le 24 août 2026). L'application accepte peut-être davantage : 2200 est la valeur sûre.
+      hashtags_conseilles: {statut: estimation, verifie_le: 2026-11-01, note: "Pas de limite officielle trouvée."}
+      duree_conseillee_s: {statut: estimation, verifie_le: 2026-11-01, note: "Choix de format éditorial, pas une règle de la plateforme."}
+      zone_ui: {statut: estimation, verifie_le: 2026-11-01, note: "Aucune valeur officielle publiée ; à contrôler sur un vrai téléphone."}
+
   instagram_reels:
     nom: Instagram Reels
     duree_max_s: 180
@@ -23,15 +51,82 @@ plateformes:
     hashtags_max: 30
     hashtags_conseilles: 5
     zone_ui: {haut: 220, bas: 420, gauche: 60, droite: 140}
+    references:
+      duree_max_s:
+        statut: non_confirme
+        source: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media
+        verifie_le: 2026-11-01
+        note: >-
+          La documentation officielle de l'API indique « Duration: 15 mins maximum, 3 seconds minimum » pour
+          les Reels publiés par API. 180 s est une limite prudente (format court) qui n'a pas été confirmée
+          sur une page officielle de l'application. La page d'aide « Reel size & aspect ratios »
+          (https://help.instagram.com/1038071743007909) n'a pas pu être lue en entier.
+      legende_max:
+        statut: officiel
+        source: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media
+        verifie_le: 2026-11-01
+        note: "« Maximum 2200 characters, 30 hashtags, and 20 @ tags. »"
+      hashtags_max:
+        statut: officiel
+        source: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media
+        verifie_le: 2026-11-01
+        note: "Même phrase : 30 hashtags au maximum dans la légende."
+      hashtags_conseilles: {statut: estimation, verifie_le: 2026-11-01, note: "Pas de recommandation officielle lue."}
+      duree_conseillee_s: {statut: estimation, verifie_le: 2026-11-01, note: "Choix de format éditorial."}
+      zone_ui: {statut: estimation, verifie_le: 2026-11-01, note: "Aucune valeur officielle publiée ; à contrôler sur un vrai téléphone."}
+
   youtube_shorts:
     nom: YouTube Shorts
     duree_max_s: 180
     duree_conseillee_s: [15, 60]
     titre_max: 100
     legende_max: 5000
+    hashtags_max: 60
     hashtags_conseilles: 3
     zone_ui: {haut: 200, bas: 400, gauche: 60, droite: 190}
+    references:
+      duree_max_s:
+        statut: officiel
+        source: https://support.google.com/youtube/answer/15424877?hl=en
+        verifie_le: 2026-11-01
+        note: "« You can now create YouTube Shorts up to three minutes in length. »"
+      titre_max:
+        statut: officiel
+        source: https://support.google.com/youtube/answer/57407?hl=en
+        verifie_le: 2026-11-01
+        note: "« Video titles have a character limit of 100 characters »"
+      legende_max:
+        statut: officiel
+        source: https://support.google.com/youtube/answer/57407?hl=en
+        verifie_le: 2026-11-01
+        note: "« Video descriptions have a character limit of 5,000 characters »"
+      hashtags_max:
+        statut: officiel
+        source: https://support.google.com/youtube/answer/6390658?hl=en
+        verifie_le: 2026-11-01
+        note: "Au-delà de 60 hashtags, YouTube les ignore tous."
+      hashtags_conseilles:
+        statut: officiel
+        source: https://support.google.com/youtube/answer/6390658?hl=en
+        verifie_le: 2026-11-01
+        note: "« up to three hashtags […] will appear by your video title »"
+      duree_conseillee_s: {statut: estimation, verifie_le: 2026-11-01, note: "Choix de format éditorial."}
+      zone_ui: {statut: estimation, verifie_le: 2026-11-01, note: "Aucune valeur officielle publiée ; à contrôler sur un vrai téléphone."}
+
   instagram_carrousel:
     nom: Instagram (carrousel)
-    images_max: 20
+    images_max: 10
     legende_max: 2200
+    references:
+      images_max:
+        statut: officiel
+        source: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media
+        verifie_le: 2026-11-01
+        note: >-
+          « Carousels can have up to 10 total images, videos, or a mix of the two » (publication par API).
+          L'application en accepterait 20 : non confirmé. 10 est la valeur sûre.
+      legende_max:
+        statut: officiel
+        source: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media
+        verifie_le: 2026-11-01
+        note: "« Maximum 2200 characters »"

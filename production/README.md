@@ -40,7 +40,7 @@ fr/ et en/
 | `lmec/tts.py` | Fournisseurs de voix interchangeables, cache |
 | `lmec/narration.py` | Phrases → voix → durées de scènes → piste audio et repères de sous-titres |
 | `lmec/inspection.py` | Images d'inspection extraites de la vidéo encodée |
-| `tts.yaml` / `plateformes.yaml` | Voix et limites des plateformes (modifiables sans code) |
+| `tts.yaml` / `plateformes.yaml` | Voix ; limites des plateformes avec leurs références officielles et dates de vérification (modifiables sans code) |
 | `charte.yaml` | Couleurs, polices, formats, zones de sécurité (modifiable sans code) |
 
 Documentation : [`docs/technique/`](../docs/technique/architecture.md).

@@ -52,6 +52,17 @@ jobs:
       - name: Téléchargement des voix manquantes
         run: python production/telecharger_voix.py
 
+      # Cache des phrases déjà synthétisées. Chaque fichier est nommé par l'empreinte
+      # (voix + configuration complète + texte exact) : un texte ou une voix modifiés ne
+      # réutilisent jamais un ancien audio. La clé change à chaque exécution pour que le
+      # cache s'enrichisse ; restore-keys reprend le plus récent.
+      - name: Cache des voix déjà synthétisées (restauration)
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache-tts
+          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: tts-piper-
+
       - name: Rendu d'aperçu
         env:
           FICHE_DEMANDEE: ${{ github.event.inputs.fiche }}
@@ -59,6 +70,13 @@ jobs:
           if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
           [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
           python production/produire.py $FICHES --mode apercu --voix piper
+
+      - name: Cache des voix déjà synthétisées (sauvegarde)
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache-tts
+          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Résumé lisible dans GitHub
         if: always()

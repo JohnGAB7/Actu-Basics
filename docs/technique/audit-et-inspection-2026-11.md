@@ -52,3 +52,15 @@ Rendu d'aperçu FR et EN avec voix Piper, filigrane « brouillon » car la fiche
 3. **Répétition dans la scène chiffre FR** : « 10,3 milliards d'humains au maximum. C'est le maximum attendu… ». Proposition : reformuler le texte de la scène, par exemple « C'est le pic attendu par l'ONU… ».
 4. **Hashtags** : 4 par langue. YouTube Shorts en conseille 3 au plus (avertissement seulement).
 5. **Graphique** : barres proches visuellement (voir §3). Garder tel quel, ou remplacer par une autre série (par exemple la fécondité 3,3 → 2,3, plus parlante en barres).
+
+## 5. Corrections après la revue de JG (1er novembre 2026)
+
+| Demande | Traitement | Tests ajoutés |
+|---|---|---|
+| Cache TTS dans GitHub Actions | `.cache-tts/` restauré et sauvegardé dans les deux workflows (un cache par fournisseur, sauvegarde même en cas de refus). Empreinte = fournisseur + langue + configuration complète de la voix + modèle Piper + texte exact envoyé | Clé sensible au texte, à la voix, à la vitesse, au modèle, aux consignes, à la langue, au fournisseur et au fichier du modèle Piper ; lexique ; nettoyage ; présence du cache dans les workflows |
+| Cohérence des données | Unités lues (nature + échelle, faux ami « billion »), comparaison chiffre clé / graphique après conversion, périodes FR/EN, années du chiffre et des libellés, pourcentages hors bornes, arrondis. Le rapport liste ce qui n'a **pas** pu être vérifié | 13 tests (unités FR/EN, échelles, pourcentage contre valeur, périodes, libellés, arrondis, rapport) |
+| Robustesse | Contrôle de type de chaque bloc et champ ; YAML illisible avec ligne et colonne ; filet de sécurité « Structure inattendue » ; une erreur du programme n'arrête pas les autres fiches | 23 cas de types incorrects, 4 YAML mal formés, ~1 600 variantes aléatoires sans plantage, exécution sans trace Python |
+| Voix | Piper conservé pour les aperçus. État réel des intégrations documenté : OpenAI et ElevenLabs **jamais appelés avec une vraie clé** | Réponses d'API simulées (sans réseau) : requête envoyée, clé hors du corps, erreurs 401/429/réseau/réponse non audio |
+| Plateformes | Référence, date de lecture et statut (`officiel`, `non_confirme`, `estimation`) pour chaque limite. Corrections : légende TikTok 4 000 → 2 200 (API officielle), carrousel 20 → 10 images (API officielle), YouTube 60 hashtags au maximum | Toute limite doit avoir une référence datée ; une erreur fondée sur une limite non officielle le signale |
+
+La fiche démographique n'a pas été modifiée.

@@ -55,6 +55,13 @@ resume.md                          résumé (identique à celui affiché dans Gi
 | Message | Cause | Solution |
 |---|---|---|
 | « Fiche inexploitable : … champ manquant » | Champ absent ou laissé vide dans la fiche | Compléter le champ cité |
+| « YAML illisible (ligne 12, colonne 5) » | Indentation, deux-points ou guillemet manquant | Corriger à la ligne indiquée ; comparer avec `modeles/fiche-contenu.yaml` |
+| « … doit être un bloc « clé: valeur », pas un texte » / « … doit être une liste » | Mauvaise forme d'un champ | Reprendre la forme du modèle (tirets pour les listes, retrait pour les blocs) |
+| « … doit valoir true ou false » | `oui`/`non` écrit à la place de `true`/`false` | Écrire `true` ou `false` |
+| « Unité du chiffre clé différente entre FR et EN » | Ex. « milliards » en FR, « million » en EN | Corriger la traduction (« milliard » = « billion ») |
+| « Période différente entre FR et EN » | Années différentes dans `contexte.periode` | Aligner les deux langues |
+| « … ne correspond pas au chiffre clé » | Le point mis en avant n'a pas la même valeur, même après conversion d'échelle | Vérifier valeur et unité (décision éditoriale) |
+| « Erreur inattendue du programme » | Défaut du programme, pas de la fiche | Transmettre le message à la direction technique |
 | « Fiche non validée (statut « brouillon ») » | Normal avant validation | Étape 4 du §1 |
 | « Statut « valide » mais la date de validation est absente » | `date:` vide | Mettre la date du jour `AAAA-MM-JJ` |
 | « Date … dans le futur » | Faute de frappe | Corriger la date |
@@ -64,6 +71,7 @@ resume.md                          résumé (identique à celui affiché dans Gi
 | « Astérisque non fermé » | `*mot` sans second `*` | Fermer la mise en valeur |
 | « Narration impossible (openai) : Variable OPENAI_API_KEY absente » | Secret non configuré | Ajouter le secret (voir [voix-off.md](voix-off.md)) ou choisir `piper` |
 | « … a répondu 401 / 429 » | Clé invalide / quota ou crédit épuisé | Vérifier la clé ou le crédit chez le fournisseur ; relancer plus tard ; ou `piper` |
+| « … (limite non confirmée par une source officielle …) » | La limite de plateforme dépassée n'est pas officielle | Raccourcir, ou vérifier la limite actuelle et mettre à jour `plateformes.yaml` |
 | « Modèle Piper introuvable » | Voix non téléchargée (en local) | `python production/telecharger_voix.py` |
 | « Voix « test » réservée aux tests » | Fournisseur de test utilisé | Choisir `piper`, `openai` ou `elevenlabs` |
 | « Texte trop long (…) » | Le texte ne tient pas, même réduit | Raccourcir la scène (décision éditoriale si le sens change) |

@@ -43,6 +43,7 @@ class Rapport:
     ok: list[str] = field(default_factory=list)
     plateformes: list[list[str]] = field(default_factory=list)   # lignes du tableau de compatibilité
     production: list[str] = field(default_factory=list)          # infos de rendu (durées, voix…)
+    a_verifier: list[str] = field(default_factory=list)          # cohérences que la machine n'a pas pu établir
 
     def bloquant(self, message, langue=""):
         self.constats.append(Constat(BLOQUANT, message, langue))
@@ -172,47 +173,192 @@ def controler_editions(fiche: Fiche, r: Rapport) -> None:
                f"Nombre de scènes différent FR/EN {nb} (adaptation volontaire ?)", AVERTISSEMENT)
 
 
+# Mots d'échelle reconnus dans les unités (« milliards » fr = « billion » en ; « billion » fr = 10^12).
+_ECHELLES = {
+    "fr": [(r"\bmilliers?\b", 1e3), (r"\bmillions?\b", 1e6), (r"\bmilliards?\b", 1e9),
+           (r"\bbillions?\b", 1e12)],
+    "en": [(r"\bthousands?\b", 1e3), (r"\bmillions?\b", 1e6), (r"\bbillions?\b", 1e9),
+           (r"\btrillions?\b", 1e12)],
+}
+_POURCENT = re.compile(r"%|\bpour ?cents?\b|\bper ?cent\b|\bpercent(age)?\b|\bpoints? de pourcentage\b|"
+                       r"\bpercentage points?\b", re.I)
+_POUR_MILLE = re.compile(r"‰|\bpour (1 ?000|mille)\b|\bper (1,?000|thousand)\b", re.I)
+
+
+def lire_unite(texte: str, langue: str) -> tuple[str, float | None]:
+    """Nature et échelle d'une unité écrite : (« pourcentage » | « pour_mille » | « valeur », facteur).
+
+    Le facteur vaut None quand aucun mot d'échelle n'est reconnu (on ne sait pas : 1 n'est pas supposé).
+    """
+    t = texte.replace("\u00a0", " ").replace("\u202f", " ")
+    if _POURCENT.search(t):
+        return "pourcentage", 1.0
+    if _POUR_MILLE.search(t):
+        return "pour_mille", 1.0
+    for motif, facteur in _ECHELLES[langue]:
+        if re.search(motif, t, re.I):
+            return "valeur", facteur
+    return "valeur", None
+
+
+def _unite_chiffre(ch: dict, langue: str) -> str:
+    return " ".join(_texte_langue(ch.get(c), langue) for c in ("prefixe", "suffixe", "unite"))
+
+
+def _annees(texte: str) -> set[int]:
+    return {int(a) for a in ANNEE.findall(texte or "")}
+
+
+def _decimales_reelles(v: float) -> int:
+    return 0 if float(v).is_integer() else len(repr(float(v)).split(".")[1])
+
+
+def _decrire(unite: tuple[str, float | None]) -> str:
+    nature, facteur = unite
+    if nature != "valeur":
+        return nature.replace("_", " ")
+    return {None: "sans mot d'échelle", 1e3: "milliers", 1e6: "millions", 1e9: "milliards",
+            1e12: "billions (10^12)"}.get(facteur, str(facteur))
+
+
+def _coherence_graphique(fiche: Fiche, r: Rapport, unite_ch: dict, debut, fin) -> None:
+    d, ch = fiche.donnees, fiche.chiffre
+    points = d["points"]
+    unite_d = {l: lire_unite(_texte_langue(d.get("unite"), l), l) for l in LANGUES}
+    u = d.get("unite")
+    if isinstance(u, dict) and bool(str(u.get("fr") or "").strip()) != bool(str(u.get("en") or "").strip()):
+        r.bloquant("donnees.unite renseignée dans une seule langue")
+    if unite_d["fr"] != unite_d["en"]:
+        r.bloquant(f"Unité du graphique différente entre FR ({_decrire(unite_d['fr'])}) et EN "
+                   f"({_decrire(unite_d['en'])}) : erreur de traduction probable")
+    if any(p["valeur"] < 0 for p in points):
+        r.avertir("Valeurs négatives : le graphique en barres ne les représente pas correctement")
+    if unite_d["fr"][0] == "pourcentage" and any(not 0 <= p["valeur"] <= 100 for p in points):
+        r.avertir("Graphique en pourcentage avec une valeur hors de 0–100")
+    dec_d = d.get("decimales")
+    if isinstance(dec_d, int):
+        arrondis = [p["valeur"] for p in points if _decimales_reelles(p["valeur"]) > dec_d]
+        if arrondis:
+            r.avertir(f"Valeurs du graphique affichées arrondies à {dec_d} décimale(s) : {arrondis}")
+
+    # Chiffre clé ↔ point mis en avant, après conversion d'échelle quand elle est connue
+    en_avant = [p for p in points if p.get("mis_en_avant")]
+    if len(en_avant) > 1:
+        r.avertir(f"{len(en_avant)} points mis en avant dans le graphique : un seul attendu")
+    nat_c, fac_c = unite_ch["fr"]
+    nat_d, fac_d = unite_d["fr"]
+    v = float(ch["valeur"])
+    if nat_c != nat_d:
+        r.avertir(f"Le chiffre clé ({_decrire(unite_ch['fr'])}) et le graphique ({_decrire(unite_d['fr'])}) "
+                  "n'ont pas la même nature d'unité : le chiffre clé n'a pas pu être retrouvé dans le graphique")
+        return
+    if (fac_c is None) != (fac_d is None):
+        # Une seule des deux unités a un mot d'échelle : on suppose « unités simples » pour l'autre,
+        # mais on le dit.
+        fac_c, fac_d = fac_c or 1.0, fac_d or 1.0
+        hypothese = " (en supposant des unités simples là où aucune échelle n'est écrite)"
+    else:
+        fac_c, fac_d = fac_c or 1.0, fac_d or 1.0
+        hypothese = ""
+
+    def tolerance(dec, facteur, val):
+        dec = dec if isinstance(dec, int) else _decimales_reelles(val)
+        return 0.5 * 10 ** -dec * facteur
+
+    def egal(p):
+        ecart = abs(v * fac_c - float(p["valeur"]) * fac_d)
+        return ecart <= tolerance(ch.get("decimales"), fac_c, v) + tolerance(dec_d, fac_d, p["valeur"]) + 1e-9
+
+    cibles = en_avant or points
+    trouves = [p for p in cibles if egal(p)]
+    if trouves:
+        conv = "" if fac_c == fac_d else " après conversion d'échelle"
+        quoi = "au point mis en avant" if en_avant else "à un point"
+        r.ok.append(f"Chiffre clé égal {quoi} du graphique{conv}{hypothese}")
+    elif en_avant:
+        r.avertir(f"Le point mis en avant du graphique ({en_avant[0]['valeur']}, {_decrire(unite_d['fr'])}) ne "
+                  f"correspond pas au chiffre clé ({ch['valeur']}, {_decrire(unite_ch['fr'])}){hypothese}")
+    else:
+        r.avertir("Le chiffre clé n'apparaît dans aucun point du graphique (normal seulement s'il "
+                  f"s'agit d'une autre grandeur){hypothese}")
+
+    # Années des libellés : identiques en FR et EN, comprises dans la période
+    hors, avec_annee = [], False
+    for i, p in enumerate(points):
+        par_langue = {l: _texte_langue(p.get("label"), l) for l in LANGUES}
+        annees = {l: _annees(t) for l, t in par_langue.items()}
+        if annees["fr"] != annees["en"]:
+            r.bloquant(f"Libellé du point {i + 1} : années différentes entre FR ({par_langue['fr']}) et EN "
+                       f"({par_langue['en']})")
+        avec_annee = avec_annee or bool(annees["fr"])
+        if debut is not None:
+            hors += [(par_langue["fr"], a) for a in annees["fr"] if not debut <= a <= fin]
+    for lab, a in hors:
+        r.avertir(f"Libellé du graphique « {lab} » : {a} hors de la période annoncée {debut}–{fin}")
+    if avec_annee and debut is not None and not hors:
+        r.ok.append(f"Années des libellés du graphique comprises dans la période {debut}–{fin}")
+
+
 def controler_coherence(fiche: Fiche, r: Rapport) -> None:
+    """Cohérence interne : chiffre clé, graphique, unités, périodes, FR/EN.
+
+    Ne conclut « cohérent » que sur ce qui est réellement comparé. Ce qui ne peut pas l'être
+    (même grandeur ? même définition ?) est renvoyé à la vérification humaine (r.a_verifier).
+    """
     ch = fiche.chiffre
     for cle in ("unite", "suffixe", "prefixe"):
         v = ch.get(cle)
-        if isinstance(v, dict) and bool(v.get("fr")) != bool(v.get("en")):
+        if isinstance(v, dict) and bool(str(v.get("fr") or "").strip()) != bool(str(v.get("en") or "").strip()):
             r.bloquant(f"chiffre_cle.{cle} renseigné dans une seule langue")
     for cle in ("periode", "perimetre", "definition"):
         for langue in LANGUES:
             if not fiche.contexte(cle, langue).strip():
                 r.bloquant(f"contexte.{cle} vide", langue)
 
-    if fiche.donnees:
-        points = fiche.donnees["points"]
-        valeur = float(ch["valeur"])
-        en_avant = [p for p in points if p.get("mis_en_avant")]
-        if en_avant and all(abs(float(p["valeur"]) - valeur) > 1e-9 for p in en_avant):
-            r.avertir(f"Le point mis en avant du graphique ({en_avant[0]['valeur']}) diffère du chiffre clé "
-                      f"({ch['valeur']}) : même grandeur, même unité ?")
-        elif not any(abs(float(p["valeur"]) - valeur) < 1e-9 for p in points):
-            r.avertir("Le chiffre clé n'apparaît dans aucun point du graphique (normal seulement s'il "
-                      "s'agit d'une autre grandeur)")
-        else:
-            r.ok.append("Chiffre clé présent dans le graphique")
-        u = fiche.donnees.get("unite")
-        if isinstance(u, dict) and bool(u.get("fr")) != bool(u.get("en")):
-            r.bloquant("donnees.unite renseignée dans une seule langue")
-        if any(p["valeur"] < 0 for p in points):
-            r.avertir("Valeurs négatives : le graphique en barres ne les représente pas correctement")
-        # Années des libellés comprises dans la période annoncée
-        annees_periode = [int(a) for a in ANNEE.findall(fiche.contexte("periode", "fr"))]
-        if len(annees_periode) >= 1:
-            debut, fin = min(annees_periode), max(annees_periode)
-            for p in points:
-                for langue in LANGUES:
-                    lab = p.get("label")
-                    lab = lab.get(langue, "") if isinstance(lab, dict) else str(lab)
-                    hors = [int(a) for a in ANNEE.findall(lab) if not debut <= int(a) <= fin]
-                    if hors:
-                        r.avertir(f"Libellé « {lab} » hors de la période {debut}–{fin}", langue)
-                        break
+    # --- Unités : même nature et même échelle en FR et en EN
+    unite_ch = {l: lire_unite(_unite_chiffre(ch, l), l) for l in LANGUES}
+    if unite_ch["fr"] != unite_ch["en"]:
+        r.bloquant(f"Unité du chiffre clé différente entre FR et EN (FR : {_decrire(unite_ch['fr'])}, "
+                   f"EN : {_decrire(unite_ch['en'])}) : erreur de traduction probable "
+                   "(rappel : « milliard » = « billion », « billion » français = « trillion »)")
+    else:
+        r.ok.append(f"Unité du chiffre clé de même nature et même échelle en FR et EN ({_decrire(unite_ch['fr'])})")
+    if unite_ch["fr"][0] == "pourcentage" and not 0 <= float(ch["valeur"]) <= 100:
+        r.avertir(f"Chiffre clé en pourcentage hors de 0–100 ({ch['valeur']}) : variation en points ?")
+    dec = ch.get("decimales")
+    if isinstance(dec, int) and _decimales_reelles(ch["valeur"]) > dec:
+        r.avertir(f"Chiffre clé {ch['valeur']} affiché arrondi à {dec} décimale(s) : arrondi voulu ?")
 
+    # --- Périodes : mêmes années en FR et en EN
+    annees_periode = {l: _annees(fiche.contexte("periode", l)) for l in LANGUES}
+    if annees_periode["fr"] != annees_periode["en"]:
+        r.bloquant(f"Période différente entre FR ({sorted(annees_periode['fr'])}) et EN "
+                   f"({sorted(annees_periode['en'])})")
+    periode = annees_periode["fr"] | annees_periode["en"]
+    debut, fin = (min(periode), max(periode)) if periode else (None, None)
+    if not periode:
+        r.avertir("La période ne contient aucune année : la cohérence des années n'a pas pu être contrôlée")
+        r.a_verifier.append("Les années citées (chiffre, graphique, textes) correspondent à la période annoncée "
+                            "(non contrôlable automatiquement : période sans année)")
+    else:
+        hors = []
+        for l in LANGUES:
+            textes = [_unite_chiffre(ch, l)] + [s.texte for s in fiche.editions[l].scenes if s.type == "chiffre"]
+            hors += [(l, a) for t in textes for a in _annees(t) if not debut <= a <= fin]
+        for l, a in hors:
+            r.avertir(f"Année {a} citée avec le chiffre clé, hors de la période annoncée {debut}–{fin}", l)
+        if not hors:
+            r.ok.append(f"Années citées avec le chiffre clé comprises dans la période {debut}–{fin}")
+
+    if fiche.donnees:
+        _coherence_graphique(fiche, r, unite_ch, debut, fin)
+    r.a_verifier.append("Le chiffre clé et le graphique mesurent la même grandeur, avec la même définition "
+                        "(la machine compare seulement les nombres et les mots d'échelle des unités)")
+
+    _coherence_textes(fiche, r)
+
+
+def _coherence_textes(fiche: Fiche, r: Rapport) -> None:
     # Mêmes nombres en FR et en EN (une adaptation ne change pas les chiffres)
     ensembles = {}
     for langue in LANGUES:
@@ -254,6 +400,15 @@ def controler_fiche(fiche: Fiche, r: Rapport, aujourd_hui: dt.date | None = None
 
 
 # --------------------------------------------------------------------------- rendus
+def _reserve(p: dict, champ: str) -> str:
+    """Précision ajoutée à une erreur quand la limite n'est pas confirmée par une source officielle."""
+    statut = ((p.get("references") or {}).get(champ) or {}).get("statut")
+    if statut == "officiel":
+        return ""
+    return (" (limite non confirmée par une source officielle : voir production/plateformes.yaml, "
+            f"références de « {champ} »)")
+
+
 def controler_plateformes(langue: str, duree: float, legende: str, titre: str, nb_hashtags: int,
                           charte: dict, plateformes: dict, r: Rapport) -> None:
     zone = charte["zones_securite_video"]
@@ -262,7 +417,7 @@ def controler_plateformes(langue: str, duree: float, legende: str, titre: str, n
         nom = p["nom"]
         notes = []
         if duree > p["duree_max_s"]:
-            r.bloquant(f"{nom} : durée {duree:.0f} s > maximum {p['duree_max_s']} s", langue)
+            r.bloquant(f"{nom} : durée {duree:.0f} s > maximum {p['duree_max_s']} s{_reserve(p, 'duree_max_s')}", langue)
             notes.append("❌ durée")
         else:
             lo, hi = p.get("duree_conseillee_s", [0, 1e9])
@@ -270,13 +425,14 @@ def controler_plateformes(langue: str, duree: float, legende: str, titre: str, n
                 r.avertir(f"{nom} : durée {duree:.0f} s hors de la fourchette conseillée {lo}–{hi} s", langue)
                 notes.append("⚠️ durée")
         if len(legende) > p.get("legende_max", 1e9):
-            r.bloquant(f"{nom} : légende de {len(legende)} caractères > {p['legende_max']}", langue)
+            r.bloquant(f"{nom} : légende de {len(legende)} caractères > {p['legende_max']}"
+                       f"{_reserve(p, 'legende_max')}", langue)
             notes.append("❌ légende")
         if "titre_max" in p and len(titre) > p["titre_max"]:
-            r.bloquant(f"{nom} : titre de {len(titre)} caractères > {p['titre_max']}", langue)
+            r.bloquant(f"{nom} : titre de {len(titre)} caractères > {p['titre_max']}{_reserve(p, 'titre_max')}", langue)
             notes.append("❌ titre")
         if nb_hashtags > p.get("hashtags_max", 1e9):
-            r.bloquant(f"{nom} : {nb_hashtags} hashtags > {p['hashtags_max']}", langue)
+            r.bloquant(f"{nom} : {nb_hashtags} hashtags > {p['hashtags_max']}{_reserve(p, 'hashtags_max')}", langue)
             notes.append("❌ hashtags")
         elif nb_hashtags > p.get("hashtags_conseilles", 1e9):
             notes.append(f"⚠️ {nb_hashtags} hashtags (≤ {p['hashtags_conseilles']} conseillés)")
@@ -357,6 +513,9 @@ def ecrire_rapport(fiche: Fiche, r: Rapport, destination: Path, mode: str) -> st
     lignes = [f"# Rapport qualité — {fiche.id}", "", f"**État : {etat}**", "",
               f"Mode : `{mode}` · statut de la fiche : `{fiche.statut}`", ""]
     lignes += [VERIFICATION_FACTUELLE]
+    if r.a_verifier:
+        lignes += ["Points que la machine n'a **pas** pu vérifier elle-même :", ""]
+        lignes += [f"- [ ] {a}" for a in dict.fromkeys(r.a_verifier)] + [""]
     lignes += ["## 2. Erreurs bloquantes", ""]
     lignes += [f"- ❌ {c}" for c in r.bloquants] or ["Aucune."]
     lignes += ["", "## 3. Avertissements", ""]

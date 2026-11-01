@@ -44,6 +44,7 @@ class Narration:
     publiable: bool
     scenes: list[VoixScene]
     synthese: int = 0        # phrases réellement synthétisées (hors cache)
+    depuis_cache: int = 0    # phrases reprises du cache (aucun coût)
     caracteres: int = 0      # volume envoyé au fournisseur (pour estimer le coût)
     notes: list[str] = field(default_factory=list)
 
@@ -95,7 +96,9 @@ def produire_voix(fiche: Fiche, edition: Edition, fournisseur: Fournisseur, cach
         for k, phrase in enumerate(decouper_phrases(ecrit)):
             dite = preparer_pour_voix(phrase, edition.langue, lexique)
             wav = travail / f"scene-{i:02d}-{k:02d}.wav"
-            if not cache.obtenir(fournisseur, dite, wav):
+            if cache.obtenir(fournisseur, dite, wav):
+                n.depuis_cache += 1
+            else:
                 n.synthese += 1
                 n.caracteres += len(dite)
             d = duree_wav(wav)

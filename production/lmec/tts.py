@@ -29,6 +29,8 @@ from pathlib import Path
 RACINE_PRODUCTION = Path(__file__).resolve().parent.parent
 DOSSIER_VOIX = Path(os.environ.get("LMEC_DOSSIER_VOIX", RACINE_PRODUCTION / "voix"))
 DELAI_API_S = 60
+# À incrémenter si le format des fichiers du cache change (invalide tout le cache).
+VERSION_CACHE = 1
 
 
 class ErreurTTS(Exception):
@@ -69,8 +71,17 @@ class Fournisseur:
         self.langue = langue
 
     def signature(self) -> str:
-        """Identifie la voix : sert de clé de cache (changer de voix = nouvelle synthèse)."""
-        return json.dumps({"f": self.nom, "c": self.config, "l": self.langue}, sort_keys=True)
+        """Identifie la voix : sert de clé de cache (changer de voix = nouvelle synthèse).
+
+        Contient le fournisseur, la langue, TOUTE la configuration de voix de tts.yaml
+        (voix, modèle, consignes, vitesse, réglages…) et l'empreinte du modèle local s'il y en a un.
+        """
+        return json.dumps({"v": VERSION_CACHE, "f": self.nom, "c": self.config, "l": self.langue,
+                           "m": self.empreinte_modele()}, sort_keys=True, default=str)
+
+    def empreinte_modele(self) -> str:
+        """Identifiant du modèle local (vide pour une API : le modèle est dans la config)."""
+        return ""
 
     def synthetiser(self, texte: str, destination: Path) -> None:
         raise NotImplementedError
@@ -90,6 +101,14 @@ class Piper(Fournisseur):
         if not chemin.exists():
             raise ErreurTTS(f"Modèle Piper introuvable : {chemin}. Lancez : python production/telecharger_voix.py")
         return chemin
+
+    def empreinte_modele(self) -> str:
+        # Nom + taille du fichier .onnx : un modèle remplacé sous le même nom invalide le cache.
+        try:
+            chemin = self._modele()
+        except ErreurTTS:
+            return "absent"
+        return f"{chemin.name}:{chemin.stat().st_size}"
 
     def verifier(self) -> None:
         try:
@@ -244,18 +263,42 @@ def creer_fournisseur(nom: str, config_tts: dict, langue: str, dossier_manuel: P
 
 
 class Cache:
-    """Évite de payer deux fois la même phrase : clé = voix + texte."""
+    """Évite de payer deux fois la même phrase.
+
+    Clé = SHA-256 de (version du cache, fournisseur, langue, configuration complète de la voix,
+    empreinte du modèle local, texte exact envoyé à la synthèse, lexique de prononciation compris).
+    Changer un mot, une voix, une consigne ou une vitesse donne une nouvelle clé : jamais de
+    réutilisation d'un audio qui ne correspond pas. Le fournisseur « manuel » n'est pas mis en cache.
+    """
 
     def __init__(self, dossier: Path):
         self.dossier = dossier
         dossier.mkdir(parents=True, exist_ok=True)
 
+    @staticmethod
+    def cle(fournisseur: Fournisseur, texte: str) -> str:
+        return hashlib.sha256((fournisseur.signature() + "\n" + texte).encode()).hexdigest()[:32]
+
     def obtenir(self, fournisseur: Fournisseur, texte: str, destination: Path) -> bool:
-        cle = hashlib.sha256((fournisseur.signature() + "\n" + texte).encode()).hexdigest()[:24]
-        fichier = self.dossier / f"{cle}.wav"
-        if fichier.exists():
+        """Copie l'audio en cache vers `destination` (True) ou le synthétise et le range (False)."""
+        fichier = self.dossier / f"{self.cle(fournisseur, texte)}.wav"
+        if fichier.exists() and fichier.stat().st_size > 44:
             shutil.copyfile(fichier, destination)
+            os.utime(fichier)  # « dernière utilisation », pour le nettoyage
             return True
         fournisseur.synthetiser(texte, destination)
-        shutil.copyfile(destination, fichier)
+        temporaire = fichier.with_suffix(".tmp")
+        shutil.copyfile(destination, temporaire)
+        temporaire.replace(fichier)  # écriture atomique : pas de fichier à moitié écrit en cache
         return False
+
+    def nettoyer(self, jours: int = 90) -> int:
+        """Supprime les audios inutilisés depuis `jours` jours (le cache ne grossit pas sans fin)."""
+        import time
+        limite = time.time() - jours * 86400
+        supprimes = 0
+        for f in self.dossier.glob("*"):
+            if f.stat().st_mtime < limite:  # chaque utilisation remet la date à jour
+                f.unlink(missing_ok=True)
+                supprimes += 1
+        return supprimes
