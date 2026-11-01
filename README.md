@@ -17,3 +17,5 @@ Les documents fondateurs, le processus éditorial, les recherches, les contenus,
 
 ## État du projet
 Initialisation du dépôt. La branche de travail souhaitée est `main`.
+
+Chaîne de production (fiche validée → vidéos verticales et carrousels FR/EN) : voir [`docs/technique/architecture.md`](docs/technique/architecture.md) et le [guide quotidien](docs/technique/guide-quotidien.md).

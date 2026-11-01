@@ -1,0 +1,82 @@
+# Rend automatiquement les fiches de contenus/fiches/ et met les fichiers
+# à disposition en « artefact » téléchargeable (onglet Actions -> exécution -> Artifacts).
+# Aucune publication sur les réseaux sociaux : c'est volontaire.
+name: Production des contenus
+
+on:
+  push:
+    paths:
+      - "contenus/fiches/**"
+      - "contenus/exemples/**"
+      - "production/**"
+      - ".github/workflows/production.yml"
+  pull_request:
+    paths:
+      - "contenus/**"
+      - "production/**"
+  workflow_dispatch:
+    inputs:
+      fiche:
+        description: "Chemin d'une fiche (vide = toutes les fiches de contenus/fiches/)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  produire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: production/requirements.txt
+
+      - name: Outils système (ffmpeg, police Inter)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-inter
+
+      - name: Dépendances Python
+        run: pip install -r production/requirements.txt pytest
+
+      - name: Tests
+        run: python -m pytest production/tests -q
+
+      - name: Rendu
+        env:
+          FICHE_DEMANDEE: ${{ github.event.inputs.fiche }}
+        run: |
+          set +e
+          if [ -n "$FICHE_DEMANDEE" ]; then
+            FICHES="$FICHE_DEMANDEE"
+          else
+            FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null)
+          fi
+          # Sans fiche réelle, on rend l'exemple fictif pour vérifier la chaîne.
+          [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
+          # Les fiches non validées sont rendues avec un filigrane « BROUILLON ».
+          python production/produire.py $FICHES --brouillon-autorise
+          echo "CODE=$?" >> "$GITHUB_ENV"
+
+      - name: Résumé
+        if: always()
+        run: |
+          for r in sortie/*/rapport-qc.md; do
+            [ -f "$r" ] && cat "$r" >> "$GITHUB_STEP_SUMMARY" && echo -e "\n---\n" >> "$GITHUB_STEP_SUMMARY"
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: contenus-${{ github.run_number }}
+          path: sortie/
+          retention-days: 14
+
+      - name: Échec si erreur bloquante
+        run: exit ${CODE:-1}

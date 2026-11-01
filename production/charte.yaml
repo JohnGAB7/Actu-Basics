@@ -1,0 +1,24 @@
+# Charte graphique provisoire (proposition technique, à valider par l'éditorial).
+# Modifier ici les couleurs et polices : aucun changement de code nécessaire.
+marque:
+  fr: "LE MONDE EN CHIFFRES"
+  en: "THE WORLD IN NUMBERS"
+couleurs:
+  fond: "#0F1B2D"        # bleu nuit
+  texte: "#F5F3EE"       # blanc cassé
+  accent: "#F2B134"      # jaune « chiffre »
+  secondaire: "#8FA3BF"  # gris bleuté (sources, pied de page)
+  barre: "#3E7CB1"
+polices:
+  # Recherche dans l'ordre : production/polices/, puis polices système.
+  # Inter (licence libre OFL) : https://rsms.me/inter/ — paquet Linux « fonts-inter ».
+  regulier: ["Inter-Regular.otf", "Inter-Regular.ttf", "DejaVuSans.ttf", "Arial.ttf"]
+  gras: ["Inter-Bold.otf", "Inter-Bold.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"]
+  noir: ["Inter-Black.otf", "Inter-Black.ttf", "Inter-Bold.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
+formats:
+  video: {largeur: 1080, hauteur: 1920, fps: 30}
+  carrousel: {largeur: 1080, hauteur: 1350}
+# Zones de sécurité vidéo (pixels) : l'interface TikTok / Reels / Shorts
+# recouvre le bas et la droite de l'écran.
+zones_securite_video: {haut: 250, bas: 420, gauche: 90, droite: 150}
+marges_carrousel: {haut: 150, bas: 150, gauche: 100, droite: 100}
