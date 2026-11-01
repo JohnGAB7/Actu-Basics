@@ -1,0 +1,49 @@
+# Configuration de la voix off. Aucune clé ici : les clés vont dans .env (local) ou les secrets GitHub.
+#
+# Fournisseur utilisé par défaut. Peut être remplacé à la volée :
+#   python production/produire.py FICHE --voix openai
+#   ou variable d'environnement LMEC_TTS=elevenlabs
+fournisseur: piper          # piper | openai | elevenlabs | manuel | test
+
+voix:
+  fr:
+    piper:
+      modele: fr-siwis-medium.onnx        # voix féminine, licence CC BY 4.0
+      lenteur: 1.05                       # > 1 = plus lent
+    openai:
+      modele: gpt-4o-mini-tts
+      voix: nova
+      consignes: "Voix de journaliste française, posée et claire. Articule les nombres."
+    elevenlabs:
+      voice_id: ""                        # à choisir dans la bibliothèque ElevenLabs
+      modele: eleven_multilingual_v2
+      reglages: {stability: 0.5, similarity_boost: 0.75}
+  en:
+    piper:
+      modele: en-us-libritts-high.onnx    # 904 locuteurs, licence CC BY 4.0
+      locuteur: 0                         # numéro du locuteur (0 à 903) : à choisir à l'oreille
+      lenteur: 1.0
+    openai:
+      modele: gpt-4o-mini-tts
+      voix: onyx
+      consignes: "Calm, clear news-explainer voice. Articulate numbers."
+    elevenlabs:
+      voice_id: ""
+      modele: eleven_multilingual_v2
+      reglages: {stability: 0.5, similarity_boost: 0.75}
+
+# Lexique de prononciation : appliqué UNIQUEMENT au texte envoyé à la synthèse,
+# jamais aux sous-titres ni aux images. Mot entier, sensible à la casse.
+prononciation:
+  fr:
+    ONU: "Onu"
+    DESA: "Désa"
+  en:
+    UN: "U.N."
+    DESA: "Desa"
+    mid-2080s: "mid twenty-eighties"
+
+# Modèles Piper téléchargeables (python production/telecharger_voix.py).
+piper_telechargements:
+  fr-siwis-medium.onnx: https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-fr-siwis-medium.tar.gz
+  en-us-libritts-high.onnx: https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-en-us-libritts-high.tar.gz

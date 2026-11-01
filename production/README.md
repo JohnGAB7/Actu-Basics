@@ -3,16 +3,22 @@
 Transforme une fiche de contenu (`contenus/fiches/*.yaml`) en fichiers prêts à publier, en français et en anglais.
 
 ```bash
-pip install -r production/requirements.txt   # + ffmpeg et la police Inter installés sur la machine
-python production/produire.py contenus/exemples/exemple-fictif.yaml --brouillon-autorise
+pip install -r production/requirements.txt -r production/requirements-voix.txt   # + ffmpeg et la police Inter
+python production/telecharger_voix.py
+python production/produire.py contenus/exemples/exemple-fictif.yaml               # aperçu
+python production/produire.py contenus/fiches/<fiche>.yaml --mode final           # fichiers à publier
 ```
+
+Guide sans code : [`docs/technique/guide-quotidien.md`](../docs/technique/guide-quotidien.md).
 
 Résultat dans `sortie/<id>/` :
 
 ```
 rapport-qc.md                 contrôles automatiques + checklist humaine
 fr/ et en/
-  video.mp4                   1080×1920, H.264/AAC, 30 i/s
+  video.mp4                   1080×1920, H.264/AAC, 30 i/s, avec voix
+  narration.wav               voix seule
+  inspection/                 planche vidéo, aperçu mobile, zones des plateformes
   miniature.jpg
   carrousel/01-….png …        1080×1350
   apercu-carrousel.png        toutes les diapositives sur une image
@@ -30,7 +36,11 @@ fr/ et en/
 | `lmec/carrousel.py` | Images du carrousel et planche d'aperçu |
 | `lmec/video.py` | Durées, animation, encodage ffmpeg |
 | `lmec/textes.py` | Sous-titres, script de voix off, légendes, métadonnées |
-| `lmec/qc.py` | Contrôles qualité et rapport |
+| `lmec/qc.py` | Contrôles qualité (bloquants, avertissements, contrôles humains) et rapport |
+| `lmec/tts.py` | Fournisseurs de voix interchangeables, cache |
+| `lmec/narration.py` | Phrases → voix → durées de scènes → piste audio et repères de sous-titres |
+| `lmec/inspection.py` | Images d'inspection extraites de la vidéo encodée |
+| `tts.yaml` / `plateformes.yaml` | Voix ; limites des plateformes avec leurs références officielles et dates de vérification (modifiables sans code) |
 | `charte.yaml` | Couleurs, polices, formats, zones de sécurité (modifiable sans code) |
 
 Documentation : [`docs/technique/`](../docs/technique/architecture.md).

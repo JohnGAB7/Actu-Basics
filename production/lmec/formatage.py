@@ -8,7 +8,7 @@ ESPACE_MILLIERS = "\u00a0"  # insécable normale : la fine est trop étroite en 
 def _texte_langue(valeur, langue: str) -> str:
     """Accepte soit une chaîne, soit un dictionnaire {fr: ..., en: ...}."""
     if isinstance(valeur, dict):
-        return str(valeur.get(langue, ""))
+        valeur = valeur.get(langue)
     return "" if valeur is None else str(valeur)
 
 

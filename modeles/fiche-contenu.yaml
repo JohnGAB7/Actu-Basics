@@ -30,7 +30,7 @@ contexte:                           # chaîne commune ou {fr: ..., en: ...}
   definition: {fr: "", en: ""}      # définition exacte de l'indicateur
 
 sources:
-  - nom: ""                         # ex. "ONU, World Population Prospects 2024"
+  - nom: ""                         # ex. "ONU, World Population Prospects 2024" ou {fr: "...", en: "..."}
     url: "https://"
     publication: ""                 # facultatif : année ou édition
     date_consultation: ""           # AAAA-MM-JJ
@@ -49,7 +49,8 @@ editions:
     legende: |                      # la source, la période et les hashtags sont ajoutés automatiquement
 
     hashtags: []                    # 3 à 5 conseillés, ex. [demographie, données]
-    audio: null                     # facultatif : chemin relatif vers la voix off, ex. audio/sujet-fr.mp3
+    narration: true                 # false = vidéo sans voix (choix éditorial explicite, signalé dans le rapport)
+    audio: null                     # mode --voix manuel : dossier des enregistrements (01.mp3, 02.mp3…) ; défaut audio/<id>/fr
     # Mise en valeur : entourer un ou plusieurs mots d'astérisques, ex. "va *bientôt arrêter* de grimper"
     # (bandeau jaune dans l'accroche, texte jaune ailleurs ; retiré des sous-titres et de la voix).
     scenes:                         # 5 à 7 scènes ≈ 20–40 s ; types : accroche | chiffre | texte | graphique | source | fin
@@ -70,6 +71,7 @@ editions:
     legende: |
 
     hashtags: []
+    narration: true
     audio: null
     scenes:
       - {type: accroche, texte: ""}

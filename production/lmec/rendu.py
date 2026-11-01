@@ -121,6 +121,7 @@ class Rendu:
         self.c = {k: _rgb(v) for k, v in charte["couleurs"].items()}
         self.chemins_polices = {style: trouver_police(c) for style, c in charte["polices"].items()}
         self.alertes: list[str] = []  # débordements de texte etc. -> rapport QC
+        self.tailles: dict[str, int] = {}  # plus petite taille de police par type de scène
         self.lib = LIBELLES[langue]
         # Nombre de décimales figé sur la valeur finale (pour l'animation du compteur).
         ch = dict(fiche.chiffre)
@@ -205,6 +206,8 @@ class Rendu:
             if (h <= hauteur and not trop_large) or taille <= taille_min:
                 if h > hauteur or trop_large:
                     self.alertes.append(f"Texte trop long ({contexte}) : « {texte[:50]}… »")
+                cle = contexte.split()[-1] if contexte else "?"
+                self.tailles[cle] = min(self.tailles.get(cle, 10_000), taille)
                 return police, lignes, pas, h
             taille -= 4
 
@@ -269,7 +272,7 @@ class Rendu:
         p = self.police("gras", 30)
         d.rectangle((g, h + 4, g + 14, h + 34), fill=self.c["accent"])
         d.text((g + 30, h), marque, font=p, fill=self.c["texte"])
-        noms = ", ".join(s["nom"] for s in self.fiche.sources)
+        noms = ", ".join(_texte_langue(s["nom"], self.langue) for s in self.fiche.sources)
         pied = typographie(f"{self.lib['source']} : {noms}" if self.langue == "fr"
                            else f"{self.lib['source']}: {noms}", self.langue)
         pp = self.police("regulier", 26)
@@ -451,7 +454,7 @@ class Rendu:
                           self.c["texte"]))
         blocs.append(("noir", 44, self.lib["sources"] + deux_points, self.c["accent"]))
         for s in self.fiche.sources:
-            ligne = s["nom"] + (f" ({s['publication']})" if s.get("publication") else "")
+            ligne = _texte_langue(s["nom"], self.langue) + (f" ({s['publication']})" if s.get("publication") else "")
             blocs.append(("gras", 40, ligne, self.c["texte"]))
         for cle in ("periode", "perimetre", "definition"):
             val = self.fiche.contexte(cle, self.langue)

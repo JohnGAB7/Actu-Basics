@@ -1,0 +1,92 @@
+# APERÇU — à chaque modification d'une fiche ou du code.
+# Accepte les brouillons : tout rendu qui a une erreur bloquante porte le filigrane
+# « BROUILLON · NON VALIDÉ ». Ces fichiers ne sont JAMAIS à publier.
+# Voix : Piper (gratuite, locale). Aucune clé d'API n'est utilisée ici.
+name: Aperçu des contenus
+
+on:
+  push:
+    paths: ["contenus/**", "production/**", ".github/workflows/apercu.yml"]
+  pull_request:
+    paths: ["contenus/**", "production/**", ".github/workflows/apercu.yml"]
+  workflow_dispatch:
+    inputs:
+      fiche:
+        description: "Chemin d'une fiche (vide = toutes les fiches de contenus/fiches/)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  apercu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: production/requirements*.txt
+
+      - name: Outils système (ffmpeg, police Inter)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-inter
+
+      - name: Dépendances Python
+        run: pip install -r production/requirements.txt -r production/requirements-voix.txt pytest
+
+      - name: Tests
+        run: python -m pytest production/tests -q
+
+      - name: Modèles de voix (cache)
+        uses: actions/cache@v4
+        with:
+          path: production/voix
+          key: voix-${{ hashFiles('production/tts.yaml') }}
+
+      - name: Téléchargement des voix manquantes
+        run: python production/telecharger_voix.py
+
+      # Cache des phrases déjà synthétisées. Chaque fichier est nommé par l'empreinte
+      # (voix + configuration complète + texte exact) : un texte ou une voix modifiés ne
+      # réutilisent jamais un ancien audio. La clé change à chaque exécution pour que le
+      # cache s'enrichisse ; restore-keys reprend le plus récent.
+      - name: Cache des voix déjà synthétisées (restauration)
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache-tts
+          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: tts-piper-
+
+      - name: Rendu d'aperçu
+        env:
+          FICHE_DEMANDEE: ${{ github.event.inputs.fiche }}
+        run: |
+          if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
+          [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
+          python production/produire.py $FICHES --mode apercu --voix piper
+
+      - name: Cache des voix déjà synthétisées (sauvegarde)
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache-tts
+          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Résumé lisible dans GitHub
+        if: always()
+        run: |
+          echo "> ⚠️ Rendu d'**aperçu** : à relire, jamais à publier. Fichiers à publier = workflow « Validation finale »." >> "$GITHUB_STEP_SUMMARY"
+          if [ -f sortie/resume.md ]; then cat sortie/resume.md >> "$GITHUB_STEP_SUMMARY"; else echo "Aucun résumé produit." >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: apercu-${{ github.run_number }}
+          path: sortie/
+          retention-days: 14

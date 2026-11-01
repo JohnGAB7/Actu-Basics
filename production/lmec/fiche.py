@@ -1,10 +1,14 @@
 """Chargement et validation d'une fiche de contenu (YAML).
 
 La fiche est le contrat entre l'éditorial (ChatGPT + propriétaire) et la
-production. Ce module vérifie sa structure ; il ne juge jamais le fond.
+production. Ce module vérifie qu'elle est exploitable (structure, types,
+champs réellement renseignés). Les contrôles de cohérence sont dans qc.py.
+Aucun module ne vérifie la véracité d'un chiffre : c'est un contrôle humain.
 """
 from __future__ import annotations
 
+import datetime as dt
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -12,6 +16,9 @@ import yaml
 
 LANGUES = ("fr", "en")
 TYPES_SCENE = ("accroche", "chiffre", "texte", "graphique", "source", "fin")
+STATUTS = ("brouillon", "valide")
+# Valeurs laissées par le modèle qui ne comptent pas comme « renseignées ».
+VALEURS_VIDES = {"", "https://", "http://", "AAAA-MM-JJ", "AAAA-MM-JJ-sujet-court"}
 
 
 class FicheInvalide(Exception):
@@ -34,6 +41,7 @@ class Edition:
     hashtags: list[str]
     scenes: list[Scene]
     audio: str | None = None
+    narration: bool = True  # False = choix éditorial explicite d'une vidéo sans voix
 
 
 @dataclass
@@ -51,93 +59,234 @@ class Fiche:
     sources: list[dict]
     donnees: dict | None
     editions: dict[str, Edition] = field(default_factory=dict)
+    brut: dict = field(default_factory=dict, repr=False)
 
     def contexte(self, cle: str, langue: str) -> str:
         """periode / perimetre / definition : chaîne commune ou {fr: ..., en: ...}."""
         valeur = getattr(self, cle)
-        return str(valeur.get(langue, "")) if isinstance(valeur, dict) else str(valeur)
+        if isinstance(valeur, dict):
+            valeur = valeur.get(langue)
+        return "" if valeur is None else str(valeur)
 
     @property
     def est_validee(self) -> bool:
         return self.statut == "valide" and bool(self.valide_par)
 
 
-def _exiger(dico: dict, cle: str, contexte: str, erreurs: list[str]):
+def _vide(valeur) -> bool:
+    return valeur is None or valeur == [] or valeur == {} or (
+        isinstance(valeur, str) and valeur.strip() in VALEURS_VIDES)
+
+
+def _exiger(dico, cle: str, contexte: str, erreurs: list[str]):
     valeur = dico.get(cle) if isinstance(dico, dict) else None
-    if valeur in (None, "", []):
+    if _vide(valeur):
         erreurs.append(f"{contexte} : champ « {cle} » manquant ou vide")
+        return None
     return valeur
 
 
+def _nom_type(valeur) -> str:
+    return {dict: "un dictionnaire", list: "une liste", str: "un texte", bool: "un booléen (oui/non)",
+            int: "un nombre", float: "un nombre"}.get(type(valeur), type(valeur).__name__)
+
+
+def _dict(valeur, contexte: str, erreurs: list[str]) -> dict:
+    """Un bloc qui doit être un dictionnaire (clé: valeur). Sinon : erreur explicite et {}."""
+    if valeur is None:
+        return {}
+    if not isinstance(valeur, dict):
+        erreurs.append(f"{contexte} doit être un bloc « clé: valeur », pas {_nom_type(valeur)}")
+        return {}
+    return valeur
+
+
+def _liste(valeur, contexte: str, erreurs: list[str]) -> list:
+    if valeur is None:
+        return []
+    if not isinstance(valeur, list):
+        erreurs.append(f"{contexte} doit être une liste (lignes commençant par « - »), pas {_nom_type(valeur)}")
+        return []
+    return valeur
+
+
+def _est_nombre(v) -> bool:
+    """Vrai nombre fini : refuse les booléens, NaN (.nan) et l'infini (.inf) que YAML sait lire."""
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+
+
+def _texte(valeur, contexte: str, erreurs: list[str], bilingue: bool = True):
+    """Texte simple ou, si `bilingue`, {fr: …, en: …}. Les nombres et dates sont acceptés comme texte."""
+    if valeur is None:
+        return valeur
+    if isinstance(valeur, (str, int, float, dt.date)) and not isinstance(valeur, bool):
+        return valeur
+    if bilingue and isinstance(valeur, dict):
+        inconnues = sorted(set(map(str, valeur)) - set(LANGUES))
+        if inconnues:
+            erreurs.append(f"{contexte} : langue(s) inconnue(s) {inconnues} (attendu : fr, en)")
+        for l in LANGUES:
+            v = valeur.get(l)
+            if v is not None and (isinstance(v, (dict, list, bool))):
+                erreurs.append(f"{contexte}.{l} doit être un texte, pas {_nom_type(v)}")
+        return valeur
+    attendu = "un texte ou {fr: …, en: …}" if bilingue else "un texte"
+    erreurs.append(f"{contexte} doit être {attendu}, pas {_nom_type(valeur)}")
+    return None
+
+
 def charger_fiche(chemin: str | Path) -> Fiche:
+    """Charge une fiche. Toute anomalie lève FicheInvalide avec la liste des problèmes, jamais
+    une exception Python brute."""
     chemin = Path(chemin)
     try:
         brut = yaml.safe_load(chemin.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise FicheInvalide(f"Fichier introuvable : {chemin}") from exc
+    except UnicodeDecodeError as exc:
+        raise FicheInvalide("Fichier illisible : il doit être enregistré en UTF-8") from exc
     except yaml.YAMLError as exc:
-        raise FicheInvalide(f"YAML illisible : {exc}") from exc
+        position = getattr(exc, "problem_mark", None)
+        ou = f" (ligne {position.line + 1}, colonne {position.column + 1})" if position else ""
+        raise FicheInvalide(f"YAML illisible{ou} : vérifier l'indentation, les deux-points et les guillemets. "
+                            f"Détail : {getattr(exc, 'problem', None) or exc}") from exc
     if not isinstance(brut, dict):
-        raise FicheInvalide("La fiche doit être un dictionnaire YAML")
+        raise FicheInvalide("La fiche doit être un dictionnaire YAML (une suite de « clé: valeur »)"
+                            + (" ; le fichier est vide" if brut is None else ""))
+    try:
+        return _construire(chemin, brut)
+    except FicheInvalide:
+        raise
+    except Exception as exc:  # filet de sécurité : un cas non prévu reste une erreur lisible
+        raise FicheInvalide(f"- Structure inattendue ({type(exc).__name__} : {exc}). Comparer la fiche avec "
+                            "modeles/fiche-contenu.yaml.") from exc
 
+
+def _construire(chemin: Path, brut: dict) -> Fiche:
     erreurs: list[str] = []
     ident = _exiger(brut, "id", "fiche", erreurs)
-    validation = brut.get("validation") or {}
-    chiffre = _exiger(brut, "chiffre_cle", "fiche", erreurs) or {}
+    if ident is not None and not isinstance(ident, str):
+        ident = str(ident)
+    _texte(brut.get("theme"), "theme", erreurs, bilingue=False)
+    validation = _dict(brut.get("validation"), "validation", erreurs)
+    for cle in ("statut", "valide_par", "date"):
+        _texte(validation.get(cle), f"validation.{cle}", erreurs, bilingue=False)
+
+    chiffre = _dict(_exiger(brut, "chiffre_cle", "fiche", erreurs), "chiffre_cle", erreurs)
     if chiffre:
-        _exiger(chiffre, "valeur", "chiffre_cle", erreurs)
-        if not isinstance(chiffre.get("valeur", 0), (int, float)):
-            erreurs.append("chiffre_cle.valeur doit être un nombre (sans unité ni espace)")
-    contexte = brut.get("contexte") or {}
+        v = _exiger(chiffre, "valeur", "chiffre_cle", erreurs)
+        if v is not None and not _est_nombre(v):
+            erreurs.append(f"chiffre_cle.valeur doit être un nombre fini (sans unité, ni espace, ni .nan/.inf), "
+                           f"pas « {v} »")
+        for cle in ("unite", "suffixe", "prefixe"):
+            _texte(chiffre.get(cle), f"chiffre_cle.{cle}", erreurs)
+        d = chiffre.get("decimales")
+        if d is not None and (not isinstance(d, int) or isinstance(d, bool) or not 0 <= d <= 6):
+            erreurs.append("chiffre_cle.decimales doit être un nombre entier entre 0 et 6")
+
+    contexte = _dict(brut.get("contexte"), "contexte", erreurs)
     for cle in ("periode", "perimetre", "definition"):
-        _exiger(contexte, cle, "contexte", erreurs)
-    sources = _exiger(brut, "sources", "fiche", erreurs) or []
+        _texte(_exiger(contexte, cle, "contexte", erreurs), f"contexte.{cle}", erreurs)
+
+    sources = _liste(_exiger(brut, "sources", "fiche", erreurs), "sources", erreurs)
     for i, src in enumerate(sources):
-        _exiger(src, "nom", f"sources[{i}]", erreurs)
-        _exiger(src, "url", f"sources[{i}]", erreurs)
+        if not isinstance(src, dict):
+            erreurs.append(f"sources[{i}] doit être un bloc avec « nom » et « url », pas {_nom_type(src)}")
+            continue
+        _texte(_exiger(src, "nom", f"sources[{i}]", erreurs), f"sources[{i}].nom", erreurs)
+        url = _exiger(src, "url", f"sources[{i}]", erreurs)
+        if url is not None and not isinstance(url, str):
+            erreurs.append(f"sources[{i}].url doit être un texte")
+        for cle in ("publication", "date_consultation"):
+            _texte(src.get(cle), f"sources[{i}].{cle}", erreurs, bilingue=False)
 
     donnees = brut.get("donnees")
+    if donnees is not None:
+        donnees = _dict(donnees, "donnees", erreurs) or None
     if donnees:
-        points = donnees.get("points") or []
+        _texte(donnees.get("unite"), "donnees.unite", erreurs)
+        d = donnees.get("decimales")
+        if d is not None and (not isinstance(d, int) or isinstance(d, bool) or not 0 <= d <= 6):
+            erreurs.append("donnees.decimales doit être un nombre entier entre 0 et 6")
+        points = _liste(donnees.get("points"), "donnees.points", erreurs)
         if not points:
             erreurs.append("donnees : « points » manquant")
         for i, p in enumerate(points):
-            if not isinstance(p.get("valeur"), (int, float)):
-                erreurs.append(f"donnees.points[{i}].valeur doit être un nombre")
+            if not isinstance(p, dict):
+                erreurs.append(f"donnees.points[{i}] doit être un bloc {{label: …, valeur: …}}, pas {_nom_type(p)}")
+                continue
+            if not _est_nombre(p.get("valeur")):
+                erreurs.append(f"donnees.points[{i}].valeur doit être un nombre fini (ni .nan ni .inf)")
+            if _vide(p.get("label")):
+                erreurs.append(f"donnees.points[{i}] : champ « label » manquant ou vide")
+            else:
+                _texte(p.get("label"), f"donnees.points[{i}].label", erreurs)
+            if not isinstance(p.get("mis_en_avant", False), bool):
+                erreurs.append(f"donnees.points[{i}].mis_en_avant doit valoir true ou false")
 
     editions: dict[str, Edition] = {}
-    brut_editions = brut.get("editions") or {}
+    brut_editions = _dict(brut.get("editions"), "editions", erreurs)
     for langue in LANGUES:
-        ed = brut_editions.get(langue)
         ctx = f"editions.{langue}"
+        ed = brut_editions.get(langue)
         if not ed:
             erreurs.append(f"{ctx} : édition manquante (FR et EN sont obligatoires)")
             continue
-        titre = _exiger(ed, "titre", ctx, erreurs)
-        legende = _exiger(ed, "legende", ctx, erreurs)
-        scenes_brutes = _exiger(ed, "scenes", ctx, erreurs) or []
+        ed = _dict(ed, ctx, erreurs)
+        if not ed:
+            continue
+        titre = _texte(_exiger(ed, "titre", ctx, erreurs), f"{ctx}.titre", erreurs, bilingue=False)
+        legende = _texte(_exiger(ed, "legende", ctx, erreurs), f"{ctx}.legende", erreurs, bilingue=False)
+        hashtags = []
+        for h in _liste(ed.get("hashtags"), f"{ctx}.hashtags", erreurs):
+            if isinstance(h, (dict, list, bool)) or h is None:
+                erreurs.append(f"{ctx}.hashtags : « {h} » n'est pas un mot-clé")
+                continue
+            h = str(h).strip()
+            hashtags.append(h if h.startswith("#") else f"#{h}")
+        narration = ed.get("narration", True)
+        if not isinstance(narration, bool):
+            erreurs.append(f"{ctx}.narration doit valoir true ou false")
+        audio = ed.get("audio")
+        if audio is not None and not isinstance(audio, str):
+            erreurs.append(f"{ctx}.audio doit être un chemin de dossier (texte)")
         scenes = []
-        for i, s in enumerate(scenes_brutes):
-            t = (s or {}).get("type")
+        for i, s in enumerate(_liste(_exiger(ed, "scenes", ctx, erreurs), f"{ctx}.scenes", erreurs)):
+            if not isinstance(s, dict):
+                erreurs.append(f"{ctx}.scenes[{i}] doit être un bloc {{type: …, texte: …}}, pas {_nom_type(s)}")
+                continue
+            t = s.get("type")
             if t not in TYPES_SCENE:
                 erreurs.append(f"{ctx}.scenes[{i}] : type « {t} » inconnu ({', '.join(TYPES_SCENE)})")
                 continue
             if t == "graphique" and not donnees:
                 erreurs.append(f"{ctx}.scenes[{i}] : scène graphique sans bloc « donnees »")
-            scenes.append(Scene(type=t, texte=str(s.get("texte", "")).strip(),
-                                voix_off=str(s.get("voix_off", "")).strip(),
-                                duree=s.get("duree")))
+            texte = _texte(s.get("texte"), f"{ctx}.scenes[{i}].texte", erreurs, bilingue=False)
+            voix = _texte(s.get("voix_off"), f"{ctx}.scenes[{i}].voix_off", erreurs, bilingue=False)
+            if t != "source" and not str(texte or "").strip():
+                erreurs.append(f"{ctx}.scenes[{i}] ({t}) : texte vide")
+            duree = s.get("duree")
+            if duree is not None and (not _est_nombre(duree) or not 0.5 <= duree <= 60):
+                erreurs.append(f"{ctx}.scenes[{i}].duree doit être un nombre de secondes entre 0,5 et 60")
+                duree = None
+            scenes.append(Scene(type=t, texte=str(texte or "").strip(), voix_off=str(voix or "").strip(),
+                                duree=duree))
         editions[langue] = Edition(
-            langue=langue, titre=str(titre or ""), legende=str(legende or "").strip(),
-            hashtags=[h if h.startswith("#") else f"#{h}" for h in (ed.get("hashtags") or [])],
-            scenes=scenes, audio=ed.get("audio"))
+            langue=langue, titre=str(titre or ""), legende=str(legende or "").strip(), hashtags=hashtags,
+            scenes=scenes, audio=audio if isinstance(audio, str) else None, narration=narration is not False)
+
+    statut = str(validation.get("statut") or "brouillon").strip()
+    if statut not in STATUTS:
+        erreurs.append(f"validation.statut « {statut} » inconnu ({' | '.join(STATUTS)})")
 
     if erreurs:
-        raise FicheInvalide("\n".join(f"- {e}" for e in erreurs))
+        raise FicheInvalide("\n".join(f"- {e}" for e in dict.fromkeys(erreurs)))
 
     return Fiche(
-        chemin=chemin, id=str(ident), theme=str(brut.get("theme", "")),
-        statut=str(validation.get("statut", "brouillon")),
+        chemin=chemin, id=str(ident), theme=str(brut.get("theme") or ""),
+        statut=statut,
         valide_par=str(validation.get("valide_par") or ""),
         date_validation=str(validation.get("date") or ""),
         chiffre=chiffre, periode=contexte["periode"],
         perimetre=contexte["perimetre"], definition=contexte["definition"],
-        sources=sources, donnees=donnees, editions=editions)
+        sources=sources, donnees=donnees, editions=editions, brut=brut)
