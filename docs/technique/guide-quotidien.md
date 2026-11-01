@@ -35,6 +35,7 @@ resume.md                          résumé (identique à celui affiché dans Gi
   inspection/planche-video.png     chaque scène en cours d'animation puis à l'état final
   inspection/apercu-mobile.png     taille réelle d'un téléphone
   inspection/zones-*.png           interface TikTok / Reels / Shorts simulée en rouge
+  inspection/logo-mobile.png       images portant le logo, taille téléphone, zone de protection en vert
 ```
 
 ## 3. Lire le rapport qualité
@@ -61,6 +62,9 @@ resume.md                          résumé (identique à celui affiché dans Gi
 | « Unité du chiffre clé différente entre FR et EN » | Ex. « milliards » en FR, « million » en EN | Corriger la traduction (« milliard » = « billion ») |
 | « Période différente entre FR et EN » | Années différentes dans `contexte.periode` | Aligner les deux langues |
 | « … ne correspond pas au chiffre clé » | Le point mis en avant n'a pas la même valeur, même après conversion d'échelle | Vérifier valeur et unité (décision éditoriale) |
+| « Logo officiel introuvable » | Fichier du logo absent de `assets/brand/actu-basics/` | Déposer le fichier officiel (voir le LISEZMOI du dossier) ; ne jamais le remplacer par une copie retouchée |
+| « Le logo touche un texte ou un graphique » | Position ou taille du logo, ou texte de fin trop long | Changer `logo.position` / `largeur_px` dans `charte.yaml`, ou raccourcir le texte |
+| « Ancien nom ou ancienne signature de la marque » | La fiche contient « un chiffre à la fois », « Le Monde en chiffres »… | Correction éditoriale de la fiche |
 | « Erreur inattendue du programme » | Défaut du programme, pas de la fiche | Transmettre le message à la direction technique |
 | « Fiche non validée (statut « brouillon ») » | Normal avant validation | Étape 4 du §1 |
 | « Statut « valide » mais la date de validation est absente » | `date:` vide | Mettre la date du jour `AAAA-MM-JJ` |

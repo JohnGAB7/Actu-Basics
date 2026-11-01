@@ -1,8 +1,59 @@
 # Charte graphique provisoire (proposition technique, à valider par l'éditorial).
 # Modifier ici les couleurs et polices : aucun changement de code nécessaire.
+# Marque ACTU-BASICS (00_STRATEGY/BRAND_IDENTITY.md). Le nom est le même dans les deux langues.
 marque:
-  fr: "LE MONDE EN CHIFFRES"
-  en: "THE WORLD IN NUMBERS"
+  fr: "ACTU-BASICS"
+  en: "ACTU-BASICS"
+# Slogans officiels : à reproduire EXACTEMENT (un test le vérifie).
+slogan:
+  fr: "Éveiller par les chiffres."
+  en: "Enlightening through numbers."
+
+# Logo officiel (assets/brand/actu-basics/BRAND_GUIDELINES.md). Fichiers d'origine, jamais modifiés :
+# seul un redimensionnement proportionnel est appliqué. S'ils manquent, rien n'est dessiné à leur place
+# et le rendu final est refusé.
+logo:
+  actif: true
+  dossier: assets/brand/actu-basics
+  # Un logo par langue (chacun porte le slogan de sa langue) et par fond. Premier fichier trouvé dans l'ordre.
+  fichiers:
+    fr:
+      clair: [logo-light.webp, logo-light.png]          # sur fond clair
+      sombre: [logo-dark.webp, logo-dark.png]           # sur fond sombre (bleu nuit)
+    en:
+      clair: [logo-light-en.webp, logo-light-en.png]
+      sombre: [logo-dark-en.webp, logo-dark-en.png]
+  variante: auto          # auto (selon la luminosité du fond sous le logo) | clair | sombre
+  zone_protection: 0.08   # espace libre exigé autour du logo, en part de sa largeur
+  # Où et comment le logo apparaît. position : haut_gauche | haut_centre | haut_droite | centre |
+  # bas_gauche | bas_centre | bas_droite. marge_px : retrait supplémentaire DANS la zone de sécurité.
+  # La scène « fin » a une mise en page dédiée (texte, logo, slogan) : position ignorée.
+  video:
+    scenes: [fin]                 # discret : en fin de vidéo seulement
+    largeur_px: 400               # ≈ 145 px sur un téléphone : nom lisible, slogan lisible (≥ 4 px)
+    largeur_min_px: 320
+    slogan: false                 # chaque logo porte déjà le slogan de sa langue
+  carrousel:
+    scenes: [fin]                 # dernière diapositive ; ajouter « accroche » pour la couverture
+    largeur_px: 460
+    largeur_min_px: 360
+    slogan: false                 # chaque logo porte déjà le slogan de sa langue
+    # Pour les scènes autres que « fin » (ex. couverture du carrousel) :
+    position: haut_droite
+    largeur_autres_px: 170
+    marge_px: 0
+  # Lisibilité sur téléphone (écran de 390 px de large). Hauteur des lettres de chaque logo, en part de
+  # sa largeur, mesurée sur les fichiers officiels : à remesurer si un logo change.
+  lisibilite:
+    fr: {nom: 0.110, slogan: 0.036}
+    en: {nom: 0.105, slogan: 0.028}
+    nom_min_px: 8                 # « ACTU-BASICS » reconnaissable
+    slogan_min_px: 4              # slogan du logo lisible (fin de vidéo et de carrousel)
+  couverture:                     # miniature.jpg (première image de la vidéo)
+    actif: true
+    position: haut_droite
+    largeur_px: 260
+    marge_px: 0
 couleurs:
   fond: "#0B1526"        # bleu nuit (haut de l'image)
   fond_bas: "#14284A"    # bas du dégradé

@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 
 from .fiche import Fiche, LANGUES
 from .formatage import _texte_langue
+from . import logo as _logo
 
 BLOQUANT, AVERTISSEMENT = "bloquant", "avertissement"
 SCENES_OBLIGATOIRES = ("accroche", "chiffre", "source", "fin")
@@ -181,6 +182,11 @@ def controler_editions(fiche: Fiche, r: Rapport) -> None:
                    f"Astérisque non fermé : « {impairs[0][:50] if impairs else ''} »", BLOQUANT, langue)
         if not ed.narration:
             r.avertir("Vidéo sans voix par choix éditorial (narration: false)", langue)
+        anciens = sorted({a for t in _textes_edition(ed) for a in _logo.ANCIENNES_SIGNATURES if a in t.lower()})
+        r.verifier(not anciens, "Aucun ancien nom ni ancienne signature de la marque",
+                   f"Ancien nom ou ancienne signature de la marque dans les textes ({', '.join(anciens)}) : "
+                   f"la marque est ACTU-BASICS, slogan « {_logo.SLOGANS_OFFICIELS[langue]} » "
+                   "(correction éditoriale)", AVERTISSEMENT, langue)
 
     nb = {l: len(e.scenes) for l, e in fiche.editions.items()}
     r.verifier(len(set(nb.values())) == 1, "FR et EN ont le même nombre de scènes",
@@ -463,6 +469,88 @@ def controler_plateformes(langue: str, duree: float, legende: str, titre: str, n
             r.avertir(f"{nom} : la zone de texte empiète sur l'interface ({', '.join(cote)})", langue)
             notes.append("⚠️ zone de sécurité")
         r.plateformes.append([langue.upper(), nom, f"{duree:.1f} s", "✅" if not notes else " ; ".join(notes)])
+
+
+def controler_marque(charte: dict, r: Rapport) -> None:
+    """Avant tout rendu : fichiers du logo présents et slogans exacts (le mode final refuse sinon)."""
+    for langue in LANGUES:
+        logos = _logo.charger_logos(charte.get("logo"), langue)
+        if not logos.actif:
+            if langue == LANGUES[0]:
+                r.avertir("Logo désactivé dans production/charte.yaml (logo.actif: false)")
+            continue
+        for m in logos.manquants:
+            r.bloquant(f"Logo officiel introuvable : {m}. Aucun logo de substitution n'est dessiné ; déposer le "
+                       "fichier d'origine (voir assets/brand/actu-basics/LISEZMOI.md)")
+        if not logos.manquants:
+            r.ok.append(f"Logo officiel {langue.upper()} présent : " + ", ".join(
+                f"{v} = {c.name}" for v, c in logos.chemins.items()))
+    for langue in LANGUES:
+        slogan = (charte.get("slogan") or {}).get(langue, "")
+        r.verifier(slogan == _logo.SLOGANS_OFFICIELS[langue], f"Slogan {langue.upper()} conforme à la marque",
+                   f"Slogan {langue.upper()} « {slogan} » différent du slogan officiel "
+                   f"« {_logo.SLOGANS_OFFICIELS[langue]} » (production/charte.yaml)", BLOQUANT)
+
+
+def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], charte: dict,
+                   plateformes: dict, r: Rapport) -> None:
+    """Logo officiel : présent, variante adaptée au fond, net, dégagé, dans les zones de sécurité.
+
+    attendus : (support, index, type de scène) des images qui doivent porter le logo.
+    """
+    logos = rendu.logos
+    if not logos.actif or not logos.images:
+        return  # signalé avant le rendu par controler_marque
+    r.verifier(logos.langue == langue, f"[{langue}] Logo de la bonne langue",
+               f"[{langue}] Logo de la langue « {logos.langue} » utilisé pour la version {langue.upper()}", BLOQUANT)
+    noms = {"video": "vidéo", "carrousel": "carrousel", "couverture": "couverture"}
+    zone_c = charte["marges_carrousel"]
+    for support, index, type_ in attendus:
+        pose = rendu.poses.get((support, index))
+        lieu = f"{noms[support]}, scène {index + 1} ({type_})"
+        if pose is None:
+            r.bloquant(f"Logo absent ({lieu}) alors que la charte le prévoit", langue)
+            continue
+        x0, y0, x1, y1 = pose.boite
+        w, h = rendu.largeur, rendu.hauteur
+        if x0 < 0 or y0 < 0 or x1 > w or y1 > h:
+            r.bloquant(f"Logo coupé par le bord de l'image ({lieu})", langue)
+        attendue = _logo.choisir_variante(pose.luminance_fond)
+        if pose.variante != attendue:
+            r.bloquant(f"Logo {pose.variante} sur un fond {'clair' if attendue == 'clair' else 'sombre'} "
+                       f"({lieu}) : utiliser la variante {attendue}", langue)
+        if pose.recouvrement > _logo.SEUIL_RECOUVREMENT:
+            r.bloquant(f"Le logo touche un texte ou un graphique ({lieu} : {pose.recouvrement:.0%} de sa zone "
+                       "de protection occupée)", langue)
+        if pose.largeur > pose.largeur_native:
+            r.avertir(f"Logo agrandi au-delà de sa résolution ({pose.largeur} px pour un fichier de "
+                      f"{pose.largeur_native} px, {lieu}) : risque de flou, fournir un fichier plus grand", langue)
+        if pose.largeur * 390 / w < _logo.LARGEUR_MOBILE_MIN:
+            r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * 390 / w)} px à l'écran, {lieu})", langue)
+        lis = (charte.get("logo") or {}).get("lisibilite") or {}
+        if lis.get(langue):
+            ecran = pose.largeur * 390 / w
+            nom, slogan = ecran * lis[langue]["nom"], ecran * lis[langue]["slogan"]
+            if nom < lis.get("nom_min_px", 8):
+                r.avertir(f"Nom ACTU-BASICS du logo peu lisible sur téléphone ({nom:.1f} px de haut, {lieu})",
+                          langue)
+            elif support != "couverture" and slogan < lis.get("slogan_min_px", 4):
+                r.avertir(f"Slogan du logo peu lisible sur téléphone ({slogan:.1f} px de haut, {lieu}) : "
+                          "agrandir le logo (largeur_px)", langue)
+        if support == "carrousel":
+            hors = (x0 < zone_c["gauche"] or y0 < zone_c["haut"] or x1 > w - zone_c["droite"]
+                    or y1 > h - zone_c["bas"])
+            if hors:
+                r.avertir(f"Logo hors des marges du carrousel ({lieu})", langue)
+        else:
+            for cle in plateformes["cibles"]:
+                p = plateformes["plateformes"][cle]
+                z = p["zone_ui"]
+                if x0 < z["gauche"] or y0 < z["haut"] or x1 > w - z["droite"] or y1 > h - z["bas"]:
+                    r.avertir(f"{p['nom']} : le logo passe sous l'interface de l'application ({lieu})", langue)
+        r.ok.append(f"[{langue}] Logo {pose.variante} ({lieu}) : {pose.largeur} px, fond "
+                    f"{'clair' if attendue == 'clair' else 'sombre'} (luminance {pose.luminance_fond:.2f}), "
+                    f"zone de protection libre, dans les zones de sécurité")
 
 
 def controler_video(langue: str, sonde: dict, attendu: dict, r: Rapport) -> None:

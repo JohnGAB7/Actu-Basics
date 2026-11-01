@@ -29,9 +29,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lmec.carrousel import planche_apercu, produire_carrousel  # noqa: E402
 from lmec.fiche import LANGUES, FicheInvalide, charger_fiche  # noqa: E402
-from lmec.inspection import produire_inspection  # noqa: E402
+from lmec.inspection import inspection_logo, produire_inspection  # noqa: E402
 from lmec.narration import durees_avec_voix, piste_complete, produire_voix, reperes_sous_titres  # noqa: E402
-from lmec.qc import (Rapport, controler_fiche, controler_lisibilite, controler_longueurs,  # noqa: E402
+from lmec.qc import (Rapport, controler_fiche, controler_lisibilite, controler_logo, controler_longueurs, controler_marque,  # noqa: E402
                      controler_plateformes, controler_video, ecrire_rapport)
 from lmec.rendu import Rendu  # noqa: E402
 from lmec.textes import ecrire_metadonnees, ecrire_script_voix, ecrire_srt, legende_complete  # noqa: E402
@@ -66,6 +66,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
 
     rapport = Rapport()
     controler_fiche(fiche, rapport)
+    controler_marque(charte, rapport)
     if args.verifier:
         _afficher(rapport)
         print("✅ Aucune erreur bloquante" if not rapport.bloquants else
@@ -147,6 +148,8 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
         planche_apercu(images, dossier / "apercu-carrousel.png")
         for a in rendu_c.alertes:
             rapport.avertir(a, langue)
+        controler_logo(langue, rendu_c, [("carrousel", i, s.type) for i, s in enumerate(edition.scenes)
+                                         if rendu_c.logo_prevu(s)], charte, plateformes, rapport)
         reperes = reperes_sous_titres(narration, durees) if narration else None
         ecrire_srt(fiche, edition, durees, dossier / "sous-titres.srt", reperes)
         ecrire_script_voix(fiche, edition, durees, dossier / "script-voix-off.txt", lexique)
@@ -158,15 +161,23 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
             produire_video(rendu_v, edition, durees, piste, dossier / "video.mp4")
             if piste:
                 shutil.copyfile(piste, dossier / "narration.wav")
-            rendu_v.dessiner(edition.scenes[0], 0, len(edition.scenes)).save(dossier / "miniature.jpg", quality=90)
+            rendu_v.dessiner(edition.scenes[0], 0, len(edition.scenes), couverture=True).convert("RGB").save(
+                dossier / "miniature.jpg", quality=90)
             for a in rendu_v.alertes:
                 rapport.avertir(a, langue)
+            attendus = [("video", i, s.type) for i, s in enumerate(edition.scenes) if rendu_v.logo_prevu(s)]
+            if rendu_v.logo_prevu(edition.scenes[0], couverture=True):
+                attendus.append(("couverture", 0, edition.scenes[0].type))
+            controler_logo(langue, rendu_v, attendus, charte, plateformes, rapport)
             controler_video(langue, sonder_video(dossier / "video.mp4"), charte["formats"]["video"], rapport)
             controler_lisibilite(langue, rendu_v.tailles, rapport)
             if not args.sans_inspection:
                 produire_inspection(dossier / "video.mp4", edition.scenes, durees,
                                     [rendu_v.duree_animation(s) for s in edition.scenes],
                                     plateformes, dossier / "inspection")
+                rendu_v.brouillon = rendu_c.brouillon = False   # images d'inspection sans filigrane
+                inspection_logo([rendu_v, rendu_c], edition.scenes, dossier / "inspection")
+                rendu_v.brouillon = rendu_c.brouillon = filigrane
         shutil.rmtree(travail, ignore_errors=True)
         voix_txt = voix_info["fournisseur"] or "aucune"
         lignes_resume.append([langue.upper(), f"{sum(durees):.1f} s", voix_txt, str(len(edition.scenes)),

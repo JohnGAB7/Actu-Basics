@@ -6,9 +6,9 @@ name: Aperçu des contenus
 
 on:
   push:
-    paths: ["contenus/**", "production/**", ".github/workflows/apercu.yml"]
+    paths: ["contenus/**", "production/**", "assets/brand/**", ".github/workflows/apercu.yml"]
   pull_request:
-    paths: ["contenus/**", "production/**", ".github/workflows/apercu.yml"]
+    paths: ["contenus/**", "production/**", "assets/brand/**", ".github/workflows/apercu.yml"]
   workflow_dispatch:
     inputs:
       fiche:

@@ -54,7 +54,7 @@ editions:
       - type: source
         texte: "D'où vient ce chiffre ?"
       - type: fin
-        texte: "Abonnez-vous pour comprendre le monde, un chiffre à la fois."
+        texte: "Abonnez-vous pour comprendre l'actualité par les chiffres."
   en:
     titre: "Sampletown: a city that doesn't exist, in numbers"
     legende: |
@@ -72,4 +72,4 @@ editions:
       - type: source
         texte: "Where does this number come from?"
       - type: fin
-        texte: "Follow to understand the world, one number at a time."
+        texte: "Follow to understand the news through numbers."
