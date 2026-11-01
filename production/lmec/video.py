@@ -1,4 +1,4 @@
-"""Vidéo verticale 1080x1920 : images Pillow envoyées à ffmpeg (H.264 + AAC)."""
+"""Vidéo verticale 1080x1920 ou cours 16:9 1920x1080 : images Pillow envoyées à ffmpeg (H.264 + AAC)."""
 from __future__ import annotations
 
 import json
@@ -13,7 +13,8 @@ from .rendu import Rendu
 
 FONDU_S = 0.25          # fondu enchaîné entre scènes
 HAUTEUR_BARRE = 10      # barre de progression (pixels)
-DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0}
+DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0,
+              "titre": 2.5, "formule": 5.0, "etapes": 4.0, "courbe": 5.0, "exercice": 5.0, "correction": 4.0}
 
 
 def verifier_ffmpeg() -> None:
@@ -44,7 +45,7 @@ def durees_visuelles(edition: Edition, rendu: Rendu | None = None) -> list[float
 def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: Path | None,
                    destination: Path) -> None:
     verifier_ffmpeg()
-    fps = rendu.charte["formats"]["video"]["fps"]
+    fps = rendu.charte["formats"][rendu.format].get("fps", 30)
     total = sum(durees)
     commande = ["ffmpeg", "-y", "-loglevel", "error",
                 "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{rendu.largeur}x{rendu.hauteur}",

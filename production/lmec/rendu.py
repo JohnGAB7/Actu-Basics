@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from .fiche import Fiche, Scene
 from . import logo as _logo
+from .scenes_pedagogiques import ScenesPedagogiques
 from .formatage import ESPACE_MILLIERS, formater_chiffre, formater_nombre, typographie, unite, _texte_langue
 
 RACINE_PRODUCTION = Path(__file__).resolve().parent.parent
@@ -96,7 +97,8 @@ def mots_riches(texte: str) -> list[tuple[str, bool, bool]]:
     morceaux.append((texte[pos:], False))
     precedent = ""
     for contenu, fort in morceaux:
-        colle = (bool(mots) and bool(contenu) and not contenu[0].isspace()
+        # Une espace insécable (« *90 %* ? ») colle aussi la ponctuation au mot mis en valeur.
+        colle = (bool(mots) and bool(contenu) and not _BLANCS.match(contenu[0])
                  and bool(precedent) and not precedent[-1].isspace())
         precedent = contenu or precedent
         for i, w in enumerate(_mots(contenu)):
@@ -109,15 +111,16 @@ DECALAGE_MOT = 0.07
 ENTREE_MOT = 0.25
 
 
-class Rendu:
-    """Dessine les scènes d'une édition (une langue) pour un format donné."""
+class Rendu(ScenesPedagogiques):
+    """Dessine les scènes d'une édition (une langue) pour un format donné (video, carrousel, lecon)."""
 
     def __init__(self, fiche: Fiche, langue: str, charte: dict, format_: str, brouillon: bool):
         self.fiche, self.langue, self.charte, self.format = fiche, langue, charte, format_
         self.brouillon = brouillon
         dims = charte["formats"][format_]
         self.largeur, self.hauteur = dims["largeur"], dims["hauteur"]
-        m = charte["zones_securite_video"] if format_ == "video" else charte["marges_carrousel"]
+        m = {"video": charte["zones_securite_video"], "carrousel": charte["marges_carrousel"],
+             "lecon": charte.get("zones_securite_lecon", charte["marges_carrousel"])}[format_]
         self.zone = (m["gauche"], m["haut"], self.largeur - m["droite"], self.hauteur - m["bas"])
         self.c = {k: _rgb(v) for k, v in charte["couleurs"].items()}
         self.chemins_polices = {style: trouver_police(c) for style, c in charte["polices"].items()}
@@ -125,7 +128,7 @@ class Rendu:
         self.tailles: dict[str, int] = {}  # plus petite taille de police par type de scène
         self.lib = LIBELLES[langue]
         # Nombre de décimales figé sur la valeur finale (pour l'animation du compteur).
-        ch = dict(fiche.chiffre)
+        ch = dict(fiche.chiffre or {"valeur": 0})
         if ch.get("decimales") is None:
             v = float(ch["valeur"])
             ch["decimales"] = 0 if v.is_integer() else min(len(repr(v).split(".")[1]), 3)
@@ -135,6 +138,10 @@ class Rendu:
         self.logos = _logo.charger_logos(charte.get("logo"), langue)
         self.poses: dict[tuple, _logo.Pose] = {}   # logos posés sur les images finales -> contrôle qualité
         self._image: Image.Image | None = None
+        # Début (s, depuis le début de la scène) de chaque phrase prononcée, par scène : les étapes
+        # apparaissent quand la voix les annonce. Renseigné après la narration (produire.py).
+        self.reperes: dict[int, list[float]] = {}
+        self.fins_voix: dict[int, float] = {}
 
     # ------------------------------------------------------------------ logo
     def conf_logo(self, couverture: bool = False) -> dict:
@@ -316,6 +323,8 @@ class Rendu:
             d.rectangle((g, h + 4, g + 14, h + 34), fill=self.c["accent"])
             d.text((g + 30, h), marque, font=p, fill=self.c["texte"])
         noms = ", ".join(_texte_langue(s["nom"], self.langue) for s in self.fiche.sources)
+        if not noms:   # fiche pédagogique sans source : pas de pied de page
+            return self._cadre_numero(d, index, total)
         pied = typographie(f"{self.lib['source']} : {noms}" if self.langue == "fr"
                            else f"{self.lib['source']}: {noms}", self.langue)
         pp = self.police("regulier", 26)
@@ -331,6 +340,13 @@ class Rendu:
                 couleur = self.c["accent"] if k == index else self.c["secondaire"]
                 r = 6 if k == index else 4
                 d.ellipse((cx - r + 6, h + 80 - r, cx + r + 6, h + 80 + r), fill=couleur)
+
+    def _cadre_numero(self, d, index, total):
+        if self.format == "carrousel" and total > 1:
+            g, h, dr, b = self.zone
+            pp = self.police("regulier", 26)
+            num = f"{index + 1}/{total}"
+            d.text((dr - pp.getlength(num), b - 34), num, font=pp, fill=self.c["secondaire"])
 
     def _filigrane(self, image: Image.Image) -> Image.Image:
         calque = Image.new("RGBA", (self.largeur * 2, 200), (0, 0, 0, 0))
@@ -354,10 +370,12 @@ class Rendu:
     def duree_animation(self, scene: Scene) -> float:
         """Temps (s) après lequel l'image de la scène ne bouge plus."""
         n = len(mots_riches(scene.texte))
+        if scene.type in self.TYPES_PEDAGOGIQUES:
+            return self.duree_animation_pedagogique(scene, n)
         return {
             "accroche": 0.15 + n * DECALAGE_MOT + ENTREE_MOT,
             "texte": 0.1 + n * self._decalage_texte(scene) + ENTREE_MOT,
-            "chiffre": max(1.9, 1.0 + n * 0.04 + ENTREE_MOT),
+            "chiffre": max(1.9, 1.0 + n * 0.04 + ENTREE_MOT) + (0.6 if scene.extra.get("valeur") is not None else 0),
             "graphique": 0.4 + len(self.fiche.donnees["points"]) * 0.15 + 1.0 if self.fiche.donnees else 0,
             "source": 1.2,
             "fin": 0.1 + n * DECALAGE_MOT + 1.2,
@@ -477,10 +495,17 @@ class Rendu:
         return groupes, ecart, largeur
 
     def _scene_chiffre(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
+        chiffre = self.chiffre
+        if scene.extra.get("valeur") is not None:   # fiche pédagogique : chiffre propre à la scène
+            chiffre = {k: scene.extra[k] for k in ("valeur", "unite", "prefixe", "suffixe", "decimales")
+                       if k in scene.extra}
+            if chiffre.get("decimales") is None:
+                v = float(chiffre["valeur"])
+                chiffre["decimales"] = 0 if v.is_integer() else min(len(repr(v).split(".")[1]), 3)
         k = 1.0 if t is None else ease_out(t / 1.3)
-        valeur = self.chiffre["valeur"] * k
-        txt = formater_chiffre(self.chiffre, self.langue, valeur)
-        final = formater_chiffre(self.chiffre, self.langue)
+        valeur = chiffre["valeur"] * k
+        txt = formater_chiffre(chiffre, self.langue, valeur)
+        final = formater_chiffre(chiffre, self.langue)
         # Taille calculée sur la valeur finale pour éviter que le chiffre « respire ».
         taille = 420
         while True:
@@ -489,7 +514,7 @@ class Rendu:
                 break
             taille -= 8
         hc = pas_c = int(taille * 1.12)
-        u = unite(self.chiffre, self.langue)
+        u = unite(chiffre, self.langue)
         pu, lu, pas_u, hu = (self.ajuster_riche(u, "gras", largeur, 200, 70, 38, 1.15, ctx) if u
                              else (None, [], 0, 0))
         reste = bas - haut - hc - hu - 140

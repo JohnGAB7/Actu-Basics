@@ -1,0 +1,238 @@
+# Vidéo de présentation ACTU-BASICS — PROTOTYPE (proposition technique, à reprendre par l'éditorial).
+# Titre de travail : « Et si les chiffres changeaient votre façon de voir le monde ? »
+# Démonstration par l'exemple : le paradoxe des anniversaires. Tous les nombres sont recalculés par la
+# machine (blocs « verifier ») ; aucun fait extérieur n'est cité sans être signalé « à sourcer ».
+id: 2026-11-lancement-actu-basics
+type_fiche: pedagogique
+famille: presentation
+format: educational
+habillage_sonore: true
+theme: "Présentation d'ACTU-BASICS : le paradoxe des anniversaires"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Comprendre pourquoi 23 personnes suffisent pour avoir plus d'une chance sur deux d'un anniversaire commun"
+      - "Raisonner par l'événement contraire"
+      - "Découvrir les quatre familles de contenus d'ACTU-BASICS"
+    en:
+      - "Understand why 23 people are enough for a better-than-even chance of a shared birthday"
+      - "Reason with the complementary event"
+      - "Discover the four content families of ACTU-BASICS"
+  prerequis:
+    fr: ["Aucun : une multiplication et une fraction suffisent"]
+    en: ["None: multiplication and fractions are enough"]
+  hypotheses:
+    fr: "365 jours équiprobables, années bissextiles et jumeaux ignorés (modèle classique)"
+    en: "365 equally likely days, ignoring leap years and twins (standard model)"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+editions:
+  fr:
+    titre: "Et si les chiffres changeaient votre façon de voir le monde ?"
+    legende: |
+      23 personnes dans une pièce : quelle est la probabilité que deux d'entre elles aient le même anniversaire ? Votre intuition va probablement se tromper. C'est le point de départ d'ACTU-BASICS : comprendre le monde, apprendre les statistiques et les probabilités, et voir à quoi elles servent. Hypothèse : 365 jours équiprobables.
+    hashtags: [probabilites, statistiques, maths]
+    scenes:
+      - type: accroche
+        texte: "Et si les chiffres changeaient *votre façon de voir* le monde ?"
+        voix_off: "Et si les chiffres changeaient votre façon de voir le monde ? Faisons un test. Il prend deux minutes."
+      - type: exercice
+        texte: "23 personnes dans une pièce. Quelle est la probabilité que *deux d'entre elles* soient nées le même jour ?"
+        voix_off: "Imaginez vingt-trois personnes dans une pièce. Quelle est la probabilité que deux d'entre elles soient nées le même jour de l'année ? Gardez votre réponse en tête."
+        etiquette: "TEST"
+        pause: 3
+      - type: texte
+        texte: "Spontanément, on pense souvent : *23 jours sur 365*, environ *6 %*."
+        voix_off: "Spontanément, on raisonne souvent ainsi : vingt-trois jours sur trois cent soixante-cinq, environ six pour cent. C'est très peu."
+        verifier:
+          - {expression: "100 * 23 / 365", attendu: 6.3, tolerance: 0.75, libelle: "23 sur 365, en %"}
+      - type: correction
+        texte: "En réalité :"
+        reponse: "Plus d'une chance sur deux"
+        voix_off: "En réalité, c'est plus d'une chance sur deux."
+      - type: chiffre
+        valeur: 50.7
+        suffixe: {fr: " %", en: "%"}
+        decimales: 1
+        texte: "de chances qu'au moins deux personnes partagent leur anniversaire"
+        voix_off: "Cinquante virgule sept pour cent. Avec seulement vingt-trois personnes."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(23)))", attendu: 50.7, libelle: "P(au moins un anniversaire commun, 23 personnes), en %"}
+      - type: titre
+        numero: 1
+        texte: "Pourquoi notre intuition se trompe"
+        voix_off: "Pourquoi notre intuition se trompe-t-elle autant ?"
+      - type: etapes
+        texte: "On ne compte pas des personnes, mais des *paires*"
+        etapes:
+          - "23 personnes"
+          - "23 × 22 ÷ 2 = *253 paires*"
+          - "*253 occasions* de coïncidence"
+        voix_off: "Parce qu'on ne compare pas une personne aux autres : on compare toutes les paires. Vingt-trois personnes. Vingt-trois fois vingt-deux, divisé par deux : deux cent cinquante-trois paires. Soit deux cent cinquante-trois occasions de coïncidence."
+        verifier:
+          - {expression: "comb(23, 2)", attendu: 253, libelle: "Nombre de paires parmi 23 personnes"}
+      - type: formule
+        texte: "Le calcul : passer par le *contraire*"
+        formule:
+          - '\frac{365}{365}\times\frac{364}{365}\times\cdots\times\frac{343}{365}'
+          - '\approx 0{,}493'
+          - '1-0{,}493\approx 0{,}507'
+        voix_off: "Le plus simple est de calculer le contraire : la probabilité que tous les anniversaires soient différents. On multiplie trois cent soixante-cinq sur trois cent soixante-cinq, puis trois cent soixante-quatre sur trois cent soixante-cinq, et ainsi de suite jusqu'à la vingt-troisième personne. On obtient quarante-neuf virgule trois pour cent. Le reste, cinquante virgule sept pour cent, c'est la probabilité d'une coïncidence."
+        verifier:
+          - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P(tous différents, 23 personnes)"}
+          - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "P(au moins un anniversaire commun, 23 personnes)"}
+      - type: courbe
+        texte: "Plus le groupe grandit, plus la coïncidence devient *certaine*"
+        courbe:
+          variable: n
+          de: 1
+          a: 70
+          expression: "1 - prod((365 - k) / 365 for k in range(int(n)))"
+          format_y: pourcent
+          y_max: 1
+          axe_x: "Nombre de personnes"
+          reperes:
+            - {x: 23, label: "23 : 50,7 %"}
+            - {x: 50, label: "50 : 97 %"}
+        voix_off: "Et plus le groupe grandit, plus la coïncidence devient probable. Avec cinquante personnes, on atteint quatre-vingt-dix-sept pour cent. Avec soixante-dix, c'est presque certain."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(50)))", attendu: 97, libelle: "P(50 personnes), en %"}
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(70)))", attendu: 99.9, libelle: "P(70 personnes), en %"}
+      - type: exercice
+        texte: "À partir de combien de personnes dépasse-t-on *90 %* ?"
+        voix_off: "À vous. À partir de combien de personnes dépasse-t-on quatre-vingt-dix pour cent ?"
+        pause: 4
+      - type: correction
+        etapes:
+          - "40 personnes : 89,1 %"
+          - "41 personnes : *90,3 %*"
+        reponse: "41 personnes"
+        voix_off: "Avec quarante personnes, on est à quatre-vingt-neuf virgule un pour cent. Avec quarante et une, on passe à quatre-vingt-dix virgule trois. La réponse est donc quarante et une personnes."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(40)))", attendu: 89.1, libelle: "P(40 personnes), en %"}
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(41)))", attendu: 90.3, libelle: "P(41 personnes), en %"}
+      - type: texte
+        texte: "Ce raisonnement aide à *repérer une fraude*, à *sécuriser des données*, à *évaluer un risque*."
+        voix_off: "Ce raisonnement n'est pas un simple jeu. Il aide à repérer une fraude, à sécuriser des données, à évaluer un risque."
+      - type: etapes
+        texte: "ACTU-BASICS, c'est quatre rendez-vous"
+        etapes:
+          - "Comprendre le monde par les chiffres"
+          - "Apprendre les statistiques"
+          - "Comprendre les probabilités"
+          - "Les statistiques en pratique"
+        voix_off: "C'est la mission d'ACTU-BASICS. Comprendre le monde par les chiffres. Apprendre les statistiques. Comprendre les probabilités. Et voir comment on s'en sert vraiment : data science, actuariat, économie, assurance."
+      - type: texte
+        texte: "Votre intuition vient de se tromper. *C'est exactement comme ça qu'on apprend.*"
+        voix_off: "Votre intuition vient de se tromper. Bonne nouvelle : c'est exactement comme ça qu'on apprend."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à voir le monde autrement."
+        voix_off: "Abonnez-vous à ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What if numbers changed the way you see the world?"
+    legende: |
+      23 people in a room: what are the odds that two of them share a birthday? Your intuition will probably get it wrong. That is where ACTU-BASICS starts: understanding the world, learning statistics and probability, and seeing what they are used for. Assumption: 365 equally likely days.
+    hashtags: [probability, statistics, math]
+    scenes:
+      - type: accroche
+        texte: "What if numbers changed *the way you see* the world?"
+        voix_off: "What if numbers changed the way you see the world? Let's try a quick test. It takes two minutes."
+      - type: exercice
+        texte: "23 people in a room. What are the odds that *two of them* share a birthday?"
+        voix_off: "Picture twenty-three people in a room. What are the odds that two of them were born on the same day of the year? Keep your answer in mind."
+        etiquette: "TEST"
+        pause: 3
+      - type: texte
+        texte: "Most people's gut says: *23 days out of 365*, about *6%*."
+        voix_off: "Most people's gut reasoning goes like this: twenty-three days out of three hundred sixty-five, about six percent. Very unlikely."
+        verifier:
+          - {expression: "100 * 23 / 365", attendu: 6.3, tolerance: 0.75, libelle: "23 out of 365, in %"}
+      - type: correction
+        texte: "In fact:"
+        reponse: "Better than even odds"
+        voix_off: "In fact, the odds are better than even."
+      - type: chiffre
+        valeur: 50.7
+        suffixe: {fr: " %", en: "%"}
+        decimales: 1
+        texte: "chance that at least two people share a birthday"
+        voix_off: "Fifty point seven percent. With just twenty-three people."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(23)))", attendu: 50.7, libelle: "P(at least one shared birthday, 23 people), in %"}
+      - type: titre
+        numero: 1
+        texte: "Why our intuition fails"
+        voix_off: "So why is our intuition so far off?"
+      - type: etapes
+        texte: "We don't count people, we count *pairs*"
+        etapes:
+          - "23 people"
+          - "23 × 22 ÷ 2 = *253 pairs*"
+          - "*253 chances* for a coincidence"
+        voix_off: "Because we don't compare one person with the others: we compare every pair. Twenty-three people. Twenty-three times twenty-two, divided by two: two hundred fifty-three pairs. That's two hundred fifty-three chances for a coincidence."
+        verifier:
+          - {expression: "comb(23, 2)", attendu: 253, libelle: "Number of pairs among 23 people"}
+      - type: formule
+        texte: "The trick: compute the *opposite*"
+        formule:
+          - '\frac{365}{365}\times\frac{364}{365}\times\cdots\times\frac{343}{365}'
+          - '\approx 0.493'
+          - '1-0.493\approx 0.507'
+        voix_off: "The easiest way is to compute the opposite: the probability that all birthdays are different. Multiply three hundred sixty-five over three hundred sixty-five, then three hundred sixty-four over three hundred sixty-five, and so on up to the twenty-third person. You get forty-nine point three percent. What's left, fifty point seven percent, is the probability of a coincidence."
+        verifier:
+          - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P(all different, 23 people)"}
+          - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "P(at least one shared birthday, 23 people)"}
+      - type: courbe
+        texte: "The bigger the group, the more *certain* the coincidence"
+        courbe:
+          variable: n
+          de: 1
+          a: 70
+          expression: "1 - prod((365 - k) / 365 for k in range(int(n)))"
+          format_y: pourcent
+          y_max: 1
+          axe_x: "Number of people"
+          reperes:
+            - {x: 23, label: "23: 50.7%"}
+            - {x: 50, label: "50: 97%"}
+        voix_off: "And the bigger the group, the more likely the coincidence. With fifty people, you reach ninety-seven percent. With seventy, it's almost certain."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(50)))", attendu: 97, libelle: "P(50 people), in %"}
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(70)))", attendu: 99.9, libelle: "P(70 people), in %"}
+      - type: exercice
+        texte: "How many people does it take to pass *90%*?"
+        voix_off: "Your turn. How many people does it take to pass ninety percent?"
+        pause: 4
+      - type: correction
+        etapes:
+          - "40 people: 89.1%"
+          - "41 people: *90.3%*"
+        reponse: "41 people"
+        voix_off: "With forty people, you're at eighty-nine point one percent. With forty-one, you reach ninety point three. So the answer is forty-one people."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(40)))", attendu: 89.1, libelle: "P(40 people), in %"}
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(41)))", attendu: 90.3, libelle: "P(41 people), in %"}
+      - type: texte
+        texte: "This reasoning helps *spot fraud*, *secure data* and *assess risk*."
+        voix_off: "This isn't just a party trick. The same reasoning helps spot fraud, secure data and assess risk."
+      - type: etapes
+        texte: "ACTU-BASICS: four ways in"
+        etapes:
+          - "Understanding the world through numbers"
+          - "Learning statistics"
+          - "Understanding probability"
+          - "Statistics in practice"
+        voix_off: "That's the mission of ACTU-BASICS. Understanding the world through numbers. Learning statistics. Understanding probability. And seeing how they are really used: data science, actuarial science, economics, insurance."
+      - type: texte
+        texte: "Your intuition just got it wrong. *That's exactly how learning starts.*"
+        voix_off: "Your intuition just got it wrong. Good news: that's exactly how learning starts."
+      - type: fin
+        texte: "Follow to learn to see the world differently."
+        voix_off: "Follow ACTU-BASICS. Enlightening through numbers."

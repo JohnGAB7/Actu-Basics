@@ -1,2 +1,5 @@
 Pillow>=10
 PyYAML>=6
+# Fiches pédagogiques : formules (mathtext de matplotlib, sans LaTeX) et habillage sonore (numpy).
+matplotlib>=3.8
+numpy>=1.26

@@ -49,6 +49,11 @@ logo:
     en: {nom: 0.105, slogan: 0.028}
     nom_min_px: 8                 # « ACTU-BASICS » reconnaissable
     slogan_min_px: 4              # slogan du logo lisible (fin de vidéo et de carrousel)
+  lecon:                          # cours YouTube 16:9 (format youtube_lesson)
+    scenes: [fin]
+    largeur_px: 380
+    largeur_min_px: 300
+    slogan: false
   couverture:                     # miniature.jpg (première image de la vidéo)
     actif: true
     position: haut_droite
@@ -74,7 +79,20 @@ polices:
 formats:
   video: {largeur: 1080, hauteur: 1920, fps: 30}
   carrousel: {largeur: 1080, hauteur: 1350}
+  lecon: {largeur: 1920, hauteur: 1080, fps: 30}   # cours YouTube horizontal (format youtube_lesson)
 # Zones de sécurité vidéo (pixels) : l'interface TikTok / Reels / Shorts
 # recouvre le bas et la droite de l'écran.
 zones_securite_video: {haut: 250, bas: 480, gauche: 90, droite: 190}  # couvre TikTok, Reels et Shorts (plateformes.yaml)
 marges_carrousel: {haut: 150, bas: 150, gauche: 100, droite: 100}
+# Cours 16:9 : pas d'interface par-dessus l'image, marges de confort (titres et sous-titres YouTube).
+zones_securite_lecon: {haut: 80, bas: 110, gauche: 150, droite: 150}
+
+# Habillage sonore (prototype synthétisé, lmec/son.py) : activé par fiche avec « habillage_sonore: true ».
+son:
+  actif: true
+  signature_debut: true      # deux notes au tout début
+  signature_fin: true        # signature complète sur la scène de fin (logo)
+  signature_db: -12
+  nappe: true                # accord tenu très doux sous la voix
+  nappe_db: -30              # niveau sans voix
+  nappe_sous_voix_db: -38    # niveau quand la voix parle

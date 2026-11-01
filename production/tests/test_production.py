@@ -986,3 +986,142 @@ def test_aucune_ancienne_signature_dans_les_contenus():
         texte = f.read_text(encoding="utf-8").lower()
         for ancienne in logo_mod.ANCIENNES_SIGNATURES[2:]:
             assert ancienne not in texte, f"{f.name} : « {ancienne} »"
+
+
+# --------------------------------------------------------------------------- fiches pédagogiques
+from lmec import pedagogie  # noqa: E402
+from lmec.formules import formule_valide  # noqa: E402
+
+LANCEMENT = RACINE / "contenus/fiches/2026-11-lancement-actu-basics.yaml"
+
+
+def brut_lancement():
+    return yaml.safe_load(LANCEMENT.read_text(encoding="utf-8"))
+
+
+def constats_pedago(tmp_path, brut):
+    r = Rapport()
+    controler_fiche(charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics")), r, AUJOURD_HUI)
+    return r
+
+
+def test_fiche_de_lancement_chargee_et_calculs_justes(tmp_path):
+    fiche = charger_fiche(LANCEMENT)
+    assert fiche.pedagogique and fiche.format == "educational" and fiche.format_image == "video"
+    assert fiche.famille == "presentation" and fiche.habillage_sonore
+    r = constats_pedago(tmp_path, valider(brut_lancement()))
+    assert not r.bloquants, [str(c) for c in r.bloquants]
+    recalcules = [o for o in r.ok if "recalculé" in o]
+    assert len(recalcules) >= 2 * 9                           # chaque nombre annoncé est recalculé
+    assert any("Chaque exercice a sa correction" in o for o in r.ok)
+
+
+def test_calcul_faux_bloque(tmp_path):
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "chiffre")
+    scene["verifier"][0]["attendu"] = 60.7                    # faute de frappe dans le résultat
+    r = constats_pedago(tmp_path, brut)
+    assert any("annoncé 60.7, recalculé 50.7" in str(c) for c in r.bloquants)
+
+
+def test_exercice_sans_correction_bloque(tmp_path):
+    brut = valider(brut_lancement())
+    brut["editions"]["en"]["scenes"] = [s for s in brut["editions"]["en"]["scenes"] if s["type"] != "correction"]
+    r = constats_pedago(tmp_path, brut)
+    assert any("exercice(s) sans correction" in str(c) for c in r.bloquants)
+
+
+def test_scenes_pedagogiques_refusees_dans_une_fiche_actualite(tmp_path):
+    brut = valider(brut_exemple())
+    brut["editions"]["fr"]["scenes"].insert(1, {"type": "formule", "texte": "x", "formule": "a=b", "voix_off": "a"})
+    with pytest.raises(FicheInvalide, match="réservé aux fiches pédagogiques"):
+        charger_fiche(ecrire(tmp_path, brut))
+
+
+def test_fiche_pedagogique_incomplete(tmp_path):
+    brut = valider(brut_lancement())
+    del brut["pedagogie"]["objectifs"]
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "formule")
+    del scene["voix_off"]
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "pedagogie.objectifs" in str(exc.value) and "voix_off" in str(exc.value)
+
+
+def test_formule_illisible_bloque(tmp_path):
+    assert formule_valide(r"\frac{1}{2}") is None
+    assert formule_valide(r"\frac{1") is not None
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "formule")
+    scene["formule"] = [r"\frac{365"]
+    r = constats_pedago(tmp_path, brut)
+    assert any("formule illisible" in str(c) for c in r.bloquants)
+
+
+@pytest.mark.parametrize("expression", ['__import__("os")', "().__class__", 'open("x")', "10**10**10",
+                                        "range(10**9)", "comb(10**9, 3)", "lambda: 1", '"a" * 10**8',
+                                        "factorial(10**6)", "x"])
+def test_evaluateur_refuse_le_dangereux(expression):
+    with pytest.raises(pedagogie.CalculInvalide):
+        pedagogie.evaluer(expression)
+
+
+def test_evaluateur_et_courbe():
+    assert pedagogie.evaluer("comb(23, 2)") == 253
+    assert abs(pedagogie.evaluer("1 - prod((365 - k) / 365 for k in range(23))") - 0.5073) < 1e-4
+    assert pedagogie.tolerance_par_defaut(0.507) == pytest.approx(0.0005)
+    assert pedagogie.tolerance_par_defaut(253) == pytest.approx(0.5)
+    pts = pedagogie.points_courbe({"variable": "n", "de": 1, "a": 70, "expression": "n * 2"})
+    assert len(pts) == 70 and pts[-1] == (70, 140)
+
+
+@pytest.mark.parametrize("fmt", ["video", "lecon"])
+def test_rendu_des_scenes_pedagogiques(fmt):
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
+        for i, s in enumerate(ed.scenes):
+            im = r.dessiner(s, i, len(ed.scenes))
+            assert im.size == ((1080, 1920) if fmt == "video" else (1920, 1080))
+            for t in (0.0, 0.7, r.duree_animation(s)):              # animations sans erreur
+                r.dessiner(s, i, len(ed.scenes), t)
+        assert not r.alertes, r.alertes
+        assert ("video" if fmt == "video" else "lecon", len(ed.scenes) - 1) in r.poses   # logo de fin
+
+
+def test_etapes_calees_sur_la_voix():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    i = next(k for k, s in enumerate(ed.scenes) if s.type == "etapes")
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    r._index = i
+    r.reperes[i] = [0.35, 2.0, 3.5, 6.0]                    # intro + une phrase par étape
+    assert r._debuts_etapes(ed.scenes[i], 3) == [2.0, 3.5, 6.0]
+    vide = r.dessiner(ed.scenes[i], i, len(ed.scenes), 1.0)
+    pleine = r.dessiner(ed.scenes[i], i, len(ed.scenes), 7.0)
+    assert vide.tobytes() != pleine.tobytes()
+
+
+def test_habillage_sonore(tmp_path):
+    import wave
+    from lmec import son
+    voix = tmp_path / "voix.wav"
+    son._ecrire(voix, np_sinus(2.0))
+    sortie = son.habiller(voix, [1.0, 2.0], CHARTE["son"], tmp_path / "mix.wav", index_fin=1)
+    with wave.open(str(sortie)) as w:
+        assert w.getframerate() == 48000 and abs(w.getnframes() / 48000 - 3.0) < 0.01
+    m = son._lire(sortie)
+    assert m.max() <= 10 ** (-1 / 20) + 1e-3                  # crête ≤ -1 dBFS
+    assert abs(m[int(1.5 * 48000):int(2.0 * 48000)]).max() > 0.05   # signature présente sur la fin
+
+
+def np_sinus(duree):
+    import numpy as np
+    t = np.arange(int(duree * 48000)) / 48000
+    return 0.3 * np.sin(2 * np.pi * 220 * t)
+
+
+def test_fiche_actualite_inchangee():
+    fiche = charger_fiche(FICHE_REELLE)
+    assert fiche.type_fiche == "actualite" and fiche.format == "short" and not fiche.habillage_sonore
