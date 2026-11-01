@@ -821,11 +821,25 @@ def test_logo_unique_toutes_langues_accepte():
     assert logo_mod.charger_logos(ch["logo"], "en").chemins["sombre"].name == "logo-dark.png"
 
 
+def test_logo_lisible_sur_mobile():
+    for langue in ("fr", "en"):
+        for fmt in ("video", "carrousel"):
+            r, _, ed = _rendu_fin(CHARTE, fmt, langue)
+            rap = Rapport()
+            controler_logo(langue, r, [(fmt, len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+            assert not any("peu lisible" in str(c) for c in rap.avertissements), (langue, fmt)
+    ch = _charte(logo__video={"scenes": ["fin"], "largeur_px": 280, "largeur_min_px": 200, "slogan": False})
+    r, _, ed = _rendu_fin(ch, "video", "en")
+    rap = Rapport()
+    controler_logo("en", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+    assert any("Slogan du logo peu lisible" in str(c) for c in rap.avertissements)
+
+
 def test_logo_discret_en_video_sans_slogan_ajoute():
     for langue in ("fr", "en"):
         r, im, ed = _rendu_fin(CHARTE, "video", langue)
         pose = r.poses[("video", len(ed.scenes) - 1)]
-        assert pose.largeur <= 300                                          # discret
+        assert pose.largeur <= 420                                          # discret (440 px avant)
         assert pose.largeur * 390 / 1080 >= logo_mod.LARGEUR_MOBILE_MIN       # mais lisible sur téléphone
         sans = _charte(logo__video__slogan=True)
         r2, im2, _ = _rendu_fin(sans, "video", langue)
@@ -956,4 +970,15 @@ def test_logo_absent_alors_que_prevu_bloque():
 
 def test_ancienne_signature_signalee(tmp_path):
     _, avert = constats(tmp_path, valider(fiche_reelle()))
+    assert not any("ancienne signature" in a for a in avert)          # fiche corrigée
+    brut = valider(fiche_reelle())
+    brut["editions"]["fr"]["scenes"][-1]["texte"] = "Abonnez-vous pour comprendre le monde, un chiffre à la fois."
+    _, avert = constats(tmp_path, brut)
     assert any("ancienne signature" in a and "Éveiller par les chiffres." in a for a in avert)
+
+
+def test_aucune_ancienne_signature_dans_les_contenus():
+    for f in list((RACINE / "contenus").rglob("*.yaml")):
+        texte = f.read_text(encoding="utf-8").lower()
+        for ancienne in logo_mod.ANCIENNES_SIGNATURES[2:]:
+            assert ancienne not in texte, f"{f.name} : « {ancienne} »"

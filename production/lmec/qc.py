@@ -527,6 +527,16 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
                       f"{pose.largeur_native} px, {lieu}) : risque de flou, fournir un fichier plus grand", langue)
         if pose.largeur * 390 / w < _logo.LARGEUR_MOBILE_MIN:
             r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * 390 / w)} px à l'écran, {lieu})", langue)
+        lis = (charte.get("logo") or {}).get("lisibilite") or {}
+        if lis.get(langue):
+            ecran = pose.largeur * 390 / w
+            nom, slogan = ecran * lis[langue]["nom"], ecran * lis[langue]["slogan"]
+            if nom < lis.get("nom_min_px", 8):
+                r.avertir(f"Nom ACTU-BASICS du logo peu lisible sur téléphone ({nom:.1f} px de haut, {lieu})",
+                          langue)
+            elif support != "couverture" and slogan < lis.get("slogan_min_px", 4):
+                r.avertir(f"Slogan du logo peu lisible sur téléphone ({slogan:.1f} px de haut, {lieu}) : "
+                          "agrandir le logo (largeur_px)", langue)
         if support == "carrousel":
             hors = (x0 < zone_c["gauche"] or y0 < zone_c["haut"] or x1 > w - zone_c["droite"]
                     or y1 > h - zone_c["bas"])

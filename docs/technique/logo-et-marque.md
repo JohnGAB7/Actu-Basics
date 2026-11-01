@@ -8,11 +8,24 @@ Chaque langue a son logo, qui porte son slogan : « ÉVEILLER PAR LES CHIFFRES �
 
 | Support | Emplacement | Taille | Slogan écrit en plus |
 |---|---|---|---|
-| Vidéo | Scène de fin, centré sous l'appel à l'action, **discret** | 280 px, soit environ 100 px sur un téléphone (réduit jusqu'à 250 px si le texte est long) | Non |
-| Carrousel | Dernière diapositive (fin), même mise en page | 400 px (min. 280) | Non |
+| Vidéo | Scène de fin seulement, centré sous l'appel à l'action | 400 px, soit environ 145 px sur un téléphone (réduit jusqu'à 320 px si le texte est long) | Non |
+| Carrousel | Dernière diapositive (fin), même mise en page | 460 px (min. 360) | Non |
 | Couverture (`miniature.jpg`) | En haut à droite, dans la zone de sécurité | 260 px | Non |
 
 Conformément au guide de marque, le logo n'est pas répété sur chaque scène. Le nom « ACTU-BASICS » reste écrit en petit en haut de chaque image. Il est masqué quand le logo occupe déjà le haut de l'image.
+
+### Lisibilité sur téléphone
+
+Sur un écran de 390 px de large, le nom « ACTU-BASICS » occupe environ 11 % de la largeur du logo en hauteur, et le slogan 3,6 % (FR) ou 2,8 % (EN, plus long). Le slogan anglais demande donc un logo plus grand.
+
+| Logo | À l'écran | Nom | Slogan FR | Slogan EN |
+|---|---|---|---|---|
+| Couverture, 260 px | 94 px | 10 px | 3,4 px | 2,6 px |
+| Vidéo, 280 px (essai précédent) | 101 px | 11 px | 3,7 px | 2,8 px (illisible) |
+| **Vidéo, 400 px** | 145 px | 16 px | 5,2 px | 4,0 px |
+| **Carrousel, 460 px** | 166 px | 18 px | 6,0 px | 4,6 px |
+
+Le rapport qualité signale un nom de moins de 8 px et, en fin de vidéo ou de carrousel, un slogan de moins de 4 px (réglages `logo.lisibilite`). Sur la couverture, seul le nom compte : c'est une miniature, le slogan n'y est pas exigé.
 
 ## Réglages (sans code) — `production/charte.yaml`, section `logo`
 
@@ -42,6 +55,7 @@ Les slogans sont dans la section `slogan` de la charte. Un test et le contrôle 
 | Logo sous l'interface TikTok / Reels / Shorts (vidéo, couverture) ou hors des marges (carrousel) | ⚠️ |
 | Logo agrandi au-delà de la résolution du fichier (flou) | ⚠️ |
 | Logo de moins de 90 px à l'écran d'un téléphone | ⚠️ |
+| Nom du logo de moins de 8 px, ou slogan de moins de 4 px (fins de vidéo et de carrousel) à l'écran d'un téléphone | ⚠️ |
 | Ancien nom ou ancienne signature (« Le Monde en chiffres », « un chiffre à la fois »…) dans les textes de la fiche | ⚠️ (correction éditoriale) |
 
 Le rapport indique, pour chaque logo posé, la variante, la taille et la luminosité du fond.
