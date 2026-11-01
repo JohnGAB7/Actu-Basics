@@ -23,55 +23,55 @@ contexte:
     en: "Total world population, UN projection (medium variant). Peak expected in the mid-2080s."
 
 sources:
-  - nom: "ONU DESA, World Population Prospects 2024"
+  - nom: {fr: "ONU DESA, World Population Prospects 2024", en: "UN DESA, World Population Prospects 2024"}
     url: "https://population.un.org/WPP/Publications/Files/WPP2024_Key-Messages.pdf"
     date_consultation: "2026-11-01"
 
 donnees:
-  unite: {fr: "Population mondiale, en milliards", en: "World population, billions"}
+  unite: {fr: "Enfants par femme", en: "Births per woman"}
   decimales: 1
   points:
-    - {label: "2024", valeur: 8.2}
-    - {label: {fr: "Pic, milieu des années 2080", en: "Peak, mid-2080s"}, valeur: 10.3, mis_en_avant: true}
-    - {label: "2100", valeur: 10.2}
+    - {label: "1990", valeur: 3.3}
+    - {label: "2024", valeur: 2.3, mis_en_avant: true}
 
 editions:
   fr:
     titre: "La population mondiale va bientôt arrêter de grimper"
     legende: |
-      Nous sommes 8,2 milliards. Selon l'ONU, la population mondiale devrait plafonner vers 10,3 milliards au milieu des années 2080, puis reculer légèrement. En cause : la baisse de la fécondité, passée de 3,3 enfants par femme en 1990 à 2,3 aujourd'hui.
-    hashtags: [demographie, population, onu, donnees]
+      En 2024, nous étions 8,2 milliards. Selon l'ONU, la population mondiale devrait plafonner vers 10,3 milliards au milieu des années 2080, puis reculer légèrement. La baisse de la fécondité y contribue : de 3,3 enfants par femme en 1990 à 2,3 en 2024.
+    hashtags: [demographie, population, onu]
     scenes:
       - type: accroche
         texte: "La population mondiale va *bientôt arrêter* de grimper"
       - type: chiffre
-        texte: "C'est le maximum attendu par l'ONU, vers le milieu des années 2080. Nous sommes 8,2 milliards aujourd'hui."
+        texte: "C'est le pic attendu par l'ONU, vers le milieu des années 2080. En 2024, nous étions 8,2 milliards."
       - type: graphique
-        texte: "Un pic, puis un léger recul"
+        texte: "La fécondité mondiale diminue"
       - type: texte
         texte: "Dans *63 pays*, dont la Chine, l'Allemagne et le Japon, la population a déjà atteint son maximum."
       - type: texte
-        texte: "La raison : la fécondité mondiale est passée de *3,3* enfants par femme en 1990 à *2,3* aujourd'hui."
+        texte: "La fécondité mondiale est passée de *3,3* enfants par femme en 1990 à *2,3* en 2024."
       - type: source
         texte: "D'où viennent ces chiffres ?"
+        voix_off: "Source : les Nations unies, perspectives de la population mondiale 2024."
       - type: fin
         texte: "Abonnez-vous pour comprendre le monde, un chiffre à la fois."
   en:
     titre: "World population is about to stop growing"
     legende: |
-      There are 8.2 billion of us. According to the UN, world population should top out at around 10.3 billion in the mid-2080s, then edge down. The driver: falling fertility, from 3.3 births per woman in 1990 to 2.3 today.
-    hashtags: [demographics, population, un, data]
+      There were 8.2 billion people in 2024. According to the UN, world population should top out at around 10.3 billion in the mid-2080s, then edge down. Falling fertility is one contributing factor: from 3.3 births per woman in 1990 to 2.3 in 2024.
+    hashtags: [demographics, population, data]
     scenes:
       - type: accroche
         texte: "World population is *about to stop* growing"
       - type: chiffre
-        texte: "That's the UN's expected peak, in the mid-2080s. Today we are 8.2 billion."
+        texte: "That's the UN's expected peak, in the mid-2080s. There were 8.2 billion people in 2024."
       - type: graphique
-        texte: "A peak, then a slight decline"
+        texte: "Global fertility is declining"
       - type: texte
         texte: "In *63 countries*, including China, Germany and Japan, population has already peaked."
       - type: texte
-        texte: "Why: global fertility fell from *3.3* births per woman in 1990 to *2.3* today."
+        texte: "Global fertility fell from *3.3* births per woman in 1990 to *2.3* in 2024."
       - type: source
         texte: "Where do these numbers come from?"
       - type: fin
