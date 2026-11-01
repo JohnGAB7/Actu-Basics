@@ -11,8 +11,17 @@ from .formatage import formater_chiffre, typographie, unite
 CARACTERES_PAR_SOUS_TITRE = 84  # 2 lignes de ~42 caractères
 
 
+def sans_marqueurs(texte: str) -> str:
+    """Retire les astérisques de mise en valeur (*mot*)."""
+    return texte.replace("*", "")
+
+
 def texte_parle(scene: Scene, fiche: Fiche, langue: str) -> str:
     """Ce qui est dit (voix off) ou, à défaut, ce qui est lu à l'écran."""
+    return sans_marqueurs(_texte_parle(scene, fiche, langue))
+
+
+def _texte_parle(scene: Scene, fiche: Fiche, langue: str) -> str:
     if scene.voix_off:
         return scene.voix_off
     if scene.type == "chiffre":

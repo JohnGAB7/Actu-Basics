@@ -44,7 +44,7 @@ editions:
     hashtags: [donnees, demographie, exemple]
     scenes:
       - type: accroche
-        texte: "Combien d'habitants dans une ville qui n'existe pas ?"
+        texte: "Combien d'habitants dans une ville qui *n'existe pas* ?"
       - type: chiffre
         texte: "C'est la population fictive d'Exempleville en 2025."
       - type: graphique
@@ -62,7 +62,7 @@ editions:
     hashtags: [data, demographics, sample]
     scenes:
       - type: accroche
-        texte: "How many people live in a city that doesn't exist?"
+        texte: "How many people live in a city that *doesn't exist*?"
       - type: chiffre
         texte: "That's Sampletown's fictional population in 2025."
       - type: graphique

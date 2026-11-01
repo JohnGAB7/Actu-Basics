@@ -31,7 +31,7 @@ Pourquoi un fichier YAML plutôt qu'un outil graphique :
 | Besoin | Choix MVP | Coût | Alternative / évolution |
 |---|---|---|---|
 | Fiches, modèles, historique | Dépôt GitHub | 0 € | — |
-| Rendu images (carrousel, images de vidéo) | Python + Pillow (`production/lmec/rendu.py`) | 0 € | Remotion ou Canva API si besoin d'animations riches |
+| Rendu images (carrousel, images de vidéo) | Python + Pillow (`production/lmec/rendu.py`) ; polices Anton (affichage) et Inter (texte), licence libre OFL | 0 € | Remotion ou Canva API si besoin d'animations riches |
 | Montage vidéo | ffmpeg (H.264, AAC, 30 i/s, 1080×1920) | 0 € | — |
 | Sous-titres | `.srt` généré depuis les textes de la fiche | 0 € | Incrustation dans l'image (ffmpeg + libass) en phase 2 |
 | Voix off | Optionnelle : fichier audio fourni (voix enregistrée ou synthèse) | 0 € à ~5–22 €/mois | Synthèse automatique en phase 2 (voir §6) |
@@ -102,7 +102,7 @@ Les plateformes exigent de signaler certains contenus générés par IA : à int
 **Opérationnel dans cette PR**
 
 - Modèle de fiche FR/EN (`modeles/fiche-contenu.yaml`) et consignes pour ChatGPT.
-- `production/produire.py` : contrôle de la fiche, carrousels PNG 1080×1350, vidéos MP4 1080×1920 avec chiffre animé et graphique en barres, sous-titres `.srt`, légendes prêtes à copier, `metadonnees.json`, script de voix off, miniature, planche d'aperçu, rapport qualité.
+- `production/produire.py` : contrôle de la fiche, carrousels PNG 1080×1350, vidéos MP4 1080×1920 avec texte qui apparaît mot à mot, mots mis en valeur, chiffre animé, graphique en barres et barre de progression, sous-titres `.srt`, légendes prêtes à copier, `metadonnees.json`, script de voix off, miniature, planche d'aperçu, rapport qualité.
 - Formatage FR/EN des nombres (8,2 / 8.2 ; 1 234 / 1,234) et typographie française (espaces insécables).
 - GitHub Actions : tests + rendu automatique à chaque ajout de fiche, résultats téléchargeables.
 - Exemple fictif (`contenus/exemples/exemple-fictif.yaml`) pour tester sans toucher aux vrais contenus.

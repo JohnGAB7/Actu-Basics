@@ -4,12 +4,17 @@ marque:
   fr: "LE MONDE EN CHIFFRES"
   en: "THE WORLD IN NUMBERS"
 couleurs:
-  fond: "#0F1B2D"        # bleu nuit
+  fond: "#0B1526"        # bleu nuit (haut de l'image)
+  fond_bas: "#14284A"    # bas du dégradé
   texte: "#F5F3EE"       # blanc cassé
   accent: "#F2B134"      # jaune « chiffre »
   secondaire: "#8FA3BF"  # gris bleuté (sources, pied de page)
   barre: "#3E7CB1"
+# Accroches, titres de graphique et sources en capitales (police d'affichage).
+accroche_majuscules: true
 polices:
+  # Police d'affichage condensée et très grasse : accroches, chiffre clé, titres.
+  affichage: ["Anton-Regular.ttf", "Inter-Black.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
   # Recherche dans l'ordre : production/polices/, puis polices système.
   # Inter (licence libre OFL) : https://rsms.me/inter/ — paquet Linux « fonts-inter ».
   regulier: ["Inter-Regular.otf", "Inter-Regular.ttf", "DejaVuSans.ttf", "Arial.ttf"]
