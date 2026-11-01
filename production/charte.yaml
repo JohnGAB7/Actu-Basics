@@ -27,12 +27,12 @@ logo:
     scenes: [fin]                 # discret : en fin de vidéo seulement
     largeur_px: 440
     largeur_min_px: 300           # en dessous, le texte de fin est jugé trop long
-    slogan: true
+    slogan: {fr: false, en: true}   # le logo porte déjà « Éveiller par les chiffres »
   carrousel:
     scenes: [fin]                 # dernière diapositive ; ajouter « accroche » pour la couverture
     largeur_px: 400
     largeur_min_px: 280
-    slogan: true
+    slogan: {fr: false, en: true}   # le logo porte déjà « Éveiller par les chiffres »
     # Pour les scènes autres que « fin » (ex. couverture du carrousel) :
     position: haut_droite
     largeur_autres_px: 170

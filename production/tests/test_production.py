@@ -846,9 +846,13 @@ def test_taille_et_marge_configurables():
     assert pose.largeur == 360
 
 
-def test_logo_agrandi_et_petit_sur_mobile_signales():
-    ch = _charte(logo__fichiers={"clair": ["logo-light.png"], "sombre": ["logo-light.png"]},
-                 logo__variante="sombre", logo__video={"scenes": ["fin"], "largeur_px": 560, "largeur_min_px": 500})
+def test_logo_agrandi_et_petit_sur_mobile_signales(tmp_path):
+    # Copie réduite (dossier temporaire de test, jamais dans le dépôt) pour simuler un fichier trop petit.
+    from PIL import Image
+    for nom in ("logo-dark.png", "logo-light.png"):
+        Image.open(DOSSIER_LOGOS / nom).resize((300, 300)).save(tmp_path / nom)
+    ch = _charte(logo__dossier=str(tmp_path),
+                 logo__video={"scenes": ["fin"], "largeur_px": 440, "largeur_min_px": 400})
     r, _, ed = _rendu_fin(ch)
     rap = Rapport()
     controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)

@@ -6,8 +6,8 @@ Règles de marque : `00_STRATEGY/BRAND_IDENTITY.md` et `assets/brand/actu-basics
 
 | Support | Emplacement | Taille | Avec slogan |
 |---|---|---|---|
-| Vidéo | Scène de fin, centré entre l'appel à l'action et le slogan | 440 px (réduit jusqu'à 300 px si le texte est long) | Oui |
-| Carrousel | Dernière diapositive (fin), même mise en page | 400 px (min. 280) | Oui |
+| Vidéo | Scène de fin, centré sous l'appel à l'action | 440 px (réduit jusqu'à 300 px si le texte est long) | EN seulement |
+| Carrousel | Dernière diapositive (fin), même mise en page | 400 px (min. 280) | EN seulement |
 | Couverture (`miniature.jpg`) | En haut à droite, dans la zone de sécurité | 260 px | Non |
 
 Conformément au guide de marque, le logo n'est pas répété sur chaque scène. Le nom « ACTU-BASICS » reste écrit en petit en haut de chaque image. Il est masqué quand le logo occupe déjà le haut de l'image.
@@ -21,7 +21,7 @@ Conformément au guide de marque, le logo n'est pas répété sur chaque scène.
 - `largeur_px`, `largeur_min_px`, `largeur_autres_px` : tailles, en pixels de l'image (1080 px de large).
 - `position` : `haut_gauche`, `haut_centre`, `haut_droite`, `centre`, `bas_gauche`, `bas_centre` ou `bas_droite`. Le logo est toujours ancré **dans** la zone de sécurité. Le texte de la scène se décale pour lui laisser la place. En bas, le logo reste au-dessus de la ligne « Source ».
 - `marge_px` : retrait supplémentaire depuis le bord de la zone de sécurité.
-- `slogan: true/false` : slogan sous le logo dans la scène de fin.
+- `slogan` : slogan écrit sous le logo dans la scène de fin, `true`/`false` ou par langue. Par défaut `{fr: false, en: true}` : le logo porte déjà « Éveiller par les chiffres », et la version anglaise ajoute « Enlightening through numbers. ».
 
 Les slogans sont dans la section `slogan` de la charte. Un test et le contrôle qualité vérifient qu'ils sont **exactement** « Éveiller par les chiffres. » et « Enlightening through numbers. ».
 

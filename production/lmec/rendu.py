@@ -434,7 +434,10 @@ class Rendu:
         ratio = ref.height / ref.width
         p, lignes, pas, hh = self.ajuster_riche(scene.texte, "gras", largeur, (bas - haut) * 2 // 5, 78, 40,
                                                 1.25, ctx)
-        slogan = (self.charte.get("slogan") or {}).get(self.langue, "") if c.get("slogan", True) else ""
+        afficher = c.get("slogan", True)
+        if isinstance(afficher, dict):  # réglage par langue
+            afficher = afficher.get(self.langue, True)
+        slogan = (self.charte.get("slogan") or {}).get(self.langue, "") if afficher else ""
         ps = self.police("gras", 46)
         ls = self._couper_riche(mots_riches(typographie(slogan, self.langue)), ps, largeur) if slogan else []
         hs = int(46 * 1.25) * len(ls)
