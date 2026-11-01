@@ -73,28 +73,28 @@ Proposition de rythme au lancement : 3 SHORT par semaine (dont au moins 1 d'actu
 ## 6. Vidéo de lancement
 
 **Titre de travail** : « Et si les chiffres changeaient votre façon de voir le monde ? »
-**Format** : EDUCATIONAL, environ 2 min 30, FR et EN. **Fiche** : `contenus/fiches/2026-11-lancement-actu-basics.yaml`.
+**Format** : EDUCATIONAL, 2 min 25 en FR et 2 min 19 en EN (rendu du prototype avec la voix Piper). **Fiche** : `contenus/fiches/2026-11-lancement-actu-basics.yaml`.
 
 **Idée** : prouver la valeur éducative par l'expérience, plutôt que l'annoncer. La vidéo piège d'abord l'intuition du spectateur avec le paradoxe des anniversaires. Elle explique ensuite, le fait participer, puis présente la mission et les quatre familles.
 
-| Temps | Scène | Rôle |
+| Temps (FR) | Scène | Rôle |
 |---|---|---|
 | 0:00 | Accroche : le titre | Promesse |
 | 0:07 | TEST : 23 personnes, même anniversaire ? (compte à rebours) | Participation immédiate |
 | 0:20 | « Spontanément : environ 6 % » | L'intuition |
 | 0:28 | « Plus d'une chance sur deux » → 50,7 % | Révélation, effet de surprise |
-| 0:40 | Chapitre 1 : pourquoi notre intuition se trompe | Rythme, respiration |
-| 0:44 | 253 paires (étapes) | Comprendre sans formule |
-| 1:00 | Formule par l'événement contraire, ligne à ligne | Montrer la rigueur |
-| 1:25 | Courbe calculée de 1 à 70 personnes | Visualiser |
-| 1:40 | À VOUS : combien pour 90 % ? (compte à rebours) | Exercice |
-| 1:50 | Correction : 41 personnes | Récompense |
-| 2:05 | Applications : fraude, données, risque | Utilité réelle |
-| 2:15 | Les quatre familles d'ACTU-BASICS | Mission |
-| 2:30 | « Votre intuition vient de se tromper. C'est exactement comme ça qu'on apprend. » | Conclusion mémorable |
-| 2:38 | Logo, slogan dit à voix haute, signature sonore | Marque |
+| 0:38 | Chapitre 1 : pourquoi notre intuition se trompe | Rythme, respiration |
+| 0:41 | 253 paires (étapes) | Comprendre sans formule |
+| 0:55 | Formule par l'événement contraire, ligne à ligne | Montrer la rigueur |
+| 1:19 | Courbe calculée de 1 à 70 personnes | Visualiser |
+| 1:30 | À VOUS : combien pour 90 % ? (compte à rebours) | Exercice |
+| 1:40 | Correction : 41 personnes | Récompense |
+| 1:52 | Applications : fraude, données, risque | Utilité réelle |
+| 1:59 | Les quatre familles d'ACTU-BASICS | Mission |
+| 2:14 | « Votre intuition vient de se tromper. C'est exactement comme ça qu'on apprend. » | Conclusion mémorable |
+| 2:21 | Logo, slogan dit à voix haute, signature sonore | Marque (fin à 2:25) |
 
-Les temps sont indicatifs. Ils dépendent de la voix, et le rendu donne les durées réelles.
+Temps mesurés sur le rendu du prototype. Ils changent avec la voix retenue.
 
 **Points à arbitrer** :
 - Voix : la voix gratuite (Piper) suffit pour le prototype. Pour la vraie vidéo de lancement, une voix humaine enregistrée (`--voix manuel`) ou une voix de synthèse payante serait nettement plus captivante. C'est une décision de dépense, non engagée.

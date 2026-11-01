@@ -216,10 +216,12 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
 def caler_sur_la_voix(rendu: Rendu, edition, narration, durees: list[float]) -> None:
     """Étapes et compte à rebours calés sur la voix ; temps de réflexion ajouté après chaque exercice."""
     for i, (scene, vs) in enumerate(zip(edition.scenes, narration.scenes)):
-        rendu.reperes[i] = [AMORCE_S + ph.debut for ph in vs.phrases]
-        rendu.fins_voix[i] = AMORCE_S + vs.duree_voix + 0.2
+        # Début de chaque PHRASE (la synthèse découpe aussi sur « : » et « ; », pas les étapes).
+        rendu.reperes[id(scene)] = [AMORCE_S + ph.debut for k, ph in enumerate(vs.phrases)
+                            if k == 0 or vs.phrases[k - 1].texte.rstrip()[-1:] in ".!?…"]
+        rendu.fins_voix[id(scene)] = AMORCE_S + vs.duree_voix + 0.2
         if scene.type == "exercice" and not scene.duree:
-            besoin = rendu.fins_voix[i] + scene.extra.get("pause", 3) + 0.8
+            besoin = rendu.fins_voix[id(scene)] + scene.extra.get("pause", 3) + 0.8
             durees[i] = round(max(durees[i], besoin), 3)
 
 

@@ -138,8 +138,8 @@ class Rendu(ScenesPedagogiques):
         self.logos = _logo.charger_logos(charte.get("logo"), langue)
         self.poses: dict[tuple, _logo.Pose] = {}   # logos posés sur les images finales -> contrôle qualité
         self._image: Image.Image | None = None
-        # Début (s, depuis le début de la scène) de chaque phrase prononcée, par scène : les étapes
-        # apparaissent quand la voix les annonce. Renseigné après la narration (produire.py).
+        # Début (s, depuis le début de la scène) de chaque phrase prononcée, par scène (clé : id(scène)) :
+        # les étapes apparaissent quand la voix les annonce. Renseigné après la narration (produire.py).
         self.reperes: dict[int, list[float]] = {}
         self.fins_voix: dict[int, float] = {}
 

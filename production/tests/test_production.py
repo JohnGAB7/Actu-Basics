@@ -1095,8 +1095,8 @@ def test_etapes_calees_sur_la_voix():
     ed = fiche.editions["fr"]
     i = next(k for k, s in enumerate(ed.scenes) if s.type == "etapes")
     r = Rendu(fiche, "fr", CHARTE, "video", False)
-    r._index = i
-    r.reperes[i] = [0.35, 2.0, 3.5, 6.0]                    # intro + une phrase par étape
+    r.reperes[id(ed.scenes[i])] = [0.35, 2.0, 3.5, 6.0]     # intro + une phrase par étape
+    assert r.duree_animation(ed.scenes[i]) == pytest.approx(6.5)   # indépendant de l'ordre de dessin
     assert r._debuts_etapes(ed.scenes[i], 3) == [2.0, 3.5, 6.0]
     vide = r.dessiner(ed.scenes[i], i, len(ed.scenes), 1.0)
     pleine = r.dessiner(ed.scenes[i], i, len(ed.scenes), 7.0)

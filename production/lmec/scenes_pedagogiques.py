@@ -33,7 +33,7 @@ class ScenesPedagogiques:
     # ------------------------------------------------------------------ temps
     def _debuts_etapes(self, scene, n: int, depart: float = 0.6) -> list[float]:
         """Instant d'apparition de chaque étape : sur les phrases de la voix si elles sont connues."""
-        reperes = self.reperes.get(getattr(self, "_index", -1)) if hasattr(self, "reperes") else None
+        reperes = self.reperes.get(id(scene))
         if reperes and n:
             if len(reperes) == n + 1:          # une phrase d'introduction, puis une par étape
                 return reperes[1:]
@@ -57,14 +57,14 @@ class ScenesPedagogiques:
                 fin = max(fin, self._debut_reponse(scene)) + 0.6
             return fin
         if scene.type == "exercice":
-            fin_voix = getattr(self, "fins_voix", {}).get(getattr(self, "_index", -1))
+            fin_voix = self.fins_voix.get(id(scene))
             depart = fin_voix if fin_voix is not None else 0.3 + n_mots * 0.05 + 0.4
             return depart + scene.extra.get("pause", 3) + 0.3
         return 1.0
 
     def _debut_reponse(self, scene) -> float:
         etapes = scene.extra.get("etapes", [])
-        reperes = self.reperes.get(getattr(self, "_index", -1))
+        reperes = self.reperes.get(id(scene))
         if reperes:
             return reperes[-1]
         return (self._debuts_etapes(scene, len(etapes))[-1] + INTERVALLE_ETAPES) if etapes else 0.6
@@ -184,7 +184,7 @@ class ScenesPedagogiques:
         pause = scene.extra.get("pause", 3)
         if pause <= 0:
             return
-        fin_voix = getattr(self, "fins_voix", {}).get(self._index)
+        fin_voix = self.fins_voix.get(id(scene))
         depart = fin_voix if fin_voix is not None else 0.3 + len(scene.texte.split()) * 0.05 + 0.4
         if t is not None and t < depart:
             return
