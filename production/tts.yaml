@@ -9,7 +9,9 @@ voix:
   fr:
     piper:
       modele: fr-siwis-medium.onnx        # voix féminine, licence CC BY 4.0
-      lenteur: 1.05                       # > 1 = plus lent
+      lenteur: 1.05                       # > 1 = plus lent (0.95 = plus vif)
+      # Voix d'homme (basse qualité, monotone : voir docs/technique/voix-off.md) :
+      # modele: fr-gilles-low.onnx
     openai:
       modele: gpt-4o-mini-tts
       voix: nova
@@ -22,6 +24,7 @@ voix:
     piper:
       modele: en-us-libritts-high.onnx    # 904 locuteurs, licence CC BY 4.0
       locuteur: 0                         # numéro du locuteur (0 à 903) : à choisir à l'oreille
+                                          # voix d'homme comparées : 117, 27, 423, 855
       lenteur: 1.0
     openai:
       modele: gpt-4o-mini-tts
@@ -47,3 +50,5 @@ prononciation:
 piper_telechargements:
   fr-siwis-medium.onnx: https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-fr-siwis-medium.tar.gz
   en-us-libritts-high.onnx: https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-en-us-libritts-high.tar.gz
+  # Voix d'homme française (CC0), à décommenter pour l'utiliser :
+  # fr-gilles-low.onnx: https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-fr-gilles-low.tar.gz

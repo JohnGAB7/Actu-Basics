@@ -9,6 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from .fiche import Fiche, Scene
+from . import logo as _logo
 from .formatage import ESPACE_MILLIERS, formater_chiffre, formater_nombre, typographie, unite, _texte_langue
 
 RACINE_PRODUCTION = Path(__file__).resolve().parent.parent
@@ -131,6 +132,47 @@ class Rendu:
         self.chiffre = ch
         self.majuscules = bool(charte.get("accroche_majuscules", True))
         self._fond = self._degrade()
+        self.logos = _logo.charger_logos(charte.get("logo"))
+        self.poses: dict[tuple, _logo.Pose] = {}   # logos posés sur les images finales -> contrôle qualité
+        self._image: Image.Image | None = None
+
+    # ------------------------------------------------------------------ logo
+    def conf_logo(self, couverture: bool = False) -> dict:
+        conf = self.logos.conf or {}
+        return (conf.get("couverture") if couverture else conf.get(self.format)) or {}
+
+    def logo_prevu(self, scene: Scene, couverture: bool = False) -> bool:
+        """Le logo doit-il apparaître sur cette image ? (indépendant de la présence des fichiers)"""
+        if not self.logos.actif:
+            return False
+        c = self.conf_logo(couverture)
+        if couverture:
+            return bool(c.get("actif", True))
+        return scene.type in (c.get("scenes") or [])
+
+    def _logo_coin(self, couverture: bool) -> tuple[int, int, int, str]:
+        """Logo hors scène de fin : (x, y, largeur, position)."""
+        c = self.conf_logo(couverture)
+        largeur = int(c.get("largeur_px" if couverture else "largeur_autres_px", 200))
+        position = c.get("position", "haut_droite")
+        ref = next(iter(self.logos.images.values()), None)
+        hauteur = round(ref.height * largeur / ref.width) if ref else largeur
+        g, h, d, b = self.zone
+        # En bas, le logo reste au-dessus du pied de page (source, numéro de diapositive).
+        zone = (g, h, d, b - 110) if position.startswith("bas") else self.zone
+        x, y = _logo.boite_position(position, zone, largeur, hauteur, int(c.get("marge_px", 0)))
+        return x, y, largeur, position
+
+    def _poser_logo(self, image, x, y, largeur, scene, index, t, couverture, opacite=1.0):
+        support = "couverture" if couverture else self.format
+        pose = _logo.poser(image, self._fond, self.logos, x=x, y=y, largeur=largeur,
+                           variante_demandee=self.logos.conf.get("variante", "auto"),
+                           protection=float(self.logos.conf.get("zone_protection", 0.08)),
+                           support=support, scene=scene.type, index=index, opacite=opacite,
+                           mesurer=t is None)
+        if pose and t is None:
+            self.poses[(support, index)] = pose
+        return pose
 
     # ------------------------------------------------------------------ outils
     @lru_cache(maxsize=256)
@@ -266,12 +308,13 @@ class Rendu:
         return y
 
     # ------------------------------------------------------------------ cadre
-    def _cadre(self, d: ImageDraw.ImageDraw, index: int, total: int):
+    def _cadre(self, d: ImageDraw.ImageDraw, index: int, total: int, nom_marque: bool = True):
         g, h, dr, b = self.zone
         marque = self.charte["marque"][self.langue]
         p = self.police("gras", 30)
-        d.rectangle((g, h + 4, g + 14, h + 34), fill=self.c["accent"])
-        d.text((g + 30, h), marque, font=p, fill=self.c["texte"])
+        if nom_marque:  # inutile quand le logo est déjà en haut de l'image
+            d.rectangle((g, h + 4, g + 14, h + 34), fill=self.c["accent"])
+            d.text((g + 30, h), marque, font=p, fill=self.c["texte"])
         noms = ", ".join(_texte_langue(s["nom"], self.langue) for s in self.fiche.sources)
         pied = typographie(f"{self.lib['source']} : {noms}" if self.langue == "fr"
                            else f"{self.lib['source']}: {noms}", self.langue)
@@ -317,24 +360,41 @@ class Rendu:
             "chiffre": max(1.9, 1.0 + n * 0.04 + ENTREE_MOT),
             "graphique": 0.4 + len(self.fiche.donnees["points"]) * 0.15 + 1.0 if self.fiche.donnees else 0,
             "source": 1.2,
-            "fin": 0.1 + n * DECALAGE_MOT + 0.9,
+            "fin": 0.1 + n * DECALAGE_MOT + 1.2,
         }[scene.type]
 
     def _decalage_texte(self, scene):
         n = max(1, len(mots_riches(scene.texte)))
         return min(DECALAGE_MOT, 1.6 / n)  # un texte long ne met jamais plus d'1,6 s à apparaître
 
-    def dessiner(self, scene: Scene, index: int = 0, total: int = 1, t: float | None = None) -> Image.Image:
-        """t : secondes écoulées depuis le début de la scène (None = état final, pour le carrousel)."""
+    def dessiner(self, scene: Scene, index: int = 0, total: int = 1, t: float | None = None,
+                 couverture: bool = False) -> Image.Image:
+        """t : secondes écoulées depuis le début de la scène (None = état final, pour le carrousel).
+        couverture : image de couverture (miniature), avec le logo selon logo.couverture."""
         image = self._fond.copy()
+        self._image = image
         d = ImageDraw.Draw(image)
-        self._cadre(d, index, total)
         g, h, dr, b = self.zone
         haut, bas = h + 130, b - 110  # sous l'en-tête, au-dessus du pied de page
+        coin = None
+        if scene.type != "fin" and self.logo_prevu(scene, couverture) and self.logos.images:
+            x, y, lg, position = coin = self._logo_coin(couverture)
+            ref = next(iter(self.logos.images.values()))
+            hl = round(ref.height * lg / ref.width)
+            p = round(lg * float(self.logos.conf.get("zone_protection", 0.08)))
+            # On réserve la place du logo : le texte de la scène ne passe jamais dessous.
+            if position.startswith("haut"):
+                haut = max(haut, y + hl + p + 20)
+            elif position.startswith("bas"):
+                bas = min(bas, y - p - 20)
+        self._cadre(d, index, total, nom_marque=not (coin and coin[3].startswith("haut")))
         largeur = dr - g
         x_c = (g + dr) // 2
         ctx = f"{self.langue}/{self.format}/scène {index + 1} {scene.type}"
+        self._index, self._couverture = index, couverture
         getattr(self, f"_scene_{scene.type}")(d, scene, g, haut, dr, bas, largeur, x_c, t, ctx)
+        if coin:
+            self._poser_logo(image, coin[0], coin[1], coin[2], scene, index, t, couverture)
         if self.brouillon:
             image = self._filigrane(image)
         return image
@@ -351,10 +411,13 @@ class Rendu:
                           decalage=self._decalage_texte(scene))
 
     def _scene_fin(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
+        if self.logo_prevu(scene, self._couverture) and self.logos.images:
+            return self._scene_fin_logo(d, scene, g, haut, dr, bas, largeur, x_c, t, ctx)
         p, lignes, pas, hh = self.ajuster_riche(scene.texte, "gras", largeur, (bas - haut) // 2, 78, 40,
                                                 1.25, ctx)
         y = haut + (bas - haut) // 2 - hh
         y, n = self.ecrire_riche(d, lignes, p, pas, y, self.c["texte"], t, 0.1)
+        # Sans logo (désactivé ou fichier absent) : nom de la marque en texte, jamais un logo imité.
         marque = self.charte["marque"][self.langue]
         pm = self.police("affichage", 120)
         lm = self._couper_riche(mots_riches(marque), pm, largeur)
@@ -362,6 +425,46 @@ class Rendu:
         if a > 0:
             self.ecrire_riche(d, [[(m, True, c) for m, _, c in l] for l in lm], pm, int(120 * 1.05),
                               y + 70 + (1 - min(a, 1)) * 40, self.c["accent"])
+
+    def _scene_fin_logo(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
+        """Fin : appel à l'action, logo officiel, slogan. Le logo n'est jamais recouvert."""
+        c = self.conf_logo()
+        protection = float(self.logos.conf.get("zone_protection", 0.08))
+        ref = next(iter(self.logos.images.values()))
+        ratio = ref.height / ref.width
+        p, lignes, pas, hh = self.ajuster_riche(scene.texte, "gras", largeur, (bas - haut) * 2 // 5, 78, 40,
+                                                1.25, ctx)
+        slogan = (self.charte.get("slogan") or {}).get(self.langue, "") if c.get("slogan", True) else ""
+        ps = self.police("gras", 46)
+        ls = self._couper_riche(mots_riches(typographie(slogan, self.langue)), ps, largeur) if slogan else []
+        hs = int(46 * 1.25) * len(ls)
+        lg, lg_min = int(c.get("largeur_px", 420)), int(c.get("largeur_min_px", 280))
+        lg = min(lg, largeur)
+
+        def ecarts(w):
+            e = max(40, round(w * protection) + 16)   # au-delà de la zone de protection
+            return e, (e if ls else 0)
+
+        def total(w):
+            e1, e2 = ecarts(w)
+            return hh + e1 + round(w * ratio) + e2 + hs
+
+        while total(lg) > bas - haut and lg > lg_min:
+            lg -= 10
+        if total(lg) > bas - haut:
+            self.alertes.append(f"Texte de fin trop long pour laisser la place au logo ({ctx})")
+        e1, e2 = ecarts(lg)
+        y = haut + max(0, (bas - haut - total(lg)) // 2)
+        y, n = self.ecrire_riche(d, lignes, p, pas, y, self.c["texte"], t, 0.1)
+        y = max(y, haut + hh)
+        depart = 0.1 + n * DECALAGE_MOT + 0.1
+        a = 1.0 if t is None else max(0.0, min(1.0, (t - depart) / 0.4))   # fondu simple, sans effet
+        y_logo = y + e1
+        if ls:  # écrit avant le logo : le contrôle de recouvrement voit tout ce qui l'entoure
+            self.ecrire_riche(d, ls, ps, int(46 * 1.25), y_logo + round(lg * ratio) + e2, self.c["texte"],
+                              t, depart + 0.3)
+        if a > 0:
+            self._poser_logo(self._image, x_c - lg // 2, y_logo, lg, scene, self._index, t, False, opacite=a)
 
     def _chiffre_espace(self, texte: str, police) -> tuple[list[str], float, float]:
         """Groupes de milliers dessinés séparément, avec un écart lisible en très gros corps."""

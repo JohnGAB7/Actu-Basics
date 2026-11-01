@@ -1,4 +1,4 @@
-# Architecture technique — Le Monde en chiffres
+# Architecture technique — ACTU-BASICS (anciennement « Le Monde en chiffres »)
 
 *Proposition de la direction technique, novembre 2026 (mise à jour LMEC-2026-003 : voix off, contrôles renforcés, workflows aperçu / final). Les prix sont indicatifs et à revérifier au moment de souscrire.*
 

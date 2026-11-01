@@ -1,8 +1,47 @@
 # Charte graphique provisoire (proposition technique, à valider par l'éditorial).
 # Modifier ici les couleurs et polices : aucun changement de code nécessaire.
+# Marque ACTU-BASICS (00_STRATEGY/BRAND_IDENTITY.md). Le nom est le même dans les deux langues.
 marque:
-  fr: "LE MONDE EN CHIFFRES"
-  en: "THE WORLD IN NUMBERS"
+  fr: "ACTU-BASICS"
+  en: "ACTU-BASICS"
+# Slogans officiels : à reproduire EXACTEMENT (un test le vérifie).
+slogan:
+  fr: "Éveiller par les chiffres."
+  en: "Enlightening through numbers."
+
+# Logo officiel (assets/brand/actu-basics/BRAND_GUIDELINES.md). Fichiers d'origine, jamais modifiés :
+# seul un redimensionnement proportionnel est appliqué. S'ils manquent, rien n'est dessiné à leur place
+# et le rendu final est refusé.
+logo:
+  actif: true
+  dossier: assets/brand/actu-basics
+  fichiers:                                     # premier fichier trouvé dans l'ordre
+    clair: [logo-light.webp, logo-light.png]    # sur fond clair
+    sombre: [logo-dark.webp, logo-dark.png]     # sur fond sombre (bleu nuit)
+  variante: auto          # auto (selon la luminosité du fond sous le logo) | clair | sombre
+  zone_protection: 0.08   # espace libre exigé autour du logo, en part de sa largeur
+  # Où et comment le logo apparaît. position : haut_gauche | haut_centre | haut_droite | centre |
+  # bas_gauche | bas_centre | bas_droite. marge_px : retrait supplémentaire DANS la zone de sécurité.
+  # La scène « fin » a une mise en page dédiée (texte, logo, slogan) : position ignorée.
+  video:
+    scenes: [fin]                 # discret : en fin de vidéo seulement
+    largeur_px: 440
+    largeur_min_px: 300           # en dessous, le texte de fin est jugé trop long
+    slogan: true
+  carrousel:
+    scenes: [fin]                 # dernière diapositive ; ajouter « accroche » pour la couverture
+    largeur_px: 400
+    largeur_min_px: 280
+    slogan: true
+    # Pour les scènes autres que « fin » (ex. couverture du carrousel) :
+    position: haut_droite
+    largeur_autres_px: 170
+    marge_px: 0
+  couverture:                     # miniature.jpg (première image de la vidéo)
+    actif: true
+    position: haut_droite
+    largeur_px: 260
+    marge_px: 0
 couleurs:
   fond: "#0B1526"        # bleu nuit (haut de l'image)
   fond_bas: "#14284A"    # bas du dégradé

@@ -19,6 +19,31 @@
 
 Avant d'utiliser OpenAI ou ElevenLabs pour une publication : lancer un aperçu avec la clé (`--voix openai`), vérifier que la vidéo est produite sans erreur, l'écouter en entier, puis seulement passer en validation finale.
 
+## Comparaison de voix gratuites (novembre 2026)
+
+Extraits de la même phrase, à écouter dans `comparaison-voix/` (livrés hors dépôt). La hauteur de voix et l'amplitude mélodique ont été **mesurées**. L'amplitude mélodique, c'est l'écart entre les notes graves et aiguës : plus elle est grande, moins la voix est monotone. Le caractère « captivant », lui, ne se mesure pas : **rien n'a été écouté ici**.
+
+| Extrait | Voix | Hauteur | Amplitude | Qualité du modèle | Licence |
+|---|---|---|---|---|---|
+| fr-1 | Femme, siwis (actuelle) | 210 Hz | 89 Hz | moyenne (22 kHz) | CC BY 4.0 |
+| fr-2 | Femme, siwis, débit plus rapide et plus de variation | 210 Hz | 91 Hz | moyenne | CC BY 4.0 |
+| fr-3 | Homme, gilles | 99 Hz | 28 Hz (monotone) | basse (16 kHz) | CC0 |
+| fr-4 | Voix grave, mls_1840 | 106 Hz | 32 Hz (monotone) | basse (16 kHz) | CC BY 4.0 |
+| en-1 | Femme, LibriTTS n° 0 (actuelle) | 184 Hz | 120 Hz | haute | CC BY 4.0 |
+| en-2 | Homme, LibriTTS n° 117 | 118 Hz | 69 Hz | haute | CC BY 4.0 |
+| en-3 | Homme, LibriTTS n° 855 | 125 Hz | 57 Hz | haute | CC BY 4.0 |
+| en-4 | Homme, LibriTTS n° 27 | 101 Hz | 62 Hz | haute | CC BY 4.0 |
+| en-5 | Homme, LibriTTS n° 423 | 103 Hz | 167 Hz | haute | CC BY 4.0 |
+
+Exclue : « Ryan » (anglais, homme, haute qualité), sous licence CC BY-NC-SA : usage commercial interdit.
+
+**Constat.** Les voix d'homme françaises gratuites sont de basse qualité et monotones. Pour une voix française vraiment captivante, la piste réaliste est un service payant : par exemple OpenAI, avec `onyx` ou `ash` pour un homme et `nova` ou `coral` pour une femme, plus des consignes de ton. Ce service n'a jamais été testé ici : il faut une clé, et c'est une dépense à décider par JG. Un essai complet en aperçu coûte quelques centimes.
+
+**Changer de voix sans code** (`tts.yaml`) :
+- anglais, voix d'homme : `locuteur: 117` (ou 27, 423, 855) ;
+- débit plus vif : `lenteur: 0.95` ; plus de variation : `variation: 0.8`, `variation_rythme: 0.95` ;
+- français, voix d'homme Piper : ajouter le modèle dans `piper_telechargements` (lignes en commentaire dans `tts.yaml`), puis `modele: fr-gilles-low.onnx`.
+
 ## Ce qui est dit
 
 Pour chaque scène, la voix lit :

@@ -727,5 +727,174 @@ def test_video_avec_voix_de_test(tmp_path):
     assert abs(durees["video"] - durees["audio"]) < 0.15
     srt = (d / "sous-titres.srt").read_text()
     assert srt.startswith("1\n00:00:00,350")
-    for f in ("planche-video.png", "apercu-mobile.png", "zones-tiktok.png"):
+    for f in ("planche-video.png", "apercu-mobile.png", "zones-tiktok.png", "logo-mobile.png"):
         assert (d / "inspection" / f).exists()
+    rapport = (tmp_path / "exemple-fictif/rapport-qc.md").read_text(encoding="utf-8")
+    assert "Logo sombre (vidéo, scène 6 (fin))" in rapport and "Logo sombre (couverture" in rapport
+
+
+
+# --------------------------------------------------------------------------- logo ACTU-BASICS
+import hashlib  # noqa: E402
+
+from lmec import logo as logo_mod  # noqa: E402
+from lmec.qc import controler_logo, controler_marque  # noqa: E402
+from lmec.rendu import Rendu  # noqa: E402
+
+DOSSIER_LOGOS = RACINE / "assets/brand/actu-basics"
+
+
+def _charte(**modifs):
+    ch = copy.deepcopy(CHARTE)
+    for chemin, valeur in modifs.items():
+        o = ch
+        cles = chemin.split("__")
+        for k in cles[:-1]:
+            o = o.setdefault(k, {})
+        o[cles[-1]] = valeur
+    return ch
+
+
+def _empreintes():
+    return {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in DOSSIER_LOGOS.glob("logo-*")}
+
+
+def _rendu_fin(charte, fmt="video", langue="fr"):
+    fiche = charger_fiche(EXEMPLE)
+    ed = fiche.editions[langue]
+    r = Rendu(fiche, langue, charte, fmt, False)
+    n = len(ed.scenes)
+    im = r.dessiner(ed.scenes[-1], n - 1, n)
+    return r, im, ed
+
+
+def test_fichiers_logo_officiels_presents():
+    for variante, candidats in CHARTE["logo"]["fichiers"].items():
+        trouves = [c for c in candidats if (DOSSIER_LOGOS / c).is_file()]
+        assert trouves, f"logo {variante} absent de {DOSSIER_LOGOS}"
+        from PIL import Image
+        im = Image.open(DOSSIER_LOGOS / trouves[0])
+        assert im.mode == "RGBA" and im.width >= 400        # fond transparent autour du disque
+
+
+def test_slogans_et_marque_officiels():
+    assert CHARTE["slogan"] == {"fr": "Éveiller par les chiffres.", "en": "Enlightening through numbers."}
+    assert CHARTE["slogan"] == logo_mod.SLOGANS_OFFICIELS
+    assert CHARTE["marque"] == {"fr": "ACTU-BASICS", "en": "ACTU-BASICS"}
+    r = Rapport()
+    controler_marque(_charte(slogan={"fr": "Éveiller par les chiffres", "en": "Enlightening through numbers."}), r)
+    assert any("Slogan FR" in str(c) for c in r.bloquants)
+
+
+def test_logo_sur_fond_sombre_proportions_et_original_intact():
+    avant = _empreintes()
+    for fmt in ("video", "carrousel"):
+        r, im, ed = _rendu_fin(CHARTE, fmt)
+        pose = r.poses[(fmt, len(ed.scenes) - 1)]
+        assert pose.variante == "sombre" and pose.luminance_fond < 0.5
+        x0, y0, x1, y1 = pose.boite
+        source = logo_mod._ouvrir(str(r.logos.chemins["sombre"]))
+        assert abs((y1 - y0) / (x1 - x0) - source.height / source.width) < 0.01      # jamais déformé
+        assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT                       # rien dans sa zone
+        assert pose.largeur <= pose.largeur_native                                    # jamais agrandi
+        rap = Rapport()
+        controler_logo("fr", r, [(fmt, len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+        assert not rap.bloquants and not rap.avertissements, [str(c) for c in rap.constats]
+    assert _empreintes() == avant                                                     # fichiers d'origine intacts
+
+
+def test_logo_clair_sur_fond_clair():
+    ch = _charte(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
+                 couleurs__texte="#06152B")
+    r, _, ed = _rendu_fin(ch, "carrousel")
+    pose = r.poses[("carrousel", len(ed.scenes) - 1)]
+    assert pose.variante == "clair" and pose.luminance_fond >= 0.5
+
+
+def test_variante_forcee_contraire_au_fond_bloque():
+    ch = _charte(logo__variante="clair")
+    r, _, ed = _rendu_fin(ch)
+    rap = Rapport()
+    controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+    assert any("variante sombre" in str(c) for c in rap.bloquants)
+
+
+@pytest.mark.parametrize("position", logo_mod.POSITIONS)
+def test_positions_configurables_sans_recouvrement(position):
+    """Couverture : le logo est ancré dans la zone de sécurité et le texte lui laisse la place."""
+    ch = _charte(logo__couverture={"actif": True, "position": position, "largeur_px": 240, "marge_px": 20})
+    fiche = charger_fiche(FICHE_REELLE)
+    ed = fiche.editions["fr"]
+    r = Rendu(fiche, "fr", ch, "video", False)
+    r.dessiner(ed.scenes[0], 0, len(ed.scenes), couverture=True)
+    pose = r.poses[("couverture", 0)]
+    g, h, d, b = r.zone
+    x0, y0, x1, y1 = pose.boite
+    assert g + 20 <= x0 and x1 <= d - 20 and h + 20 <= y0 and y1 <= b - 20
+    if position != "centre":   # au centre, le logo ne peut que gêner l'accroche : contrôle qualité
+        assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT, position
+    else:
+        rap = Rapport()
+        controler_logo("fr", r, [("couverture", 0, "accroche")], ch, PLATEFORMES, rap)
+        assert any("touche un texte" in str(c) for c in rap.bloquants)
+
+
+def test_taille_et_marge_configurables():
+    ch = _charte(logo__video={"scenes": ["fin"], "largeur_px": 360, "largeur_min_px": 200, "slogan": False})
+    r, _, ed = _rendu_fin(ch)
+    pose = r.poses[("video", len(ed.scenes) - 1)]
+    assert pose.largeur == 360
+
+
+def test_logo_agrandi_et_petit_sur_mobile_signales():
+    ch = _charte(logo__fichiers={"clair": ["logo-light.png"], "sombre": ["logo-light.png"]},
+                 logo__variante="sombre", logo__video={"scenes": ["fin"], "largeur_px": 560, "largeur_min_px": 500})
+    r, _, ed = _rendu_fin(ch)
+    rap = Rapport()
+    controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+    assert any("agrandi au-delà de sa résolution" in str(c) for c in rap.avertissements)
+    ch = _charte(logo__couverture={"actif": True, "position": "haut_droite", "largeur_px": 150, "marge_px": 0})
+    fiche = charger_fiche(EXEMPLE)
+    r = Rendu(fiche, "fr", ch, "video", False)
+    r.dessiner(fiche.editions["fr"].scenes[0], 0, 6, couverture=True)
+    rap = Rapport()
+    controler_logo("fr", r, [("couverture", 0, "accroche")], ch, PLATEFORMES, rap)
+    assert any("petit sur téléphone" in str(c) for c in rap.avertissements)
+
+
+def test_logo_absent_jamais_remplace(tmp_path):
+    ch = _charte(logo__dossier="assets/brand/inexistant")
+    rap = Rapport()
+    controler_marque(ch, rap)
+    assert any("Logo officiel introuvable" in str(c) and "Aucun logo de substitution" in str(c) for c in rap.bloquants)
+    r, im, ed = _rendu_fin(ch)
+    assert r.poses == {}                                  # rien n'est dessiné à la place du logo
+    # rendu final refusé avant toute production
+    f = ecrire(tmp_path, valider(brut_exemple()))
+    charte = tmp_path / "charte.yaml"
+    charte.write_text(yaml.safe_dump(ch, allow_unicode=True), encoding="utf-8")
+    res = lancer(f, "--mode", "final", "--voix", "test", "--sans-video", "--charte", charte, "--sortie", tmp_path / "s")
+    assert res.returncode == 1 and "Logo officiel introuvable" in res.stdout
+    assert not (tmp_path / "s/exemple-fictif/fr").exists()
+
+
+def test_logo_desactivable():
+    ch = _charte(logo__actif=False)
+    r, _, _ = _rendu_fin(ch)
+    assert r.poses == {}
+    rap = Rapport()
+    controler_marque(ch, rap)
+    assert any("Logo désactivé" in str(c) for c in rap.avertissements)
+
+
+def test_logo_absent_alors_que_prevu_bloque():
+    r, _, ed = _rendu_fin(CHARTE)
+    r.poses.clear()
+    rap = Rapport()
+    controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+    assert any("Logo absent" in str(c) for c in rap.bloquants)
+
+
+def test_ancienne_signature_signalee(tmp_path):
+    _, avert = constats(tmp_path, valider(fiche_reelle()))
+    assert any("ancienne signature" in a and "Éveiller par les chiffres." in a for a in avert)
