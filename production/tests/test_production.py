@@ -769,12 +769,67 @@ def _rendu_fin(charte, fmt="video", langue="fr"):
 
 
 def test_fichiers_logo_officiels_presents():
-    for variante, candidats in CHARTE["logo"]["fichiers"].items():
-        trouves = [c for c in candidats if (DOSSIER_LOGOS / c).is_file()]
-        assert trouves, f"logo {variante} absent de {DOSSIER_LOGOS}"
-        from PIL import Image
-        im = Image.open(DOSSIER_LOGOS / trouves[0])
-        assert im.mode == "RGBA" and im.width >= 400        # fond transparent autour du disque
+    from PIL import Image
+    noms = set()
+    for langue in ("fr", "en"):
+        fichiers = logo_mod.fichiers_langue(CHARTE["logo"], langue)
+        assert set(fichiers) == {"clair", "sombre"}
+        for variante, candidats in fichiers.items():
+            trouves = [c for c in candidats if (DOSSIER_LOGOS / c).is_file()]
+            assert trouves, f"logo {langue} {variante} absent de {DOSSIER_LOGOS}"
+            noms.add(trouves[0])
+            im = Image.open(DOSSIER_LOGOS / trouves[0])
+            assert im.mode == "RGBA" and im.width >= 400    # fond transparent autour du disque
+    assert len(noms) == 4                                   # un fichier distinct par langue et par fond
+
+
+def test_logo_choisi_selon_la_langue_et_le_fond():
+    clair = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
+                 couleurs__texte="#06152B")
+    attendu = {("fr", "sombre"): "logo-dark.png", ("fr", "clair"): "logo-light.png",
+               ("en", "sombre"): "logo-dark-en.png", ("en", "clair"): "logo-light-en.png"}
+    for langue in ("fr", "en"):
+        for fond, ch in (("sombre", CHARTE), ("clair", _charte(**clair))):
+            r, _, ed = _rendu_fin(ch, "carrousel", langue)
+            pose = r.poses[("carrousel", len(ed.scenes) - 1)]
+            assert pose.variante == fond
+            assert r.logos.chemins[pose.variante].name == attendu[(langue, fond)]
+            rap = Rapport()
+            controler_logo(langue, r, [("carrousel", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+            assert not rap.bloquants, [str(c) for c in rap.bloquants]
+    # logo d'une autre langue : bloquant
+    r, _, ed = _rendu_fin(CHARTE, "video", "fr")
+    rap = Rapport()
+    controler_logo("en", r, [("video", len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+    assert any("Logo de la langue « fr »" in str(c) for c in rap.bloquants)
+
+
+def test_logo_anglais_absent_bloque(tmp_path):
+    import shutil
+    for f in DOSSIER_LOGOS.glob("logo-*.png"):
+        if "-en" not in f.name:
+            shutil.copy(f, tmp_path / f.name)
+    rap = Rapport()
+    controler_marque(_charte(logo__dossier=str(tmp_path)), rap)
+    assert any("[en]" in str(c) and "introuvable" in str(c) for c in rap.bloquants)
+    assert not any("[fr]" in str(c) for c in rap.bloquants)
+
+
+def test_logo_unique_toutes_langues_accepte():
+    """Ancien format (fichiers.<variante>) : le même logo pour toutes les langues."""
+    ch = _charte(logo__fichiers={"clair": ["logo-light.png"], "sombre": ["logo-dark.png"]})
+    assert logo_mod.charger_logos(ch["logo"], "en").chemins["sombre"].name == "logo-dark.png"
+
+
+def test_logo_discret_en_video_sans_slogan_ajoute():
+    for langue in ("fr", "en"):
+        r, im, ed = _rendu_fin(CHARTE, "video", langue)
+        pose = r.poses[("video", len(ed.scenes) - 1)]
+        assert pose.largeur <= 300                                          # discret
+        assert pose.largeur * 390 / 1080 >= logo_mod.LARGEUR_MOBILE_MIN       # mais lisible sur téléphone
+        sans = _charte(logo__video__slogan=True)
+        r2, im2, _ = _rendu_fin(sans, "video", langue)
+        assert im.tobytes() != im2.tobytes()          # le slogan écrit sous le logo est bien désactivé
 
 
 def test_slogans_et_marque_officiels():
@@ -849,8 +904,8 @@ def test_taille_et_marge_configurables():
 def test_logo_agrandi_et_petit_sur_mobile_signales(tmp_path):
     # Copie réduite (dossier temporaire de test, jamais dans le dépôt) pour simuler un fichier trop petit.
     from PIL import Image
-    for nom in ("logo-dark.png", "logo-light.png"):
-        Image.open(DOSSIER_LOGOS / nom).resize((300, 300)).save(tmp_path / nom)
+    for f in DOSSIER_LOGOS.glob("logo-*.png"):
+        Image.open(f).resize((300, 300)).save(tmp_path / f.name)
     ch = _charte(logo__dossier=str(tmp_path),
                  logo__video={"scenes": ["fin"], "largeur_px": 440, "largeur_min_px": 400})
     r, _, ed = _rendu_fin(ch)

@@ -4,10 +4,12 @@ Règles de marque : `00_STRATEGY/BRAND_IDENTITY.md` et `assets/brand/actu-basics
 
 ## Où apparaît le logo (réglages par défaut)
 
-| Support | Emplacement | Taille | Avec slogan |
+Chaque langue a son logo, qui porte son slogan : « ÉVEILLER PAR LES CHIFFRES » en français, « ENLIGHTENING THROUGH NUMBERS » en anglais. Pour chaque langue, la variante claire ou sombre est choisie selon le fond.
+
+| Support | Emplacement | Taille | Slogan écrit en plus |
 |---|---|---|---|
-| Vidéo | Scène de fin, centré sous l'appel à l'action | 440 px (réduit jusqu'à 300 px si le texte est long) | EN seulement |
-| Carrousel | Dernière diapositive (fin), même mise en page | 400 px (min. 280) | EN seulement |
+| Vidéo | Scène de fin, centré sous l'appel à l'action, **discret** | 280 px, soit environ 100 px sur un téléphone (réduit jusqu'à 250 px si le texte est long) | Non |
+| Carrousel | Dernière diapositive (fin), même mise en page | 400 px (min. 280) | Non |
 | Couverture (`miniature.jpg`) | En haut à droite, dans la zone de sécurité | 260 px | Non |
 
 Conformément au guide de marque, le logo n'est pas répété sur chaque scène. Le nom « ACTU-BASICS » reste écrit en petit en haut de chaque image. Il est masqué quand le logo occupe déjà le haut de l'image.
@@ -15,13 +17,14 @@ Conformément au guide de marque, le logo n'est pas répété sur chaque scène.
 ## Réglages (sans code) — `production/charte.yaml`, section `logo`
 
 - `actif: false` : retire le logo partout (le rapport le signale).
+- `fichiers.fr` et `fichiers.en` : fichiers du logo de chaque langue, `clair` et `sombre`. Une seule liste `fichiers.clair` / `fichiers.sombre` (sans langue) sert pour les deux langues.
 - `variante: auto | clair | sombre` : `auto` choisit selon la luminosité réelle du fond sous le logo. La variante claire va sur un fond clair, la sombre sur un fond sombre.
 - `zone_protection` : espace libre exigé autour du logo, en part de sa largeur (8 % par défaut).
 - `video.scenes`, `carrousel.scenes` : scènes qui portent le logo. Par exemple, ajouter `accroche` dans `carrousel.scenes` place aussi le logo sur la couverture du carrousel.
 - `largeur_px`, `largeur_min_px`, `largeur_autres_px` : tailles, en pixels de l'image (1080 px de large).
 - `position` : `haut_gauche`, `haut_centre`, `haut_droite`, `centre`, `bas_gauche`, `bas_centre` ou `bas_droite`. Le logo est toujours ancré **dans** la zone de sécurité. Le texte de la scène se décale pour lui laisser la place. En bas, le logo reste au-dessus de la ligne « Source ».
 - `marge_px` : retrait supplémentaire depuis le bord de la zone de sécurité.
-- `slogan` : slogan écrit sous le logo dans la scène de fin, `true`/`false` ou par langue. Par défaut `{fr: false, en: true}` : le logo porte déjà « Éveiller par les chiffres », et la version anglaise ajoute « Enlightening through numbers. ».
+- `slogan` : slogan écrit sous le logo dans la scène de fin, `true`/`false` ou par langue (`{fr: false, en: true}`). Par défaut `false` : chaque logo porte déjà le slogan de sa langue.
 
 Les slogans sont dans la section `slogan` de la charte. Un test et le contrôle qualité vérifient qu'ils sont **exactement** « Éveiller par les chiffres. » et « Enlightening through numbers. ».
 
@@ -29,7 +32,8 @@ Les slogans sont dans la section `slogan` de la charte. Un test et le contrôle 
 
 | Contrôle | Gravité |
 |---|---|
-| Fichier du logo absent (rien n'est dessiné à sa place) | ❌ avant tout rendu |
+| Fichier du logo absent, pour l'une ou l'autre langue (rien n'est dessiné à sa place) | ❌ avant tout rendu |
+| Logo d'une autre langue que la version produite | ❌ |
 | Slogan différent du slogan officiel | ❌ |
 | Logo prévu mais absent d'une image | ❌ |
 | Variante inadaptée au fond (claire sur fond sombre, ou l'inverse) | ❌ |

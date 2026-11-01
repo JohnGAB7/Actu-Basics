@@ -132,7 +132,7 @@ class Rendu:
         self.chiffre = ch
         self.majuscules = bool(charte.get("accroche_majuscules", True))
         self._fond = self._degrade()
-        self.logos = _logo.charger_logos(charte.get("logo"))
+        self.logos = _logo.charger_logos(charte.get("logo"), langue)
         self.poses: dict[tuple, _logo.Pose] = {}   # logos posés sur les images finales -> contrôle qualité
         self._image: Image.Image | None = None
 

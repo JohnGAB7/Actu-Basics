@@ -473,15 +473,18 @@ def controler_plateformes(langue: str, duree: float, legende: str, titre: str, n
 
 def controler_marque(charte: dict, r: Rapport) -> None:
     """Avant tout rendu : fichiers du logo présents et slogans exacts (le mode final refuse sinon)."""
-    logos = _logo.charger_logos(charte.get("logo"))
-    if not logos.actif:
-        r.avertir("Logo désactivé dans production/charte.yaml (logo.actif: false)")
-    for m in logos.manquants:
-        r.bloquant(f"Logo officiel introuvable : {m}. Aucun logo de substitution n'est dessiné ; déposer le "
-                   "fichier d'origine (voir assets/brand/actu-basics/LISEZMOI.md)")
-    if logos.actif and not logos.manquants:
-        r.ok.append("Fichiers du logo officiel présents : " + ", ".join(
-            f"{v} = {c.name}" for v, c in logos.chemins.items()))
+    for langue in LANGUES:
+        logos = _logo.charger_logos(charte.get("logo"), langue)
+        if not logos.actif:
+            if langue == LANGUES[0]:
+                r.avertir("Logo désactivé dans production/charte.yaml (logo.actif: false)")
+            continue
+        for m in logos.manquants:
+            r.bloquant(f"Logo officiel introuvable : {m}. Aucun logo de substitution n'est dessiné ; déposer le "
+                       "fichier d'origine (voir assets/brand/actu-basics/LISEZMOI.md)")
+        if not logos.manquants:
+            r.ok.append(f"Logo officiel {langue.upper()} présent : " + ", ".join(
+                f"{v} = {c.name}" for v, c in logos.chemins.items()))
     for langue in LANGUES:
         slogan = (charte.get("slogan") or {}).get(langue, "")
         r.verifier(slogan == _logo.SLOGANS_OFFICIELS[langue], f"Slogan {langue.upper()} conforme à la marque",
@@ -498,6 +501,8 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
     logos = rendu.logos
     if not logos.actif or not logos.images:
         return  # signalé avant le rendu par controler_marque
+    r.verifier(logos.langue == langue, f"[{langue}] Logo de la bonne langue",
+               f"[{langue}] Logo de la langue « {logos.langue} » utilisé pour la version {langue.upper()}", BLOQUANT)
     noms = {"video": "vidéo", "carrousel": "carrousel", "couverture": "couverture"}
     zone_c = charte["marges_carrousel"]
     for support, index, type_ in attendus:

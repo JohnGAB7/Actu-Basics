@@ -2,6 +2,7 @@
 
 Règles (assets/brand/actu-basics/BRAND_GUIDELINES.md) :
 - seuls les fichiers officiels sont utilisés ; aucun logo n'est dessiné ni « reconstitué » ;
+- un logo par langue (chacun porte le slogan de sa langue) ;
 - variante claire sur fond clair, variante sombre sur fond sombre ;
 - proportions, couleurs et zone de protection préservées : redimensionnement proportionnel
   uniquement (jamais d'étirement, de recadrage, de recoloration ni d'effet) ;
@@ -19,6 +20,7 @@ from PIL import Image, ImageStat
 
 DEPOT = Path(__file__).resolve().parents[2]
 VARIANTES = ("clair", "sombre")
+LANGUES_LOGO = ("fr", "en")
 POSITIONS = ("haut_gauche", "haut_centre", "haut_droite", "centre", "bas_gauche", "bas_centre", "bas_droite")
 SEUIL_FOND_CLAIR = 0.5        # luminance moyenne (0–1) au-dessus de laquelle le fond est « clair »
 SLOGANS_OFFICIELS = {"fr": "Éveiller par les chiffres.", "en": "Enlightening through numbers."}
@@ -46,6 +48,7 @@ class Pose:
 @dataclass
 class Logos:
     conf: dict
+    langue: str = "fr"
     images: dict[str, Image.Image] = field(default_factory=dict)
     chemins: dict[str, Path] = field(default_factory=dict)
     manquants: list[str] = field(default_factory=list)
@@ -58,17 +61,27 @@ class Logos:
         return variante in self.images
 
 
-def charger_logos(conf: dict | None) -> Logos:
+def fichiers_langue(conf: dict | None, langue: str) -> dict:
+    """Candidats par variante pour une langue : fichiers.<langue>.<variante> (ou fichiers.<variante>,
+    même logo pour toutes les langues)."""
+    fichiers = (conf or {}).get("fichiers") or {}
+    if any(l in fichiers for l in LANGUES_LOGO):
+        return fichiers.get(langue) or {}
+    return fichiers
+
+
+def charger_logos(conf: dict | None, langue: str = "fr") -> Logos:
     conf = conf or {}
-    logos = Logos(conf)
+    logos = Logos(conf, langue)
     if not logos.actif:
         return logos
     dossier = DEPOT / conf.get("dossier", "assets/brand/actu-basics")
+    fichiers = fichiers_langue(conf, langue)
     for variante in VARIANTES:
-        candidats = (conf.get("fichiers") or {}).get(variante) or []
+        candidats = fichiers.get(variante) or []
         trouve = next((dossier / c for c in candidats if (dossier / c).is_file()), None)
         if trouve is None:
-            logos.manquants.append(f"{dossier.relative_to(DEPOT) if dossier.is_relative_to(DEPOT) else dossier}/"
+            logos.manquants.append(f"[{langue}] {dossier.relative_to(DEPOT) if dossier.is_relative_to(DEPOT) else dossier}/"
                                    f"{' ou '.join(candidats)}")
             continue
         logos.chemins[variante] = trouve
