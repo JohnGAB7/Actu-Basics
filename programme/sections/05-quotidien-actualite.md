@@ -12,7 +12,7 @@ Ce pilier explique des phénomènes familiers et des événements importants ave
 
 ## 5.1 Taxonomie des phénomènes du quotidien
 
-Quinze familles de sujets, chacune reliée aux notions du cursus. La liste détaillée (section 5.5) en donne {{NB_QUOTIDIEN}} sujets prêts à scénariser. Elle reste ouverte.
+Quinze familles de sujets, chacune reliée aux notions du cursus. La liste détaillée (section 5.5) en donne {{NB_QUOTIDIEN}} sujets prêts à scénariser. **Le catalogue du quotidien est ouvert** : un événement important, appuyé par des sources primaires fiables, peut déclencher un nouvel épisode intemporel de méthode ou un dossier d'actualité daté (sections 5.2 à 5.4).
 
 | Famille | Exemples de questions | Notions mobilisées |
 |---|---|---|
@@ -23,9 +23,9 @@ Quinze familles de sujets, chacune reliée aux notions du cursus. La liste déta
 | **Q5 · Technologie et algorithmes** | Comment un site décide-t-il quel bouton montrer ? L'IA se trompe-t-elle « en moyenne » ? | Tests A/B, recommandation, évaluation d'un classifieur |
 | **Q6 · Sport, jeux et loisirs** | Le classement dit-il qui est le meilleur ? Une équipe qui perd 1-0 a-t-elle mal joué ? | Simulation, hasard, espérance, expected goals, force du calendrier |
 | **Q7 · Démographie et santé publique** | Incidence ou prévalence ? Que veut dire « 1,8 enfant par femme » ? | Taux, standardisation par âge, indicateurs du moment, flux et stocks |
-| **Q8 · Énergie et climat** | Puissance ou énergie ? Une canicule est-elle attribuable au réchauffement ? | Unités, facteur de charge, stocks cumulés, rapport de probabilités |
+| **Q8 · Énergie et climat** | Puissance ou énergie ? Une canicule est-elle attribuable au réchauffement ? Dépendre de qui pour son gaz ? | Unités, facteur de charge, stocks cumulés, rapport de probabilités, concentration des fournisseurs |
 | **Q9 · Logement** | Le logement est-il plus cher qu'il y a vingt ans ? | Prix réels, taux d'effort, indices hédoniques, effet de composition |
-| **Q10 · Finances publiques et commerce** | Dette ou déficit ? Un déficit commercial est-il une perte ? | Stock et flux, ratio dette/PIB, effet boule de neige, taux de change |
+| **Q10 · Finances publiques et commerce** | Dette ou déficit ? Un déficit commercial est-il une perte ? Pourquoi une usine à l'arrêt bloque le monde ? | Stock et flux, ratio dette/PIB, effet boule de neige, taux de change, chaînes d'approvisionnement |
 | **Q11 · Éducation** | Le meilleur lycée est-il celui qui a le plus de bacheliers ? | Valeur ajoutée, sélection, incertitude d'un classement |
 | **Q12 · Information et médias** | Pourquoi une moyenne de sondages est-elle plus fiable ? | Agrégation, biais commun, causalité inversée |
 | **Q13 · Conflits et crises humanitaires** | Pourquoi deux bilans d'un même conflit divergent-ils ? | Définitions, périmètres, estimation, incertitude (protocole renforcé) |

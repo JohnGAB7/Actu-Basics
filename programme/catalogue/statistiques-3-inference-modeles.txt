@@ -463,7 +463,7 @@ titre: La méta-analyse : combiner des études
 titre_en: Meta-analysis: combining studies
 question: Vingt études sur le même sujet disent des choses différentes : que faut-il en retenir ?
 pre: S8.07 | S8.09 | S7.07
-obj: Combiner des estimations en les pondérant par l'inverse de leur variance | Lire un forest plot | Distinguer effets fixes et effets aléatoires entre études | Repérer un biais de publication sur un funnel plot
+obj: Combiner des estimations en les pondérant par l'inverse de leur variance | Lire un forest plot | Mesurer l'hétérogénéité entre études (Q de Cochran, I²) | Distinguer effets fixes et effets aléatoires entre études | Repérer un biais de publication sur un funnel plot et dire les limites de ce diagnostic
 intuition: Chaque étude vote, mais les plus précises ont plus de voix ; et celles qui n'ont rien trouvé ne sont parfois jamais publiées.
 exemple: Collaboration Cochrane (synthèses à sourcer et dater lors de la préparation).
 maths: M1.
@@ -471,6 +471,22 @@ erreurs: Compter les études « positives » et « négatives » ; ignorer le bi
 exercice: Deux études estiment un effet de 2 (erreur standard 1) et de 4 (erreur standard 2). Quelle estimation combinée, et quelle erreur standard ?
 correction: Poids : 1 / 1² = 1 et 1 / 2² = 0,25. Estimation : (1 × 2 + 0,25 × 4) / 1,25 = 2,4. Erreur standard : 1 / √1,25 ≈ 0,89, plus petite que celle de chaque étude.
 duree: 8-10
+format: educational
+forme: lecon
+
+## S8.12
+titre: Absence de preuve ou preuve d'absence ? Les tests d'équivalence
+titre_en: Absence of evidence or evidence of absence? Equivalence tests
+question: Comment montrer qu'un médicament générique fait aussi bien que l'original ?
+pre: S8.08 | S8.07
+obj: Expliquer pourquoi un test non significatif ne prouve pas l'absence d'effet | Fixer une marge d'équivalence avant l'étude | Conclure à l'équivalence quand tout l'intervalle de confiance est dans la marge (deux tests unilatéraux, TOST)
+intuition: On ne demande plus « l'effet est-il différent de zéro ? » mais « l'effet est-il assez petit pour ne pas compter ? ».
+exemple: Essais de bioéquivalence des médicaments génériques (règles des agences sanitaires, à sourcer).
+maths: M1.
+erreurs: Conclure « aucun effet » d'une étude trop petite ; choisir la marge après avoir vu les résultats.
+exercice: Marge d'équivalence ±5 points. Étude A : intervalle [−2 ; 3]. Étude B : intervalle [−8 ; 12], non significatif. Que conclure de chacune ?
+correction: A : tout l'intervalle est dans [−5 ; 5], on conclut à l'équivalence. B : l'intervalle déborde de la marge, on ne peut conclure ni à un effet ni à l'équivalence : l'étude est simplement trop imprécise.
+duree: 7-9
 format: educational
 forme: lecon
 
@@ -815,6 +831,22 @@ duree: 10-12
 format: youtube_lesson
 forme: lecon
 
+## S10.08
+titre: Trop de zéros : modèles à inflation de zéros et modèles à seuil
+titre_en: Too many zeros: zero-inflated and hurdle models
+question: Comment modéliser le nombre de cigarettes fumées par jour, quand la plupart des gens n'en fument aucune ?
+pre: S10.04
+obj: Repérer un excès de zéros par rapport à une loi de Poisson | Distinguer modèle à inflation de zéros (deux sources de zéros) et modèle à seuil (décider, puis combien) | Interpréter les deux parties du modèle
+intuition: Certains zéros viennent de non-fumeurs, d'autres de fumeurs qui n'ont pas fumé ce jour-là : ce ne sont pas les mêmes zéros.
+exemple: Nombre de visites chez le médecin dans une enquête de santé.
+maths: M2.
+erreurs: Ajouter une inflation de zéros sans raison concrète d'avoir deux sources de zéros.
+exercice: Avec une loi de Poisson de moyenne 2, quelle proportion de zéros attend-on ? Les données en comptent 40 % : que suggère cet écart ?
+correction: P(X = 0) = e^(−2) ≈ 13,5 %. Avec 40 % de zéros observés, il y a bien plus de zéros que la loi de Poisson n'en prévoit : une partie de la population ne participe peut-être jamais.
+duree: 8-10
+format: educational
+forme: lecon
+
 # MODULE S11
 niveau: 3
 titre: Méthodes computationnelles et robustesse
@@ -975,6 +1007,22 @@ maths_demontrer: M2
 erreurs: Supprimer les valeurs gênantes sans le dire ; croire qu'une méthode robuste dispense de comprendre les valeurs extrêmes.
 exercice: Données : 1, 2, 3, 4, 100. Comparer la moyenne et la moyenne tronquée à 20 %.
 correction: Moyenne : 110 / 5 = 22. Moyenne tronquée à 20 % (on retire une valeur à chaque bout) : (2 + 3 + 4) / 3 = 3.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S11.11
+titre: Le résultat tient-il à nos choix ? Robustesse et analyse multivers
+titre_en: Does the result depend on our choices? Robustness and multiverse analysis
+question: Si dix équipes analysent les mêmes données, trouvent-elles la même chose ?
+pre: S11.10 | S8.09 | S9.11
+obj: Lister les choix d'analyse (variables, exclusions, transformations, modèle) | Présenter un résultat sur l'ensemble des spécifications raisonnables (analyse multivers, courbe de spécifications) | Distinguer robustesse d'un résultat et recherche du résultat voulu | Séparer analyse exploratoire et analyse confirmatoire pré-enregistrée
+intuition: Un résultat solide survit à des choix raisonnables différents ; un résultat fragile n'existe que dans une seule version de l'analyse.
+exemple: R. Silberzahn et coll., « Many Analysts, One Data Set », Advances in Methods and Practices in Psychological Science, 2018 (29 équipes, mêmes données).
+maths: M1.
+erreurs: Montrer seulement la spécification qui « marche » ; croire qu'un résultat qui change avec les choix est forcément faux.
+exercice: Sur 64 spécifications raisonnables, 9 donnent un effet significatif. Que dire du résultat ?
+correction: Il dépend fortement des choix d'analyse : 9 sur 64, soit environ 14 %. On ne peut pas le présenter comme établi, même si l'une des spécifications est significative.
 duree: 8-10
 format: educational
 forme: lecon

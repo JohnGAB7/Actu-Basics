@@ -31,6 +31,7 @@ Claude fait une recommandation pour chacune, sans la considérer comme acquise. 
 | **A8** | Place de la statistique bayésienne | (a) Bayes dès le niveau 2 (S4.10), méthode bayésienne en branche S12 · (b) Bayésien intégré dès le niveau 3, en parallèle du fréquentiste | **(a)**. Cela reste simple pour le débutant, et la comparaison des deux approches (S12.06) garde l'équilibre. |
 | **A9** | Code à l'écran | (a) Pas de code dans les vidéos, scripts Python et R fournis en description · (b) Python montré à l'écran à partir du niveau 3 · (c) Aucun code | **(a)** au lancement. La chaîne enseigne le raisonnement, pas la programmation. |
 | **A10** | La vidéo de lancement (paradoxe des anniversaires) | (a) Elle compte comme S4.06 dans le stock · (b) S4.06 est refaite en leçon, et la vidéo de lancement garde son rôle de présentation | **(a)**. Elle remplit déjà les objectifs de S4.06. Elle utilise le complément, enseigné en S4.05 : il faudra veiller à ce que S4.05 soit produite avant sa publication. |
+| **A11** | Faut-il un statut pédagogique éditorial, en plus du rôle dans le graphe ? | (a) Non : rôle dans le graphe et parcours suffisent · (b) Oui : un champ éditorial (par exemple « essentiel pour le parcours X »), attribué par l'éditorial, sans jamais dire « optionnel » | **(a)** pour l'instant, (b) si la revue éditoriale le juge utile. Ce choix appartient à ChatGPT, puis à JG. |
 
 ## 10.3 Points de vigilance pour la suite de la revue
 
@@ -112,14 +113,14 @@ Pour chaque famille : ce qui existait, et ce que la version 1.6 ajoute (« + » 
 | A1 Données manquantes | S1.07 (intuition), S18.03 (MCAR, MAR, MNAR, imputation multiple) | obj. S18.03 : indicateurs de manquants, limites de l'imputation simple |
 | A2 Erreurs de mesure, qualité | S1.07 en partie, E4.03 (atténuation) | + S1.12 fiabilité, validité, biais de mesure |
 | A3 Plan d'expérience, essais | S1.06, S9.10, S9.13, E7.01 | + S9.14 aveugle, conformité, attrition, intention de traiter |
-| A4 Puissance | S7.09, S8.03 | obj. S8.03 : effet minimal détectable, « non significatif » |
+| A4 Puissance | S7.09, S8.03 | obj. S8.03 : effet minimal détectable ; + S8.12 tests d'équivalence (preuve d'absence, version 1.7) |
 | A5 Tests multiples | S8.09 | obj. S8.09 : Holm, Benjamini-Hochberg, HARKing, exploration et confirmation |
 | A6 Rééchantillonnage | S11.02 (bootstrap), S11.03 (permutation) | + S11.09 jackknife, BCa, bootstrap par blocs |
-| A7 Statistique robuste | S2.09 (valeurs atypiques) | + S11.10 moyenne tronquée, MAD, M-estimateurs, régression robuste |
+| A7 Statistique robuste | S2.09 (valeurs atypiques), S9.06 (points influents) | + S11.10 moyenne tronquée, MAD, M-estimateurs, régression robuste ; + S11.11 robustesse et analyse multivers (version 1.7) |
 | A8 Survie | S15.01 à S15.04 | obj. S15.01 à S15.03 : censure à gauche, log-rank, vérification des risques proportionnels |
 | A9 Valeurs extrêmes | S18.06 | obj. S18.06 : GEV, GPD, niveau de retour |
 | A10 Données spatiales | S14.08 | obj. S14.08 : MAUP |
-| A11 Longitudinal, modèles mixtes | S10.07, S12.05 | obj. S10.07 : pente aléatoire, ICC, modèle mixte ou erreurs groupées |
+| A11 Longitudinal, modèles mixtes | S10.07, S12.05, E3.02, S9.14 (randomisation par grappes) | obj. S10.07 et E3.02 : pente aléatoire, ICC, niveau de groupement, modèle mixte ou erreurs groupées |
 | A12 Non paramétrique | S11.04, S11.03 | obj. S11.04 : ce que teste vraiment Mann-Whitney, Kruskal-Wallis |
 | A13 Fonctionnel, haute dimension | S17.03 (ridge, lasso) | + S13.09 données fonctionnelles, + S17.10 haute dimension et inférence après sélection ; obj. S17.03 : elastic net |
 | A14 Enquêtes avancées | S6.04, S6.07, S6.08 | + S6.09 effet de plan, poids de réplication |
@@ -157,6 +158,8 @@ Pour chaque famille : ce qui existait, et ce que la version 1.6 ajoute (« + » 
 | Conflits | absent | + module Q13 (2 vidéos, protocole renforcé) |
 | Commerce et mondialisation | absent | + Q10.03 |
 | Dette et finances publiques | absent | + Q10.01, Q10.02 |
+| Chaînes d'approvisionnement | absent | + Q10.04 (version 1.7) |
+| Sécurité énergétique | absent | + Q8.04 (version 1.7) |
 | Technologie et IA | Q5.01 à Q5.04 | + Q5.05 ce que mesure un score d'IA |
 | Information et médias | Q4.05, S1.09 | + module Q12 : agrégation de sondages, causalité inversée |
 | Agriculture et alimentation | absent | + module Q14 (2 vidéos) |
@@ -164,3 +167,22 @@ Pour chaque famille : ce qui existait, et ce que la version 1.6 ajoute (« + » 
 | Sport | Q6.01 à Q6.03 | + Q6.04 expected goals, + Q6.05 force du calendrier |
 
 Pour l'actualité, ces thèmes sont aussi des familles de questions à activer quand un événement et des sources primaires le justifient (section 5.2) ; ils ne figent aucun chiffre.
+
+## 10.9 Audit de la version 1.5 par ChatGPT
+
+L'audit de ChatGPT portait sur la version 1.5. La version 1.6 y répondait déjà en grande partie (table de la section 10.8). La version 1.7 complète ce qui restait.
+
+| Demande | Position de Claude | Ce qui change |
+|---|---|---|
+| Table de correspondance avec l'inventaire précédent | **Fait** en version 1.6 (section 10.8). Toutes les correspondances renvoient à des vidéos réellement enseignées, avec leurs objectifs ; aucune ne repose sur une simple mention en bibliographie. L'entrée « S13.13 » citée n'existe pas : il s'agit de S9.13 (plans factoriels) et de S9.14 (essai randomisé). | Section 10.8 complétée. |
+| Puissance, absence de preuve | **Accord** : la « preuve d'absence » est une compétence distincte. | + S8.12 tests d'équivalence (TOST). |
+| Comparaisons multiples et FDR | **Déjà couvert** : S8.09 enseigne Bonferroni, Holm et Benjamini-Hochberg depuis la version 1.6. | Aucun. |
+| Sensibilité et robustesse, multivers | **Accord**, c'était un manque. | + S11.11 analyse multivers. |
+| Statistique robuste, données de composition | **Déjà ajoutées** en version 1.6 (S11.10, S13.10). | Aucun. |
+| Méta-analyse approfondie | **Accord** : l'hétérogénéité manquait. | obj. S8.11 : Q de Cochran, I², limites du funnel plot. |
+| Comptages avancés | **Accord** : S10.04 s'arrêtait à la surdispersion. | + S10.08 inflation de zéros et modèles à seuil. |
+| Données groupées | **Déjà couvert** (E3.02, S10.07, S9.14). | obj. E3.02 : niveau de groupement, peu de groupes. |
+| Thèmes du quotidien | **Déjà ajoutés** en version 1.6 (modules Q7 à Q15), sauf deux. | + Q8.04 sécurité énergétique, + Q10.04 chaînes d'approvisionnement ; le caractère ouvert du catalogue est écrit en section 5.1. |
+| Description de la PR | **Accord**, elle décrivait encore la version 1. | Description mise à jour sur GitHub. |
+| Nom de la taxonomie | **Accord** : la règle est mécanique et ne mesure pas l'importance. | Renommée « rôle dans le graphe » ; statut éditorial éventuel soumis à l'arbitrage A11. |
+

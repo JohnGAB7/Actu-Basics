@@ -657,6 +657,20 @@ duree: 6-8
 format: educational
 forme: lecon
 
+## Q8.04
+titre: Sécurité énergétique : dépendre de qui ?
+titre_en: Energy security: dependent on whom?
+question: Un pays qui importe 40 % de son gaz est-il plus vulnérable qu'un pays qui en importe 60 % ?
+renvoi: S1.08 | Q10.03
+obj: Distinguer taux de dépendance et concentration des fournisseurs | Calculer un indice de concentration simple (part du premier fournisseur, indice de Herfindahl)
+intuition: Dépendre un peu d'un seul fournisseur peut être plus risqué que dépendre beaucoup de dix.
+exemple: Approvisionnement gazier européen en 2021-2022 (Eurostat, AIE, à dater).
+erreurs: Juger une vulnérabilité sur le seul taux de dépendance.
+sources: Eurostat, AIE, ministère de la Transition énergétique
+duree: 6-8
+format: educational
+forme: lecon
+
 # MODULE Q9
 niveau: 2
 titre: Logement
@@ -739,6 +753,20 @@ intuition: Un même conteneur coûte plus cher en euros quand l'euro baisse, san
 exemple: Douanes françaises, OMC (à dater).
 erreurs: Comparer des valeurs nominales sur des années de change très différent.
 sources: Douanes, OMC, Banque de France
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q10.04
+titre: Chaînes d'approvisionnement : pourquoi une usine à l'arrêt bloque le monde
+titre_en: Supply chains: why one stopped factory can stall the world
+question: Comment une pénurie de puces électroniques peut-elle arrêter des usines automobiles sur trois continents ?
+renvoi: S5.11 | S16.03
+obj: Lire une part de marché mondiale et un indice de concentration | Expliquer pourquoi des étapes en série multiplient les risques de rupture | Lire un indicateur de tension (délais de livraison, indices de pression)
+intuition: Une chaîne ne tient pas mieux que son maillon le plus fragile, et plus il y a de maillons, plus il y a de chances qu'un cède.
+exemple: Indice de pression des chaînes d'approvisionnement mondiales de la Réserve fédérale de New York (à dater).
+erreurs: Croire qu'un pays « produit » un bien parce qu'il l'assemble.
+sources: OMC, OCDE (base TiVA), Réserve fédérale de New York
 duree: 6-8
 format: educational
 forme: lecon

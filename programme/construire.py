@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.6 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-6.pdf"
+VERSION = "1.7 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-7.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -167,6 +167,8 @@ VERIFICATIONS = [
     ("S14.09", "100 * abs(2 - 1) / 1", 100, "erreur en % pour une valeur réelle de 1"),
     ("S14.09", "100 * abs(101 - 100) / 100", 1, "erreur en % pour une valeur réelle de 100"),
     ("E10.08", "1 / 0.2", 5, "durée moyenne de chômage, en mois"),
+    ("S10.08", "100 * exp(-2)", 13.5, "proportion de zéros attendue, loi de Poisson de moyenne 2, en %"),
+    ("S11.11", "100 * 9 / 64", 14, "part des spécifications significatives, en %"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
 ]
@@ -442,7 +444,7 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
     if u.pilier != "M":
         chips.append(f'<span class="chip maitrise">Maîtrise : {" · ".join(maitrise(u))}</span>')
     r = role(u, niveau, successeurs)
-    chips.append(f'<span class="chip role-{r}">{ROLES[r][0]}</span>')
+    chips.append(f'<span class="chip role-{r}">Graphe : {ROLES[r][0].lower()}</span>')
     if u.id in CONCUES:
         chips.append('<span class="chip etat-concue">Conçue</span>')
     else:
@@ -612,7 +614,7 @@ def tableau_roles(modules, unites, successeurs) -> str:
     lignes = "".join(
         f"<tr><td><span class='chip role-{k}'>{e(nom)}</span></td><td>{e(regle)}</td><td class='num'>{compte.get(k, 0)}</td></tr>"
         for k, (nom, regle) in ROLES.items())
-    return ("<table class='donnees'><thead><tr><th>Rôle</th><th>Règle (calculée par le script)</th><th>Vidéos</th></tr></thead><tbody>"
+    return ("<table class='donnees'><thead><tr><th>Rôle dans le graphe</th><th>Règle (calculée par le script)</th><th>Vidéos</th></tr></thead><tbody>"
             + lignes + "</tbody></table>")
 
 

@@ -48,7 +48,7 @@ Elles commencent par une **phase pilote interne de 5 vidéos**. Elle sert à mes
 
 ## Ce que JG doit décider
 
-Les dix arbitrages de la section 10, dont les plus structurants :
+Les onze arbitrages de la section 10, dont les plus structurants :
 
 1. adopter les trois piliers et leur correspondance avec les quatre familles actuelles du moteur ;
 2. fixer le seuil de lancement (proposition : vague 1 terminée et au moins 12 semaines de publication en stock, comptées en épisodes entièrement validés en FR et en EN) ;
@@ -66,6 +66,7 @@ Les dix arbitrages de la section 10, dont les plus structurants :
 | 1.4 | Décision de JG : toutes les vidéos possibles sont intégrées, aucune n'est marquée optionnelle (le spectateur choisit ; le script refuse désormais le champ « option »). Quatre vidéos ajoutées en E9 : changements de régime, volatilité stochastique, corrélations dynamiques (DCC), volatilité réalisée ; 5 calculs vérifiés de plus ; arbitrage A11 retiré, car tranché |
 | 1.5 | Règle d'exhaustivité (ChatGPT, conforme à la décision de JG) : inventaire des vidéos manquantes et 35 entrées ajoutées dans les trois piliers ; rôle (socle, approfondissement, spécialisation, sujet autonome, rappel) et état (conçue ou cataloguée) affichés sur chaque vidéo ; corrections de E9 (quasi-vraisemblance, séquence du test ARCH-LM, mesures de volatilité, conditions du GARCH(1,1), annualisation, VaR et Expected Shortfall, test d'indépendance des dépassements) ; corrections détaillées des exercices chiffrés de E9 et des nouvelles vidéos ; 69 calculs vérifiés ; LISEZMOI synchronisé |
 | 1.6 | Audit des familles proposées par ChatGPT (15 en statistiques, 14 en économétrie, 14 thèmes du quotidien) : table de correspondance en section 10.8 ; 41 vidéos ajoutées, dont neuf nouveaux modules du quotidien (démographie et santé publique, énergie et climat, logement, finances publiques et commerce, éducation, information et médias, conflits, agriculture, transport) ; objectifs complétés pour 21 vidéos existantes dont la couverture était partielle |
+| 1.7 | Audit de la version 1.5 par ChatGPT (section 10.9) : tests d'équivalence (S8.12), inflation de zéros (S10.08), analyse multivers (S11.11), sécurité énergétique (Q8.04), chaînes d'approvisionnement (Q10.04) ; hétérogénéité en méta-analyse et niveau de groupement complétés ; taxonomie renommée « rôle dans le graphe » ; arbitrage A11 sur un statut éditorial ; description de la PR synchronisée |
 
 ## Sommaire
 

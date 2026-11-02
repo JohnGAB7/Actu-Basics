@@ -34,7 +34,7 @@ Le tronc commun (niveaux 1 à 3) est le parcours de référence. Il peut être s
 
 Ces parcours sont des **itinéraires recommandés** à travers le catalogue, pas des frontières : aucune vidéo n'en est exclue, et un spectateur peut en sortir à tout moment.
 
-**Règle d'exhaustivité.** Toutes les vidéos pédagogiquement pertinentes figurent au catalogue, y compris les approfondissements et les spécialisations. Aucune n'est marquée « optionnelle » : c'est au spectateur de choisir ce qu'il suit (décision de JG). Pour l'orienter, chaque vidéo porte un **rôle**, calculé par le script à partir de son niveau et du graphe des prérequis. Ce rôle décrit la place de la vidéo, il ne juge pas son importance :
+**Règle d'exhaustivité.** Toutes les vidéos pédagogiquement pertinentes figurent au catalogue, y compris les approfondissements et les spécialisations. Aucune n'est marquée « optionnelle » : c'est au spectateur de choisir ce qu'il suit (décision de JG). Pour l'orienter, chaque vidéo porte un **rôle dans le graphe**, calculé par le script à partir de son niveau et des prérequis. C'est une règle mécanique : elle dit où se trouve la vidéo dans les dépendances, **pas son importance pédagogique**. Une vidéo terminale (« approfondissement ») peut être essentielle à un objectif, comme la méta-analyse pour lire l'actualité scientifique. Un statut pédagogique éditorial distinct, s'il est souhaité, relève de la revue éditoriale (arbitrage A11) :
 
 {{TABLEAU_ROLES}}
 

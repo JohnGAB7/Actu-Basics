@@ -186,7 +186,7 @@ titre: Erreurs standard robustes et groupées
 titre_en: Robust and clustered standard errors
 question: Pourquoi des observations d'une même école ou d'une même région faussent-elles la précision ?
 pre: E3.01 | S9.06
-obj: Expliquer l'hétéroscédasticité et la correction de White | Expliquer pourquoi des observations groupées exigent des erreurs groupées
+obj: Expliquer l'hétéroscédasticité et la correction de White | Expliquer pourquoi des observations groupées exigent des erreurs groupées | Dire à quel niveau grouper (celui de l'assignation du traitement) et pourquoi peu de groupes posent problème | Distinguer corriger l'inférence (erreurs groupées) et modéliser la dépendance (modèle mixte, S10.07)
 intuition: Cent élèves d'une même classe n'apportent pas cent informations indépendantes.
 exemple: Effet d'une réforme appliquée par région.
 maths: M2.
