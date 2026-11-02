@@ -192,7 +192,6 @@ obj: Expliquer la convergence d'une suite | Distinguer convergence en probabilit
 duree: 8-10
 format: educational
 forme: rappel
-option: oui
 
 ## M4.02
 titre: Espace probabilisé : pourquoi les mathématiciens ont formalisé le hasard
@@ -203,4 +202,3 @@ obj: Énoncer les trois axiomes des probabilités | Dire quand ce cadre devient 
 duree: 8-10
 format: educational
 forme: rappel
-option: oui

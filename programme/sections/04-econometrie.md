@@ -22,14 +22,14 @@ Chaque fiche de conception d'une méthode causale tient aussi un **registre des 
 | Module d'économétrie | Prérequis statistiques | Mathématiques |
 |---|---|---|
 | E1 · Données économiques et questions causales, graphes causaux | S1, S3 (corrélation et causalité) | M0 à M1 |
-| E2 · Le modèle linéaire (MCO) | **S9 complet** (régression) | M2, M3 en option |
+| E2 · Le modèle linéaire (MCO) | **S9 complet** (régression) | M2, M3 pour la forme matricielle |
 | E3 · Inférence et diagnostics | S8 (tests), S9.06 (diagnostics) | M2 |
 | E4 · Endogénéité | E2, E3 | M2 |
 | E5 · Variables instrumentales | E4 | M2 |
 | E6 · Données de panel | E3, E4.01 | M2 |
 | E7 · Méthodes d'évaluation | E4, E5.01, E6.02 pour E7.04 | M2 |
 | E8 · Séries temporelles économiques | S14.02, S16.01 (marche aléatoire), E3 | M2 à M3 |
-| E9 · Volatilité conditionnelle (ARCH, GARCH) | S14.04 (ARMA), S14.05 (prévision évaluée hors échantillon), S7.05 (maximum de vraisemblance), E3.02 (hétéroscédasticité) ; pas E8 | M2 à M3 |
+| E9 · Volatilité conditionnelle (ARCH, GARCH) | S14.04 (ARMA), S14.05 (prévision évaluée hors échantillon), S7.05 (maximum de vraisemblance), E3.02 (hétéroscédasticité) ; pas E8. Pour les extensions : S16.02 (chaînes de Markov), S12.04 (MCMC), S13.01 et M3.02 (matrices) | M2 à M3 |
 | E10 · Réponses limitées | S10 (GLM) | M2 |
 | E11 · Études de cas | E6, E7 | M2 |
 
@@ -37,12 +37,12 @@ Chaque fiche de conception d'une méthode causale tient aussi un **registre des 
 
 | Fondamental, pour tout spectateur du pilier | Extension avancée |
 |---|---|
-| E1 complet (dont graphes causaux), E2 complet, E3.01 à E3.04, E4.05 analyse de sensibilité | E6.04 panels dynamiques *(optionnel)* |
+| E1 complet (dont graphes causaux), E2 complet, E3.01 à E3.04, E4.05 analyse de sensibilité | E6.04 panels dynamiques |
 | E4 complet : variable omise, simultanéité, erreur de mesure, sélection | E7.04 différences de différences échelonnées |
 | E5.01 à E5.03 : idée, 2SLS, instruments faibles | E5.04 effet local (LATE) |
 | E7.01 à E7.03, E7.05 : expérience, expérience naturelle, différences de différences, discontinuité | E7.06 contrôle synthétique, E7.07 appariement et score de propension |
 | E6.01 et E6.02 : différences premières et effets fixes | E8 complet : racines unitaires, cointégration, VAR |
-| | E9.01 à E9.03 : volatilité conditionnelle, GARCH(1,1), cas reproductible de prévision ; E9.04 (asymétrie, loi de Student) et E9.05 (VaR, backtesting) *(optionnels)* |
+| | E9 complet : volatilité conditionnelle, GARCH(1,1), cas reproductible de prévision, asymétrie et loi de Student, VaR et backtesting, changements de régime, volatilité stochastique, corrélations dynamiques (DCC), volatilité réalisée |
 | | E10 complet : probit et logit, Tobit et Heckman, comptages |
 
 ## 4.4 Ce qui n'est pas refait, pour éviter les doublons

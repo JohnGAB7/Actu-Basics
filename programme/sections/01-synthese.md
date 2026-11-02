@@ -48,7 +48,7 @@ Elles commencent par une **phase pilote interne de 5 vidéos**. Elle sert à mes
 
 ## Ce que JG doit décider
 
-Les onze arbitrages de la section 10, dont les plus structurants :
+Les dix arbitrages de la section 10, dont les plus structurants :
 
 1. adopter les trois piliers et leur correspondance avec les quatre familles actuelles du moteur ;
 2. fixer le seuil de lancement (proposition : vague 1 terminée et au moins 12 semaines de publication en stock, comptées en épisodes entièrement validés en FR et en EN) ;
@@ -63,6 +63,7 @@ Les onze arbitrages de la section 10, dont les plus structurants :
 | 1.1 | Corrections après la première revue de ChatGPT : randomisation (S1.06), théorème central limite (S5.13), hypothèses de la marge d'erreur (S6.03, S6.05), premier contact avec le hasard au niveau 1 (S1.11), niveaux mathématiques séparés (comprendre, appliquer, démontrer), maîtrise visée par vidéo, sources des exemples historiques, liens de la bibliographie vérifiés, pilote, unité de stock et charge de travail précisés, minima de la grille d'actualité, décisions déjà prises distinguées des recommandations |
 | 1.2 | Revue croisée avec ChatGPT : rapport GAISE 2025 et correspondance avec ses dix recommandations ; spirale explicite autour de la droite de régression (S3.07 → S9.01) ; trois vidéos d'économétrie (graphes causaux E1.05, analyse de sensibilité E4.05, appariement et score de propension E7.07) ; registre des hypothèses ; cycle d'enquête, données ou simulation, reproductibilité et preuve d'apprentissage dans la fiche de conception ; tests de transfert et de diagnostic d'erreur dans le pilote |
 | 1.3 | Proposition ARCH/GARCH : nouveau module E9 « Volatilité conditionnelle » (3 vidéos et 2 optionnelles, 11 calculs vérifiés) ; anciens E9 et E10 renumérotés E10 et E11 ; profil « Finance et risque » ; prérequis de E8.04 corrigé (ARMA au lieu des chaînes de Markov) ; bibliographie des articles fondateurs |
+| 1.4 | Décision de JG : toutes les vidéos possibles sont intégrées, aucune n'est marquée optionnelle (le spectateur choisit ; le script refuse désormais le champ « option »). Quatre vidéos ajoutées en E9 : changements de régime, volatilité stochastique, corrélations dynamiques (DCC), volatilité réalisée ; 5 calculs vérifiés de plus ; arbitrage A11 retiré, car tranché |
 
 ## Sommaire
 

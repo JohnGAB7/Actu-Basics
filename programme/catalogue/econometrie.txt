@@ -444,7 +444,6 @@ exercice: Pourquoi le biais diminue-t-il quand le nombre de périodes augmente ?
 duree: 10-12
 format: youtube_lesson
 forme: lecon
-option: oui
 
 # MODULE E7
 niveau: 3
@@ -649,7 +648,7 @@ titre_en: Conditional volatility: ARCH and GARCH
 titre_court: Volatilité ARCH/GARCH
 pre: S14.04 | S14.05 | S7.05 | E3.02
 maths: M2 → M3
-but: Modéliser une variance qui change avec le temps. S14 modélise la moyenne conditionnelle d'une série ; ce module modélise sa variance conditionnelle, des faits stylisés des rendements jusqu'à la prévision de volatilité évaluée hors échantillon. Il ne dépend pas de E8 : les rendements sont déjà stationnaires. ARCH est né sur l'inflation britannique (Engle, 1982), et non en finance : le module reste donc dans l'économétrie des séries temporelles, avec la finance comme terrain d'application principal. La volatilité stochastique, les GARCH multivariés (DCC) et la volatilité réalisée à haute fréquence sont signalés en bibliographie, sans vidéo.
+but: Modéliser une variance qui change avec le temps. S14 modélise la moyenne conditionnelle d'une série ; ce module modélise sa variance conditionnelle, des faits stylisés des rendements jusqu'à la prévision de volatilité évaluée hors échantillon. Il ne dépend pas de E8 : les rendements sont déjà stationnaires. ARCH est né sur l'inflation britannique (Engle, 1982), et non en finance : le module reste donc dans l'économétrie des séries temporelles, avec la finance comme terrain d'application principal. Le module va jusqu'aux extensions de niveau master : asymétrie, mesure du risque, changements de régime, volatilité stochastique, corrélations dynamiques et volatilité réalisée.
 
 ## E9.01
 titre: Pourquoi la volatilité varie-t-elle dans le temps ?
@@ -714,7 +713,6 @@ exercice: GJR-GARCH avec ω = 0,02, α = 0,03, γ = 0,10, β = 0,90 et une varia
 duree: 8-10
 format: educational
 forme: lecon
-option: oui
 
 ## E9.05
 titre: Volatilité et mesure du risque : VaR, Expected Shortfall et backtesting
@@ -730,7 +728,70 @@ exercice: Volatilité prévue de 1,5 % et loi normale : quelle VaR à 99 % sur u
 duree: 8-10
 format: educational
 forme: lecon
-option: oui
+
+## E9.06
+titre: Changements de régime : quand le marché bascule entre calme et crise
+titre_en: Regime switching: when markets flip between calm and crisis
+question: Et si la volatilité ne variait pas doucement, mais sautait d'un état à un autre ?
+pre: E9.02 | S16.02
+obj: Décrire un modèle à changements de régime markoviens | Calculer la durée moyenne d'un régime à partir de sa probabilité de maintien | Lire une probabilité filtrée d'être en régime de crise | Distinguer un changement de régime d'une forte persistance GARCH
+intuition: Deux météos possibles, beau temps et tempête, et une chaîne de Markov qui décide chaque jour si l'on reste ou si l'on change.
+exemple: J. Hamilton, Econometrica, 1989 : régimes d'expansion et de récession du PIB américain.
+maths: M2.
+maths_demontrer: M3
+erreurs: Prendre la probabilité filtrée pour une certitude ; ajouter des régimes jusqu'à « expliquer » chaque épisode passé.
+exercice: Un régime de crise se maintient d'un mois sur l'autre avec une probabilité de 0,95 : combien de mois dure-t-il en moyenne ?
+duree: 8-10
+format: educational
+forme: lecon
+
+## E9.07
+titre: La volatilité stochastique
+titre_en: Stochastic volatility
+question: Et si la volatilité avait son propre hasard, au lieu d'être fixée par les chocs passés ?
+pre: E9.03 | S12.04
+obj: Écrire un modèle à volatilité stochastique avec une log-variance autorégressive | Expliquer la différence avec GARCH : volatilité déterminée par le passé contre volatilité latente avec son propre choc | Expliquer pourquoi la vraisemblance n'a pas de forme simple, et les solutions (filtrage, MCMC) | Dire quand ce modèle vaut l'effort supplémentaire
+intuition: Dans GARCH, connaître le passé suffit à connaître la variance de demain ; ici, la variance est elle-même une variable cachée qu'il faut deviner.
+exemple: E. Jacquier, N. Polson, P. Rossi, Journal of Business & Economic Statistics, 1994 : estimation bayésienne par MCMC.
+maths: M3.
+maths_comprendre: M2
+maths_demontrer: M4
+erreurs: Croire que la volatilité stochastique bat toujours GARCH en prévision ; confondre la volatilité filtrée et la volatilité vraie.
+exercice: Pourquoi la vraisemblance d'un GARCH se calcule-t-elle pas à pas, et pas celle d'un modèle à volatilité stochastique ?
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## E9.08
+titre: Corrélations dynamiques : GARCH multivarié et DCC
+titre_en: Dynamic correlations: multivariate GARCH and DCC
+question: Pourquoi la diversification protège-t-elle moins au moment où l'on en a le plus besoin ?
+pre: E9.03 | S13.01 | M3.02
+obj: Calculer la variance d'un portefeuille de deux actifs à partir des volatilités et de la corrélation | Expliquer pourquoi un GARCH multivarié complet a trop de paramètres | Décrire la logique en deux temps du DCC : volatilités univariées, puis corrélation dynamique | Interpréter une hausse des corrélations en période de crise
+intuition: En temps calme, les actifs bougent chacun de leur côté ; dans la panique, tout baisse ensemble.
+exemple: R. Engle, Journal of Business & Economic Statistics, 2002 (modèle DCC) ; corrélations entre actions et obligations (données à sourcer et dater).
+maths: M3.
+maths_comprendre: M2
+erreurs: Supposer une corrélation constante pour mesurer le risque d'un portefeuille ; lire une corrélation dynamique estimée comme une causalité entre marchés.
+exercice: Deux actifs pondérés à 50 %, de volatilités 1 % et 2 % : variance du portefeuille avec une corrélation de 0,3, puis de 0,9.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## E9.09
+titre: Volatilité réalisée et données à haute fréquence
+titre_en: Realized volatility and high-frequency data
+question: Et si l'on pouvait mesurer la volatilité d'une journée au lieu de la deviner ?
+pre: E9.03
+obj: Calculer une volatilité réalisée à partir de rendements intrajournaliers | Expliquer pourquoi elle est bien moins bruitée que le carré du rendement journalier | Décrire le modèle HAR (jour, semaine, mois) | Expliquer le bruit de microstructure et pourquoi on n'échantillonne pas à chaque seconde
+intuition: Au lieu de photographier le marché une fois par jour, on le filme ; la somme des petits mouvements révèle l'agitation réelle de la journée.
+exemple: T. Andersen, T. Bollerslev, F. Diebold, P. Labys, Econometrica, 2003 ; F. Corsi, Journal of Financial Econometrics, 2009 (modèle HAR).
+maths: M2.
+erreurs: Échantillonner à la fréquence la plus fine possible sans tenir compte du bruit de microstructure ; oublier les nuits et les week-ends.
+exercice: Une journée compte 78 intervalles de 5 minutes, chacun avec un rendement de ±0,1 %. Quelle est la variance réalisée, et la volatilité réalisée du jour ?
+duree: 8-10
+format: educational
+forme: lecon
 
 # MODULE E10
 niveau: 4
@@ -769,7 +830,6 @@ exercice: Classer trois situations en censure ou sélection.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
-option: oui
 
 ## E10.03
 titre: Modèles de comptage en économie
@@ -785,7 +845,6 @@ exercice: Interpréter un coefficient de 0,2 sur le logarithme des dépenses de 
 duree: 6-8
 format: educational
 forme: lecon
-option: oui
 
 # MODULE E11
 niveau: 4

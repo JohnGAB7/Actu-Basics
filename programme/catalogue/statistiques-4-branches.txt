@@ -496,7 +496,7 @@ titre: Compléments théoriques et pratiques avancés
 titre_en: Advanced theory and practice
 pre: S7 | S10
 maths: M2 → M4
-but: Parcours optionnel pour les spectateurs qui veulent la théorie derrière les méthodes (précision maximale d'un estimateur, approximations) et une question pratique majeure souvent ignorée : les données manquantes.
+but: Pour les spectateurs qui veulent la théorie derrière les méthodes (précision maximale d'un estimateur, approximations) et une question pratique majeure souvent ignorée : les données manquantes.
 
 ## S18.01
 titre: Information de Fisher et borne de Cramér-Rao
@@ -514,7 +514,6 @@ exercice: Calculer l'information de Fisher d'une observation de Bernoulli.
 duree: 12-16
 format: youtube_lesson
 forme: lecon
-option: oui
 
 ## S18.02
 titre: La méthode delta
@@ -530,7 +529,6 @@ exercice: Erreur standard de log(p̂) à partir de celle de p̂.
 duree: 8-10
 format: educational
 forme: lecon
-option: oui
 
 ## S18.03
 titre: Données manquantes et imputation multiple

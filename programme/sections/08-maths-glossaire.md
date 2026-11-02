@@ -9,8 +9,8 @@ Chaque vidéo indique le niveau mathématique dont elle a besoin. Le cursus prin
 | **M0 · Calcul de base** | Fractions, ratios, pourcentages, règle de trois, ordres de grandeur, notation scientifique, lecture de graphique | Niveau 1 entier, pilier 3 | M0.01 à M0.03 |
 | **M1 · Algèbre et fonctions** | Équations, droites, puissances, racines, exponentielle, logarithme, notation Σ, factorielle, suites géométriques | Niveaux 2 et 3, E1 | M1.01 à M1.05 |
 | **M2 · Analyse** | Dérivée comme pente, recherche d'un maximum, intégrale comme aire, fonctions de plusieurs variables | S5.07 et suivantes, S7.05, S9, S10, la plupart des branches | M2.01 à M2.03 |
-| **M3 · Algèbre linéaire** | Vecteurs, matrices, produit matriciel, valeurs et vecteurs propres | S9.04 en option, S13, S16.02, E2.03, E8.04 | M3.01 à M3.03 |
-| **M4 · Fondements** | Suites et convergence, espaces probabilisés | S18 uniquement (optionnel) | M4.01, M4.02 |
+| **M3 · Algèbre linéaire** | Vecteurs, matrices, produit matriciel, valeurs et vecteurs propres | S9.04, S13, S16.02, E2.03, E8.04, E9.07, E9.08 | M3.01 à M3.03 |
+| **M4 · Fondements** | Suites et convergence, espaces probabilisés | S18 ; démonstrations de E9.07 | M4.01, M4.02 |
 
 {{SYLLABUS_MATHS}}
 

@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.3 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-3.pdf"
+VERSION = "1.4 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-4.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -135,6 +135,11 @@ VERIFICATIONS = [
     ("E9.04", "0.02 + (0.03 + 0.10) * 2 ** 2 + 0.90 * 1", 1.44, "variance après un choc de −2"),
     ("E9.04", "0.02 + 0.03 * 2 ** 2 + 0.90 * 1", 1.04, "variance après un choc de +2"),
     ("E9.05", "2.326 * 1.5", 3.49, "VaR normale à 99 % sur un jour, en %"),
+    ("E9.06", "1 / (1 - 0.95)", 20, "durée moyenne du régime de crise, en mois"),
+    ("E9.08", "0.25 * 1 ** 2 + 0.25 * 2 ** 2 + 2 * 0.25 * 0.3 * 1 * 2", 1.55, "variance du portefeuille, corrélation 0,3"),
+    ("E9.08", "0.25 * 1 ** 2 + 0.25 * 2 ** 2 + 2 * 0.25 * 0.9 * 1 * 2", 2.15, "variance du portefeuille, corrélation 0,9"),
+    ("E9.09", "78 * 0.1 ** 2", 0.78, "variance réalisée du jour"),
+    ("E9.09", "sqrt(78 * 0.1 ** 2)", 0.88, "volatilité réalisée du jour, en %"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
 ]
@@ -171,9 +176,6 @@ class Unite:
         a, _, b = self.champs["duree"].partition("-")
         return float(a), float(b or a)
 
-    @property
-    def optionnelle(self) -> bool:
-        return self.champs.get("option", "").lower() in ("oui", "true")
 
 
 @dataclass
@@ -235,6 +237,8 @@ def controler(modules: list[Module], unites: dict[str, Unite]) -> tuple[list[str
         for c in CHAMPS_UNITE[u.pilier]:
             if not u.champs.get(c):
                 erreurs.append(f"{u.id} : champ « {c} » manquant")
+        if "option" in u.champs:
+            erreurs.append(f"{u.id} : champ « option » refusé (décision de JG : toutes les vidéos sont proposées, le spectateur choisit)")
         fmt = u.champs.get("format")
         if fmt not in FORMATS:
             erreurs.append(f"{u.id} : format inconnu « {fmt} »")
@@ -260,8 +264,6 @@ def controler(modules: list[Module], unites: dict[str, Unite]) -> tuple[list[str
                 erreurs.append(f"{u.id} (niveau {niv}) demande {p}, de niveau {niveau_module[q.module]} plus élevé")
             if u.pilier == "S" and q.pilier == "S" and niv <= 3 and q.rang > u.rang:
                 erreurs.append(f"{u.id} demande {p}, placé plus loin dans le tronc commun")
-            if q.optionnelle and not u.optionnelle:
-                avertissements.append(f"{u.id} (obligatoire) dépend de {p}, marqué optionnel")
     # Cycles
     etat: dict[str, int] = {}
 
@@ -389,8 +391,6 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
             chips.append(f'<span class="chip">Maths : comprendre M{comp} · appliquer M{app} · démontrer M{demo}</span>')
     if u.pilier != "M":
         chips.append(f'<span class="chip maitrise">Maîtrise : {" · ".join(maitrise(u))}</span>')
-    if u.optionnelle:
-        chips.append('<span class="chip opt">Optionnel</span>')
     lignes = []
 
     def ligne(lib: str, val: str) -> None:
@@ -426,7 +426,7 @@ def bloc_module(m: Module, unites: dict[str, Unite], successeurs) -> str:
     niv = NIVEAUX[m.niveau][0]
     pre = [x.strip() for x in c["pre"].split("|") if x.strip() not in ("", "-")]
     sommaire = "".join(
-        f'<tr><td><a href="#{e(u.id)}">{e(u.id)}</a></td><td>{e(u.champs["titre"])}{" <em>(optionnel)</em>" if u.optionnelle else ""}</td>'
+        f'<tr><td><a href="#{e(u.id)}">{e(u.id)}</a></td><td>{e(u.champs["titre"])}</td>'
         f'<td>{FORMATS[u.champs["format"]][0]}</td><td class="num">{minutes(*u.duree)}</td></tr>'
         for u in m.unites
     )
@@ -541,12 +541,11 @@ def tableau_volumes(modules, unites) -> str:
         n = len(us)
         mins = sum(sum(u.duree) / 2 for u in us)
         fm = Counter(u.champs["format"] for u in us)
-        opt = sum(u.optionnelle for u in us)
         tot_n += n
         tot_min += mins
-        lignes.append(f"<tr><td>{e(nom)}</td><td class='num'>{n}</td><td class='num'>{opt}</td><td class='num'>{fm.get('short', 0)}</td><td class='num'>{fm.get('educational', 0)}</td><td class='num'>{fm.get('youtube_lesson', 0)}</td><td class='num'>{mins / 60:.1f} h</td></tr>")
-    lignes.append(f"<tr class='total'><td>Total</td><td class='num'>{tot_n}</td><td></td><td></td><td></td><td></td><td class='num'>{tot_min / 60:.1f} h</td></tr>")
-    tete = ("<table class='donnees'><thead><tr><th>Pilier</th><th>Vidéos</th><th>dont optionnelles</th><th>SHORT</th>"
+        lignes.append(f"<tr><td>{e(nom)}</td><td class='num'>{n}</td><td class='num'>{fm.get('short', 0)}</td><td class='num'>{fm.get('educational', 0)}</td><td class='num'>{fm.get('youtube_lesson', 0)}</td><td class='num'>{mins / 60:.1f} h</td></tr>")
+    lignes.append(f"<tr class='total'><td>Total</td><td class='num'>{tot_n}</td><td></td><td></td><td></td><td class='num'>{tot_min / 60:.1f} h</td></tr>")
+    tete = ("<table class='donnees'><thead><tr><th>Pilier</th><th>Vidéos</th><th>SHORT</th>"
             "<th>EDUCATIONAL</th><th>YOUTUBE_LESSON</th><th>Durée totale<br>(milieu de fourchette)</th></tr></thead><tbody>")
     return tete + "".join(lignes).replace(".", ",") + "</tbody></table>"
 

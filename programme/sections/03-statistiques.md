@@ -32,7 +32,7 @@ Le tronc commun (niveaux 1 à 3) est le parcours de référence. Il peut être s
 | **Finance et risque** | S1 à S9, S14, E2 et E3, puis E9 (volatilité, VaR) | 110 |
 | **Actuariat et assurance** | S5, S7, S10 (avec S10.06), S15, S12 | 50 |
 
-Les vidéos marquées **optionnel** (S18 entièrement, E6.04, E9.04, E9.05, E10.02, E10.03, M4) approfondissent sans être nécessaires à la suite.
+**Aucune vidéo n'est marquée optionnelle.** Toutes les vidéos possibles sont proposées, et c'est au spectateur de choisir ce qu'il suit, à l'aide des prérequis, des niveaux et des parcours ci-dessus. Certaines vidéos approfondissent sans être nécessaires à la suite : on le voit à ce qu'aucune autre vidéo ne les demande en prérequis (lien « Prépare » vide).
 
 ## 3.4 Ce que la statistique partage avec d'autres disciplines
 

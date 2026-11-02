@@ -76,9 +76,9 @@ Ces références servent à **concevoir et vérifier** les vidéos. Ce ne sont p
 | J. Wooldridge, *Econometric Analysis of Cross Section and Panel Data*, 2e éd. (2010) | Master | Livre | | E6, E10 |
 | G. Imbens, D. Rubin, *Causal Inference for Statistics, Social, and Biomedical Sciences* (2015) | Master | Livre | | E1.04, E7 |
 | J. Hamilton, *Time Series Analysis* (1994) | Master | Livre | | E8, E9.02 |
-| C. Francq, J.-M. Zakoïan, *GARCH Models: Structure, Statistical Inference and Financial Applications* (Wiley, 2010 ; édition la plus récente à confirmer) | Master | Livre | | E9 |
-| R. Tsay, *Analysis of Financial Time Series*, 3e éd. (Wiley, 2010) | Master | Livre | | E9 |
-| ENSAE, cours « GARCH and stochastic volatility models » (C. Francq) · ensae.fr/courses/176-garch-and-stochastic-volatility-models | Master | Plan de cours en ligne | ✔ | E9, extensions hors programme (volatilité stochastique) |
+| C. Francq, J.-M. Zakoïan, *GARCH Models: Structure, Statistical Inference and Financial Applications* (Wiley, 1re éd. 2010 ; nouvelle édition Wiley 2019, ISBN 9781119313571) | Master | Livre | | E9 |
+| R. Tsay, *Analysis of Financial Time Series*, 3e éd. (Wiley, 2010 ; édition non revérifiée) | Master | Livre | | E9 |
+| ENSAE, cours « GARCH and stochastic volatility models » (C. Francq) · ensae.fr/courses/176-garch-and-stochastic-volatility-models | Master | Plan de cours en ligne | ✔ | E9, dont E9.06 et E9.07 |
 | Université de Bologne, « Econometrics of Financial Markets » (Laurea magistrale, 2026-2027) · unibo.it, insegnamento 521364 | Master | Plan de cours en ligne | ✔ | E9 (test ARCH, ARCH, GARCH, VaR) |
 | W. Greene, *Econometric Analysis* | Master, référence | Livre | | Tout le pilier 2 |
 
@@ -122,8 +122,13 @@ Articles fondateurs et articles cités dans le module E9 (métadonnées vérifi�
 | E9.04 | L. Glosten, R. Jagannathan, D. Runkle, *Journal of Finance*, 48(5), 1993, p. 1779-1801 · doi.org/10.1111/j.1540-6261.1993.tb05128.x |
 | E9.04 | D. Nelson, « Conditional Heteroskedasticity in Asset Returns: A New Approach », *Econometrica*, 59(2), 1991, p. 347 et suiv. · doi.org/10.2307/2938260 |
 | E9.05 | P. Kupiec, « Techniques for Verifying the Accuracy of Risk Measurement Models », *Journal of Derivatives*, 3(2), 1995, p. 73-84 · doi.org/10.3905/jod.1995.407942 |
-| E9.01 | R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », *Quantitative Finance*, 2001 (non revérifié) |
-| E9.03 | A. Patton, « Volatility forecast comparison using imperfect volatility proxies », *Journal of Econometrics*, 2011 (non revérifié) |
+| E9.01 | R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », *Quantitative Finance*, 1(2), 2001, p. 223-236 · doi.org/10.1080/713665670 |
+| E9.03 | A. Patton, « Volatility forecast comparison using imperfect volatility proxies », *Journal of Econometrics*, 160(1), 2011, p. 246-256 · doi.org/10.1016/j.jeconom.2010.03.034 |
+| E9.06 | J. Hamilton, « A New Approach to the Economic Analysis of Nonstationary Time Series and the Business Cycle », *Econometrica*, 57(2), 1989, p. 357 et suiv. · doi.org/10.2307/1912559 |
+| E9.07 | E. Jacquier, N. Polson, P. Rossi, « Bayesian Analysis of Stochastic Volatility Models », *Journal of Business & Economic Statistics*, 1994 (non revérifié) |
+| E9.08 | R. Engle, « Dynamic Conditional Correlation », *Journal of Business & Economic Statistics*, 20(3), 2002, p. 339-350 · doi.org/10.1198/073500102288618487 |
+| E9.09 | T. Andersen, T. Bollerslev, F. Diebold, P. Labys, « Modeling and Forecasting Realized Volatility », *Econometrica*, 71(2), 2003, p. 579-625 · doi.org/10.1111/1468-0262.00418 |
+| E9.09 | F. Corsi, « A Simple Approximate Long-Memory Model of Realized Volatility », *Journal of Financial Econometrics*, 7(2), p. 174-196 · doi.org/10.1093/jjfinec/nbp001 |
 
 ## 9.6 Vulgarisation audiovisuelle à étudier (références de forme, pas de fond)
 
