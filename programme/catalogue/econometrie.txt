@@ -309,6 +309,22 @@ duree: 8-10
 format: educational
 forme: lecon
 
+## E4.06
+titre: Des bornes plutôt qu'un chiffre : l'identification partielle
+titre_en: Bounds instead of a number: partial identification
+question: Que peut-on affirmer sans faire d'hypothèse invérifiable ?
+pre: E4.04 | E1.04
+obj: Calculer des bornes de Manski avec des données manquantes | Expliquer comment chaque hypothèse supplémentaire resserre les bornes | Présenter un résultat comme un intervalle d'identification
+intuition: Plutôt que de deviner ce que font les absents, on calcule ce qui se passe s'ils font tous le pire, puis tous le mieux.
+exemple: C. Manski, Partial Identification of Probability Distributions, Springer, 2003.
+maths: M1.
+erreurs: Confondre intervalle d'identification et intervalle de confiance ; croire qu'un intervalle large est un échec.
+exercice: 80 % des personnes interrogées répondent, et 70 % des répondants ont un emploi. Entre quelles bornes se situe le taux d'emploi de toute la population ?
+correction: Borne basse, si aucun non-répondant n'a d'emploi : 0,8 × 0,7 = 0,56. Borne haute, si tous en ont un : 0,56 + 0,2 = 0,76. Le taux est entre 56 % et 76 %, sans autre hypothèse.
+duree: 7-9
+format: educational
+forme: lecon
+
 # MODULE E5
 niveau: 3
 titre: Variables instrumentales et 2SLS
@@ -377,6 +393,23 @@ duree: 8-10
 format: educational
 forme: lecon
 
+## E5.05
+titre: La méthode des moments généralisée (GMM)
+titre_en: The generalized method of moments (GMM)
+question: Comment estimer quand on a plus de conditions que de paramètres ?
+pre: E5.02 | S7.03
+obj: Écrire un estimateur comme une solution de conditions de moments | Expliquer la pondération optimale | Lire un test de suridentification (Hansen) et ses limites
+intuition: Chaque instrument donne une équation ; on cherche les paramètres qui les satisfont au mieux toutes ensemble.
+exemple: L. P. Hansen, Econometrica, 1982 ; modèles de consommation.
+maths: M3.
+maths_comprendre: M2
+erreurs: Croire qu'un test de Hansen non significatif prouve la validité des instruments.
+exercice: Avec 3 instruments et 1 variable endogène, combien de degrés de suridentification ?
+correction: 3 − 1 = 2 conditions en surnombre, que le test de Hansen confronte entre elles.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
 # MODULE E6
 niveau: 3
 titre: Données de panel
@@ -443,6 +476,24 @@ erreurs: Multiplier les instruments sans contrôle.
 exercice: Pourquoi le biais diminue-t-il quand le nombre de périodes augmente ?
 duree: 10-12
 format: youtube_lesson
+forme: lecon
+
+## E6.05
+titre: L'économétrie spatiale
+titre_en: Spatial econometrics
+question: Le chômage d'une région dépend-il de celui de ses voisines ?
+pre: E6.02 | E3.02
+renvoi: S14.08
+obj: Écrire une matrice de voisinage | Distinguer décalage spatial de la variable et erreurs spatialement corrélées | Expliquer le problème de la réflexion de Manski
+intuition: Les régions s'influencent, mais elles partagent aussi des chocs communs : il faut séparer les deux.
+exemple: L. Anselin, Spatial Econometrics: Methods and Models, Kluwer, 1988.
+maths: M3.
+maths_comprendre: M1
+erreurs: Lire une corrélation entre voisins comme un effet de contagion.
+exercice: Deux régions voisines ont des chômages qui évoluent ensemble. Citer deux explications qu'un modèle spatial doit séparer.
+correction: Une influence réelle d'une région sur l'autre (débordement), ou un choc commun aux deux (industrie, climat) : seule la première est un effet spatial.
+duree: 8-10
+format: educational
 forme: lecon
 
 # MODULE E7
@@ -558,6 +609,23 @@ duree: 10-12
 format: youtube_lesson
 forme: lecon
 
+## E7.08
+titre: Effets hétérogènes et apprentissage automatique causal
+titre_en: Heterogeneous effects and causal machine learning
+question: Un traitement efficace en moyenne l'est-il pour tout le monde ?
+pre: E7.07 | S11.05 | S9.05
+renvoi: S17.04
+obj: Distinguer effet moyen et effet conditionnel (CATE) | Décrire l'idée du double apprentissage automatique (double ML) et des forêts causales | Expliquer pourquoi l'apprentissage ne remplace pas l'hypothèse d'identification
+intuition: L'apprentissage automatique sert à bien prédire les variables de contrôle, la stratégie d'identification sert à mesurer l'effet.
+exemple: V. Chernozhukov et coll., Econometrics Journal, 2018 (double ML) ; S. Wager, S. Athey, JASA, 2018 (forêts causales).
+maths: M2.
+erreurs: Chercher des sous-groupes jusqu'à trouver un effet significatif ; croire que l'apprentissage automatique rend une étude observationnelle causale.
+exercice: Un effet moyen est nul, mais positif pour les jeunes et négatif pour les seniors. Comment le vérifier sans p-hacking ?
+correction: Déclarer les sous-groupes à l'avance, ou les choisir sur une partie des données et tester sur l'autre (échantillons séparés), et corriger pour les comparaisons multiples.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
 # MODULE E8
 niveau: 4
 titre: Séries temporelles économiques
@@ -641,6 +709,38 @@ duree: 6-8
 format: educational
 forme: lecon
 
+## E8.06
+titre: Les projections locales
+titre_en: Local projections
+question: Peut-on mesurer la réponse à un choc sans écrire tout un système VAR ?
+pre: E8.04
+obj: Estimer une réponse à un choc par une régression à chaque horizon | Comparer projections locales et VAR (biais, variance) | Dire que l'identification du choc reste le vrai problème
+intuition: Pour chaque horizon, on régresse directement la variable future sur le choc d'aujourd'hui.
+exemple: Ò. Jordà, American Economic Review, 2005.
+maths: M2.
+erreurs: Croire que les projections locales règlent l'identification des chocs.
+exercice: Pourquoi les bandes d'incertitude d'une projection locale sont-elles souvent plus larges que celles d'un VAR ?
+correction: Chaque horizon est estimé séparément, sans imposer la structure du VAR : moins de biais si le VAR est mal spécifié, mais plus de variance.
+duree: 7-9
+format: educational
+forme: lecon
+
+## E8.07
+titre: L'effet d'un événement sur une série : modèles structurels bayésiens
+titre_en: The effect of an event on a time series: Bayesian structural models
+question: De combien une campagne a-t-elle fait augmenter les ventes, sans groupe témoin ?
+pre: E7.06 | S14.07 | S12.04
+obj: Construire un contrefactuel à partir de séries témoins non touchées | Lire l'effet cumulé et son intervalle de crédibilité | Énoncer les hypothèses : séries témoins non affectées, relation stable avant et après
+intuition: On prévoit ce qu'aurait fait la série sans l'événement, à partir de séries proches, et l'on compare.
+exemple: K. Brodersen et coll., Annals of Applied Statistics, 2015 (modèle CausalImpact).
+maths: M2.
+erreurs: Choisir des séries témoins elles-mêmes touchées par l'événement.
+exercice: Pourquoi une série témoin touchée par la même campagne sous-estime-t-elle l'effet ?
+correction: Le contrefactuel monte avec elle : l'écart mesuré est plus petit que l'effet réel.
+duree: 8-10
+format: educational
+forme: lecon
+
 # MODULE E9
 niveau: 4
 titre: Volatilité conditionnelle : ARCH et GARCH
@@ -655,13 +755,14 @@ titre: Pourquoi la volatilité varie-t-elle dans le temps ?
 titre_en: Why does volatility change over time?
 question: Si personne ne peut prévoir le sens du marché demain, peut-on au moins prévoir son agitation ?
 pre: S14.02 | M1.04
-obj: Calculer un rendement logarithmique | Repérer les regroupements de volatilité sur un graphique des rendements et de leurs carrés | Distinguer l'absence d'autocorrélation des rendements et l'autocorrélation de leurs carrés | Distinguer la volatilité roulante, une estimation, et la variance conditionnelle, une quantité du modèle qui ne s'observe pas
+obj: Calculer un rendement logarithmique | Repérer les regroupements de volatilité sur un graphique des rendements et de leurs carrés | Distinguer l'absence d'autocorrélation des rendements et l'autocorrélation de leurs carrés | Distinguer quatre objets : la variance conditionnelle (quantité du modèle, non observée), la volatilité estimée ou roulante, la volatilité réalisée (E9.09) et le carré du rendement, mesure très bruitée de la variance du jour
 intuition: Les marchés ont une météo : après une journée agitée, une autre journée agitée est plus probable, même si l'on ignore dans quel sens ira le prix.
 exemple: Rendements journaliers d'un grand indice boursier, avec 2008 et mars 2020 (données publiques à sourcer et dater). Faits stylisés : R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », Quantitative Finance, 2001.
 maths: M1.
 maths_comprendre: M0
 erreurs: Croire que des rendements imprévisibles ont forcément une variance constante ; prendre la volatilité roulante pour la vraie volatilité ; traiter les queues épaisses comme des valeurs aberrantes à supprimer.
 exercice: Un indice passe de 100 à 103 : quel est le rendement logarithmique, en % ? Les rendements ne sont pas autocorrélés, mais leurs carrés le sont : qu'en conclure ?
+correction: Rendement logarithmique : 100 × ln(103/100) = 100 × ln(1,03) ≈ 2,96 %. Des rendements non autocorrélés mais des carrés autocorrélés signifient que l'on ne peut pas prévoir le sens du mouvement, mais que l'on peut prévoir son ampleur : la variance conditionnelle change avec le temps, ce qui contredit l'hypothèse d'une variance constante.
 duree: 7-9
 format: educational
 forme: lecon
@@ -671,14 +772,15 @@ titre: Du modèle ARCH au GARCH(1,1)
 titre_en: From ARCH to GARCH(1,1)
 question: Comment écrire que la variance de demain dépend des chocs d'aujourd'hui ?
 pre: E9.01 | S14.04 | E3.02
-obj: Écrire séparément l'équation de la moyenne et celle de la variance conditionnelle | Interpréter ω, α et β d'un GARCH(1,1) | Calculer la persistance α + β, la variance de long terme ω / (1 − α − β) et la demi-vie d'un choc | Énoncer les conditions de positivité et la condition α + β < 1 d'une variance inconditionnelle finie
+obj: Écrire séparément l'équation de la moyenne et celle de la variance conditionnelle | Interpréter ω, α et β d'un GARCH(1,1) | Calculer la persistance α + β, la variance de long terme ω / (1 − α − β) et la demi-vie d'un choc | Distinguer trois propriétés qui ne sont pas interchangeables : les conditions suffisantes usuelles de positivité (ω > 0, α ≥ 0, β ≥ 0), la stationnarité au second ordre, qui équivaut pour un GARCH(1,1) à α + β < 1 et donne une variance inconditionnelle finie, et la stationnarité stricte, possible même quand α + β = 1 (IGARCH), avec une variance infinie | Annualiser une volatilité en énonçant la convention utilisée
 intuition: Variance de demain = un plancher + une part du choc d'aujourd'hui (α, la réaction à la nouvelle) + une part de la variance d'aujourd'hui (β, la mémoire).
 exemple: R. Engle, Econometrica, 1982 : ARCH appliqué à l'inflation du Royaume-Uni. T. Bollerslev, Journal of Econometrics, 1986 : la généralisation GARCH.
 maths: M2.
 maths_comprendre: M1
 maths_demontrer: M3
 erreurs: Confondre l'équation de la moyenne et celle de la variance ; présenter GARCH(1,1) comme une loi de la nature plutôt qu'un point de départ ; croire que α + β proche de 1 est une anomalie (c'est le cas courant, mais cela peut aussi signaler une rupture non modélisée).
-exercice: Rendements journaliers en %, ω = 0,02, α = 0,08, β = 0,90. Calculer la persistance, la variance de long terme, la volatilité journalière de long terme et la demi-vie d'un choc, en jours. Quelle volatilité annuelle cela donne-t-il, avec 252 jours de bourse ?
+exercice: Rendements journaliers en %, ω = 0,02, α = 0,08, β = 0,90. Calculer la persistance, la variance de long terme, la volatilité journalière de long terme et la demi-vie d'un choc, en jours. Quelle volatilité annuelle cela donne-t-il avec la convention de 252 jours de bourse, et sur quelle hypothèse repose cette convention ?
+correction: Persistance : α + β = 0,08 + 0,90 = 0,98. Elle est inférieure à 1 : le processus est stationnaire au second ordre et sa variance inconditionnelle est finie. Variance de long terme : ω / (1 − α − β) = 0,02 / 0,02 = 1 (%²), donc une volatilité journalière de long terme de √1 = 1 %. Demi-vie : l'écart à la variance de long terme est multiplié par 0,98 chaque jour, donc ln(0,5) / ln(0,98) ≈ 34,3 jours. Volatilité annuelle : 1 % × √252 ≈ 15,9 %. Cette convention additionne 252 variances journalières égales et suppose des rendements non autocorrélés. Elle ne s'applique qu'à la variance de long terme : avec une volatilité qui varie, la variance prévue sur un an est la somme des variances prévues jour par jour, différente de 252 fois la variance du jour.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -688,13 +790,14 @@ titre: Estimer, diagnostiquer et prévoir la volatilité : un cas reproductible
 titre_en: Estimating, checking and forecasting volatility: a reproducible case
 question: Comment savoir si un modèle de volatilité prévoit mieux qu'une simple moyenne du passé ?
 pre: E9.02 | S7.05 | S14.05
-obj: Tester des effets ARCH dans des résidus (test ARCH-LM) | Expliquer l'estimation par maximum de vraisemblance, et pourquoi la quasi-vraisemblance reste valable quand la loi est mal choisie | Vérifier les résidus standardisés et leurs carrés | Calculer une prévision de variance à plusieurs horizons | Comparer, sur une période de test, la prévision GARCH à la volatilité historique avec une fonction de perte adaptée | Énoncer les limites : ruptures, instabilité des paramètres, choix de la loi, incertitude de modèle
+obj: Estimer d'abord une équation de la moyenne adaptée (constante, ou ARMA si les rendements sont autocorrélés), puis chercher des effets ARCH dans ses résidus avec le test ARCH-LM | Expliquer l'estimation par maximum de vraisemblance et le rôle de la quasi-vraisemblance (QMLE) : avec des innovations supposées normales, l'estimateur reste convergent et asymptotiquement normal, avec des erreurs standard robustes (Bollerslev-Wooldridge), si les équations de la moyenne et de la variance conditionnelles sont bien spécifiées et sous des conditions de régularité ; il ne protège pas contre une dynamique de variance mal spécifiée | Vérifier les résidus standardisés et leurs carrés | Calculer une prévision de variance à plusieurs horizons | Comparer, sur une période de test, la prévision GARCH à la volatilité historique, en sachant que le verdict dépend de la mesure de référence (carré du rendement ou volatilité réalisée) et de la fonction de perte | Énoncer les limites : ruptures, instabilité des paramètres, choix de la loi, incertitude de modèle
 intuition: Un bel ajustement sur le passé ne prouve rien : un modèle de volatilité se juge sur des jours qu'il n'a pas vus.
 exemple: Démonstration en cinq étapes sur les rendements journaliers d'un indice (données publiques, licence à vérifier), script fourni en description : graphique, test ARCH-LM, GARCH(1,1), résidus standardisés, prévision hors échantillon contre la volatilité historique. Le carré du rendement est une mesure très bruitée de la variance du jour ; certaines fonctions de perte restent fiables malgré ce bruit (A. Patton, Journal of Econometrics, 2011).
 maths: M2.
 maths_demontrer: M3
-erreurs: Juger le modèle sur son ajustement dans l'échantillon ; comparer une prévision au carré du rendement sans dire que c'est une mesure très bruitée ; croire qu'un test ARCH-LM non significatif prouve l'absence d'effets ARCH.
+erreurs: Juger le modèle sur son ajustement dans l'échantillon ; chercher des effets ARCH dans les rendements bruts sans équation de la moyenne ; comparer une prévision au carré du rendement sans dire que c'est une mesure très bruitée ; croire qu'un test ARCH-LM non significatif prouve l'absence d'effets ARCH ; croire que la quasi-vraisemblance rend toute erreur de spécification sans conséquence.
 exercice: Avec les paramètres de E9.02 (variance de long terme 1, persistance 0,98), la variance prévue pour demain vaut 4. Que prévoit le modèle à 10 jours ? Puis : le test ARCH-LM donne p < 0,001 sur les rendements et p = 0,62 sur les résidus standardisés ; que peut-on conclure, et que ne peut-on pas conclure ?
+correction: Prévision : l'écart à la variance de long terme décroît au rythme de la persistance. σ²(t+h) = V + (α + β)^(h−1) × (σ²(t+1) − V), donc à 10 jours : 1 + 0,98⁹ × (4 − 1) ≈ 1 + 0,834 × 3 ≈ 3,50. ARCH-LM : p < 0,001 sur les résidus de l'équation de la moyenne montre des effets ARCH. p = 0,62 sur les résidus standardisés signifie que le test ne détecte plus d'effet ARCH résiduel : le modèle a capté l'essentiel de la dynamique visible par ce test. Cela ne prouve ni l'absence de tout effet ARCH, ni que le modèle est le bon, ni qu'il prévoit bien hors échantillon.
 duree: 12-16
 format: youtube_lesson
 forme: demonstration
@@ -709,7 +812,8 @@ intuition: Les mauvaises nouvelles secouent davantage que les bonnes : le modèl
 exemple: L. Glosten, R. Jagannathan, D. Runkle, Journal of Finance, 1993 ; D. Nelson, Econometrica, 1991.
 maths: M2.
 erreurs: Ajouter des extensions jusqu'à obtenir un ajustement parfait dans l'échantillon ; croire qu'une loi de Student suffit à décrire le risque extrême.
-exercice: GJR-GARCH avec ω = 0,02, α = 0,03, γ = 0,10, β = 0,90 et une variance du jour égale à 1. Quelle variance prévoit-on pour demain après un choc de −2 ? Et après un choc de +2 ?
+exercice: GJR-GARCH : σ²(t+1) = ω + (α + γ × 1[ε(t) < 0]) × ε(t)² + β × σ²(t), avec ω = 0,02, α = 0,03, γ = 0,10, β = 0,90, rendements en % et une variance du jour égale à 1. Quelle variance prévoit-on pour demain après un choc de −2 ? Et après un choc de +2 ?
+correction: Choc de −2 : l'indicatrice vaut 1, donc 0,02 + (0,03 + 0,10) × 4 + 0,90 × 1 = 0,02 + 0,52 + 0,90 = 1,44, soit une volatilité de 1,2 %. Choc de +2 : l'indicatrice vaut 0, donc 0,02 + 0,03 × 4 + 0,90 = 0,02 + 0,12 + 0,90 = 1,04, soit environ 1,02 %. Un choc de même taille augmente la variance de 44 % s'il est négatif, et de 4 % s'il est positif.
 duree: 8-10
 format: educational
 forme: lecon
@@ -719,12 +823,13 @@ titre: Volatilité et mesure du risque : VaR, Expected Shortfall et backtesting
 titre_en: Volatility and risk: VaR, expected shortfall and backtesting
 question: Une perte « qui n'arrive qu'une fois sur cent » arrive-t-elle vraiment une fois sur cent ?
 pre: E9.03 | S5.04
-obj: Définir la VaR et l'Expected Shortfall | Calculer une VaR paramétrique à partir d'une volatilité prévue | Backtester une VaR en comparant le nombre de dépassements à une loi binomiale (test de Kupiec) | Expliquer pourquoi un nombre correct de dépassements ne suffit pas s'ils arrivent en grappes | Dire ce qu'un GARCH ne garantit pas sur les pertes extrêmes
+obj: Définir la VaR comme un quantile de perte et l'Expected Shortfall comme la perte moyenne au-delà de ce quantile | Calculer une VaR et une Expected Shortfall paramétriques à partir d'une volatilité prévue | Tester la fréquence des dépassements en la comparant à une loi binomiale (test de Kupiec) | Tester séparément leur indépendance dans le temps (test de Christoffersen), car le test de Kupiec ne la vérifie pas | Dire ce qu'un GARCH ne garantit pas sur les pertes extrêmes
 intuition: Une VaR à 99 % se trompe un jour sur cent par construction : la tester, c'est vérifier qu'elle ne se trompe ni plus souvent, ni par paquets.
-exemple: P. Kupiec, Journal of Derivatives, 1995. Usage de l'Expected Shortfall dans la réglementation bancaire : texte du Comité de Bâle à sourcer et dater lors de la préparation.
+exemple: P. Kupiec, Journal of Derivatives, 1995 (fréquence des dépassements) ; P. Christoffersen, International Economic Review, 1998 (indépendance des dépassements). Usage de l'Expected Shortfall dans la réglementation bancaire : texte du Comité de Bâle à sourcer et dater lors de la préparation.
 maths: M2.
-erreurs: Lire la VaR comme la perte maximale possible ; supposer la normalité pour les queues de distribution ; valider une VaR sur son seul nombre de dépassements.
-exercice: Volatilité prévue de 1,5 % et loi normale : quelle VaR à 99 % sur un jour (quantile 2,326) ? Sur 250 jours, combien de dépassements attend-on ? On en observe 7 : quelle est la probabilité d'en observer au moins autant si le modèle est juste ?
+erreurs: Lire la VaR comme la perte maximale possible ; confondre VaR et Expected Shortfall ; supposer la normalité pour les queues de distribution ; valider une VaR sur son seul nombre de dépassements, sans tester s'ils arrivent en grappes.
+exercice: Volatilité prévue de 1,5 % et loi normale centrée. (1) VaR à 99 % sur un jour (quantile 2,326). (2) Expected Shortfall à 99 % : que mesure-t-elle de plus, et combien vaut-elle ? (3) Sur 250 jours, combien de dépassements attend-on ? On en observe 7 : quelle est la probabilité d'en observer au moins autant si le modèle est juste ? (4) Les 7 dépassements tombent sur deux semaines consécutives : qu'est-ce que le test de Kupiec ne peut pas voir ?
+correction: (1) VaR = 2,326 × 1,5 ≈ 3,49 % : un jour sur cent, la perte devrait dépasser 3,49 %. (2) L'Expected Shortfall répond à une autre question, « quand on dépasse, combien perd-on en moyenne ? ». Pour une loi normale, ES = σ × φ(2,326) / 0,01 ≈ 1,5 × 2,667 ≈ 4,00 %. (3) 250 × 0,01 = 2,5 dépassements attendus. Avec X ~ B(250 ; 0,01), P(X ≥ 7) ≈ 1,37 % : trop de dépassements, le test de fréquence rejette le modèle au seuil de 5 %. (4) Le test de Kupiec ne regarde que le nombre de dépassements. Des dépassements groupés montrent que le modèle réagit trop lentement aux changements de volatilité : c'est ce que teste l'indépendance (Christoffersen).
 duree: 8-10
 format: educational
 forme: lecon
@@ -733,7 +838,7 @@ forme: lecon
 titre: Changements de régime : quand le marché bascule entre calme et crise
 titre_en: Regime switching: when markets flip between calm and crisis
 question: Et si la volatilité ne variait pas doucement, mais sautait d'un état à un autre ?
-pre: E9.02 | S16.02
+pre: E9.02 | S16.02 | S5.05
 obj: Décrire un modèle à changements de régime markoviens | Calculer la durée moyenne d'un régime à partir de sa probabilité de maintien | Lire une probabilité filtrée d'être en régime de crise | Distinguer un changement de régime d'une forte persistance GARCH
 intuition: Deux météos possibles, beau temps et tempête, et une chaîne de Markov qui décide chaque jour si l'on reste ou si l'on change.
 exemple: J. Hamilton, Econometrica, 1989 : régimes d'expansion et de récession du PIB américain.
@@ -741,6 +846,7 @@ maths: M2.
 maths_demontrer: M3
 erreurs: Prendre la probabilité filtrée pour une certitude ; ajouter des régimes jusqu'à « expliquer » chaque épisode passé.
 exercice: Un régime de crise se maintient d'un mois sur l'autre avec une probabilité de 0,95 : combien de mois dure-t-il en moyenne ?
+correction: Le régime se maintient avec une probabilité p = 0,95 et s'arrête avec une probabilité 0,05 chaque mois. Sa durée suit une loi géométrique (S5.05) de moyenne 1 / (1 − 0,95) = 20 mois.
 duree: 8-10
 format: educational
 forme: lecon
@@ -749,7 +855,7 @@ forme: lecon
 titre: La volatilité stochastique
 titre_en: Stochastic volatility
 question: Et si la volatilité avait son propre hasard, au lieu d'être fixée par les chocs passés ?
-pre: E9.03 | S12.04
+pre: E9.03 | S12.04 | S14.07
 obj: Écrire un modèle à volatilité stochastique avec une log-variance autorégressive | Expliquer la différence avec GARCH : volatilité déterminée par le passé contre volatilité latente avec son propre choc | Expliquer pourquoi la vraisemblance n'a pas de forme simple, et les solutions (filtrage, MCMC) | Dire quand ce modèle vaut l'effort supplémentaire
 intuition: Dans GARCH, connaître le passé suffit à connaître la variance de demain ; ici, la variance est elle-même une variable cachée qu'il faut deviner.
 exemple: E. Jacquier, N. Polson, P. Rossi, Journal of Business & Economic Statistics, 1994 : estimation bayésienne par MCMC.
@@ -758,6 +864,7 @@ maths_comprendre: M2
 maths_demontrer: M4
 erreurs: Croire que la volatilité stochastique bat toujours GARCH en prévision ; confondre la volatilité filtrée et la volatilité vraie.
 exercice: Pourquoi la vraisemblance d'un GARCH se calcule-t-elle pas à pas, et pas celle d'un modèle à volatilité stochastique ?
+correction: Dans un GARCH, la variance de demain est une fonction connue des observations passées : on la calcule pas à pas, et la vraisemblance est un produit de densités conditionnelles. Dans un modèle à volatilité stochastique, la variance a son propre choc et n'est jamais observée. La vraisemblance demande d'intégrer sur toutes les trajectoires possibles de cette variance cachée, d'où le filtrage (filtre particulaire, filtre de Kalman sur une approximation) ou la simulation bayésienne (MCMC).
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -767,13 +874,14 @@ titre: Corrélations dynamiques : GARCH multivarié et DCC
 titre_en: Dynamic correlations: multivariate GARCH and DCC
 question: Pourquoi la diversification protège-t-elle moins au moment où l'on en a le plus besoin ?
 pre: E9.03 | S13.01 | M3.02
-obj: Calculer la variance d'un portefeuille de deux actifs à partir des volatilités et de la corrélation | Expliquer pourquoi un GARCH multivarié complet a trop de paramètres | Décrire la logique en deux temps du DCC : volatilités univariées, puis corrélation dynamique | Interpréter une hausse des corrélations en période de crise
+obj: Calculer la variance d'un portefeuille de deux actifs à partir des volatilités et de la corrélation | Expliquer pourquoi un GARCH multivarié complet a trop de paramètres | Distinguer le modèle à corrélation conditionnelle constante (CCC, Bollerslev 1990) et le DCC, en deux temps : volatilités univariées, puis corrélation dynamique | Interpréter une hausse des corrélations en période de crise
 intuition: En temps calme, les actifs bougent chacun de leur côté ; dans la panique, tout baisse ensemble.
 exemple: R. Engle, Journal of Business & Economic Statistics, 2002 (modèle DCC) ; corrélations entre actions et obligations (données à sourcer et dater).
 maths: M3.
 maths_comprendre: M2
 erreurs: Supposer une corrélation constante pour mesurer le risque d'un portefeuille ; lire une corrélation dynamique estimée comme une causalité entre marchés.
 exercice: Deux actifs pondérés à 50 %, de volatilités 1 % et 2 % : variance du portefeuille avec une corrélation de 0,3, puis de 0,9.
+correction: Variance du portefeuille : w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρσ₁σ₂. Avec ρ = 0,3 : 0,25 × 1 + 0,25 × 4 + 2 × 0,25 × 0,3 × 1 × 2 = 0,25 + 1 + 0,3 = 1,55, soit une volatilité d'environ 1,24 %. Avec ρ = 0,9 : 0,25 + 1 + 0,9 = 2,15, soit environ 1,47 %. La même allocation devient plus risquée quand la corrélation monte, ce qui arrive souvent en crise.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -783,12 +891,30 @@ titre: Volatilité réalisée et données à haute fréquence
 titre_en: Realized volatility and high-frequency data
 question: Et si l'on pouvait mesurer la volatilité d'une journée au lieu de la deviner ?
 pre: E9.03
-obj: Calculer une volatilité réalisée à partir de rendements intrajournaliers | Expliquer pourquoi elle est bien moins bruitée que le carré du rendement journalier | Décrire le modèle HAR (jour, semaine, mois) | Expliquer le bruit de microstructure et pourquoi on n'échantillonne pas à chaque seconde
+obj: Calculer une volatilité réalisée à partir de rendements intrajournaliers | Expliquer pourquoi elle est bien moins bruitée que le carré du rendement journalier | Distinguer volatilité réalisée (une mesure ex post de la variation du jour) et variance conditionnelle (une prévision du modèle) | Décrire le modèle HAR (jour, semaine, mois) | Expliquer le bruit de microstructure et pourquoi on n'échantillonne pas à chaque seconde
 intuition: Au lieu de photographier le marché une fois par jour, on le filme ; la somme des petits mouvements révèle l'agitation réelle de la journée.
 exemple: T. Andersen, T. Bollerslev, F. Diebold, P. Labys, Econometrica, 2003 ; F. Corsi, Journal of Financial Econometrics, 2009 (modèle HAR).
 maths: M2.
 erreurs: Échantillonner à la fréquence la plus fine possible sans tenir compte du bruit de microstructure ; oublier les nuits et les week-ends.
 exercice: Une journée compte 78 intervalles de 5 minutes, chacun avec un rendement de ±0,1 %. Quelle est la variance réalisée, et la volatilité réalisée du jour ?
+correction: Variance réalisée = somme des carrés des rendements intrajournaliers = 78 × 0,1² = 78 × 0,01 = 0,78 (%²). Volatilité réalisée = √0,78 ≈ 0,88 %. Elle mesure la variation effective de cette journée, à ne pas confondre avec la variance conditionnelle, qui était une prévision faite la veille.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E9.10
+titre: La mémoire longue de la volatilité : FIGARCH et HAR
+titre_en: Long memory in volatility: FIGARCH and HAR
+question: Pourquoi la trace d'une crise reste-t-elle visible dans la volatilité des mois plus tard ?
+pre: E9.03 | E9.09
+obj: Comparer la décroissance géométrique d'un GARCH et la décroissance lente observée | Décrire l'idée d'un modèle FIGARCH | Expliquer pourquoi le modèle HAR imite la mémoire longue avec trois horizons
+intuition: Un GARCH oublie vite et régulièrement ; les marchés, eux, oublient lentement.
+exemple: R. Baillie, T. Bollerslev, H. O. Mikkelsen, Journal of Econometrics, 1996 (FIGARCH).
+maths: M2.
+maths_demontrer: M4
+erreurs: Confondre mémoire longue et ruptures non modélisées, qui produisent les mêmes autocorrélations.
+exercice: Avec une persistance de 0,98, quelle part d'un choc de volatilité reste-t-il après 100 jours ?
+correction: 0,98¹⁰⁰ ≈ 0,133, soit environ 13 %. Les autocorrélations observées des carrés de rendements décroissent souvent bien plus lentement.
 duree: 8-10
 format: educational
 forme: lecon
@@ -844,6 +970,39 @@ erreurs: Ignorer l'excès de zéros.
 exercice: Interpréter un coefficient de 0,2 sur le logarithme des dépenses de recherche.
 duree: 6-8
 format: educational
+forme: lecon
+
+## E10.04
+titre: Choix discrets : logit multinomial et conditionnel
+titre_en: Discrete choice: multinomial and conditional logit
+question: Comment modéliser le choix entre voiture, train et bus ?
+pre: E10.01
+obj: Écrire un modèle de choix entre plusieurs options | Interpréter un coefficient de prix ou de temps de trajet | Expliquer l'hypothèse d'indépendance des alternatives non pertinentes et ses limites
+intuition: Chacun choisit l'option qui lui apporte le plus, avec une part de goût que l'économètre ne voit pas.
+exemple: D. McFadden, choix de transport dans la baie de San Francisco (conférence Nobel, 2000).
+maths: M2.
+erreurs: Ignorer l'hypothèse d'indépendance des alternatives (problème du bus bleu et du bus rouge).
+exercice: Un bus bleu et un bus rouge identiques : pourquoi le logit multinomial prédit-il mal leur part de marché ?
+correction: Il traite les deux bus comme des options indépendantes et leur prend des parts à la voiture et au train, alors qu'en réalité le nouveau bus prend surtout ses passagers à l'autre bus.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E10.05
+titre: Modèles structurels de demande
+titre_en: Structural demand models
+question: Comment prévoir l'effet d'une fusion entre deux entreprises sur les prix ?
+pre: E10.04 | E5.05
+obj: Expliquer pourquoi la demande doit être estimée avec des instruments | Décrire l'idée du modèle de Berry, Levinsohn et Pakes | Dire ce qu'apporte un modèle structurel et ce qu'il suppose
+intuition: On reconstruit les préférences des consommateurs pour simuler un monde qui n'existe pas encore.
+exemple: S. Berry, J. Levinsohn, A. Pakes, Econometrica, 1995 ; usages en droit de la concurrence (à sourcer).
+maths: M3.
+maths_comprendre: M2
+erreurs: Croire qu'une simulation structurelle est aussi solide que ses hypothèses ne le sont pas.
+exercice: Pourquoi une régression naïve de la quantité sur le prix sous-estime-t-elle souvent la sensibilité au prix ?
+correction: Les prix montent quand la demande est forte (simultanéité, E4.02) : sans instrument, une part de la demande se mêle à l'effet du prix.
+duree: 10-12
+format: youtube_lesson
 forme: lecon
 
 # MODULE E11

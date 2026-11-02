@@ -35,15 +35,17 @@ Chaque fiche de conception d'une méthode causale tient aussi un **registre des 
 
 ## 4.3 Fondamental ou avancé
 
+Les deux colonnes orientent le spectateur ; toutes les vidéos font partie du catalogue.
+
 | Fondamental, pour tout spectateur du pilier | Extension avancée |
 |---|---|
-| E1 complet (dont graphes causaux), E2 complet, E3.01 à E3.04, E4.05 analyse de sensibilité | E6.04 panels dynamiques |
+| E1 complet (dont graphes causaux), E2 complet, E3.01 à E3.04, E4.05 analyse de sensibilité | E6.04 panels dynamiques, E4.06 identification partielle (bornes de Manski), E5.05 méthode des moments généralisée |
 | E4 complet : variable omise, simultanéité, erreur de mesure, sélection | E7.04 différences de différences échelonnées |
 | E5.01 à E5.03 : idée, 2SLS, instruments faibles | E5.04 effet local (LATE) |
-| E7.01 à E7.03, E7.05 : expérience, expérience naturelle, différences de différences, discontinuité | E7.06 contrôle synthétique, E7.07 appariement et score de propension |
-| E6.01 et E6.02 : différences premières et effets fixes | E8 complet : racines unitaires, cointégration, VAR |
-| | E9 complet : volatilité conditionnelle, GARCH(1,1), cas reproductible de prévision, asymétrie et loi de Student, VaR et backtesting, changements de régime, volatilité stochastique, corrélations dynamiques (DCC), volatilité réalisée |
-| | E10 complet : probit et logit, Tobit et Heckman, comptages |
+| E7.01 à E7.03, E7.05 : expérience, expérience naturelle, différences de différences, discontinuité | E7.06 contrôle synthétique, E7.07 appariement et score de propension, E7.08 effets hétérogènes et apprentissage automatique causal |
+| E6.01 et E6.02 : différences premières et effets fixes | E8 complet : racines unitaires, cointégration, VAR, projections locales |
+| | E9 complet : volatilité conditionnelle, GARCH(1,1), cas reproductible de prévision, asymétrie et loi de Student, VaR et backtesting, changements de régime, volatilité stochastique, corrélations dynamiques (CCC et DCC), volatilité réalisée, mémoire longue (FIGARCH, HAR) |
+| | E10 complet : probit et logit, Tobit et Heckman, comptages, choix discrets multinomiaux |
 
 ## 4.4 Ce qui n'est pas refait, pour éviter les doublons
 

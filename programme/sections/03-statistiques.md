@@ -32,7 +32,13 @@ Le tronc commun (niveaux 1 à 3) est le parcours de référence. Il peut être s
 | **Finance et risque** | S1 à S9, S14, E2 et E3, puis E9 (volatilité, VaR) | 110 |
 | **Actuariat et assurance** | S5, S7, S10 (avec S10.06), S15, S12 | 50 |
 
-**Aucune vidéo n'est marquée optionnelle.** Toutes les vidéos possibles sont proposées, et c'est au spectateur de choisir ce qu'il suit, à l'aide des prérequis, des niveaux et des parcours ci-dessus. Certaines vidéos approfondissent sans être nécessaires à la suite : on le voit à ce qu'aucune autre vidéo ne les demande en prérequis (lien « Prépare » vide).
+Ces parcours sont des **itinéraires recommandés** à travers le catalogue, pas des frontières : aucune vidéo n'en est exclue, et un spectateur peut en sortir à tout moment.
+
+**Règle d'exhaustivité.** Toutes les vidéos pédagogiquement pertinentes figurent au catalogue, y compris les approfondissements et les spécialisations. Aucune n'est marquée « optionnelle » : c'est au spectateur de choisir ce qu'il suit (décision de JG). Pour l'orienter, chaque vidéo porte un **rôle**, calculé par le script à partir de son niveau et du graphe des prérequis. Ce rôle décrit la place de la vidéo, il ne juge pas son importance :
+
+{{TABLEAU_ROLES}}
+
+Chaque vidéo porte aussi son **état** : « Conçue » quand sa fiche de conception est complète ({{NB_CONCUES}} à ce jour, la vidéo de lancement), « Cataloguée » sinon. Aucune n'est encore produite et validée pour publication, en dehors de la vidéo de lancement, en attente de sa validation finale (section 7.2). Le catalogue est exhaustif ; l'ordre de production, lui, se priorise (section 7).
 
 ## 3.4 Ce que la statistique partage avec d'autres disciplines
 
@@ -45,6 +51,7 @@ Le ticket demande de préciser ce qui relève des statistiques et ce qui relève
 | Évaluation d'un classifieur, faux positifs | Ingénierie et stockage des données, mise en production (génie logiciel) |
 | Biais d'échantillonnage des données d'entraînement | Théorie de la calculabilité, complexité algorithmique |
 | Distinction prédire et expliquer, limites causales | Éthique et droit des algorithmes (évoqués à partir des questions statistiques) |
+| Réseaux de neurones vus comme une régression non linéaire (S17.08), boosting (S17.07), prédiction conforme (S17.09) | |
 
 ## 3.5 Syllabus détaillé
 

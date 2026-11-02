@@ -12,7 +12,7 @@ Les décisions éditoriales appartiennent à ChatGPT, et JG arbitre. Cette secti
 | Trois piliers : statistiques de A à Z, économétrie, phénomènes du quotidien et actualité | Ticket n° 10 |
 | Éditions FR et EN autonomes, sans traduction mécanique | Identité de marque ; ticket n° 10 |
 | Rôles : Claude structure, ChatGPT relit, JG valide le PDF final | Ticket n° 10 ; LMEC-DEC-002 |
-| Toutes les vidéos possibles sont intégrées, y compris les approfondissements. Aucune n'est marquée optionnelle : c'est au spectateur de choisir | Message de JG, 2/11/2026 |
+| Toutes les vidéos pédagogiquement pertinentes sont intégrées au catalogue, y compris les approfondissements et les spécialisations. Aucune n'est marquée optionnelle : c'est au spectateur de choisir. Le catalogue est exhaustif, l'ordre de production se priorise | Message de JG, 2/11/2026 ; règle d'exhaustivité proposée par ChatGPT sur la PR n° 12 |
 | Marque ACTU-BASICS, slogans « Éveiller par les chiffres. » et “Enlightening through numbers.” | Identité de marque |
 
 ## 10.2 Recommandations à valider
@@ -67,3 +67,36 @@ La revue indépendante annoncée dans le ticket est la prochaine étape. Pour la
 | Quelles extensions ? | Claude proposait deux vidéos optionnelles et la bibliographie seule pour le reste. **JG a tranché** : toutes les vidéos possibles sont intégrées, aucune n'est optionnelle. | E9.04 asymétrie et loi de Student, E9.05 VaR et backtesting (loi binomiale, S5.04), E9.06 changements de régime (chaînes de Markov, S16.02), E9.07 volatilité stochastique (MCMC, S12.04), E9.08 corrélations dynamiques et DCC (matrices, M3.02), E9.09 volatilité réalisée et modèle HAR. |
 | Branche « économétrie financière » ? | **Désaccord.** ARCH est né sur l'inflation britannique (Engle, 1982). Une branche promettrait la valorisation d'actifs et le portefeuille, que le programme n'enseigne pas. Un module clairement nommé, plus un profil de parcours, suffit. | Profil « Finance et risque » en section 3.3. |
 | Quels prérequis imposer, lesquels rappeler ? | **Imposés** : stationnarité et autocorrélation (S14.02), ARMA comme équation de la moyenne (S14.04), prévision hors échantillon (S14.05), maximum de vraisemblance (S7.05), hétéroscédasticité (E3.02). **Rappelés à l'écran** : logarithme (M1.04), loi binomiale (S5.04). **Pour les extensions** : chaînes de Markov (S16.02) pour E9.06, MCMC (S12.04) pour E9.07, matrices (S13.01, M3.02) pour E9.08. | Contrôlé par le script ; 16 calculs ajoutés (persistance, variance de long terme, demi-vie, prévision à 10 jours, VaR, test de Kupiec, durée d'un régime, variance d'un portefeuille, volatilité réalisée). |
+
+## 10.6 Revue de la version 1.3 : règle d'exhaustivité et corrections de E9
+
+| Demande de ChatGPT | Position de Claude | Ce qui change |
+|---|---|---|
+| Règle d'exhaustivité du catalogue | **Accord.** Elle rejoint la décision de JG. Une seule nuance : le mot « optionnel » n'est plus utilisé, puisque JG a demandé que ce soit le spectateur qui rende une vidéo optionnelle. | Taxonomie descriptive calculée par le script (section 3.3) : socle, approfondissement, spécialisation, sujet autonome, rappel. Le script refuse le champ « option ». |
+| E9.06 à E9.08 (volatilité stochastique, GARCH multivarié, volatilité réalisée) | **Accord**, déjà intégrées en version 1.4, avec les changements de régime. | Ajout de **E9.10** mémoire longue (FIGARCH et HAR). Le modèle CCC est nommé dans E9.08. La volatilité stochastique demande maintenant le filtre de Kalman (nouvelle S14.07). |
+| Quasi-vraisemblance (E9.03) | **Accord.** La formulation de la version 1.3 était trop large. | Convergence et normalité asymptotique conditionnées à une bonne spécification des moments conditionnels et à des conditions de régularité, erreurs standard de Bollerslev-Wooldridge ; aucune protection contre une dynamique de variance mal spécifiée. |
+| Séquence du test ARCH-LM | **Accord.** | Équation de la moyenne d'abord, test sur ses résidus ; un test non significatif ne prouve rien. |
+| Mesures de volatilité | **Accord.** | Quatre objets distingués dès E9.01 ; en E9.03, le verdict d'une comparaison dépend de la mesure de référence et de la fonction de perte. |
+| VaR et Expected Shortfall, backtesting | **Accord.** Le test de Kupiec ne teste que la fréquence. | Exercice en quatre questions qui sépare VaR (3,49 %) et ES (4,00 %) ; test d'indépendance de Christoffersen ajouté. |
+| Conditions du GARCH(1,1) | **Accord.** | Positivité, stationnarité au second ordre (α + β < 1, variance finie) et stationnarité stricte (possible avec α + β = 1) distinguées. |
+| Annualisation | **Accord.** | Convention √252 énoncée avec ses hypothèses, valable pour la variance de long terme seulement. |
+| Trois niveaux en E9.02 | **Déjà en place** : comprendre M1, appliquer M2, démontrer M3. | Aucun. |
+| Solutions détaillées | **Accord.** | Nouveau champ « Correction détaillée », rempli pour E9 et pour toutes les nouvelles vidéos chiffrées. Les autres vidéos l'auront dans leur fiche de conception. |
+| Cohérence documentaire | **Accord**, le LISEZMOI renvoyait encore au PDF v1.2. | Noms, versions et comptes synchronisés ; les comptes du PDF sont calculés par le script à partir des entrées réellement lues. |
+| Distinguer vidéos conçues, cataloguées et à produire | **Accord.** | État affiché sur chaque vidéo. |
+
+## 10.7 Inventaire : vidéos absentes du catalogue ou laissées en bibliographie
+
+En appliquant la règle d'exhaustivité, Claude a comparé le catalogue aux programmes universitaires de référence cités en section 9. Les 35 vidéos suivantes ont été ajoutées en version 1.5 :
+
+| Pilier | Vidéos ajoutées |
+|---|---|
+| Statistiques, niveaux 2 et 3 | S5.14 lois log-normale et de Pareto · S5.15 espérance conditionnelle · S6.07 non-réponse et redressement · S6.08 calage sur marges · S8.10 adéquation à une loi · S8.11 méta-analyse · S9.12 régression quantile · S9.13 plans factoriels, fractions et blocs · S11.07 lissage, splines, GAM · S11.08 estimation de densité par noyau |
+| Statistiques, niveau 4 | S13.06 analyse factorielle · S13.07 loi normale multivariée · S13.08 copules · S14.06 analyse spectrale · S14.07 espace-état et filtre de Kalman · S14.08 données spatiales et krigeage · S15.04 lois paramétriques et risques concurrents · S17.07 boosting · S17.08 réseaux de neurones vus par un statisticien · S17.09 prédiction conforme · S18.04 Wald, rapport de vraisemblance, score · S18.05 algorithme EM · S18.06 valeurs extrêmes |
+| Économétrie | E4.06 identification partielle · E5.05 GMM · E6.05 économétrie spatiale · E7.08 effets hétérogènes et apprentissage automatique causal · E8.06 projections locales · E8.07 effet d'un événement sur une série (modèles structurels bayésiens) · E9.10 mémoire longue de la volatilité · E10.04 choix discrets multinomiaux · E10.05 modèles structurels de demande |
+| Quotidien | Q2.06 pourquoi les études se contredisent · Q4.07 le seuil de pauvreté · Q5.04 quand une IA annonce 90 % de confiance |
+
+Restent hors du catalogue, faute d'être des sujets statistiques : l'architecture des réseaux de neurones, l'optimisation numérique à grande échelle, le génie logiciel des données, la théorie de la calculabilité (section 3.4). L'éthique et le droit des algorithmes sont abordés à partir des questions statistiques (S1.10, S17.06). **Question à JG** : faut-il aussi leur consacrer des vidéos ?
+
+Le pilier 3 reste ouvert par construction : il s'enrichit en continu selon la méthode de la section 5.
+

@@ -187,6 +187,57 @@ duree: 10-12
 format: youtube_lesson
 forme: lecon
 
+## S13.06
+titre: Analyse factorielle et variables latentes
+titre_en: Factor analysis and latent variables
+question: Peut-on mesurer « l'intelligence » ou « la confiance » à partir de réponses à un questionnaire ?
+pre: S13.02
+obj: Distinguer ACP et analyse factorielle | Lire une matrice de saturations | Expliquer ce qu'est une variable latente et les limites de son interprétation
+intuition: Plusieurs questions bougent ensemble parce qu'une cause commune, invisible, les pousse.
+exemple: Questionnaires de personnalité (modèle à cinq facteurs, à sourcer).
+maths: M3.
+maths_comprendre: M1
+erreurs: Donner un nom à un facteur et croire avoir prouvé son existence ; confondre rotation et découverte.
+exercice: Trois questions ont des saturations de 0,8 sur le facteur 1 et proches de 0 sur le facteur 2 : que conclure ?
+correction: Elles mesurent surtout une même dimension. Le nom donné à cette dimension reste une interprétation, à valider avec d'autres données.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S13.07
+titre: La loi normale multivariée
+titre_en: The multivariate normal distribution
+question: Comment décrire ensemble la taille et le poids, qui varient ensemble ?
+pre: S13.01 | S5.10 | M3.02
+obj: Décrire une loi normale multivariée par son vecteur de moyennes et sa matrice de covariance | Lire les ellipses de densité | Expliquer que les lois marginales et conditionnelles sont normales
+intuition: Une cloche en relief, dont la forme ovale dit dans quelle direction les variables bougent ensemble.
+exemple: Taille et poids d'adultes.
+maths: M3.
+maths_comprendre: M1
+erreurs: Croire que deux variables normales non corrélées sont toujours indépendantes, sans supposer la normalité jointe.
+exercice: Si la corrélation passe de 0 à 0,9, comment change la forme des ellipses ?
+correction: Elles passent de cercles (à variances égales) à des ellipses très allongées le long de la diagonale.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S13.08
+titre: Les copules : séparer les lois et leur dépendance
+titre_en: Copulas: separating marginals from dependence
+question: Comment modéliser des risques qui explosent ensemble lors des crises ?
+pre: S13.07 | S5.10
+obj: Expliquer qu'une loi jointe se décompose en lois marginales et en une copule | Distinguer dépendance de queue et corrélation | Dire pourquoi une copule gaussienne sous-estime les crises simultanées
+intuition: On choisit d'abord la forme de chaque variable, puis, séparément, la façon dont elles bougent ensemble.
+exemple: Usage de la copule gaussienne dans les produits de crédit avant 2008 (à sourcer).
+maths: M3.
+maths_comprendre: M1
+erreurs: Résumer toute dépendance par une corrélation ; croire qu'une copule bien ajustée en temps calme vaut en crise.
+exercice: Deux paires de variables ont la même corrélation, mais l'une chute toujours ensemble dans les cas extrêmes. Qu'est-ce qui les distingue ?
+correction: Leur dépendance de queue : la copule diffère alors que la corrélation est la même.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
 # MODULE S14
 niveau: 4
 titre: Séries temporelles
@@ -270,6 +321,55 @@ duree: 7-9
 format: educational
 forme: lecon
 
+## S14.06
+titre: Cycles cachés : l'analyse spectrale
+titre_en: Hidden cycles: spectral analysis
+question: Comment trouver les rythmes cachés d'une série, comme un cycle de 11 ans dans l'activité solaire ?
+pre: S14.02
+obj: Expliquer qu'une série peut se décomposer en oscillations de fréquences différentes | Lire un périodogramme | Distinguer un vrai cycle d'un pic dû au hasard
+intuition: Comme une oreille qui distingue les notes d'un accord, le spectre sépare les rythmes superposés.
+exemple: Taches solaires (données publiques à sourcer).
+maths: M2.
+erreurs: Voir un cycle dans chaque pic du périodogramme ; confondre saisonnalité connue et cycle découvert.
+exercice: Une série mensuelle a un pic du périodogramme à la fréquence 1/12. Que signifie-t-il ?
+correction: Un cycle de 12 mois : une saisonnalité annuelle.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S14.07
+titre: Modèles espace-état et filtre de Kalman
+titre_en: State-space models and the Kalman filter
+question: Comment suivre une grandeur qu'on ne voit qu'à travers des mesures bruitées ?
+pre: S14.04 | S4.10
+obj: Écrire un modèle avec une équation d'état et une équation de mesure | Faire une étape de mise à jour du filtre de Kalman | Expliquer le rôle du gain
+intuition: On combine ce que l'on croyait et ce que l'on vient de mesurer, en faisant plus confiance à la source la plus précise.
+exemple: Position d'un véhicule par GPS ; tendance de l'inflation sous-jacente.
+maths: M2.
+maths_demontrer: M3
+erreurs: Prendre l'état filtré pour l'état vrai ; oublier que le filtre dépend des variances supposées.
+exercice: On estime un état à 10 (variance 4), puis on mesure 14 avec une variance d'erreur 4. Quel gain, quelle nouvelle estimation, quelle variance ?
+correction: Gain = 4 / (4 + 4) = 0,5. Estimation = 10 + 0,5 × (14 − 10) = 12. Variance = (1 − 0,5) × 4 = 2 : l'incertitude diminue.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S14.08
+titre: Données spatiales : autocorrélation spatiale et krigeage
+titre_en: Spatial data: spatial autocorrelation and kriging
+question: Comment estimer la pollution là où il n'y a pas de capteur ?
+pre: S14.02 | S9.04
+obj: Calculer l'idée d'une autocorrélation spatiale (indice de Moran) | Lire un variogramme | Expliquer le krigeage comme une interpolation pondérée avec incertitude
+intuition: Comme dans le temps, ce qui est proche se ressemble : on prédit un lieu à partir de ses voisins.
+exemple: Concentrations de particules fines mesurées par des stations (données publiques à sourcer).
+maths: M2.
+erreurs: Traiter des observations voisines comme indépendantes ; ignorer l'incertitude des cartes interpolées.
+exercice: Pourquoi une carte de pollution est-elle plus incertaine loin des capteurs ?
+correction: Le krigeage pondère les mesures voisines : loin des capteurs, il y a peu d'information proche, et la variance de prédiction augmente.
+duree: 8-10
+format: educational
+forme: lecon
+
 # MODULE S15
 niveau: 4
 titre: Analyse de survie
@@ -321,6 +421,22 @@ erreurs: Lire un hazard ratio de 2 comme « deux fois moins de survie ».
 exercice: Interpréter un hazard ratio de 0,7 avec son IC.
 duree: 10-14
 format: youtube_lesson
+forme: lecon
+
+## S15.04
+titre: Lois paramétriques de survie et risques concurrents
+titre_en: Parametric survival models and competing risks
+question: Comment prévoir une durée, et que faire quand plusieurs événements peuvent survenir en premier ?
+pre: S15.03 | S7.05
+obj: Utiliser les lois exponentielle et de Weibull pour une durée | Calculer une médiane de survie | Expliquer pourquoi Kaplan-Meier surestime le risque en présence de risques concurrents
+intuition: Mourir d'une autre cause empêche de mourir de celle qu'on étudie : on ne peut pas traiter ces cas comme de simples censures.
+exemple: Rechute ou décès dans un essai clinique (à sourcer).
+maths: M2.
+erreurs: Traiter un risque concurrent comme une censure ordinaire.
+exercice: Un risque constant vaut 0,1 par an. Quelle est la médiane de survie ?
+correction: Avec une loi exponentielle, médiane = ln(2) / 0,1 ≈ 6,9 ans.
+duree: 8-10
+format: educational
 forme: lecon
 
 # MODULE S16
@@ -490,6 +606,55 @@ duree: 10-14
 format: youtube_lesson
 forme: lecon
 
+## S17.07
+titre: Le boosting
+titre_en: Boosting
+question: Comment mille modèles médiocres peuvent-ils en faire un excellent ?
+pre: S17.04
+obj: Expliquer le principe du boosting : chaque modèle corrige les erreurs du précédent | Régler le taux d'apprentissage et le nombre d'étapes par validation | Comparer boosting et forêts aléatoires
+intuition: Une équipe où chaque nouveau membre se concentre sur ce que les précédents ont raté.
+exemple: Prédiction de défaut de crédit.
+maths: M2.
+erreurs: Ajouter des étapes sans validation, jusqu'au surapprentissage ; lire l'importance des variables comme un effet causal.
+exercice: Pourquoi un taux d'apprentissage plus faible demande-t-il plus d'étapes ?
+correction: Chaque étape ne corrige qu'une petite part de l'erreur restante : il en faut davantage pour atteindre le même ajustement, mais le modèle surapprend moins vite.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S17.08
+titre: Les réseaux de neurones vus par un statisticien
+titre_en: Neural networks through a statistician's eyes
+question: Un réseau de neurones est-il autre chose qu'une très grosse régression ?
+pre: S17.03 | S10.02 | M2.03
+obj: Décrire un réseau à une couche cachée comme une régression non linéaire | Expliquer l'estimation par descente de gradient | Relier régularisation, validation et surapprentissage | Dire ce qui relève de l'informatique (architectures, calcul à grande échelle) et n'est pas enseigné ici
+intuition: Des régressions logistiques empilées : chaque couche fabrique de nouvelles variables pour la suivante.
+exemple: Reconnaissance de chiffres manuscrits (jeu de données public MNIST).
+maths: M2.
+maths_demontrer: M3
+erreurs: Croire qu'un réseau comprend ce qu'il prédit ; croire qu'un réseau n'a pas d'hypothèses.
+exercice: Un réseau sans fonction d'activation non linéaire, avec trois couches, est-il plus riche qu'une régression linéaire ?
+correction: Non : une composition de fonctions linéaires reste linéaire. C'est la non-linéarité qui donne au réseau sa souplesse.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S17.09
+titre: La prédiction conforme : une marge d'erreur honnête pour toute prédiction
+titre_en: Conformal prediction: honest error bars for any prediction
+question: Comment donner une fourchette fiable à la prédiction d'un modèle qu'on ne comprend pas ?
+pre: S17.05 | S11.05 | S2.06
+obj: Construire un intervalle de prédiction conforme à partir de résidus de calibration | Expliquer la garantie de couverture et ses hypothèses (échangeabilité) | Dire ce que la garantie ne promet pas (couverture conditionnelle)
+intuition: On mesure les erreurs du modèle sur des données mises de côté, et l'on prend un quantile de ces erreurs comme marge.
+exemple: Prévision du prix d'un logement par un modèle d'apprentissage.
+maths: M1.
+erreurs: Croire que la couverture vaut pour chaque individu ; utiliser des données de calibration qui ne ressemblent pas aux nouvelles.
+exercice: Avec 19 résidus de calibration et une couverture visée de 90 %, quel résidu (dans l'ordre croissant) sert de marge ?
+correction: On prend le rang ⌈(n + 1) × 0,9⌉ = ⌈20 × 0,9⌉ = 18 : le 18e plus petit résidu en valeur absolue.
+duree: 7-9
+format: educational
+forme: lecon
+
 # MODULE S18
 niveau: 4
 titre: Compléments théoriques et pratiques avancés
@@ -544,3 +709,55 @@ exercice: Dans trois scénarios, dire quel mécanisme de non-réponse est le plu
 duree: 10-12
 format: youtube_lesson
 forme: lecon
+
+## S18.04
+titre: Les trois grands tests : Wald, rapport de vraisemblance, score
+titre_en: The three classical tests: Wald, likelihood ratio and score
+question: Pourquoi trois tests différents pour la même hypothèse, et lequel choisir ?
+pre: S18.01 | S8.08
+obj: Décrire géométriquement les trois tests sur la courbe de log-vraisemblance | Calculer une statistique du rapport de vraisemblance | Expliquer quand ils divergent
+intuition: Sur une colline de vraisemblance, on mesure la distance horizontale (Wald), la différence d'altitude (rapport) ou la pente au point testé (score).
+exemple: Tester si une pièce est équilibrée.
+maths: M2.
+maths_demontrer: M4
+erreurs: Croire que les trois tests donnent toujours la même conclusion en petit échantillon.
+exercice: La log-vraisemblance vaut −100 pour le modèle complet et −104 sous l'hypothèse nulle (une contrainte). Que conclure au seuil de 5 % ?
+correction: Statistique = 2 × (−100 − (−104)) = 8, comparée au seuil 3,84 d'une loi du khi-deux à 1 degré de liberté : on rejette l'hypothèse nulle.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S18.05
+titre: L'algorithme EM : estimer avec des données cachées
+titre_en: The EM algorithm: estimating with hidden data
+question: Comment estimer un modèle quand une partie de l'information manque ou n'est jamais observée ?
+pre: S7.05 | S18.03
+obj: Décrire l'alternance des étapes E (compléter) et M (maximiser) | Appliquer l'idée à un mélange de deux lois | Expliquer la convergence vers un maximum local
+intuition: On devine ce qui manque, on estime comme si on l'avait, puis on devine mieux, et l'on recommence.
+exemple: Mélange de deux groupes dans une distribution de tailles.
+maths: M2.
+maths_demontrer: M4
+erreurs: Croire qu'EM trouve toujours le meilleur maximum ; oublier de tester plusieurs points de départ.
+exercice: Pourquoi relancer EM depuis plusieurs points de départ ?
+correction: EM converge vers un maximum local qui dépend du point de départ. Plusieurs départs permettent de repérer le meilleur.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S18.06
+titre: La théorie des valeurs extrêmes
+titre_en: Extreme value theory
+question: Comment estimer la hauteur d'une crue centennale avec cinquante ans de données ?
+pre: S5.09 | S7.05 | S2.06
+obj: Distinguer maxima par blocs et dépassements de seuil | Définir une période de retour | Calculer la probabilité d'au moins un événement centennal sur une période | Énoncer les limites de l'extrapolation
+intuition: Les maxima ont leur propre loi, comme les moyennes ont la loi normale : on peut extrapoler, prudemment.
+exemple: Crues et digues aux Pays-Bas ; niveaux de la mer (à sourcer).
+maths: M2.
+maths_demontrer: M4
+erreurs: Croire qu'une crue centennale n'arrive qu'une fois par siècle ; ignorer un climat qui change.
+exercice: Une crue a une probabilité de 1 % par an. Quelle est la probabilité d'en connaître au moins une en 30 ans ?
+correction: 1 − 0,99³⁰ ≈ 26 %. Un événement « centennal » a plus d'une chance sur quatre d'arriver pendant un prêt immobilier.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+

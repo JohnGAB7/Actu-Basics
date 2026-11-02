@@ -160,6 +160,20 @@ duree: 5-7
 format: educational
 forme: lecon
 
+## Q2.06
+titre: Pourquoi les études se contredisent-elles ?
+titre_en: Why do studies contradict each other?
+question: Un jour le café protège, le lendemain il nuit : à qui se fier ?
+renvoi: S8.11 | S8.09
+obj: Expliquer trois raisons de résultats contradictoires (hasard, populations différentes, biais de publication) | Préférer une synthèse à une étude isolée
+intuition: Une étude est un vote bruyant ; c'est le décompte pondéré de toutes les études qui compte.
+exemple: Café et santé (synthèses à sourcer et dater).
+erreurs: Croire la dernière étude parue ; croire qu'une contradiction prouve que la science ne sait rien.
+sources: Cochrane, revues systématiques publiées, agences sanitaires nationales
+duree: 5-7
+format: educational
+forme: lecon
+
 # MODULE Q3
 niveau: 1
 titre: Les pièges de l'intuition au quotidien
@@ -331,6 +345,20 @@ duree: 5-7
 format: educational
 forme: lecon
 
+## Q4.07
+titre: Le seuil de pauvreté
+titre_en: The poverty line
+question: Pourquoi le taux de pauvreté peut-il baisser quand tout le monde s'appauvrit ?
+renvoi: S2.05 | S2.06
+obj: Calculer un seuil de pauvreté relatif (60 % du revenu médian) | Expliquer la différence entre pauvreté relative et pauvreté absolue
+intuition: Un seuil relatif se déplace avec la médiane : il mesure l'écart aux autres, pas le niveau de vie lui-même.
+exemple: Taux de pauvreté de l'Insee et d'Eurostat (à dater).
+erreurs: Comparer des taux de pauvreté de pays qui utilisent des définitions différentes.
+sources: Insee, Eurostat, Banque mondiale
+duree: 5-7
+format: educational
+forme: lecon
+
 # MODULE Q5
 niveau: 2
 titre: Technologie, algorithmes et données personnelles
@@ -380,6 +408,20 @@ sources: Articles scientifiques, rapports d'évaluation publics
 duree: 6-8
 format: educational
 forme: etude_de_cas
+
+## Q5.04
+titre: Quand une IA annonce « 90 % de confiance »
+titre_en: When an AI says it is 90% sure
+question: Une machine sûre à 90 % a-t-elle raison neuf fois sur dix ?
+renvoi: S17.05 | S17.09
+obj: Expliquer la calibration d'un modèle | Lire un diagramme de fiabilité
+intuition: Un bon météorologue qui annonce 70 % de pluie doit voir pleuvoir sept fois sur dix.
+exemple: Prévisions météorologiques et classifieurs d'images (à sourcer).
+erreurs: Confondre confiance affichée et probabilité d'avoir raison.
+sources: Publications scientifiques sur la calibration, services météorologiques
+duree: 5-7
+format: educational
+forme: lecon
 
 # MODULE Q6
 niveau: 1

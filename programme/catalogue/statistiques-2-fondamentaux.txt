@@ -383,3 +383,38 @@ exercice: Avec n = 100, l'écart-type de la moyenne est-il 10 fois plus petit qu
 duree: 8-10
 format: educational
 forme: simulation
+
+## S5.14
+titre: D'autres lois continues : uniforme, log-normale, Pareto
+titre_en: More continuous distributions: uniform, log-normal, Pareto
+question: Pourquoi les revenus ou la taille des villes ne suivent-ils pas une courbe en cloche ?
+pre: S5.09 | M1.04
+obj: Reconnaître une loi uniforme, log-normale ou de Pareto à sa forme | Expliquer qu'un produit de nombreux facteurs donne une loi log-normale | Calculer la médiane et la moyenne d'une loi log-normale | Distinguer queue fine et queue épaisse
+intuition: Additionner des hasards donne une cloche ; les multiplier donne une loi penchée, avec quelques valeurs immenses.
+exemple: Distribution des revenus ; taille des villes (loi de Zipf, à sourcer et dater).
+maths: M1.
+maths_demontrer: M2
+erreurs: Supposer la normalité pour toute variable continue ; résumer une loi de Pareto par sa moyenne.
+exercice: Le logarithme d'un revenu suit une loi normale de moyenne 10 et d'écart-type 1. Quelle est la médiane du revenu, et quelle est sa moyenne ?
+correction: La médiane est conservée par l'exponentielle : e¹⁰ ≈ 22 026. La moyenne vaut e^(μ + σ²/2) = e^10,5 ≈ 36 316. La moyenne dépasse nettement la médiane, comme pour les vrais revenus.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S5.15
+titre: L'espérance conditionnelle
+titre_en: Conditional expectation
+question: Que vaut le hasard en moyenne quand on sait déjà quelque chose ?
+pre: S5.10 | S4.07
+obj: Calculer une espérance conditionnelle sur un exemple discret | Appliquer la formule de l'espérance totale | Expliquer pourquoi la régression estime une espérance conditionnelle
+intuition: On fait la moyenne seulement sur les cas compatibles avec ce que l'on sait.
+exemple: Lancer d'un dé quand on sait que le résultat est pair ; salaire moyen selon le diplôme.
+maths: M1.
+maths_demontrer: M2
+erreurs: Confondre E[X | Y] et E[Y | X] ; croire qu'une espérance conditionnelle est un nombre fixe alors qu'elle dépend de ce que l'on conditionne.
+exercice: On lance un dé équilibré et l'on sait que le résultat est pair. Quelle est l'espérance du résultat ?
+correction: Les cas possibles sont 2, 4 et 6, également probables : (2 + 4 + 6) / 3 = 4.
+duree: 7-9
+format: educational
+forme: lecon
+

@@ -100,6 +100,38 @@ duree: 7-9
 format: educational
 forme: lecon
 
+## S6.07
+titre: Non-réponse et redressement
+titre_en: Nonresponse and weighting adjustment
+question: Que faire quand ceux qui répondent ne ressemblent pas à ceux qui ne répondent pas ?
+pre: S6.04 | S1.07
+obj: Distinguer non-réponse totale et non-réponse partielle | Calculer un poids de redressement par post-stratification | Expliquer pourquoi le redressement ne corrige que ce qui est lié aux variables utilisées
+intuition: Si les femmes sont surreprésentées, chaque réponse de femme compte un peu moins, et chaque réponse d'homme un peu plus.
+exemple: Taux de réponse en baisse des enquêtes téléphoniques (à sourcer et dater).
+maths: M0.
+erreurs: Croire qu'un échantillon redressé est équivalent à un échantillon aléatoire ; redresser sur des variables sans lien avec la non-réponse.
+exercice: La population compte 50 % de femmes, l'échantillon 60 %. Quels poids donner aux réponses des femmes et des hommes ?
+correction: Femmes : 0,50 / 0,60 ≈ 0,83. Hommes : 0,50 / 0,40 = 1,25. Après pondération, chaque groupe pèse 50 %.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S6.08
+titre: Le calage sur marges
+titre_en: Calibration weighting
+question: Comment un institut fait-il coller son échantillon à la population sur plusieurs critères à la fois ?
+pre: S6.07
+obj: Expliquer le calage sur plusieurs marges (âge, sexe, région) | Décrire la méthode itérative (raking) | Mesurer la perte de précision due à des poids très dispersés (effet de plan)
+intuition: On ajuste les poids critère par critère, en boucle, jusqu'à retrouver toutes les répartitions connues.
+exemple: Méthode des quotas et redressement des instituts de sondage ; macro CALMAR de l'Insee (à sourcer).
+maths: M1.
+erreurs: Croire que plus de variables de calage donnent toujours un meilleur résultat ; ignorer la perte de précision.
+exercice: Pourquoi des poids allant de 0,2 à 8 réduisent-ils la précision d'un sondage ?
+correction: Quelques répondants pèsent très lourd : l'estimation dépend de peu de personnes, ce qui revient à un échantillon effectif plus petit.
+duree: 7-9
+format: educational
+forme: lecon
+
 # MODULE S7
 niveau: 3
 titre: Estimation et intervalles de confiance
@@ -394,6 +426,38 @@ duree: 8-10
 format: educational
 forme: etude_de_cas
 
+## S8.10
+titre: Les données suivent-elles la loi supposée ? Q-Q plot et tests d'adéquation
+titre_en: Does the data follow the assumed distribution? Q-Q plots and goodness of fit
+question: Comment vérifier qu'une variable est à peu près normale avant d'utiliser une méthode qui le suppose ?
+pre: S8.06 | S2.06 | S5.09
+obj: Lire un diagramme quantile-quantile | Utiliser un test d'adéquation (khi-deux, Kolmogorov-Smirnov, Shapiro-Wilk) | Expliquer pourquoi, avec beaucoup de données, un test rejette des écarts sans importance
+intuition: On aligne les quantiles observés sur ceux de la loi supposée : si les points suivent la diagonale, la loi convient.
+exemple: Tailles d'adultes (presque normales) contre revenus (très asymétriques).
+maths: M1.
+erreurs: Conclure qu'une loi est normale parce que le test ne la rejette pas sur un petit échantillon ; exiger la normalité des données alors que la méthode ne demande que celle des moyennes.
+exercice: Un Q-Q plot montre des points au-dessus de la diagonale à droite et en dessous à gauche. Que dit-il des queues de la distribution ?
+correction: Les quantiles extrêmes observés sont plus éloignés du centre que ceux de la loi normale : la distribution a des queues plus épaisses.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S8.11
+titre: La méta-analyse : combiner des études
+titre_en: Meta-analysis: combining studies
+question: Vingt études sur le même sujet disent des choses différentes : que faut-il en retenir ?
+pre: S8.07 | S8.09 | S7.07
+obj: Combiner des estimations en les pondérant par l'inverse de leur variance | Lire un forest plot | Distinguer effets fixes et effets aléatoires entre études | Repérer un biais de publication sur un funnel plot
+intuition: Chaque étude vote, mais les plus précises ont plus de voix ; et celles qui n'ont rien trouvé ne sont parfois jamais publiées.
+exemple: Collaboration Cochrane (synthèses à sourcer et dater lors de la préparation).
+maths: M1.
+erreurs: Compter les études « positives » et « négatives » ; ignorer le biais de publication ; combiner des études qui ne mesurent pas la même chose.
+exercice: Deux études estiment un effet de 2 (erreur standard 1) et de 4 (erreur standard 2). Quelle estimation combinée, et quelle erreur standard ?
+correction: Poids : 1 / 1² = 1 et 1 / 2² = 0,25. Estimation : (1 × 2 + 0,25 × 4) / 1,25 = 2,4. Erreur standard : 1 / √1,25 ≈ 0,89, plus petite que celle de chaque étude.
+duree: 8-10
+format: educational
+forme: lecon
+
 # MODULE S9
 niveau: 3
 titre: Régression linéaire et ANOVA
@@ -570,6 +634,39 @@ exercice: Lequel de trois modèles choisir au vu des erreurs d'entraînement et 
 duree: 8-10
 format: educational
 forme: demonstration
+
+## S9.12
+titre: La régression quantile
+titre_en: Quantile regression
+question: Un diplôme augmente-t-il autant les bas salaires que les hauts salaires ?
+pre: S9.04 | S2.06
+obj: Expliquer ce que modélise une régression quantile | Interpréter des coefficients différents selon le quantile | Expliquer sa robustesse aux valeurs extrêmes
+intuition: Au lieu d'une seule droite pour la moyenne, on trace une droite pour le bas, le milieu et le haut de la distribution.
+exemple: Rendements de l'éducation selon le quantile de salaire (R. Koenker, G. Bassett, Econometrica, 1978, pour la méthode).
+maths: M2.
+maths_comprendre: M1
+erreurs: Interpréter le coefficient du 90e centile comme l'effet sur les personnes qui sont au 90e centile.
+exercice: Un coefficient vaut 0,05 au 10e centile et 0,12 au 90e centile. Que dire des écarts de salaire ?
+correction: L'écart associé à la variable est plus grand dans le haut de la distribution : la dispersion des salaires augmente avec elle. Ce n'est pas l'effet sur des individus précis, mais sur les quantiles de la distribution.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S9.13
+titre: Plans factoriels, fractions et blocs
+titre_en: Factorial, fractional and block designs
+question: Comment tester cinq facteurs à la fois sans faire 32 expériences ?
+pre: S9.10
+obj: Construire un plan factoriel complet 2^k | Expliquer un plan fractionnaire et la notion d'alias | Utiliser des blocs pour neutraliser une source de variation connue
+intuition: On renonce à mesurer des interactions improbables pour économiser des essais, en sachant exactement ce qu'on confond.
+exemple: Optimisation d'une recette industrielle ; G. Box, J. S. Hunter, W. Hunter, Statistics for Experimenters, Wiley, 2005.
+maths: M1.
+erreurs: Interpréter un effet principal sans savoir avec quelle interaction il est confondu.
+exercice: Combien d'essais demande un plan 2^(5−2) ?
+correction: 2^(5−2) = 2³ = 8 essais au lieu de 32 : chaque effet principal est confondu avec certaines interactions.
+duree: 8-10
+format: educational
+forme: lecon
 
 # MODULE S10
 niveau: 3
@@ -783,3 +880,37 @@ exercice: Lister ce qu'il faut transmettre pour qu'une analyse soit refaite à l
 duree: 6-8
 format: educational
 forme: etude_de_cas
+
+## S11.07
+titre: Lisser sans formule imposée : régression non paramétrique, splines, GAM
+titre_en: Smoothing without a fixed formula: nonparametric regression, splines and GAMs
+question: Comment suivre une relation courbe sans choisir à l'avance sa forme ?
+pre: S9.07 | S11.05
+obj: Expliquer le principe d'un lissage local et d'une spline | Choisir un degré de lissage par validation croisée | Lire les courbes d'un modèle additif généralisé
+intuition: Une règle souple qui épouse les données, avec un réglage qui l'empêche de suivre chaque point.
+exemple: Mortalité selon la température journalière (forme en U, à sourcer).
+maths: M2.
+erreurs: Lisser trop peu et prendre le bruit pour une tendance ; extrapoler une spline hors des données.
+exercice: Pourquoi une courbe qui passe par tous les points prévoit-elle mal de nouvelles données ?
+correction: Elle a appris le bruit propre à cet échantillon : sa variance est très élevée. La validation croisée mesure cette erreur sur des données non utilisées.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S11.08
+titre: Estimer une densité : de l'histogramme aux noyaux
+titre_en: Estimating a density: from histograms to kernels
+question: Comment dessiner la forme d'une distribution sans dépendre du choix des classes ?
+pre: S2.02 | S5.07 | S11.05
+obj: Expliquer l'estimation par noyau | Montrer l'effet de la largeur de fenêtre | Comparer histogramme et densité estimée
+intuition: On pose une petite bosse sur chaque observation et l'on additionne les bosses.
+exemple: Distribution des temps de trajet domicile-travail.
+maths: M2.
+maths_comprendre: M1
+erreurs: Choisir la fenêtre pour obtenir la forme attendue ; lire une bosse due au hasard comme un second groupe.
+exercice: Que se passe-t-il quand la fenêtre devient très grande, puis très petite ?
+correction: Très grande : une seule bosse lisse qui efface la structure. Très petite : un pic par observation, qui reproduit le bruit.
+duree: 6-8
+format: educational
+forme: lecon
+

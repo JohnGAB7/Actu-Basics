@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.4 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-4.pdf"
+VERSION = "1.5 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-5.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -140,6 +140,25 @@ VERIFICATIONS = [
     ("E9.08", "0.25 * 1 ** 2 + 0.25 * 2 ** 2 + 2 * 0.25 * 0.9 * 1 * 2", 2.15, "variance du portefeuille, corrélation 0,9"),
     ("E9.09", "78 * 0.1 ** 2", 0.78, "variance réalisée du jour"),
     ("E9.09", "sqrt(78 * 0.1 ** 2)", 0.88, "volatilité réalisée du jour, en %"),
+    ("E9.05", "1.5 * exp(-2.326 ** 2 / 2) / sqrt(2 * pi) / 0.01", 4.0, "Expected Shortfall normale à 99 %, en %"),
+    ("E9.10", "100 * 0.98 ** 100", 13.3, "part d'un choc restant après 100 jours, GARCH, en %"),
+    ("S5.14", "exp(10)", 22026, "médiane du revenu log-normal"),
+    ("S5.14", "exp(10.5)", 36316, "moyenne du revenu log-normal"),
+    ("S5.15", "(2 + 4 + 6) / 3", 4, "espérance d'un dé sachant qu'il est pair"),
+    ("S6.07", "0.5 / 0.6", 0.83, "poids des réponses de femmes"),
+    ("S6.07", "0.5 / 0.4", 1.25, "poids des réponses d'hommes"),
+    ("S8.11", "(1 * 2 + 0.25 * 4) / 1.25", 2.4, "estimation combinée par l'inverse de la variance"),
+    ("S8.11", "1 / sqrt(1.25)", 0.89, "erreur standard combinée"),
+    ("S14.07", "10 + 4 / (4 + 4) * (14 - 10)", 12, "estimation après mise à jour de Kalman"),
+    ("S14.07", "(1 - 4 / (4 + 4)) * 4", 2, "variance après mise à jour"),
+    ("S15.04", "log(2) / 0.1", 6.9, "médiane de survie, en années"),
+    ("S17.09", "ceil((19 + 1) * 0.9)", 18, "rang du résidu de calibration"),
+    ("S18.04", "2 * (-100 - (-104))", 8, "statistique du rapport de vraisemblance"),
+    ("S18.06", "100 * (1 - 0.99 ** 30)", 26, "au moins une crue centennale en 30 ans, en %"),
+    ("E4.06", "0.8 * 0.7", 0.56, "borne basse du taux d'emploi"),
+    ("E4.06", "0.8 * 0.7 + 0.2", 0.76, "borne haute du taux d'emploi"),
+    ("E5.05", "3 - 1", 2, "degrés de suridentification"),
+    ("S9.13", "2 ** (5 - 2)", 8, "essais d'un plan 2^(5−2)"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
 ]
@@ -148,6 +167,29 @@ TOLERANCES = {("Q6.03", 4200): 50, ("Q1.02", 14): 0.5, ("S8.09", 64): 0.5}
 
 
 ILLUSTRATIONS: dict[str, list[str]] = defaultdict(list)
+
+# État de conception : seules ces vidéos ont une fiche de conception complète.
+CONCUES = {"S4.06": "fiche de conception complète (vidéo de lancement)"}
+
+# Rôle dans le parcours : une description, jamais une exclusion (décision de JG,
+# 2/11/2026 : toutes les vidéos sont proposées, le spectateur choisit).
+ROLES = {
+    "socle": ("Socle", "niveaux 1 à 3, demandée par une vidéo suivante"),
+    "approfondissement": ("Approfondissement", "niveaux 1 à 3, aucune vidéo ne la demande ensuite"),
+    "specialisation": ("Spécialisation", "niveau 4, branche avancée"),
+    "autonome": ("Sujet autonome", "pilier 3, compréhensible sans le cursus"),
+    "rappel": ("Rappel mathématique", "boîte à outils, à voir juste avant la vidéo qui en a besoin"),
+}
+
+
+def role(u: "Unite", niveau: int, successeurs: dict[str, list[str]]) -> str:
+    if u.pilier == "Q":
+        return "autonome"
+    if u.pilier == "M":
+        return "rappel"
+    if niveau == 4:
+        return "specialisation"
+    return "socle" if successeurs.get(u.id) else "approfondissement"
 
 
 @dataclass
@@ -374,7 +416,7 @@ def niveaux_maths(u: "Unite") -> tuple[int, int, int]:
     return comp, app, max(demo, app)
 
 
-def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[str]]) -> str:
+def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[str]], niveau: int = 0) -> str:
     c = u.champs
     illustrations = ILLUSTRATIONS
     fmt = FORMATS[c["format"]][0]
@@ -391,6 +433,12 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
             chips.append(f'<span class="chip">Maths : comprendre M{comp} · appliquer M{app} · démontrer M{demo}</span>')
     if u.pilier != "M":
         chips.append(f'<span class="chip maitrise">Maîtrise : {" · ".join(maitrise(u))}</span>')
+    r = role(u, niveau, successeurs)
+    chips.append(f'<span class="chip role-{r}">{ROLES[r][0]}</span>')
+    if u.id in CONCUES:
+        chips.append('<span class="chip etat-concue">Conçue</span>')
+    else:
+        chips.append('<span class="chip">Cataloguée</span>')
     lignes = []
 
     def ligne(lib: str, val: str) -> None:
@@ -407,7 +455,7 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
     ligne("Objectifs", puces(u.liste("obj")))
     if c.get("maths") and c["maths"].rstrip(".") not in ("Aucune", "M0", "M1", "M2", "M3"):
         ligne("Notions mathématiques", e(c["maths"]))
-    for cle, lib in [("intuition", "Intuition d'abord"), ("exemple", "Exemple fil rouge"), ("erreurs", "Idées fausses à prévenir"), ("exercice", "Vérification"), ("sources", "Sources à mobiliser")]:
+    for cle, lib in [("intuition", "Intuition d'abord"), ("exemple", "Exemple fil rouge"), ("erreurs", "Idées fausses à prévenir"), ("exercice", "Vérification"), ("correction", "Correction détaillée"), ("sources", "Sources à mobiliser")]:
         if c.get(cle):
             ligne(lib, e(c[cle]))
     return (
@@ -437,7 +485,7 @@ def bloc_module(m: Module, unites: dict[str, Unite], successeurs) -> str:
         f'{len(m.unites)} vidéos · environ {round(total)} min</p>'
         f'<p class="but">{e(c["but"])}</p>'
         f'<table class="sommaire"><thead><tr><th>N°</th><th>Vidéo</th><th>Format</th><th>Durée</th></tr></thead><tbody>{sommaire}</tbody></table></div>'
-        + "".join(carte_unite(u, unites, successeurs) for u in m.unites)
+        + "".join(carte_unite(u, unites, successeurs, m.niveau) for u in m.unites)
         + "</section>"
     )
 
@@ -548,6 +596,16 @@ def tableau_volumes(modules, unites) -> str:
     tete = ("<table class='donnees'><thead><tr><th>Pilier</th><th>Vidéos</th><th>SHORT</th>"
             "<th>EDUCATIONAL</th><th>YOUTUBE_LESSON</th><th>Durée totale<br>(milieu de fourchette)</th></tr></thead><tbody>")
     return tete + "".join(lignes).replace(".", ",") + "</tbody></table>"
+
+
+def tableau_roles(modules, unites, successeurs) -> str:
+    niveau = {m.id: m.niveau for m in modules}
+    compte = Counter(role(u, niveau[u.module], successeurs) for u in unites.values())
+    lignes = "".join(
+        f"<tr><td><span class='chip role-{k}'>{e(nom)}</span></td><td>{e(regle)}</td><td class='num'>{compte.get(k, 0)}</td></tr>"
+        for k, (nom, regle) in ROLES.items())
+    return ("<table class='donnees'><thead><tr><th>Rôle</th><th>Règle (calculée par le script)</th><th>Vidéos</th></tr></thead><tbody>"
+            + lignes + "</tbody></table>")
 
 
 def tableau_niveaux(modules, unites) -> str:
@@ -665,6 +723,8 @@ def main() -> int:
         "HEURES_TOTAL": f"{sum(sum(u.duree) / 2 for u in unites.values()) / 60:.0f}",
         "NB_CALCULS": str(len(lignes_calc)),
         "TABLEAU_VOLUMES": tableau_volumes(modules, unites),
+        "TABLEAU_ROLES": tableau_roles(modules, unites, successeurs),
+        "NB_CONCUES": str(len(CONCUES)),
         "TABLEAU_NIVEAUX": tableau_niveaux(modules, unites),
         "CARTE_STATS": carte_dependances(modules, "S"),
         "CARTE_ECO": carte_dependances([m for m in modules if m.id[0] == "E" or m.id in ("S1", "S3", "S9", "S10", "S14")], "SE"),

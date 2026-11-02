@@ -112,7 +112,7 @@ Chaque exemple historique du syllabus renvoie maintenant à une source primaire 
 | Q6.01 | Penaltys | P.-A. Chiappori, S. Levitt, T. Groseclose, *AER*, 2002 ; I. Palacios-Huerta, *Review of Economic Studies*, 2003 |
 
 
-Articles fondateurs et articles cités dans le module E9 (métadonnées vérifiées par leur DOI le 2/11/2026) :
+Articles fondateurs et articles cités dans le module E9 et dans les vidéos ajoutées en version 1.5 (métadonnées vérifiées par leur DOI le 2/11/2026, sauf mention contraire) :
 
 | Vidéo | Référence |
 |---|---|
@@ -125,8 +125,17 @@ Articles fondateurs et articles cités dans le module E9 (métadonnées vérifi�
 | E9.01 | R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », *Quantitative Finance*, 1(2), 2001, p. 223-236 · doi.org/10.1080/713665670 |
 | E9.03 | A. Patton, « Volatility forecast comparison using imperfect volatility proxies », *Journal of Econometrics*, 160(1), 2011, p. 246-256 · doi.org/10.1016/j.jeconom.2010.03.034 |
 | E9.06 | J. Hamilton, « A New Approach to the Economic Analysis of Nonstationary Time Series and the Business Cycle », *Econometrica*, 57(2), 1989, p. 357 et suiv. · doi.org/10.2307/1912559 |
-| E9.07 | E. Jacquier, N. Polson, P. Rossi, « Bayesian Analysis of Stochastic Volatility Models », *Journal of Business & Economic Statistics*, 1994 (non revérifié) |
+| E9.07 | E. Jacquier, N. Polson, P. Rossi, « Bayesian Analysis of Stochastic Volatility Models », *Journal of Business & Economic Statistics*, 12(4), 1994, p. 371-389 · doi.org/10.1080/07350015.1994.10524553 |
 | E9.08 | R. Engle, « Dynamic Conditional Correlation », *Journal of Business & Economic Statistics*, 20(3), 2002, p. 339-350 · doi.org/10.1198/073500102288618487 |
+| E9.05 | P. Christoffersen, « Evaluating Interval Forecasts », *International Economic Review*, 39(4), 1998, p. 841 et suiv. · doi.org/10.2307/2527341 |
+| E9.08 | T. Bollerslev, « Modelling the Coherence in Short-Run Nominal Exchange Rates: A Multivariate Generalized ARCH Model » (modèle CCC), *Review of Economics and Statistics*, 72(3), 1990, p. 498 et suiv. · doi.org/10.2307/2109358 |
+| E9.10 | R. Baillie, T. Bollerslev, H. O. Mikkelsen, « Fractionally integrated generalized autoregressive conditional heteroskedasticity », *Journal of Econometrics*, 74(1), 1996, p. 3-30 · doi.org/10.1016/S0304-4076(95)01749-6 |
+| E5.05 | L. P. Hansen, « Large Sample Properties of Generalized Method of Moments Estimators », *Econometrica*, 50(4), 1982, p. 1029 et suiv. · doi.org/10.2307/1912775 |
+| E8.06 | Ò. Jordà, « Estimation and Inference of Impulse Responses by Local Projections », *American Economic Review*, 95(1), 2005, p. 161-182 · doi.org/10.1257/0002828053828518 |
+| E7.08 | V. Chernozhukov et coll., « Double/debiased machine learning for treatment and structural parameters », *Econometrics Journal*, 21(1), 2018, p. C1-C68 · doi.org/10.1111/ectj.12097 ; S. Wager, S. Athey, *JASA*, 113(523), 2018, p. 1228-1242 · doi.org/10.1080/01621459.2017.1319839 |
+| S9.12 | R. Koenker, G. Bassett, « Regression Quantiles », *Econometrica*, 46(1), 1978, p. 33 et suiv. · doi.org/10.2307/1913643 |
+| E4.06 | C. Manski, *Partial Identification of Probability Distributions*, Springer Series in Statistics, 2003 · doi.org/10.1007/b97478 |
+| E8.07, E10.04, E10.05, E6.05, S9.13 | K. Brodersen et coll. (2015), D. McFadden (2000), S. Berry, J. Levinsohn, A. Pakes (1995), L. Anselin (1988), G. Box, J. S. Hunter, W. Hunter (2005) : références à revérifier lors de la préparation |
 | E9.09 | T. Andersen, T. Bollerslev, F. Diebold, P. Labys, « Modeling and Forecasting Realized Volatility », *Econometrica*, 71(2), 2003, p. 579-625 · doi.org/10.1111/1468-0262.00418 |
 | E9.09 | F. Corsi, « A Simple Approximate Long-Memory Model of Realized Volatility », *Journal of Financial Econometrics*, 7(2), p. 174-196 · doi.org/10.1093/jjfinec/nbp001 |
 
