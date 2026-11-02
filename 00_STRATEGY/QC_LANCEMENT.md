@@ -52,13 +52,13 @@ Prudence sur la cryptographie : la voix ne dit jamais que le paradoxe « sécuri
 
 ## 4. Rendu et lisibilité mobile
 
-Les deux vidéos complètes ont été relues **image par image, une image toutes les 2 secondes** (238 images FR, 228 EN, dans `revue-image-par-image/`), puis les scènes corrigées ont été rendues et relues à nouveau.
+Les deux vidéos complètes ont été relues **image par image, une image toutes les 2 secondes** (239 images FR, 228 EN, dans `revue-image-par-image/`), puis les scènes corrigées ont été rendues et relues à nouveau.
 
 | Contrôle | Résultat |
 |---|---|
 | Barre d'accent sous les grands chiffres | **corrigée par une règle commune** : la barre se place sous le bas réel du glyphe (numéros de chapitre « 1 » à « 5 », chiffre clé « 50,7 % »), en FR et en EN, vertical et 16:9. Deux tests vérifient qu'aucun pixel de la barre ne touche le chiffre ; ils échouaient sur l'ancien code |
 | Coupures de ligne | les expressions ne sont plus coupées : « n(n − 1) ÷ 2 », « 1 − P₀ », « 780 ÷ 365 > 2 » restent sur une ligne |
-| Chevauchements | aucun relevé sur les 466 images relues |
+| Chevauchements | aucun relevé sur les 467 images relues |
 | Formules sur mobile | ligne la plus petite de la formule du produit : 85 px (seuil 70 px), y compris avec la police du runner GitHub |
 | Zones de sécurité | zones TikTok, Reels et Shorts vérifiées par le moteur (`inspection/zones-*.png`) |
 | Point d'attention | en vertical, le texte des quatre cartes de piliers reste petit (36 px sur 1 080) : lisible, mais c'est l'écran le plus dense |
