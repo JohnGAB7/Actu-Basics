@@ -99,5 +99,5 @@ Les 37 scènes, le storyboard, les animations et l'architecture sont conservés.
 
 - L'écoute humaine des deux narrations (prononciation, rythme, naturel).
 - Le test du débutant (un vrai spectateur).
-- La licence du fichier ONNX réellement utilisé (`kokoro-v1.0.onnx`) : point bloquant avant une publication monétisée, solutions sans frais proposées dans `docs/voice-licenses.md`.
+- La licence du fichier ONNX réellement utilisé (`kokoro-v1.0.onnx`) : point bloquant avant une publication monétisée, réduit le 2 novembre : le fichier contient 99,65 % des valeurs des poids officiels Apache-2.0 ([run](https://github.com/JohnGAB7/le-monde-en-chiffres/actions/runs/41525279833)). Preuve technique de provenance, pas licence écrite ; décision de JG. Détail dans `docs/voice-licenses.md`.
 - La fiche reste en « brouillon » : aucune vidéo n'est publiable en l'état, et rien n'a été publié.
