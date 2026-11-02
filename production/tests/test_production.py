@@ -1372,9 +1372,11 @@ def test_sous_titres_sur_deux_lignes_lisibles_sur_mobile():
 
 def test_pas_de_coupure_au_milieu_d_une_expression():
     from lmec.rendu import mots_riches
-    mots = [w for w, _, _ in mots_riches("Compter les paires : *n(n − 1) ÷ 2*")]
-    assert "n(n − 1)" in mots and "÷ 2" in mots
-    assert [w for w, _, _ in mots_riches("Multiplier, puis 1 − P₀")][-1] == "− P₀"
+    def mots(t):
+        return [w.replace("\u00a0", " ") for w, _, _ in mots_riches(t)]
+    assert "n(n − 1) ÷ 2" in mots("Compter les paires : *n(n − 1) ÷ 2*")   # formule sur une ligne
+    assert "780 ÷ 365 > 2," in mots("40 personnes : 780 ÷ 365 > 2, impossible")
+    assert mots("Multiplier, puis 1 − P₀")[-1] == "− P₀"
     assert len(mots_riches("(voir le rapport de rendu complet)")) == 6   # parenthèse longue : coupable
 
 

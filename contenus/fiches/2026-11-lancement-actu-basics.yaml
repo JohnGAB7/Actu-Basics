@@ -132,9 +132,12 @@ editions:
         voix_off: "Dix fois neuf, quatre-vingt-dix. Divisé par deux : quarante-cinq paires."
         verifier:
           - {expression: "comb(10, 2)", attendu: 45, libelle: "Paires parmi 10 personnes"}
-      - type: texte
+      - type: etapes
         texte: "253 paires, mais *pas* 253 chances qui s'additionnent"
-        note: "Avec 40 personnes : 780 paires, et 780 ÷ 365 dépasse 2. Une probabilité ne dépasse jamais 1."
+        etapes:
+          - "Les paires se chevauchent : A–B et A–C partagent *A*"
+          - "Donc 253 ÷ 365 n'est *pas* la réponse"
+          - "40 personnes : 780 ÷ 365 > 2, *impossible* pour une probabilité"
         voix_off: "Attention : ces deux cent cinquante-trois paires ne sont pas indépendantes. Elles se chevauchent : les paires formées par A et B, et par A et C, partagent la même personne A. On ne peut donc pas simplement calculer deux cent cinquante-trois sur trois cent soixante-cinq. D'ailleurs, avec quarante personnes, ce calcul donnerait plus de deux, alors qu'une probabilité ne dépasse jamais un."
         verifier:
           - {expression: "comb(40, 2)", attendu: 780, libelle: "Paires parmi 40 personnes"}
@@ -164,8 +167,8 @@ editions:
           - 'P_0=\dfrac{365}{365}\times\dfrac{364}{365}\times\dfrac{363}{365}'
           - '\times\cdots\times\dfrac{343}{365}'
           - '\approx 0{,}493'
-        voix_off: "Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu : ce sont des probabilités conditionnelles, et elles se multiplient. On multiplie trois cent soixante-cinq sur trois cent soixante-cinq, par trois cent soixante-quatre sur trois cent soixante-cinq, puis par trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite, jusqu'à trois cent quarante-trois sur trois cent soixante-cinq. Résultat : environ zéro virgule quatre cent quatre-vingt-treize, soit quarante-neuf virgule trois pour cent."
-        note: "P₀ : probabilité que les 23 anniversaires soient tous différents."
+        voix_off: "Ces probabilités se multiplient. Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu : trois cent soixante-cinq sur trois cent soixante-cinq, puis trois cent soixante-quatre sur trois cent soixante-cinq, puis trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite, jusqu'à trois cent quarante-trois sur trois cent soixante-cinq. Résultat : environ zéro virgule quatre cent quatre-vingt-treize, soit quarante-neuf virgule trois pour cent."
+        note: "P₀ : les 23 anniversaires sont tous différents. Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu."
         verifier:
           - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P₀, 23 personnes"}
       - type: animation
@@ -407,9 +410,12 @@ editions:
         voix_off: "Ten times nine is ninety. Divided by two: forty-five pairs."
         verifier:
           - {expression: "comb(10, 2)", attendu: 45, libelle: "Pairs among 10 people"}
-      - type: texte
+      - type: etapes
         texte: "253 pairs, but *not* 253 chances you can add up"
-        note: "With 40 people: 780 pairs, and 780 ÷ 365 is more than 2. A probability is never above 1."
+        etapes:
+          - "Pairs overlap: A–B and A–C share *A*"
+          - "So 253 ÷ 365 is *not* the answer"
+          - "40 people: 780 ÷ 365 > 2, *impossible* for a probability"
         voix_off: "Careful: these two hundred fifty-three pairs are not independent. They overlap: the pair of A and B and the pair of A and C share the same person, A. So we can't just compute two hundred fifty-three out of three hundred sixty-five. In fact, with forty people, that calculation would give more than two, and a probability can never be more than one."
         verifier:
           - {expression: "comb(40, 2)", attendu: 780, libelle: "Pairs among 40 people"}
@@ -439,8 +445,8 @@ editions:
           - 'P_0=\dfrac{365}{365}\times\dfrac{364}{365}\times\dfrac{363}{365}'
           - '\times\cdots\times\dfrac{343}{365}'
           - '\approx 0.493'
-        voix_off: "Each fraction assumes there's been no match so far: these are conditional probabilities, and they multiply. We multiply three hundred sixty-five over three hundred sixty-five, by three hundred sixty-four over three hundred sixty-five, then by three hundred sixty-three over three hundred sixty-five. And so on, all the way to three hundred forty-three over three hundred sixty-five. The result: about zero point four nine three, or forty-nine point three percent."
-        note: "P₀: the probability that all 23 birthdays are different."
+        voix_off: "These probabilities multiply. Each fraction assumes there's been no match so far: three hundred sixty-five over three hundred sixty-five, then three hundred sixty-four over three hundred sixty-five, then three hundred sixty-three over three hundred sixty-five. And so on, all the way to three hundred forty-three over three hundred sixty-five. The result: about zero point four nine three, or forty-nine point three percent."
+        note: "P₀: all 23 birthdays are different. Each fraction assumes there has been no match so far."
         verifier:
           - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P₀, 23 people"}
       - type: animation

@@ -90,7 +90,10 @@ def mots_riches(texte: str) -> list[tuple[str, bool, bool]]:
     # Pas de coupure de ligne dans une expression : ni entre parenthèses (« n(n − 1) »), ni juste
     # après un opérateur (« ÷ 2 », « − P₀ » restent avec leur opérande).
     texte = re.sub(r"\(([^()]{1,12})\)", lambda m: "(" + m.group(1).replace(" ", "\u00a0") + ")", texte)
-    texte = re.sub(r"(?<=\s)([−÷×=+–]) (?=\S)", "\\1\u00a0", texte)
+    texte = re.sub(r"(?<=\s)([−÷×=+–<>≈≤≥]) (?=\S)", "\\1\u00a0", texte)
+    # Multiplications, divisions et comparaisons restent aussi avec leur opérande de gauche
+    # (« 780 ÷ 365 > 2 » sur une ligne) ; les longues sommes « 22 + 21 + … » restent coupables.
+    texte = re.sub(r"(?<=[\w)]) (?=[÷×=<>≈≤≥]\u00a0)", "\u00a0", texte)
     mots: list[tuple[str, bool, bool]] = []
     pos = 0
     morceaux = []
