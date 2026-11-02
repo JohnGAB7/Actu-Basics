@@ -97,6 +97,16 @@ jobs:
           echo "> ⚠️ Rendu d'**aperçu** : à relire, jamais à publier. Fichiers à publier = workflow « Validation finale »." >> "$GITHUB_STEP_SUMMARY"
           if [ -f sortie/resume.md ]; then cat sortie/resume.md >> "$GITHUB_STEP_SUMMARY"; else echo "Aucun résumé produit." >> "$GITHUB_STEP_SUMMARY"; fi
 
+      # Inventaire de l'artefact (taille, SHA-256, durée, résolution, audio de chaque fichier).
+      # Fait échouer le run si une langue rendue n'a pas sa vidéo avec piste audio ou un fichier attendu.
+      - name: Inventaire de l'artefact
+        if: always()
+        run: |
+          mkdir -p sortie
+          set +e; python production/inventaire.py sortie/ --sortie sortie/INVENTAIRE.md > /dev/null; code=$?; set -e
+          [ -f sortie/INVENTAIRE.md ] && cat sortie/INVENTAIRE.md >> "$GITHUB_STEP_SUMMARY"
+          exit $code
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

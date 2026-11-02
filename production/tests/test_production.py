@@ -1478,3 +1478,101 @@ def test_lecture_pt_refuse_les_objets_inattendus():
         a.writestr("archive/data.pkl", flux.getvalue())
     with pytest.raises(pickle.UnpicklingError):
         lire_tenseur_pt(z.getvalue())
+
+
+def test_lecture_pth_officiel_sans_torch():
+    import numpy as np
+    from comparer_poids_onnx import lire_pth
+    t = np.arange(12, dtype=np.float32).reshape(3, 4)
+    assert np.array_equal(lire_pth(_faux_pt(t)), t)
+
+
+def test_comparaison_des_poids_onnx():
+    """Transposition, portes réordonnées et poids normalisés sont reconnus ; une valeur changée ne l'est pas."""
+    import numpy as np
+    from comparer_poids_onnx import comparer
+    rng = np.random.default_rng(0)
+    a, b = rng.standard_normal((8, 5), dtype=np.float32), rng.standard_normal((16, 3), dtype=np.float32)
+    g, v = rng.random((4, 1, 1), dtype=np.float32) + 0.5, rng.standard_normal((4, 2, 3), dtype=np.float32)
+    w = (g * v / np.sqrt((v.astype(np.float64) ** 2).reshape(4, -1).sum(1)).reshape(4, 1, 1)).astype(np.float32)
+    c = rng.standard_normal(50, dtype=np.float32)
+    c_modifie = c.copy(); c_modifie[:10] += 1.0
+    officiels = {"lin.weight": a, "lstm.weight_ih": b, "conv.weight_g": g, "conv.weight_v": v, "autre": c}
+    onnx_t = {"x": a.T.copy(), "y": np.concatenate([b[8:], b[:8]]), "z": w, "k": c_modifie,
+              "forme": np.array([1, 2], dtype=np.int64)}
+    res = comparer(officiels, onnx_t)
+    assert set(res["exacts"]) == {"lin.weight", "lstm.weight_ih"}
+    assert len(res["normalises"]) == 1
+    taille, part = res["restants"]["autre"]
+    assert taille == 50 and abs(part - 0.8) < 1e-9
+
+
+def _occurrences_barres(fiche, langue, fmt, instants=(None, 0.3, 0.6, 1.2, 1.8, 3.0)):
+    """Rend chaque scène à plusieurs instants en enregistrant chaque texte (boîte réelle des glyphes)
+    et chaque barre fine (rectangle ≤ 20 px de haut). Retourne, pour chaque barre posée sous un grand
+    texte (≥ 150 px), l'écart vertical entre le bas réel du glyphe et le haut de la barre."""
+    from PIL import ImageDraw
+    from lmec import rendu as module_rendu
+    journal = []
+
+    class Enregistreur(ImageDraw.ImageDraw):
+        def text(self, xy, txt, *a, **k):
+            f = k.get("font")
+            if f is not None and str(txt).strip():
+                journal[-1][0].append((str(txt), f.size, self.textbbox(xy, txt, font=f)))
+            return super().text(xy, txt, *a, **k)
+
+        def rectangle(self, box, *a, **k):
+            if box[3] - box[1] <= 20 and box[2] - box[0] >= 1:
+                journal[-1][1].append(tuple(box))
+            return super().rectangle(box, *a, **k)
+
+    origine = module_rendu.ImageDraw.Draw
+    resultats = []
+    try:
+        module_rendu.ImageDraw.Draw = lambda im, mode=None: Enregistreur(im, mode)
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
+        scenes = fiche.editions[langue].scenes
+        for i, s in enumerate(scenes):
+            for t in instants:
+                journal.append(([], []))
+                r.dessiner(s, i, len(scenes), t=t)
+                textes, barres = journal[-1]
+                for barre in barres:
+                    for txt, taille, (x0, y0, x1, y1) in textes:
+                        chevauche = x0 < barre[2] and barre[0] < x1
+                        if taille >= 150 and chevauche and y0 < barre[1]:
+                            resultats.append((i, s.type, t, txt, barre[1] - y1, (min(x0, barre[0]), y0, max(x1, barre[2]), barre[3])))
+    finally:
+        module_rendu.ImageDraw.Draw = origine
+    return resultats
+
+
+@pytest.mark.parametrize("chemin", sorted((RACINE / "contenus/fiches").glob("*.yaml")), ids=lambda p: p.stem)
+def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
+    """Composant commun : sous TOUT grand chiffre (numéro de chapitre, chiffre clé, quelle que soit la
+    scène), la barre reste sous le glyphe entier avec une marge nette, à chaque instant de l'animation,
+    en français et en anglais, en vertical comme en 16:9."""
+    fiche = charger_fiche(chemin)
+    vus = 0
+    for langue in fiche.editions:
+        for fmt in ("video", "lecon", "carrousel"):
+            for i, type_, t, txt, ecart, _ in _occurrences_barres(fiche, langue, fmt):
+                vus += 1
+                assert ecart >= 10, (chemin.name, langue, fmt, f"scène {i + 1} {type_}", t, txt, ecart)
+    assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
+
+
+def test_inventaire_signale_une_video_manquante(tmp_path):
+    """L'inventaire de l'artefact échoue si une langue rendue n'a pas sa vidéo."""
+    sys.path.insert(0, str(RACINE / "production"))
+    import inventaire
+    for langue in ("fr", "en"):
+        d = tmp_path / "fiche" / langue
+        d.mkdir(parents=True)
+        for nom in inventaire.ATTENDUS:
+            (d / nom).write_text("{}" if nom.endswith(".json") else "x", encoding="utf-8")
+    (tmp_path / "fiche/en/video.mp4").unlink()
+    texte, erreurs = inventaire.inventorier(tmp_path)
+    assert "fiche/en/video.mp4 manquant" in erreurs
+    assert "| `fr/video.mp4` |" in texte and "## Contrôle" in texte
