@@ -588,11 +588,14 @@ def test_duree_imposee_trop_courte_allongee(tmp_path):
     assert notes and all(d > 1.0 for d in durees)
 
 
+PAYANT_AUTORISE = {"gratuit_uniquement": False}   # tests des intégrations payantes, sans appel réel
+
+
 def test_fournisseurs_sans_cle():
     with pytest.raises(ErreurTTS, match="OPENAI_API_KEY"):
-        creer_fournisseur("openai", {}, "fr").verifier()
+        creer_fournisseur("openai", PAYANT_AUTORISE, "fr").verifier()
     with pytest.raises(ErreurTTS, match="ELEVENLABS_API_KEY"):
-        creer_fournisseur("elevenlabs", {}, "fr").verifier()
+        creer_fournisseur("elevenlabs", PAYANT_AUTORISE, "fr").verifier()
     with pytest.raises(ErreurTTS, match="inconnu"):
         creer_fournisseur("robot", {}, "fr")
 
@@ -627,7 +630,7 @@ def test_api_simulee_sans_appel_reel(tmp_path, monkeypatch, nom, cle, config):
     import urllib.error
     import urllib.request
     monkeypatch.setenv(cle, "cle-factice")
-    f = creer_fournisseur(nom, {"voix": {"fr": {nom: config}}}, "fr")
+    f = creer_fournisseur(nom, {**PAYANT_AUTORISE, "voix": {"fr": {nom: config}}}, "fr")
     envoyes = []
     audio = _wav_bref(tmp_path / "ref.wav")
 
@@ -1130,12 +1133,12 @@ def test_fiche_actualite_inchangee():
 def test_scene_animation_et_note(tmp_path):
     fiche = charger_fiche(LANCEMENT)
     ed = fiche.editions["fr"]
-    anim = next(s for s in ed.scenes if s.type == "animation")
-    assert anim.extra["animation"] == {"modele": "paires", "n": 23} and "253" in anim.extra["note"]
-    assert any(s.extra.get("note", "").startswith("Hypothèse") for s in ed.scenes)
+    anim = next(s for s in ed.scenes if s.type == "animation" and s.extra["animation"].get("n") == 4)
+    assert anim.extra["animation"]["modele"] == "paires" and len(anim.extra["etapes"]) == 5
+    assert any(s.extra.get("note", "").startswith("Hypothèses") for s in ed.scenes)
     r = Rendu(fiche, "fr", CHARTE, "video", False)
     i = ed.scenes.index(anim)
-    debut, fin = r.dessiner(anim, i, len(ed.scenes), 1.0), r.dessiner(anim, i, len(ed.scenes), 4.0)
+    debut, fin = r.dessiner(anim, i, len(ed.scenes), 1.0), r.dessiner(anim, i, len(ed.scenes), 9.0)
     assert debut.tobytes() != fin.tobytes()                   # les paires se tracent
     brut = valider(brut_lancement())
     scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "animation")
@@ -1146,14 +1149,71 @@ def test_scene_animation_et_note(tmp_path):
     assert "modele" in str(exc.value) and "note" in str(exc.value)
 
 
-def test_application_cryptographie_verifiee():
-    """L'application concrète (collisions d'empreintes) est recalculée comme le reste."""
-    assert pedagogie.evaluer("sqrt(2 * log(2) * 365)") == pytest.approx(22.49, abs=0.01)
-    assert pedagogie.evaluer("sqrt(2 * log(2) * 2 ** 64) / 1e9") == pytest.approx(5.06, abs=0.01)
+@pytest.mark.parametrize("modele", ["foule", "paires", "doublon", "calendrier", "complement"])
+def test_chaque_modele_d_animation_se_construit_phase_par_phase(modele):
     fiche = charger_fiche(LANCEMENT)
     for langue in ("fr", "en"):
-        textes = " ".join(s.voix_off for s in fiche.editions[langue].scenes)
-        assert "SHA-256" in textes
+        ed = fiche.editions[langue]
+        scenes = [s for s in ed.scenes if s.type == "animation" and s.extra["animation"]["modele"] == modele]
+        assert scenes, modele
+        r = Rendu(fiche, langue, CHARTE, "video", False)
+        for s in scenes:
+            i = ed.scenes.index(s)
+            plan = r._plan_animation(s)
+            assert not s.extra.get("etapes") or len(s.extra["etapes"]) == len(plan)   # une légende par phase
+            fin = r.duree_animation(s)
+            images = [r.dessiner(s, i, len(ed.scenes), t).tobytes() for t in (0.0, fin / 2, fin)]
+            assert len(set(images)) == 3, f"{modele} : l'image doit évoluer pendant l'animation"
+        assert not r.alertes
+
+
+def test_animation_calee_sur_les_phrases_de_la_voix():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    s = next(s for s in ed.scenes if s.type == "animation" and s.extra["animation"].get("n") == 4)
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    r.reperes[id(s)] = [0.35, 2.0, 4.0, 8.0, 12.0, 15.0]    # intro + une phrase par phase
+    assert [p["debut"] for p in r._plan_animation(s)] == [2.0, 4.0, 8.0, 12.0, 15.0]
+    assert r.duree_animation(s) == pytest.approx(15.0 + 0.8 + 0.8)
+
+
+def test_legendes_et_phases_d_animation_doivent_correspondre(tmp_path):
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"]
+                 if s["type"] == "animation" and s["animation"].get("n") == 4)
+    scene["etapes"] = scene["etapes"][:3]
+    with pytest.raises(FicheInvalide, match="une légende par phase"):
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+
+
+def test_correction_etapes_puis_reponse_sur_la_derniere_phrase():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    s = next(s for s in ed.scenes if s.type == "correction" and len(s.extra.get("etapes", [])) == 2)
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    r.reperes[id(s)] = [0.35, 4.0, 8.0]
+    assert r._debuts_etapes(s, 2) == [0.35, 4.0] and r._debut_reponse(s) == 8.0
+
+
+def test_courbe_avec_quatre_reperes_et_seuil():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    s = next(s for s in ed.scenes if s.type == "courbe" and s.extra["courbe"].get("seuil"))
+    assert [rep["x"] for rep in s.extra["courbe"]["reperes"]] == [23, 40, 41, 50]
+    for fmt in ("video", "lecon"):
+        r = Rendu(fiche, "fr", CHARTE, fmt, False)
+        r.dessiner(s, ed.scenes.index(s), len(ed.scenes))
+        assert not r.alertes
+
+
+def test_application_cryptographie_verifiee():
+    """L'application concrète (collisions d'empreintes) est recalculée comme le reste, et prudente."""
+    assert pedagogie.evaluer("1 - exp(-(5e9) ** 2 / (2 * 2 ** 64))") == pytest.approx(0.49, abs=0.01)
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        textes = " ".join(s.voix_off for s in fiche.editions[langue].scenes).lower()
+        assert "collision" in textes
+        assert "sécuris" not in textes and "secure" not in textes and "fraud" not in textes
 
 
 def test_reperes_sonores_et_signature():
@@ -1176,3 +1236,113 @@ def test_reperes_sonores_et_signature():
 def test_pauses_de_narration_selon_la_ponctuation():
     from lmec.narration import pause_apres
     assert pause_apres("Une question ?") > pause_apres("Une phrase.") > pause_apres("Une énumération :")
+
+
+# --------------------------------------------------------------------------- gratuité et Kokoro
+from lmec import tts as tts_mod  # noqa: E402
+
+
+@pytest.mark.parametrize("nom", ["openai", "elevenlabs"])
+def test_service_payant_refuse_par_defaut(nom, monkeypatch):
+    """Gratuité imposée (tts.yaml) : un fournisseur payant est refusé, et aucune requête ne part."""
+    config = yaml.safe_load((RACINE / "production/tts.yaml").read_text(encoding="utf-8"))
+    assert config["gratuit_uniquement"] is True and config["fournisseur"] == "kokoro"
+    with pytest.raises(tts_mod.ServicePayantRefuse, match="gratuit_uniquement"):
+        creer_fournisseur(nom, config, "fr")
+    with pytest.raises(tts_mod.ServicePayantRefuse):
+        creer_fournisseur(nom, {}, "fr")                     # sans réglage : gratuité par défaut
+    import urllib.request
+    appels = []
+    monkeypatch.setattr(urllib.request, "urlopen", lambda *a, **k: appels.append(a))
+    with pytest.raises(tts_mod.ServicePayantRefuse):
+        tts_mod._requete("https://api.openai.com/v1/audio/speech", {}, {})
+    assert not appels                                         # bloqué avant le réseau
+
+
+def test_qc_bloque_un_service_payant(tmp_path):
+    r = lancer(EXEMPLE, "--voix", "elevenlabs", "--sans-video", "--sortie", tmp_path)
+    rapport = (tmp_path / "exemple-fictif/rapport-qc.md").read_text()
+    assert "BLOQUÉ" in rapport and "gratuit_uniquement" in rapport
+
+
+def test_kokoro_absent_bascule_sur_le_secours(tmp_path, monkeypatch):
+    monkeypatch.setattr(tts_mod, "DOSSIER_VOIX", tmp_path)            # aucun modèle Kokoro ici
+    config = {"secours": {"kokoro": "test"}, "voix": {"fr": {"kokoro": {"voix": "ff_siwis"}}}}
+    f, note = tts_mod.creer_avec_secours("kokoro", config, "fr")
+    assert f.nom == "test" and "secours" in note
+    with pytest.raises(ErreurTTS):
+        tts_mod.creer_avec_secours("kokoro", {"voix": {"fr": {"kokoro": {"voix": "ff_siwis"}}}}, "fr")
+
+
+def _kokoro_disponible():
+    try:
+        import kokoro_onnx  # noqa: F401
+    except ImportError:
+        return False
+    return (tts_mod.DOSSIER_VOIX / "kokoro-v1.0.onnx").exists() and (tts_mod.DOSSIER_VOIX / "voices-v1.0.bin").exists()
+
+
+@pytest.mark.skipif(not _kokoro_disponible(), reason="Kokoro non installé ou modèle non téléchargé")
+@pytest.mark.parametrize("langue, voix, texte", [
+    ("fr", "ff_siwis", "Cinquante virgule sept pour cent, avec vingt-trois personnes."),
+    ("en", "af_heart", "Fifty point seven percent, with twenty-three people."),
+])
+def test_kokoro_local_sans_reseau(tmp_path, monkeypatch, langue, voix, texte):
+    """Kokoro synthétise sans aucun accès réseau (toute connexion est interdite pendant le test)."""
+    import socket
+
+    def interdit(*a, **k):
+        raise AssertionError("connexion réseau tentée pendant la synthèse")
+    monkeypatch.setattr(socket.socket, "connect", interdit)
+    config = yaml.safe_load((RACINE / "production/tts.yaml").read_text(encoding="utf-8"))
+    f, note = tts_mod.creer_avec_secours("kokoro", config, langue)
+    assert f.nom == "kokoro" and note is None and f.config["voix"] == voix
+    f.synthetiser(texte, tmp_path / "k.wav")
+    import wave
+    with wave.open(str(tmp_path / "k.wav")) as w:
+        assert w.getframerate() == 48000 and w.getnchannels() == 1
+    assert 2.0 < duree_wav(tmp_path / "k.wav") < 8.0
+
+
+# --- Lecture des nombres et symboles par la voix (Kokoro et Piper passent par espeak-ng) ---
+
+@pytest.mark.parametrize("langue,ecrit,dit", [
+    ("fr", "50,7 %", "50 virgule 7 pour cent"),
+    ("fr", "P₀ ≈ 0,493.", "P zéro environ 0 virgule 493."),
+    ("fr", "1 − P₀", "1 moins P zéro"),
+    ("fr", "365/365 × 364/365", "365 sur 365 fois 364 sur 365"),
+    ("fr", "2⁶⁴ ≈ 18 400", "2 puissance 64 environ 18400"),
+    ("fr", "23 × 22 ÷ 2 = 253", "23 fois 22 divisé par 2 égale 253"),
+    ("fr", "41 - 40 = 1", "41 moins 40 égale 1"),
+    ("fr", "Le 29 février 2028, 1,2,3.", "Le 29 février 2028, 1,2,3."),
+    ("en", "50.7%", "50 point seven percent"),
+    ("en", "P₀ ≈ 0.493.", "P zero about 0 point four nine three."),
+    ("en", "18,400,000 pairs", "18400000 pairs"),
+    ("en", "2⁶⁴ and 1 − P₀", "2 to the power of 64 and 1 minus P zero"),
+    ("en", "365/365 × 364/365", "365 over 365 times 364 over 365"),
+    ("en", "On 29 February 2028, the SHA-256 hash.", "On 29 February 2028, the SHA-256 hash."),
+])
+def test_lecture_des_nombres_et_symboles(langue, ecrit, dit):
+    from lmec.lecture import normaliser_lecture
+    assert normaliser_lecture(ecrit, langue) == dit
+
+
+def test_lecture_appliquee_apres_le_lexique_et_pas_aux_sous_titres():
+    from lmec.narration import preparer_pour_voix
+    lex = {"fr": {"ONU": "Onu"}}
+    assert preparer_pour_voix("L'ONU : 50,7 %.", "fr", lex) == "L'Onu : 50 virgule 7 pour cent."
+
+
+def test_kokoro_prononce_les_nombres_normalises():
+    """Vérifie la phonétisation réelle (espeak-ng via Kokoro) quand le modèle est installé."""
+    from lmec.narration import preparer_pour_voix
+    from lmec.tts import DOSSIER_VOIX
+    kokoro_onnx = pytest.importorskip("kokoro_onnx")
+    modele, voix = DOSSIER_VOIX / "kokoro-v1.0.onnx", DOSSIER_VOIX / "voices-v1.0.bin"
+    if not (modele.exists() and voix.exists()):
+        pytest.skip("modèle Kokoro absent")
+    k = kokoro_onnx.Kokoro(str(modele), str(voix))
+    fr = k.tokenizer.phonemize(preparer_pour_voix("50,7 % et 1 − P₀", "fr", {}), "fr-fr")
+    assert "viʁɡˈyl" in fr and "mwˈɛ̃" in fr and "mˈaɪnəs" not in fr
+    en = k.tokenizer.phonemize(preparer_pour_voix("0.493 ≈ 2⁶⁴", "en", {}), "en-us")
+    assert "pˈɔɪnt" in en and "pˈaʊɚ" in en and "hˈʌndɹɪd nˈaɪnti" not in en

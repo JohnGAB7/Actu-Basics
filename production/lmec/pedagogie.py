@@ -21,7 +21,6 @@ DUREES_FORMAT = {            # (min, max) en secondes, avertissement seulement
     "educational": (90, 600),
     "youtube_lesson": (300, 3600),
 }
-MODELES_ANIMATION = ("paires",)   # paires : n points sur un cercle, reliés deux à deux
 
 FORMATS_SCENES = {           # scènes possibles par format (au-delà : avertissement)
     "short": {"accroche", "chiffre", "texte", "graphique", "source", "fin", "formule", "etapes", "courbe",
@@ -176,6 +175,57 @@ def _liste_textes(v, ctx, erreurs) -> list[str]:
     return [str(e) for e in v]
 
 
+def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> None:
+    from .animations import MODELES, PHASES, PHASES_DEFAUT
+    a = s.get("animation")
+    if not isinstance(a, dict) or a.get("modele") not in MODELES:
+        erreurs.append(f"{ctx} : bloc « animation » avec « modele » parmi {', '.join(MODELES)}")
+        return
+    modele = a["modele"]
+    conf = {"modele": modele}
+
+    def entier(cle, mini, maxi, requis=True):
+        v = a.get(cle)
+        if v is None and not requis:
+            return None
+        if not isinstance(v, int) or isinstance(v, bool) or not mini <= v <= maxi:
+            erreurs.append(f"{ctx}.animation.{cle} : nombre entier entre {mini} et {maxi}")
+            return None
+        return v
+
+    if modele in ("foule", "paires", "calendrier"):
+        conf["n"] = entier("n", 2, {"foule": 60, "paires": 60, "calendrier": 365}[modele])
+    if modele == "paires" and a.get("depuis") is not None:
+        conf["depuis"] = entier("depuis", 1, max(1, (conf.get("n") or 2) - 1))
+    if modele == "calendrier" and a.get("jours") is not None:
+        conf["jours"] = entier("jours", 2, 400)
+    if modele == "complement":
+        v = a.get("valeur")
+        if not _nombre(v) or not 0 < v < 1:
+            erreurs.append(f"{ctx}.animation.valeur : part du premier événement, entre 0 et 1 (ex. 0.493)")
+        else:
+            conf["valeur"] = float(v)
+    phases = a.get("phases")
+    if phases is not None:
+        if not isinstance(phases, list) or not phases or any(p not in PHASES[modele] for p in phases):
+            erreurs.append(f"{ctx}.animation.phases : liste parmi {', '.join(PHASES[modele])}")
+            phases = None
+        elif modele == "paires" and conf.get("n") and phases.count("personne") + ("vous" in phases) > conf["n"] - 1:
+            erreurs.append(f"{ctx}.animation.phases : plus de phases « personne » que de personnes")
+            phases = None
+        elif modele == "calendrier" and conf.get("n") and phases.count("personne") > conf["n"]:
+            erreurs.append(f"{ctx}.animation.phases : plus de phases « personne » que de personnes")
+            phases = None
+        conf["phases"] = phases
+    n_phases = len(conf.get("phases") or PHASES_DEFAUT[modele])
+    legendes = s.get("etapes")
+    if isinstance(legendes, list) and legendes and len(legendes) != n_phases:
+        erreurs.append(f"{ctx}.etapes : une légende par phase de l'animation ({n_phases} attendue(s), "
+                       f"{len(legendes)} donnée(s))")
+    if None not in conf.values():
+        extra["animation"] = conf
+
+
 def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
     """Champs propres au type de scène. Retourne Scene.extra."""
     extra: dict = {}
@@ -191,7 +241,7 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
             extra["formule"] = [l.strip() for l in lignes]
         if not str(s.get("voix_off") or "").strip():
             erreurs.append(f"{ctx} : une formule doit avoir une « voix_off » (une formule ne se lit pas telle quelle)")
-    if type_ in ("etapes", "correction") and s.get("etapes") is not None:
+    if type_ in ("etapes", "correction", "animation") and s.get("etapes") is not None:
         extra["etapes"] = _liste_textes(s.get("etapes"), f"{ctx}.etapes", erreurs)
     if type_ == "etapes" and "etapes" not in extra:
         erreurs.append(f"{ctx} : champ « etapes » manquant (liste des lignes qui apparaissent une à une)")
@@ -209,15 +259,12 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
         if s.get("etiquette") is not None:
             extra["etiquette"] = str(s["etiquette"])
     if type_ == "animation":
-        a = s.get("animation")
-        if not isinstance(a, dict) or a.get("modele") not in MODELES_ANIMATION:
-            erreurs.append(f"{ctx} : bloc « animation » avec « modele » parmi {', '.join(MODELES_ANIMATION)}")
+        _valider_animation(s, ctx, erreurs, extra)
+    if type_ == "etapes" and s.get("disposition") is not None:
+        if s["disposition"] not in ("liste", "cartes"):
+            erreurs.append(f"{ctx}.disposition : « liste » (défaut) ou « cartes »")
         else:
-            n = a.get("n")
-            if not isinstance(n, int) or isinstance(n, bool) or not 2 <= n <= 60:
-                erreurs.append(f"{ctx}.animation.n : nombre entier de points entre 2 et 60")
-            else:
-                extra["animation"] = {"modele": a["modele"], "n": n}
+            extra["disposition"] = s["disposition"]
     if s.get("note") is not None:   # petite mention en bas d'écran (hypothèse, précision), non lue
         if not isinstance(s["note"], str) or not s["note"].strip() or len(s["note"]) > 140:
             erreurs.append(f"{ctx}.note : texte court (140 caractères au plus)")

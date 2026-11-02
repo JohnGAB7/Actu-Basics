@@ -3,10 +3,24 @@
 # Fournisseur utilisé par défaut. Peut être remplacé à la volée :
 #   python production/produire.py FICHE --voix openai
 #   ou variable d'environnement LMEC_TTS=elevenlabs
-fournisseur: piper          # piper | openai | elevenlabs | manuel | test
+fournisseur: kokoro         # kokoro | piper | openai | elevenlabs | manuel | test
+
+# Gratuité imposée (décision de JG) : aucun service payant, aucune clé, aucun crédit.
+# Avec true, openai et elevenlabs sont refusés et aucune requête payante ne part.
+# Passer à false est une décision de dépense, réservée à JG.
+gratuit_uniquement: true
+
+# Si le fournisseur principal est inutilisable (paquet ou modèle absent), on bascule ici,
+# et le rapport le signale.
+secours:
+  kokoro: piper
 
 voix:
   fr:
+    kokoro:
+      voix: ff_siwis                      # choisie par JG après écoute
+      langue: fr-fr                       # phonémisation espeak-ng
+      vitesse: 1.0
     piper:
       modele: fr-siwis-medium.onnx        # voix féminine, licence CC BY 4.0
       lenteur: 1.05                       # > 1 = plus lent (0.95 = plus vif)
@@ -21,6 +35,10 @@ voix:
       modele: eleven_multilingual_v2
       reglages: {stability: 0.5, similarity_boost: 0.75}
   en:
+    kokoro:
+      voix: af_heart                      # choisie par JG après écoute
+      langue: en-us
+      vitesse: 1.0
     piper:
       modele: en-us-libritts-high.onnx    # 904 locuteurs, licence CC BY 4.0
       locuteur: 0                         # numéro du locuteur (0 à 903) : à choisir à l'oreille
@@ -45,6 +63,16 @@ prononciation:
     UN: "U.N."
     DESA: "Desa"
     mid-2080s: "mid twenty-eighties"
+
+# Modèle Kokoro-82M au format ONNX (publication GitHub du projet kokoro-onnx), vérifié par empreinte SHA-256.
+# Licences et versions : docs/voice-licenses.md
+kokoro_telechargements:
+  kokoro-v1.0.onnx:
+    url: https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+    sha256: 7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5
+  voices-v1.0.bin:
+    url: https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+    sha256: bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d
 
 # Modèles Piper téléchargeables (python production/telecharger_voix.py).
 piper_telechargements:

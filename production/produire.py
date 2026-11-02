@@ -37,7 +37,7 @@ from lmec.qc import (Rapport, controler_fiche, controler_lisibilite, controler_l
                      controler_plateformes, controler_video, ecrire_rapport)
 from lmec.rendu import Rendu  # noqa: E402
 from lmec.textes import ecrire_metadonnees, ecrire_script_voix, ecrire_srt, legende_complete  # noqa: E402
-from lmec.tts import Cache, ErreurTTS, charger_env, creer_fournisseur  # noqa: E402
+from lmec.tts import Cache, ErreurTTS, charger_env, creer_avec_secours  # noqa: E402
 from lmec.video import durees_visuelles, produire_video, sonder_video  # noqa: E402
 
 RACINE = Path(__file__).resolve().parent
@@ -114,7 +114,9 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
                 dossier_manuel = ((chemin.parent / edition.audio) if edition.audio
                                   else DEPOT / "audio" / fiche.id / langue).resolve()
             try:
-                fournisseur = creer_fournisseur(nom_voix, config_tts, langue, dossier_manuel)
+                fournisseur, bascule = creer_avec_secours(nom_voix, config_tts, langue, dossier_manuel)
+                if bascule:
+                    rapport.avertir(bascule, langue)
                 narration = produire_voix(fiche, edition, fournisseur, cache, travail, lexique)
                 durees, notes = durees_avec_voix(durees, narration, explicites)
                 for n in notes:
@@ -247,7 +249,7 @@ def main() -> int:
     parseur = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parseur.add_argument("fiches", nargs="+", type=Path)
     parseur.add_argument("--mode", choices=("apercu", "final"), default="apercu")
-    parseur.add_argument("--voix", help="fournisseur de voix : piper | openai | elevenlabs | manuel | test")
+    parseur.add_argument("--voix", help="fournisseur de voix : kokoro (défaut) | piper | openai | elevenlabs | manuel | test")
     parseur.add_argument("--sortie", default="sortie", help="dossier de sortie (défaut : sortie/)")
     parseur.add_argument("--langues", nargs="+", choices=LANGUES, default=list(LANGUES))
     parseur.add_argument("--sans-video", action="store_true", help="carrousels et textes seulement")

@@ -132,6 +132,7 @@ def ecrire_metadonnees(fiche: Fiche, edition: Edition, durees: list[float], doss
         "validation": {"statut": fiche.statut, "valide_par": fiche.valide_par,
                        "date": fiche.date_validation},
         "duree_video_s": round(sum(durees), 2),
+        "durees_scenes_s": [round(d, 2) for d in durees],
         "mode": mode,
         "voix": voix or {"fournisseur": None},
         "fichiers": {"video": "video.mp4", "sous_titres": "sous-titres.srt",

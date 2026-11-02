@@ -428,7 +428,7 @@ class Rendu(ScenesPedagogiques):
         self._index, self._couverture = index, couverture
         note = scene.extra.get("note")
         if note and scene.type != "fin":
-            bas = self._note(d, note, g, dr, bas, t, 4.2 if scene.type == "animation" else 0.9)
+            bas = self._note(d, note, g, dr, bas, t, self.duree_animation_modele(scene) - 0.6 if scene.type == "animation" else 0.9)
         getattr(self, f"_scene_{scene.type}")(d, scene, g, haut, dr, bas, largeur, x_c, t, ctx)
         if coin:
             self._poser_logo(image, coin[0], coin[1], coin[2], scene, index, t, couverture)

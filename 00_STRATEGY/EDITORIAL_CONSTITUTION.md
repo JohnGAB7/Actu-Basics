@@ -58,3 +58,13 @@ Ne jamais inventer une source, un expert, une citation, une donnée ou une valid
 
 ## 9. Décision de publication
 Au lancement, aucune publication sans validation humaine explicite. L'automatisation peut assister la recherche, la rédaction et le montage, mais ne remplace pas la responsabilité éditoriale.
+
+## 10. Contenus pédagogiques : la compréhension avant la durée
+Décision de JG (novembre 2026). La durée d'une vidéo est déterminée par la profondeur nécessaire pour atteindre son objectif pédagogique, et non par une durée maximale arbitraire. Une vidéo est réussie lorsque le spectateur a réellement appris quelque chose et peut le réexpliquer ou l'appliquer.
+
+Conséquences pour chaque contenu pédagogique :
+- partir d'un exemple minuscule avant de généraliser, et ne pas supposer que le spectateur connaît déjà la notion (par exemple le dénombrement) ;
+- « la voix raconte, l'image démontre » : la narration n'est pas affichée en entier à l'écran ;
+- laisser à l'écran le temps de lire et de comprendre chaque étape ;
+- test éditorial avant validation : un spectateur débutant peut réexpliquer le raisonnement avec ses propres mots et refaire au moins un calcul simple ;
+- le contrôle automatique des calculs est nécessaire mais ne suffit pas : relecture humaine de la logique pédagogique, de la narration et des hypothèses.

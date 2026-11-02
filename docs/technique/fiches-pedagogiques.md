@@ -24,17 +24,29 @@ Les scènes d'actualité restent disponibles (`accroche`, `chiffre`, `texte`, `g
 |---|---|---|
 | `titre` | `texte`, `numero` | Carte de chapitre |
 | `formule` | `formule` (texte ou liste de lignes, notation LaTeX), `voix_off` obligatoire | Lignes de formule à la même taille, qui apparaissent une à une |
-| `etapes` | `texte` (titre), `etapes` (liste) | Lignes numérotées qui apparaissent quand la voix les annonce |
-| `courbe` | `courbe` : `expression` + `variable` + `de` + `a` (calculée) ou `points`, `format_y: pourcent`, `axe_x`, `reperes` | Courbe tracée progressivement, repères annotés |
+| `etapes` | `texte` (titre), `etapes` (liste), `disposition: liste` (défaut) ou `cartes` | Lignes numérotées qui apparaissent quand la voix les annonce ; `cartes` : cartes arrondies sur deux colonnes, utiles pour des notions distinctes (les quatre piliers de la conclusion) |
+| `courbe` | `courbe` : `expression` + `variable` + `de` + `a` (calculée) ou `points`, `format_y: pourcent`, `axe_x`, `reperes`, `seuil` (ex. 0.9) | Courbe tracée progressivement ; chaque repère apparaît sur sa phrase de voix ; `seuil` trace une ligne pointillée ; au-delà de deux repères, les étiquettes passent dans une légende en haut à gauche |
 | `exercice` | `texte`, `pause` (s), `etiquette` | Badge « À VOUS », question, compte à rebours après la voix |
 | `correction` | `reponse` et/ou `etapes` | Badge « CORRECTION », démarche, réponse dans un encadré mesuré sur son texte |
-| `animation` | `texte` (titre), `animation: {modele: paires, n: 23}` | `paires` : n points sur un cercle, toutes les paires reliées une à une, compteur. Durée minimale 5 s |
+| `animation` | `texte` (titre), `animation: {modele, n, phases, …}`, `etapes` (une légende par phase) | Animation découpée en **phases**, chacune calée sur une phrase de la voix, avec une seule légende à la fois en bas. Durée minimale 5 s |
+
+Modèles d'animation et leurs phases :
+
+| Modèle | Paramètres | Phases possibles | Ce qu'on voit |
+|---|---|---|---|
+| `foule` | `n` (≤ 60) | `apparition` | n silhouettes qui apparaissent |
+| `paires` | `n` (≤ 60), `depuis` (facultatif) | `apparition`, `personne` (répétable), `vous`, `reste`, `total` | Personnes sur un cercle ; avec n ≤ 6, lettres A, B, C… et liste des paires à droite ; `personne` relie la personne suivante à toutes les autres (3 + 2 + 1) ; `vous` montre seulement vos 22 paires ; `total` colore toutes les paires |
+| `doublon` | — | `aller`, `retour`, `fusion`, `legende` | A → B puis B → A, les deux flèches fusionnent : « A–B = B–A », d'où la division par 2 |
+| `calendrier` | `n` (≤ 365), `jours` | `personne` (répétable), `reste` | Grille de 365 jours ; chaque personne prend un jour libre ; ligne « Tous différents : xx,x % » |
+| `complement` | `valeur` (entre 0 et 1) | `gauche`, `droite`, `total` | Barre coupée en deux : P₀ et 1 − P₀, avec leurs pourcentages, puis une accolade sur l'ensemble |
+
+Le contrôle refuse une animation dont le nombre de légendes (`etapes`) diffère du nombre de phases.
 
 **Champ commun `note`** (toutes les scènes pédagogiques sauf `fin`) : une mention courte et discrète en bas de l'image, non lue par la voix, 140 caractères au plus. Usage : hypothèse de calcul (« 365 jours équiprobables »), détail d'un calcul (« 23 × 22 ÷ 2 = 253 »), ordre de grandeur. Elle allège l'écran principal sans perdre la rigueur.
 
 **Réponse d'un test par un chiffre** : un exercice peut être résolu par une scène `chiffre` qui le suit, à condition qu'elle ait un bloc `verifier`. C'est le cas du test d'ouverture de la vidéo de lancement (réponse : 50,7 %).
 
-**Synchronisation avec la voix** : si la voix off a une phrase de plus que d'étapes, la première phrase introduit et chaque phrase suivante fait apparaître une étape. Avec autant de phrases que d'étapes, chacune en fait apparaître une. Sinon, les étapes se répartissent sur les phrases.
+**Synchronisation avec la voix** (étapes, phases d'animation, repères de courbe) : si la voix off a une phrase de plus que d'étapes, la première phrase introduit et chaque phrase suivante fait apparaître une étape. Avec autant de phrases que d'étapes, chacune en fait apparaître une. Sinon, les étapes se répartissent sur les phrases. Pour une correction avec `etapes` et `reponse`, la dernière phrase fait apparaître la réponse. **Règle d'écriture : une phrase d'introduction, puis une phrase par étape ou par phase.** Seuls « . ! ? … » comptent : un deux-points ou un point-virgule marque une courte pause sans faire apparaître d’étape.
 
 **Formules** : notation LaTeX rendue par `mathtext` (matplotlib), sans installation de LaTeX : fractions, exposants, indices, `\sum`, `\binom`, `\approx`, lettres grecques, `\mathrm{…}`. En vertical, une formule longue doit être coupée en plusieurs lignes : le rapport signale une formule trop petite.
 

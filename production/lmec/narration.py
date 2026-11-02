@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .fiche import Edition, Fiche
+from .lecture import normaliser_lecture
 from .textes import texte_parle
 from .tts import Cache, ErreurTTS, Fournisseur, duree_wav
 
@@ -69,7 +70,8 @@ def preparer_pour_voix(texte: str, langue: str, lexique: dict) -> str:
     t = texte.replace(" ", " ").replace(" ", " ")
     for ecrit, dit in (lexique.get(langue) or {}).items():
         t = re.sub(rf"(?<!\w){re.escape(ecrit)}(?!\w)", dit, t)
-    return re.sub(r"\s+", " ", t).strip()
+    # Puis lecture des nombres et symboles (virgule décimale, %, −, ≈, fractions, exposants).
+    return normaliser_lecture(t, langue)
 
 
 def _assembler(parties: list[tuple[Path | None, float]], destination: Path) -> None:

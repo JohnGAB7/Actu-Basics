@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import math
 
+from .animations import Animations
 from .formatage import formater_nombre, typographie
 
 LIBELLES_PEDAGOGIE = {
@@ -20,7 +21,6 @@ LIBELLES_PEDAGOGIE = {
 }
 INTERVALLE_ETAPES = 1.1     # s entre deux étapes sans repères de voix
 TRACE_COURBE = 2.2          # s pour tracer la courbe
-DEBUT_LIENS, DUREE_LIENS = 1.0, 3.2   # animation « paires »
 
 
 def _ease(t: float) -> float:
@@ -28,7 +28,7 @@ def _ease(t: float) -> float:
     return 1 - (1 - t) ** 3
 
 
-class ScenesPedagogiques:
+class ScenesPedagogiques(Animations):
     """Mélangé à Rendu : utilise ses polices, couleurs, zone et fonctions d'écriture."""
 
     TYPES_PEDAGOGIQUES = ("titre", "formule", "etapes", "courbe", "animation", "exercice", "correction")
@@ -47,8 +47,11 @@ class ScenesPedagogiques:
 
     # ------------------------------------------------------------------ temps
     def _debuts_etapes(self, scene, n: int, depart: float = 0.6) -> list[float]:
-        """Instant d'apparition de chaque étape : sur les phrases de la voix si elles sont connues."""
+        """Instant d'apparition de chaque étape : sur les phrases de la voix si elles sont connues.
+        Correction avec réponse : la dernière phrase annonce la réponse, les étapes prennent les précédentes."""
         reperes = self.reperes.get(id(scene))
+        if reperes and n and scene.type == "correction" and scene.extra.get("reponse") and len(reperes) > n:
+            return reperes[:n]
         if reperes and n:
             if len(reperes) == n + 1:          # une phrase d'introduction, puis une par étape
                 return reperes[1:]
@@ -65,9 +68,14 @@ class ScenesPedagogiques:
             n = len(scene.extra.get("formule", [])) or 1
             return (self._debuts_etapes(scene, n, depart=0.5)[-1] if n > 1 else 0.5) + 1.0
         if scene.type == "courbe":
-            return 0.6 + TRACE_COURBE + 0.8
+            reperes = scene.extra["courbe"].get("reperes", [])
+            fin_reperes = (self._debuts_etapes(scene, len(reperes))[-1] + 0.6) \
+                if reperes and self.reperes.get(id(scene)) else 0
+            return max(0.6 + TRACE_COURBE + 0.8, fin_reperes)
         if scene.type == "animation":
-            return DEBUT_LIENS + DUREE_LIENS + 0.8
+            return self.duree_animation_modele(scene)
+        if scene.type == "etapes" and scene.extra.get("disposition") == "cartes":
+            return self._debuts_etapes(scene, len(etapes))[-1] + 0.8
         if scene.type in ("etapes", "correction"):
             fin = (self._debuts_etapes(scene, len(etapes))[-1] + 0.5) if etapes else 0.8
             if scene.type == "correction" and scene.extra.get("reponse"):
@@ -176,6 +184,49 @@ class ScenesPedagogiques:
             yy += h + ecart
         return yy - ecart
 
+    def _cartes(self, d, etapes, debuts, zone, t, ctx):
+        """Étapes en cartes (grille de deux colonnes) : chaque idée a sa place, sans bloc de texte dense."""
+        from .rendu import _melange
+        g, haut, dr, bas = zone
+        n = len(etapes)
+        cols = 2 if n > 1 else 1
+        rangs = math.ceil(n / cols)
+        ecart = 36
+        lc = (dr - g - ecart * (cols - 1)) / cols
+        hc = min((bas - haut - ecart * (rangs - 1)) / rangs, lc * 0.9 if not self.colonnes else lc * 0.62)
+        y0 = haut + (bas - haut - (hc * rangs + ecart * (rangs - 1))) / 2
+        pn = self.police("affichage", 96 if not self.colonnes else 84)
+
+        def _zone(i, x, y):
+            if self.colonnes:   # 16:9 : cartes basses, numéro à gauche du texte pour lui laisser la hauteur
+                return (x + 34 + d.textlength(str(i + 1), font=pn) + 30, y + 26, x + lc - 30, y + hc - 26)
+            return (x + 34, y + 56 + pn.size, x + lc - 34, y + hc - 26)
+
+        # Même taille de texte sur toutes les cartes : la plus grande qui convient à la plus longue.
+        commune = 58
+        for i, texte in enumerate(etapes):
+            z = _zone(i, 0, 0)
+            commune = min(commune, self.ajuster_riche(texte, "gras", z[2] - z[0], z[3] - z[1], 58, 36, 1.15, ctx)[0].size)
+        for i, (texte, debut) in enumerate(zip(etapes, debuts)):
+            a = 1.0 if t is None else _ease((t - debut) / 0.45)
+            if a <= 0:
+                continue
+            c, l = i % cols, i // cols
+            x = g + c * (lc + ecart)
+            y = y0 + l * (hc + ecart) + (1 - a) * 30
+            fond = self._fond.getpixel((int(x + 5), int(min(y + 5, self.hauteur - 1))))
+            d.rounded_rectangle((x, y, x + lc, y + hc), radius=28, fill=_melange(fond, self.c["barre"], 0.35 * a),
+                                outline=_melange(fond, self.c["accent"], a), width=4)
+            num = str(i + 1)
+            pos_num = (x + 34, y + (hc - pn.size) / 2 - 8) if self.colonnes else (x + 34, y + 22)
+            d.text(pos_num, num, font=pn, fill=_melange(fond, self.c["accent"], a))
+            zone_txt = _zone(i, x, y)
+            pt, lt, pas_t, ht = self.ajuster_riche(texte, "gras", zone_txt[2] - zone_txt[0],
+                                                   zone_txt[3] - zone_txt[1], commune, 36, 1.15, ctx)
+            y_txt = zone_txt[1] + (max(0, zone_txt[3] - zone_txt[1] - ht) / 2 if self.colonnes else 0)
+            self.ecrire_riche(d, lt, pt, pas_t, y_txt, self.c["texte"], None if a >= 1 else t, debut,
+                              centre=False, x_gauche=zone_txt[0], decalage=0.02)
+
     # ------------------------------------------------------------------ scènes
     def _scene_titre(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         from .rendu import _melange
@@ -258,42 +309,10 @@ class ScenesPedagogiques:
         y = self._titre_scene(d, scene, zt, t, ctx)
         haut_c = zc[1] if self.colonnes else y + 20
         etapes = scene.extra.get("etapes", [])
+        if scene.extra.get("disposition") == "cartes":
+            return self._cartes(d, etapes, self._debuts_etapes(scene, len(etapes)), (zc[0], haut_c, zc[2], bas), t, ctx)
         self._lignes_etapes(d, etapes, self._debuts_etapes(scene, len(etapes)), zc[0], haut_c, zc[2] - zc[0],
                             bas - haut_c, t, ctx, derniere_accent=bool(scene.extra.get("derniere_en_valeur", False)))
-
-    def _scene_animation(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
-        """« paires » : n personnes sur un cercle, toutes les paires reliées une à une, compteur."""
-        from .rendu import _melange
-        a_conf = scene.extra["animation"]
-        n = int(a_conf.get("n", 23))
-        zt, zc = self._zones(g, haut, dr, bas)
-        y = self._titre_scene(d, scene, zt, t, ctx, hauteur_max=(bas - haut) // 4)
-        haut_c = zc[1] if self.colonnes else y + 10
-        pc = self.police("affichage", 104 if not self.colonnes else 120)
-        place_compteur = pc.size + 40
-        rayon = min((zc[2] - zc[0]) / 2 - 30, (bas - haut_c - place_compteur) / 2 - 20)
-        cx, cy = (zc[0] + zc[2]) / 2, haut_c + 20 + rayon
-        points = [(cx + rayon * math.cos(2 * math.pi * k / n - math.pi / 2),
-                   cy + rayon * math.sin(2 * math.pi * k / n - math.pi / 2)) for k in range(n)]
-        paires = [(i, j) for i in range(n) for j in range(i + 1, n)]
-        k = 1.0 if t is None else _ease((t - DEBUT_LIENS) / DUREE_LIENS)
-        visibles = round(len(paires) * k)
-        fond = self._fond.getpixel((int(cx), int(cy)))
-        lien = _melange(fond, self.c["barre"], 0.55)
-        for i, j in paires[:visibles]:
-            d.line((*points[i], *points[j]), fill=lien, width=2)
-        if 0 < visibles < len(paires):   # le dernier lien tracé en couleur d'accent
-            i, j = paires[visibles - 1]
-            d.line((*points[i], *points[j]), fill=self.c["accent"], width=4)
-        for idx, (px, py) in enumerate(points):
-            ap = 1.0 if t is None else _ease((t - 0.2 - idx * 0.025) / 0.3)
-            if ap > 0:
-                r = 13 * ap
-                d.ellipse((px - r, py - r, px + r, py + r), fill=_melange(fond, self.c["texte"], ap))
-        texte = f"{formater_nombre(visibles, self.langue, 0)} {LIBELLES_PEDAGOGIE[self.langue]['paires']}"
-        yc = cy + rayon + 30
-        d.text((cx - pc.getlength(texte) / 2, yc), texte, font=pc,
-               fill=self.c["accent"] if visibles == len(paires) else self.c["texte"])
 
     def _scene_exercice(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         lib = LIBELLES_PEDAGOGIE[self.langue]
@@ -448,6 +467,14 @@ class ScenesPedagogiques:
             lbl = typographie(c["axe_x"], self.langue)
             d.text((droite - p_axe.getlength(lbl), bas_g + 64), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
+        if c.get("seuil") is not None:   # seuil horizontal (ex. 90 %), en pointillés
+            ys = Y(float(c["seuil"]))
+            xx = gauche
+            while xx < droite:
+                d.line((xx, ys, min(xx + 16, droite), ys), fill=_melange(fond, self.c["accent"], 0.8 * a_axes), width=4)
+                xx += 30
+            lbl = fmt_y(float(c["seuil"]))
+            d.text((gauche + 16, ys - p_axe.size - 12), lbl, font=p_axe, fill=_melange(fond, self.c["accent"], a_axes))
         # Courbe tracée progressivement.
         k = 1.0 if t is None else _ease((t - 0.6) / TRACE_COURBE)
         if k <= 0:
@@ -456,27 +483,49 @@ class ScenesPedagogiques:
         trace = [(X(x), Y(v)) for x, v in pts if x <= x_lim + 1e-9]
         if len(trace) >= 2:
             d.line(trace, fill=self.c["accent"], width=10, joint="curve")
-        # Repères : point, pointillés, étiquette (quand la courbe les atteint).
-        for rep in c.get("reperes", []):
+        # Repères : point, pointillés, étiquette. Ils apparaissent quand la courbe les atteint et, si la
+        # voix est connue, sur la phrase qui les annonce (une phrase d'introduction, puis une par repère).
+        reperes = c.get("reperes", [])
+        debuts = self._debuts_etapes(scene, len(reperes)) if self.reperes.get(id(scene)) and reperes \
+            else [0.0] * len(reperes)
+        places = []
+        for rep, debut in zip(reperes, debuts):
             xr = rep["x"]
-            if xr > x_lim + 1e-9:
+            if xr > x_lim + 1e-9 or (t is not None and t < debut):
                 continue
+            a = 1.0 if t is None else _ease((t - debut) / 0.4) if debut else 1.0
             yr = rep.get("y")
             if yr is None:
                 yr = min(pts, key=lambda p: abs(p[0] - xr))[1]
             px, py = X(xr), Y(yr)
             for yy in range(int(py), int(bas_g), 22):
-                d.line((px, yy, px, min(yy + 11, bas_g)), fill=self.c["texte"], width=3)
-            d.ellipse((px - 15, py - 15, px + 15, py + 15), fill=self.c["texte"], outline=self.c["accent"], width=6)
-            lbl = typographie(rep.get("label") or fmt_y(yr), self.langue)
-            # À droite et sous le point (la courbe, croissante, passe au-dessus) ; sinon à gauche et
-            # au-dessus (la courbe passe en dessous). Fond plein pour rester lisible sur la grille.
+                d.line((px, yy, px, min(yy + 11, bas_g)), fill=_melange(fond, self.c["texte"], a), width=3)
+            r = 15 * (0.6 + 0.4 * a)
+            d.ellipse((px - r, py - r, px + r, py + r), fill=self.c["texte"], outline=self.c["accent"], width=6)
+            places.append((typographie(rep.get("label") or fmt_y(yr), self.langue), px, py, a))
+        # Étiquettes : à droite et sous le point (la courbe, croissante, passe au-dessus), sinon à gauche et
+        # au-dessus ; décalées si elles en chevauchent une autre (repères voisins comme 40 et 41).
+        occupes = []
+        hl = p_lbl.size
+        if len(reperes) > 2:
+            # Repères nombreux et voisins (40 et 41) : légende rangée en haut à gauche du graphique,
+            # vide au-dessus d'une courbe croissante. Chaque ligne commence par son abscisse.
+            y_leg = Y(ymin + (ymax - ymin) * 0.86)
+            for lbl, px, py, a in places:
+                d.text((gauche + 24, y_leg), lbl, font=p_lbl, fill=_melange(fond, self.c["texte"], a))
+                y_leg += hl + 14
+            places = []
+        for lbl, px, py, a in places:
             lg_l = p_lbl.getlength(lbl)
-            hl = p_lbl.size
-            if px + 28 + lg_l <= droite:
-                lx, ly = px + 28, py + 20
-            else:
-                lx, ly = px - 28 - lg_l, py - 28 - hl
-            d.rounded_rectangle((lx - 10, ly - 6, lx + lg_l + 10, ly + hl + 12), radius=8,
-                                fill=self._fond.getpixel((int(min(max(lx, 0), self.largeur - 1)), int(ly))))
-            d.text((lx, ly), lbl, font=p_lbl, fill=self.c["texte"])
+            a_droite = px + 28 + lg_l <= droite
+            lx = px + 28 if a_droite else px - 28 - lg_l
+            ly = py + 20 if a_droite else py - 28 - hl
+            for _ in range(8):
+                rect = (lx - 10, ly - 6, lx + lg_l + 10, ly + hl + 12)
+                if not any(rect[0] < o[2] and o[0] < rect[2] and rect[1] < o[3] and o[1] < rect[3] for o in occupes):
+                    break
+                ly += (hl + 22) if a_droite else -(hl + 22)
+            occupes.append(rect)
+            d.rounded_rectangle(rect, radius=8, fill=self._fond.getpixel((int(min(max(lx, 0), self.largeur - 1)),
+                                                                          int(min(max(ly, 0), self.hauteur - 1)))))
+            d.text((lx, ly), lbl, font=p_lbl, fill=_melange(fond, self.c["texte"], a))

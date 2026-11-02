@@ -1,7 +1,8 @@
 # APERÇU — à chaque modification d'une fiche ou du code.
 # Accepte les brouillons : tout rendu qui a une erreur bloquante porte le filigrane
 # « BROUILLON · NON VALIDÉ ». Ces fichiers ne sont JAMAIS à publier.
-# Voix : Piper (gratuite, locale). Aucune clé d'API n'est utilisée ici.
+# Voix : Kokoro (gratuite, locale, exécutée sur le runner), Piper en secours. Aucune clé d'API,
+# aucun service payant (tts.yaml : gratuit_uniquement). Licences : docs/voice-licenses.md
 name: Aperçu des contenus
 
 on:
@@ -22,7 +23,7 @@ permissions:
 jobs:
   apercu:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -60,8 +61,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .cache-tts
-          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: tts-piper-
+          key: tts-kokoro-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: tts-kokoro-
 
       - name: Rendu d'aperçu
         env:
@@ -69,14 +70,14 @@ jobs:
         run: |
           if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
           [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
-          python production/produire.py $FICHES --mode apercu --voix piper
+          python production/produire.py $FICHES --mode apercu --voix kokoro
 
       - name: Cache des voix déjà synthétisées (sauvegarde)
         if: always()
         uses: actions/cache/save@v4
         with:
           path: .cache-tts
-          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
+          key: tts-kokoro-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Résumé lisible dans GitHub
         if: always()

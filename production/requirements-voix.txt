@@ -1,3 +1,6 @@
-# Facultatif : voix de synthèse locale et gratuite (Piper, licence GPL-3.0).
+# Facultatif : voix de synthèse locales et gratuites. Licences : docs/voice-licenses.md
+# Kokoro (moteur prioritaire) : kokoro-onnx (MIT), onnxruntime (MIT), phonémisation espeak-ng (GPL-3.0).
+kokoro-onnx==0.5.0
+# Piper (secours, GPL-3.0).
 # Les fournisseurs OpenAI et ElevenLabs n'ont besoin d'aucun paquet supplémentaire.
 piper-tts>=1.3,<2
