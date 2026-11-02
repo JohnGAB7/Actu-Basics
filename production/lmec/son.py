@@ -127,7 +127,13 @@ def nappe(n: int) -> np.ndarray:
 def _enveloppe(signal: np.ndarray, fenetre_s: float = 0.25) -> np.ndarray:
     """Présence de la voix (0–1), lissée."""
     k = max(1, int(fenetre_s * TAUX))
-    energie = np.convolve(np.abs(signal), np.ones(k) / k, mode="same")
+    # Moyenne glissante par somme cumulée : O(n). np.convolve (O(n·k)) prenait plus d'une heure
+    # sur une vidéo de 8 minutes.
+    a = np.abs(signal)
+    c = np.concatenate(([0.0], np.cumsum(a)))
+    gauche = np.arange(len(a)) - k // 2
+    haut, bas = np.clip(gauche + k, 0, len(a)), np.clip(gauche, 0, len(a))
+    energie = (c[haut] - c[bas]) / k
     return np.clip(energie / (np.percentile(energie, 95) or 1), 0, 1)
 
 

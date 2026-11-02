@@ -1346,3 +1346,17 @@ def test_kokoro_prononce_les_nombres_normalises():
     assert "viʁɡˈyl" in fr and "mwˈɛ̃" in fr and "mˈaɪnəs" not in fr
     en = k.tokenizer.phonemize(preparer_pour_voix("0.493 ≈ 2⁶⁴", "en", {}), "en-us")
     assert "pˈɔɪnt" in en and "pˈaʊɚ" in en and "hˈʌndɹɪd nˈaɪnti" not in en
+
+
+def test_enveloppe_de_voix_rapide_et_identique_a_la_convolution():
+    """Une vidéo de 8 minutes ne doit pas bloquer l'habillage sonore (ancienne convolution O(n·k))."""
+    import time
+    import numpy as np
+    from lmec import son
+    x = np.random.default_rng(1).standard_normal(48000 * 3)
+    k = int(0.25 * 48000)
+    ref = np.convolve(np.abs(x), np.ones(k) / k, mode="same")
+    assert np.allclose(son._enveloppe(x), np.clip(ref / np.percentile(ref, 95), 0, 1), atol=1e-9)
+    debut = time.time()
+    son._enveloppe(np.zeros(48000 * 480))
+    assert time.time() - debut < 15
