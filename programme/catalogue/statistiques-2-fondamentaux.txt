@@ -33,7 +33,8 @@ intuition: Le hasard est imprévisible au coup par coup, mais très régulier en
 exemple: Simulation animée de lancers de pièce et de dé ; longues séries de piles dans une suite vraiment aléatoire.
 maths: M0.
 erreurs: Croire que la fréquence doit « rattraper » un écart (renvoi S4.08).
-exercice: Dans 20 lancers, une série de 4 piles d'affilée est-elle surprenante ? Estimer par simulation.
+exercice: Dans 20 lancers d'une pièce équilibrée, une série d'au moins 4 piles d'affilée est-elle surprenante ? Estimer la probabilité par simulation (par exemple 1 000 séries de 20 lancers).
+correction: La simulation donne une fréquence proche de 48 % ; le calcul exact (récurrence sur la longueur de la série en cours) donne 47,8 %. Une telle série arrive donc presque une fois sur deux : elle n'a rien de surprenant. Avec 1 000 simulations, la fréquence observée varie d'environ ± 3 points d'une fois à l'autre.
 duree: 5-7
 format: educational
 forme: simulation
@@ -343,7 +344,8 @@ intuition: La covariance est la version probabiliste de la corrélation vue en S
 exemple: Tableau conjoint de deux variables simples ; X et X² (covariance nulle, dépendance totale).
 maths: M1-M2.
 erreurs: Covariance nulle donc indépendance.
-exercice: Calculer la covariance dans un tableau 2 × 2.
+exercice: X et Y valent 0 ou 1. Loi conjointe : P(X = 0, Y = 0) = 0,4 ; P(X = 0, Y = 1) = 0,1 ; P(X = 1, Y = 0) = 0,2 ; P(X = 1, Y = 1) = 0,3. Calculer la covariance de X et Y.
+correction: E[X] = 0,2 + 0,3 = 0,5. E[Y] = 0,1 + 0,3 = 0,4. E[XY] = P(X = 1, Y = 1) = 0,3. Cov(X, Y) = 0,3 − 0,5 × 0,4 = 0,1. La covariance est positive : X et Y ont tendance à valoir 1 ensemble. Elles ne sont pas indépendantes, puisque P(X = 1, Y = 1) = 0,3 ≠ 0,5 × 0,4.
 duree: 6-8
 format: educational
 forme: lecon

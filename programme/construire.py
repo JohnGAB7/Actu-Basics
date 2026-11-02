@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.11 — arbitrages rendus, validation finale de JG en attente"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-11.pdf"
+VERSION = "1.12 — validé par JG le 2/11/2026"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -156,6 +156,20 @@ VERIFICATIONS = [
     ("S18.04", "2 * (-100 - (-104))", 8, "statistique du rapport de vraisemblance"),
     ("S18.06", "100 * (1 - 0.99 ** 30)", 26, "au moins une crue centennale en 30 ans, en %"),
     ("S19.01", "4 * 3 + 3 + 3 + 1", 19, "paramètres d'un réseau 4-3-1"),
+    ("S2.01", "100 * (8 + 6) / 20", 70, "fréquence cumulée après deux modes, en %"),
+    ("S3.03", "100 * 81 / 87", 93.1, "succès de A, petits calculs, en %"),
+    ("S3.03", "100 * 192 / 263", 73.0, "succès de A, gros calculs, en %"),
+    ("S3.03", "100 * 234 / 270", 86.7, "succès de B, petits calculs, en %"),
+    ("S3.03", "100 * 55 / 80", 68.8, "succès de B, gros calculs, en %"),
+    ("S3.03", "100 * (81 + 192) / 350", 78, "succès de A au total, en %"),
+    ("S3.03", "100 * (234 + 55) / 350", 82.6, "succès de B au total, en %"),
+    ("S5.10", "0.3 - 0.5 * 0.4", 0.1, "covariance"),
+    ("S8.05", "(5 + 8 + 3 + 6 + 9 + 5) / 6", 6, "moyenne des différences"),
+    ("S8.05", "sqrt((1 + 4 + 9 + 0 + 9 + 1) / 5)", 2.19, "écart-type des différences"),
+    ("S12.01", "100 * 0.5 / 1.5", 33.3, "a posteriori de p = 0,5, en %"),
+    ("S13.04", "(1 + 8 + 8 + 9) / 4", 6.5, "abscisse du second centre après l'itération 1"),
+    ("S13.04", "(2 + 8 + 9 + 8) / 4", 6.75, "ordonnée du second centre après l'itération 1"),
+    ("S13.04", "sqrt((1 - 6.5) ** 2 + (2 - 6.75) ** 2)", 7.27, "distance de B au second centre"),
     ("S19.02", "8 * (3 * 3 + 1)", 80, "paramètres de la couche convolutive"),
     ("S19.02", "8 * (28 * 28 + 1)", 6280, "paramètres de la couche dense"),
     ("S19.03", "100 * exp(2) / (exp(2) + exp(1) + 1)", 66.5, "softmax du premier mot, en %"),

@@ -248,3 +248,16 @@ ChatGPT considère le programme prêt pour la validation finale de JG après tro
 
 **Réserves non bloquantes, reprises telles quelles** : huit exercices sans correction avant toute fiche validée ; aucune référence de la liste fermée citée avant vérification ; revue dédiée de l'édition anglaise avant les fiches bilingues ; double relecture des sujets sensibles. La validation du programme par JG ne vaut ni validation des fiches de conception, ni autorisation de publication.
 
+## 10.13 Points en suspens traités après la validation de JG (version 1.12)
+
+JG a validé le programme et demandé de traiter tout ce qui restait en suspens (2/11/2026).
+
+| Point en suspens | Ce qui est fait |
+|---|---|
+| Section 5 d'`ARCHITECTURE_EDITORIALE.md` (arbitrage A2) | Réécrite : le programme fait référence, pas de publication avant la vague 1 et 12 semaines de stock, séries reprises dans les vagues, décisions A3, A6, A7, A9 et A10 rappelées. |
+| Huit exercices chiffrés sans correction | S2.01, S3.03, S4.02, S5.10, S8.05, S11.02, S12.01 et S13.04 ont maintenant des données précises et une correction détaillée ; 14 calculs vérifiés de plus (134 au total). Le script ne signale plus aucun exercice chiffré sans correction. S3.03 utilise les données de Charig et coll. (1986), vérifiées sur Crossref. |
+| Références de la liste fermée | Sept références vérifiées sur Crossref et sorties de la liste (section 9.5). Restent : Box, Hunter et Hunter, Kleinberg et coll., le seuil chiffré de Lee et coll., deux détails de notice (Staiger et Stock, Stock et Yogo), la liste d'auteurs de Firpo et coll. dans Crossref, et les notices des exemples historiques sans DOI. |
+| Édition anglaise | Première relecture des 320 titres anglais : orthographe américaine unifiée, trois titres ambigus corrigés (S10.04, S17.06, Q6.01). La relecture par un locuteur natif et celle des scripts restent à faire avec les fiches bilingues : elles ne peuvent pas précéder l'écriture des scripts. |
+
+**Ce qui ne peut pas être traité dans le programme** : les fiches de conception elles-mêmes (une seule est complète), la relecture native de l'anglais et la double relecture des sujets sensibles se font vidéo par vidéo, pendant la préparation.
+

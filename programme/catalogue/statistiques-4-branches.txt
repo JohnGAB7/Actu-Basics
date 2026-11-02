@@ -22,7 +22,8 @@ maths: M2.
 maths_comprendre: M1
 maths_demontrer: M2
 erreurs: Croire que l'a priori est arbitraire donc sans valeur, ou qu'il ne compte jamais.
-exercice: Mettre à jour une grille de 5 valeurs possibles après une observation.
+exercice: Taux de clic p possible : 0,1, 0,2, 0,3, 0,4 ou 0,5, avec un a priori uniforme. On observe un clic sur un affichage. Calculer la loi a posteriori.
+correction: A posteriori ∝ vraisemblance × a priori = p × 1/5. Somme des p : 1,5. A posteriori : 0,1/1,5 ≈ 6,7 % ; 0,2/1,5 ≈ 13,3 % ; 0,3/1,5 = 20 % ; 0,4/1,5 ≈ 26,7 % ; 0,5/1,5 ≈ 33,3 %. Un seul clic déplace la croyance vers les grands taux, sans exclure les petits.
 duree: 8-10
 format: educational
 forme: lecon
@@ -168,7 +169,8 @@ intuition: Rassembler ce qui se ressemble, séparer ce qui diffère, selon une d
 exemple: Segmentation de clients ou de villes.
 maths: M1-M3 (distances).
 erreurs: Croire que les groupes trouvés existent forcément dans la réalité.
-exercice: Faire deux itérations des k-moyennes sur 6 points.
+exercice: Six points : A(1, 1), B(1, 2), C(2, 1), D(8, 8), E(8, 9), F(9, 8). On cherche 2 groupes, avec A et B comme centres de départ. Faire deux itérations des k-moyennes.
+correction: Itération 1 : C est plus proche de A (distance 1 contre 1,41) ; D, E et F sont plus proches de B. Groupes {A, C} et {B, D, E, F} ; nouveaux centres (1,5 ; 1) et (6,5 ; 6,75). Itération 2 : B passe dans le premier groupe (distance 1,12 contre 7,27). Groupes {A, B, C} et {D, E, F} ; centres (1,33 ; 1,33) et (8,33 ; 8,33). Une troisième itération ne change plus rien. Un mauvais choix des centres de départ a ralenti la convergence : d'où l'intérêt de plusieurs départs.
 duree: 10-12
 format: youtube_lesson
 forme: demonstration
@@ -650,7 +652,7 @@ forme: lecon
 
 ## S17.06
 titre: Ce qui relève de la statistique, ce qui relève d'ailleurs
-titre_en: What is statistics, and what is not
+titre_en: What belongs to statistics, and what does not
 question: Un réseau de neurones est-il un modèle statistique ?
 pre: S17.04 | S17.05
 obj: Situer les réseaux de neurones et les grands modèles de langage par rapport aux modèles statistiques | Dire ce qui relève de l'optimisation, de l'informatique et de l'ingénierie des données | Citer les questions statistiques qui restent (biais, incertitude, généralisation, équité)
@@ -897,7 +899,7 @@ forme: lecon
 
 ## S19.04
 titre: Optimiser à grande échelle : la descente de gradient stochastique
-titre_en: Optimisation at scale: stochastic gradient descent
+titre_en: Optimization at scale: stochastic gradient descent
 question: Comment ajuster un modèle quand les données ne tiennent pas en mémoire ?
 pre: S17.08 | M2.01
 obj: Faire un pas de descente de gradient à la main | Expliquer le rôle du taux d'apprentissage (trop petit : lent ; trop grand : divergence) | Expliquer pourquoi un gradient calculé sur un petit lot est une estimation bruitée du vrai gradient | Dire ce qui relève de l'optimisation numérique (méthodes adaptatives, calcul distribué) et n'est pas détaillé
@@ -965,7 +967,7 @@ titre: Algorithmes, droit et éthique
 titre_en: Algorithms, law and ethics
 question: Qui est responsable quand un algorithme décide ?
 pre: S17.06 | S1.10 | S17.05
-obj: Distinguer trois questions : un modèle est-il exact, est-il équitable, est-il légal ? | Définir la valeur prédictive positive (part des prédictions positives qui sont justes) et les taux de faux positifs et de faux négatifs | Expliquer pourquoi, en classification binaire, quand les taux de base diffèrent entre groupes et que les prédictions sont imparfaites, on ne peut pas égaliser à la fois la valeur prédictive positive et les deux taux d'erreur (A. Chouldechova, 2017 ; J. Kleinberg et coll., 2017 ; références à vérifier) : un résultat sous conditions, pas une loi universelle | Situer les grands cadres juridiques (protection des données, réglementation européenne de l'IA) sans donner d'avis juridique | Formuler une question de transparence à poser à tout système de décision automatisée
+obj: Distinguer trois questions : un modèle est-il exact, est-il équitable, est-il légal ? | Définir la valeur prédictive positive (part des prédictions positives qui sont justes) et les taux de faux positifs et de faux négatifs | Expliquer pourquoi, en classification binaire, quand les taux de base diffèrent entre groupes et que les prédictions sont imparfaites, on ne peut pas égaliser à la fois la valeur prédictive positive et les deux taux d'erreur (A. Chouldechova, Big Data, 2017 ; J. Kleinberg et coll., 2017, notice à vérifier) : un résultat sous conditions, pas une loi universelle | Situer les grands cadres juridiques (protection des données, réglementation européenne de l'IA) sans donner d'avis juridique | Formuler une question de transparence à poser à tout système de décision automatisée
 intuition: Un même taux d'erreur moyen peut cacher des erreurs très différentes selon les groupes.
 exemple: Débat sur un outil de prédiction de récidive aux États-Unis (à sourcer) ; RGPD et règlement européen sur l'IA (textes et dates à vérifier lors de la préparation).
 maths: M1.

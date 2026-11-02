@@ -475,7 +475,7 @@ but: Des terrains de jeu familiers pour faire comprendre des notions exigeantes.
 
 ## Q6.01
 titre: Un penalty se tire-t-il au hasard ?
-titre_en: Should a penalty be random?
+titre_en: Should a penalty kick be random?
 question: Pourquoi un tireur doit-il être imprévisible ?
 renvoi: S5.02
 obj: Présenter l'idée d'équilibre en stratégies mixtes | Calculer le taux de réussite d'un tireur prévisible et d'un tireur imprévisible sur un exemple chiffré | Montrer qu'être prévisible coûte des buts
@@ -925,7 +925,7 @@ but: Embouteillages, accidents, vitesse : la ville vue par ses chiffres.
 
 ## Q15.01
 titre: Le vélo est-il dangereux ? Le risque par kilomètre, par trajet ou par heure
-titre_en: Is cycling dangerous? Risk per kilometre, per trip or per hour
+titre_en: Is cycling dangerous? Risk per kilometer, per trip or per hour
 question: Pourquoi le classement des modes de transport change-t-il selon l'unité choisie ?
 renvoi: Q2.02 | S1.08
 obj: Calculer un risque rapporté à l'exposition | Expliquer pourquoi le choix du dénominateur change la conclusion

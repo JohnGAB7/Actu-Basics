@@ -212,7 +212,8 @@ intuition: Compter, puis rapporter au total : c'est déjà de la statistique.
 exemple: Modes de transport domicile-travail d'une classe ou d'une entreprise.
 maths: M0.
 erreurs: Oublier le total ; comparer des effectifs de groupes de tailles différentes.
-exercice: Compléter un tableau d'effectifs et de fréquences à partir de 20 réponses.
+exercice: Vingt salariés indiquent leur mode de transport : 8 voiture, 6 transports en commun, 4 vélo, 2 marche. Construire le tableau des effectifs, des fréquences et des fréquences cumulées.
+correction: Fréquences : voiture 8/20 = 40 %, transports en commun 6/20 = 30 %, vélo 4/20 = 20 %, marche 2/20 = 10 %. Fréquences cumulées dans cet ordre : 40 %, 70 %, 90 %, 100 %. Le total des fréquences vaut 100 % ; le cumul n'a de sens que si l'on choisit un ordre, ici du plus fréquent au moins fréquent, puisque la variable n'est pas ordonnée.
 duree: 3-5
 format: educational
 forme: demonstration
@@ -404,7 +405,8 @@ intuition: Le total mélange des groupes de tailles différentes : c'est la comp
 exemple: Admissions aux études doctorales de Berkeley, 1973 (P. Bickel, E. Hammel, J. O'Connell, Science, 1975) ou traitements des calculs rénaux (C. Charig et coll., British Medical Journal, 1986).
 maths: M0.
 erreurs: Toujours faire confiance au chiffre agrégé, ou toujours au chiffre détaillé.
-exercice: Calculer les taux par groupe et au total dans un tableau 2 × 2 × 2.
+exercice: Calculs rénaux (Charig et coll., 1986). Traitement A : petits calculs 81 succès sur 87, gros calculs 192 sur 263. Traitement B : petits calculs 234 sur 270, gros calculs 55 sur 80. Calculer les taux de succès par taille de calcul et au total.
+correction: Petits calculs : A 81/87 ≈ 93,1 %, B 234/270 ≈ 86,7 %. Gros calculs : A 192/263 ≈ 73,0 %, B 55/80 ≈ 68,8 %. Total : A 273/350 = 78 %, B 289/350 ≈ 82,6 %. A gagne dans chaque groupe et perd au total, parce que A a surtout traité des gros calculs, plus difficiles : la taille du calcul est une variable de confusion. Données à revérifier sur l'article avant la vidéo.
 duree: 6-8
 format: educational
 forme: paradoxe

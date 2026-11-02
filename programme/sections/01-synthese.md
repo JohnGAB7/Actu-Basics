@@ -55,7 +55,7 @@ Le 2/11/2026, JG a retenu **toutes les recommandations** de la section 10.2 (arb
 3. les vidéos d'actualité sont produites dans les semaines qui précèdent le lancement ;
 4. les leçons de plus de 10 minutes passent en 16:9, après un essai.
 
-**Ce qui reste** : la validation finale de ce PDF par JG, puis la mise à jour de la section 5 d'`ARCHITECTURE_EDITORIALE.md` (arbitrage A2), dans une PR distincte.
+**Validation** : JG a validé le programme le 2/11/2026 (PR #12). La version 1.12 traite ensuite les points laissés en suspens (section 10.13).
 
 ## Historique des versions
 
@@ -73,6 +73,7 @@ Le 2/11/2026, JG a retenu **toutes les recommandations** de la section 10.2 (arb
 | 1.9 | Relecture de la version 1.8 par ChatGPT (section 10.11) : exercice et correction de E5.03 rattachés à un cadre précis ; prérequis de E5.04 ramené à E5.02, hypothèses du LATE distinguées des diagnostics ; provenance étendue aux chiffres prononcés, tracés et calculés ; inclusions et exclusions de la charge de travail ; règle de maturité des fiches ; recommandation commune sur A11 |
 | 1.10 | Arbitrages rendus par JG : toutes les recommandations A1 à A11 retenues ; sujets non statistiques pertinents intégrés (nouveau module S19, 8 vidéos : réseaux profonds et convolutifs, modèles de langue, optimisation, modèles génératifs, mise en production, complexité, droit et éthique ; 8 calculs vérifiés de plus) ; feu vert pour les fiches des sujets sensibles |
 | 1.11 | Dernière revue de ChatGPT (section 10.12) : provenance alignée en section 6.1 ; Anderson-Rubin robuste à l'hétéroscédasticité en E5.03 ; tokens, embeddings et attention précisés en S19.03 ; conditions de l'incompatibilité des critères d'équité en S19.08 |
+| 1.12 | Après la validation de JG (PR #12) : corrections détaillées des 8 derniers exercices chiffrés (134 calculs vérifiés), première relecture des titres anglais, références de la liste fermée vérifiées, section 5 d'`ARCHITECTURE_EDITORIALE.md` mise à jour (arbitrage A2) |
 
 ## Sommaire
 
