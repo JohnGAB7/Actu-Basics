@@ -1,0 +1,953 @@
+# Pilier 3 — Phénomènes du quotidien (sous-série intemporelle)
+# Chaque épisode part d'une expérience familière et la relie à une notion du
+# pilier 1 ou 2 (champ « renvoi »). Les chiffres cités sont revérifiés et datés
+# à la préparation : aucun chiffre n'est figé ici, sauf calcul pur.
+
+# MODULE Q1
+niveau: 1
+titre: Argent, prix et consommation
+titre_en: Money, prices and spending
+pre: -
+maths: M0
+but: Les chiffres que chacun croise en faisant ses courses, en empruntant ou en épargnant.
+
+## Q1.01
+titre: Pourquoi « mon » inflation n'est pas celle de l'Insee
+titre_en: Why your inflation is not the official one
+question: Pourquoi a-t-on l'impression que les prix montent plus vite que l'inflation annoncée ?
+renvoi: E1.02 | S2.04
+obj: Calculer un indice des prix comme moyenne pondérée sur un panier de trois produits | Expliquer pourquoi l'inflation ressentie diffère selon le panier et la fréquence d'achat | Repérer, dans son propre budget, les postes qui pèsent plus que dans le panier moyen
+intuition: On remarque le prix du café acheté chaque jour, pas celui du téléviseur acheté tous les sept ans.
+exemple: Pondérations de l'indice des prix (source : institut statistique national, à dater).
+erreurs: Croire que l'indice est faux parce qu'il ne correspond pas à son propre panier.
+sources: Insee, Eurostat, BLS selon l'édition
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q1.02
+titre: Les intérêts composés
+titre_en: Compound interest
+question: Pourquoi 5 % par an double-t-il un capital en environ 14 ans ?
+renvoi: E1.03
+obj: Calculer une croissance composée | Utiliser la règle de 70 (ou de 72) et dire d'où elle vient
+intuition: Les intérêts produisent eux-mêmes des intérêts : la croissance s'accélère.
+exemple: Épargne à 3 % et à 6 % sur 30 ans ; dette de carte de crédit.
+erreurs: Raisonner en intérêts simples.
+sources: Calcul pur
+duree: 4-6
+format: educational
+forme: lecon
+
+## Q1.03
+titre: Soldes, réductions successives et pourcentages trompeurs
+titre_en: Sales, stacked discounts and misleading percentages
+question: « −30 % puis −20 % supplémentaires », est-ce −50 % ?
+renvoi: S1.08
+obj: Calculer l'effet de réductions successives | Repérer un prix de référence gonflé
+intuition: La seconde réduction s'applique à un prix déjà réduit.
+exemple: −30 % puis −20 % = −44 %.
+erreurs: Additionner des pourcentages successifs.
+sources: Calcul pur
+duree: 0.75-1.5
+format: short
+forme: paradoxe
+
+## Q1.04
+titre: Le coût réel d'un crédit
+titre_en: The true cost of a loan
+question: Pourquoi le taux affiché ne suffit-il pas à comparer deux crédits ?
+pre: Q1.02
+renvoi: E1.03
+obj: Expliquer le taux annuel effectif global | Calculer le coût total d'un petit crédit
+intuition: Les frais et la durée changent tout, même à taux égal.
+exemple: Deux offres de crédit fictives.
+erreurs: Comparer des mensualités sans comparer les durées.
+sources: Réglementation nationale (à vérifier par édition FR et EN)
+duree: 5-7
+format: educational
+forme: demonstration
+
+## Q1.05
+titre: Pourquoi on ne gagne pas au loto
+titre_en: Why the lottery is a losing bet
+question: Combien rapporte en moyenne un euro joué ?
+renvoi: S5.02 | S4.04
+obj: Calculer la probabilité du gros lot | Interpréter le taux de retour aux joueurs comme une espérance
+intuition: Le jeu reverse en moyenne moins qu'il ne reçoit : c'est sa raison d'être.
+exemple: Probabilités d'un jeu de loterie national (règles à vérifier à la préparation).
+erreurs: « Il faut bien que quelqu'un gagne » ; numéros « en retard ».
+sources: Règlement officiel du jeu
+duree: 5-7
+format: educational
+forme: lecon
+
+# MODULE Q2
+niveau: 1
+titre: Risque, santé et sécurité
+titre_en: Risk, health and safety
+pre: -
+maths: M0
+but: Lire les risques sans paniquer ni minimiser. Sujets sensibles : vérification renforcée selon la constitution éditoriale (section 6).
+
+## Q2.01
+titre: Risque relatif ou risque absolu ?
+titre_en: Relative risk versus absolute risk
+question: « Ce produit double le risque de maladie » : faut-il s'inquiéter ?
+renvoi: S1.08 | S10.03
+obj: Traduire un risque relatif en risque absolu | Calculer le nombre de personnes à traiter
+intuition: Doubler un risque de 1 sur 10 000 donne 2 sur 10 000.
+exemple: Titres de presse sur une étude (exemple à sourcer et dater).
+erreurs: Lire un risque relatif sans connaître le risque de base.
+sources: Article scientifique original, agences de santé
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q2.02
+titre: Avion ou voiture : comparer des risques
+titre_en: Plane or car: comparing risks
+question: Pourquoi a-t-on plus peur de l'avion alors que la route tue davantage ?
+renvoi: S1.08 | S3.02
+obj: Choisir le bon dénominateur (par trajet, par kilomètre, par heure) | Expliquer le biais de disponibilité
+intuition: Le choix de l'unité de comparaison peut renverser le classement.
+exemple: Mortalité par milliard de kilomètres (sources officielles à dater).
+erreurs: Comparer des risques avec des dénominateurs différents.
+sources: Organismes de sécurité routière et aérienne
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q2.03
+titre: Faut-il croire un test positif ?
+titre_en: Should you trust a positive test?
+question: Pourquoi un test de dépistage positif n'est-il pas une certitude ?
+renvoi: S4.10
+obj: Appliquer le raisonnement de Bayes à un dépistage réel | Expliquer pourquoi on confirme par un second test
+intuition: Version quotidienne de S4.10, avec un test réel et des chiffres sourcés.
+exemple: Dépistage d'une maladie donnée (données d'une agence de santé, à dater).
+erreurs: Confondre sensibilité et probabilité d'être malade.
+sources: Agences de santé, notices des tests
+duree: 3-5
+format: educational
+forme: paradoxe
+
+## Q2.04
+titre: Le biais du survivant
+titre_en: Survivorship bias
+question: Pourquoi les vieux bâtiments semblent-ils mieux construits que les neufs ?
+renvoi: S1.05
+obj: Reconnaître le biais du survivant dans trois situations | Expliquer l'exemple des avions de la Seconde Guerre mondiale (Abraham Wald)
+intuition: On ne voit que ce qui a survécu ; les échecs ont disparu des données.
+exemple: Avions revenus de mission : le travail d'Abraham Wald pour le Statistical Research Group (M. Mangel, F. Samaniego, Journal of the American Statistical Association, 1984) ; entreprises qui ont réussi.
+erreurs: Tirer des leçons des seuls gagnants.
+sources: Mangel et Samaniego (1984) ; rapports originaux de Wald (1943) si accessibles
+duree: 1-1.5
+format: short
+forme: paradoxe
+
+## Q2.05
+titre: Pourquoi les records de chaleur se multiplient-ils ?
+titre_en: Why heat records keep piling up
+question: Combien de records devrait-on battre si le climat ne changeait pas ?
+renvoi: S4.01 | S3.08
+obj: Calculer la probabilité qu'une année soit un record dans une série stable (1/n) | Comparer au nombre de records observés
+intuition: Dans un climat stable, les records deviennent de plus en plus rares ; leur multiplication est un signal.
+exemple: Séries de températures d'un service météorologique (à dater).
+erreurs: Interpréter un seul record comme une preuve, ou un hiver froid comme un démenti.
+sources: Services météorologiques nationaux, Copernicus, NOAA
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q2.06
+titre: Pourquoi les études se contredisent-elles ?
+titre_en: Why do studies contradict each other?
+question: Un jour le café protège, le lendemain il nuit : à qui se fier ?
+renvoi: S8.11 | S8.09
+obj: Expliquer trois raisons de résultats contradictoires (hasard, populations différentes, biais de publication) | Préférer une synthèse à une étude isolée
+intuition: Une étude est un vote bruyant ; c'est le décompte pondéré de toutes les études qui compte.
+exemple: Café et santé (synthèses à sourcer et dater).
+erreurs: Croire la dernière étude parue ; croire qu'une contradiction prouve que la science ne sait rien.
+sources: Cochrane, revues systématiques publiées, agences sanitaires nationales
+duree: 5-7
+format: educational
+forme: lecon
+
+# MODULE Q3
+niveau: 1
+titre: Les pièges de l'intuition au quotidien
+titre_en: Everyday traps for intuition
+pre: -
+maths: M0 → M1
+but: Des paradoxes familiers qui montrent qu'une méthode statistique protège mieux que l'intuition.
+
+## Q3.01
+titre: Pourquoi votre bus arrive toujours en retard
+titre_en: Why your bus always seems late
+question: Si un bus passe toutes les 10 minutes en moyenne, pourquoi attend-on souvent plus de 5 minutes ?
+renvoi: S5.08 | S2.04
+obj: Expliquer le paradoxe de l'inspection | Calculer l'attente moyenne d'un voyageur quand les intervalles entre bus valent 5 et 15 minutes | Repérer d'autres situations où l'on tombe plus souvent dans les longs intervalles
+intuition: Les longs intervalles occupent plus de temps, donc on a plus de chances d'y arriver.
+exemple: Simulation d'intervalles réguliers puis irréguliers.
+erreurs: Croire que l'attente moyenne vaut toujours la moitié de l'intervalle moyen.
+sources: Calcul et simulation
+duree: 5-7
+format: educational
+forme: paradoxe
+
+## Q3.02
+titre: Vos amis ont plus d'amis que vous
+titre_en: Your friends have more friends than you
+question: Pourquoi la plupart des gens ont-ils moins d'amis que leurs amis ?
+pre: Q3.01
+renvoi: S2.05
+obj: Calculer le nombre moyen d'amis et le nombre moyen d'amis des amis sur un petit réseau dessiné | Relier ce paradoxe au paradoxe de l'inspection
+intuition: Les personnes très connectées apparaissent dans beaucoup de listes d'amis.
+exemple: Réseau de 6 personnes dessiné à l'écran.
+erreurs: Y voir un défaut personnel.
+sources: Calcul pur ; S. Feld, American Journal of Sociology, 1991
+duree: 1-1.5
+format: short
+forme: paradoxe
+
+## Q3.03
+titre: La régression vers la moyenne
+titre_en: Regression to the mean
+question: Pourquoi un sportif en couverture de magazine a-t-il souvent une saison suivante moins bonne ?
+renvoi: S3.07
+obj: Expliquer la régression vers la moyenne par la part de chance dans une performance | Reconnaître l'erreur de l'attribuer à une cause
+intuition: Un résultat exceptionnel contient une part de chance qui, en moyenne, ne se répète pas.
+exemple: « Malédiction de la couverture » ; amélioration apparente après une sanction.
+erreurs: Attribuer à une intervention une amélioration due à la régression vers la moyenne.
+sources: Calcul et simulation ; exemples sportifs à dater
+duree: 5-7
+format: educational
+forme: paradoxe
+
+## Q3.04
+titre: Coïncidences : le hasard fait-il trop bien les choses ?
+titre_en: Coincidences: is chance too good to be true?
+question: Croiser un ami à l'autre bout du monde est-il vraiment improbable ?
+renvoi: S4.06 | S4.05
+obj: Distinguer « cet événement précis » et « un événement de ce genre » | Appliquer la loi des très grands nombres
+intuition: Avec assez d'occasions, l'improbable devient presque certain.
+exemple: Gagnants multiples d'une loterie ; rêves « prémonitoires ».
+erreurs: Calculer la probabilité de l'événement exact a posteriori.
+sources: Calcul pur
+duree: 4-6
+format: educational
+forme: paradoxe
+
+## Q3.05
+titre: La « main chaude » existe-t-elle ?
+titre_en: Is the hot hand real?
+question: Un joueur qui vient de réussir trois tirs a-t-il plus de chances de réussir le quatrième ?
+renvoi: S4.08 | S11.03
+obj: Présenter l'étude de 1985 (Gilovich, Vallone, Tversky) et sa remise en cause (Miller et Sanjurjo, 2018) | Montrer qu'un biais de mesure subtil peut renverser une conclusion
+intuition: Même les chercheurs peuvent se tromper en comptant des séries.
+exemple: Simulation de séries de tirs indépendants.
+erreurs: Croire qu'une conclusion scientifique est figée.
+sources: T. Gilovich, R. Vallone, A. Tversky, Cognitive Psychology, 1985 ; J. Miller, A. Sanjurjo, Econometrica, 2018
+duree: 8-10
+format: educational
+forme: etude_de_cas
+
+# MODULE Q4
+niveau: 2
+titre: Mesurer la société
+titre_en: Measuring society
+pre: -
+maths: M0 → M1
+but: Les grands indicateurs que l'on entend tous les jours : ce qu'ils mesurent, comment, et leurs limites. Lien direct avec la sous-série actualité, qui les utilise.
+
+## Q4.01
+titre: Qu'est-ce que le PIB ?
+titre_en: What GDP measures, and what it misses
+question: Le PIB mesure-t-il la richesse ou le bien-être ?
+renvoi: E1.02
+obj: Décrire les trois approches du PIB (production, revenus, dépenses) | Distinguer PIB, PIB par habitant et parité de pouvoir d'achat | Citer ce que le PIB ne mesure pas
+intuition: Le PIB mesure ce qui est produit et vendu en un an, pas ce que l'on possède ni ce qui ne se vend pas.
+exemple: Travail domestique, pollution, qualité de vie.
+erreurs: Comparer des PIB de pays sans parité de pouvoir d'achat.
+sources: Instituts statistiques, Banque mondiale, FMI, OCDE
+duree: 7-9
+format: educational
+forme: lecon
+
+## Q4.02
+titre: Qui est chômeur ?
+titre_en: Who counts as unemployed?
+question: Pourquoi plusieurs chiffres du chômage circulent-ils en même temps ?
+renvoi: S1.04 | S1.02
+obj: Expliquer la définition du chômage au sens du BIT | Distinguer chômeurs, inactifs et demandeurs d'emploi inscrits
+intuition: Une définition précise transforme une impression en indicateur comparable.
+exemple: Enquête emploi et fichiers administratifs (à dater par pays).
+erreurs: Comparer un taux de chômage et un nombre d'inscrits.
+sources: Insee, Dares, BLS, OIT
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q4.03
+titre: Mesurer les inégalités
+titre_en: Measuring inequality
+question: Comment résumer les inégalités par un seul nombre, et faut-il le faire ?
+renvoi: S2.06 | S2.05
+obj: Expliquer le coefficient de Gini avec la courbe de Lorenz | Comparer Gini, rapport interdécile et part du top 10 % | Distinguer revenus et patrimoine
+intuition: Chaque indicateur regarde une partie différente de la distribution.
+exemple: Courbes de Lorenz de deux pays (données officielles à dater).
+erreurs: Comparer des indicateurs calculés avant et après impôts et transferts.
+sources: Insee, OCDE, World Inequality Database (avec méthodologie)
+duree: 8-10
+format: educational
+forme: lecon
+
+## Q4.04
+titre: Espérance de vie : ce que dit vraiment ce chiffre
+titre_en: Life expectancy: what the number really means
+question: Une espérance de vie de 35 ans au Moyen Âge veut-elle dire qu'on mourait à 35 ans ?
+renvoi: S2.05 | S15.02
+obj: Expliquer que l'espérance de vie à la naissance est une moyenne sensible à la mortalité infantile | Distinguer espérance de vie à la naissance et à 60 ans
+intuition: Beaucoup de décès de bébés tirent la moyenne vers le bas, même si les adultes vivaient longtemps.
+exemple: Tables de mortalité historiques (Human Mortality Database, travaux de l'Ined), série à choisir lors de la préparation.
+erreurs: Lire l'espérance de vie comme l'âge typique du décès.
+sources: Ined, Human Mortality Database, ONU
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q4.05
+titre: Comment lit-on un sondage ?
+titre_en: How to read an opinion poll
+question: Que faut-il vérifier avant de croire un sondage ?
+renvoi: S6.05 | S6.04
+obj: Appliquer une grille de lecture : commanditaire, méthode, échantillon, dates, question posée, marge d'erreur
+intuition: La question posée et la façon de la poser comptent autant que le nombre de répondants.
+exemple: Même sujet, deux formulations, deux résultats (exemple à sourcer).
+erreurs: Comparer des sondages de méthodes différentes comme une série.
+sources: Notices des instituts, commission des sondages (selon pays)
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q4.06
+titre: La population mondiale va-t-elle diminuer ?
+titre_en: Will the world population shrink?
+question: Que veulent dire les projections démographiques de l'ONU ?
+renvoi: S14.05 | S3.08
+obj: Distinguer projection, prévision et scénario | Lire une fourchette de projection
+intuition: Une projection dit « si les tendances se poursuivent », pas « voici l'avenir ».
+exemple: World Population Prospects (édition à vérifier) ; déjà traité en format court (premier livrable).
+erreurs: Présenter une projection centrale comme une certitude.
+sources: ONU, World Population Prospects
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q4.07
+titre: Le seuil de pauvreté
+titre_en: The poverty line
+question: Pourquoi le taux de pauvreté peut-il baisser quand tout le monde s'appauvrit ?
+renvoi: S2.05 | S2.06
+obj: Calculer un seuil de pauvreté relatif (60 % du revenu médian) | Expliquer la différence entre pauvreté relative et pauvreté absolue
+intuition: Un seuil relatif se déplace avec la médiane : il mesure l'écart aux autres, pas le niveau de vie lui-même.
+exemple: Taux de pauvreté de l'Insee et d'Eurostat (à dater).
+erreurs: Comparer des taux de pauvreté de pays qui utilisent des définitions différentes.
+sources: Insee, Eurostat, Banque mondiale
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q4.08
+titre: L'écart de salaire entre femmes et hommes : brut ou ajusté ?
+titre_en: The gender pay gap: raw or adjusted?
+question: Les femmes gagnent-elles 24 % ou 4 % de moins que les hommes ?
+renvoi: S9.04 | S3.03
+obj: Distinguer écart brut et écart « à poste égal » | Expliquer ce que l'ajustement retire, et pourquoi ce qu'il retire peut lui-même refléter des inégalités
+intuition: Les deux chiffres sont justes : ils ne répondent pas à la même question.
+exemple: Statistiques de l'Insee et d'Eurostat (à dater).
+erreurs: Opposer les deux chiffres comme si l'un démentait l'autre.
+sources: Insee, Eurostat, OCDE
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q4.09
+titre: La mobilité sociale se mesure-t-elle ?
+titre_en: Can social mobility be measured?
+question: Un enfant d'ouvrier a-t-il plus de chances de devenir cadre qu'il y a cinquante ans ?
+renvoi: S3.02 | S3.05
+obj: Lire une table de mobilité | Distinguer mobilité absolue (changement de structure) et mobilité relative (chances comparées)
+intuition: Si les emplois de cadre se multiplient, beaucoup d'enfants montent, même si les chances relatives ne changent pas.
+exemple: Enquêtes Formation et qualification professionnelle de l'Insee ; R. Chetty et coll. (à sourcer).
+erreurs: Confondre plus de mobilité ascendante et plus d'égalité des chances.
+sources: Insee, OCDE, Opportunity Insights
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q5
+niveau: 2
+titre: Technologie, algorithmes et données personnelles
+titre_en: Technology, algorithms and personal data
+pre: -
+maths: M0 → M1
+but: Ce que font les chiffres derrière les écrans : tests, recommandations, intelligence artificielle.
+
+## Q5.01
+titre: Les tests A/B : comment les sites décident à votre place
+titre_en: A/B tests: how websites decide for you
+question: Comment un site sait-il quel bouton fait cliquer le plus ?
+renvoi: S1.06 | S8.06
+obj: Décrire un test A/B comme une expérience randomisée | Expliquer les pièges (arrêter trop tôt, tests multiples)
+intuition: Une expérience à grande échelle, permanente et souvent invisible.
+exemple: Deux versions d'une page, 10 000 visiteurs chacune.
+erreurs: Regarder les résultats tous les jours et s'arrêter dès que c'est « significatif ».
+sources: Littérature professionnelle (sources à choisir)
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q5.02
+titre: Comment fonctionne une recommandation ?
+titre_en: How recommendations work
+question: Pourquoi une plateforme me propose-t-elle cette vidéo ?
+renvoi: S13.04 | S17.01
+obj: Expliquer la similarité entre utilisateurs ou entre contenus | Discuter les boucles de rétroaction
+intuition: « Les gens qui vous ressemblent ont aimé ceci. »
+exemple: Petite matrice utilisateurs × films.
+erreurs: Croire qu'un algorithme connaît vos intentions.
+sources: Publications techniques publiques (à choisir)
+duree: 6-8
+format: educational
+forme: demonstration
+
+## Q5.03
+titre: L'IA se trompe-t-elle « en moyenne » ?
+titre_en: Does AI get it wrong on average?
+question: Un modèle exact à 95 % peut-il être injuste ?
+renvoi: S17.05 | S17.06
+obj: Montrer qu'une exactitude moyenne peut cacher des écarts entre groupes | Lire des taux d'erreur par groupe
+intuition: Une moyenne générale peut masquer des performances très différentes selon les sous-groupes.
+exemple: Reconnaissance faciale et écarts de performance (études à sourcer).
+erreurs: Juger un modèle sur un seul chiffre global.
+sources: Articles scientifiques, rapports d'évaluation publics
+duree: 6-8
+format: educational
+forme: etude_de_cas
+
+## Q5.04
+titre: Quand une IA annonce « 90 % de confiance »
+titre_en: When an AI says it is 90% sure
+question: Une machine sûre à 90 % a-t-elle raison neuf fois sur dix ?
+renvoi: S17.05 | S17.09
+obj: Expliquer la calibration d'un modèle | Lire un diagramme de fiabilité
+intuition: Un bon météorologue qui annonce 70 % de pluie doit voir pleuvoir sept fois sur dix.
+exemple: Prévisions météorologiques et classifieurs d'images (à sourcer).
+erreurs: Confondre confiance affichée et probabilité d'avoir raison.
+sources: Publications scientifiques sur la calibration, services météorologiques
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q5.05
+titre: Que mesure le score d'une IA sur un test ?
+titre_en: What does an AI benchmark score really measure?
+question: Une IA qui réussit 90 % d'un examen est-elle compétente ?
+renvoi: S17.05 | S11.05
+obj: Distinguer précision et rappel | Expliquer la contamination d'un test par les données d'entraînement | Expliquer la dérive : un modèle évalué hier peut se dégrader sur les données de demain
+intuition: Un élève qui a vu le sujet à l'avance a une excellente note, et n'a rien prouvé.
+exemple: Classements publics de modèles de langage (à sourcer et dater).
+erreurs: Comparer des scores obtenus sur des tests différents ; croire qu'un score élevé hors distribution est garanti.
+sources: Articles d'évaluation publiés, documentation des jeux de test
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q6
+niveau: 1
+titre: Sport, jeux et loisirs
+titre_en: Sport, games and leisure
+pre: -
+maths: M0 → M1
+but: Des terrains de jeu familiers pour faire comprendre des notions exigeantes.
+
+## Q6.01
+titre: Un penalty se tire-t-il au hasard ?
+titre_en: Should a penalty be random?
+question: Pourquoi un tireur doit-il être imprévisible ?
+renvoi: S5.02
+obj: Présenter l'idée d'équilibre en stratégies mixtes | Calculer le taux de réussite d'un tireur prévisible et d'un tireur imprévisible sur un exemple chiffré | Montrer qu'être prévisible coûte des buts
+intuition: Si le gardien sait où vous tirez, vous perdez votre avantage.
+exemple: Penaltys du football professionnel (P.-A. Chiappori, S. Levitt, T. Groseclose, American Economic Review, 2002 ; I. Palacios-Huerta, Review of Economic Studies, 2003).
+erreurs: Croire qu'il existe un « meilleur côté » fixe.
+sources: Articles originaux cités
+duree: 4-6
+format: educational
+forme: etude_de_cas
+
+## Q6.02
+titre: Le classement final dit-il qui est le meilleur ?
+titre_en: Does the league table tell who is best?
+question: Quelle part du classement d'un championnat est due à la chance ?
+renvoi: S11.01 | S10.07
+obj: Simuler une saison avec des équipes de niveaux connus | Estimer la part de hasard dans un classement
+intuition: Même la meilleure équipe ne termine pas toujours première.
+exemple: Simulation Monte-Carlo de 1 000 saisons.
+erreurs: Lire un écart de deux points comme une différence de niveau.
+sources: Simulation ; résultats réels datés
+duree: 6-8
+format: educational
+forme: simulation
+
+## Q6.03
+titre: Le problème du collectionneur
+titre_en: The coupon collector's problem
+question: Combien de paquets acheter pour compléter un album de 600 images ?
+renvoi: S5.05
+obj: Calculer l'espérance du nombre d'achats (n × (1 + 1/2 + … + 1/n)) | Montrer pourquoi les dernières images coûtent si cher
+intuition: Au début, presque tout est nouveau ; à la fin, presque tout est en double.
+exemple: Album de 600 images, une image par achat : environ 4 200 achats en moyenne.
+erreurs: Croire qu'il faut à peine plus de 600 achats.
+sources: Calcul pur
+duree: 5-7
+format: educational
+forme: paradoxe
+
+## Q6.04
+titre: Les « expected goals » : mesurer les occasions plutôt que les buts
+titre_en: Expected goals: measuring chances instead of goals
+question: Une équipe qui perd 1-0 a-t-elle mal joué ?
+renvoi: S10.02 | S5.04
+obj: Expliquer un modèle de probabilité de but par tir | Additionner des probabilités pour obtenir des buts attendus | Dire pourquoi les buts réels s'écartent des buts attendus sur un match, et moins sur une saison
+intuition: Chaque tir vaut une chance de but ; on compte les chances, pas seulement celles qui ont réussi.
+exemple: Données publiques de tirs (à sourcer).
+erreurs: Lire un écart d'un match comme un talent de finition.
+sources: Fournisseurs de données sportives, articles méthodologiques
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q6.05
+titre: La force du calendrier
+titre_en: Strength of schedule
+question: Une équipe invaincue a-t-elle simplement affronté des adversaires faibles ?
+renvoi: Q6.02 | Q3.03
+obj: Ajuster un classement selon la force des adversaires | Expliquer la régression vers la moyenne après un bon début de saison
+intuition: Battre trois fois le dernier ne vaut pas battre trois fois le premier.
+exemple: Classements Elo (à sourcer).
+erreurs: Juger une équipe sur un petit nombre de matchs.
+sources: Fédérations sportives, systèmes de classement publiés
+duree: 5-7
+format: educational
+forme: lecon
+
+# MODULE Q7
+niveau: 2
+titre: Démographie et santé publique
+titre_en: Demography and public health
+pre: -
+maths: M0 → M1
+but: Lire les chiffres de population et de santé : naissances, décès, migrations, maladies. Chaque vidéo donne les définitions qui changent tout et la façon de comparer des pays différents.
+
+## Q7.01
+titre: Incidence ou prévalence ?
+titre_en: Incidence or prevalence?
+question: Une maladie qui progresse peut-elle avoir moins de nouveaux cas ?
+renvoi: S1.08 | S2.01
+obj: Distinguer incidence (nouveaux cas) et prévalence (cas présents) | Relier prévalence, incidence et durée de la maladie
+intuition: La prévalence est une baignoire : elle se remplit par l'incidence et se vide par les guérisons et les décès.
+exemple: Diabète et grippe saisonnière (données à dater).
+erreurs: Comparer une prévalence à une incidence.
+sources: Santé publique France, OMS, CDC
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q7.02
+titre: Taux standardisés : comparer des pays qui n'ont pas le même âge
+titre_en: Age-standardized rates: comparing populations of different ages
+question: Pourquoi un pays jeune peut-il avoir moins de décès qu'un pays en meilleure santé ?
+renvoi: S3.03 | S2.04
+obj: Calculer un taux standardisé par âge sur un exemple à deux groupes | Expliquer le lien avec le paradoxe de Simpson
+intuition: On applique les taux de chaque pays à une même population de référence, pour comparer à âge égal.
+exemple: Mortalité par cancer en Europe (Eurostat, à dater).
+erreurs: Comparer des taux bruts entre populations d'âges différents.
+sources: Eurostat, OMS, Insee
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q7.03
+titre: Que veut dire « 1,8 enfant par femme » ?
+titre_en: What does "1.8 children per woman" mean?
+question: Ce chiffre décrit-il les familles d'aujourd'hui ?
+renvoi: S2.04 | Q4.04
+obj: Définir l'indicateur conjoncturel de fécondité comme une somme de taux par âge | Distinguer fécondité de l'année et descendance finale d'une génération | Expliquer l'effet de calendrier
+intuition: Comme l'espérance de vie, c'est le nombre d'enfants d'une femme fictive qui vivrait toute sa vie avec les taux d'une seule année.
+exemple: Fécondité en France et en Corée du Sud (données à dater).
+erreurs: Croire qu'une baisse due au recul de l'âge des mères signifie moins d'enfants au total.
+sources: Insee, Ined, Nations unies
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q7.04
+titre: Migrations : flux, stocks et définitions
+titre_en: Migration: flows, stocks and definitions
+question: Combien d'immigrés y a-t-il, et pourquoi les chiffres divergent-ils ?
+renvoi: S1.02 | S1.07
+obj: Distinguer immigré, étranger et solde migratoire | Distinguer flux annuel et stock de population | Expliquer pourquoi le solde migratoire est souvent estimé par différence
+intuition: Les chiffres divergent rarement parce que quelqu'un ment ; ils comptent des personnes différentes.
+exemple: Statistiques de l'Insee et des Nations unies (à dater).
+erreurs: Comparer des chiffres d'immigrés et d'étrangers.
+sources: Insee, Eurostat, Nations unies (DAES)
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q8
+niveau: 2
+titre: Énergie et climat
+titre_en: Energy and climate
+pre: -
+maths: M0 → M1
+but: Les chiffres de l'énergie et du climat, où les unités, les stocks et les flux sont souvent confondus.
+
+## Q8.01
+titre: Puissance installée ou énergie produite ?
+titre_en: Installed capacity or energy produced?
+question: Pourquoi 1 gigawatt de solaire ne produit-il pas autant que 1 gigawatt de nucléaire ?
+renvoi: M0.02 | S1.08
+obj: Distinguer puissance (GW) et énergie (GWh) | Calculer une production annuelle à partir d'un facteur de charge
+intuition: La puissance dit ce qu'une installation peut faire ; le facteur de charge, ce qu'elle fait vraiment.
+exemple: Facteurs de charge publiés par les gestionnaires de réseau (à dater).
+erreurs: Comparer des puissances installées comme si c'étaient des productions.
+sources: RTE, AIE, Ember
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q8.02
+titre: Émissions annuelles ou émissions cumulées ?
+titre_en: Annual or cumulative emissions?
+question: Quel pays est le plus responsable du réchauffement ?
+renvoi: S1.08 | E1.01
+obj: Distinguer flux annuel, émissions nettes cumulées et émissions par habitant | Distinguer émissions cumulées, absorption par les puits naturels et concentration atmosphérique | Expliquer pourquoi le classement des pays change selon l'indicateur
+intuition: Le réchauffement suit à peu près les émissions nettes cumulées de CO₂ depuis le début de l'ère industrielle. Environ la moitié de ces émissions a été absorbée par les océans et la végétation : la concentration dans l'atmosphère n'est donc pas la somme des émissions.
+exemple: Données d'émissions historiques (Global Carbon Project, à dater) ; relation quasi linéaire entre émissions cumulées et réchauffement (GIEC, sixième rapport, 2021).
+erreurs: Juger une responsabilité sur une seule année.
+sources: Global Carbon Project, GIEC, AIE
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q8.03
+titre: Peut-on attribuer une canicule au changement climatique ?
+titre_en: Can a heatwave be attributed to climate change?
+question: Que veut dire « cette canicule a été rendue dix fois plus probable » ?
+renvoi: S4.01 | S18.06 | Q2.05
+obj: Distinguer trois résultats : le rapport de probabilités (combien de fois plus probable), le changement d'intensité (combien de degrés de plus) et la probabilité absolue (une fois tous les combien d'années) | Lire l'intervalle d'incertitude d'une étude d'attribution et ses limites (modèles, données, définition de l'événement) | Dire ce qu'une étude d'attribution affirme et ce qu'elle n'affirme pas
+intuition: On compare la fréquence de l'événement dans deux mondes simulés : avec et sans réchauffement.
+exemple: Études du réseau World Weather Attribution (à dater).
+erreurs: Croire que « dix fois plus probable » signifie que le réchauffement a créé seul l'événement, ou que l'événement était impossible avant ; oublier l'intervalle d'incertitude ; confondre rapport de probabilités et probabilité absolue.
+sources: World Weather Attribution, GIEC, Météo-France
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q8.04
+titre: Sécurité énergétique : dépendre de qui ?
+titre_en: Energy security: dependent on whom?
+question: Un pays qui importe 40 % de son gaz est-il plus vulnérable qu'un pays qui en importe 60 % ?
+renvoi: S1.08 | Q10.03
+obj: Distinguer taux de dépendance et concentration des fournisseurs | Calculer un indice de concentration simple (part du premier fournisseur, indice de Herfindahl)
+intuition: Dépendre un peu d'un seul fournisseur peut être plus risqué que dépendre beaucoup de dix.
+exemple: Approvisionnement gazier européen en 2021-2022 (Eurostat, AIE, à dater).
+erreurs: Juger une vulnérabilité sur le seul taux de dépendance.
+sources: Eurostat, AIE, ministère de la Transition énergétique
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q9
+niveau: 2
+titre: Logement
+titre_en: Housing
+pre: -
+maths: M0 → M1
+but: Prix, loyers, crédit : ce que disent et ne disent pas les chiffres du logement.
+
+## Q9.01
+titre: Prix, loyers et taux d'effort
+titre_en: Prices, rents and housing cost burden
+question: Le logement est-il vraiment plus cher qu'il y a vingt ans ?
+renvoi: E1.02 | Q1.04
+obj: Distinguer prix d'achat, loyer et taux d'effort | Expliquer pourquoi la baisse des taux d'intérêt peut rendre un logement plus cher et plus accessible à la fois
+intuition: Ce qui compte pour un ménage, c'est la mensualité rapportée au revenu, pas seulement le prix affiché.
+exemple: Indices des notaires et de l'Insee (à dater).
+erreurs: Comparer des prix nominaux sur vingt ans.
+sources: Insee, notaires de France, Banque de France
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q9.02
+titre: Comment mesure-t-on l'évolution des prix immobiliers ?
+titre_en: How are house price changes measured?
+question: Si les logements vendus cette année sont plus grands, les prix ont-ils augmenté ?
+renvoi: S9.04 | Q1.01
+obj: Repérer l'effet de composition des ventes dans une hausse du prix moyen | Décrire un indice hédonique, qui compare des logements à caractéristiques égales
+intuition: On ne compare pas un studio vendu hier à une maison vendue aujourd'hui.
+exemple: Indices Notaires-Insee (méthode publiée, à dater).
+erreurs: Lire une hausse du prix moyen comme une hausse des prix.
+sources: Insee, notaires de France
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q10
+niveau: 2
+titre: Finances publiques, commerce et mondialisation
+titre_en: Public finances, trade and globalization
+pre: -
+maths: M0 → M1
+but: Dette, déficit, balance commerciale, taux de change : des chiffres omniprésents dans le débat public et souvent mal compris.
+
+## Q10.01
+titre: Dette ou déficit : un stock et un flux
+titre_en: Debt or deficit: a stock and a flow
+question: Comment la dette peut-elle augmenter quand le déficit baisse ?
+renvoi: S1.08 | E1.01
+obj: Distinguer déficit annuel (flux) et dette (stock) | Lire un ratio dette/PIB et ce qui fait bouger son numérateur et son dénominateur
+intuition: Le déficit est ce qui coule dans la baignoire chaque année ; la dette, le niveau de l'eau.
+exemple: Comptes nationaux de l'Insee et d'Eurostat (à dater).
+erreurs: Croire qu'un déficit qui baisse fait baisser la dette.
+sources: Insee, Eurostat, FMI
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q10.02
+titre: L'effet boule de neige de la dette
+titre_en: The debt snowball effect
+question: Pourquoi le taux d'intérêt et la croissance comptent-ils autant que le déficit ?
+renvoi: Q1.02 | E1.03
+obj: Calculer le solde primaire qui stabilise un ratio dette/PIB | Expliquer le rôle de l'écart entre taux d'intérêt et croissance
+intuition: Si les intérêts croissent plus vite que l'économie, la dette grossit d'elle-même.
+exemple: Scénarios du Haut Conseil des finances publiques ou du FMI (à dater).
+erreurs: Raisonner sur la dette sans les taux d'intérêt ni la croissance.
+sources: FMI, Commission européenne, Cour des comptes
+duree: 7-9
+format: educational
+forme: lecon
+
+## Q10.03
+titre: Balance commerciale et taux de change
+titre_en: Trade balance and exchange rates
+question: Un déficit commercial est-il une perte pour un pays ?
+renvoi: E1.02 | S1.08
+obj: Lire une balance commerciale en valeur et en volume | Expliquer l'effet d'un taux de change sur les montants | Distinguer dépendance commerciale et concentration des fournisseurs
+intuition: Un même conteneur coûte plus cher en euros quand l'euro baisse, sans qu'on ait importé davantage.
+exemple: Douanes françaises, OMC (à dater).
+erreurs: Comparer des valeurs nominales sur des années de change très différent.
+sources: Douanes, OMC, Banque de France
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q10.04
+titre: Chaînes d'approvisionnement : pourquoi une usine à l'arrêt bloque le monde
+titre_en: Supply chains: why one stopped factory can stall the world
+question: Comment une pénurie de puces électroniques peut-elle arrêter des usines automobiles sur trois continents ?
+renvoi: S5.11 | S16.03
+obj: Lire une part de marché mondiale et un indice de concentration | Expliquer pourquoi des étapes en série multiplient les risques de rupture | Lire un indicateur de tension (délais de livraison, indices de pression)
+intuition: Une chaîne ne tient pas mieux que son maillon le plus fragile, et plus il y a de maillons, plus il y a de chances qu'un cède.
+exemple: Indice de pression des chaînes d'approvisionnement mondiales de la Réserve fédérale de New York (à dater).
+erreurs: Croire qu'un pays « produit » un bien parce qu'il l'assemble.
+sources: OMC, OCDE (base TiVA), Réserve fédérale de New York
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q11
+niveau: 2
+titre: Éducation
+titre_en: Education
+pre: -
+maths: M0 → M1
+but: Taux de réussite, classements, comparaisons internationales : ce qu'on peut comparer, et à quelles conditions.
+
+## Q11.01
+titre: Le meilleur lycée est-il celui qui a le plus de bacheliers ?
+titre_en: Is the best school the one with the highest pass rate?
+question: Un taux de réussite dit-il ce qu'apporte un établissement ?
+renvoi: S3.03 | S9.04
+obj: Distinguer taux de réussite et valeur ajoutée | Expliquer les effets de composition et de sélection des élèves
+intuition: Un lycée qui sélectionne ses élèves réussit sans forcément les faire progresser.
+exemple: Indicateurs de valeur ajoutée des lycées du ministère de l'Éducation nationale (à dater).
+erreurs: Classer des établissements sur des taux bruts.
+sources: Ministère de l'Éducation nationale (DEPP)
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q11.02
+titre: Lire un classement international comme PISA
+titre_en: Reading an international ranking like PISA
+question: Que veut dire « la France perd cinq places » ?
+renvoi: S6.05 | S6.04
+obj: Lire un score avec son intervalle de confiance | Expliquer pourquoi des pays proches au classement ne sont pas toujours distinguables | Dire ce que mesure et ne mesure pas l'enquête
+intuition: Un classement transforme de petits écarts incertains en rangs qui ont l'air précis.
+exemple: Rapports PISA de l'OCDE (à dater).
+erreurs: Interpréter un changement de rang sans regarder l'incertitude.
+sources: OCDE, DEPP
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q12
+niveau: 2
+titre: Information et médias
+titre_en: Information and media
+pre: -
+maths: M0 → M1
+but: Les chiffres tels qu'ils arrivent dans les titres, les graphiques et les fils d'actualité.
+
+## Q12.01
+titre: Agréger les sondages
+titre_en: Poll aggregation
+question: Pourquoi une moyenne de sondages est-elle plus fiable qu'un sondage ?
+renvoi: S6.05 | S8.11
+obj: Calculer une moyenne de sondages pondérée par la taille des échantillons | Expliquer la pondération par la date et par l'institut | Dire pourquoi une erreur commune à tous les instituts ne disparaît pas dans la moyenne
+intuition: Les erreurs propres à chaque sondage se compensent ; un biais partagé par tous, non.
+exemple: Agrégateurs de sondages électoraux (à sourcer et dater).
+erreurs: Croire qu'un agrégat élimine tous les biais.
+sources: Commission des sondages, instituts publiant leurs notices
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q12.02
+titre: Causalité inversée dans les titres
+titre_en: Reverse causation in headlines
+question: Les gens qui dorment plus sont-ils en meilleure santé parce qu'ils dorment ?
+renvoi: S3.06 | E1.05
+obj: Repérer un titre causal tiré d'une étude observationnelle | Proposer une causalité inversée et un facteur commun
+intuition: Être malade fait dormir davantage : la flèche peut aller dans l'autre sens.
+exemple: Titres de presse sur la santé (à choisir et dater).
+erreurs: Lire « associé à » comme « cause ».
+sources: Études originales citées par les articles
+duree: 5-7
+format: educational
+forme: lecon
+
+# MODULE Q13
+niveau: 2
+titre: Conflits et crises humanitaires
+titre_en: Conflicts and humanitarian crises
+pre: -
+maths: M0 → M1
+but: Lire avec rigueur et respect des chiffres de victimes et de déplacements, toujours incertains, toujours définis par un périmètre. Ces vidéos sont soumises au protocole renforcé de la section 5.
+
+## Q13.01
+titre: Compter les victimes d'un conflit
+titre_en: Counting conflict casualties
+question: Pourquoi deux organisations donnent-elles des bilans très différents pour le même conflit ?
+renvoi: S1.04 | S1.07 | S6.04
+obj: Distinguer décès directs, décès indirects et surmortalité | Expliquer les méthodes (listes nominatives, enquêtes, estimations statistiques) et leur incertitude | Refuser de comparer des chiffres de périmètres différents
+intuition: Chaque chiffre répond à une question précise : qui compte-t-on, où, depuis quand, et comment ?
+exemple: Uppsala Conflict Data Program ; méthodes d'estimation par capture-recapture (à sourcer).
+erreurs: Additionner ou comparer des bilans aux définitions différentes ; présenter une estimation comme un décompte.
+sources: UCDP, ACLED, agences des Nations unies, études publiées
+duree: 7-9
+format: educational
+forme: lecon
+
+## Q13.02
+titre: Réfugiés, déplacés, demandeurs d'asile
+titre_en: Refugees, displaced people and asylum seekers
+question: Pourquoi le nombre de réfugiés dans le monde n'est-il pas celui des migrants ?
+renvoi: Q7.04 | S1.02
+obj: Distinguer réfugié, déplacé interne et demandeur d'asile | Lire un chiffre du HCR avec sa définition et sa date
+intuition: Les catégories juridiques déterminent qui est compté, et donc ce que dit le chiffre.
+exemple: Rapports annuels du HCR (à dater).
+erreurs: Mélanger les catégories dans une même comparaison.
+sources: HCR, OIM, IDMC
+duree: 5-7
+format: educational
+forme: lecon
+
+# MODULE Q14
+niveau: 2
+titre: Agriculture et alimentation
+titre_en: Agriculture and food
+pre: -
+maths: M0 → M1
+but: Rendements, prix et sécurité alimentaire : des séries saisonnières, volatiles et souvent révisées.
+
+## Q14.01
+titre: Les prix alimentaires flambent-ils vraiment ?
+titre_en: Are food prices really soaring?
+question: Le prix du blé a doublé : le pain va-t-il doubler ?
+renvoi: E1.02 | S3.08
+obj: Distinguer prix mondial d'une matière première et prix au consommateur | Lire un indice de prix réel | Expliquer saisonnalité et volatilité des prix agricoles
+intuition: Le blé ne représente qu'une petite part du prix d'une baguette.
+exemple: Indice FAO des prix des produits alimentaires (à dater).
+erreurs: Transposer une hausse de matière première telle quelle au prix final.
+sources: FAO, Insee, Banque mondiale
+duree: 6-8
+format: educational
+forme: lecon
+
+## Q14.02
+titre: Mesurer la faim dans le monde
+titre_en: Measuring world hunger
+question: Comment sait-on combien de personnes sont sous-alimentées ?
+renvoi: S1.04 | S6.04
+obj: Expliquer l'estimation de la prévalence de la sous-alimentation | Distinguer sous-alimentation et insécurité alimentaire mesurée par enquête
+intuition: On ne pèse pas les repas de huit milliards de personnes : on estime une distribution à partir de données partielles.
+exemple: Rapport SOFI de la FAO (à dater).
+erreurs: Lire une estimation révisée comme une évolution réelle.
+sources: FAO, PAM, Banque mondiale
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE Q15
+niveau: 2
+titre: Transport et ville
+titre_en: Transport and cities
+pre: -
+maths: M0 → M1
+but: Embouteillages, accidents, vitesse : la ville vue par ses chiffres.
+
+## Q15.01
+titre: Le vélo est-il dangereux ? Le risque par kilomètre, par trajet ou par heure
+titre_en: Is cycling dangerous? Risk per kilometre, per trip or per hour
+question: Pourquoi le classement des modes de transport change-t-il selon l'unité choisie ?
+renvoi: Q2.02 | S1.08
+obj: Calculer un risque rapporté à l'exposition | Expliquer pourquoi le choix du dénominateur change la conclusion
+intuition: Un avion parcourt beaucoup de kilomètres en peu de trajets : son risque dépend de ce qu'on compte.
+exemple: Bilans de l'Observatoire national interministériel de la sécurité routière (à dater).
+erreurs: Comparer des nombres d'accidents sans exposition.
+sources: ONISR, Eurostat
+duree: 5-7
+format: educational
+forme: lecon
+
+## Q15.02
+titre: Pourquoi élargir une route ne réduit pas les bouchons
+titre_en: Why widening roads doesn't cure congestion
+question: Une voie de plus, et les embouteillages reviennent : pourquoi ?
+renvoi: E1.03 | E4.02
+obj: Expliquer la demande induite comme une élasticité de la demande de trajets | Distinguer effet de court et de long terme
+intuition: Une route plus rapide attire de nouveaux trajets, jusqu'à retrouver la congestion.
+exemple: G. Duranton, M. Turner, American Economic Review, 2011.
+erreurs: Prévoir le trafic futur à demande constante.
+sources: Études publiées, données de trafic des collectivités
+duree: 6-8
+format: educational
+forme: lecon
+

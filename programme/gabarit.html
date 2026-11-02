@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>ACTU-BASICS — Programme éditorial et pédagogique</title>
+<style>
+@font-face { font-family: "Anton"; src: url("{{POLICE_ANTON}}"); }
+@page { size: A4; margin: 16mm 15mm 18mm 15mm; }
+@page couverture { margin: 0; }
+:root {
+  --nuit: #06152B; --bleu: #1685D5; --orange: #FF8500; --gris: #5b6b80;
+  --trait: #d9e1ea; --fond: #f3f6fa; --texte: #16202e; --vert: #2a9d8f;
+}
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: "Inter", "DejaVu Sans", sans-serif; font-size: 9.4pt; line-height: 1.45; color: var(--texte); margin: 0; background: #fff; }
+a { color: var(--bleu); text-decoration: none; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 0.86em; background: var(--fond); padding: 0 3px; border-radius: 3px; }
+pre { background: var(--fond); padding: 8px 10px; border-radius: 6px; font-size: 8.5pt; }
+pre code { background: none; padding: 0; }
+
+/* Couverture */
+.couverture { page: couverture; height: 297mm; width: 210mm; background: var(--nuit); color: #fff; position: relative; overflow: hidden; break-after: page; }
+.couverture .logo { position: absolute; top: 34mm; left: 50%; transform: translateX(-50%); width: 96mm; }
+.couverture .titre { position: absolute; top: 146mm; left: 22mm; right: 22mm; text-align: center; }
+.couverture h1 { font-family: "Anton", sans-serif; font-weight: normal; font-size: 33pt; line-height: 1.08; letter-spacing: 0.5px; margin: 0 0 6mm; color: #fff; border: 0; padding: 0; }
+.couverture .sous { font-size: 13pt; color: #c9d6e6; margin: 0 0 12mm; }
+.couverture .piliers { display: flex; justify-content: center; gap: 5mm; margin-bottom: 14mm; }
+.couverture .piliers span { border: 1.5px solid var(--bleu); border-radius: 20px; padding: 2mm 5mm; font-size: 10pt; }
+.couverture .piliers span:nth-child(2) { border-color: var(--orange); }
+.couverture .piliers span:nth-child(3) { border-color: var(--vert); }
+.couverture .slogan { font-family: "Anton", sans-serif; font-size: 15pt; color: var(--orange); letter-spacing: 0.6px; }
+.couverture .slogan-en { font-size: 10.5pt; color: #c9d6e6; margin-top: 1mm; }
+.couverture .pied { position: absolute; bottom: 18mm; left: 22mm; right: 22mm; font-size: 9pt; color: #9fb2c8; text-align: center; line-height: 1.6; }
+.couverture .pied strong { color: #fff; }
+
+/* Titres */
+h1 { font-family: "Anton", sans-serif; font-weight: normal; font-size: 24pt; color: var(--nuit); letter-spacing: 0.3px; margin: 0 0 5mm; padding-bottom: 2mm; border-bottom: 3px solid var(--orange); break-before: page; }
+h2 { font-size: 13.5pt; color: var(--nuit); margin: 7mm 0 2.5mm; break-after: avoid; }
+h2.niveau { break-before: page; font-family: "Anton", sans-serif; font-weight: normal; font-size: 19pt; color: #fff; background: var(--nuit); padding: 4mm 5mm; border-radius: 6px; margin-top: 0; }
+h2.niveau span { display: block; font-family: "Inter", sans-serif; font-size: 10pt; color: #c9d6e6; margin-top: 1mm; }
+h3 { font-size: 11pt; color: var(--nuit); margin: 5mm 0 2mm; break-after: avoid; }
+p { margin: 0 0 2.4mm; }
+ul, ol { margin: 0 0 2.5mm; padding-left: 5mm; }
+li { margin-bottom: 0.8mm; }
+
+/* Tableaux */
+table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; font-size: 8.6pt; }
+th, td { border-bottom: 1px solid var(--trait); padding: 1.6mm 2mm; text-align: left; vertical-align: top; }
+thead th { background: var(--nuit); color: #fff; font-weight: 600; border-bottom: 0; }
+tbody tr:nth-child(even) td { background: #fafbfd; }
+tr { break-inside: avoid; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tr.total td { font-weight: 700; border-top: 2px solid var(--nuit); background: #fff !important; }
+table.serre td, table.serre th { padding: 1mm 2mm; }
+
+.encadre { background: var(--fond); border-left: 4px solid var(--bleu); padding: 3mm 4mm; border-radius: 0 6px 6px 0; margin: 2mm 0 4mm; }
+.encadre.statut { border-left-color: var(--orange); }
+.encadre p:last-child { margin-bottom: 0; }
+.exemple-fiche table th, .exemple-fiche table td:first-child { width: 30mm; font-weight: 600; color: var(--nuit); }
+.exemple-fiche thead { display: none; }
+
+/* Carte des dépendances */
+svg.carte { width: 100%; height: auto; margin: 2mm 0 4mm; break-inside: avoid; }
+svg .bande { font: 700 9px Inter, sans-serif; fill: var(--gris); letter-spacing: 1px; }
+svg .mid { font: 700 13px Inter, sans-serif; text-anchor: middle; }
+svg .mt { font: 8.8px Inter, sans-serif; fill: var(--texte); text-anchor: middle; }
+svg .arc { fill: none; stroke: #8a97a8; stroke-width: 1.3; }
+svg .pointille { stroke-dasharray: 4 3; }
+
+/* Modules et fiches */
+.module { margin-bottom: 4mm; }
+.module-entete { break-inside: avoid; }
+.section[data-fichier^="10"] table:has(th:nth-child(4)) td:nth-child(1) { width: 20mm; }
+.section[data-fichier^="10"] table:has(th:nth-child(4)) td:nth-child(2) { width: 42mm; }
+.module-tete { display: flex; align-items: center; gap: 4mm; margin: 6mm 0 2mm; break-after: avoid; }
+.module-tete .mid { font-family: "Anton", sans-serif; font-size: 20pt; color: var(--bleu); min-width: 16mm; }
+.module[id^="E"] .module-tete .mid { color: var(--orange); }
+.module[id^="Q"] .module-tete .mid { color: var(--vert); }
+.module[id^="M"] .module-tete .mid { color: var(--gris); }
+.module-tete h3 { margin: 0; font-size: 14pt; }
+.en { color: var(--gris); font-size: 8.6pt; margin: 0.5mm 0 0; font-style: italic; }
+.meta { font-size: 8.4pt; color: var(--gris); margin-bottom: 1.5mm; }
+.but { margin-bottom: 2mm; }
+table.sommaire { font-size: 8.3pt; }
+table.sommaire td, table.sommaire th { padding: 1mm 2mm; }
+table.sommaire td:first-child { width: 14mm; }
+
+.unite { border: 1px solid var(--trait); border-radius: 7px; padding: 3mm 4mm 1.5mm; margin: 0 0 3.2mm; break-inside: avoid; }
+.unite header { display: flex; gap: 3mm; align-items: baseline; }
+.unite .uid { font-weight: 800; color: #fff; background: var(--bleu); border-radius: 4px; padding: 0.4mm 1.8mm; font-size: 8.6pt; white-space: nowrap; }
+.unite[id^="E"] .uid { background: var(--orange); }
+.unite[id^="Q"] .uid { background: var(--vert); }
+.unite[id^="M"] .uid { background: var(--gris); }
+.unite h4 { margin: 0; font-size: 10.6pt; color: var(--nuit); }
+.unite .question { font-style: italic; margin: 1.5mm 0 1.5mm; color: #2b3a4e; }
+.chips { display: flex; flex-wrap: wrap; gap: 1.5mm; margin-bottom: 1.5mm; }
+.chip { font-size: 7.4pt; border: 1px solid var(--trait); border-radius: 10px; padding: 0.2mm 2.2mm; color: var(--gris); background: #fff; }
+.chip.fmt-educational { border-color: var(--bleu); color: var(--bleu); font-weight: 600; }
+.chip.fmt-youtube_lesson { border-color: var(--nuit); color: #fff; background: var(--nuit); font-weight: 600; }
+.chip.fmt-short { border-color: var(--orange); color: var(--orange); font-weight: 600; }
+.chip.maitrise { border-color: #2a9d8f; color: #2a9d8f; }
+.chip.role-socle { border-color: var(--nuit); color: var(--nuit); font-weight: 600; }
+.chip.role-specialisation { border-color: #7b5ea7; color: #7b5ea7; }
+.chip.role-approfondissement { border-color: #5a6b7d; color: #5a6b7d; }
+.chip.etat-concue { border-color: #2a9d8f; color: #fff; background: #2a9d8f; font-weight: 600; }
+table.fiche { margin: 0 0 1mm; font-size: 8.3pt; }
+table.fiche th { width: 32mm; color: var(--gris); font-weight: 600; background: none; padding: 0.8mm 2mm 0.8mm 0; }
+table.fiche td { padding: 0.8mm 0; }
+table.fiche tr:last-child th, table.fiche tr:last-child td { border-bottom: 0; }
+table.fiche tbody tr:nth-child(even) td { background: none; }
+table.fiche ul { margin: 0; padding-left: 4mm; }
+table.fiche li { margin: 0; }
+</style>
+</head>
+<body>
+<section class="couverture">
+  <img class="logo" src="{{LOGO}}" alt="ACTU-BASICS">
+  <div class="titre">
+    <h1>Programme éditorial<br>et pédagogique</h1>
+    <p class="sous">Ce que la chaîne enseignera, dans quel ordre, à quel niveau,<br>et comment les vidéos seront choisies et produites</p>
+    <div class="piliers"><span>Statistiques</span><span>Économétrie</span><span>Quotidien et actualité</span></div>
+    <div class="slogan">Éveiller par les chiffres.</div>
+    <div class="slogan-en">Enlightening through numbers.</div>
+  </div>
+  <div class="pied">
+    <strong>Version {{VERSION}}</strong> · {{DATE}}<br>
+    Proposition de Claude (direction technique et production) · Revue : ChatGPT (éditorial) · Validation : JG<br>
+    Document de travail interne, non destiné à la publication
+  </div>
+</section>
+{{CORPS}}
+</body>
+</html>

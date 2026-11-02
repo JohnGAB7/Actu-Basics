@@ -1,0 +1,112 @@
+# Fiche de CONCEPTION d'un épisode ACTU-BASICS (avant tout script).
+# Elle précède la fiche de production (modeles/fiche-pedagogique.yaml), que le moteur lit.
+# Programme de référence : programme/ (PDF dans programme/sortie/ après construction).
+# Rubriques expliquées : programme/sections/06-fiche-type.md
+
+id_programme: ""                # ex. S2.05 : identifiant stable du programme, ne change jamais
+statut: brouillon               # brouillon | revue_claude | revue_chatgpt | valide_jg ; pas de valide_jg sans correction détaillée de chaque exercice chiffré
+
+titres:
+  fr: ""
+  en: ""                        # titre naturel, pas une traduction
+question_centrale:
+  fr: ""
+  en: ""
+
+position:
+  pilier: statistiques          # statistiques | econometrie | quotidien | actualite | boite_a_outils
+  niveau: 1                     # 1 decouverte | 2 lycee | 3 licence | 4 master
+  module: ""                    # ex. S2
+  rang_dans_module: 1
+
+public:
+  prerequis: []                 # identifiants du programme, ex. [S2.04, S2.03]
+  niveau_maths: M0              # M0 à M4
+  rappel_conseille: []          # ex. [M1.01]
+
+objectifs:                      # verbes observables : calculer, distinguer, interpréter, repérer…
+  fr: [""]
+  en: [""]
+
+intuition: ""                   # l'image qui doit rester, avant toute formule
+exemple_fil_rouge: ""
+exemple_reel:                   # facultatif ; obligatoirement sourcé
+  description: ""
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:                     # une entrée par chiffre : affiché, prononcé, tracé dans un graphique, comparaison historique, valeur calculée (section 5.3)
+  - chiffre: ""
+    support: ecran              # ecran | narration | graphique | comparaison
+    nature: source              # source | calcul_derive | parametre_simulation
+    calcul: {entrees: "", formule: "", transformations: ""}   # pour un calcul dérivé : provenance des entrées, formule, transformations
+    definition: ""
+    unite: ""
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""               # provisoire | révisé | définitif ; révisions connues
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: ""
+    comparabilite: ""
+
+affirmations_qualitatives:      # toute affirmation non chiffrée sur l'apprentissage, l'usage ou l'histoire (section 6)
+  - {affirmation: "", statut: hypothese, source: "", verification: ""}   # statut : hypothese | sourcee | testee_pilote
+
+cycle_enquete:                  # les 9 questions de la section 6.2 ; préciser montrée ou supposée
+  question: ""
+  population_et_mesure: ""
+  origine_des_donnees: ""
+  exploration: ""
+  methode_et_raison: ""
+  hypotheses: ""
+  resultat_et_incertitude: ""
+  interpretation_permise_et_interdite: ""
+  reproductibilite: ""
+
+donnees_ou_simulation:
+  type: calcul_pur              # donnees_reelles | donnees_synthetiques | simulation | calcul_pur
+  raison_du_choix: ""
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""     # loi, paramètres, graine, nombre de tirages
+
+hypotheses_et_limites:          # pour une méthode causale : registre des hypothèses
+  - {hypothese: "", intuition: "", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: ""}
+
+reproductibilite: ""            # calcul, code ou paramètres ; script fourni en description ?
+
+deroule:                        # question, intuition, donnees, raisonnement, formalisation,
+  - {etape: question, contenu: ""}   # exercice, correction, application, limites, rappel
+  - {etape: intuition, contenu: ""}
+
+formules:
+  - {formule: "", explication_symboles: "", conditions: ""}
+
+calculs_a_verifier:             # repris tels quels dans le bloc « verifier » de la fiche de production
+  - {expression: "", attendu: 0, libelle: ""}
+
+idees_fausses:
+  - {idee: "", desamorcee_a_l_etape: ""}
+
+exercice:
+  question: ""
+  correction: ""
+  pause_secondes: 5
+
+preuve_apprentissage:           # tâches observables, réussies sans aide
+  tache: ""
+  question_de_transfert: ""     # exemple différent de celui de la vidéo
+  diagnostic_d_erreur: ""       # pourquoi une interprétation séduisante est fausse
+  limite_a_enoncer: ""
+
+duree_estimee_min: [0, 0]       # réestimée ici d'après le script (la durée du catalogue n'est qu'un ordre de grandeur), puis mesurée après synthèse vocale
+format: educational             # short | educational | youtube_lesson
+raison_du_format: ""
+derives_short: []               # SHORT d'accroche tirés de la vidéo
+
+adaptation_en: ""               # ce qui change (exemples, formulations) et ce qui ne change pas (raisonnement, nombres)
+licences: ""                    # données, visuels, musique
+
+controle:
+  test_du_debutant: ""          # le spectateur peut-il réexpliquer et refaire un calcul ?
+  relecture_definitions: ""     # nom du relecteur, date
+  controle_mobile: ""

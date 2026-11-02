@@ -1,0 +1,436 @@
+# Pilier 1 — Statistiques · Niveau 2 « Fondamentaux » (probabilités)
+
+# MODULE S4
+niveau: 2
+titre: Hasard et probabilités
+titre_en: Chance and probability
+pre: S2
+maths: M1
+but: Donner un langage précis au hasard. On commence par l'expérience et la simulation, puis on compte, puis on formalise. Les paradoxes célèbres servent d'appât, mais chacun est rattaché à une règle générale réutilisable.
+
+## S4.01
+titre: Qu'est-ce qu'une probabilité ?
+titre_en: What is a probability, really?
+question: « 70 % de chances de pluie demain » : qu'est-ce que cela veut dire ?
+pre: S1.08
+obj: Distinguer trois lectures d'une probabilité : symétrie (dé équilibré), fréquence à long terme, degré de confiance | Exprimer une probabilité en fraction, décimal et pourcentage
+intuition: Une probabilité mesure ce que l'on peut attendre quand on ne sait pas tout.
+exemple: Prévisions météo : sur tous les jours annoncés à 70 %, il pleut environ 7 fois sur 10 si la prévision est bien calibrée.
+maths: M0.
+erreurs: Croire qu'une prévision à 70 % est « fausse » s'il ne pleut pas.
+exercice: Donner la lecture (symétrie, fréquence, confiance) de quatre phrases.
+duree: 4-6
+format: educational
+forme: lecon
+
+## S4.02
+titre: Simuler le hasard
+titre_en: Simulating chance
+question: Si l'on lance une pièce 10 fois, puis 10 000 fois, que se passe-t-il ?
+pre: S4.01
+obj: Décrire comment la fréquence observée se stabilise quand le nombre d'essais augmente | Utiliser une simulation pour estimer une probabilité
+intuition: Le hasard est imprévisible au coup par coup, mais très régulier en grand nombre.
+exemple: Simulation animée de lancers de pièce et de dé ; longues séries de piles dans une suite vraiment aléatoire.
+maths: M0.
+erreurs: Croire que la fréquence doit « rattraper » un écart (renvoi S4.08).
+exercice: Dans 20 lancers, une série de 4 piles d'affilée est-elle surprenante ? Estimer par simulation.
+duree: 5-7
+format: educational
+forme: simulation
+
+## S4.03
+titre: Compter sans tout écrire : le principe multiplicatif
+titre_en: Counting without listing: the multiplication rule
+question: Combien de codes à 4 chiffres existe-t-il, et combien de façons de ranger 5 livres ?
+pre: S4.01
+obj: Appliquer le principe multiplicatif | Calculer une factorielle et un arrangement | Dire si l'ordre compte dans une situation
+intuition: Un arbre de choix : chaque branche se divise en autant de branches que de choix suivants.
+exemple: Codes de cadenas, menus de restaurant, podiums.
+maths: M1 (puissances, factorielle).
+erreurs: Additionner au lieu de multiplier ; compter deux fois le même cas.
+exercice: Combien de podiums différents avec 8 coureurs ?
+correction: 8 choix pour la première place, 7 pour la deuxième, 6 pour la troisième : 8 × 7 × 6 = 336 podiums.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S4.04
+titre: Combinaisons : choisir sans ordre
+titre_en: Combinations: choosing without order
+question: Combien de grilles possibles au loto, et pourquoi divise-t-on par k! ?
+pre: S4.03
+obj: Calculer un coefficient binomial | Expliquer la division par k! comme suppression des ordres en double | Calculer la probabilité d'une grille gagnante
+intuition: Compter avec l'ordre, puis diviser par le nombre de façons de ranger chaque groupe.
+exemple: Choisir 2 délégués parmi 4 (liste complète), puis 5 numéros parmi 49.
+maths: M1.
+erreurs: Confondre arrangements et combinaisons.
+exercice: Combien de mains de 2 cartes dans un jeu de 32 ?
+correction: Combinaisons de 2 cartes parmi 32 : 32 × 31 / 2 = 496.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S4.05
+titre: Événements : complément, union, intersection
+titre_en: Events: complement, union, intersection
+question: Quelle est la probabilité d'obtenir au moins un 6 en quatre lancers ?
+pre: S4.01
+obj: Représenter des événements par un diagramme de Venn | Utiliser le complément et la formule de l'union | Repérer des événements incompatibles
+intuition: « Au moins un » est presque toujours plus facile à calculer par son contraire : « aucun ».
+exemple: Le problème du chevalier de Méré (au moins un 6 en 4 lancers, au moins un double 6 en 24 lancers), discuté dans la correspondance entre Pascal et Fermat (1654).
+maths: M1.
+erreurs: Additionner des probabilités d'événements qui se recouvrent.
+exercice: Probabilité d'au moins un 6 en 4 lancers : 1 − (5/6)⁴ ≈ 51,8 %.
+correction: Le complément de « au moins un 6 » est « aucun 6 » : (5/6)⁴ ≈ 0,482. Donc 1 − 0,482 ≈ 51,8 %.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S4.06
+titre: Le paradoxe des anniversaires
+titre_en: The birthday problem
+question: Dans un groupe de 23 personnes, deux partagent-elles probablement le même anniversaire ?
+pre: S4.04 | S4.05
+obj: Compter les paires d'un groupe (n(n − 1)/2) | Calculer la probabilité que tous soient différents, puis passer par le complément | Expliquer pourquoi l'intuition se trompe
+intuition: On ne pense qu'à ses propres 22 paires, alors que le groupe en compte 253.
+exemple: Déjà produit sous forme de vidéo de lancement (8 min 01 FR, 7 min 38 EN) ; prévoir une version leçon ou la réutiliser telle quelle.
+maths: M1 (produits, complément).
+erreurs: Calculer 23/365 ; croire que les paires sont indépendantes.
+exercice: À partir de combien de personnes la probabilité dépasse-t-elle 90 % ? (41)
+correction: On cherche le plus petit n tel que 1 − (365/365) × (364/365) × … × ((365 − n + 1)/365) ≥ 0,9 : n = 41. Le calcul passe par le complément : la probabilité que tous les anniversaires soient différents.
+duree: 8-8
+format: educational
+forme: paradoxe
+
+## S4.07
+titre: La probabilité conditionnelle
+titre_en: Conditional probability
+question: Savoir qu'il pleut change-t-il la probabilité d'un bouchon ?
+pre: S4.05 | S3.02
+obj: Calculer P(A | B) dans un tableau croisé | Distinguer P(A | B) et P(B | A)
+intuition: Conditionner, c'est réduire l'univers aux seuls cas où B est vrai.
+exemple: Tableau de fréquences météo × trafic ; « la plupart des accidents ont lieu près de chez soi ».
+maths: M1.
+erreurs: Inverser le conditionnement (le sophisme du procureur).
+exercice: Dans un tableau donné, calculer P(bouchon | pluie) et P(pluie | bouchon).
+duree: 6-8
+format: educational
+forme: lecon
+
+## S4.08
+titre: Indépendance et sophisme du joueur
+titre_en: Independence and the gambler's fallacy
+question: Après cinq « rouge » à la roulette, le noir est-il « dû » ?
+pre: S4.07 | S4.02
+obj: Définir l'indépendance par P(A | B) = P(A) | Expliquer pourquoi une suite passée n'influence pas un tirage indépendant
+intuition: La roulette n'a pas de mémoire ; c'est notre cerveau qui en a une.
+exemple: Une suite de 5 rouges simulée des milliers de fois : le tirage suivant est rouge environ une fois sur deux (à la roulette européenne, 18 chances sur 37).
+maths: M1.
+erreurs: Confondre indépendance et incompatibilité.
+exercice: Deux événements incompatibles de probabilité non nulle peuvent-ils être indépendants ?
+duree: 5-7
+format: educational
+forme: paradoxe
+
+## S4.09
+titre: Arbres et probabilités totales
+titre_en: Probability trees and the law of total probability
+question: Quelle part des pièces d'une usine est défectueuse si trois machines en produisent ?
+pre: S4.07
+obj: Construire un arbre pondéré | Appliquer la formule des probabilités totales
+intuition: On découpe le problème selon les chemins possibles, puis on additionne les chemins.
+exemple: Trois machines, trois taux de défaut.
+maths: M1.
+erreurs: Additionner les taux de défaut sans les pondérer.
+exercice: Calculer le taux de défaut global de l'usine.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S4.10
+titre: Bayes et les faux positifs
+titre_en: Bayes and false positives
+question: Un test fiable à 99 % est positif. Êtes-vous malade à 99 % ?
+pre: S4.09
+obj: Appliquer le théorème de Bayes avec des fréquences naturelles (sur 10 000 personnes) | Expliquer le rôle de la prévalence | Distinguer sensibilité, spécificité et valeur prédictive positive
+intuition: Quand une maladie est rare, la plupart des positifs viennent de la foule immense des personnes saines.
+exemple: Dépistage d'une maladie touchant 1 personne sur 1 000.
+maths: M1.
+erreurs: Confondre P(positif | malade) et P(malade | positif).
+exercice: Prévalence 1 %, sensibilité 90 %, spécificité 95 % : probabilité d'être malade si positif ? (≈ 15,4 %)
+correction: Sur 10 000 personnes : 100 malades, dont 90 positifs ; 9 900 non-malades, dont 5 % = 495 positifs. Probabilité d'être malade si positif : 90 / (90 + 495) ≈ 15,4 %.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S4.11
+titre: Monty Hall
+titre_en: The Monty Hall problem
+question: Faut-il changer de porte ?
+pre: S4.10
+obj: Résoudre le problème par énumération et par simulation | Identifier l'information apportée par l'animateur
+intuition: L'animateur sait où est la voiture : son choix n'est pas du hasard, c'est une information.
+exemple: Version à 100 portes pour rendre l'intuition évidente.
+maths: M1.
+erreurs: « Il reste deux portes, donc 50/50 ».
+exercice: Avec 4 portes et une porte ouverte par l'animateur, quelle est la probabilité de gagner en changeant ?
+correction: On choisit une porte (probabilité 1/4 que ce soit la bonne). L'animateur ouvre une porte perdante ; il en reste deux autres. En changeant pour l'une d'elles au hasard : (3/4) × (1/2) = 3/8 = 37,5 %, contre 25 % en gardant sa porte.
+duree: 6-8
+format: educational
+forme: paradoxe
+
+# MODULE S5
+niveau: 2
+titre: Variables aléatoires et lois usuelles
+titre_en: Random variables and common distributions
+pre: S4
+maths: M1 → M2
+but: Passer des événements aux quantités aléatoires. Chaque loi est présentée par l'histoire qui la produit (essais répétés, attente, événements rares, erreurs additionnées) avant sa formule. Le module se termine par les deux grands théorèmes qui rendent l'inférence possible.
+
+## S5.01
+titre: Variable aléatoire et loi de probabilité
+titre_en: Random variables and distributions
+question: Comment décrire le gain d'un jeu à gratter avant de l'acheter ?
+pre: S4.05
+obj: Définir une variable aléatoire comme un nombre qui dépend du hasard | Construire la loi d'une variable discrète et vérifier que les probabilités somment à 1
+intuition: Une loi, c'est la liste de ce qui peut arriver et de la fréquence à laquelle cela arrive.
+exemple: Somme de deux dés : pourquoi 7 est le plus fréquent.
+maths: M1.
+erreurs: Confondre la variable et sa valeur observée.
+exercice: Donner la loi de la somme de deux dés.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S5.02
+titre: L'espérance : la moyenne du hasard
+titre_en: Expected value
+question: Un ticket à 2 € fait gagner en moyenne combien ?
+pre: S5.01 | S2.04
+obj: Calculer une espérance | Interpréter l'espérance comme moyenne à long terme | Juger si un jeu est équitable
+intuition: L'espérance est la moyenne que l'on obtiendrait en jouant un très grand nombre de fois.
+exemple: Jeux de loterie (barème réel à vérifier à la préparation) ; prime d'assurance.
+maths: M1.
+erreurs: Croire que l'on obtiendra l'espérance à chaque partie.
+exercice: Un jeu : 1 chance sur 10 de gagner 15 €, mise 2 €. Espérance du gain net ? (−0,50 €)
+correction: Espérance du gain : 0,1 × 15 = 1,50 €. Moins la mise de 2 € : −0,50 € par partie en moyenne.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S5.03
+titre: Variance d'une variable aléatoire
+titre_en: Variance of a random variable
+question: Deux placements ont le même rendement espéré. Sont-ils aussi risqués ?
+pre: S5.02 | S2.08
+obj: Calculer la variance d'une loi discrète | Relier variance et notion de risque
+intuition: Même moyenne, mais l'un oscille beaucoup plus que l'autre.
+exemple: Placement sûr contre pari risqué.
+maths: M1.
+erreurs: Assimiler risque et probabilité de perte uniquement.
+exercice: Calculer la variance du gain d'un pari simple.
+duree: 5-6
+format: educational
+forme: lecon
+
+## S5.04
+titre: Bernoulli et la loi binomiale
+titre_en: Bernoulli trials and the binomial distribution
+question: Sur 10 passagers ayant réservé, combien vont réellement se présenter ?
+pre: S5.03 | S4.04
+obj: Reconnaître une situation binomiale (n essais indépendants, même probabilité) | Calculer P(X = k) en expliquant le rôle du coefficient binomial | Donner l'espérance np et la variance np(1 − p)
+intuition: Compter les succès dans une suite d'essais identiques ; le coefficient binomial compte les places possibles des succès.
+exemple: Surréservation des compagnies aériennes.
+maths: M1.
+erreurs: Utiliser la binomiale quand les essais ne sont pas indépendants.
+exercice: 10 réservations, chaque passager vient avec probabilité 0,9 : P(tous viennent) ? (≈ 34,9 %)
+correction: Les dix venues sont supposées indépendantes : 0,9¹⁰ ≈ 0,349, soit environ 34,9 %.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S5.05
+titre: La loi géométrique : combien d'essais avant le premier succès ?
+titre_en: The geometric distribution
+question: Combien de paquets de céréales faut-il acheter pour obtenir la figurine ?
+pre: S5.04
+obj: Calculer P(X = k) pour une loi géométrique | Interpréter l'espérance 1/p
+intuition: Pour un succès de probabilité 1/6, il faut en moyenne 6 essais.
+exemple: Collection d'images (introduction au problème du collectionneur).
+maths: M1 (suites géométriques).
+erreurs: Croire qu'après beaucoup d'échecs le succès devient plus probable.
+exercice: Combien de lancers en moyenne pour obtenir un 6 ?
+correction: Loi géométrique de paramètre 1/6 : espérance 1 / (1/6) = 6 lancers.
+duree: 5-6
+format: educational
+forme: lecon
+
+## S5.06
+titre: La loi de Poisson : compter les événements rares
+titre_en: The Poisson distribution
+question: Combien d'appels un standard reçoit-il en une minute ?
+pre: S5.04
+obj: Reconnaître une situation de Poisson (événements rares et indépendants à taux constant) | Calculer une probabilité de Poisson | Interpréter λ comme moyenne et variance
+intuition: Une binomiale avec énormément d'essais et une probabilité minuscule.
+exemple: Les morts par ruade de cheval dans 14 corps de l'armée prussienne de 1875 à 1894 (L. von Bortkiewicz, Das Gesetz der kleinen Zahlen, 1898) ; appels à un standard.
+maths: M1 (exponentielle).
+erreurs: Appliquer Poisson à des événements groupés (épidémies, embouteillages).
+exercice: En moyenne 2 appels par minute : probabilité d'aucun appel ? (≈ 13,5 %)
+correction: Loi de Poisson de moyenne 2 : P(0) = e^(−2) ≈ 13,5 %.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S5.07
+titre: Variables continues et densité
+titre_en: Continuous variables and density
+question: Quelle est la probabilité qu'une personne mesure exactement 1,75 m ?
+pre: S5.01 | S2.02 | M2.02
+obj: Expliquer qu'une probabilité continue est une aire sous une densité | Calculer une probabilité simple avec une densité uniforme | Lire une fonction de répartition
+intuition: L'histogramme dont on rend les classes infiniment fines devient une courbe.
+exemple: Heure d'arrivée d'un bus entre 8 h et 8 h 10.
+maths: M2 (aire sous une courbe, idée d'intégrale).
+maths_comprendre: M1
+maths_demontrer: M2
+erreurs: Lire la hauteur de la densité comme une probabilité.
+exercice: Bus uniforme entre 0 et 10 minutes : P(attente > 7 min) ?
+correction: Loi uniforme sur [0 ; 10] : P(attente > 7) = (10 − 7) / 10 = 0,3.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S5.08
+titre: Loi exponentielle et absence de mémoire
+titre_en: The exponential distribution and memorylessness
+question: Une ampoule qui a déjà duré 1 000 heures est-elle « usée » ?
+pre: S5.07 | S5.06
+obj: Relier loi exponentielle et loi de Poisson | Expliquer la propriété d'absence de mémoire et ses limites réelles
+intuition: Si les pannes arrivent au hasard à taux constant, le passé ne dit rien de l'avenir.
+exemple: Désintégration radioactive (demi-vie) ; temps entre deux appels.
+maths: M2.
+erreurs: Appliquer l'exponentielle à des objets qui vieillissent.
+exercice: Demi-vie de 10 ans : quelle part reste après 30 ans ? (1/8)
+correction: 30 ans = 3 demi-vies : (1/2)³ = 1/8 = 12,5 %.
+duree: 6-7
+format: educational
+forme: lecon
+
+## S5.09
+titre: La loi normale
+titre_en: The normal distribution
+question: Pourquoi la courbe en cloche apparaît-elle partout, et où n'apparaît-elle pas ?
+pre: S5.07 | S2.10
+obj: Décrire la loi normale par sa moyenne et son écart-type | Utiliser la règle 68-95-99,7 | Calculer une probabilité avec le score z
+intuition: Quand beaucoup de petites causes indépendantes s'additionnent, on obtient une cloche.
+exemple: Planche de Galton ; tailles d'adultes d'un même sexe ; contre-exemple des revenus.
+maths: M2.
+maths_comprendre: M1
+maths_demontrer: M2
+erreurs: Supposer que tout est normal ; ignorer les queues épaisses.
+exercice: Moyenne 170 cm, écart-type 7 cm : quelle part dépasse 184 cm ? (≈ 2,3 %)
+correction: 184 cm = 170 + 2 × 7 : deux écarts-types au-dessus de la moyenne. Pour une loi normale, environ 2,3 % des valeurs sont au-delà.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S5.10
+titre: Couples de variables, covariance et indépendance
+titre_en: Joint distributions and covariance
+question: La taille et le poids sont-ils indépendants ? Comment le mesurer en probabilités ?
+pre: S5.03 | S3.05
+obj: Lire une loi conjointe dans un tableau | Calculer une covariance | Expliquer qu'une covariance nulle n'implique pas l'indépendance
+intuition: La covariance est la version probabiliste de la corrélation vue en S3.05.
+exemple: Tableau conjoint de deux variables simples ; X et X² (covariance nulle, dépendance totale).
+maths: M1-M2.
+erreurs: Covariance nulle donc indépendance.
+exercice: Calculer la covariance dans un tableau 2 × 2.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S5.11
+titre: Additionner des variables aléatoires
+titre_en: Adding random variables
+question: Pourquoi diversifier un portefeuille réduit-il le risque ?
+pre: S5.10
+obj: Calculer l'espérance et la variance d'une somme | Expliquer le rôle de la covariance dans la variance d'une somme
+intuition: Les hasards indépendants se compensent en partie ; leurs écarts ne s'additionnent pas, leurs variances oui.
+exemple: Mutualisation en assurance ; portefeuille de deux actifs.
+maths: M1-M2.
+erreurs: Additionner des écarts-types.
+exercice: Deux variables indépendantes d'écart-type 3 et 4 : écart-type de la somme ? (5)
+correction: Pour des variables indépendantes, les variances s'additionnent : 3² + 4² = 25, écart-type √25 = 5, et non 3 + 4 = 7.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S5.12
+titre: La loi des grands nombres
+titre_en: The law of large numbers
+question: Pourquoi un casino ne perd-il jamais sur le long terme ?
+pre: S5.11 | S4.02
+obj: Énoncer la loi des grands nombres avec des mots puis en symboles | Montrer que l'écart-type de la moyenne décroît comme 1/√n
+intuition: La moyenne de beaucoup de tirages se rapproche de l'espérance, mais lentement.
+exemple: Gains d'un casino sur un an ; mutualisation des risques en assurance.
+maths: M2 (racine, limite en intuition).
+maths_comprendre: M1
+maths_demontrer: M4
+erreurs: Croire que la loi des grands nombres corrige les écarts passés.
+exercice: Combien de tirages faut-il pour diviser l'écart-type de la moyenne par 10 ? (100 fois plus)
+correction: L'écart-type de la moyenne vaut σ/√n. Pour le diviser par 10, il faut multiplier √n par 10, donc n par 100.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S5.13
+titre: Le théorème central limite
+titre_en: The central limit theorem
+question: Pourquoi la moyenne de dés très peu « normaux » finit-elle par dessiner une cloche ?
+pre: S5.12 | S5.09
+obj: Énoncer le théorème central limite dans sa version classique et ses conditions (observations indépendantes, de même loi, de variance finie) | Le constater par simulation sur des lois asymétriques, en voyant que la convergence est plus lente quand l'asymétrie est forte | Expliquer pourquoi il est la clé de l'inférence
+intuition: Quand on additionne beaucoup de hasards indépendants dont aucun ne domine, la somme, une fois centrée et mise à l'échelle, ressemble de plus en plus à une cloche. Ce sont les moyennes qui deviennent approximativement normales, pas les observations.
+exemple: Simulation : moyennes de 1, 2, 5, 30 dés ; moyennes de temps d'attente exponentiels.
+maths: M2.
+maths_comprendre: M1
+maths_demontrer: M4
+erreurs: Croire que ce sont les données qui deviennent normales (c'est la moyenne) ; oublier l'indépendance ou la variance finie (contre-exemple : la loi de Cauchy, dont la moyenne ne se stabilise jamais) ; croire que n = 30 suffit toujours.
+exercice: Avec n = 100, l'écart-type de la moyenne est-il 10 fois plus petit que celui d'une observation ?
+correction: Oui : l'écart-type de la moyenne vaut σ/√100 = σ/10. Cela vaut pour des observations indépendantes de même variance, quelle que soit leur loi.
+duree: 8-10
+format: educational
+forme: simulation
+
+## S5.14
+titre: D'autres lois continues : uniforme, log-normale, Pareto
+titre_en: More continuous distributions: uniform, log-normal, Pareto
+question: Pourquoi les revenus ou la taille des villes ne suivent-ils pas une courbe en cloche ?
+pre: S5.09 | M1.04
+obj: Reconnaître une loi uniforme, log-normale ou de Pareto à sa forme | Expliquer qu'un produit de nombreux facteurs donne une loi log-normale | Calculer la médiane et la moyenne d'une loi log-normale | Distinguer queue fine et queue épaisse
+intuition: Additionner des hasards donne une cloche ; les multiplier donne une loi penchée, avec quelques valeurs immenses.
+exemple: Distribution des revenus ; taille des villes (loi de Zipf, à sourcer et dater).
+maths: M1.
+maths_demontrer: M2
+erreurs: Supposer la normalité pour toute variable continue ; résumer une loi de Pareto par sa moyenne.
+exercice: Le logarithme d'un revenu suit une loi normale de moyenne 10 et d'écart-type 1. Quelle est la médiane du revenu, et quelle est sa moyenne ?
+correction: La médiane est conservée par l'exponentielle : e¹⁰ ≈ 22 026. La moyenne vaut e^(μ + σ²/2) = e^10,5 ≈ 36 316. La moyenne dépasse nettement la médiane, comme pour les vrais revenus.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S5.15
+titre: L'espérance conditionnelle
+titre_en: Conditional expectation
+question: Que vaut le hasard en moyenne quand on sait déjà quelque chose ?
+pre: S5.10 | S4.07
+obj: Calculer une espérance conditionnelle sur un exemple discret | Appliquer la formule de l'espérance totale | Expliquer pourquoi la régression estime une espérance conditionnelle
+intuition: On fait la moyenne seulement sur les cas compatibles avec ce que l'on sait.
+exemple: Lancer d'un dé quand on sait que le résultat est pair ; salaire moyen selon le diplôme.
+maths: M1.
+maths_demontrer: M2
+erreurs: Confondre E[X | Y] et E[Y | X] ; croire qu'une espérance conditionnelle est un nombre fixe alors qu'elle dépend de ce que l'on conditionne.
+exercice: On lance un dé équilibré et l'on sait que le résultat est pair. Quelle est l'espérance du résultat ?
+correction: Les cas possibles sont 2, 4 et 6, également probables : (2 + 4 + 6) / 3 = 4.
+duree: 7-9
+format: educational
+forme: lecon
+

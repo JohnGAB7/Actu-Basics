@@ -1,0 +1,173 @@
+# 9. Bibliographie et ressources {#bibliographie}
+
+Ces références servent à **concevoir et vérifier** les vidéos. Ce ne sont pas des sources de chiffres d'actualité, qui suivent la hiérarchie de la constitution éditoriale (section 3). Elles sont classées en deux niveaux : **accessibles aux débutants** et **références universitaires**. La colonne « Accès » distingue les ressources **ouvertes** (gratuites en ligne), les **livres** payants et les **cours** en ligne.
+
+<div class="encadre" markdown="1">
+**État de la vérification (2 novembre 2026).** Les pages marquées ✔ ont été consultées à cette date : titre, auteurs, édition et accès libre y ont été relevés. Les références sans ✔ sont des livres imprimés classiques, cités de mémoire : leur édition est à confirmer avant la version finale. Aucune URL n'a été inventée : quand une page n'a pas pu être vérifiée, aucune URL n'est donnée.
+</div>
+
+## 9.1 Cadres pédagogiques
+
+| Référence | Accès | Vérif. | Usage dans le programme |
+|---|---|---|---|
+| American Statistical Association, *Guidelines for Assessment and Instruction in Statistics (GAISE) College Report*, **révision 2025 publiée par étapes** (recommandations publiées ; section « Assessment » en préparation au 2/11/2026) · amstat.quarto.pub/college-gaise. Versions antérieures : 2016 et 2005 · asacollegegaise.org | Ouvert | ✔ | Démarche d'investigation, dix recommandations (section 2.7) |
+| MIT OpenCourseWare, *18.05 Introduction to Probability and Statistics* (printemps 2022, J. Orloff et J. French Kamrin), licence CC BY-NC-SA 4.0 · ocw.mit.edu | Cours ouvert | ✔ | Articulation probabilités, inférence fréquentiste et bayésienne, simulation, bootstrap, régression (S4 à S12) |
+| K. Imai, *Causal Inference* (Harvard, STAT 286 / GOV 2003) : résultats potentiels, graphes causaux, analyse de sensibilité, appariement, IV, RD, DiD, contrôle synthétique · imai.fas.harvard.edu/teaching/cause | Supports de cours ouverts | ✔ | E1.04, E1.05, E4.05, E7 |
+| EPFL, *Introduction to Econometrics* (MGT-581, M. Aklin) · edu.epfl.ch | Fiche de cours publique, cours réservé aux inscrits | ✔ | Repère de progression pour le pilier 2 uniquement |
+| OpenEconometrics, « The econometrics hub » · openeconometrics.com | Ouvert (logiciel Apache 2.0, version alpha) | ✔ | **Usage prudent** : le site ne nomme ni auteur ni institution. Utile pour des exemples de code, pas comme référence de fond. |
+
+## 9.2 Statistiques et probabilités : accessibles aux débutants
+
+| Référence | Langue | Accès | Vérif. | Modules |
+|---|---|---|---|---|
+| OpenStax, *Introductory Statistics 2e* · openstax.org | EN | Ouvert | ✔ | S1 à S8 |
+| D. Diez, M. Çetinkaya-Rundel, C. Barr, *OpenIntro Statistics* · openintro.org/book/os | EN | Ouvert (PDF à prix libre) | ✔ | S1 à S9 |
+| Brown University, *Seeing Theory* (D. Kunin et coll.), visualisations interactives · seeing-theory.brown.edu | EN | Ouvert (site archivé) | ✔ | S4, S5, S7 |
+| J. Larmarange et coll., *analyse-R* · larmarange.github.io/analyse-R ; son successeur *guide-R* · larmarange.github.io/guide-R | FR | Ouvert (CC BY-NC-SA) | ✔ | S11.06, travaux pratiques en R |
+| D. Spiegelhalter, *The Art of Statistics* (2019) | EN | Livre | | Niveau 1, pilier 3 |
+| T. Harford, *How to Make the World Add Up* (2020), paru aux États-Unis sous le titre *The Data Detective* | EN | Livre | | S1, pilier 3 |
+| C. Wheelan, *Naked Statistics* (2013) | EN | Livre | | Niveaux 1 et 2 |
+| H. Rosling, O. Rosling, A. Rosling Rönnlund, *Factfulness* (2018) | EN | Livre | | Pilier 3, ordres de grandeur |
+| D. Huff, *How to Lie with Statistics* (1954) | EN | Livre | | S1.09 (classique, à utiliser avec recul) |
+| Statistique Canada, *Les statistiques : le pouvoir des données !* | FR et EN | Ouvert | | Niveau 1 (URL à confirmer) |
+| Khan Academy, statistiques et probabilités | FR et EN | Ouvert | | Niveaux 1 et 2, boîte à outils |
+| Insee, rubrique « Définitions et méthodes » | FR | Ouvert | | Définitions officielles (pilier 3) |
+
+## 9.3 Statistiques et probabilités : références universitaires
+
+| Référence | Accès | Vérif. | Modules |
+|---|---|---|---|
+| G. James, D. Witten, T. Hastie, R. Tibshirani, *An Introduction to Statistical Learning*, 2e éd. avec R (2021) ; édition Python avec J. Taylor (2023) · statlearning.com | Ouvert (PDF) | ✔ | S17 |
+| T. Hastie, R. Tibshirani, J. Friedman, *The Elements of Statistical Learning*, 2e éd. · hastie.su.domains/ElemStatLearn | À confirmer | ✔ (titre seul) | S17 |
+| B. Efron, T. Hastie, *Computer Age Statistical Inference* (2016) · hastie.su.domains/CASI | PDF à usage personnel | ✔ | S11, S12, S17 |
+| A. Gelman, J. Hill, A. Vehtari, *Regression and Other Stories* (Cambridge University Press, 2020) · avehtari.github.io/ROS-Examples | PDF à usage personnel | ✔ | S9, S10, S17.01 |
+| A. Gelman, J. Carlin, H. Stern, D. Dunson, A. Vehtari, D. Rubin, *Bayesian Data Analysis*, 3e éd. · sites.stat.columbia.edu/gelman/book | PDF à usage non commercial | ✔ | S12 |
+| R. Hyndman, G. Athanasopoulos, *Forecasting: Principles and Practice*, 3e éd. · otexts.com/fpp3 | Ouvert | ✔ | S14 |
+| J. Blitzstein, J. Hwang, *Introduction to Probability*, 2e éd. (2019) | Livre ; version libre annoncée, lien non vérifié | | S4, S5, S16 |
+| D. Freedman, R. Pisani, R. Purves, *Statistics*, 4e éd. (2007) | Livre | | Niveaux 1 à 3 |
+| J. Rice, *Mathematical Statistics and Data Analysis*, 3e éd. (2007) | Livre | | S6 à S9 |
+| G. Casella, R. Berger, *Statistical Inference*, 2e éd. (2002) | Livre | | S7, S8, S18 |
+| L. Wasserman, *All of Statistics* (2004) | Livre | | Niveau 3, S17, S18 |
+| G. Saporta, *Probabilités, analyse des données et statistique*, 3e éd. (2011) | Livre | | Tout le pilier 1, en français |
+| S. Lohr, *Sampling: Design and Analysis* | Livre | | S6.04 |
+| D. Montgomery, *Design and Analysis of Experiments* | Livre | | S9.10 |
+| A. Agresti, *Foundations of Linear and Generalized Linear Models* (2015) | Livre | | S10 |
+| P. McCullagh, J. Nelder, *Generalized Linear Models*, 2e éd. (1989) | Livre | | S10 |
+| B. Efron, R. Tibshirani, *An Introduction to the Bootstrap* (1993) | Livre | | S11 |
+| R. McElreath, *Statistical Rethinking*, 2e éd. (2020) | Livre | | S12 |
+| F. Husson, S. Lê, J. Pagès, *Analyse de données avec R* | Livre | | S13, en français |
+| I. Jolliffe, *Principal Component Analysis*, 2e éd. (2002) | Livre | | S13.02 |
+| D. Kleinbaum, M. Klein, *Survival Analysis: A Self-Learning Text* | Livre | | S15 |
+| S. Ross, *Introduction to Probability Models* | Livre | | S16 |
+| R. Little, D. Rubin, *Statistical Analysis with Missing Data*, 3e éd. (2019) | Livre | | S18.03 |
+
+## 9.4 Économétrie et inférence causale
+
+| Référence | Niveau | Accès | Vérif. | Modules |
+|---|---|---|---|---|
+| N. Huntington-Klein, *The Effect: An Introduction to Research Design and Causality* (Chapman & Hall) · theeffectbook.net | Accessible | Ouvert en ligne | ✔ | E1.04, E4, E7 |
+| S. Cunningham, *Causal Inference: The Mixtape* ; la version en ligne est une 2e édition en cours (« The Remix ») · mixtape.scunning.com | Accessible à intermédiaire | Lisible en ligne | ✔ | E4 à E7 |
+| M. Hernán, J. Robins, *Causal Inference: What If* (Chapman & Hall/CRC, 2020) · miguelhernan.org/whatifbook | Master | Ouvert (PDF) | ✔ | E1.04, E3.04 |
+| J. Angrist, J.-S. Pischke, *Mastering 'Metrics* (2014) | Accessible | Livre | | E1, E5, E7 |
+| J. Pearl, D. Mackenzie, *The Book of Why* (2018) | Vulgarisation | Livre | | E3.04, S3.06 |
+| J. Wooldridge, *Introductory Econometrics: A Modern Approach* | Licence | Livre | | E2 à E10 |
+| J. Stock, M. Watson, *Introduction to Econometrics* | Licence | Livre | | E2 à E8 |
+| J. Angrist, J.-S. Pischke, *Mostly Harmless Econometrics* (2009) | Master | Livre | | E4 à E7 |
+| J. Wooldridge, *Econometric Analysis of Cross Section and Panel Data*, 2e éd. (2010) | Master | Livre | | E6, E10 |
+| G. Imbens, D. Rubin, *Causal Inference for Statistics, Social, and Biomedical Sciences* (2015) | Master | Livre | | E1.04, E7 |
+| J. Hamilton, *Time Series Analysis* (1994) | Master | Livre | | E8, E9.02 |
+| C. Francq, J.-M. Zakoïan, *GARCH Models: Structure, Statistical Inference and Financial Applications* (Wiley, 1re éd. 2010 ; nouvelle édition Wiley 2019, ISBN 9781119313571) | Master | Livre | | E9 |
+| R. Tsay, *Analysis of Financial Time Series*, 3e éd. (Wiley, 2010 ; édition non revérifiée) | Master | Livre | | E9 |
+| ENSAE, cours « GARCH and stochastic volatility models » (C. Francq) · ensae.fr/courses/176-garch-and-stochastic-volatility-models | Master | Plan de cours en ligne | ✔ | E9, dont E9.06 et E9.07 |
+| Université de Bologne, « Econometrics of Financial Markets » (Laurea magistrale, 2026-2027) · unibo.it, insegnamento 521364 | Master | Plan de cours en ligne | ✔ | E9 (test ARCH, ARCH, GARCH, VaR) |
+| W. Greene, *Econometric Analysis* | Master, référence | Livre | | Tout le pilier 2 |
+
+## 9.5 Sources des exemples historiques et des études citées
+
+Chaque exemple historique du syllabus renvoie maintenant à une source primaire ou universitaire. Avant l'écriture du script, l'éditorial relit la source et vérifie que la formulation de la vidéo reste fidèle (beaucoup de ces histoires circulent sous une forme simplifiée).
+
+| Vidéo | Exemple | Source |
+|---|---|---|
+| S1.05 | Sondage du *Literary Digest*, 1936 | P. Squire, « Why the 1936 Literary Digest Poll Failed », *Public Opinion Quarterly*, 1988 |
+| S3.03 | Admissions à Berkeley ; calculs rénaux | P. Bickel, E. Hammel, J. O'Connell, *Science*, 1975 ; C. Charig et coll., *British Medical Journal*, 1986 |
+| S3.05 | Quartet d'Anscombe | F. Anscombe, *The American Statistician*, 1973 |
+| S3.07 | Régression vers la moyenne | F. Galton, *Journal of the Anthropological Institute*, 1886 |
+| S4.05 | Problème du chevalier de Méré | Correspondance Pascal-Fermat, 1654 |
+| S5.06 | Ruades de cheval dans l'armée prussienne | L. von Bortkiewicz, *Das Gesetz der kleinen Zahlen*, 1898 |
+| S6.06 | « Student » et Guinness | W. S. Gosset, « The Probable Error of a Mean », *Biometrika*, 1908 |
+| S9.09 | Essais de Rothamsted | R. A. Fisher, *Statistical Methods for Research Workers*, 1925 |
+| S11.06 | Erreur de tableur Reinhart-Rogoff | T. Herndon, M. Ash, R. Pollin, *Cambridge Journal of Economics*, 2014 |
+| S12.05 | Les huit écoles | D. Rubin, *Journal of Educational Statistics*, 1981 |
+| E4.02 | Marché aux poissons de Fulton | K. Graddy, *Journal of Economic Perspectives*, 2006 |
+| E5.01 | Trimestre de naissance et scolarité | J. Angrist, A. Krueger, *Quarterly Journal of Economics*, 1991 ; J. Bound, D. Jaeger, R. Baker, *JASA*, 1995 |
+| E7.03 | Salaire minimum au New Jersey | D. Card, A. Krueger, *American Economic Review*, 1994 |
+| E7.05 | Règle de Maïmonide | J. Angrist, V. Lavy, *Quarterly Journal of Economics*, 1999 |
+| E4.05 | Sensibilité à un facteur caché | J. Cornfield et coll., *Journal of the National Cancer Institute*, 1959 ; T. VanderWeele, P. Ding, *Annals of Internal Medicine*, 2017 |
+| E7.06 | Contrôle synthétique | A. Abadie, A. Diamond, J. Hainmueller, *JASA*, 2010 ; *American Journal of Political Science*, 2015 |
+| E7.07 | Appariement, programme de formation | R. LaLonde, *American Economic Review*, 1986 |
+| E8.02 | Régressions fallacieuses | C. Granger, P. Newbold, *Journal of Econometrics*, 1974 |
+| Q2.04 | Avions de Wald | M. Mangel, F. Samaniego, *JASA*, 1984 |
+| Q3.02 | Paradoxe de l'amitié | S. Feld, *American Journal of Sociology*, 1991 |
+| Q3.05 | Main chaude | T. Gilovich, R. Vallone, A. Tversky, *Cognitive Psychology*, 1985 ; J. Miller, A. Sanjurjo, *Econometrica*, 2018 |
+| Q6.01 | Penaltys | P.-A. Chiappori, S. Levitt, T. Groseclose, *AER*, 2002 ; I. Palacios-Huerta, *Review of Economic Studies*, 2003 |
+
+
+Articles fondateurs et articles cités dans le module E9 et dans les vidéos ajoutées en version 1.5 (métadonnées vérifiées par leur DOI le 2/11/2026, sauf mention contraire) :
+
+| Vidéo | Référence |
+|---|---|
+| E9.02 | R. Engle, « Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation », *Econometrica*, 50(4), 1982, p. 987 et suiv. · doi.org/10.2307/1912773 |
+| E9.02 | T. Bollerslev, « Generalized Autoregressive Conditional Heteroskedasticity », *Journal of Econometrics*, 31(3), 1986, p. 307-327 · doi.org/10.1016/0304-4076(86)90063-1 |
+| E9.02 | T. Bollerslev, « The story of GARCH: A personal odyssey », *Journal of Econometrics*, 234, supplément, 2023, p. 96-100 · doi.org/10.1016/j.jeconom.2023.01.015 |
+| E9.04 | L. Glosten, R. Jagannathan, D. Runkle, *Journal of Finance*, 48(5), 1993, p. 1779-1801 · doi.org/10.1111/j.1540-6261.1993.tb05128.x |
+| E9.04 | D. Nelson, « Conditional Heteroskedasticity in Asset Returns: A New Approach », *Econometrica*, 59(2), 1991, p. 347 et suiv. · doi.org/10.2307/2938260 |
+| E9.05 | P. Kupiec, « Techniques for Verifying the Accuracy of Risk Measurement Models », *Journal of Derivatives*, 3(2), 1995, p. 73-84 · doi.org/10.3905/jod.1995.407942 |
+| E9.01 | R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », *Quantitative Finance*, 1(2), 2001, p. 223-236 · doi.org/10.1080/713665670 |
+| E9.03 | A. Patton, « Volatility forecast comparison using imperfect volatility proxies », *Journal of Econometrics*, 160(1), 2011, p. 246-256 · doi.org/10.1016/j.jeconom.2010.03.034 |
+| E9.06 | J. Hamilton, « A New Approach to the Economic Analysis of Nonstationary Time Series and the Business Cycle », *Econometrica*, 57(2), 1989, p. 357 et suiv. · doi.org/10.2307/1912559 |
+| E9.07 | E. Jacquier, N. Polson, P. Rossi, « Bayesian Analysis of Stochastic Volatility Models », *Journal of Business & Economic Statistics*, 12(4), 1994, p. 371-389 · doi.org/10.1080/07350015.1994.10524553 |
+| E9.08 | R. Engle, « Dynamic Conditional Correlation », *Journal of Business & Economic Statistics*, 20(3), 2002, p. 339-350 · doi.org/10.1198/073500102288618487 |
+| E9.05 | P. Christoffersen, « Evaluating Interval Forecasts », *International Economic Review*, 39(4), 1998, p. 841 et suiv. · doi.org/10.2307/2527341 |
+| E9.08 | T. Bollerslev, « Modelling the Coherence in Short-Run Nominal Exchange Rates: A Multivariate Generalized ARCH Model » (modèle CCC), *Review of Economics and Statistics*, 72(3), 1990, p. 498 et suiv. · doi.org/10.2307/2109358 |
+| E9.10 | R. Baillie, T. Bollerslev, H. O. Mikkelsen, « Fractionally integrated generalized autoregressive conditional heteroskedasticity », *Journal of Econometrics*, 74(1), 1996, p. 3-30 · doi.org/10.1016/S0304-4076(95)01749-6 |
+| E5.05 | L. P. Hansen, « Large Sample Properties of Generalized Method of Moments Estimators », *Econometrica*, 50(4), 1982, p. 1029 et suiv. · doi.org/10.2307/1912775 |
+| E8.06 | Ò. Jordà, « Estimation and Inference of Impulse Responses by Local Projections », *American Economic Review*, 95(1), 2005, p. 161-182 · doi.org/10.1257/0002828053828518 |
+| E7.08 | V. Chernozhukov et coll., « Double/debiased machine learning for treatment and structural parameters », *Econometrics Journal*, 21(1), 2018, p. C1-C68 · doi.org/10.1111/ectj.12097 ; S. Wager, S. Athey, *JASA*, 113(523), 2018, p. 1228-1242 · doi.org/10.1080/01621459.2017.1319839 |
+| S9.12 | R. Koenker, G. Bassett, « Regression Quantiles », *Econometrica*, 46(1), 1978, p. 33 et suiv. · doi.org/10.2307/1913643 |
+| E4.06 | C. Manski, *Partial Identification of Probability Distributions*, Springer Series in Statistics, 2003 · doi.org/10.1007/b97478 |
+| E5.03 | D. Staiger, J. Stock, « Instrumental Variables Regression with Weak Instruments », *Econometrica*, 65(3), 1997, p. 557 et suiv. · doi.org/10.2307/2171753 |
+| E5.03 | J. Stock, M. Yogo, « Testing for Weak Instruments in Linear IV Regression », dans *Identification and Inference for Econometric Models*, Cambridge University Press, 2005, p. 80-108 · doi.org/10.1017/CBO9780511614491.006 |
+| E5.03 | D. Lee, J. McCrary, M. Moreira, J. Porter, « Valid t-ratio Inference for IV », *American Economic Review*, 112(10), 2022, p. 3260-3290 · doi.org/10.1257/aer.20211063 |
+| E5.05 | D. Roodman, « A Note on the Theme of Too Many Instruments », *Oxford Bulletin of Economics and Statistics*, 71(1), 2009, p. 135-158 · doi.org/10.1111/j.1468-0084.2008.00542.x |
+| E8.07, E10.04, E10.05, E6.05, S9.13 | K. Brodersen et coll. (2015), D. McFadden (2000), S. Berry, J. Levinsohn, A. Pakes (1995), L. Anselin (1988), G. Box, J. S. Hunter, W. Hunter (2005) : références à revérifier lors de la préparation |
+| E9.09 | T. Andersen, T. Bollerslev, F. Diebold, P. Labys, « Modeling and Forecasting Realized Volatility », *Econometrica*, 71(2), 2003, p. 579-625 · doi.org/10.1111/1468-0262.00418 |
+| E9.09 | F. Corsi, « A Simple Approximate Long-Memory Model of Realized Volatility », *Journal of Financial Econometrics*, 7(2), p. 174-196 · doi.org/10.1093/jjfinec/nbp001 |
+
+**Statut de cette bibliographie.** Elle n'est pas présentée comme entièrement validée. Les entrées suivies d'un DOI ont été contrôlées sur Crossref (auteurs, titre, revue, volume, pages) ; les autres le seront lors de la préparation de la vidéo concernée, selon la liste fermée ci-dessous.
+
+### Liste fermée des références non vérifiées
+
+| Vidéo | Référence | Ce qui reste à vérifier |
+|---|---|---|
+| E8.07 | K. Brodersen et coll., 2015 (impact causal bayésien) | Référence complète et DOI |
+| E10.04 | D. McFadden, 2000 | Référence exacte (conférence Nobel ou article), DOI |
+| E10.05 | S. Berry, J. Levinsohn, A. Pakes, 1995 | Volume, pages, DOI |
+| E6.05 | L. Anselin, 1988 (économétrie spatiale) | Éditeur, édition |
+| S9.13 | G. Box, J. S. Hunter, W. Hunter, 2005 | Éditeur, édition |
+| E5.03 | D. Lee et coll., 2022 | Le seuil chiffré de la statistique F qu'il propose : non lu dans le texte intégral, donc **non cité** dans le programme |
+| E5.03 | D. Staiger, J. Stock, 1997 | Page de fin |
+| E5.03 | J. Stock, M. Yogo, 2005 | Éditeurs de l'ouvrage collectif |
+| S19.08 | A. Chouldechova, 2017 ; J. Kleinberg, S. Mullainathan, M. Raghavan, 2017 (incompatibilité des critères d'équité) | Revue, volume, pages, DOI |
+| E10.06 (exemple) | S. Firpo, N. Fortin, T. Lemieux, *Econometrica*, 2009 | Liste d'auteurs, titre, pages, DOI (notice Crossref incomplète) |
+| Section 9.5, lignes sans DOI | 22 exemples historiques (Squire 1988 à Palacios-Huerta 2003) | Volume, pages et DOI ; la source est identifiée mais la notice n'a pas été contrôlée |
+| Sections 9.2 et 9.3, lignes sans ✔ | Ouvrages imprimés et Statistique Canada | Lien ou édition (URL de Statistique Canada à confirmer, version libre de Blitzstein et Hwang, licence de *Elements of Statistical Learning*) |
+
+Une référence de cette liste n'est jamais citée à l'écran avant d'avoir été vérifiée et sortie de la liste.
+
+## 9.6 Vulgarisation audiovisuelle à étudier (références de forme, pas de fond)
+
+À regarder pour la pédagogie visuelle, jamais à recopier : **3Blue1Brown** (Bayes, théorème central limite), **StatQuest** (Josh Starmer, régression, apprentissage statistique), **Science étonnante** (David Louapre, en français). Toute reprise d'idée visuelle reste une création originale d'ACTU-BASICS.
+
+## 9.7 Sources de données pour les exemples réels
+
+Sources primaires à privilégier, selon la constitution éditoriale : instituts statistiques nationaux (Insee, ONS, BLS, Statistique Canada), Eurostat, OCDE, Banque mondiale (World Development Indicators), FMI, ONU (World Population Prospects), OMS, services météorologiques (Météo-France, NOAA, Copernicus), Human Mortality Database. **Our World in Data** est utile pour trouver la source primaire, mais n'est jamais la source finale d'un chiffre.
