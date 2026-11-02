@@ -195,7 +195,7 @@ forme: rappel
 
 ## M4.02
 titre: Espace probabilisé : pourquoi les mathématiciens ont formalisé le hasard
-titre_en: Probability spaces: why chance was formalised
+titre_en: Probability spaces: why chance was formalized
 question: Pourquoi a-t-on besoin d'un cadre axiomatique (Kolmogorov, 1933) ?
 pre: M4.01
 obj: Énoncer les trois axiomes des probabilités | Dire quand ce cadre devient indispensable

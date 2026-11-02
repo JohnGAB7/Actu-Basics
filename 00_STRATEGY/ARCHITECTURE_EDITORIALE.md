@@ -63,12 +63,23 @@ Niveaux : `decouverte` (grand public), `lycee`, `licence`, `master`, `profession
 
 ## 5. Séries et progression
 
-Les contenus pédagogiques avancent par séries courtes de 5 à 8 épisodes, chaque épisode s'appuyant sur le précédent. Exemples :
-- « Les probabilités qui trompent l'intuition » : anniversaires, Monty Hall, faux positifs, loi des grands nombres, joueur et hasard.
-- « Lire un chiffre sans se faire avoir » : moyenne ou médiane, pourcentage ou point de pourcentage, échelle d'un graphique, corrélation, échantillon.
-- « Les statistiques en pratique » : l'actuaire et le prix d'une assurance, un test A/B, la régression, ce que fait un modèle de machine learning.
+> Section mise à jour après la validation par JG du programme éditorial et pédagogique (ticket n° 10, `programme/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-11.pdf`, arbitrages A1 à A11 du 2/11/2026). Elle remplace la proposition de rythme de la version précédente.
 
-Proposition de rythme au lancement : 3 SHORT par semaine (dont au moins 1 d'actualité), 1 EDUCATIONAL tous les 15 jours, la première YOUTUBE_LESSON après les 4 premiers EDUCATIONAL. À décider par JG selon la capacité de relecture.
+**Le programme fait référence.** La progression pédagogique est celle du programme : trois piliers (statistiques de A à Z, économétrie, phénomènes du quotidien et actualité), quatre niveaux, 320 entrées de syllabus reliées par leurs prérequis. Les piliers s'ajoutent **au-dessus** des quatre familles de la section 2, qui restent un champ technique des fiches ; le moteur n'est pas modifié (arbitrage A1).
+
+**Pas de publication avant un stock suffisant** (ticket n° 10, arbitrage A4). La publication commence quand la vague 1 du programme (49 épisodes, « Lire un chiffre sans se faire avoir ») est terminée **et** qu'au moins 12 semaines de publication sont en stock, en épisodes maîtres entièrement validés en FR et en EN. Ce seuil sera recalculé après la phase pilote, quand le temps humain par épisode sera mesuré. Le rythme de publication sera fixé à ce moment, selon la capacité de relecture de JG.
+
+**Les séries deviennent des vagues.** Les séries de 5 à 8 épisodes de la version précédente sont reprises dans les vagues du programme :
+- « Lire un chiffre sans se faire avoir » est la vague 1 ;
+- « Les probabilités qui trompent l'intuition » est couverte par les modules S4 et S5 et le pilier 3 (Q1 à Q3) ;
+- « Les statistiques en pratique » est couverte par les branches de niveau 4 (S10, S15, S17, S19) et le pilier 2.
+
+**Autres décisions qui s'appliquent ici** :
+- la répartition thématique de la constitution éditoriale (démographie 20 %, etc.) vaut pour les vidéos d'actualité, pas pour le cursus (A3) ;
+- les vidéos d'actualité sont produites dans les semaines qui précèdent le lancement, pour ne pas être périmées (A6) ;
+- les leçons de plus de 10 minutes passent en YOUTUBE_LESSON 16:9, après un essai sur une vraie leçon (A7) ;
+- pas de code à l'écran, scripts fournis en description (A9) ;
+- la vidéo de lancement compte comme l'épisode S4.06 du programme (A10).
 
 ## 6. Vidéo de lancement
 

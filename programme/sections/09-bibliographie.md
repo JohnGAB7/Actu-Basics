@@ -89,7 +89,7 @@ Chaque exemple historique du syllabus renvoie maintenant à une source primaire 
 | Vidéo | Exemple | Source |
 |---|---|---|
 | S1.05 | Sondage du *Literary Digest*, 1936 | P. Squire, « Why the 1936 Literary Digest Poll Failed », *Public Opinion Quarterly*, 1988 |
-| S3.03 | Admissions à Berkeley ; calculs rénaux | P. Bickel, E. Hammel, J. O'Connell, *Science*, 1975 ; C. Charig et coll., *British Medical Journal*, 1986 |
+| S3.03 | Admissions à Berkeley ; calculs rénaux | P. Bickel, E. Hammel, J. O'Connell, *Science*, 1975 ; C. Charig, D. Webb, S. Payne, J. Wickham, *BMJ*, 292(6524), 1986, p. 879-882 · doi.org/10.1136/bmj.292.6524.879 |
 | S3.05 | Quartet d'Anscombe | F. Anscombe, *The American Statistician*, 1973 |
 | S3.07 | Régression vers la moyenne | F. Galton, *Journal of the Anthropological Institute*, 1886 |
 | S4.05 | Problème du chevalier de Méré | Correspondance Pascal-Fermat, 1654 |
@@ -139,7 +139,12 @@ Articles fondateurs et articles cités dans le module E9 et dans les vidéos ajo
 | E5.03 | J. Stock, M. Yogo, « Testing for Weak Instruments in Linear IV Regression », dans *Identification and Inference for Econometric Models*, Cambridge University Press, 2005, p. 80-108 · doi.org/10.1017/CBO9780511614491.006 |
 | E5.03 | D. Lee, J. McCrary, M. Moreira, J. Porter, « Valid t-ratio Inference for IV », *American Economic Review*, 112(10), 2022, p. 3260-3290 · doi.org/10.1257/aer.20211063 |
 | E5.05 | D. Roodman, « A Note on the Theme of Too Many Instruments », *Oxford Bulletin of Economics and Statistics*, 71(1), 2009, p. 135-158 · doi.org/10.1111/j.1468-0084.2008.00542.x |
-| E8.07, E10.04, E10.05, E6.05, S9.13 | K. Brodersen et coll. (2015), D. McFadden (2000), S. Berry, J. Levinsohn, A. Pakes (1995), L. Anselin (1988), G. Box, J. S. Hunter, W. Hunter (2005) : références à revérifier lors de la préparation |
+| E8.07 | K. Brodersen, F. Gallusser, J. Koehler, N. Remy, S. Scott, « Inferring causal impact using Bayesian structural time-series models », *Annals of Applied Statistics*, 9(1), 2015, p. 247-274 · doi.org/10.1214/14-AOAS788 |
+| E10.04 | D. McFadden, « Economic Choices » (conférence Nobel), *American Economic Review*, 91(3), 2001, p. 351-378 · doi.org/10.1257/aer.91.3.351 |
+| E10.05 | S. Berry, J. Levinsohn, A. Pakes, « Automobile Prices in Market Equilibrium », *Econometrica*, 63(4), 1995, p. 841 et suiv. · doi.org/10.2307/2171802 |
+| E6.05 | L. Anselin, *Spatial Econometrics: Methods and Models*, Springer (Dordrecht), coll. Studies in Operational Regional Science, 1988 · doi.org/10.1007/978-94-015-7799-1 |
+| E10.06 | S. Firpo, N. Fortin, T. Lemieux, « Unconditional Quantile Regressions », *Econometrica*, 77(3), 2009, p. 953-973 · doi.org/10.3982/ECTA6822 |
+| S19.08 | A. Chouldechova, « Fair Prediction with Disparate Impact: A Study of Bias in Recidivism Prediction Instruments », *Big Data*, 5(2), 2017, p. 153-163 · doi.org/10.1089/big.2016.0047 |
 | E9.09 | T. Andersen, T. Bollerslev, F. Diebold, P. Labys, « Modeling and Forecasting Realized Volatility », *Econometrica*, 71(2), 2003, p. 579-625 · doi.org/10.1111/1468-0262.00418 |
 | E9.09 | F. Corsi, « A Simple Approximate Long-Memory Model of Realized Volatility », *Journal of Financial Econometrics*, 7(2), p. 174-196 · doi.org/10.1093/jjfinec/nbp001 |
 
@@ -147,20 +152,18 @@ Articles fondateurs et articles cités dans le module E9 et dans les vidéos ajo
 
 ### Liste fermée des références non vérifiées
 
+Mise à jour en version 1.12 : Brodersen et coll. (2015), McFadden (2001), Berry, Levinsohn et Pakes (1995), Anselin (1988), Chouldechova (2017) et Charig et coll. (1986) ont été vérifiés sur Crossref et sortent de la liste.
+
 | Vidéo | Référence | Ce qui reste à vérifier |
 |---|---|---|
-| E8.07 | K. Brodersen et coll., 2015 (impact causal bayésien) | Référence complète et DOI |
-| E10.04 | D. McFadden, 2000 | Référence exacte (conférence Nobel ou article), DOI |
-| E10.05 | S. Berry, J. Levinsohn, A. Pakes, 1995 | Volume, pages, DOI |
-| E6.05 | L. Anselin, 1988 (économétrie spatiale) | Éditeur, édition |
-| S9.13 | G. Box, J. S. Hunter, W. Hunter, 2005 | Éditeur, édition |
-| E5.03 | D. Lee et coll., 2022 | Le seuil chiffré de la statistique F qu'il propose : non lu dans le texte intégral, donc **non cité** dans le programme |
-| E5.03 | D. Staiger, J. Stock, 1997 | Page de fin |
+| S9.13 | G. Box, J. S. Hunter, W. Hunter, *Statistics for Experimenters*, 2005 | Éditeur, édition (Crossref inaccessible lors de la vérification) |
+| S19.08 | J. Kleinberg, S. Mullainathan, M. Raghavan, 2017 | Notice des actes ITCS 2017 non trouvée ; version arXiv 1609.05807 à citer à défaut |
+| E5.03 | D. Lee et coll., 2022 | Le seuil chiffré de la statistique F : non lu dans le texte intégral, donc **non cité** |
+| E5.03 | D. Staiger, J. Stock, 1997 | Page de fin (Crossref ne la donne pas) |
 | E5.03 | J. Stock, M. Yogo, 2005 | Éditeurs de l'ouvrage collectif |
-| S19.08 | A. Chouldechova, 2017 ; J. Kleinberg, S. Mullainathan, M. Raghavan, 2017 (incompatibilité des critères d'équité) | Revue, volume, pages, DOI |
-| E10.06 (exemple) | S. Firpo, N. Fortin, T. Lemieux, *Econometrica*, 2009 | Liste d'auteurs, titre, pages, DOI (notice Crossref incomplète) |
-| Section 9.5, lignes sans DOI | 22 exemples historiques (Squire 1988 à Palacios-Huerta 2003) | Volume, pages et DOI ; la source est identifiée mais la notice n'a pas été contrôlée |
-| Sections 9.2 et 9.3, lignes sans ✔ | Ouvrages imprimés et Statistique Canada | Lien ou édition (URL de Statistique Canada à confirmer, version libre de Blitzstein et Hwang, licence de *Elements of Statistical Learning*) |
+| E10.06 | S. Firpo, N. Fortin, T. Lemieux, 2009 | Liste d'auteurs : absente de la notice Crossref (titre, revue et pages vérifiés) |
+| Section 9.5, lignes sans DOI | 21 lignes d'exemples historiques (Squire 1988 à Palacios-Huerta 2003), plus Bickel et coll. (1975) | Volume, pages et DOI ; la source est identifiée mais la notice n'a pas été contrôlée |
+| Sections 9.2 et 9.3, lignes sans ✔ | Ouvrages imprimés et Statistique Canada | Lien ou édition (URL de Statistique Canada, version libre de Blitzstein et Hwang, licence de *Elements of Statistical Learning*) |
 
 Une référence de cette liste n'est jamais citée à l'écran avant d'avoir été vérifiée et sortie de la liste.
 

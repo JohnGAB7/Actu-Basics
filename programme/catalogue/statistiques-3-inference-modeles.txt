@@ -386,7 +386,8 @@ intuition: Chacun est son propre témoin : on retire la variabilité entre perso
 exemple: Tension artérielle avant et après un programme sportif.
 maths: M2.
 erreurs: Traiter avant et après comme deux groupes indépendants.
-exercice: Calculer la moyenne et l'écart-type des différences sur 6 couples.
+exercice: Tension systolique de 6 personnes avant et après un programme sportif : avant 140, 152, 135, 148, 160, 142 ; après 135, 144, 132, 142, 151, 137. Calculer la moyenne et l'écart-type des différences.
+correction: Différences (avant − après) : 5, 8, 3, 6, 9, 5. Moyenne : 36 / 6 = 6. Écarts à la moyenne : −1, 2, −3, 0, 3, −1 ; somme des carrés : 24 ; variance (division par n − 1 = 5) : 4,8 ; écart-type ≈ 2,19. Les différences varient beaucoup moins que les tensions elles-mêmes, qui vont de 132 à 160 : c'est pour cela que l'analyse appariée est plus précise. Sans groupe témoin, la baisse n'est pas pour autant un effet du programme.
 duree: 5-7
 format: educational
 forme: lecon
@@ -789,7 +790,7 @@ forme: lecon
 
 ## S10.04
 titre: Compter : régression de Poisson et surdispersion
-titre_en: Counting: Poisson regression and overdispersion
+titre_en: Count data: Poisson regression and overdispersion
 question: Comment modéliser le nombre de sinistres d'un assuré ?
 pre: S10.02 | S5.06
 obj: Écrire une régression de Poisson avec une durée d'exposition | Diagnostiquer la surdispersion et présenter la binomiale négative
@@ -899,7 +900,8 @@ intuition: L'échantillon joue le rôle de la population : on le rééchantillon
 exemple: Médiane des loyers d'un échantillon de 40 logements.
 maths: M1.
 erreurs: Croire que le bootstrap crée de l'information ; l'appliquer à des données dépendantes sans adaptation.
-exercice: Faire à la main 3 rééchantillons d'un échantillon de 5 valeurs.
+exercice: Échantillon : 2, 4, 5, 7, 12. Tirer à la main 3 rééchantillons de taille 5 avec remise (dé, papiers dans un chapeau) et calculer la médiane de chacun.
+correction: Les tirages varient d'une personne à l'autre ; exemple de résultat : (4, 4, 7, 12, 2) de médiane 4 ; (5, 2, 2, 7, 5) de médiane 5 ; (12, 7, 7, 4, 5) de médiane 7. Une valeur peut apparaître plusieurs fois ou pas du tout. La dispersion de ces médianes donne une idée de l'incertitude sur la médiane ; trois rééchantillons ne suffisent pas pour un intervalle, il en faut des milliers, d'où l'ordinateur.
 duree: 8-10
 format: educational
 forme: simulation
