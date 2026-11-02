@@ -16,7 +16,9 @@ chiffre_cle:
   unite: {fr: "milliards d'humains au maximum", en: "billion people at the peak"}
 
 contexte:
-  periode: {fr: "2024–2100 (projection)", en: "2024–2100 (projection)"}
+  periode:
+    fr: "1990–2100 (fécondité observée 1990–2024 ; population projetée 2024–2100)"
+    en: "1990–2100 (fertility observed 1990–2024; population projected 2024–2100)"
   perimetre: {fr: "Monde", en: "World"}
   definition:
     fr: "Population mondiale totale, projection de l'ONU (variante moyenne). Pic attendu vers le milieu des années 2080."
