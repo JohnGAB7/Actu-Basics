@@ -21,14 +21,14 @@ Le moteur de production et `00_STRATEGY/ARCHITECTURE_EDITORIALE.md` utilisent qu
 | 1 · Statistiques, modules S1 à S3, S6 à S18 | `apprendre_les_statistiques` | `pedagogique` |
 | 1 · Statistiques, modules S4 et S5 (probabilités) | `comprendre_les_probabilites` | `pedagogique` |
 | 1 · Branches appliquées (S10.06, S17) | `statistiques_en_pratique` | `pedagogique` |
-| 2 · Économétrie | `statistiques_en_pratique` *(ou nouvelle famille `econometrie`, voir arbitrage A1)* | `pedagogique` |
+| 2 · Économétrie | `statistiques_en_pratique` *(arbitrage A1 : piliers au-dessus des familles, moteur inchangé)* | `pedagogique` |
 | 3 · Quotidien (intemporel) | `statistiques_en_pratique` ou `comprendre_le_monde` selon l'angle | `pedagogique` |
 | 3 · Actualité | `comprendre_le_monde` | `actualite` |
 | Boîte à outils maths | `apprendre_les_statistiques` | `pedagogique` |
 
-**À signaler à l'éditorial.** Deux points touchent des décisions déjà écrites et demandent un arbitrage (section 10) :
+**Deux points touchaient des décisions déjà écrites.** JG les a tranchés (arbitrages A2 et A3, section 10) :
 
-- la section 5 d'`ARCHITECTURE_EDITORIALE.md` proposait un rythme de publication dès le lancement (3 SHORT par semaine, etc.). Le ticket n° 10 décide au contraire de **ne rien publier avant d'avoir un stock suffisant**. Ce programme suit le ticket, plus récent et validé par JG. Le document existant n'est pas modifié tant que l'arbitrage n'est pas rendu ;
+- la section 5 d'`ARCHITECTURE_EDITORIALE.md` proposait un rythme de publication dès le lancement (3 SHORT par semaine, etc.). Le ticket n° 10 décide au contraire de **ne rien publier avant d'avoir un stock suffisant**. Ce programme suit le ticket, plus récent et validé par JG. Le document existant sera mis à jour dans une PR distincte, après la validation de ce programme ;
 - la répartition par thèmes de la constitution éditoriale (démographie 20 %, économie 20 %, etc.) est appliquée ici **aux seules vidéos d'actualité**, et non au cursus.
 
 ## 2.3 Quatre niveaux, avec des branches

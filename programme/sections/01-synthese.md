@@ -46,14 +46,16 @@ Deux vagues, sans publication avant que le stock soit suffisant :
 
 Elles commencent par une **phase pilote interne de 5 vidéos**. Elle sert à mesurer le temps réel de travail humain et à tester la compréhension auprès de spectateurs débutants. Ce n'est pas une mini-série à publier dans cet ordre.
 
-## Ce que JG doit décider
+## Ce que JG a décidé
 
-Les onze arbitrages de la section 10, dont les plus structurants :
+Le 2/11/2026, JG a retenu **toutes les recommandations** de la section 10.2 (arbitrages A1 à A11). Il a aussi tranché deux questions ouvertes : pas de vidéos sur des sujets non statistiques, et feu vert pour préparer les fiches des sujets sensibles, qui gardent la double relecture prévue par la constitution éditoriale. En pratique :
 
-1. adopter les trois piliers et leur correspondance avec les quatre familles actuelles du moteur ;
-2. fixer le seuil de lancement (proposition : vague 1 terminée et au moins 12 semaines de publication en stock, comptées en épisodes entièrement validés en FR et en EN) ;
-3. reporter les vidéos d'actualité aux semaines qui précèdent le lancement ;
-4. choisir le format des leçons longues (vertical ou 16:9).
+1. les trois piliers deviennent la structure de référence, au-dessus des quatre familles du moteur, sans le modifier ;
+2. le seuil de lancement est fixé : vague 1 terminée et au moins 12 semaines de publication en stock, en épisodes entièrement validés en FR et en EN, à recalculer après le pilote ;
+3. les vidéos d'actualité sont produites dans les semaines qui précèdent le lancement ;
+4. les leçons de plus de 10 minutes passent en 16:9, après un essai.
+
+**Ce qui reste** : la validation finale de ce PDF par JG, puis la mise à jour de la section 5 d'`ARCHITECTURE_EDITORIALE.md` (arbitrage A2), dans une PR distincte.
 
 ## Historique des versions
 
@@ -69,6 +71,7 @@ Les onze arbitrages de la section 10, dont les plus structurants :
 | 1.7 | Audit de la version 1.5 par ChatGPT (section 10.9) : tests d'équivalence (S8.12), inflation de zéros (S10.08), analyse multivers (S11.11), sécurité énergétique (Q8.04), chaînes d'approvisionnement (Q10.04) ; hétérogénéité en méta-analyse et niveau de groupement complétés ; taxonomie renommée « rôle dans le graphe » ; arbitrage A11 sur un statut éditorial ; description de la PR synchronisée |
 | 1.8 | Audit de la version 1.7 par ChatGPT (section 10.10) : douze corrections de rigueur (TOST à 90 %, multivers, méta-analyse, zéros, BCa, instruments faibles, LATE, discontinuité, contrôle synthétique, panels dynamiques, émissions cumulées, attribution) ; corrections détaillées ajoutées et 112 calculs vérifiés ; liste fermée des références non vérifiées ; fiche de provenance des chiffres ; registre des affirmations qualitatives ; charge totale du catalogue ; règle des SHORT autonomes |
 | 1.9 | Relecture de la version 1.8 par ChatGPT (section 10.11) : exercice et correction de E5.03 rattachés à un cadre précis ; prérequis de E5.04 ramené à E5.02, hypothèses du LATE distinguées des diagnostics ; provenance étendue aux chiffres prononcés, tracés et calculés ; inclusions et exclusions de la charge de travail ; règle de maturité des fiches ; recommandation commune sur A11 |
+| 1.10 | Arbitrages rendus par JG : toutes les recommandations A1 à A11 retenues ; pas de vidéos hors statistique ; feu vert pour les fiches des sujets sensibles |
 
 ## Sommaire
 
@@ -81,5 +84,5 @@ Les onze arbitrages de la section 10, dont les plus structurants :
 7. Feuille de route du premier catalogue
 8. Prérequis mathématiques et glossaire
 9. Bibliographie et ressources
-10. Arbitrages demandés
+10. Arbitrages rendus par JG
 11. Annexe : rapport des contrôles automatiques

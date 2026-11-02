@@ -1,6 +1,6 @@
-# 10. Arbitrages demandés {#arbitrages}
+# 10. Arbitrages rendus par JG {#arbitrages}
 
-Les décisions éditoriales appartiennent à ChatGPT, et JG arbitre. Cette section distingue ce que JG a **déjà décidé**, et que le programme applique, de ce qui reste **à décider**.
+Les décisions éditoriales appartiennent à ChatGPT, et JG arbitre. Le 2/11/2026, JG a retenu toutes les recommandations de la section 10.2. Les débats avec ChatGPT (10.4 à 10.11) sont conservés pour mémoire.
 
 ## 10.1 Décisions déjà prises par JG, appliquées telles quelles
 
@@ -13,13 +13,16 @@ Les décisions éditoriales appartiennent à ChatGPT, et JG arbitre. Cette secti
 | Éditions FR et EN autonomes, sans traduction mécanique | Identité de marque ; ticket n° 10 |
 | Rôles : Claude structure, ChatGPT relit, JG valide le PDF final | Ticket n° 10 ; LMEC-DEC-002 |
 | Toutes les vidéos pédagogiquement pertinentes sont intégrées au catalogue, y compris les approfondissements et les spécialisations. Aucune n'est marquée optionnelle : c'est au spectateur de choisir. Le catalogue est exhaustif, l'ordre de production se priorise | Message de JG, 2/11/2026 ; règle d'exhaustivité proposée par ChatGPT sur la PR n° 12 |
+| Arbitrages A1 à A11 : toutes les recommandations de Claude de la section 10.2 sont retenues | Message de JG, 2/11/2026 (« oui sur tout donc tout OK ») |
+| Pas de vidéos sur des sujets non statistiques (architecture des réseaux de neurones, génie logiciel) : ils restent « évoqués, non enseignés » (section 3.4) | Message de JG, 2/11/2026 |
+| Feu vert pour préparer les fiches des sujets sensibles (conflits, santé, migration), avec la double relecture de la constitution éditoriale | Message de JG, 2/11/2026 |
 | Marque ACTU-BASICS, slogans « Éveiller par les chiffres. » et “Enlightening through numbers.” | Identité de marque |
 
-## 10.2 Recommandations à valider
+## 10.2 Recommandations, toutes retenues par JG
 
-Claude fait une recommandation pour chacune, sans la considérer comme acquise. Les points **A1 à A3** touchent des décisions déjà écrites dans le dépôt : ils sont signalés comme tels.
+Claude a fait une recommandation pour chacune ; JG les a toutes retenues le 2/11/2026. Les points **A1 à A3** touchent des décisions déjà écrites dans le dépôt : ils sont signalés comme tels.
 
-| N° | Question | Options | Recommandation de Claude (statut : à valider) |
+| N° | Question | Options | Recommandation de Claude (retenue par JG) |
 |---|---|---|---|
 | **A1** *(touche une décision existante)* | Faut-il adopter les trois piliers comme structure de référence, à la place des quatre familles d'`ARCHITECTURE_EDITORIALE.md` ? | (a) Trois piliers au-dessus des familles, sans changer le moteur · (b) Remplacer les familles par les piliers dans le moteur · (c) Garder les quatre familles seules | **(a)**. Les familles restent un champ technique ; on ajoute seulement une famille `econometrie` si JG veut l'identifier à part dans les métadonnées. |
 | **A2** *(touche une décision existante)* | La règle du stock préalable est déjà décidée par JG (10.1). Reste à mettre à jour la section 5 d'`ARCHITECTURE_EDITORIALE.md`, qui proposait un rythme dès le lancement. | (a) Mettre le document à jour après validation de ce programme · (b) Le laisser en l'état, avec un renvoi | **(a)**. |
