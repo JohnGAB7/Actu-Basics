@@ -232,6 +232,21 @@ class Rendu(ScenesPedagogiques):
             lignes.append(courante)
         return lignes
 
+    def _couper_equilibre(self, mots, police, largeur_max):
+        """Même nombre de lignes que la coupe gloutonne, mais des lignes de longueurs voisines
+        (pas de mot orphelin en fin de titre)."""
+        lignes = self._couper_riche(mots, police, largeur_max)
+        if len(lignes) < 2:
+            return lignes
+        bas, haut = max(police.getlength(m) for m, _, _ in mots), float(largeur_max)
+        for _ in range(18):
+            milieu = (bas + haut) / 2
+            if len(self._couper_riche(mots, police, milieu)) <= len(lignes):
+                haut = milieu
+            else:
+                bas = milieu
+        return self._couper_riche(mots, police, haut + 0.5)
+
     @staticmethod
     def _largeur_ligne(ligne, police) -> float:
         espace = police.getlength(" ")
@@ -239,8 +254,9 @@ class Rendu(ScenesPedagogiques):
                    for i, (m, _, c) in enumerate(ligne))
 
     def ajuster_riche(self, texte, style, largeur, hauteur, taille_max, taille_min,
-                      interligne=1.2, contexte="", majuscules=False):
-        """Plus grande taille qui fait tenir le texte (avec mots mis en valeur *…*)."""
+                      interligne=1.2, contexte="", majuscules=False, equilibre=False):
+        """Plus grande taille qui fait tenir le texte (avec mots mis en valeur *…*).
+        equilibre : lignes de longueurs voisines (titres)."""
         texte = typographie(texte, self.langue)
         if majuscules:
             texte = texte.upper()
@@ -248,7 +264,7 @@ class Rendu(ScenesPedagogiques):
         taille = taille_max
         while True:
             police = self.police(style, taille)
-            lignes = self._couper_riche(mots, police, largeur)
+            lignes = (self._couper_equilibre if equilibre else self._couper_riche)(mots, police, largeur)
             pas = int(taille * interligne)
             h = pas * len(lignes)
             trop_large = any(self._largeur_ligne(l, police) > largeur for l in lignes)
@@ -410,12 +426,36 @@ class Rendu(ScenesPedagogiques):
         x_c = (g + dr) // 2
         ctx = f"{self.langue}/{self.format}/scène {index + 1} {scene.type}"
         self._index, self._couverture = index, couverture
+        note = scene.extra.get("note")
+        if note and scene.type != "fin":
+            bas = self._note(d, note, g, dr, bas, t, 4.2 if scene.type == "animation" else 0.9)
         getattr(self, f"_scene_{scene.type}")(d, scene, g, haut, dr, bas, largeur, x_c, t, ctx)
         if coin:
             self._poser_logo(image, coin[0], coin[1], coin[2], scene, index, t, couverture)
         if self.brouillon:
             image = self._filigrane(image)
         return image
+
+    def _note(self, d, note, g, dr, bas, t, depart=0.9) -> int:
+        """Petite mention discrète en bas de la zone (hypothèse, précision). Retourne le nouveau bas."""
+        p = self.police("regulier", 40 if self.format != "lecon" else 36)
+        mots, lignes, ligne = note.split(), [], ""
+        for m in mots:
+            essai = f"{ligne} {m}".strip()
+            if p.getlength(essai) > (dr - g) * 0.9 and ligne:
+                lignes.append(ligne)
+                ligne = m
+            else:
+                ligne = essai
+        lignes.append(ligne)
+        pas = 52 if self.format != "lecon" else 46
+        y = bas - pas * len(lignes)
+        a = self._visibilite(t, depart)
+        for k, l in enumerate(lignes):
+            x = (g + dr - p.getlength(l)) / 2
+            fond = self._fond.getpixel((int(x), int(y + k * pas)))
+            d.text((x, y + k * pas), l, font=p, fill=_melange(fond, self.c["secondaire"], a))
+        return y - 30
 
     def _scene_accroche(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         p, lignes, pas, hh = self.ajuster_riche(scene.texte, "affichage", largeur, bas - haut, 190, 80,
@@ -510,7 +550,8 @@ class Rendu(ScenesPedagogiques):
         taille = 420
         while True:
             pc = self.police("affichage", taille)
-            if self._chiffre_espace(final, pc)[2] <= largeur or taille <= 120:
+            if (self._chiffre_espace(final, pc)[2] <= largeur and taille * 1.12 <= (bas - haut) * 0.55) \
+                    or taille <= 120:
                 break
             taille -= 8
         hc = pas_c = int(taille * 1.12)
@@ -520,7 +561,7 @@ class Rendu(ScenesPedagogiques):
         reste = bas - haut - hc - hu - 140
         pt, lt, pas_t, ht = self.ajuster_riche(scene.texte, "regulier", largeur, max(reste, 100), 56, 34,
                                                1.3, ctx)
-        y = haut + (bas - haut - (hc + hu + ht + 120)) // 2
+        y = haut + max(0, (bas - haut - (hc + hu + ht + 120)) // 2)
         groupes, ecart, l_txt = self._chiffre_espace(final, pc)
         # Le chiffre final fixe la position : les groupes sont alignés à droite pendant le comptage.
         groupes_courants = txt.split(ESPACE_MILLIERS)

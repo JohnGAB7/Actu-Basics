@@ -124,8 +124,9 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
                 son = charte.get("son") or {}
                 if fiche.habillage_sonore and son.get("actif", True):
                     fin = next((i for i, s in enumerate(edition.scenes) if s.type == "fin"), None)
-                    piste = habiller(piste, durees, son, travail / "narration-habillee.wav", fin)
-                    rapport.ok.append(f"[{langue}] Habillage sonore ajouté (signature et nappe, prototype)")
+                    piste = habiller(piste, durees, son, travail / "narration-habillee.wav", fin,
+                                     rendu_v.reperes_sonores(edition.scenes, durees))
+                    rapport.ok.append(f"[{langue}] Habillage sonore ajouté (signature, nappe et repères, prototype)")
                 voix_info = {"fournisseur": narration.fournisseur, "publiable": narration.publiable,
                              "config": fournisseur.config}
                 rapport.ok.append(f"[{langue}] Narration produite ({narration.fournisseur}) : "

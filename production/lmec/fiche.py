@@ -17,7 +17,7 @@ import yaml
 LANGUES = ("fr", "en")
 TYPES_SCENE_ACTUALITE = ("accroche", "chiffre", "texte", "graphique", "source", "fin")
 # Scènes propres aux fiches pédagogiques (voir lmec/pedagogie.py).
-TYPES_SCENE_PEDAGOGIE = ("titre", "formule", "etapes", "courbe", "exercice", "correction")
+TYPES_SCENE_PEDAGOGIE = ("titre", "formule", "etapes", "courbe", "exercice", "correction", "animation")
 TYPES_SCENE = TYPES_SCENE_ACTUALITE + TYPES_SCENE_PEDAGOGIE
 TYPES_FICHE = ("actualite", "pedagogique")
 FAMILLES = ("comprendre_le_monde", "apprendre_les_statistiques", "comprendre_les_probabilites",

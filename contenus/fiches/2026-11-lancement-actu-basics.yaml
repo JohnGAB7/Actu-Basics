@@ -1,7 +1,8 @@
 # Vidéo de présentation ACTU-BASICS — PROTOTYPE (proposition technique, à reprendre par l'éditorial).
 # Titre de travail : « Et si les chiffres changeaient votre façon de voir le monde ? »
 # Démonstration par l'exemple : le paradoxe des anniversaires. Tous les nombres sont recalculés par la
-# machine (blocs « verifier ») ; aucun fait extérieur n'est cité sans être signalé « à sourcer ».
+# machine (blocs « verifier »). Application concrète : les collisions d'empreintes numériques
+# (« attaque des anniversaires » en cryptographie). Deuxième itération : script resserré, animation des paires.
 id: 2026-11-lancement-actu-basics
 type_fiche: pedagogique
 famille: presentation
@@ -15,10 +16,12 @@ pedagogie:
     fr:
       - "Comprendre pourquoi 23 personnes suffisent pour avoir plus d'une chance sur deux d'un anniversaire commun"
       - "Raisonner par l'événement contraire"
+      - "Relier le paradoxe aux collisions d'empreintes numériques en cryptographie"
       - "Découvrir les quatre familles de contenus d'ACTU-BASICS"
     en:
       - "Understand why 23 people are enough for a better-than-even chance of a shared birthday"
       - "Reason with the complementary event"
+      - "Connect the paradox to hash collisions in cryptography"
       - "Discover the four content families of ACTU-BASICS"
   prerequis:
     fr: ["Aucun : une multiplication et une fraction suffisent"]
@@ -36,59 +39,54 @@ editions:
   fr:
     titre: "Et si les chiffres changeaient votre façon de voir le monde ?"
     legende: |
-      23 personnes dans une pièce : quelle est la probabilité que deux d'entre elles aient le même anniversaire ? Votre intuition va probablement se tromper. C'est le point de départ d'ACTU-BASICS : comprendre le monde, apprendre les statistiques et les probabilités, et voir à quoi elles servent. Hypothèse : 365 jours équiprobables.
+      23 personnes dans une pièce : quelle est la probabilité que deux d'entre elles aient le même anniversaire ? Votre intuition va probablement se tromper. Et ce même calcul protège vos données : c'est l'« attaque des anniversaires » en cryptographie. Bienvenue sur ACTU-BASICS : comprendre le monde, apprendre les statistiques et les probabilités, et voir à quoi elles servent. Hypothèse : 365 jours équiprobables.
     hashtags: [probabilites, statistiques, maths]
     scenes:
       - type: accroche
         texte: "Et si les chiffres changeaient *votre façon de voir* le monde ?"
-        voix_off: "Et si les chiffres changeaient votre façon de voir le monde ? Faisons un test. Il prend deux minutes."
+        voix_off: "Et si les chiffres changeaient votre façon de voir le monde ? Faisons un test."
       - type: exercice
-        texte: "23 personnes dans une pièce. Quelle est la probabilité que *deux d'entre elles* soient nées le même jour ?"
-        voix_off: "Imaginez vingt-trois personnes dans une pièce. Quelle est la probabilité que deux d'entre elles soient nées le même jour de l'année ? Gardez votre réponse en tête."
+        texte: "23 personnes dans une pièce. Quelle est la probabilité que *deux d'entre elles* aient le même anniversaire ?"
+        voix_off: "Imaginez vingt-trois personnes dans une pièce. Quelle est la probabilité que deux d'entre elles aient le même anniversaire ? Même jour, même mois. Gardez votre réponse en tête."
         etiquette: "TEST"
         pause: 3
       - type: texte
-        texte: "Spontanément, on pense souvent : *23 jours sur 365*, environ *6 %*."
-        voix_off: "Spontanément, on raisonne souvent ainsi : vingt-trois jours sur trois cent soixante-cinq, environ six pour cent. C'est très peu."
+        texte: "Un raisonnement tentant : *23 jours sur 365*, soit environ *6 %*."
+        voix_off: "Un raisonnement tentant : vingt-trois jours sur trois cent soixante-cinq, soit environ six pour cent. Presque rien."
         verifier:
           - {expression: "100 * 23 / 365", attendu: 6.3, tolerance: 0.75, libelle: "23 sur 365, en %"}
-      - type: correction
-        texte: "En réalité :"
-        reponse: "Plus d'une chance sur deux"
-        voix_off: "En réalité, c'est plus d'une chance sur deux."
       - type: chiffre
         valeur: 50.7
         suffixe: {fr: " %", en: "%"}
         decimales: 1
-        texte: "de chances qu'au moins deux personnes partagent leur anniversaire"
-        voix_off: "Cinquante virgule sept pour cent. Avec seulement vingt-trois personnes."
+        texte: "de chances qu'au moins deux personnes aient *le même anniversaire*"
+        voix_off: "En réalité, c'est plus d'une chance sur deux : cinquante virgule sept pour cent. Avec seulement vingt-trois personnes."
+        note: "Hypothèse : 365 jours équiprobables, sans le 29 février."
         verifier:
           - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(23)))", attendu: 50.7, libelle: "P(au moins un anniversaire commun, 23 personnes), en %"}
       - type: titre
         numero: 1
         texte: "Pourquoi notre intuition se trompe"
         voix_off: "Pourquoi notre intuition se trompe-t-elle autant ?"
-      - type: etapes
-        texte: "On ne compte pas des personnes, mais des *paires*"
-        etapes:
-          - "23 personnes"
-          - "23 × 22 ÷ 2 = *253 paires*"
-          - "*253 occasions* de coïncidence"
-        voix_off: "Parce qu'on ne compare pas une personne aux autres : on compare toutes les paires. Vingt-trois personnes. Vingt-trois fois vingt-deux, divisé par deux : deux cent cinquante-trois paires. Soit deux cent cinquante-trois occasions de coïncidence."
+      - type: animation
+        texte: "Tout le monde se compare à *tout le monde*"
+        animation: {modele: paires, n: 23}
+        note: "23 × 22 ÷ 2 = 253 paires"
+        voix_off: "Parce qu'on pense à son propre anniversaire, comparé à celui des vingt-deux autres. Mais chaque paire de personnes compte. Vingt-trois fois vingt-deux, divisé par deux : deux cent cinquante-trois paires. Autant d'occasions de coïncidence."
         verifier:
           - {expression: "comb(23, 2)", attendu: 253, libelle: "Nombre de paires parmi 23 personnes"}
       - type: formule
-        texte: "Le calcul : passer par le *contraire*"
+        texte: "Calculer le *contraire* : tous différents"
         formule:
-          - '\frac{365}{365}\times\frac{364}{365}\times\cdots\times\frac{343}{365}'
-          - '\approx 0{,}493'
+          - '\frac{365}{365}\times\frac{364}{365}\times\frac{363}{365}'
+          - '\times\cdots\times\frac{343}{365}\approx 0{,}493'
           - '1-0{,}493\approx 0{,}507'
-        voix_off: "Le plus simple est de calculer le contraire : la probabilité que tous les anniversaires soient différents. On multiplie trois cent soixante-cinq sur trois cent soixante-cinq, puis trois cent soixante-quatre sur trois cent soixante-cinq, et ainsi de suite jusqu'à la vingt-troisième personne. On obtient quarante-neuf virgule trois pour cent. Le reste, cinquante virgule sept pour cent, c'est la probabilité d'une coïncidence."
+        voix_off: "Le plus simple est de calculer le contraire : la probabilité que tous les anniversaires soient différents. La deuxième personne doit éviter un jour, la troisième deux jours, et ainsi de suite. En multipliant ces vingt-trois fractions, on obtient quarante-neuf virgule trois pour cent. Le reste, cinquante virgule sept pour cent, c'est la probabilité d'une coïncidence."
         verifier:
           - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P(tous différents, 23 personnes)"}
           - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "P(au moins un anniversaire commun, 23 personnes)"}
       - type: courbe
-        texte: "Plus le groupe grandit, plus la coïncidence devient *certaine*"
+        texte: "Plus le groupe grandit, plus la coïncidence devient *probable*"
         courbe:
           variable: n
           de: 1
@@ -117,9 +115,35 @@ editions:
         verifier:
           - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(40)))", attendu: 89.1, libelle: "P(40 personnes), en %"}
           - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(41)))", attendu: 90.3, libelle: "P(41 personnes), en %"}
+      - type: titre
+        numero: 2
+        texte: "Le même calcul protège vos données"
+        voix_off: "Ce n'est pas qu'un jeu de salon. Le même calcul protège vos données."
+      - type: etapes
+        texte: "Une *empreinte numérique* résume un fichier en un code"
+        etapes:
+          - "Code de 64 bits : *18 milliards de milliards* de valeurs"
+          - "Deux fichiers, même code : une *collision*"
+        voix_off: "En informatique, une empreinte numérique résume n'importe quel fichier en un code court. Avec un code de soixante-quatre bits, il existe environ dix-huit milliards de milliards de valeurs possibles. Si deux fichiers différents obtiennent le même code, c'est une collision : comme deux personnes nées le même jour."
+        verifier:
+          - {expression: "2 ** 64 / 1e18", attendu: 18.4, tolerance: 0.1, libelle: "2^64, en milliards de milliards"}
+      - type: formule
+        texte: "Combien de fichiers pour *une chance sur deux* de collision ?"
+        formule:
+          - 'n\approx\sqrt{2\,\ln 2\times N}'
+          - 'N=365\ \Rightarrow\ n\approx 22{,}5'
+          - 'N=2^{64}\ \Rightarrow\ n\approx 5\times 10^{9}'
+        voix_off: "Une même règle répond aux deux questions. Le nombre d'essais nécessaires est d'environ la racine carrée de deux logarithme de deux, fois N. Pour trois cent soixante-cinq jours, on trouve vingt-deux virgule cinq : on retrouve nos vingt-trois personnes. Pour un code de soixante-quatre bits, environ cinq milliards de fichiers suffisent."
+        note: "Approximation classique, valable quand N est grand."
+        verifier:
+          - {expression: "sqrt(2 * log(2) * 365)", attendu: 22.5, tolerance: 0.05, libelle: "Seuil de 50 %, N = 365"}
+          - {expression: "sqrt(2 * log(2) * 2 ** 64) / 1e9", attendu: 5, tolerance: 0.1, libelle: "Seuil de 50 %, N = 2^64, en milliards"}
       - type: texte
-        texte: "Ce raisonnement aide à *repérer une fraude*, à *sécuriser des données*, à *évaluer un risque*."
-        voix_off: "Ce raisonnement n'est pas un simple jeu. Il aide à repérer une fraude, à sécuriser des données, à évaluer un risque."
+        texte: "C'est l'*attaque des anniversaires*. D'où des empreintes de *256 bits*, comme SHA-256."
+        voix_off: "Les cryptographes appellent cela l'attaque des anniversaires. C'est pourquoi les empreintes modernes, comme SHA-256, utilisent deux cent cinquante-six bits : il faudrait alors environ deux puissance cent vingt-huit essais. Hors de portée."
+        note: "2¹²⁸ ≈ 3,4 × 10³⁸ essais"
+        verifier:
+          - {expression: "2 ** 128 / 1e38", attendu: 3.4, tolerance: 0.05, libelle: "2^128, en 10^38"}
       - type: etapes
         texte: "ACTU-BASICS, c'est quatre rendez-vous"
         etapes:
@@ -127,7 +151,7 @@ editions:
           - "Apprendre les statistiques"
           - "Comprendre les probabilités"
           - "Les statistiques en pratique"
-        voix_off: "C'est la mission d'ACTU-BASICS. Comprendre le monde par les chiffres. Apprendre les statistiques. Comprendre les probabilités. Et voir comment on s'en sert vraiment : data science, actuariat, économie, assurance."
+        voix_off: "C'est la mission d'ACTU-BASICS. Comprendre le monde par les chiffres. Apprendre les statistiques. Comprendre les probabilités. Et voir à quoi elles servent vraiment."
       - type: texte
         texte: "Votre intuition vient de se tromper. *C'est exactement comme ça qu'on apprend.*"
         voix_off: "Votre intuition vient de se tromper. Bonne nouvelle : c'est exactement comme ça qu'on apprend."
@@ -138,59 +162,54 @@ editions:
   en:
     titre: "What if numbers changed the way you see the world?"
     legende: |
-      23 people in a room: what are the odds that two of them share a birthday? Your intuition will probably get it wrong. That is where ACTU-BASICS starts: understanding the world, learning statistics and probability, and seeing what they are used for. Assumption: 365 equally likely days.
+      23 people in a room: what are the odds that two of them share a birthday? Your intuition will probably get it wrong. And the same calculation protects your data: it's the "birthday attack" in cryptography. Welcome to ACTU-BASICS: understanding the world, learning statistics and probability, and seeing what they are used for. Assumption: 365 equally likely days.
     hashtags: [probability, statistics, math]
     scenes:
       - type: accroche
         texte: "What if numbers changed *the way you see* the world?"
-        voix_off: "What if numbers changed the way you see the world? Let's try a quick test. It takes two minutes."
+        voix_off: "What if numbers changed the way you see the world? Let's try a test."
       - type: exercice
         texte: "23 people in a room. What are the odds that *two of them* share a birthday?"
-        voix_off: "Picture twenty-three people in a room. What are the odds that two of them were born on the same day of the year? Keep your answer in mind."
+        voix_off: "Picture twenty-three people in a room. What are the odds that two of them share a birthday? Same day, same month. Keep your answer in mind."
         etiquette: "TEST"
         pause: 3
       - type: texte
-        texte: "Most people's gut says: *23 days out of 365*, about *6%*."
-        voix_off: "Most people's gut reasoning goes like this: twenty-three days out of three hundred sixty-five, about six percent. Very unlikely."
+        texte: "A tempting line of reasoning: *23 days out of 365*, about *6%*."
+        voix_off: "A tempting line of reasoning: twenty-three days out of three hundred sixty-five, about six percent. Hardly anything."
         verifier:
           - {expression: "100 * 23 / 365", attendu: 6.3, tolerance: 0.75, libelle: "23 out of 365, in %"}
-      - type: correction
-        texte: "In fact:"
-        reponse: "Better than even odds"
-        voix_off: "In fact, the odds are better than even."
       - type: chiffre
         valeur: 50.7
         suffixe: {fr: " %", en: "%"}
         decimales: 1
-        texte: "chance that at least two people share a birthday"
-        voix_off: "Fifty point seven percent. With just twenty-three people."
+        texte: "chance that at least two people *share a birthday*"
+        voix_off: "In fact, the odds are better than even: fifty point seven percent. With just twenty-three people."
+        note: "Assumption: 365 equally likely days, no February 29."
         verifier:
           - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(23)))", attendu: 50.7, libelle: "P(at least one shared birthday, 23 people), in %"}
       - type: titre
         numero: 1
         texte: "Why our intuition fails"
         voix_off: "So why is our intuition so far off?"
-      - type: etapes
-        texte: "We don't count people, we count *pairs*"
-        etapes:
-          - "23 people"
-          - "23 × 22 ÷ 2 = *253 pairs*"
-          - "*253 chances* for a coincidence"
-        voix_off: "Because we don't compare one person with the others: we compare every pair. Twenty-three people. Twenty-three times twenty-two, divided by two: two hundred fifty-three pairs. That's two hundred fifty-three chances for a coincidence."
+      - type: animation
+        texte: "Everyone is compared with *everyone*"
+        animation: {modele: paires, n: 23}
+        note: "23 × 22 ÷ 2 = 253 pairs"
+        voix_off: "Because we think of our own birthday, compared with the twenty-two others. But every pair of people counts. Twenty-three times twenty-two, divided by two: two hundred fifty-three pairs. That many chances for a coincidence."
         verifier:
           - {expression: "comb(23, 2)", attendu: 253, libelle: "Number of pairs among 23 people"}
       - type: formule
-        texte: "The trick: compute the *opposite*"
+        texte: "Compute the *opposite*: all different"
         formule:
-          - '\frac{365}{365}\times\frac{364}{365}\times\cdots\times\frac{343}{365}'
-          - '\approx 0.493'
+          - '\frac{365}{365}\times\frac{364}{365}\times\frac{363}{365}'
+          - '\times\cdots\times\frac{343}{365}\approx 0.493'
           - '1-0.493\approx 0.507'
-        voix_off: "The easiest way is to compute the opposite: the probability that all birthdays are different. Multiply three hundred sixty-five over three hundred sixty-five, then three hundred sixty-four over three hundred sixty-five, and so on up to the twenty-third person. You get forty-nine point three percent. What's left, fifty point seven percent, is the probability of a coincidence."
+        voix_off: "The easiest way is to compute the opposite: the probability that all birthdays are different. The second person must avoid one day, the third two days, and so on. Multiply these twenty-three fractions and you get forty-nine point three percent. What's left, fifty point seven percent, is the probability of a coincidence."
         verifier:
           - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P(all different, 23 people)"}
           - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "P(at least one shared birthday, 23 people)"}
       - type: courbe
-        texte: "The bigger the group, the more *certain* the coincidence"
+        texte: "The bigger the group, the more *likely* the coincidence"
         courbe:
           variable: n
           de: 1
@@ -219,9 +238,35 @@ editions:
         verifier:
           - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(40)))", attendu: 89.1, libelle: "P(40 people), in %"}
           - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(41)))", attendu: 90.3, libelle: "P(41 people), in %"}
+      - type: titre
+        numero: 2
+        texte: "The same math protects your data"
+        voix_off: "This is more than a party trick. The same math protects your data."
+      - type: etapes
+        texte: "A *hash* sums up a file in a short code"
+        etapes:
+          - "64-bit code: *18 billion billion* values"
+          - "Two files, same code: a *collision*"
+        voix_off: "In computing, a hash function sums up any file in a short code. With a sixty-four-bit code, there are about eighteen billion billion possible values. If two different files get the same code, that's a collision: just like two people born on the same day."
+        verifier:
+          - {expression: "2 ** 64 / 1e18", attendu: 18.4, tolerance: 0.1, libelle: "2^64, in billion billions"}
+      - type: formule
+        texte: "How many files for *even odds* of a collision?"
+        formule:
+          - 'n\approx\sqrt{2\,\ln 2\times N}'
+          - 'N=365\ \Rightarrow\ n\approx 22.5'
+          - 'N=2^{64}\ \Rightarrow\ n\approx 5\times 10^{9}'
+        voix_off: "One rule answers both questions. The number of tries you need is about the square root of two times the natural log of two, times N. For three hundred sixty-five days, you get twenty-two point five: our twenty-three people again. For a sixty-four-bit code, about five billion files are enough."
+        note: "Standard approximation, valid when N is large."
+        verifier:
+          - {expression: "sqrt(2 * log(2) * 365)", attendu: 22.5, tolerance: 0.05, libelle: "50% threshold, N = 365"}
+          - {expression: "sqrt(2 * log(2) * 2 ** 64) / 1e9", attendu: 5, tolerance: 0.1, libelle: "50% threshold, N = 2^64, in billions"}
       - type: texte
-        texte: "This reasoning helps *spot fraud*, *secure data* and *assess risk*."
-        voix_off: "This isn't just a party trick. The same reasoning helps spot fraud, secure data and assess risk."
+        texte: "It's called the *birthday attack*. Hence *256-bit* hashes, like SHA-256."
+        voix_off: "Cryptographers call this the birthday attack. That's why modern hashes, like SHA-256, use two hundred fifty-six bits: you would then need about two to the power of one hundred twenty-eight tries. Out of reach."
+        note: "2¹²⁸ ≈ 3.4 × 10³⁸ tries"
+        verifier:
+          - {expression: "2 ** 128 / 1e38", attendu: 3.4, tolerance: 0.05, libelle: "2^128, in 10^38"}
       - type: etapes
         texte: "ACTU-BASICS: four ways in"
         etapes:
@@ -229,7 +274,7 @@ editions:
           - "Learning statistics"
           - "Understanding probability"
           - "Statistics in practice"
-        voix_off: "That's the mission of ACTU-BASICS. Understanding the world through numbers. Learning statistics. Understanding probability. And seeing how they are really used: data science, actuarial science, economics, insurance."
+        voix_off: "That's the mission of ACTU-BASICS. Understanding the world through numbers. Learning statistics. Understanding probability. And seeing what they are really used for."
       - type: texte
         texte: "Your intuition just got it wrong. *That's exactly how learning starts.*"
         voix_off: "Your intuition just got it wrong. Good news: that's exactly how learning starts."

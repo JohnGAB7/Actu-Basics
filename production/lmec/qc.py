@@ -113,7 +113,8 @@ def nombres(texte: str, langue: str) -> list[float]:
 def _textes_edition(ed) -> list[str]:
     return ([ed.titre, ed.legende] + [s.texte for s in ed.scenes] + [s.voix_off for s in ed.scenes if s.voix_off]
             + [e for s in ed.scenes for e in s.extra.get("etapes", [])]
-            + [s.extra["reponse"] for s in ed.scenes if s.extra.get("reponse")])
+            + [s.extra["reponse"] for s in ed.scenes if s.extra.get("reponse")]
+            + [s.extra["note"] for s in ed.scenes if s.extra.get("note")])
 
 
 # --------------------------------------------------------------------------- fiche

@@ -27,7 +27,12 @@ Les scènes d'actualité restent disponibles (`accroche`, `chiffre`, `texte`, `g
 | `etapes` | `texte` (titre), `etapes` (liste) | Lignes numérotées qui apparaissent quand la voix les annonce |
 | `courbe` | `courbe` : `expression` + `variable` + `de` + `a` (calculée) ou `points`, `format_y: pourcent`, `axe_x`, `reperes` | Courbe tracée progressivement, repères annotés |
 | `exercice` | `texte`, `pause` (s), `etiquette` | Badge « À VOUS », question, compte à rebours après la voix |
-| `correction` | `reponse` et/ou `etapes` | Badge « CORRECTION », démarche, réponse surlignée |
+| `correction` | `reponse` et/ou `etapes` | Badge « CORRECTION », démarche, réponse dans un encadré mesuré sur son texte |
+| `animation` | `texte` (titre), `animation: {modele: paires, n: 23}` | `paires` : n points sur un cercle, toutes les paires reliées une à une, compteur. Durée minimale 5 s |
+
+**Champ commun `note`** (toutes les scènes pédagogiques sauf `fin`) : une mention courte et discrète en bas de l'image, non lue par la voix, 140 caractères au plus. Usage : hypothèse de calcul (« 365 jours équiprobables »), détail d'un calcul (« 23 × 22 ÷ 2 = 253 »), ordre de grandeur. Elle allège l'écran principal sans perdre la rigueur.
+
+**Réponse d'un test par un chiffre** : un exercice peut être résolu par une scène `chiffre` qui le suit, à condition qu'elle ait un bloc `verifier`. C'est le cas du test d'ouverture de la vidéo de lancement (réponse : 50,7 %).
 
 **Synchronisation avec la voix** : si la voix off a une phrase de plus que d'étapes, la première phrase introduit et chaque phrase suivante fait apparaître une étape. Avec autant de phrases que d'étapes, chacune en fait apparaître une. Sinon, les étapes se répartissent sur les phrases.
 
@@ -54,7 +59,7 @@ Expressions acceptées : nombres, `+ - * / // % **`, comparaisons, `sum`, `prod`
 | Formule sans voix off | ❌ fiche refusée |
 | Scène pédagogique dans une fiche d'actualité | ❌ fiche refusée |
 | Nombre annoncé ≠ nombre recalculé | ❌ |
-| Exercice sans correction | ❌ |
+| Exercice sans correction (ni chiffre vérifié qui y répond) | ❌ |
 | Formule illisible par le moteur | ❌ |
 | Durée hors de la plage du format (SHORT 15–90 s, EDUCATIONAL 90–600 s, YOUTUBE_LESSON 300–3 600 s) | ⚠️ |
 | Aucun nombre recalculé dans la fiche | ⚠️ |
@@ -67,12 +72,21 @@ Les plafonds des plateformes (TikTok, Reels, Shorts) ne sont contrôlés que pou
 
 ## Format YOUTUBE_LESSON (16:9) : état actuel
 
-Le moteur produit déjà le 16:9. Il reprend les mises en page verticales, adaptées à la largeur, avec des marges de confort (`zones_securite_lecon`) et le logo de fin (`logo.lecon`). Ce rendu est utilisable pour des essais. Avant le premier vrai cours, il manque une mise en page dédiée : deux colonnes texte et visuel, sommaire et chapitres YouTube, formules plus grandes, tableau de bord d'exercice.
+Première mise en page dédiée (novembre 2026), **à ne pas considérer comme terminée** : elle passe les tests techniques mais n'a pas encore été jugée sur un vrai cours.
+- **Deux colonnes** pour les scènes pédagogiques : titre à gauche (36 % de la largeur, centré verticalement, filet d'accent), visuel à droite (formule, courbe, animation, étapes, compte à rebours).
+- **Cartes de chapitre** : grand numéro à gauche, titre à droite.
+- **Corrections** sur une seule colonne centrée, car les étapes ont besoin de largeur.
+- Marges de confort `zones_securite_lecon`, logo de fin `logo.lecon`.
+
+Reste à faire avant le premier vrai cours : sommaire et chapitres YouTube (horodatage dans la description), écrans plus denses autorisés en 16:9 (un cours se regarde sur grand écran), relecture visuelle sur une leçon de 10 minutes au moins.
 
 ## Habillage sonore (prototype)
 
-`lmec/son.py` synthétise tout, sans fichier ni service extérieur :
-- une **signature** de quatre notes de cloche ascendantes (la, do#, mi, la), deux notes au début et la signature complète sur le logo de fin ;
-- une **nappe** : un accord tenu très bas, qui baisse encore quand la voix parle.
+`lmec/son.py` synthétise tout, sans fichier ni service extérieur ni droits à payer :
+- une **signature** de quatre notes de cloche ascendantes (la, do#, mi, la) : un souffle monte avant la dernière note, qui s'ouvre sur un accord tenu, avec une réverbération légère. Début de la signature à l'ouverture, signature complète sur le logo de fin ;
+- une **nappe** : un accord tenu très bas, qui baisse encore quand la voix parle ;
+- des **repères** : un tic discret à chaque seconde d'un compte à rebours, un carillon de deux notes quand un chiffre s'arrête ou qu'une réponse apparaît.
 
-Les niveaux se règlent dans `charte.yaml`, section `son`. C'est un prototype : une identité sonore composée devra le remplacer avant publication.
+Les niveaux se règlent dans `charte.yaml`, section `son` (`signature_db`, `nappe_db`, `tic_db`, `revele_db`, `reperes: false` pour couper les repères). C'est un prototype : une identité sonore composée devra le remplacer avant publication.
+
+Voix de la vidéo de lancement : voir [voix-video-lancement.md](voix-video-lancement.md).

@@ -14,7 +14,7 @@ from .rendu import Rendu
 FONDU_S = 0.25          # fondu enchaîné entre scènes
 HAUTEUR_BARRE = 10      # barre de progression (pixels)
 DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0,
-              "titre": 2.5, "formule": 5.0, "etapes": 4.0, "courbe": 5.0, "exercice": 5.0, "correction": 4.0}
+              "titre": 2.5, "formule": 5.0, "etapes": 4.0, "courbe": 5.0, "exercice": 5.0, "correction": 4.0, "animation": 5.0}
 
 
 def verifier_ffmpeg() -> None:

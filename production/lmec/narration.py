@@ -19,6 +19,16 @@ from .tts import Cache, ErreurTTS, Fournisseur, duree_wav
 
 AMORCE_S = 0.35      # silence avant la voix au début de chaque scène (le texte commence à apparaître)
 ENTRE_PHRASES_S = 0.25
+# Silence après une phrase selon sa ponctuation : une question laisse le temps de réfléchir,
+# un deux-points annonce la suite sans casser l'élan.
+PAUSES_PONCTUATION = {"?": 0.6, "!": 0.4, ".": 0.32, "…": 0.5, ":": 0.12, ";": 0.2}
+
+
+def pause_apres(phrase: str) -> float:
+    fin = phrase.rstrip()[-1:]
+    return PAUSES_PONCTUATION.get(fin, ENTRE_PHRASES_S)
+
+
 FIN_SCENE_S = 0.5    # respiration après la dernière phrase d'une scène
 TAUX = 48000
 CIBLE_LUFS = -16     # volume homogène, adapté aux réseaux sociaux
@@ -103,8 +113,9 @@ def produire_voix(fiche: Fiche, edition: Edition, fournisseur: Fournisseur, cach
                 n.caracteres += len(dite)
             d = duree_wav(wav)
             if k:
-                parties.append((None, ENTRE_PHRASES_S))
-                t += ENTRE_PHRASES_S
+                pause = pause_apres(phrases[-1].texte)
+                parties.append((None, pause))
+                t += pause
             parties.append((wav, d))
             phrases.append(Phrase(phrase, t, t + d))
             t += d

@@ -96,3 +96,6 @@ son:
   nappe: true                # accord tenu très doux sous la voix
   nappe_db: -30              # niveau sans voix
   nappe_sous_voix_db: -38    # niveau quand la voix parle
+  reperes: true              # tic du compte à rebours, carillon des révélations
+  tic_db: -26
+  revele_db: -20

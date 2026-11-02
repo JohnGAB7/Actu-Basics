@@ -1125,3 +1125,54 @@ def np_sinus(duree):
 def test_fiche_actualite_inchangee():
     fiche = charger_fiche(FICHE_REELLE)
     assert fiche.type_fiche == "actualite" and fiche.format == "short" and not fiche.habillage_sonore
+
+
+def test_scene_animation_et_note(tmp_path):
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    anim = next(s for s in ed.scenes if s.type == "animation")
+    assert anim.extra["animation"] == {"modele": "paires", "n": 23} and "253" in anim.extra["note"]
+    assert any(s.extra.get("note", "").startswith("Hypothèse") for s in ed.scenes)
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    i = ed.scenes.index(anim)
+    debut, fin = r.dessiner(anim, i, len(ed.scenes), 1.0), r.dessiner(anim, i, len(ed.scenes), 4.0)
+    assert debut.tobytes() != fin.tobytes()                   # les paires se tracent
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "animation")
+    scene["animation"] = {"modele": "spirale", "n": 500}
+    scene["note"] = "x" * 200
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "modele" in str(exc.value) and "note" in str(exc.value)
+
+
+def test_application_cryptographie_verifiee():
+    """L'application concrète (collisions d'empreintes) est recalculée comme le reste."""
+    assert pedagogie.evaluer("sqrt(2 * log(2) * 365)") == pytest.approx(22.49, abs=0.01)
+    assert pedagogie.evaluer("sqrt(2 * log(2) * 2 ** 64) / 1e9") == pytest.approx(5.06, abs=0.01)
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        textes = " ".join(s.voix_off for s in fiche.editions[langue].scenes)
+        assert "SHA-256" in textes
+
+
+def test_reperes_sonores_et_signature():
+    from lmec import son
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    r = Rendu(fiche, "fr", CHARTE, "video", True)
+    durees = [r.duree_animation(s) + 2 for s in ed.scenes]
+    reperes = r.reperes_sonores(ed.scenes, durees)
+    pauses = sum(int(s.extra.get("pause", 3)) for s in ed.scenes if s.type == "exercice")
+    assert sum(1 for _, n in reperes if n == "tic") == pauses                # un tic par seconde de réflexion
+    assert sum(1 for _, n in reperes if n == "revele") == sum(1 for s in ed.scenes if s.type == "chiffre") \
+        + sum(1 for s in ed.scenes if s.type == "correction" and s.extra.get("reponse"))
+    assert all(0 <= t < sum(durees) for t, _ in reperes)
+    sig = son.signature()
+    assert abs(sig).max() == pytest.approx(1.0) and (sig == son.signature()).all()   # identique à chaque rendu
+    assert abs(sig[-100:]).max() < 0.01                                       # extinction douce
+
+
+def test_pauses_de_narration_selon_la_ponctuation():
+    from lmec.narration import pause_apres
+    assert pause_apres("Une question ?") > pause_apres("Une phrase.") > pause_apres("Une énumération :")

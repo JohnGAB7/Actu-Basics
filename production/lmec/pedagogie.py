@@ -21,9 +21,11 @@ DUREES_FORMAT = {            # (min, max) en secondes, avertissement seulement
     "educational": (90, 600),
     "youtube_lesson": (300, 3600),
 }
+MODELES_ANIMATION = ("paires",)   # paires : n points sur un cercle, reliés deux à deux
+
 FORMATS_SCENES = {           # scènes possibles par format (au-delà : avertissement)
     "short": {"accroche", "chiffre", "texte", "graphique", "source", "fin", "formule", "etapes", "courbe",
-              "exercice", "correction"},
+              "exercice", "correction", "animation"},
 }
 LIMITE_RANGE = 1_000_000
 LIMITE_FACTORIELLE = 5_000
@@ -206,6 +208,21 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
         extra["pause"] = float(pause)
         if s.get("etiquette") is not None:
             extra["etiquette"] = str(s["etiquette"])
+    if type_ == "animation":
+        a = s.get("animation")
+        if not isinstance(a, dict) or a.get("modele") not in MODELES_ANIMATION:
+            erreurs.append(f"{ctx} : bloc « animation » avec « modele » parmi {', '.join(MODELES_ANIMATION)}")
+        else:
+            n = a.get("n")
+            if not isinstance(n, int) or isinstance(n, bool) or not 2 <= n <= 60:
+                erreurs.append(f"{ctx}.animation.n : nombre entier de points entre 2 et 60")
+            else:
+                extra["animation"] = {"modele": a["modele"], "n": n}
+    if s.get("note") is not None:   # petite mention en bas d'écran (hypothèse, précision), non lue
+        if not isinstance(s["note"], str) or not s["note"].strip() or len(s["note"]) > 140:
+            erreurs.append(f"{ctx}.note : texte court (140 caractères au plus)")
+        else:
+            extra["note"] = s["note"].strip()
     if type_ == "chiffre":
         for cle in ("valeur", "unite", "prefixe", "suffixe", "decimales"):
             if s.get(cle) is not None:
@@ -248,12 +265,13 @@ def controler_pedagogie(fiche, r, langues=("fr", "en")) -> None:
     for l in langues:
         ed = fiche.editions[l]
         types = [s.type for s in ed.scenes]
-        # Chaque exercice est suivi d'une correction.
+        # Chaque exercice est suivi d'une correction, ou d'un chiffre révélé dont le calcul est
+        # vérifié (bloc « verifier ») : la réponse d'un test peut être un grand chiffre.
         attente = 0
-        for t in types:
-            if t == "exercice":
+        for s in ed.scenes:
+            if s.type == "exercice":
                 attente += 1
-            elif t == "correction":
+            elif s.type == "correction" or (s.type == "chiffre" and attente and s.extra.get("verifier")):
                 if attente == 0:
                     r.avertir("Correction sans exercice avant elle", l)
                 attente = max(0, attente - 1)
