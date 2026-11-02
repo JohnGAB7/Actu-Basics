@@ -73,33 +73,26 @@ Proposition de rythme au lancement : 3 SHORT par semaine (dont au moins 1 d'actu
 ## 6. Vidéo de lancement
 
 **Titre de travail** : « Et si les chiffres changeaient votre façon de voir le monde ? »
-**Format** : EDUCATIONAL, 2 min 25 en FR et 2 min 19 en EN (rendu du prototype avec la voix Piper). **Fiche** : `contenus/fiches/2026-11-lancement-actu-basics.yaml`.
+**Format** : EDUCATIONAL, version 3 (refonte demandée par JG) : **8 min 01 en FR, 7 min 38 en EN** avec la voix Kokoro. La durée n'est pas une contrainte : elle découle de la profondeur pédagogique (constitution éditoriale, section 10). **Fiche** : `contenus/fiches/2026-11-lancement-actu-basics.yaml`. **Storyboard scène par scène** (durées réelles, narration FR et EN, texte à l'écran, animation, intention) : [STORYBOARD_LANCEMENT.md](STORYBOARD_LANCEMENT.md). **Contrôle qualité** (vérification mathématique et pédagogique) : [QC_LANCEMENT.md](QC_LANCEMENT.md).
 
-**Idée** : prouver la valeur éducative par l'expérience, plutôt que l'annoncer. La vidéo piège d'abord l'intuition du spectateur avec le paradoxe des anniversaires. Elle explique ensuite, le fait participer, puis présente la mission et les quatre familles.
+**Idée** : la vidéo n'annonce pas la réponse, elle la construit. Le spectateur estime d'abord, puis refait le raisonnement avec nous, s'entraîne deux fois et repart avec une méthode. Principe de réalisation : la voix raconte, l'image démontre.
 
-| Temps (FR) | Scène | Rôle |
+| Chapitre | Contenu | Objectif pédagogique |
 |---|---|---|
-| 0:00 | Accroche : le titre | Promesse |
-| 0:07 | TEST : 23 personnes, même anniversaire ? (compte à rebours) | Participation immédiate |
-| 0:20 | « Spontanément : environ 6 % » | L'intuition |
-| 0:28 | « Plus d'une chance sur deux » → 50,7 % | Révélation, effet de surprise |
-| 0:38 | Chapitre 1 : pourquoi notre intuition se trompe | Rythme, respiration |
-| 0:41 | 253 paires (étapes) | Comprendre sans formule |
-| 0:55 | Formule par l'événement contraire, ligne à ligne | Montrer la rigueur |
-| 1:19 | Courbe calculée de 1 à 70 personnes | Visualiser |
-| 1:30 | À VOUS : combien pour 90 % ? (compte à rebours) | Exercice |
-| 1:40 | Correction : 41 personnes | Récompense |
-| 1:52 | Applications : fraude, données, risque | Utilité réelle |
-| 1:59 | Les quatre familles d'ACTU-BASICS | Mission |
-| 2:14 | « Votre intuition vient de se tromper. C'est exactement comme ça qu'on apprend. » | Conclusion mémorable |
-| 2:21 | Logo, slogan dit à voix haute, signature sonore | Marque (fin à 2:25) |
+| A · Le défi | 23 silhouettes, estimation, hypothèses (365 jours, 29 février ignoré) | Faire estimer avant d'expliquer |
+| B · Compter les paires | A, B, C, D, une paire à la fois (3 + 2 + 1 = 6) ; A–B = B–A, d'où la division par 2 | Compter les paires |
+| C · De 4 à 23 | 22 + 21 + … + 1 = 253, puis n(n − 1)/2 ; exercice à 10 personnes ; les paires ne sont pas indépendantes | Généraliser, éviter « 253/365 » |
+| D · Tous différents | 365/365 × 364/365 × … ≈ 0,493, puis le complément : 50,7 % | Produit conditionnel et complément |
+| E · L'intuition | vos 22 paires (≈ 6 %) contre les 253 paires du groupe | Pourquoi l'intuition se trompe |
+| F · La courbe | repères 23 / 40 / 41 / 50, exercice : seuil de 90 % atteint à 41 | Comprendre plutôt que mémoriser |
+| G · Le monde réel | collisions d'empreintes numériques (exemple prudent), les quatre piliers, conclusion | Utilité, mission de la marque |
 
-Temps mesurés sur le rendu du prototype. Ils changent avec la voix retenue.
+Conclusion : « Un chiffre ne raconte pas toujours toute l'histoire. Apprendre à le comprendre change notre façon de voir le monde. ACTU-BASICS — Éveiller par les chiffres. »
 
-**Points à arbitrer** :
-- Voix : la voix gratuite (Piper) suffit pour le prototype. Pour la vraie vidéo de lancement, une voix humaine enregistrée (`--voix manuel`) ou une voix de synthèse payante serait nettement plus captivante. C'est une décision de dépense, non engagée.
-- Identité sonore : la signature (quatre notes ascendantes, « l'éveil ») et la nappe sont des prototypes synthétisés, sans droits. Une identité composée reste à valider.
-- Phrase d'application (« repérer une fraude, sécuriser des données, évaluer un risque ») : formulation générale à relire par l'éditorial. Exemple établi : en cryptographie, l'« attaque des anniversaires » exploite exactement ce raisonnement.
+**Points à arbitrer par JG** :
+- Voix : Kokoro (gratuit, local) est la voix prioritaire, Piper le secours. À valider à l'écoute ; licences et attribution SIWIS dans `docs/voice-licenses.md`.
+- Prononciation française de « ACTU-BASICS » par Kokoro (« aktybazik ») : à confirmer ou à corriger dans le lexique de `production/tts.yaml`.
+- Identité sonore : signature et nappe synthétisées, prototypes sans droits.
 
 ## 7. Ce qui reste à faire avant la production en série
 
