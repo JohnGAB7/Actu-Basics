@@ -2,7 +2,7 @@
 
 > Généré à partir de `contenus/fiches/2026-11-lancement-actu-basics.yaml` et des **temps réels de la voix Kokoro** (FR `ff_siwis`, EN `af_heart`). Les durées changent si le texte ou la voix changent : relancer la génération plutôt que corriger à la main.
 
-Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'image démontre ; chaque étape, ligne de formule ou phase d'animation apparaît sur la phrase qui l'annonce.
+Durée totale : **FR 7:57.7**, **EN 7:35.4**. Principe : la voix raconte, l'image démontre ; chaque étape, ligne de formule ou phase d'animation apparaît sur la phrase qui l'annonce.
 
 ## A · Le défi
 
@@ -115,11 +115,11 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : Ten times nine is ninety. Divided by two: forty-five pairs.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.4
 
-### 13. texte — 2:35.5, 22.6 s (EN 21.8 s)
+### 13. etapes — 2:35.5, 22.6 s (EN 21.8 s)
 
 - **Intention** : Nuance : les paires ne sont pas indépendantes, on ne peut pas faire 253/365.
-- **À l'écran** : 253 paires, mais pas 253 chances qui s'additionnent
-- **Visuel** : texte, mots clés en accent
+- **À l'écran** : 253 paires, mais pas 253 chances qui s'additionnent — Les paires se chevauchent : A–B et A–C partagent A / Donc 253 ÷ 365 n'est pas la réponse / 40 personnes : 780 ÷ 365 > 2, impossible pour une probabilité
+- **Visuel** : étapes révélées une à une
 - **Voix FR** : Attention : ces deux cent cinquante-trois paires ne sont pas indépendantes. Elles se chevauchent : les paires formées par A et B, et par A et C, partagent la même personne A. On ne peut donc pas simplement calculer deux cent cinquante-trois sur trois cent soixante-cinq. D'ailleurs, avec quarante personnes, ce calcul donnerait plus de deux, alors qu'une probabilité ne dépasse jamais un.
 - **Voice EN** : Careful: these two hundred fifty-three pairs are not independent. They overlap: the pair of A and B and the pair of A and C share the same person, A. So we can't just compute two hundred fifty-three out of three hundred sixty-five. In fact, with forty people, that calculation would give more than two, and a probability can never be more than one.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 4.8, 10.4, 15.8
@@ -152,16 +152,16 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : Let's bring people in one at a time. The first person can be born on any day: three hundred sixty-five days out of three hundred sixty-five. To avoid the first person's birthday, the second has three hundred sixty-four days out of three hundred sixty-five. If the first two are different, the third must avoid two days: three hundred sixty-three out of three hundred sixty-five. And so on: the twenty-third person must avoid twenty-two days already taken, which leaves three hundred forty-three.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.8, 8.8, 16.7, 24.0
 
-### 17. formule — 3:45.8, 29.7 s (EN 30.0 s)
+### 17. formule — 3:45.8, 27.1 s (EN 27.4 s)
 
 - **Intention** : Multiplier les probabilités conditionnelles : P₀ ≈ 0,493 (objectif 4).
 - **À l'écran** : On multiplie ces probabilités — formule ligne à ligne : `P_0=\dfrac{365}{365}\times\dfrac{364}{365}\times\dfrac{363}{365}` ; `\times\cdots\times\dfrac{343}{365}` ; `\approx 0{,}493`
 - **Visuel** : lignes révélées une à une
-- **Voix FR** : Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu : ce sont des probabilités conditionnelles, et elles se multiplient. On multiplie trois cent soixante-cinq sur trois cent soixante-cinq, par trois cent soixante-quatre sur trois cent soixante-cinq, puis par trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite, jusqu'à trois cent quarante-trois sur trois cent soixante-cinq. Résultat : environ zéro virgule quatre cent quatre-vingt-treize, soit quarante-neuf virgule trois pour cent.
-- **Voice EN** : Each fraction assumes there's been no match so far: these are conditional probabilities, and they multiply. We multiply three hundred sixty-five over three hundred sixty-five, by three hundred sixty-four over three hundred sixty-five, then by three hundred sixty-three over three hundred sixty-five. And so on, all the way to three hundred forty-three over three hundred sixty-five. The result: about zero point four nine three, or forty-nine point three percent.
-- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 7.4, 18.3, 22.9
+- **Voix FR** : Ces probabilités se multiplient. Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu : trois cent soixante-cinq sur trois cent soixante-cinq, puis trois cent soixante-quatre sur trois cent soixante-cinq, puis trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite, jusqu'à trois cent quarante-trois sur trois cent soixante-cinq. Résultat : environ zéro virgule quatre cent quatre-vingt-treize, soit quarante-neuf virgule trois pour cent.
+- **Voice EN** : These probabilities multiply. Each fraction assumes there's been no match so far: three hundred sixty-five over three hundred sixty-five, then three hundred sixty-four over three hundred sixty-five, then three hundred sixty-three over three hundred sixty-five. And so on, all the way to three hundred forty-three over three hundred sixty-five. The result: about zero point four nine three, or forty-nine point three percent.
+- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.5, 15.6, 20.3
 
-### 18. animation — 4:15.5, 13.2 s (EN 12.5 s)
+### 18. animation — 4:12.8, 13.2 s (EN 12.5 s)
 
 - **Intention** : Visualiser les deux issues complémentaires sur une seule barre.
 - **À l'écran** : L'un ou l'autre — Tous différents : 49,3 % / Au moins une coïncidence : 50,7 % / Ensemble : 100 %
@@ -170,16 +170,16 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : There are only two possibilities. Either all the birthdays are different: forty-nine point three percent. Or at least two people share one: that's everything else. Together, they make one hundred percent.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.3, 6.8, 10.7
 
-### 19. formule — 4:28.7, 12.8 s (EN 11.9 s)
+### 19. formule — 4:26.0, 10.6 s (EN 9.9 s)
 
 - **Intention** : Écrire le complément : 1 − P₀ (objectif 4).
 - **À l'écran** : Le complément à 1 — formule ligne à ligne : `1-P_0` ; `=1-0{,}493` ; `\approx 0{,}507`
 - **Visuel** : lignes révélées une à une
-- **Voix FR** : Pour obtenir la probabilité d'au moins une coïncidence, on retire donc P zéro de un. Un moins P zéro. Un moins zéro virgule quatre cent quatre-vingt-treize. Environ zéro virgule cinq cent sept.
-- **Voice EN** : To get the probability of at least one match, we subtract P zero from one. One minus P zero. One minus zero point four nine three. About zero point five oh seven.
-- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 5.5, 7.0, 10.1
+- **Voix FR** : Reste le complément. Au moins une coïncidence, c'est un moins P zéro. Un moins zéro virgule quatre cent quatre-vingt-treize. Environ zéro virgule cinq cent sept.
+- **Voice EN** : Now the complement. At least one match is one minus P zero. One minus zero point four nine three. About zero point five oh seven.
+- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.0, 4.9, 8.0
 
-### 20. chiffre — 4:41.4, 10.0 s (EN 8.0 s)
+### 20. chiffre — 4:36.6, 10.0 s (EN 8.0 s)
 
 - **Intention** : Révéler 50,7 % et répondre au défi d'ouverture (objectif 1).
 - **À l'écran** : 50.7  — de chances qu'au moins deux des 23 personnes aient le même anniversaire
@@ -190,7 +190,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 
 ## E · Pourquoi l'intuition se trompe
 
-### 21. titre — 4:51.5, 3.0 s (EN 3.0 s)
+### 21. titre — 4:46.6, 3.0 s (EN 3.0 s)
 
 - **Intention** : Ouvrir la question de l'intuition (objectif 6).
 - **À l'écran** : Pourquoi notre intuition se trompe
@@ -198,7 +198,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voix FR** : Pourquoi ce résultat surprend-il autant ?
 - **Voice EN** : So why is this result so surprising?
 
-### 22. animation — 4:54.5, 16.4 s (EN 16.6 s)
+### 22. animation — 4:49.7, 16.4 s (EN 16.6 s)
 
 - **Intention** : Montrer la différence : vos 22 paires contre les 253 paires du groupe.
 - **À l'écran** : Une intuition incomplète — Votre anniversaire face aux 22 autres : 22 paires / Tout le monde avec tout le monde : 253 paires
@@ -207,7 +207,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : Our first instinct is often to think about our own birthday. Against the twenty-two others, that's only twenty-two pairs, and about a six percent chance that someone shares yours. But the question is about the whole group: every pair counts, and there are two hundred fifty-three of them.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 3.7, 10.8
 
-### 23. texte — 5:10.9, 8.3 s (EN 7.9 s)
+### 23. texte — 5:06.1, 8.3 s (EN 7.9 s)
 
 - **Intention** : Reconnaître que « 23/365 » est une idée possible mais incomplète.
 - **À l'écran** : Une intuition possible, mais incomplète : la coïncidence peut concerner n'importe quelle paire
@@ -218,7 +218,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 
 ## F · La courbe et l'exercice des 90 %
 
-### 24. titre — 5:19.2, 2.6 s (EN 2.5 s)
+### 24. titre — 5:14.4, 2.6 s (EN 2.5 s)
 
 - **Intention** : Passer à la pratique.
 - **À l'écran** : À vous de jouer
@@ -226,7 +226,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voix FR** : Et maintenant, à vous de jouer.
 - **Voice EN** : Now it's your turn.
 
-### 25. courbe — 5:21.8, 12.6 s (EN 11.0 s)
+### 25. courbe — 5:17.0, 12.6 s (EN 11.0 s)
 
 - **Intention** : Lire la courbe : 23 → 50,7 %, 50 → 97 % ; elle monte vite.
 - **À l'écran** : La probabilité monte vite — courbe, repères 23 : 50,7 %, 50 : 97,0 %
@@ -235,7 +235,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : Here's the probability of at least one match, by number of people. With twenty-three people, it just passes fifty percent. With fifty people, it reaches ninety-seven percent.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 5.1, 8.8
 
-### 26. exercice — 5:34.4, 14.7 s (EN 13.2 s)
+### 26. exercice — 5:29.6, 14.7 s (EN 13.2 s)
 
 - **Intention** : Exercice : trouver le seuil de 90 % (objectif 5).
 - **À l'écran** : À partir de combien de personnes dépasse-t-on 90 % ? — badge « À VOUS », compte à rebours 6.0 s
@@ -244,7 +244,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : How many people does it take for the probability to pass ninety percent? Take your time and make a guess.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 5.5
 
-### 27. correction — 5:49.1, 12.1 s (EN 10.0 s)
+### 27. correction — 5:44.2, 12.1 s (EN 10.0 s)
 
 - **Intention** : Correction : 40 → 89,1 % (pas encore), 41 → 90,3 %.
 - **À l'écran** : 40 personnes : 89,1 % / 41 personnes : 90,3 % ; réponse : 41 personnes
@@ -253,7 +253,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : With forty people, you're at eighty-nine point one percent: not quite. With forty-one, you reach ninety point three percent. So it takes forty-one people.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 5.5, 9.7
 
-### 28. courbe — 6:01.2, 16.3 s (EN 14.9 s)
+### 28. courbe — 5:56.4, 16.3 s (EN 14.9 s)
 
 - **Intention** : Voir le seuil sur la courbe avec les repères 23, 40, 41, 50.
 - **À l'écran** : Le seuil de 90 % est franchi à 41 — courbe, repères 23 : 50,7 %, 40 : 89,1 %, 41 : 90,3 %, 50 : 97,0 %, seuil 0.9
@@ -262,7 +262,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : On the curve, you can see the crossing. Twenty-three people: fifty point seven percent. Forty: eighty-nine point one. Forty-one: ninety point three, and the line is crossed. Fifty: ninety-seven percent.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.9, 6.5, 9.2, 13.2
 
-### 29. texte — 6:17.5, 10.1 s (EN 9.2 s)
+### 29. texte — 6:12.7, 10.1 s (EN 9.2 s)
 
 - **Intention** : Comprendre pourquoi la courbe accélère : la 41ᵉ personne apporte 40 nouvelles paires.
 - **À l'écran** : Chaque nouvelle personne apporte plus de paires que la précédente
@@ -271,7 +271,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : Why does the curve climb so fast? Because each new person brings more pairs than the one before: the forty-first adds forty all by itself.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.9
 
-### 30. etapes — 6:27.6, 16.0 s (EN 17.1 s)
+### 30. etapes — 6:22.7, 16.0 s (EN 17.1 s)
 
 - **Intention** : Récapituler la méthode en trois gestes réutilisables.
 - **À l'écran** : Ce qu'il faut retenir — Compter les paires : n(n − 1) ÷ 2 / Passer par le contraire : tous différents / Multiplier, puis 1 − P₀
@@ -282,7 +282,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 
 ## G · Application et conclusion
 
-### 31. titre — 6:43.6, 3.9 s (EN 3.1 s)
+### 31. titre — 6:38.7, 3.9 s (EN 3.1 s)
 
 - **Intention** : Montrer que le raisonnement sert ailleurs.
 - **À l'écran** : Et dans le monde réel ?
@@ -290,7 +290,7 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voix FR** : Ce raisonnement sert aussi bien au-delà des anniversaires.
 - **Voice EN** : This reasoning goes far beyond birthdays.
 
-### 32. etapes — 6:47.5, 14.5 s (EN 14.3 s)
+### 32. etapes — 6:42.6, 14.5 s (EN 14.3 s)
 
 - **Intention** : Introduire les empreintes numériques sans jargon.
 - **À l'écran** : Les empreintes numériques — Un fichier → un code court : son empreinte / Deux fichiers différents, même code : une collision
@@ -299,16 +299,16 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : In computing, a file is often summed up by a short code, called a hash, a kind of digital fingerprint. Since there are far more possible files than codes, two different files can sometimes get the same hash: that's a collision.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 5.6
 
-### 33. etapes — 7:01.9, 17.7 s (EN 16.0 s)
+### 33. etapes — 6:57.1, 19.4 s (EN 17.7 s)
 
 - **Intention** : Transposer le calcul : 64 bits, environ 5 milliards de fichiers pour une chance sur deux.
-- **À l'écran** : Le même calcul, en très grand — Codes de 64 bits : 18 milliards de milliards / ≈ 5 milliards de fichiers : près d'1 chance sur 2 de collision
+- **À l'écran** : Le même calcul, en très grand — Codes = jours, fichiers = personnes / Codes de 64 bits : 18 milliards de milliards / ≈ 5 milliards de fichiers : près d'1 chance sur 2 de collision
 - **Visuel** : étapes révélées une à une
-- **Voix FR** : Les codes jouent le rôle des jours de l'année, et les fichiers celui des personnes. Avec des codes de soixante-quatre bits, il existe environ dix-huit milliards de milliards de valeurs possibles. Pourtant, avec environ cinq milliards de fichiers, la probabilité d'une collision approche déjà une chance sur deux.
-- **Voice EN** : The codes play the role of the days of the year, and the files play the people. With sixty-four-bit codes, there are about eighteen billion billion possible values. Yet with around five billion files, the probability of a collision is already close to one in two.
-- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 4.6, 11.0
+- **Voix FR** : C'est le même raisonnement. Les codes jouent le rôle des jours de l'année, et les fichiers celui des personnes. Avec des codes de soixante-quatre bits, il existe environ dix-huit milliards de milliards de valeurs possibles. Pourtant, avec environ cinq milliards de fichiers, la probabilité d'une collision approche déjà une chance sur deux.
+- **Voice EN** : It's the same reasoning. The codes play the role of the days of the year, and the files play the people. With sixty-four-bit codes, there are about eighteen billion billion possible values. Yet with around five billion files, the probability of a collision is already close to one in two.
+- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 2.1, 6.3, 12.8
 
-### 34. texte — 7:19.6, 13.0 s (EN 11.3 s)
+### 34. texte — 7:16.5, 13.0 s (EN 11.3 s)
 
 - **Intention** : Conclure prudemment : on allonge les empreintes (256 bits) ; aucune promesse de sécurité.
 - **À l'écran** : D'où des empreintes bien plus longues, par exemple de 256 bits
@@ -316,16 +316,16 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voix FR** : C'est l'une des raisons pour lesquelles on utilise aujourd'hui des empreintes bien plus longues, par exemple de deux cent cinquante-six bits : il faudrait alors un nombre astronomique de fichiers pour qu'une collision devienne probable.
 - **Voice EN** : That's one reason why today's hashes are much longer, for example two hundred fifty-six bits: you would then need an astronomical number of files before a collision became likely.
 
-### 35. etapes — 7:32.6, 17.0 s (EN 15.7 s)
+### 35. etapes — 7:29.5, 17.2 s (EN 15.7 s)
 
 - **Intention** : Présenter les quatre piliers d'ACTU-BASICS, distincts.
 - **À l'écran** : ACTU-BASICS, quatre piliers — Comprendre le monde par les chiffres / Apprendre les statistiques / Comprendre les probabilités / Les statistiques en pratique
 - **Visuel** : étapes révélées une à une (cartes)
 - **Voix FR** : Voilà ce que nous ferons ensemble sur ACTU-BASICS. Comprendre le monde par les chiffres, à partir de l'actualité. Apprendre les statistiques, pas à pas. Comprendre les probabilités, comme aujourd'hui. Et découvrir les statistiques en pratique, dans les métiers qui les utilisent.
 - **Voice EN** : Here's what we'll do together on ACTU-BASICS. Understand the world through numbers, starting from the news. Learn statistics, step by step. Understand probability, just like today. And discover statistics in practice, in the jobs that use them.
-- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 3.4, 7.1, 9.4, 12.2
+- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 3.7, 7.4, 9.7, 12.4
 
-### 36. texte — 7:49.5, 7.4 s (EN 7.3 s)
+### 36. texte — 7:46.7, 7.4 s (EN 7.3 s)
 
 - **Intention** : Phrase de conclusion demandée par JG.
 - **À l'écran** : Un chiffre ne raconte pas toujours toute l'histoire. Apprendre à le comprendre change notre façon de voir le monde.
@@ -334,12 +334,12 @@ Durée totale : **FR 8:00.6**, **EN 7:38.3**. Principe : la voix raconte, l'imag
 - **Voice EN** : A number doesn't always tell the whole story. Learning to understand it changes the way we see the world.
 - **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 3.3
 
-### 37. fin — 7:56.9, 3.7 s (EN 3.7 s)
+### 37. fin — 7:54.0, 3.7 s (EN 3.7 s)
 
 - **Intention** : Signature de marque et slogan.
 - **À l'écran** : Abonnez-vous pour apprendre à voir le monde autrement.
 - **Visuel** : logo et slogan
 - **Voix FR** : ACTU-BASICS. Éveiller par les chiffres.
 - **Voice EN** : ACTU-BASICS. Enlightening through numbers.
-- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 1.7
+- **Synchronisation FR** (début de chaque phrase, s depuis le début de la scène) : 0.3, 1.8
 
