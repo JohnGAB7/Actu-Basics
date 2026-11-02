@@ -53,7 +53,7 @@ Les objectifs de chaque vidéo sont écrits avec des verbes observables (calcule
 | **EDUCATIONAL** (`educational`) | vertical 1080 × 1920 | 1 min 30–10 min | **Le format principal** du cursus : une notion expliquée pas à pas, avec exercice. |
 | **YOUTUBE_LESSON** (`youtube_lesson`) | horizontal 1920 × 1080 | 5–60 min | Démonstrations longues, études de cas, sujets qui demandent de la place à l'écran (régression multiple, ACP, MCMC). |
 
-La durée de chaque vidéo découle de ce qu'il faut pour atteindre l'objectif, jamais d'un plafond arbitraire (constitution éditoriale, section 10). Les durées indiquées sont des **estimations de conception** : elles seront corrigées après l'écriture du script.
+La durée de chaque vidéo découle de ce qu'il faut pour atteindre l'objectif, jamais d'un plafond arbitraire (constitution éditoriale, section 10). Les durées indiquées sont des **estimations de conception** : elles seront corrigées après l'écriture du script. Trois entrées du catalogue sont des SHORT autonomes (Q1.03, Q2.04, Q3.02) : ce sont des capsules de paradoxe d'une seule idée, sans exercice, qui renvoient vers la leçon qui les explique. Toutes les autres sont des leçons EDUCATIONAL ou YOUTUBE_LESSON, dont les SHORT dérivés ne figurent pas au catalogue.
 
 ## 2.5 La structure d'un épisode
 

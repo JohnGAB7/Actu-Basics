@@ -126,6 +126,7 @@ exemple: Hausse de 50 % puis baisse de 50 % : on ne revient pas au point de dép
 maths: M0 (fractions, règle de trois).
 erreurs: Additionner des pourcentages ; confondre points et pourcentage.
 exercice: Un prix augmente de 20 % puis baisse de 20 %. Quel est l'effet total ?
+correction: 1,2 × 0,8 = 0,96 : le prix final est 4 % plus bas qu'au départ. La baisse de 20 % s'applique à un prix déjà augmenté.
 duree: 4-6
 format: educational
 forme: lecon
@@ -156,6 +157,7 @@ exemple: Date de naissance, sexe et code postal suffisent souvent à rendre une 
 maths: Aucune.
 erreurs: Croire qu'enlever le nom suffit à anonymiser.
 exercice: Combien de combinaisons (jour de naissance × sexe × commune) pour une commune de 2 000 habitants ? Qu'en conclure ?
+correction: 365 jours × 2 sexes = 730 combinaisons pour 2 000 habitants : environ 2,7 personnes par combinaison en moyenne, donc beaucoup sont seules dans la leur. Avec l'année de naissance, il y a des dizaines de milliers de combinaisons : presque chacun devient identifiable. Des données « anonymes » ne le sont pas forcément.
 duree: 4-6
 format: educational
 forme: lecon
@@ -171,6 +173,7 @@ exemple: Lancer un dé 60 fois : on n'obtient presque jamais exactement 10 six. 
 maths: M0.
 erreurs: Croire qu'un événement « rare » ne peut pas arriver, ou qu'une chance sur dix signifie « au dixième essai ».
 exercice: Traduire quatre phrases (« 1 risque sur 500 », « 0,2 % », « 2 pour 1 000 », « 20 sur 10 000 ») en une même écriture : laquelle est différente ?
+correction: 1 sur 500 = 0,2 % = 2 pour 1 000 = 20 sur 10 000 : les quatre écritures sont égales. Aucune n'est différente ; la question vérifie qu'on ne se laisse pas impressionner par le nombre le plus grand.
 duree: 4-6
 format: educational
 forme: lecon
@@ -255,6 +258,7 @@ exemple: Note moyenne pondérée par les coefficients.
 maths: M0, puis notation Σ présentée pas à pas (M1).
 erreurs: Moyenne de moyennes de groupes de tailles différentes.
 exercice: Deux classes de 10 et 30 élèves ont 12 et 8 de moyenne. Quelle est la moyenne générale ?
+correction: La moyenne générale pondère chaque classe par son effectif : (10 × 12 + 30 × 8) / 40 = 360 / 40 = 9, et non (12 + 8) / 2 = 10.
 duree: 4-6
 format: educational
 forme: lecon
@@ -269,7 +273,8 @@ intuition: Une seule valeur extrême déplace la moyenne, presque jamais la méd
 exemple: Un milliardaire entre dans un café de 10 personnes.
 maths: M0.
 erreurs: Croire que la moitié des gens gagnent plus que le salaire moyen.
-exercice: Calculer moyenne et médiane de 7 salaires, puis après l'arrivée d'un très haut salaire.
+exercice: Sept salaires mensuels : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000, 2 100 €. Calculer moyenne et médiane, puis après l'arrivée d'un salaire de 20 000 €.
+correction: Avant : moyenne 12 600 / 7 = 1 800 €, médiane 1 800 €. Après : moyenne 32 600 / 8 = 4 075 €, médiane (1 800 + 1 900) / 2 = 1 850 €. Un seul salaire a plus que doublé la moyenne et presque pas bougé la médiane.
 duree: 5-7
 format: educational
 forme: lecon
@@ -314,7 +319,8 @@ intuition: Mesurer la distance moyenne au centre ; le carré empêche les écart
 exemple: Temps d'attente de deux lignes de bus de même moyenne.
 maths: M1 (carrés, racines, Σ).
 erreurs: Oublier de prendre la racine ; débat n ou n − 1 présenté sans explication (renvoi vers S7.01).
-exercice: Calculer l'écart-type de 2, 4, 4, 6.
+exercice: Calculer l'écart-type de 2, 4, 4, 6, en divisant par n, puis par n − 1.
+correction: Moyenne 4 ; écarts au carré 4, 0, 0, 4, de somme 8. En divisant par n : variance 2, écart-type √2 ≈ 1,41. En divisant par n − 1 (estimation à partir d'un échantillon) : variance 8/3, écart-type ≈ 1,63.
 duree: 6-8
 format: educational
 forme: lecon
@@ -344,7 +350,8 @@ intuition: Mesurer une valeur en « nombre d'écarts-types au-dessus de la moyen
 exemple: Comparer des performances sportives entre disciplines.
 maths: M1.
 erreurs: Croire que la standardisation rend une distribution normale.
-exercice: Moyenne 12, écart-type 2 en maths ; moyenne 10, écart-type 3 en philosophie : quelle note est la plus remarquable ?
+exercice: Un élève a 15 en maths (moyenne 12, écart-type 2) et 14 en philosophie (moyenne 10, écart-type 3). Quelle note est la plus remarquable ?
+correction: Score z en maths : (15 − 12) / 2 = 1,5. En philosophie : (14 − 10) / 3 ≈ 1,33. La note de maths est la plus remarquable, bien que l'écart brut soit plus petit (3 points contre 4).
 duree: 4-6
 format: educational
 forme: lecon
@@ -472,7 +479,8 @@ intuition: Ramener tout le monde au même point de départ pour comparer les tra
 exemple: Indices de prix base 100 ; nombre de cas hebdomadaires lissé sur 7 jours.
 maths: M0.
 erreurs: Comparer des niveaux au lieu d'évolutions ; prendre une variation saisonnière pour une tendance.
-exercice: Convertir une petite série en indice base 100.
+exercice: Convertir la série 50, 55, 60 en indice base 100 sur la première valeur.
+correction: Indice = valeur / valeur de base × 100 : 100, 110, 120.
 duree: 5-7
 format: educational
 forme: lecon

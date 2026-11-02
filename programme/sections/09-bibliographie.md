@@ -135,9 +135,33 @@ Articles fondateurs et articles cités dans le module E9 et dans les vidéos ajo
 | E7.08 | V. Chernozhukov et coll., « Double/debiased machine learning for treatment and structural parameters », *Econometrics Journal*, 21(1), 2018, p. C1-C68 · doi.org/10.1111/ectj.12097 ; S. Wager, S. Athey, *JASA*, 113(523), 2018, p. 1228-1242 · doi.org/10.1080/01621459.2017.1319839 |
 | S9.12 | R. Koenker, G. Bassett, « Regression Quantiles », *Econometrica*, 46(1), 1978, p. 33 et suiv. · doi.org/10.2307/1913643 |
 | E4.06 | C. Manski, *Partial Identification of Probability Distributions*, Springer Series in Statistics, 2003 · doi.org/10.1007/b97478 |
+| E5.03 | D. Staiger, J. Stock, « Instrumental Variables Regression with Weak Instruments », *Econometrica*, 65(3), 1997, p. 557 et suiv. · doi.org/10.2307/2171753 |
+| E5.03 | J. Stock, M. Yogo, « Testing for Weak Instruments in Linear IV Regression », dans *Identification and Inference for Econometric Models*, Cambridge University Press, 2005, p. 80-108 · doi.org/10.1017/CBO9780511614491.006 |
+| E5.03 | D. Lee, J. McCrary, M. Moreira, J. Porter, « Valid t-ratio Inference for IV », *American Economic Review*, 112(10), 2022, p. 3260-3290 · doi.org/10.1257/aer.20211063 |
+| E5.05 | D. Roodman, « A Note on the Theme of Too Many Instruments », *Oxford Bulletin of Economics and Statistics*, 71(1), 2009, p. 135-158 · doi.org/10.1111/j.1468-0084.2008.00542.x |
 | E8.07, E10.04, E10.05, E6.05, S9.13 | K. Brodersen et coll. (2015), D. McFadden (2000), S. Berry, J. Levinsohn, A. Pakes (1995), L. Anselin (1988), G. Box, J. S. Hunter, W. Hunter (2005) : références à revérifier lors de la préparation |
 | E9.09 | T. Andersen, T. Bollerslev, F. Diebold, P. Labys, « Modeling and Forecasting Realized Volatility », *Econometrica*, 71(2), 2003, p. 579-625 · doi.org/10.1111/1468-0262.00418 |
 | E9.09 | F. Corsi, « A Simple Approximate Long-Memory Model of Realized Volatility », *Journal of Financial Econometrics*, 7(2), p. 174-196 · doi.org/10.1093/jjfinec/nbp001 |
+
+**Statut de cette bibliographie.** Elle n'est pas présentée comme entièrement validée. Les entrées suivies d'un DOI ont été contrôlées sur Crossref (auteurs, titre, revue, volume, pages) ; les autres le seront lors de la préparation de la vidéo concernée, selon la liste fermée ci-dessous.
+
+### Liste fermée des références non vérifiées
+
+| Vidéo | Référence | Ce qui reste à vérifier |
+|---|---|---|
+| E8.07 | K. Brodersen et coll., 2015 (impact causal bayésien) | Référence complète et DOI |
+| E10.04 | D. McFadden, 2000 | Référence exacte (conférence Nobel ou article), DOI |
+| E10.05 | S. Berry, J. Levinsohn, A. Pakes, 1995 | Volume, pages, DOI |
+| E6.05 | L. Anselin, 1988 (économétrie spatiale) | Éditeur, édition |
+| S9.13 | G. Box, J. S. Hunter, W. Hunter, 2005 | Éditeur, édition |
+| E5.03 | D. Lee et coll., 2022 | Le seuil chiffré de la statistique F qu'il propose : non lu dans le texte intégral, donc **non cité** dans le programme |
+| E5.03 | D. Staiger, J. Stock, 1997 | Page de fin |
+| E5.03 | J. Stock, M. Yogo, 2005 | Éditeurs de l'ouvrage collectif |
+| E10.06 (exemple) | S. Firpo, N. Fortin, T. Lemieux, *Econometrica*, 2009 | Liste d'auteurs, titre, pages, DOI (notice Crossref incomplète) |
+| Section 9.5, lignes sans DOI | 22 exemples historiques (Squire 1988 à Palacios-Huerta 2003) | Volume, pages et DOI ; la source est identifiée mais la notice n'a pas été contrôlée |
+| Sections 9.2 et 9.3, lignes sans ✔ | Ouvrages imprimés et Statistique Canada | Lien ou édition (URL de Statistique Canada à confirmer, version libre de Blitzstein et Hwang, licence de *Elements of Statistical Learning*) |
+
+Une référence de cette liste n'est jamais citée à l'écran avant d'avoir été vérifiée et sortie de la liste.
 
 ## 9.6 Vulgarisation audiovisuelle à étudier (références de forme, pas de fond)
 

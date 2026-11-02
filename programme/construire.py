@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.7 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-7.pdf"
+VERSION = "1.8 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-8.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -169,6 +169,39 @@ VERIFICATIONS = [
     ("E10.08", "1 / 0.2", 5, "durée moyenne de chômage, en mois"),
     ("S10.08", "100 * exp(-2)", 13.5, "proportion de zéros attendue, loi de Poisson de moyenne 2, en %"),
     ("S11.11", "100 * 9 / 64", 14, "part des spécifications significatives, en %"),
+    ("S8.11", "(0.5 * 2 + 0.2 * 4) / 0.7", 2.57, "estimation combinée, effets aléatoires (τ² = 1)"),
+    ("E7.06", "1 / 20", 0.05, "p-value de permutation, rang 1 sur 20"),
+    ("S1.10", "365 * 2", 730, "combinaisons jour de naissance × sexe"),
+    ("S1.10", "2000 / 730", 2.7, "personnes par combinaison"),
+    ("S1.11", "1 / 500 * 100", 0.2, "1 sur 500, en %"),
+    ("S2.08", "sqrt(((2 - 4) ** 2 + 0 + 0 + (6 - 4) ** 2) / 4)", 1.41, "écart-type, division par n"),
+    ("S2.08", "sqrt(((2 - 4) ** 2 + 0 + 0 + (6 - 4) ** 2) / 3)", 1.63, "écart-type, division par n − 1"),
+    ("S4.03", "8 * 7 * 6", 336, "podiums avec 8 coureurs"),
+    ("S4.04", "comb(32, 2)", 496, "mains de 2 cartes parmi 32"),
+    ("S4.11", "3 / 4 * 1 / 2", 0.375, "Monty Hall à 4 portes, en changeant"),
+    ("S5.05", "1 / (1 / 6)", 6, "lancers moyens pour obtenir un 6"),
+    ("S5.07", "(10 - 7) / 10", 0.3, "P(attente > 7 min)"),
+    ("S5.12", "10 ** 2", 100, "facteur sur n pour diviser l'écart-type par 10"),
+    ("S6.04", "40 / 30", 1.33, "poids des moins de 35 ans"),
+    ("S7.03", "1 / 4", 0.25, "paramètre λ estimé"),
+    ("S7.04", "(0.7 ** 7 * 0.3 ** 3) / 0.5 ** 10", 2.28, "rapport de vraisemblance 0,7 contre 0,5"),
+    ("S9.03", "3200 - 1.96 * 400", 2416, "borne basse de l'IC"),
+    ("S9.03", "3200 + 1.96 * 400", 3984, "borne haute de l'IC"),
+    ("S9.07", "100 * (exp(0.05) - 1)", 5.1, "effet d'une unité de x, en %"),
+    ("S11.01", "10 ** 2", 100, "facteur sur n pour une décimale de plus"),
+    ("S14.03", "0.3 * 12 + 0.7 * 10", 10.6, "première prévision lissée"),
+    ("S14.03", "0.3 * 11 + 0.7 * (0.3 * 12 + 0.7 * 10)", 10.72, "deuxième prévision lissée"),
+    ("S16.02", "0.6 * 0.6 + 0.4 * 0.2", 0.44, "probabilité de pluie dans deux jours"),
+    ("E4.03", "0.8 * 1", 0.8, "pente atténuée"),
+    ("E8.03", "log(0.5) / log(0.75)", 2.4, "demi-vie de l'écart à l'équilibre, en périodes"),
+    ("S2.05", "(1500 + 1600 + 1700 + 1800 + 1900 + 2000 + 2100) / 7", 1800, "moyenne des 7 salaires"),
+    ("S2.05", "(1500 + 1600 + 1700 + 1800 + 1900 + 2000 + 2100 + 20000) / 8", 4075, "moyenne après le haut salaire"),
+    ("S2.05", "(1800 + 1900) / 2", 1850, "médiane après le haut salaire"),
+    ("S3.08", "60 / 50 * 100", 120, "indice de la troisième valeur"),
+    ("S8.06", "60 * 50 / 100", 30, "effectif attendu hommes-oui"),
+    ("S8.06", "40 * 50 / 100", 20, "effectif attendu femmes-oui"),
+    ("S9.01", "((1 - 3) * (2 - 4.2) + (2 - 3) * (4 - 4.2) + (3 - 3) * (5 - 4.2) + (4 - 3) * (4 - 4.2) + (5 - 3) * (6 - 4.2)) / 10", 0.8, "pente des moindres carrés"),
+    ("S9.01", "4.2 - 0.8 * 3", 1.8, "ordonnée à l'origine"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
 ]
@@ -316,6 +349,10 @@ def controler(modules: list[Module], unites: dict[str, Unite]) -> tuple[list[str
                 erreurs.append(f"{u.id} (niveau {niv}) demande {p}, de niveau {niveau_module[q.module]} plus élevé")
             if u.pilier == "S" and q.pilier == "S" and niv <= 3 and q.rang > u.rang:
                 erreurs.append(f"{u.id} demande {p}, placé plus loin dans le tronc commun")
+    # Exercices chiffrés : un nombre dans l'énoncé appelle une correction écrite.
+    for u in unites.values():
+        if u.pilier in "SE" and re.search(r"\d", u.champs.get("exercice", "")) and not u.champs.get("correction"):
+            notes.append(f"{u.id} : exercice chiffré sans correction détaillée ; données et correction à fixer dans la fiche de conception")
     # Cycles
     etat: dict[str, int] = {}
 
@@ -393,7 +430,7 @@ def puces(items: list[str]) -> str:
 VERBES_APPLIQUER = ("Calculer", "Construire", "Appliquer", "Mener", "Estimer", "Réaliser", "Simuler", "Écrire", "Utiliser",
                     "Coder", "Déflater", "Lisser", "Traduire", "Obtenir", "Dérouler", "Compléter", "Retrouver", "Tester",
                     "Approcher", "Convertir", "Simplifier", "Résoudre", "Sommer", "Mettre", "Décomposer", "Classer", "Lire",
-                    "Exprimer", "Reproduire", "Interpréter", "Choisir", "Identifier", "Associer", "Représenter", "Formuler")
+                    "Exprimer", "Reproduire", "Interpréter", "Choisir", "Identifier", "Associer", "Représenter", "Formuler", "Additionner", "Ajuster", "Comparer")
 MARQUEURS_CRITIQUER = ("Distinguer", "Repérer", "Juger", "Discuter", "Réfuter", "Diagnostiquer", "Évaluer", "limite", "Critiquer", "Reconnaître",
                        "contresens", "piège", "ne couvre pas", "biais", "Dire quand", "Dire ce qu", "plausibilité", "crédib", "portée")
 
@@ -756,6 +793,9 @@ def main() -> int:
     n1 = len(v[0][1])
     contexte["CHARGE_V1"] = f"{n1 * 4.5:.0f} et {n1 * 9:.0f}"
     contexte["CHARGE_V1_JG"] = f"{n1 * 0.5:.0f} à {n1 * 1:.0f}"
+    nt = len(unites)
+    contexte["CHARGE_TOTALE"] = f"{nt * 4.5:.0f} et {nt * 9:.0f}"
+    contexte["CHARGE_TOTALE_JG"] = f"{nt * 0.5:.0f} à {nt * 1:.0f}"
     for p in "SEQM":
         contexte[f"H_{p}"] = f"{sum(sum(u.duree) / 2 for u in unites.values() if u.pilier == p) / 60:.0f}"
     corps = rendre_sections(contexte)

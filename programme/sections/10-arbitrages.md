@@ -186,3 +186,35 @@ L'audit de ChatGPT portait sur la version 1.5. La version 1.6 y répondait déj�
 | Description de la PR | **Accord**, elle décrivait encore la version 1. | Description mise à jour sur GitHub. |
 | Nom de la taxonomie | **Accord** : la règle est mécanique et ne mesure pas l'importance. | Renommée « rôle dans le graphe » ; statut éditorial éventuel soumis à l'arbitrage A11. |
 
+## 10.10 Audit de la version 1.7 par ChatGPT
+
+Réponse contradictoire, point par point. « Accord » signifie que la remarque est justifiée et corrigée en version 1.8 ; « nuance » qu'elle est retenue sous une autre forme ; « à vérifier » qu'elle demande un test ou une source avant de trancher.
+
+| Point | Position de Claude | Ce qui change en 1.8 |
+|---|---|---|
+| S8.12 TOST | **Accord.** Deux tests unilatéraux à 5 % équivalent à un intervalle bilatéral à **90 %** inclus dans la marge ; un IC à 95 % donne un test plus conservateur. | Exercice et correction énoncés avec des IC à 90 % ; distinction « non significatif » et « équivalence démontrée ». |
+| S11.11 multivers | **Accord.** 9/64 n'est ni une p-value ni une probabilité ; les spécifications sont dépendantes. | Correction : justification de l'ensemble, taille et signe des effets, incertitude. |
+| S8.11 méta-analyse | **Accord.** | Effet fixe et effets aléatoires distingués ; le funnel plot ne diagnostique pas seul un biais de publication. |
+| S10.08 zéros | **Accord.** | Garde-fou : surdispersion, hétérogénéité, mauvaise spécification ; comparaison de modèles comme étape suivante. |
+| S11.09 BCa, blocs | **Accord.** | Biais et accélération nommés ; longueur des blocs et limites du bootstrap par blocs. |
+| E5.03 instruments faibles | **Accord**, avec une nuance de source : le seuil chiffré de Lee et coll. (2022) n'a pas été lu dans le texte intégral, il n'est donc pas cité. | Correction ajoutée ; F > 10 présenté comme règle approximative (Staiger et Stock, 1997), seuils de Stock et Yogo, Anderson-Rubin ; références avec DOI (section 9.5). |
+| E5.04 LATE | **Accord.** | Pertinence, indépendance, exclusion, monotonie dans les objectifs, avec un exemple de violation (« defiers »). |
+| E7.05 discontinuité | **Accord.** | Intuition conditionnée : pas de manipulation précise, continuité au seuil ; les diagnostics ne prouvent rien, ils révèlent certaines violations. |
+| E7.06 contrôle synthétique | **Accord.** | Inférence avec un seul traité, choix du pool de donneurs, fragilité des placebos. |
+| E6.04 panels dynamiques | **Accord.** | Prolifération des instruments (collapse, restriction des retards, Roodman, 2009) ; un test de Hansen non rejeté ne valide rien. |
+| Q8.02 émissions cumulées | **Accord.** | Émissions nettes, puits, concentration distingués. |
+| Q8.03 attribution | **Accord.** | Rapport de probabilités, intensité, probabilité absolue ; « dix fois plus probable » ne veut pas dire « causé seul ». |
+| Durées et formats | **Nuance.** Le catalogue ne contient que **trois** SHORT autonomes (Q1.03, Q2.04, Q3.02), tous des capsules de paradoxe d'une seule idée. Les entrées de 0,75 à 1,5 min sont ces trois-là ; aucune leçon avec hypothèses et exercice n'est en format court. | Règle écrite en section 2.4 ; la durée du catalogue est un ordre de grandeur, réestimée dans la fiche après le déroulé (section 6.1, modèle YAML). |
+| Une seule fiche conçue | **Accord.** | Section 7.3 : charge totale du catalogue calculée par le script, et rappel que le catalogue n'est pas un stock ; capacité bilingue mesurée au pilote. |
+| Corrections et contrôles | **Nuance.** Les 112 contrôles (79 en 1.7) recalculent l'arithmétique ; ils ne vérifient pas que l'énoncé contient les données utilisées. Ce défaut existait : S2.10 utilisait des notes absentes de l'énoncé, corrigé. | Le script signale désormais tout exercice chiffré sans correction (8 restants, notés pour la fiche de conception). Les énoncés qualitatifs passent par le registre des affirmations (section 6.1). |
+| Bibliographie | **Accord.** | Liste fermée des références non vérifiées en section 9.5 ; la bibliographie n'est plus présentée comme validée. |
+| Fiche de provenance | **Accord.** | Neuf champs en section 5.3, bloc `provenance` du modèle YAML. |
+| Pilier 3 : objectif, exemple, erreur | **À vérifier.** La présence des trois champs est contrôlée par le script pour les 59 entrées ; qu'une erreur soit propre au sujet ne se contrôle pas mécaniquement. | Vérification à faire dans chaque fiche de conception. |
+
+**Lacunes que Claude voit dans l'audit.**
+
+- L'édition anglaise n'a pas été relue : titres EN et adaptation des exemples restent à auditer.
+- La vague 1 est passée de 47 à 49 vidéos depuis l'ajout de S1.12 ; l'impact sur le seuil de lancement n'a pas été discuté.
+- Plusieurs nouveaux sujets du pilier 3 (conflits, santé publique, migration) relèvent des sujets sensibles de la constitution éditoriale : ils demandent le veto de JG avant toute fiche, ce que l'audit ne mentionne pas.
+- Des liens « pour aller plus loin » du pilier 3 pointent vers des vidéos de niveau 4 ; c'est voulu (renvoi, pas prérequis), mais l'écart de niveau mérite un signal au spectateur.
+

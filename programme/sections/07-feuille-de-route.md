@@ -38,6 +38,8 @@ Le moteur automatise le rendu, la voix, les sous-titres et une partie des contr�
 
 À ce rythme, la vague 1 ({{NB_V1}} épisodes) représenterait entre {{CHARGE_V1}} heures de travail cumulé, dont {{CHARGE_V1_JG}} heures pour JG. C'est bien au-delà de l'objectif de 10 minutes par jour visé à terme pour la publication courante. La conséquence est simple : **la capacité de relecture de JG fixe le rythme**, et le seuil de lancement doit être recalculé après la phase pilote. Les SHORT dérivés ajoutent environ 0,5 à 1 h chacun, et les versions 16:9 éventuelles une reprise de mise en page.
 
+**Le catalogue n'est pas un stock.** Le programme complet ({{NB_VIDEOS}} vidéos) représenterait, aux mêmes hypothèses, entre {{CHARGE_TOTALE}} heures de travail cumulé, dont {{CHARGE_TOTALE_JG}} heures pour JG, éditions FR et EN comprises dans ces hypothèses mais non encore mesurées séparément. Ce chiffre ne fixe aucun calendrier : il rappelle que l'exhaustivité du catalogue (décision de JG) est une carte de ce qui peut être produit, pas un engagement de production. La capacité bilingue réelle (temps d'adaptation de l'édition EN, relecture EN) est mesurée pendant le pilote, puis le calendrier est fixé vague par vague.
+
 ## 7.4 Équilibre entre piliers
 
 | | Vague 1 | Vague 2 | Programme complet |

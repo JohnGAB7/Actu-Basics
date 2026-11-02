@@ -16,7 +16,7 @@ titre: Pourquoi « mon » inflation n'est pas celle de l'Insee
 titre_en: Why your inflation is not the official one
 question: Pourquoi a-t-on l'impression que les prix montent plus vite que l'inflation annoncée ?
 renvoi: E1.02 | S2.04
-obj: Expliquer qu'un indice des prix est une moyenne pondérée par un panier moyen | Dire pourquoi l'inflation ressentie diffère selon le panier et la fréquence d'achat
+obj: Calculer un indice des prix comme moyenne pondérée sur un panier de trois produits | Expliquer pourquoi l'inflation ressentie diffère selon le panier et la fréquence d'achat | Repérer, dans son propre budget, les postes qui pèsent plus que dans le panier moyen
 intuition: On remarque le prix du café acheté chaque jour, pas celui du téléviseur acheté tous les sept ans.
 exemple: Pondérations de l'indice des prix (source : institut statistique national, à dater).
 erreurs: Croire que l'indice est faux parce qu'il ne correspond pas à son propre panier.
@@ -187,7 +187,7 @@ titre: Pourquoi votre bus arrive toujours en retard
 titre_en: Why your bus always seems late
 question: Si un bus passe toutes les 10 minutes en moyenne, pourquoi attend-on souvent plus de 5 minutes ?
 renvoi: S5.08 | S2.04
-obj: Expliquer le paradoxe de l'inspection | Montrer qu'on tombe plus souvent dans les longs intervalles
+obj: Expliquer le paradoxe de l'inspection | Calculer l'attente moyenne d'un voyageur quand les intervalles entre bus valent 5 et 15 minutes | Repérer d'autres situations où l'on tombe plus souvent dans les longs intervalles
 intuition: Les longs intervalles occupent plus de temps, donc on a plus de chances d'y arriver.
 exemple: Simulation d'intervalles réguliers puis irréguliers.
 erreurs: Croire que l'attente moyenne vaut toujours la moitié de l'intervalle moyen.
@@ -202,7 +202,7 @@ titre_en: Your friends have more friends than you
 question: Pourquoi la plupart des gens ont-ils moins d'amis que leurs amis ?
 pre: Q3.01
 renvoi: S2.05
-obj: Expliquer le paradoxe de l'amitié par un petit réseau | Le relier au paradoxe de l'inspection
+obj: Calculer le nombre moyen d'amis et le nombre moyen d'amis des amis sur un petit réseau dessiné | Relier ce paradoxe au paradoxe de l'inspection
 intuition: Les personnes très connectées apparaissent dans beaucoup de listes d'amis.
 exemple: Réseau de 6 personnes dessiné à l'écran.
 erreurs: Y voir un défaut personnel.
@@ -478,7 +478,7 @@ titre: Un penalty se tire-t-il au hasard ?
 titre_en: Should a penalty be random?
 question: Pourquoi un tireur doit-il être imprévisible ?
 renvoi: S5.02
-obj: Présenter l'idée d'équilibre en stratégies mixtes | Montrer qu'être prévisible coûte des buts
+obj: Présenter l'idée d'équilibre en stratégies mixtes | Calculer le taux de réussite d'un tireur prévisible et d'un tireur imprévisible sur un exemple chiffré | Montrer qu'être prévisible coûte des buts
 intuition: Si le gardien sait où vous tirez, vous perdez votre avantage.
 exemple: Penaltys du football professionnel (P.-A. Chiappori, S. Levitt, T. Groseclose, American Economic Review, 2002 ; I. Palacios-Huerta, Review of Economic Studies, 2003).
 erreurs: Croire qu'il existe un « meilleur côté » fixe.
@@ -634,9 +634,9 @@ titre: Émissions annuelles ou émissions cumulées ?
 titre_en: Annual or cumulative emissions?
 question: Quel pays est le plus responsable du réchauffement ?
 renvoi: S1.08 | E1.01
-obj: Distinguer flux annuel, stock cumulé et émissions par habitant | Expliquer pourquoi le classement change selon l'indicateur
-intuition: Le réchauffement dépend surtout du CO₂ accumulé dans l'atmosphère, pas de celui émis cette année.
-exemple: Données d'émissions historiques (Global Carbon Project, à dater).
+obj: Distinguer flux annuel, émissions nettes cumulées et émissions par habitant | Distinguer émissions cumulées, absorption par les puits naturels et concentration atmosphérique | Expliquer pourquoi le classement des pays change selon l'indicateur
+intuition: Le réchauffement suit à peu près les émissions nettes cumulées de CO₂ depuis le début de l'ère industrielle. Environ la moitié de ces émissions a été absorbée par les océans et la végétation : la concentration dans l'atmosphère n'est donc pas la somme des émissions.
+exemple: Données d'émissions historiques (Global Carbon Project, à dater) ; relation quasi linéaire entre émissions cumulées et réchauffement (GIEC, sixième rapport, 2021).
 erreurs: Juger une responsabilité sur une seule année.
 sources: Global Carbon Project, GIEC, AIE
 duree: 6-8
@@ -648,10 +648,10 @@ titre: Peut-on attribuer une canicule au changement climatique ?
 titre_en: Can a heatwave be attributed to climate change?
 question: Que veut dire « cette canicule a été rendue dix fois plus probable » ?
 renvoi: S4.01 | S18.06 | Q2.05
-obj: Expliquer le rapport de probabilités entre un climat actuel et un climat sans réchauffement | Dire ce qu'une étude d'attribution affirme et ce qu'elle n'affirme pas
+obj: Distinguer trois résultats : le rapport de probabilités (combien de fois plus probable), le changement d'intensité (combien de degrés de plus) et la probabilité absolue (une fois tous les combien d'années) | Lire l'intervalle d'incertitude d'une étude d'attribution et ses limites (modèles, données, définition de l'événement) | Dire ce qu'une étude d'attribution affirme et ce qu'elle n'affirme pas
 intuition: On compare la fréquence de l'événement dans deux mondes simulés : avec et sans réchauffement.
 exemple: Études du réseau World Weather Attribution (à dater).
-erreurs: Croire qu'une étude d'attribution dit qu'un événement « n'aurait pas pu arriver » sans réchauffement.
+erreurs: Croire que « dix fois plus probable » signifie que le réchauffement a créé seul l'événement, ou que l'événement était impossible avant ; oublier l'intervalle d'incertitude ; confondre rapport de probabilités et probabilité absolue.
 sources: World Weather Attribution, GIEC, Météo-France
 duree: 6-8
 format: educational
@@ -698,7 +698,7 @@ titre: Comment mesure-t-on l'évolution des prix immobiliers ?
 titre_en: How are house price changes measured?
 question: Si les logements vendus cette année sont plus grands, les prix ont-ils augmenté ?
 renvoi: S9.04 | Q1.01
-obj: Expliquer l'effet de composition des ventes | Décrire un indice hédonique, qui compare des logements à caractéristiques égales
+obj: Repérer l'effet de composition des ventes dans une hausse du prix moyen | Décrire un indice hédonique, qui compare des logements à caractéristiques égales
 intuition: On ne compare pas un studio vendu hier à une maison vendue aujourd'hui.
 exemple: Indices Notaires-Insee (méthode publiée, à dater).
 erreurs: Lire une hausse du prix moyen comme une hausse des prix.
@@ -820,7 +820,7 @@ titre: Agréger les sondages
 titre_en: Poll aggregation
 question: Pourquoi une moyenne de sondages est-elle plus fiable qu'un sondage ?
 renvoi: S6.05 | S8.11
-obj: Expliquer la pondération d'une moyenne de sondages (taille, date, institut) | Dire pourquoi une erreur commune à tous les instituts ne disparaît pas dans la moyenne
+obj: Calculer une moyenne de sondages pondérée par la taille des échantillons | Expliquer la pondération par la date et par l'institut | Dire pourquoi une erreur commune à tous les instituts ne disparaît pas dans la moyenne
 intuition: Les erreurs propres à chaque sondage se compensent ; un biais partagé par tous, non.
 exemple: Agrégateurs de sondages électoraux (à sourcer et dater).
 erreurs: Croire qu'un agrégat élimine tous les biais.

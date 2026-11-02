@@ -34,6 +34,21 @@ exemple_reel:                   # facultatif ; obligatoirement sourcé
   description: ""
   source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
 
+provenance:                     # une entrée par chiffre affiché à l'écran (section 5.3)
+  - chiffre: ""
+    definition: ""
+    unite: ""
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""               # provisoire | révisé | définitif ; révisions connues
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: ""
+    comparabilite: ""
+
+affirmations_qualitatives:      # toute affirmation non chiffrée sur l'apprentissage, l'usage ou l'histoire (section 6)
+  - {affirmation: "", statut: hypothese, source: "", verification: ""}   # statut : hypothese | sourcee | testee_pilote
+
 cycle_enquete:                  # les 9 questions de la section 6.2 ; préciser montrée ou supposée
   question: ""
   population_et_mesure: ""
@@ -80,7 +95,7 @@ preuve_apprentissage:           # tâches observables, réussies sans aide
   diagnostic_d_erreur: ""       # pourquoi une interprétation séduisante est fausse
   limite_a_enoncer: ""
 
-duree_estimee_min: [0, 0]       # estimée d'après le contenu, mesurée après synthèse vocale
+duree_estimee_min: [0, 0]       # réestimée ici d'après le script (la durée du catalogue n'est qu'un ordre de grandeur), puis mesurée après synthèse vocale
 format: educational             # short | educational | youtube_lesson
 raison_du_format: ""
 derives_short: []               # SHORT d'accroche tirés de la vidéo

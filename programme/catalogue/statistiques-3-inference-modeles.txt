@@ -49,6 +49,7 @@ exemple: Coût d'un sondage de 1 000 contre 4 000 personnes.
 maths: M1 (racines).
 erreurs: Croire que la précision dépend en général de la taille de la population plutôt que de celle de l'échantillon ; appliquer la formule à un échantillon qui n'est pas aléatoire ou à des observations groupées.
 exercice: p = 0,5, n = 1 000 : erreur standard ? (≈ 0,016)
+correction: √(0,5 × 0,5 / 1 000) = √0,00025 ≈ 0,016, soit 1,6 point.
 duree: 5-7
 format: educational
 forme: lecon
@@ -64,6 +65,7 @@ exemple: Pratiques de sondage d'opinion (méthode des quotas courante en France)
 maths: M1.
 erreurs: Croire que la méthode des quotas a la même théorie d'erreur que le tirage aléatoire.
 exercice: Un échantillon contient 30 % de moins de 35 ans pour 40 % dans la population : quel poids leur donner ?
+correction: Poids = part dans la population / part dans l'échantillon = 40 / 30 ≈ 1,33 pour les moins de 35 ans (et 60 / 70 ≈ 0,86 pour les autres).
 duree: 7-9
 format: educational
 forme: lecon
@@ -79,6 +81,7 @@ exemple: Lecture de sondages électoraux (exemples à dater lors de la préparat
 maths: M1.
 erreurs: Croire qu'un écart dans la marge prouve une égalité ; oublier que la marge de l'écart entre deux candidats est plus grande que celle de chaque score ; présenter la marge d'un sondage par quotas comme une garantie probabiliste.
 exercice: n = 1 000, p̂ = 0,5 : marge d'erreur à 95 % ? (≈ 3,1 points)
+correction: 1,96 × √(0,25 / 1 000) ≈ 0,031, soit ±3,1 points, sous l'hypothèse d'un tirage aléatoire simple.
 duree: 6-8
 format: educational
 forme: lecon
@@ -199,6 +202,7 @@ exemple: Estimer un taux d'arrivée à partir de comptages.
 maths: M2.
 erreurs: Appliquer la méthode sans vérifier que le modèle convient.
 exercice: Estimer le paramètre d'une loi exponentielle de moyenne observée 4 min.
+correction: Pour une loi exponentielle, l'espérance vaut 1/λ. Méthode des moments : 1/λ = 4, donc λ = 0,25 par minute.
 duree: 5-6
 format: educational
 forme: lecon
@@ -216,6 +220,7 @@ maths_comprendre: M1
 maths_demontrer: M2
 erreurs: Lire la vraisemblance comme la probabilité du paramètre.
 exercice: Laquelle des valeurs p = 0,5 ou p = 0,7 rend 7 faces sur 10 plus vraisemblable ?
+correction: L(0,5) ∝ 0,5¹⁰ ≈ 0,00098 ; L(0,7) ∝ 0,7⁷ × 0,3³ ≈ 0,00222. La valeur 0,7 rend les données environ 2,3 fois plus vraisemblables.
 duree: 7-9
 format: educational
 forme: lecon
@@ -263,6 +268,7 @@ exemple: Échantillon de 25 temps de trajet.
 maths: M2.
 erreurs: Utiliser 1,96 avec un très petit échantillon sans le dire ; oublier l'hypothèse d'indépendance.
 exercice: x̄ = 32, s = 10, n = 25 : IC à 95 % (t ≈ 2,064) ? (≈ 27,9 à 36,1)
+correction: 32 ± 2,064 × 10 / √25 = 32 ± 4,13, soit environ [27,9 ; 36,1].
 duree: 6-8
 format: educational
 forme: lecon
@@ -278,6 +284,7 @@ exemple: 0 incident sur 50 vols d'essai : la « règle de trois » (≈ 3/n).
 maths: M2.
 erreurs: Donner un intervalle qui sort de [0, 1].
 exercice: 0 événement sur 300 essais : borne supérieure approximative à 95 % ? (≈ 1 %)
+correction: Règle de trois : avec 0 événement sur n essais, la borne supérieure à 95 % vaut environ 3/n = 3/300 = 1 %.
 duree: 6-8
 format: educational
 forme: lecon
@@ -293,6 +300,7 @@ exemple: Budget d'une enquête de satisfaction ; précision dans un sous-groupe 
 maths: M1.
 erreurs: Oublier que l'analyse de sous-groupes demande un échantillon beaucoup plus grand.
 exercice: Marge de 2 points à 95 % avec p = 0,5 ? (≈ 2 401)
+correction: n = 1,96² × 0,25 / 0,02² = 2 401 personnes.
 duree: 5-7
 format: educational
 forme: lecon
@@ -348,6 +356,7 @@ exemple: Détecteur de fumée ; essai clinique sous-dimensionné.
 maths: M2.
 erreurs: Conclure « pas d'effet » à partir d'une étude peu puissante.
 exercice: Que se passe-t-il pour β si l'on abaisse α de 5 % à 1 % sans changer n ?
+correction: Abaisser α rend le test plus exigeant : à n égal, il rejette moins souvent, donc β (le risque de manquer un vrai effet) augmente et la puissance baisse.
 duree: 7-9
 format: educational
 forme: lecon
@@ -392,7 +401,8 @@ intuition: Comparer ce que l'on observe à ce que l'on observerait si les deux v
 exemple: Tableau croisé transport × région.
 maths: M2.
 erreurs: Appliquer le khi-deux à des pourcentages au lieu d'effectifs ; effectifs attendus trop petits.
-exercice: Calculer les effectifs attendus d'un tableau 2 × 2.
+exercice: Tableau 2 × 2 de 100 personnes : 60 hommes, 40 femmes ; 50 réponses « oui », 50 « non ». Calculer les effectifs attendus sous l'hypothèse d'indépendance.
+correction: Effectif attendu = total de la ligne × total de la colonne / total général : hommes-oui 60 × 50 / 100 = 30, hommes-non 30, femmes-oui 40 × 50 / 100 = 20, femmes-non 20.
 duree: 7-9
 format: educational
 forme: lecon
@@ -423,6 +433,7 @@ exemple: Effet d'un traitement présenté par p-value seule puis par IC.
 maths: M2.
 erreurs: Ne publier que la p-value.
 exercice: Un IC à 95 % va de 0,2 à 1,8 : que dit le test de H₀ : effet = 0 ?
+correction: L'intervalle à 95 % ne contient pas 0 : le test bilatéral au seuil de 5 % rejette H₀. L'intervalle dit en plus que l'effet est compris entre 0,2 et 1,8, ce que le test seul ne dit pas.
 duree: 5-6
 format: educational
 forme: lecon
@@ -438,6 +449,7 @@ exemple: 20 tests indépendants à 5 % : 1 − 0,95²⁰ ≈ 64 % de chances d'a
 maths: M1-M2.
 erreurs: Ne rapporter que les analyses « qui marchent ».
 exercice: Avec 10 tests, quel seuil de Bonferroni utiliser ? (0,005)
+correction: Seuil de Bonferroni : 0,05 / 10 = 0,005. Sans correction, avec 20 tests indépendants, la probabilité d'au moins un faux positif vaut 1 − 0,95²⁰ ≈ 64 %.
 duree: 8-10
 format: educational
 forme: etude_de_cas
@@ -468,8 +480,8 @@ intuition: Chaque étude vote, mais les plus précises ont plus de voix ; et cel
 exemple: Collaboration Cochrane (synthèses à sourcer et dater lors de la préparation).
 maths: M1.
 erreurs: Compter les études « positives » et « négatives » ; ignorer le biais de publication ; combiner des études qui ne mesurent pas la même chose.
-exercice: Deux études estiment un effet de 2 (erreur standard 1) et de 4 (erreur standard 2). Quelle estimation combinée, et quelle erreur standard ?
-correction: Poids : 1 / 1² = 1 et 1 / 2² = 0,25. Estimation : (1 × 2 + 0,25 × 4) / 1,25 = 2,4. Erreur standard : 1 / √1,25 ≈ 0,89, plus petite que celle de chaque étude.
+exercice: Deux études estiment un effet de 2 (erreur standard 1) et de 4 (erreur standard 2). (1) Estimation combinée par un modèle à effet fixe. (2) Si l'on suppose une variance entre études τ² = 1 (modèle à effets aléatoires), comment changent les poids et l'estimation ?
+correction: (1) Effet fixe : poids 1/1² = 1 et 1/2² = 0,25 ; estimation (1 × 2 + 0,25 × 4) / 1,25 = 2,4 ; erreur standard 1/√1,25 ≈ 0,89. Ce modèle suppose un seul vrai effet commun. (2) Effets aléatoires : on ajoute τ² à chaque variance, poids 1/(1 + 1) = 0,5 et 1/(4 + 1) = 0,2 ; estimation (0,5 × 2 + 0,2 × 4) / 0,7 ≈ 2,57. Les poids se rapprochent : la petite étude compte davantage, et l'incertitude augmente. Un funnel plot asymétrique peut venir d'un biais de publication, mais aussi d'une hétérogénéité réelle entre petites et grandes études : il ne suffit pas à diagnostiquer un biais.
 duree: 8-10
 format: educational
 forme: lecon
@@ -484,8 +496,8 @@ intuition: On ne demande plus « l'effet est-il différent de zéro ? » mais «
 exemple: Essais de bioéquivalence des médicaments génériques (règles des agences sanitaires, à sourcer).
 maths: M1.
 erreurs: Conclure « aucun effet » d'une étude trop petite ; choisir la marge après avoir vu les résultats.
-exercice: Marge d'équivalence ±5 points. Étude A : intervalle [−2 ; 3]. Étude B : intervalle [−8 ; 12], non significatif. Que conclure de chacune ?
-correction: A : tout l'intervalle est dans [−5 ; 5], on conclut à l'équivalence. B : l'intervalle déborde de la marge, on ne peut conclure ni à un effet ni à l'équivalence : l'étude est simplement trop imprécise.
+exercice: Marge d'équivalence ±5 points, fixée avant l'étude. Étude A : intervalle de confiance à 90 % [−2 ; 3], non significatif. Étude B : intervalle à 90 % [−8 ; 12], non significatif. Que conclure de chacune ?
+correction: Deux tests unilatéraux au seuil de 5 % (TOST) reviennent à vérifier qu'un intervalle de confiance bilatéral à 90 % est entièrement dans la marge. A : [−2 ; 3] est dans [−5 ; 5], l'équivalence est démontrée au seuil de 5 %. B : l'intervalle déborde des deux côtés, on ne peut conclure ni à une différence ni à l'équivalence. A et B sont tous deux « non significatifs » : c'est la marge qui fait la différence, pas l'absence de significativité. (Avec un intervalle à 95 % entièrement dans la marge, la conclusion d'équivalence reste valable, mais à un seuil plus strict.)
 duree: 7-9
 format: educational
 forme: lecon
@@ -510,7 +522,8 @@ maths: M1 pour appliquer les formules ; M2 (dérivées partielles, rappel M2.03)
 maths_comprendre: M1
 maths_demontrer: M2
 erreurs: Lire la pente comme un effet causal ; extrapoler.
-exercice: Calculer pente et ordonnée à l'origine sur 5 points.
+exercice: Calculer pente et ordonnée à l'origine des moindres carrés pour les points (1 ; 2), (2 ; 4), (3 ; 5), (4 ; 4), (5 ; 6).
+correction: x̄ = 3, ȳ = 4,2. Somme des produits des écarts : 8 ; somme des carrés des écarts de x : 10. Pente : 8 / 10 = 0,8. Ordonnée à l'origine : 4,2 − 0,8 × 3 = 1,8. Droite : y = 1,8 + 0,8x.
 duree: 10-14
 format: youtube_lesson
 forme: lecon
@@ -541,6 +554,7 @@ exemple: Sortie de régression commentée ligne par ligne.
 maths: M2.
 erreurs: Lire un tableau de régression sans regarder les erreurs standard.
 exercice: Pente 3 200 €/m², erreur standard 400 : IC à 95 % approximatif ?
+correction: 3 200 ± 1,96 × 400 ≈ [2 416 ; 3 984] €/m², soit à peu près [2 400 ; 4 000].
 duree: 7-9
 format: educational
 forme: lecon
@@ -603,6 +617,7 @@ exemple: Revenu et dépenses ; relation âge-salaire en cloche.
 maths: M1-M2 (logarithmes).
 erreurs: Interpréter un coefficient en log comme en niveau.
 exercice: Modèle log(y) = 2 + 0,05x : effet approximatif d'une unité de x sur y ?
+correction: Une unité de x multiplie y par e^0,05 ≈ 1,051 : environ +5 % (exactement +5,1 %).
 duree: 7-9
 format: educational
 forme: lecon
@@ -752,6 +767,7 @@ maths_comprendre: M1
 maths_demontrer: M2
 erreurs: Lire un coefficient logistique comme un effet en points de probabilité.
 exercice: Probabilité 0,2 : quelle cote ? (0,25)
+correction: Cote = p / (1 − p) = 0,2 / 0,8 = 0,25, soit « 1 contre 4 ».
 duree: 8-10
 format: educational
 forme: lecon
@@ -782,6 +798,7 @@ exemple: Sinistres automobiles selon l'âge du conducteur.
 maths: M2.
 erreurs: Oublier l'exposition ; ignorer une variance bien supérieure à la moyenne.
 exercice: Interpréter un coefficient 0,3 dans un modèle de Poisson (×1,35 sur le taux).
+correction: e^0,3 ≈ 1,35 : une unité de plus de la variable multiplie le taux attendu par 1,35, soit +35 %.
 duree: 8-10
 format: educational
 forme: lecon
@@ -812,6 +829,7 @@ exemple: Tarification automobile (données d'exemple publiques à choisir).
 maths: M2.
 erreurs: Modéliser des montants très asymétriques avec une loi normale.
 exercice: Fréquence 0,08 sinistre par an, coût moyen 2 500 € : prime pure ? (200 €)
+correction: Prime pure = fréquence × coût moyen = 0,08 × 2 500 = 200 € par an.
 duree: 10-12
 format: youtube_lesson
 forme: etude_de_cas
@@ -842,7 +860,7 @@ exemple: Nombre de visites chez le médecin dans une enquête de santé.
 maths: M2.
 erreurs: Ajouter une inflation de zéros sans raison concrète d'avoir deux sources de zéros.
 exercice: Avec une loi de Poisson de moyenne 2, quelle proportion de zéros attend-on ? Les données en comptent 40 % : que suggère cet écart ?
-correction: P(X = 0) = e^(−2) ≈ 13,5 %. Avec 40 % de zéros observés, il y a bien plus de zéros que la loi de Poisson n'en prévoit : une partie de la population ne participe peut-être jamais.
+correction: P(X = 0) = e^(−2) ≈ 13,5 %. 40 % de zéros observés signalent que la loi de Poisson s'ajuste mal. Cela ne prouve pas l'existence de zéros « structurels » : une hétérogénéité non observée (binomiale négative), une variable omise ou une mauvaise spécification produisent aussi un excès de zéros. Étape suivante : comparer plusieurs modèles (Poisson, binomiale négative, inflation de zéros, modèle à seuil) par des critères d'information et des graphiques des fréquences prédites, et retenir l'inflation de zéros seulement si l'on a une raison concrète de croire à deux sources de zéros.
 duree: 8-10
 format: educational
 forme: lecon
@@ -866,6 +884,7 @@ exemple: Points dans un carré et un quart de disque ; probabilité d'un retard 
 maths: M1.
 erreurs: Oublier de quantifier l'erreur de simulation.
 exercice: Combien de points faut-il pour gagner une décimale de précision ? (100 fois plus)
+correction: L'erreur de Monte-Carlo décroît comme 1/√n. Gagner une décimale, c'est diviser l'erreur par 10, donc multiplier n par 100.
 duree: 6-8
 format: educational
 forme: simulation
@@ -896,6 +915,7 @@ exemple: Petite expérience à deux groupes de 6.
 maths: M1.
 erreurs: Mélanger des données appariées comme si elles étaient indépendantes.
 exercice: Combien de façons de répartir 12 personnes en deux groupes de 6 ? (924)
+correction: Choisir les 6 personnes du premier groupe parmi 12 : C(12, 6) = 924 répartitions.
 duree: 7-9
 format: educational
 forme: simulation
@@ -983,7 +1003,7 @@ titre: Rééchantillonner plus finement : jackknife, BCa et données dépendante
 titre_en: Resampling further: jackknife, BCa and dependent data
 question: Le bootstrap simple marche-t-il toujours ?
 pre: S11.02 | S7.01
-obj: Calculer une estimation jackknife du biais | Expliquer pourquoi l'intervalle BCa corrige le percentile | Utiliser un bootstrap par blocs pour des séries temporelles | Dire quand le bootstrap échoue (maximum, très petits échantillons, plans complexes)
+obj: Calculer une estimation jackknife du biais | Expliquer les deux corrections de l'intervalle BCa : le biais de l'estimateur (z₀) et l'accélération (a), qui tient compte d'une variance qui change avec le paramètre ; dire que BCa demande encore un échantillon assez grand | Utiliser un bootstrap par blocs pour des séries temporelles, en sachant que le résultat dépend de la longueur des blocs et qu'il ne règle pas toute forme de dépendance | Dire quand le bootstrap échoue (maximum, très petits échantillons, plans complexes)
 intuition: Rééchantillonner suppose que les observations sont interchangeables ; si elles se suivent, il faut tirer des morceaux entiers.
 exemple: Intervalle de confiance d'une médiane ; série de ventes journalières.
 maths: M2.
@@ -1016,13 +1036,13 @@ titre: Le résultat tient-il à nos choix ? Robustesse et analyse multivers
 titre_en: Does the result depend on our choices? Robustness and multiverse analysis
 question: Si dix équipes analysent les mêmes données, trouvent-elles la même chose ?
 pre: S11.10 | S8.09 | S9.11
-obj: Lister les choix d'analyse (variables, exclusions, transformations, modèle) | Présenter un résultat sur l'ensemble des spécifications raisonnables (analyse multivers, courbe de spécifications) | Distinguer robustesse d'un résultat et recherche du résultat voulu | Séparer analyse exploratoire et analyse confirmatoire pré-enregistrée
+obj: Lister et justifier l'ensemble des choix d'analyse raisonnables (variables, exclusions, transformations, modèle), avant de voir les résultats si possible | Présenter une courbe de spécifications : taille, signe et intervalle de l'effet pour chaque spécification, et pas seulement la part de résultats significatifs | Expliquer que cette part n'est ni une p-value ni une probabilité que l'effet existe, car les spécifications sont fortement dépendantes et leur ensemble est en partie arbitraire | Séparer analyse exploratoire et analyse confirmatoire pré-enregistrée
 intuition: Un résultat solide survit à des choix raisonnables différents ; un résultat fragile n'existe que dans une seule version de l'analyse.
 exemple: R. Silberzahn et coll., « Many Analysts, One Data Set », Advances in Methods and Practices in Psychological Science, 2018 (29 équipes, mêmes données).
 maths: M1.
 erreurs: Montrer seulement la spécification qui « marche » ; croire qu'un résultat qui change avec les choix est forcément faux.
-exercice: Sur 64 spécifications raisonnables, 9 donnent un effet significatif. Que dire du résultat ?
-correction: Il dépend fortement des choix d'analyse : 9 sur 64, soit environ 14 %. On ne peut pas le présenter comme établi, même si l'une des spécifications est significative.
+exercice: Sur 64 spécifications jugées raisonnables, 9 donnent un effet significatif. Que peut-on dire, et que faut-il regarder d'autre ?
+correction: 9 sur 64, soit environ 14 % : le résultat dépend fortement des choix. Mais ce pourcentage n'est pas une probabilité que l'effet soit vrai, et les 64 analyses ne sont pas 64 preuves indépendantes. Il faut regarder la taille et le signe des effets (les 55 autres sont-elles proches de zéro, ou de même signe mais imprécises ?), leurs intervalles, et la justification de l'ensemble retenu. Un effet de même signe partout, mais imprécis, ne raconte pas la même histoire qu'un effet qui change de signe.
 duree: 8-10
 format: educational
 forme: lecon

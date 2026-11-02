@@ -71,6 +71,20 @@ Chaque épisode d'actualité a un **dossier de sources**, dans la fiche d'actual
 8. **Date de référence à l'écran** (« données 2025, publiées en mars 2026 ») et dans la description.
 9. **Date de péremption** inscrite dans les métadonnées. À cette date, la vidéo est relue : elle est mise à jour, annotée ou retirée, et la correction est consignée.
 
+**Fiche de provenance d'un chiffre.** Chaque chiffre affiché à l'écran, d'actualité ou d'exemple, a sa fiche de provenance dans la fiche de conception (bloc `provenance` de `modeles/fiche-conception-episode.yaml`) :
+
+| Champ | Question |
+|---|---|
+| Définition | Que mesure exactement l'indicateur ? |
+| Unité | Dans quelle unité (personnes, euros courants ou constants, pour 100 000) ? |
+| Population | Qui est compté, qui ne l'est pas ? |
+| Période | Quelle période couvrent les données ? |
+| Couverture | Quel territoire, quel champ, quel taux de réponse ? |
+| Révisions | Le chiffre est-il provisoire, déjà révisé, révisable ? |
+| Source primaire | Qui produit le chiffre, où, consulté quand ? |
+| Incertitude | Marge d'erreur, intervalle, ou à défaut nature de l'incertitude |
+| Comparabilité | Peut-on le comparer à un autre pays, à une autre année ? Sinon, pourquoi ? |
+
 **Ce que le programme ne fait pas.** Aucun chiffre d'actualité n'est inscrit dans ce syllabus. Seuls les gabarits et la méthode sont fixés, pour éviter de figer des données qui deviendront vite fausses.
 
 ## 5.4 Actualité : gabarits d'épisodes

@@ -38,6 +38,7 @@ exemple: Taux de réussite d'un nouveau joueur de tirs au but.
 maths: M2.
 erreurs: Choisir un a priori très informatif sans le dire.
 exercice: A priori Bêta(2, 2), 7 succès sur 10 : moyenne a posteriori ? (9/14 ≈ 0,64)
+correction: A posteriori Bêta(2 + 7, 2 + 3) = Bêta(9, 5), de moyenne 9 / 14 ≈ 0,64, entre la proportion observée (0,7) et l'a priori (0,5).
 duree: 8-10
 format: educational
 forme: lecon
@@ -319,7 +320,8 @@ intuition: Le passé récent compte plus que le passé lointain, avec un poids q
 exemple: Ventes hebdomadaires d'un commerce.
 maths: M1.
 erreurs: Choisir le paramètre de lissage au jugé sans validation.
-exercice: Calculer deux étapes de lissage avec α = 0,3.
+exercice: Série 10, 12, 11 ; prévision initiale 10 ; α = 0,3. Calculer les deux prévisions lissées suivantes.
+correction: Après 12 : 0,3 × 12 + 0,7 × 10 = 10,6. Après 11 : 0,3 × 11 + 0,7 × 10,6 = 10,72.
 duree: 7-9
 format: educational
 forme: lecon
@@ -335,6 +337,7 @@ exemple: Série mensuelle de passagers aériens.
 maths: M2.
 erreurs: Différencier une série déjà stationnaire.
 exercice: Simuler mentalement un AR(1) avec coefficient 0,9 puis −0,9.
+correction: Avec 0,9, la série garde longtemps la trace de chaque choc et fait de longues vagues. Avec −0,9, elle change de signe presque à chaque période et zigzague.
 duree: 12-16
 format: youtube_lesson
 forme: lecon
@@ -350,6 +353,7 @@ exemple: Prévisions de demande d'électricité.
 maths: M2.
 erreurs: Évaluer une prévision sur les données d'apprentissage ; mélanger l'ordre du temps en validation.
 exercice: Pourquoi l'intervalle à 12 mois est-il plus large que l'intervalle à 1 mois ?
+correction: L'erreur de prévision cumule les chocs futurs : plus l'horizon est lointain, plus de chocs inconnus s'ajoutent, et la variance de l'erreur augmente.
 duree: 7-9
 format: educational
 forme: lecon
@@ -467,7 +471,8 @@ intuition: Comparer, à chaque instant, le risque de deux groupes encore présen
 exemple: Lecture d'une publication médicale (exemple à sourcer).
 maths: M2.
 erreurs: Lire un hazard ratio de 2 comme « deux fois moins de survie ».
-exercice: Interpréter un hazard ratio de 0,7 avec son IC.
+exercice: Un traitement a un hazard ratio de 0,7, avec un IC à 95 % de [0,55 ; 0,89]. Interpréter.
+correction: À chaque instant, le risque instantané de l'événement est environ 30 % plus faible dans le groupe traité, sous l'hypothèse de risques proportionnels. L'intervalle exclut 1 : la réduction est statistiquement significative. Ce n'est pas « 30 % de décès en moins » au total.
 duree: 10-14
 format: youtube_lesson
 forme: lecon
@@ -507,6 +512,7 @@ exemple: Ruine du joueur face au casino.
 maths: M1-M2.
 erreurs: Voir des tendances dans une marche aléatoire.
 exercice: Après 100 pas de ±1, quel est l'écart typique au départ ? (10)
+correction: Après n pas de ±1 indépendants, l'écart-type de la position vaut √n = √100 = 10.
 duree: 7-9
 format: educational
 forme: simulation
@@ -521,7 +527,8 @@ intuition: Le futur ne dépend que du présent, pas du chemin pour y arriver.
 exemple: Météo à deux états ; classement de pages web (idée du PageRank : S. Brin, L. Page, 1998).
 maths: M3 (produit matriciel).
 erreurs: Appliquer l'hypothèse de Markov à un système qui a de la mémoire.
-exercice: Matrice 2 × 2 donnée : probabilité de pluie dans deux jours.
+exercice: S'il pleut aujourd'hui, il pleut demain avec une probabilité 0,6 ; s'il fait sec, il pleut demain avec une probabilité 0,2. Il pleut aujourd'hui : quelle est la probabilité de pluie dans deux jours ?
+correction: Deux chemins : pluie puis pluie, 0,6 × 0,6 = 0,36 ; sec puis pluie, 0,4 × 0,2 = 0,08. Total : 0,44.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -537,6 +544,7 @@ exemple: Urgences, caisses de supermarché, serveurs informatiques.
 maths: M2.
 erreurs: Croire qu'un guichet occupé à 90 % a « encore de la marge ».
 exercice: Occupation 0,5 puis 0,9 : comment varie le nombre moyen de clients dans le système ρ/(1 − ρ) ? (1 puis 9)
+correction: Nombre moyen de clients ρ / (1 − ρ) : 0,5 / 0,5 = 1, puis 0,9 / 0,1 = 9. Le système s'engorge bien avant 100 % d'occupation.
 duree: 8-10
 format: educational
 forme: lecon

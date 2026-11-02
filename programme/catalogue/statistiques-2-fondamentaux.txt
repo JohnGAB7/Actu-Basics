@@ -49,6 +49,7 @@ exemple: Codes de cadenas, menus de restaurant, podiums.
 maths: M1 (puissances, factorielle).
 erreurs: Additionner au lieu de multiplier ; compter deux fois le même cas.
 exercice: Combien de podiums différents avec 8 coureurs ?
+correction: 8 choix pour la première place, 7 pour la deuxième, 6 pour la troisième : 8 × 7 × 6 = 336 podiums.
 duree: 5-7
 format: educational
 forme: lecon
@@ -64,6 +65,7 @@ exemple: Choisir 2 délégués parmi 4 (liste complète), puis 5 numéros parmi 
 maths: M1.
 erreurs: Confondre arrangements et combinaisons.
 exercice: Combien de mains de 2 cartes dans un jeu de 32 ?
+correction: Combinaisons de 2 cartes parmi 32 : 32 × 31 / 2 = 496.
 duree: 6-8
 format: educational
 forme: lecon
@@ -79,6 +81,7 @@ exemple: Le problème du chevalier de Méré (au moins un 6 en 4 lancers, au moi
 maths: M1.
 erreurs: Additionner des probabilités d'événements qui se recouvrent.
 exercice: Probabilité d'au moins un 6 en 4 lancers : 1 − (5/6)⁴ ≈ 51,8 %.
+correction: Le complément de « au moins un 6 » est « aucun 6 » : (5/6)⁴ ≈ 0,482. Donc 1 − 0,482 ≈ 51,8 %.
 duree: 5-7
 format: educational
 forme: lecon
@@ -94,6 +97,7 @@ exemple: Déjà produit sous forme de vidéo de lancement (8 min 01 FR, 7 min 38
 maths: M1 (produits, complément).
 erreurs: Calculer 23/365 ; croire que les paires sont indépendantes.
 exercice: À partir de combien de personnes la probabilité dépasse-t-elle 90 % ? (41)
+correction: On cherche le plus petit n tel que 1 − (365/365) × (364/365) × … × ((365 − n + 1)/365) ≥ 0,9 : n = 41. Le calcul passe par le complément : la probabilité que tous les anniversaires soient différents.
 duree: 8-8
 format: educational
 forme: paradoxe
@@ -154,6 +158,7 @@ exemple: Dépistage d'une maladie touchant 1 personne sur 1 000.
 maths: M1.
 erreurs: Confondre P(positif | malade) et P(malade | positif).
 exercice: Prévalence 1 %, sensibilité 90 %, spécificité 95 % : probabilité d'être malade si positif ? (≈ 15,4 %)
+correction: Sur 10 000 personnes : 100 malades, dont 90 positifs ; 9 900 non-malades, dont 5 % = 495 positifs. Probabilité d'être malade si positif : 90 / (90 + 495) ≈ 15,4 %.
 duree: 7-9
 format: educational
 forme: lecon
@@ -169,6 +174,7 @@ exemple: Version à 100 portes pour rendre l'intuition évidente.
 maths: M1.
 erreurs: « Il reste deux portes, donc 50/50 ».
 exercice: Avec 4 portes et une porte ouverte par l'animateur, quelle est la probabilité de gagner en changeant ?
+correction: On choisit une porte (probabilité 1/4 que ce soit la bonne). L'animateur ouvre une porte perdante ; il en reste deux autres. En changeant pour l'une d'elles au hasard : (3/4) × (1/2) = 3/8 = 37,5 %, contre 25 % en gardant sa porte.
 duree: 6-8
 format: educational
 forme: paradoxe
@@ -207,6 +213,7 @@ exemple: Jeux de loterie (barème réel à vérifier à la préparation) ; prime
 maths: M1.
 erreurs: Croire que l'on obtiendra l'espérance à chaque partie.
 exercice: Un jeu : 1 chance sur 10 de gagner 15 €, mise 2 €. Espérance du gain net ? (−0,50 €)
+correction: Espérance du gain : 0,1 × 15 = 1,50 €. Moins la mise de 2 € : −0,50 € par partie en moyenne.
 duree: 5-7
 format: educational
 forme: lecon
@@ -237,6 +244,7 @@ exemple: Surréservation des compagnies aériennes.
 maths: M1.
 erreurs: Utiliser la binomiale quand les essais ne sont pas indépendants.
 exercice: 10 réservations, chaque passager vient avec probabilité 0,9 : P(tous viennent) ? (≈ 34,9 %)
+correction: Les dix venues sont supposées indépendantes : 0,9¹⁰ ≈ 0,349, soit environ 34,9 %.
 duree: 7-9
 format: educational
 forme: lecon
@@ -252,6 +260,7 @@ exemple: Collection d'images (introduction au problème du collectionneur).
 maths: M1 (suites géométriques).
 erreurs: Croire qu'après beaucoup d'échecs le succès devient plus probable.
 exercice: Combien de lancers en moyenne pour obtenir un 6 ?
+correction: Loi géométrique de paramètre 1/6 : espérance 1 / (1/6) = 6 lancers.
 duree: 5-6
 format: educational
 forme: lecon
@@ -267,6 +276,7 @@ exemple: Les morts par ruade de cheval dans 14 corps de l'armée prussienne de 1
 maths: M1 (exponentielle).
 erreurs: Appliquer Poisson à des événements groupés (épidémies, embouteillages).
 exercice: En moyenne 2 appels par minute : probabilité d'aucun appel ? (≈ 13,5 %)
+correction: Loi de Poisson de moyenne 2 : P(0) = e^(−2) ≈ 13,5 %.
 duree: 6-8
 format: educational
 forme: lecon
@@ -284,6 +294,7 @@ maths_comprendre: M1
 maths_demontrer: M2
 erreurs: Lire la hauteur de la densité comme une probabilité.
 exercice: Bus uniforme entre 0 et 10 minutes : P(attente > 7 min) ?
+correction: Loi uniforme sur [0 ; 10] : P(attente > 7) = (10 − 7) / 10 = 0,3.
 duree: 6-8
 format: educational
 forme: lecon
@@ -299,6 +310,7 @@ exemple: Désintégration radioactive (demi-vie) ; temps entre deux appels.
 maths: M2.
 erreurs: Appliquer l'exponentielle à des objets qui vieillissent.
 exercice: Demi-vie de 10 ans : quelle part reste après 30 ans ? (1/8)
+correction: 30 ans = 3 demi-vies : (1/2)³ = 1/8 = 12,5 %.
 duree: 6-7
 format: educational
 forme: lecon
@@ -316,6 +328,7 @@ maths_comprendre: M1
 maths_demontrer: M2
 erreurs: Supposer que tout est normal ; ignorer les queues épaisses.
 exercice: Moyenne 170 cm, écart-type 7 cm : quelle part dépasse 184 cm ? (≈ 2,3 %)
+correction: 184 cm = 170 + 2 × 7 : deux écarts-types au-dessus de la moyenne. Pour une loi normale, environ 2,3 % des valeurs sont au-delà.
 duree: 7-9
 format: educational
 forme: lecon
@@ -346,6 +359,7 @@ exemple: Mutualisation en assurance ; portefeuille de deux actifs.
 maths: M1-M2.
 erreurs: Additionner des écarts-types.
 exercice: Deux variables indépendantes d'écart-type 3 et 4 : écart-type de la somme ? (5)
+correction: Pour des variables indépendantes, les variances s'additionnent : 3² + 4² = 25, écart-type √25 = 5, et non 3 + 4 = 7.
 duree: 6-8
 format: educational
 forme: lecon
@@ -363,6 +377,7 @@ maths_comprendre: M1
 maths_demontrer: M4
 erreurs: Croire que la loi des grands nombres corrige les écarts passés.
 exercice: Combien de tirages faut-il pour diviser l'écart-type de la moyenne par 10 ? (100 fois plus)
+correction: L'écart-type de la moyenne vaut σ/√n. Pour le diviser par 10, il faut multiplier √n par 10, donc n par 100.
 duree: 6-8
 format: educational
 forme: lecon
@@ -380,6 +395,7 @@ maths_comprendre: M1
 maths_demontrer: M4
 erreurs: Croire que ce sont les données qui deviennent normales (c'est la moyenne) ; oublier l'indépendance ou la variance finie (contre-exemple : la loi de Cauchy, dont la moyenne ne se stabilise jamais) ; croire que n = 30 suffit toujours.
 exercice: Avec n = 100, l'écart-type de la moyenne est-il 10 fois plus petit que celui d'une observation ?
+correction: Oui : l'écart-type de la moyenne vaut σ/√100 = σ/10. Cela vaut pour des observations indépendantes de même variance, quelle que soit leur loi.
 duree: 8-10
 format: educational
 forme: simulation

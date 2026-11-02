@@ -37,6 +37,7 @@ exemple: Salaire minimum en euros courants et en euros constants (chiffres à v�
 maths: M0-M1.
 erreurs: Comparer des montants de dates différentes sans correction ; confondre baisse de l'inflation et baisse des prix.
 exercice: Indice des prix 80 puis 120 : que vaut 1 500 € de la première date en euros de la seconde ? (2 250 €)
+correction: 1 500 × 120 / 80 = 2 250 € de la seconde date.
 duree: 5-7
 format: educational
 forme: lecon
@@ -52,6 +53,7 @@ exemple: Prix du carburant et consommation.
 maths: M1 (logarithmes).
 erreurs: Confondre élasticité et pente.
 exercice: Une élasticité de −0,3 et une hausse de prix de 20 % : variation de la demande ? (≈ −6 %)
+correction: Variation de la demande ≈ élasticité × variation du prix = −0,3 × 20 % = −6 %.
 duree: 6-8
 format: educational
 forme: lecon
@@ -192,6 +194,7 @@ exemple: Effet d'une réforme appliquée par région.
 maths: M2.
 erreurs: Grouper avec très peu de groupes sans le signaler.
 exercice: Une politique varie au niveau de 10 régions : à quel niveau grouper les erreurs ?
+correction: Au niveau des 10 régions, celui où la politique varie. Avec seulement 10 groupes, les erreurs groupées classiques sont peu fiables : on utilise des corrections pour petit nombre de groupes, par exemple le bootstrap sauvage (wild cluster bootstrap).
 duree: 7-9
 format: educational
 forme: lecon
@@ -275,6 +278,7 @@ exemple: Revenus déclarés dans une enquête.
 maths: M2.
 erreurs: Conclure à un effet faible alors que la variable est mal mesurée.
 exercice: Fiabilité de 0,8 : que devient une vraie pente de 1 ? (0,8)
+correction: Avec une fiabilité de 0,8, la pente estimée tend vers 0,8 × 1 = 0,8 : le biais d'atténuation rapproche la pente de zéro.
 duree: 6-8
 format: educational
 forme: lecon
@@ -368,12 +372,13 @@ titre: Instruments faibles et validité
 titre_en: Weak instruments and validity
 question: Un instrument qui explique très peu la cause pose-t-il problème ?
 pre: E5.02
-obj: Lire la statistique F de première étape | Expliquer le biais des instruments faibles | Dire pourquoi l'exclusion ne se teste pas complètement | Utiliser une inférence robuste aux instruments faibles (test d'Anderson-Rubin) | Discuter plusieurs instruments et la validité externe
+obj: Lire la statistique F de première étape comme une alerte sur l'identification, et non comme un test de validité | Expliquer que la règle « F > 10 » (D. Staiger, J. Stock, Econometrica, 1997) est une règle approximative pour une variable endogène, que les seuils de Stock et Yogo dépendent du nombre d'instruments et du biais toléré, et qu'un test t valide à 5 % demande bien plus (D. Lee, J. McCrary, M. Moreira, J. Porter, American Economic Review, 2022) | Utiliser une inférence robuste aux instruments faibles (test d'Anderson-Rubin), qui reste valide quelle que soit la force de l'instrument | Dire pourquoi aucune statistique F ne valide l'exclusion | Discuter plusieurs instruments et la validité externe
 intuition: Une pichenette trop faible se noie dans le bruit, et l'estimation dérive vers celle des MCO.
 exemple: Débats autour d'instruments célèbres.
 maths: M2.
 erreurs: Présenter un test de suridentification comme une preuve de validité.
 exercice: F de première étape égal à 3 : que conclure ?
+correction: Avec F = 3, l'instrument est faible : l'estimation par 2SLS est biaisée vers celle des MCO et les intervalles usuels sont trop étroits. On ne conclut pas avec le test t habituel. On peut rapporter un intervalle d'Anderson-Rubin, robuste à la faiblesse de l'instrument, qui sera probablement large, ou chercher un meilleur instrument. Un F élevé n'aurait pas non plus prouvé que l'instrument est valide : l'exclusion reste un argument, pas un test.
 duree: 7-9
 format: educational
 forme: lecon
@@ -383,12 +388,13 @@ titre: Effet local : qui mesure-t-on vraiment ?
 titre_en: The local average treatment effect
 question: L'effet estimé par un instrument vaut-il pour tout le monde ?
 pre: E5.03
-obj: Définir les « compliers » et l'effet local moyen (LATE) | Discuter la portée externe d'une estimation par instrument | Distinguer effet de l'intention de traiter (ITT) et effet du traitement reçu (TOT) dans un plan d'encouragement
+obj: Définir les « compliers » et l'effet local moyen (LATE) | Énoncer les quatre hypothèses qui identifient le LATE : pertinence (l'instrument change le traitement), indépendance (l'instrument est comme tiré au sort), exclusion (il n'agit que par le traitement), monotonie (aucun « defier » ne fait l'inverse de ce que l'instrument pousse à faire) | Distinguer effet de l'intention de traiter (ITT) et effet du traitement reçu (TOT) dans un plan d'encouragement | Discuter la portée externe d'une estimation par instrument
 intuition: L'instrument ne mesure l'effet que chez ceux qu'il fait changer de comportement.
 exemple: Loterie d'accès à une école ou à une assurance.
 maths: M1-M2.
 erreurs: Généraliser un LATE à toute la population.
 exercice: Classer des individus en compliers, always-takers et never-takers.
+correction: Always-takers : traités quel que soit l'instrument. Never-takers : jamais traités. Compliers : traités seulement quand l'instrument les y pousse ; le LATE ne parle que d'eux. Exemple de violation de la monotonie : si une lettre d'encouragement à un programme décourage certaines personnes par réaction (defiers), le rapport ITT / taux d'adoption ne mesure plus l'effet chez les compliers.
 duree: 8-10
 format: educational
 forme: lecon
@@ -485,12 +491,13 @@ titre: Panels dynamiques
 titre_en: Dynamic panels
 question: Que se passe-t-il quand le passé de la variable explique son présent ?
 pre: E6.02 | E5.02
-obj: Expliquer le biais de Nickell | Présenter l'idée des estimateurs par la méthode des moments généralisée (Arellano-Bond) et leurs risques | Comparer GMM en différences et GMM système | Repérer la prolifération des instruments et lire les diagnostics (test de Hansen, autocorrélation d'ordre 2)
+obj: Expliquer le biais de Nickell | Comparer GMM en différences (Arellano-Bond) et GMM système (Blundell-Bond), et les hypothèses supplémentaires du second sur les conditions initiales | Limiter le nombre d'instruments (restriction des retards, regroupement des instruments) | Lire les diagnostics (autocorrélation d'ordre 2, test de Hansen) en sachant que trop d'instruments affaiblissent le test de Hansen et qu'un test non rejeté ne prouve pas la validité des instruments (D. Roodman, Oxford Bulletin of Economics and Statistics, 2009)
 intuition: Avec peu de périodes, retirer la moyenne individuelle crée un lien artificiel entre retard et erreur.
 exemple: Persistance de l'emploi dans les entreprises.
 maths: M2-M3.
 erreurs: Multiplier les instruments sans contrôle.
 exercice: Pourquoi le biais diminue-t-il quand le nombre de périodes augmente ?
+correction: Le biais de Nickell est de l'ordre de 1/T : retirer la moyenne individuelle crée une corrélation entre le retard et l'erreur, qui se dilue quand la moyenne porte sur plus de périodes. Avec T = 5, il est important ; avec T = 50, il devient faible.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -586,12 +593,13 @@ titre: La régression sur discontinuité
 titre_en: Regression discontinuity
 question: Les élèves juste au-dessus d'un seuil d'admission réussissent-ils mieux que ceux juste en dessous ?
 pre: E7.01 | S9.07
-obj: Expliquer la logique du seuil | Distinguer discontinuité nette et floue | Citer les tests de manipulation et de continuité | Choisir une bande passante et montrer la sensibilité du résultat | Mener des tests placebo à de faux seuils | Dire que l'effet n'est valable qu'au voisinage du seuil
-intuition: Juste autour du seuil, être d'un côté ou de l'autre tient presque du hasard.
+obj: Expliquer la logique du seuil et ses deux hypothèses : pas de manipulation précise du score, continuité des résultats potentiels au seuil | Distinguer discontinuité nette et floue | Mener les diagnostics de densité (test de McCrary) et de continuité des covariables, en sachant qu'ils peuvent révéler certaines violations mais jamais prouver les hypothèses | Choisir une bande passante et montrer la sensibilité du résultat | Mener des tests placebo à de faux seuils | Dire que l'effet n'est valable qu'au voisinage du seuil
+intuition: Juste autour du seuil, les unités d'un côté et de l'autre se ressemblent, à condition que personne ne puisse placer précisément son score du bon côté et que rien d'autre ne change au seuil. Une discontinuité n'est pas un tirage au sort automatique.
 exemple: Seuil de taille de classe, la « règle de Maïmonide » en Israël (J. Angrist, V. Lavy, Quarterly Journal of Economics, 1999).
 maths: M2.
 erreurs: Utiliser des observations loin du seuil ; ignorer une manipulation du score.
 exercice: Lire un graphique de discontinuité et estimer le saut.
+correction: On estime le saut comme l'écart entre les deux courbes ajustées de part et d'autre du seuil, dans une bande passante donnée, puis on vérifie qu'il résiste à d'autres bandes passantes et qu'il n'apparaît pas à de faux seuils. Le saut ne vaut que pour les unités proches du seuil.
 duree: 8-10
 format: educational
 forme: lecon
@@ -601,12 +609,13 @@ titre: Le contrôle synthétique
 titre_en: Synthetic control
 question: Comment évaluer une politique appliquée à une seule région ?
 pre: E7.03
-obj: Construire l'idée d'un témoin synthétique comme moyenne pondérée de régions | Expliquer les tests placebo | Juger la qualité de l'ajustement avant l'intervention | Mener des placebos dans l'espace et dans le temps | Présenter le contrôle synthétique généralisé et les limites de l'inférence
+obj: Construire l'idée d'un témoin synthétique comme moyenne pondérée de régions | Juger la qualité de l'ajustement avant l'intervention | Expliquer le rôle du choix du groupe de donneurs et l'exclusion des unités touchées par des chocs comparables | Mener des placebos dans l'espace et dans le temps, en sachant qu'ils sont fragiles quand les donneurs sont peu comparables | Dire pourquoi l'inférence est limitée avec une seule unité traitée (inférence par permutation, rang parmi les placebos) | Présenter le contrôle synthétique généralisé
 intuition: Fabriquer un « jumeau » à partir d'un mélange d'autres régions qui imitait bien l'avant.
 exemple: Programme anti-tabac californien (A. Abadie, A. Diamond, J. Hainmueller, Journal of the American Statistical Association, 2010) ; réunification allemande (mêmes auteurs, American Journal of Political Science, 2015).
 maths: M2.
 erreurs: Juger l'effet sans vérifier la qualité de l'ajustement avant la mesure.
 exercice: Lire un graphique de contrôle synthétique et ses placebos.
+correction: On compare l'écart entre la région traitée et son témoin synthétique après l'intervention aux écarts obtenus en appliquant la même méthode à chaque région donneuse (placebos). Si l'écart réel est le plus grand parmi 20 régions, une « p-value » de permutation vaut 1/20 = 0,05, à condition que l'ajustement avant intervention soit bon pour toutes.
 duree: 8-10
 format: educational
 forme: etude_de_cas
@@ -692,6 +701,7 @@ exemple: Consommation et revenu ; prix d'un même bien sur deux marchés.
 maths: M2.
 erreurs: Différencier des séries cointégrées et perdre la relation de long terme.
 exercice: Interpréter un coefficient de correction d'erreur de −0,25.
+correction: Chaque période, 25 % de l'écart à l'équilibre de long terme est résorbé. La demi-vie de l'écart vaut ln(0,5) / ln(0,75) ≈ 2,4 périodes.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -707,6 +717,7 @@ exemple: Politique monétaire (exemple à sourcer).
 maths: M3.
 erreurs: Donner une lecture causale à un VAR sans hypothèse d'identification.
 exercice: Lire une fonction de réponse et décrire l'effet à 4 et 12 trimestres.
+correction: À 4 trimestres, on lit la valeur de la réponse et si son intervalle exclut zéro ; à 12 trimestres, on regarde si l'effet s'est dissipé ou persiste. L'interprétation causale dépend de l'hypothèse qui identifie le choc.
 duree: 12-16
 format: youtube_lesson
 forme: lecon
@@ -971,6 +982,7 @@ exemple: Participation au marché du travail.
 maths: M2.
 erreurs: Comparer directement les coefficients d'un logit et d'un probit.
 exercice: Interpréter un effet marginal moyen de 0,04.
+correction: En moyenne, une unité de plus de la variable augmente la probabilité de 0,04, soit 4 points de pourcentage (et non 4 %).
 duree: 8-10
 format: educational
 forme: lecon
@@ -1001,6 +1013,7 @@ exemple: Brevets et dépenses de recherche.
 maths: M2.
 erreurs: Ignorer l'excès de zéros.
 exercice: Interpréter un coefficient de 0,2 sur le logarithme des dépenses de recherche.
+correction: Coefficient sur le logarithme d'une variable explicative, dans un modèle de Poisson : c'est une élasticité. Une hausse de 1 % des dépenses de recherche est associée à environ 0,2 % de brevets en plus.
 duree: 6-8
 format: educational
 forme: lecon
@@ -1135,6 +1148,7 @@ exemple: Carburants et électricité (sources à choisir).
 maths: M2.
 erreurs: Confondre élasticité de court et de long terme.
 exercice: Interpréter une élasticité de −0,1 à court terme et de −0,5 à long terme.
+correction: À court terme, une hausse de 10 % du prix réduit la demande d'environ 1 % ; à long terme, d'environ 5 %, quand les ménages ont pu changer d'équipement.
 duree: 10-12
 format: youtube_lesson
 forme: etude_de_cas

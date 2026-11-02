@@ -23,7 +23,9 @@ Chaque vidéo est conçue à partir d'une **fiche de conception**, avant tout sc
 | **Idées fausses à prévenir** | Les contresens les plus fréquents, et le moment de la vidéo où on les désamorce | Éditorial |
 | **Exercice et correction** | Une question que le spectateur peut résoudre seul, avec la démarche complète | Éditorial |
 | **Preuve d'apprentissage** | La tâche observable que le spectateur doit réussir sans aide, une question de **transfert** (exemple différent de la vidéo) et une question de **diagnostic d'erreur** (pourquoi une interprétation séduisante est fausse). Utilisées pour les tests du pilote | Éditorial |
-| **Durée indicative** | Estimée d'après le contenu, puis mesurée après la synthèse vocale | Production |
+| **Provenance des chiffres** | Pour chaque chiffre affiché : définition, unité, population, période, couverture, révisions, source primaire, incertitude, comparabilité (section 5.3) | Éditorial |
+| **Affirmations qualitatives** | Toute affirmation non chiffrée (« les débutants confondent… », « cette histoire est souvent déformée ») est inscrite avec son statut : hypothèse, sourcée, ou testée pendant le pilote. Une hypothèse n'est jamais présentée comme un fait ; la relecture croisée Claude et ChatGPT porte sur ce registre | Éditorial, relu par Claude |
+| **Durée indicative** | Celle du catalogue n'est qu'un ordre de grandeur : elle est réestimée d'après le script dans la fiche, puis mesurée après la synthèse vocale | Production |
 | **Format** | SHORT, EDUCATIONAL ou YOUTUBE_LESSON, avec la raison du choix | Programme |
 | **Sources et licences** | Sources de tout fait extérieur, licences des données et des visuels | Éditorial |
 | **Adaptation EN** | Ce qui change d'exemple ou de formulation, ce qui ne change pas (raisonnement, nombres) | Éditorial |
