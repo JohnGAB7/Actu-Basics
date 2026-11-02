@@ -81,6 +81,23 @@ Toutes les vidéos pédagogiques suivent le même arc, déjà mis en œuvre dans
 | Accessible sans sacrifier la rigueur | Relecture humaine des définitions (ChatGPT) et contrôle automatique des calculs (moteur). |
 | FR et EN naturels, pas traduits | Titre de travail anglais propre à chaque vidéo ; scripts écrits dans chaque langue à partir de la même fiche de conception. |
 
-## 2.7 Bilinguisme
+## 2.7 Correspondance avec les recommandations GAISE (révision 2025)
+
+Le rapport GAISE de l'American Statistical Association, révisé en 2025 et publié par étapes, formule dix recommandations pour l'enseignement de la statistique et de la science des données. Le tableau indique comment le programme les applique, et où il s'en écarte à cause du format vidéo.
+
+| Recommandation GAISE (résumé) | Application dans ACTU-BASICS |
+|---|---|
+| 1. Enseigner la statistique comme un processus qui va des données à la décision | Cycle d'enquête en 9 étapes dans chaque fiche de conception (section 6) ; S3.09 en démonstration complète |
+| 2. Communiquer les résultats, avec leur portée et leurs limites | Étape « limites » obligatoire dans l'arc d'un épisode ; champ « hypothèses et limites » |
+| 3. Viser la compréhension plutôt que la manipulation de formules | Intuition d'abord, formule ensuite, chaque symbole expliqué |
+| 4. Utiliser des données réelles, avec un contexte | Choix explicite dans chaque fiche : données réelles, simulation ou calcul pur, avec la raison |
+| 5. Encourager la pensée multivariée | Tableaux croisés et Simpson dès le niveau 1 (S3.02, S3.03), régression multiple, graphes causaux (E1.05) |
+| 6. Utiliser des logiciels pour explorer | Simulations à l'écran ; scripts reproductibles fournis en description (arbitrage A9) |
+| 7. Collecte et usage éthiques des données | S1.10, S17.06, prudence de la constitution éditoriale |
+| 8. Pédagogies actives | Estimation demandée, exercice avec temps de réflexion dans chaque vidéo. **Limite du format** : une vidéo reste moins interactive qu'un cours |
+| 9. Évaluations formatives et sommatives variées | Exercice dans chaque vidéo (formatif) ; tests de transfert et de diagnostic d'erreur pendant le pilote (section 7.2). La section « Assessment » de GAISE 2025 est encore en préparation : à intégrer dès sa parution |
+| 10. Stratégies inclusives | Éditions FR et EN autonomes, exemples variés, formulation non stigmatisante. À renforcer : sous-titres et accessibilité visuelle sont contrôlés, la diversité des exemples ne l'est pas encore |
+
+## 2.8 Bilinguisme
 
 Chaque vidéo existe en deux éditions, française et anglaise, produites à partir de la **même fiche de conception**. Les scripts sont écrits séparément. Les exemples peuvent être adaptés à chaque public (Insee et Eurostat d'un côté, BLS, ONS ou Banque mondiale de l'autre), à condition que **le raisonnement et les nombres calculés restent identiques**. Le moteur signale déjà un écart de nombres entre les deux éditions. Les titres anglais de ce document sont des titres de travail, à revoir par l'éditorial.

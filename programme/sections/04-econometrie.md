@@ -15,11 +15,13 @@ Pour chaque méthode causale (modules E5 et E7), la vidéo suit la grille propos
 | **Diagnostics** | Comment vérifier ce qui peut l'être ? |
 | **Portée externe** | Le résultat vaut-il ailleurs, pour d'autres personnes, à une autre époque ? |
 
+Chaque fiche de conception d'une méthode causale tient aussi un **registre des hypothèses** : pour chaque hypothèse, son intuition, ce qui en est testable, ce qui ne l'est pas, le diagnostic possible et la conséquence si elle échoue. Deux vidéos donnent le langage commun avant les méthodes : les graphes causaux (E1.05, accessible dès le niveau 2) et l'analyse de sensibilité (E4.05, « que reste-t-il si un facteur caché existe ? »). L'appariement et le score de propension (E7.07) sont enseignés comme des **outils de conception d'études observationnelles**, qui reposent sur la même hypothèse que la régression avec contrôles, et non comme des substituts à la randomisation.
+
 ## 4.2 Prérequis statistiques et mathématiques
 
 | Module d'économétrie | Prérequis statistiques | Mathématiques |
 |---|---|---|
-| E1 · Données économiques et questions causales | S1, S3 (corrélation et causalité) | M1 |
+| E1 · Données économiques et questions causales, graphes causaux | S1, S3 (corrélation et causalité) | M0 à M1 |
 | E2 · Le modèle linéaire (MCO) | **S9 complet** (régression) | M2, M3 en option |
 | E3 · Inférence et diagnostics | S8 (tests), S9.06 (diagnostics) | M2 |
 | E4 · Endogénéité | E2, E3 | M2 |
@@ -34,10 +36,10 @@ Pour chaque méthode causale (modules E5 et E7), la vidéo suit la grille propos
 
 | Fondamental, pour tout spectateur du pilier | Extension avancée |
 |---|---|
-| E1 complet, E2 complet, E3.01 à E3.04 | E6.04 panels dynamiques *(optionnel)* |
+| E1 complet (dont graphes causaux), E2 complet, E3.01 à E3.04, E4.05 analyse de sensibilité | E6.04 panels dynamiques *(optionnel)* |
 | E4 complet : variable omise, simultanéité, erreur de mesure, sélection | E7.04 différences de différences échelonnées |
 | E5.01 à E5.03 : idée, 2SLS, instruments faibles | E5.04 effet local (LATE) |
-| E7.01 à E7.03, E7.05 : expérience, expérience naturelle, différences de différences, discontinuité | E7.06 contrôle synthétique |
+| E7.01 à E7.03, E7.05 : expérience, expérience naturelle, différences de différences, discontinuité | E7.06 contrôle synthétique, E7.07 appariement et score de propension |
 | E6.01 et E6.02 : différences premières et effets fixes | E8 complet : racines unitaires, cointégration, VAR |
 | | E9 complet : probit et logit, Tobit et Heckman, comptages |
 

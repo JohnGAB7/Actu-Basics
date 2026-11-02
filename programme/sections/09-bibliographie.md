@@ -10,8 +10,9 @@ Ces références servent à **concevoir et vérifier** les vidéos. Ce ne sont p
 
 | Référence | Accès | Vérif. | Usage dans le programme |
 |---|---|---|---|
-| American Statistical Association, *GAISE College Report*, version révisée de **2016** (la version en vigueur selon le site, qui la dit « appelée à évoluer ») · asacollegegaise.org | Ouvert | ✔ | Démarche d'investigation, place de la communication et des limites (sections 2 et 3.1) |
+| American Statistical Association, *Guidelines for Assessment and Instruction in Statistics (GAISE) College Report*, **révision 2025 publiée par étapes** (recommandations publiées ; section « Assessment » en préparation au 2/11/2026) · amstat.quarto.pub/college-gaise. Versions antérieures : 2016 et 2005 · asacollegegaise.org | Ouvert | ✔ | Démarche d'investigation, dix recommandations (section 2.7) |
 | MIT OpenCourseWare, *18.05 Introduction to Probability and Statistics* (printemps 2022, J. Orloff et J. French Kamrin), licence CC BY-NC-SA 4.0 · ocw.mit.edu | Cours ouvert | ✔ | Articulation probabilités, inférence fréquentiste et bayésienne, simulation, bootstrap, régression (S4 à S12) |
+| K. Imai, *Causal Inference* (Harvard, STAT 286 / GOV 2003) : résultats potentiels, graphes causaux, analyse de sensibilité, appariement, IV, RD, DiD, contrôle synthétique · imai.fas.harvard.edu/teaching/cause | Supports de cours ouverts | ✔ | E1.04, E1.05, E4.05, E7 |
 | EPFL, *Introduction to Econometrics* (MGT-581, M. Aklin) · edu.epfl.ch | Fiche de cours publique, cours réservé aux inscrits | ✔ | Repère de progression pour le pilier 2 uniquement |
 | OpenEconometrics, « The econometrics hub » · openeconometrics.com | Ouvert (logiciel Apache 2.0, version alpha) | ✔ | **Usage prudent** : le site ne nomme ni auteur ni institution. Utile pour des exemples de code, pas comme référence de fond. |
 
@@ -97,7 +98,9 @@ Chaque exemple historique du syllabus renvoie maintenant à une source primaire 
 | E5.01 | Trimestre de naissance et scolarité | J. Angrist, A. Krueger, *Quarterly Journal of Economics*, 1991 ; J. Bound, D. Jaeger, R. Baker, *JASA*, 1995 |
 | E7.03 | Salaire minimum au New Jersey | D. Card, A. Krueger, *American Economic Review*, 1994 |
 | E7.05 | Règle de Maïmonide | J. Angrist, V. Lavy, *Quarterly Journal of Economics*, 1999 |
+| E4.05 | Sensibilité à un facteur caché | J. Cornfield et coll., *Journal of the National Cancer Institute*, 1959 ; T. VanderWeele, P. Ding, *Annals of Internal Medicine*, 2017 |
 | E7.06 | Contrôle synthétique | A. Abadie, A. Diamond, J. Hainmueller, *JASA*, 2010 ; *American Journal of Political Science*, 2015 |
+| E7.07 | Appariement, programme de formation | R. LaLonde, *American Economic Review*, 1986 |
 | E8.02 | Régressions fallacieuses | C. Granger, P. Newbold, *Journal of Econometrics*, 1974 |
 | Q2.04 | Avions de Wald | M. Mangel, F. Samaniego, *JASA*, 1984 |
 | Q3.02 | Paradoxe de l'amitié | S. Feld, *American Journal of Sociology*, 1991 |

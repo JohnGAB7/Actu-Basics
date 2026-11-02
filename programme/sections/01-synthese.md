@@ -61,6 +61,7 @@ Les dix arbitrages de la section 10, dont les plus structurants :
 |---|---|
 | 1.0 | Première proposition structurée de Claude |
 | 1.1 | Corrections après la première revue de ChatGPT : randomisation (S1.06), théorème central limite (S5.13), hypothèses de la marge d'erreur (S6.03, S6.05), premier contact avec le hasard au niveau 1 (S1.11), niveaux mathématiques séparés (comprendre, appliquer, démontrer), maîtrise visée par vidéo, sources des exemples historiques, liens de la bibliographie vérifiés, pilote, unité de stock et charge de travail précisés, minima de la grille d'actualité, décisions déjà prises distinguées des recommandations |
+| 1.2 | Revue croisée avec ChatGPT : rapport GAISE 2025 et correspondance avec ses dix recommandations ; spirale explicite autour de la droite de régression (S3.07 → S9.01) ; trois vidéos d'économétrie (graphes causaux E1.05, analyse de sensibilité E4.05, appariement et score de propension E7.07) ; registre des hypothèses ; cycle d'enquête, données ou simulation, reproductibilité et preuve d'apprentissage dans la fiche de conception ; tests de transfert et de diagnostic d'erreur dans le pilote |
 
 ## Sommaire
 

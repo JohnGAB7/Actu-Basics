@@ -16,16 +16,34 @@ Chaque vidéo est conçue à partir d'une **fiche de conception**, avant tout sc
 | **Exemple fil rouge** | Un exemple minuscule, puis un exemple réel sourcé si besoin | Éditorial |
 | **Déroulé des scènes** | Question → intuition → données → raisonnement → formalisation → exercice → application → limites → rappel | Éditorial puis production |
 | **Formules** | Chaque formule, chaque symbole expliqué, unités et conditions d'usage | Éditorial |
+| **Données, simulation ou calcul** | Le choix est explicite : données réelles (source, licence, population, variables, période, limites), données synthétiques ou simulation (paramètres), ou calcul pur, avec la raison du choix | Éditorial |
+| **Hypothèses et limites** | Hypothèses de la méthode, conséquence si chacune échoue. Pour une méthode causale : registre des hypothèses (testable, non testable, diagnostic) | Éditorial |
 | **Calculs vérifiés** | Chaque nombre annoncé, avec l'expression qui le recalcule (bloc `verifier`) | Production |
+| **Reproductibilité** | Calcul, code ou paramètres qui permettent de refaire le résultat ; script fourni en description quand il y en a un | Production |
 | **Idées fausses à prévenir** | Les contresens les plus fréquents, et le moment de la vidéo où on les désamorce | Éditorial |
 | **Exercice et correction** | Une question que le spectateur peut résoudre seul, avec la démarche complète | Éditorial |
+| **Preuve d'apprentissage** | La tâche observable que le spectateur doit réussir sans aide, une question de **transfert** (exemple différent de la vidéo) et une question de **diagnostic d'erreur** (pourquoi une interprétation séduisante est fausse). Utilisées pour les tests du pilote | Éditorial |
 | **Durée indicative** | Estimée d'après le contenu, puis mesurée après la synthèse vocale | Production |
 | **Format** | SHORT, EDUCATIONAL ou YOUTUBE_LESSON, avec la raison du choix | Programme |
 | **Sources et licences** | Sources de tout fait extérieur, licences des données et des visuels | Éditorial |
 | **Adaptation EN** | Ce qui change d'exemple ou de formulation, ce qui ne change pas (raisonnement, nombres) | Éditorial |
 | **Critères de contrôle** | Test du débutant (peut-il réexpliquer ?), relecture des définitions, contrôle visuel mobile | Les deux |
 
-## 6.2 Exemple rempli : S2.05 « Moyenne ou médiane ? »
+## 6.2 Le cycle d'enquête, colonne vertébrale de chaque fiche
+
+Toute fiche de conception répond, même brièvement, aux neuf questions de l'enquête statistique. Une vidéo courte n'en traite pas toutes les étapes à l'écran, mais la fiche dit lesquelles sont montrées et lesquelles sont seulement supposées.
+
+1. Quelle question veut-on réellement résoudre ?
+2. Quelle population et quelle mesure ?
+3. D'où viennent les données, et quel mécanisme les a produites ?
+4. Quelle exploration graphique et descriptive ?
+5. Quelle méthode, et pourquoi celle-là ?
+6. Quelles hypothèses cette méthode exige-t-elle ?
+7. Quel résultat numérique, avec quelle incertitude ?
+8. Quelle interprétation est permise, et laquelle ne l'est pas ?
+9. Peut-on reproduire le résultat à partir des données, du code et des sources ?
+
+## 6.3 Exemple rempli : S2.05 « Moyenne ou médiane ? »
 
 <div class="exemple-fiche" markdown="1">
 
@@ -41,14 +59,16 @@ Chaque vidéo est conçue à partir d'une **fiche de conception**, avant tout sc
 | **Déroulé** | 1. Question et estimation demandée : « quelle part des salariés gagne moins que le salaire moyen ? » · 2. Le café, la moyenne calculée · 3. Le client riche entre, la moyenne recalculée · 4. La médiane : ranger, prendre le milieu, cas pair · 5. Formalisation : définition, position (n + 1)/2 · 6. Exercice · 7. Correction · 8. Application aux salaires réels · 9. Limites : la médiane ignore l'ampleur des écarts, d'où l'intérêt de donner les deux · 10. Rappel. |
 | **Calculs vérifiés** | Moyenne et médiane du café avant et après, part des salaires sous la moyenne dans l'exemple. Tous déclarés dans le bloc `verifier`. |
 | **Idées fausses** | « La moitié des gens gagne plus que le salaire moyen » (désamorcée à l'étape 3). « La médiane est toujours meilleure » (désamorcée à l'étape 9). |
+| **Données ou calcul** | Calcul pur pour le café (nombres fictifs, choisis pour être suivis de tête), puis données réelles pour l'application : distribution des salaires d'un institut statistique, source, période et licence notées dans la fiche. |
 | **Exercice** | Calculer moyenne et médiane de 7 salaires donnés, puis après l'arrivée d'un salaire de 20 000 €. Pause de 5 s. |
+| **Preuve d'apprentissage** | Transfert : « le prix moyen d'une maison dans un village où se trouve un château » (même raisonnement, autre contexte). Diagnostic d'erreur : « le salaire moyen a augmenté, donc la plupart des salariés gagnent plus » : pourquoi est-ce faux ? |
 | **Durée et format** | 5 à 7 min, EDUCATIONAL vertical. Un SHORT d'accroche (le café) en dérivé. |
 | **Adaptation EN** | Mêmes nombres. Exemple réel tiré de l'ONS ou du BLS au lieu de l'Insee. Formulation propre, sans calque. |
 | **Contrôle** | Un débutant peut-il réexpliquer pourquoi la moyenne dépasse la médiane ? Les nombres sont-ils lisibles sur mobile ? La source est-elle datée ? |
 
 </div>
 
-## 6.3 Du programme à la vidéo : le circuit d'une fiche
+## 6.4 Du programme à la vidéo : le circuit d'une fiche
 
 1. **Programme** : la vidéo existe dans ce document, avec son identifiant et ses prérequis.
 2. **Fiche de conception** : remplie par l'éditorial (ChatGPT). Statut « brouillon ».

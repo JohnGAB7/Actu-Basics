@@ -408,7 +408,7 @@ titre_en: Simple linear regression
 question: De combien le prix d'un appartement augmente-t-il par mètre carré supplémentaire ?
 pre: S3.07 | S7.05
 obj: Écrire le modèle y = a + bx + erreur | Obtenir les formules des moindres carrés et les calculer sur 5 points | Interpréter la pente dans les unités
-intuition: La pente est le changement moyen de y associé à une unité de x de plus, dans les données observées.
+intuition: Retour sur la droite de S3.07 : la même idée, mais cette fois on écrit le modèle, on obtient les formules et l'on se prépare à répondre aux trois questions laissées ouvertes. La pente est le changement moyen de y associé à une unité de x de plus, dans les données observées.
 exemple: Prix et surface d'appartements (données publiques à choisir).
 maths: M1 pour appliquer les formules ; M2 (dérivées partielles, rappel M2.03) pour les démontrer.
 maths_comprendre: M1

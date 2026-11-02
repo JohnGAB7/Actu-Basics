@@ -71,6 +71,21 @@ duree: 8-10
 format: educational
 forme: lecon
 
+## E1.05
+titre: Dessiner ses hypothèses : les graphes causaux
+titre_en: Drawing your assumptions: causal diagrams
+question: Comment écrire noir sur blanc ce que l'on croit sur les causes avant de toucher aux données ?
+pre: E1.04
+obj: Lire et dessiner un graphe causal simple (flèches entre variables) | Reconnaître une cause commune (confusion), un médiateur et un collisionneur | Repérer un « chemin détourné » (porte arrière) qu'il faut bloquer pour comparer à juste titre
+intuition: Un graphe causal ne prouve rien : il rend visibles les hypothèses, pour que chacun puisse les discuter. Les données disent ensuite ce qu'on peut estimer sous ces hypothèses.
+exemple: Études, capacités et salaire ; le paradoxe des célébrités « talentueuses ou belles » pour le collisionneur (exemple fictif).
+maths: M0.
+erreurs: Croire qu'un graphe se déduit des données seules ; ajouter des flèches « par prudence » sans les justifier.
+exercice: Dans un graphe de cinq variables, dire lesquelles contrôler pour estimer l'effet de A sur B.
+duree: 8-10
+format: educational
+forme: lecon
+
 # MODULE E2
 niveau: 3
 titre: Le modèle linéaire en économie (MCO)
@@ -200,9 +215,9 @@ forme: lecon
 titre: Les mauvais contrôles
 titre_en: Bad controls
 question: Faut-il contrôler par la profession pour mesurer l'effet des études sur le salaire ?
-pre: E2.04
+pre: E2.04 | E1.05
 obj: Distinguer facteur de confusion, médiateur et collisionneur | Expliquer pourquoi contrôler un médiateur ou un collisionneur biaise l'effet
-intuition: Contrôler une conséquence de la cause, c'est effacer une partie de l'effet que l'on cherche.
+intuition: Application des graphes causaux de E1.05 : contrôler une conséquence de la cause, c'est effacer une partie de l'effet que l'on cherche ; contrôler un collisionneur crée une liaison qui n'existait pas.
 exemple: Études, profession et salaire ; graphes causaux simples.
 maths: M1.
 erreurs: « Plus on contrôle, mieux c'est ».
@@ -276,6 +291,21 @@ maths: M1-M2.
 erreurs: Traiter l'échantillon observé comme représentatif.
 exercice: Repérer la sélection dans trois études.
 duree: 7-9
+format: educational
+forme: lecon
+
+## E4.05
+titre: Et s'il restait un facteur caché ? L'analyse de sensibilité
+titre_en: What if a hidden confounder remains? Sensitivity analysis
+question: Que peut-on encore conclure si l'on n'a pas pu mesurer une variable qui fausse la comparaison ?
+pre: E4.01 | E1.05
+obj: Formuler la question de sensibilité : quelle force devrait avoir un facteur caché pour annuler le résultat ? | Interpréter une valeur de type « E-value » sans la calculer en détail | Distinguer un résultat fragile d'un résultat robuste
+intuition: Au lieu de prétendre qu'il n'y a pas de facteur caché, on mesure jusqu'où il pourrait aller avant de changer la conclusion.
+exemple: Tabac et cancer du poumon : l'argument de Cornfield et coll. (1959), précurseur de l'analyse de sensibilité ; E-value (T. VanderWeele, P. Ding, Annals of Internal Medicine, 2017).
+maths: M1.
+erreurs: Croire qu'une analyse de sensibilité prouve l'absence de confusion ; ignorer la question quand l'étude est observationnelle.
+exercice: Deux études ont la même estimation : l'une est annulée par un facteur caché modeste, l'autre seulement par un facteur très fort. Laquelle croire davantage ?
+duree: 8-10
 format: educational
 forme: lecon
 
@@ -422,7 +452,7 @@ titre: Méthodes d'évaluation et causalité
 titre_en: Research designs for causal inference
 pre: E4 | E5.01
 maths: M2
-but: La « révolution de la crédibilité » : des stratégies qui reposent sur la conception de l'étude plus que sur le modèle. Chaque vidéo suit la même grille : estimand, contrefactuel, hypothèses, menaces, diagnostics, portée externe.
+but: La « révolution de la crédibilité » : des stratégies qui reposent sur la conception de l'étude plus que sur le modèle. Chaque vidéo suit la même grille (estimand, contrefactuel, hypothèses, menaces, diagnostics, portée externe) et tient un registre des hypothèses : ce qui est testable, ce qui ne l'est pas, ce qui arrive si l'hypothèse échoue.
 
 ## E7.01
 titre: L'expérience randomisée, étalon de référence
@@ -459,11 +489,11 @@ titre: Différences de différences
 titre_en: Difference-in-differences
 question: Une hausse du salaire minimum réduit-elle l'emploi ?
 pre: E7.01 | E3.02
-obj: Calculer un estimateur de différences de différences dans un tableau 2 × 2 | Énoncer l'hypothèse de tendances parallèles et la vérifier visuellement
+obj: Calculer un estimateur de différences de différences dans un tableau 2 × 2 | Énoncer l'hypothèse de tendances parallèles et lire un graphique des périodes précédant la mesure | Expliquer pourquoi des tendances préalables parallèles rendent l'hypothèse plus plausible sans la prouver
 intuition: Le groupe témoin montre ce qui serait arrivé au groupe traité sans la mesure.
 exemple: Restauration rapide au New Jersey et en Pennsylvanie (D. Card, A. Krueger, American Economic Review, 1994).
 maths: M1.
-erreurs: Ignorer des tendances différentes avant la mesure.
+erreurs: Ignorer des tendances différentes avant la mesure ; croire qu'un test de pré-tendance non significatif prouve les tendances parallèles (il peut manquer de puissance, et l'hypothèse porte sur l'après, qui n'est jamais observé).
 exercice: Calculer l'effet dans un tableau de quatre moyennes.
 duree: 8-10
 format: educational
@@ -513,6 +543,21 @@ exercice: Lire un graphique de contrôle synthétique et ses placebos.
 duree: 8-10
 format: educational
 forme: etude_de_cas
+
+## E7.07
+titre: Comparer des semblables : appariement et score de propension
+titre_en: Comparing like with like: matching and propensity scores
+question: Sans tirage au sort, peut-on construire un groupe témoin qui ressemble aux traités ?
+pre: E7.01 | E4.05 | S10.02
+obj: Expliquer l'appariement comme outil de conception d'une étude observationnelle | Estimer un score de propension par régression logistique et vérifier l'équilibre des groupes | Dire que la méthode repose sur la même hypothèse que la régression avec contrôles (aucune confusion non mesurée) et ne protège pas contre les facteurs cachés
+intuition: On cherche, pour chaque personne traitée, des personnes non traitées qui lui ressemblaient avant le traitement ; le score de propension résume cette ressemblance en un seul nombre.
+exemple: Effet d'un programme de formation (étude de LaLonde, American Economic Review, 1986, et ses réanalyses).
+maths: M2.
+erreurs: Présenter l'appariement comme un substitut à la randomisation ; oublier de vérifier l'équilibre et le recouvrement des groupes.
+exercice: Après appariement, un tableau montre encore un fort écart d'âge entre groupes : que faut-il faire ?
+duree: 10-12
+format: youtube_lesson
+forme: lecon
 
 # MODULE E8
 niveau: 4

@@ -41,4 +41,17 @@ La revue indépendante annoncée dans le ticket est la prochaine étape. Pour la
 4. **Exemples historiques** : ils ont maintenant une référence primaire ou universitaire (section 9.5). L'anecdote du casino de Monte-Carlo en 1913, mal documentée, a été remplacée par une simulation. Les références doivent encore être relues dans le texte avant chaque script.
 5. **Titres anglais** : titres de travail, à revoir par un regard éditorial anglophone.
 6. **Références bibliographiques** : les ressources en ligne ont été vérifiées (section 9). Les éditions des livres imprimés restent à confirmer.
-7. **GAISE** : le cadrage de ChatGPT parle d'une révision 2025/2026. Le site de l'ASA, consulté le 2 novembre 2026, présente toujours la version révisée de **2016** comme la version en vigueur et n'annonce pas de nouvelle révision. Le programme cite donc la version de 2016. Merci de confirmer ou de fournir la source de la révision évoquée.
+7. **GAISE** : la version 1.1 citait à tort la version de 2016 comme seule version en vigueur. ChatGPT a raison : le portail du rapport (amstat.quarto.pub/college-gaise) annonce une révision 2025 publiée par étapes. La version 1.2 la cite, avec la section « Assessment » signalée comme encore en préparation.
+
+## 10.4 Points débattus avec ChatGPT (revue croisée de la version 1.1)
+
+| Proposition de ChatGPT | Position de Claude | Ce qui change |
+|---|---|---|
+| Comparer deux parcours de démonstration (actuel, ou en spirale avec une régression descriptive précoce) sur les 12 à 15 premières leçons | **Accord partiel.** Le parcours actuel contient déjà une spirale : la droite de régression descriptive (S3.07) arrive au niveau 1, avant les probabilités, et après S3.06 (corrélation et causalité). Produire deux parcours de 12 à 15 vidéos coûterait 50 à 130 heures de plus, pour un test sur quelques testeurs incapable de départager deux séquences entières. | Spirale rendue explicite (S3.07 se termine sur trois questions ouvertes, S9.01 y revient). Le pilote teste le point charnière : un testeur peut-il dire ce que la droite de S3.07 ne permet pas de conclure ? |
+| Enseigner les graphes causaux avant les pièges des mauvais contrôles | **Accord.** | Nouvelle vidéo E1.05, au niveau 2, sans régression ; E3.04 en devient l'application. |
+| Registre des hypothèses pour chaque méthode | **Accord**, sans vidéo supplémentaire. | Rubrique obligatoire de la fiche de conception pour E5 et E7. |
+| Initiation à l'analyse de sensibilité | **Accord.** C'est la question honnête de toute étude observationnelle. | Nouvelle vidéo E4.05, en intuition (E-value), à la fin du module sur l'endogénéité. |
+| Clarifier la place de l'appariement et du score de propension | **Accord.** C'était un manque de la version 1.1. | Nouvelle vidéo E7.07, présentée comme outil de conception et non comme substitut au tirage au sort. |
+| Ne pas laisser croire qu'un test de pré-tendance prouve les tendances parallèles | **Accord.** | Objectifs et idées fausses de E7.03 réécrits. |
+| Enquête reproductible et dimension pratique récurrente | **Accord sur la fiche, accord partiel sur l'écran.** Une manipulation de données dans chaque vidéo verticale alourdirait le format court. | Cycle d'enquête, choix données, simulation ou calcul, et reproductibilité dans chaque fiche ; scripts en description (A9) ; démonstration complète en S3.09. |
+| Évaluation plus robuste dans le pilote | **Accord.** La vérification différée reste facultative, selon le nombre de testeurs disponibles. | Questions de transfert et de diagnostic d'erreur, critère de validation réécrit (section 7.2). |

@@ -34,6 +34,28 @@ exemple_reel:                   # facultatif ; obligatoirement sourcé
   description: ""
   source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
 
+cycle_enquete:                  # les 9 questions de la section 6.2 ; préciser montrée ou supposée
+  question: ""
+  population_et_mesure: ""
+  origine_des_donnees: ""
+  exploration: ""
+  methode_et_raison: ""
+  hypotheses: ""
+  resultat_et_incertitude: ""
+  interpretation_permise_et_interdite: ""
+  reproductibilite: ""
+
+donnees_ou_simulation:
+  type: calcul_pur              # donnees_reelles | donnees_synthetiques | simulation | calcul_pur
+  raison_du_choix: ""
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""     # loi, paramètres, graine, nombre de tirages
+
+hypotheses_et_limites:          # pour une méthode causale : registre des hypothèses
+  - {hypothese: "", intuition: "", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: ""}
+
+reproductibilite: ""            # calcul, code ou paramètres ; script fourni en description ?
+
 deroule:                        # question, intuition, donnees, raisonnement, formalisation,
   - {etape: question, contenu: ""}   # exercice, correction, application, limites, rappel
   - {etape: intuition, contenu: ""}
@@ -51,6 +73,12 @@ exercice:
   question: ""
   correction: ""
   pause_secondes: 5
+
+preuve_apprentissage:           # tâches observables, réussies sans aide
+  tache: ""
+  question_de_transfert: ""     # exemple différent de celui de la vidéo
+  diagnostic_d_erreur: ""       # pourquoi une interprétation séduisante est fausse
+  limite_a_enoncer: ""
 
 duree_estimee_min: [0, 0]       # estimée d'après le contenu, mesurée après synthèse vocale
 format: educational             # short | educational | youtube_lesson

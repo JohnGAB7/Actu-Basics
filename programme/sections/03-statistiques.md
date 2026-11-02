@@ -2,7 +2,7 @@
 
 ## 3.1 Pourquoi cet ordre
 
-L'ordre suit la démarche d'une enquête statistique, comme le recommande le rapport GAISE de l'American Statistical Association (version révisée de 2016, présentée comme la version en vigueur sur le site de l'ASA) : poser une question, produire ou trouver des données, les explorer, choisir une méthode, calculer, interpréter, puis dire les limites.
+L'ordre suit la démarche d'une enquête statistique, comme le recommande le rapport GAISE de l'American Statistical Association (révision de 2025, publiée par étapes ; recommandation 1) : poser une question, produire ou trouver des données, les explorer, choisir une méthode, calculer, interpréter, puis dire les limites.
 
 - **Les données avant les calculs (S1).** Un débutant doit savoir d'où vient un chiffre avant d'apprendre à le résumer. Le biais de sélection et la différence entre observer et expérimenter arrivent dès le début, parce qu'ils conditionnent tout le reste.
 - **Un premier contact avec le hasard dès le niveau 1 (S1.11).** La révision de ChatGPT a relevé que le débutant attendait 29 vidéos avant de croiser le hasard. S1.11 donne une première lecture intuitive (chance, fréquence, risque) et montre pourquoi deux échantillons diffèrent. Le formalisme reste au niveau 2.
@@ -10,6 +10,7 @@ L'ordre suit la démarche d'une enquête statistique, comme le recommande le rap
 - **Probabilités après la description (S4, S5).** Le spectateur sait alors ce qu'est une distribution observée. Une loi de probabilité devient « la distribution que l'on attendrait ». Chaque loi est présentée par l'histoire qui la produit avant sa formule.
 - **Simulation avant théorie.** La loi des grands nombres, le théorème central limite, la distribution d'échantillonnage et l'intervalle de confiance sont d'abord **montrés par simulation**, puis justifiés. Cela rend le niveau 3 accessible sans calcul intégral avancé.
 - **L'inférence en trois temps (S6, S7, S8).** On voit d'abord que le résultat change d'un échantillon à l'autre, puis on estime, puis on décide. La p-value arrive après l'intervalle de confiance, pour qu'elle ne soit pas le seul outil retenu.
+- **Une spirale courte autour de la droite de régression.** La relation entre deux variables est montrée tôt, de façon descriptive (S3.04 à S3.07, avant les probabilités), comme dans la séquence alternative proposée par OpenStax. S3.06 (corrélation et causalité) est placée **avant** la droite, pour que la pente ne soit jamais lue comme un effet. S3.07 se termine par trois questions laissées ouvertes : hasard de l'échantillon, causalité, validité hors des données. Le niveau 3 (S9.01, S9.03) et l'économétrie (E1.04) y répondent explicitement.
 - **Les modèles en dernier (S9, S10, S11).** La régression du niveau 3 reprend l'intuition donnée en S3.07 (droite des moindres carrés), puis la complète par l'inférence et les diagnostics.
 
 ## 3.2 Carte des dépendances entre modules

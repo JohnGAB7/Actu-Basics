@@ -436,11 +436,11 @@ titre: Tracer une droite dans un nuage
 titre_en: Drawing a line through the cloud
 question: Quelle est « la meilleure » droite qui passe au milieu des points ?
 pre: S3.05
-obj: Expliquer le critère des moindres carrés avec des carrés visibles | Utiliser une droite pour une prévision prudente dans le domaine observé
+obj: Expliquer le critère des moindres carrés avec des carrés visibles | Utiliser une droite pour une prévision prudente dans le domaine observé | Énoncer les trois questions que la droite ne résout pas encore : est-elle due au hasard de l'échantillon (S6, S9.03), est-elle causale (E1.04), vaut-elle hors des données observées ?
 intuition: On cherche la droite qui rend les carrés des erreurs verticales les plus petits possible.
 exemple: Taille des parents et des enfants : la « régression vers la médiocrité » de Galton (F. Galton, Journal of the Anthropological Institute, 1886).
 maths: M1 (équation de droite).
-erreurs: Extrapoler loin des données ; inverser x et y sans le savoir.
+erreurs: Extrapoler loin des données ; inverser x et y sans le savoir ; lire la pente comme un effet (« si j'augmente x, y augmente de… »).
 exercice: Parmi trois droites tracées, laquelle a la plus petite somme des carrés ?
 duree: 5-7
 format: educational
