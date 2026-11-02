@@ -883,12 +883,12 @@ titre: Modèles de langue : prédire le mot suivant
 titre_en: Language models: predicting the next word
 question: Que calcule réellement un modèle comme ceux des assistants conversationnels ?
 pre: S19.01 | S4.01
-obj: Décrire un modèle de langue comme une loi de probabilité sur le mot suivant | Calculer une probabilité par la fonction softmax à partir de scores | Expliquer l'attention comme une moyenne pondérée des mots déjà lus | Expliquer pourquoi une réponse fluide peut être fausse (hallucination) : le modèle optimise la vraisemblance du texte, pas la vérité
-intuition: Un autocomplétion géant : à chaque pas, une distribution de probabilité sur tous les mots possibles.
+obj: Expliquer comment un texte devient une suite de nombres : découpage en tokens (mots ou morceaux de mots), puis embeddings (un vecteur par token) | Décrire un modèle de langue comme une loi de probabilité sur le token suivant | Calculer une probabilité par la fonction softmax à partir de scores | Expliquer l'attention comme une combinaison pondérée des représentations des tokens, dont les poids viennent de scores d'attention, principe des Transformers | Expliquer pourquoi une réponse fluide peut être fausse (hallucination) : le modèle optimise la vraisemblance du texte, pas la vérité
+intuition: Une autocomplétion géante : à chaque pas, une distribution de probabilité sur tous les tokens possibles.
 exemple: Compléter « Le chat dort sur le… » avec trois candidats et leurs scores.
 maths: M1-M2.
 maths_demontrer: M3
-erreurs: Prendre une probabilité élevée pour une garantie de vérité ; croire que le modèle consulte une base de faits.
+erreurs: Prendre une probabilité élevée pour une garantie de vérité ; croire que le modèle consulte une base de faits ; croire qu'un token est toujours un mot.
 exercice: Trois mots candidats ont les scores 2, 1 et 0. Quelle probabilité la fonction softmax donne-t-elle au premier ?
 correction: e² / (e² + e¹ + e⁰) = 7,39 / (7,39 + 2,72 + 1) ≈ 0,665, soit environ 66,5 %. Les deux autres reçoivent environ 24,5 % et 9 %.
 duree: 10-14
@@ -965,13 +965,13 @@ titre: Algorithmes, droit et éthique
 titre_en: Algorithms, law and ethics
 question: Qui est responsable quand un algorithme décide ?
 pre: S17.06 | S1.10 | S17.05
-obj: Distinguer trois questions : un modèle est-il exact, est-il équitable, est-il légal ? | Expliquer pourquoi plusieurs définitions statistiques de l'équité ne peuvent pas, en général, être satisfaites en même temps quand les taux de base diffèrent | Situer les grands cadres juridiques (protection des données, réglementation européenne de l'IA) sans donner d'avis juridique | Formuler une question de transparence à poser à tout système de décision automatisée
+obj: Distinguer trois questions : un modèle est-il exact, est-il équitable, est-il légal ? | Définir la valeur prédictive positive (part des prédictions positives qui sont justes) et les taux de faux positifs et de faux négatifs | Expliquer pourquoi, en classification binaire, quand les taux de base diffèrent entre groupes et que les prédictions sont imparfaites, on ne peut pas égaliser à la fois la valeur prédictive positive et les deux taux d'erreur (A. Chouldechova, 2017 ; J. Kleinberg et coll., 2017 ; références à vérifier) : un résultat sous conditions, pas une loi universelle | Situer les grands cadres juridiques (protection des données, réglementation européenne de l'IA) sans donner d'avis juridique | Formuler une question de transparence à poser à tout système de décision automatisée
 intuition: Un même taux d'erreur moyen peut cacher des erreurs très différentes selon les groupes.
 exemple: Débat sur un outil de prédiction de récidive aux États-Unis (à sourcer) ; RGPD et règlement européen sur l'IA (textes et dates à vérifier lors de la préparation).
 maths: M1.
 erreurs: Croire qu'un algorithme est neutre parce qu'il est mathématique ; croire qu'enlever une variable sensible suffit à supprimer une discrimination.
 exercice: Deux groupes ont des taux de base différents. Pourquoi un classifieur peut-il avoir la même précision dans les deux groupes et des taux de faux positifs différents ?
-correction: La précision (part de vrais positifs parmi les prédictions positives) dépend du taux de base. À taux de base différents, égaliser la précision oblige en général à accepter des taux de faux positifs ou de faux négatifs différents : on ne peut pas tout égaliser à la fois, sauf classifieur parfait. Choisir quelle égalité défendre est une décision éthique et juridique, pas seulement statistique.
+correction: Cadre : classification binaire, prédictions imparfaites. La valeur prédictive positive (part des prédictions positives qui sont justes) dépend du taux de base. À taux de base différents, égaliser la précision oblige en général à accepter des taux de faux positifs ou de faux négatifs différents : on ne peut pas tout égaliser à la fois, sauf classifieur parfait. Choisir quelle égalité défendre est une décision éthique et juridique, pas seulement statistique.
 duree: 10-12
 format: youtube_lesson
 forme: lecon

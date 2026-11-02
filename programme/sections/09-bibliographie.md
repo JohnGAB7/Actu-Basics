@@ -157,6 +157,7 @@ Articles fondateurs et articles cités dans le module E9 et dans les vidéos ajo
 | E5.03 | D. Lee et coll., 2022 | Le seuil chiffré de la statistique F qu'il propose : non lu dans le texte intégral, donc **non cité** dans le programme |
 | E5.03 | D. Staiger, J. Stock, 1997 | Page de fin |
 | E5.03 | J. Stock, M. Yogo, 2005 | Éditeurs de l'ouvrage collectif |
+| S19.08 | A. Chouldechova, 2017 ; J. Kleinberg, S. Mullainathan, M. Raghavan, 2017 (incompatibilité des critères d'équité) | Revue, volume, pages, DOI |
 | E10.06 (exemple) | S. Firpo, N. Fortin, T. Lemieux, *Econometrica*, 2009 | Liste d'auteurs, titre, pages, DOI (notice Crossref incomplète) |
 | Section 9.5, lignes sans DOI | 22 exemples historiques (Squire 1988 à Palacios-Huerta 2003) | Volume, pages et DOI ; la source est identifiée mais la notice n'a pas été contrôlée |
 | Sections 9.2 et 9.3, lignes sans ✔ | Ouvrages imprimés et Statistique Canada | Lien ou édition (URL de Statistique Canada à confirmer, version libre de Blitzstein et Hwang, licence de *Elements of Statistical Learning*) |

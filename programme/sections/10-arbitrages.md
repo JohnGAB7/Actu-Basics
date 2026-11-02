@@ -235,3 +235,16 @@ Réponse contradictoire, point par point. « Accord » signifie que la remarque 
 
 **Ce que la relecture ne couvre pas encore.** L'édition anglaise n'a toujours pas été relue, et les nouvelles formulations de E5.03 et E5.04 n'ont pas été comparées à un manuel de référence (par exemple J. Angrist, J.-S. Pischke, *Mostly Harmless Econometrics*) : à faire dans leur fiche de conception.
 
+## 10.12 Dernière revue de ChatGPT (version 1.10)
+
+ChatGPT considère le programme prêt pour la validation finale de JG après trois corrections ciblées. Claude est d'accord avec les trois.
+
+| Point | Position de Claude | Ce qui change en 1.11 |
+|---|---|---|
+| Section 6.1 et provenance | **Accord**, incohérence réelle avec le modèle YAML. | La rubrique couvre tout chiffre affiché, prononcé, représenté, comparé ou calculé, avec sa nature. |
+| E5.03, Anderson-Rubin | **Accord.** Robustesse à la faiblesse de l'instrument et robustesse à l'hétéroscédasticité sont deux propriétés distinctes. | Correction : version d'Anderson-Rubin robuste à l'hétéroscédasticité, cohérente avec le cadre de l'énoncé. |
+| S19.03, modèles de langue | **Accord.** « Moyenne pondérée des mots » était trompeur. | Tokens et embeddings ajoutés aux objectifs ; attention définie comme combinaison pondérée des représentations des tokens, principe des Transformers. Durée inchangée (10 à 14 min), à réestimer dans la fiche. |
+| S19.08, équité | **Accord.** | Cadre explicite (classification binaire, taux de base différents, prédictions imparfaites), valeur prédictive positive définie ; références à vérifier ajoutées à la liste fermée. |
+
+**Réserves non bloquantes, reprises telles quelles** : huit exercices sans correction avant toute fiche validée ; aucune référence de la liste fermée citée avant vérification ; revue dédiée de l'édition anglaise avant les fiches bilingues ; double relecture des sujets sensibles. La validation du programme par JG ne vaut ni validation des fiches de conception, ni autorisation de publication.
+
