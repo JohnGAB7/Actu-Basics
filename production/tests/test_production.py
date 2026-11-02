@@ -1360,3 +1360,19 @@ def test_enveloppe_de_voix_rapide_et_identique_a_la_convolution():
     debut = time.time()
     son._enveloppe(np.zeros(48000 * 480))
     assert time.time() - debut < 15
+
+
+def test_sous_titres_sur_deux_lignes_lisibles_sur_mobile():
+    from lmec.textes import deux_lignes
+    t = deux_lignes("Et si les chiffres changeaient votre façon de voir le monde ?")
+    assert t.count("\n") == 1 and all(len(l) <= 42 for l in t.split("\n"))
+    assert not t.split("\n")[1].startswith("?")
+    assert deux_lignes("Commençons par un défi.") == "Commençons par un défi."
+
+
+def test_pas_de_coupure_au_milieu_d_une_expression():
+    from lmec.rendu import mots_riches
+    mots = [w for w, _, _ in mots_riches("Compter les paires : *n(n − 1) ÷ 2*")]
+    assert "n(n − 1)" in mots and "÷ 2" in mots
+    assert [w for w, _, _ in mots_riches("Multiplier, puis 1 − P₀")][-1] == "− P₀"
+    assert len(mots_riches("(voir le rapport de rendu complet)")) == 6   # parenthèse longue : coupable

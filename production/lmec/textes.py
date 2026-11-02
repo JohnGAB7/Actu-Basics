@@ -39,6 +39,19 @@ def _texte_parle(scene: Scene, fiche: Fiche, langue: str) -> str:
     return scene.texte
 
 
+LIGNE_SOUS_TITRE = 42   # caractères par ligne, lisibles sur mobile
+
+
+def deux_lignes(texte: str) -> str:
+    """Coupe un sous-titre trop long en deux lignes équilibrées, à l'espace le plus proche du milieu."""
+    if len(texte) <= LIGNE_SOUS_TITRE or " " not in texte:
+        return texte
+    milieu = len(texte) / 2
+    espaces = [i for i, c in enumerate(texte) if c == " " and texte[i + 1:i + 2] not in ("?", "!", ":", ";", "»")]
+    i = min(espaces or [texte.index(" ")], key=lambda k: abs(k - milieu))
+    return texte[:i] + "\n" + texte[i + 1:]
+
+
 def decouper_sous_titres(texte: str) -> list[str]:
     """Phrases, puis morceaux équilibrés de ≤ 84 caractères (pas de petit reste orphelin)."""
     phrases = re.split(r"(?<=[.!?…])\s+", texte.replace("\n", " ").strip())
@@ -86,7 +99,7 @@ def ecrire_srt(fiche: Fiche, edition: Edition, durees: list[float], destination:
             t += duree
     blocs = []
     for n, (debut, fin, texte) in enumerate(reperes, 1):
-        texte = typographie(texte, edition.langue)
+        texte = deux_lignes(typographie(texte, edition.langue))
         blocs.append(f"{n}\n{_horodatage(debut)} --> {_horodatage(max(debut + 0.3, fin - 0.04))}\n{texte}\n")
     destination.write_text("\n".join(blocs), encoding="utf-8")
 

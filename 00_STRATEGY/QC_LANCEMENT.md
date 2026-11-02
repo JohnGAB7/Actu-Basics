@@ -53,4 +53,15 @@ Prudence sur la cryptographie : la voix ne dit jamais que le paradoxe « sécuri
 
 ## 4. Rendu et lisibilité mobile
 
-Voir la section « Rendu » ajoutée après la production des aperçus.
+Aperçus vérifiés image par image (une image toutes les 8 secondes, vertical FR et EN) et planches 16:9.
+
+| Contrôle | Résultat |
+|---|---|
+| Rapport du moteur | aucun avertissement ; seul blocage : la fiche est encore en « brouillon » (attend la validation de JG) |
+| Chevauchements | aucun relevé ; courbes à quatre repères : étiquettes en légende |
+| Coupures de ligne | les formules ne sont plus coupées au milieu (« n(n − 1) ÷ 2 », « 1 − P₀ » restent sur une ligne) |
+| Sous-titres | 166 (FR) et 159 (EN), aucun chevauchement, deux lignes de 45 caractères au plus |
+| Zones de sécurité | zones TikTok, Reels et Shorts vérifiées par le moteur (`inspection/zones-*.png`) |
+| Logo | officiel, variante sombre sur fond sombre |
+| Point d'attention | en vertical, le texte des quatre cartes de piliers est petit (36 px sur 1 080) : lisible sur téléphone, mais c'est l'écran le plus dense |
+| Son | voix normalisée à −16 LUFS, nappe sous la voix, tic des comptes à rebours, carillon des révélations |

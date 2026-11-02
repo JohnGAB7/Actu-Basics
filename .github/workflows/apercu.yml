@@ -20,10 +20,18 @@ on:
 permissions:
   contents: read
 
+# Un push sur une branche avec PR déclenche « push » et « pull_request » : un seul rendu suffit.
+# Le plus récent annule le précédent (moins de minutes GitHub Actions consommées).
+concurrency:
+  group: apercu-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   apercu:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # Une leçon de 8 minutes en FR et en EN demande environ 70 à 90 minutes de rendu sur un
+    # exécuteur standard (voix Kokoro sur CPU, puis images et encodage). Voir docs/voice-licenses.md.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
 

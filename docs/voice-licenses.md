@@ -83,7 +83,7 @@ Aucune attribution particulière n'est indiquée. La fiche du modèle décrit le
 | Licences | 0 € | — |
 | Téléchargement | ≈ 354 Mo une fois (modèle 326 Mo + voix 28 Mo) | Puis gardé en cache. |
 | Cache GitHub Actions | ≈ 350 Mo pour Kokoro, plus les voix Piper (≈ 200 Mo) | Le cache GitHub est gratuit jusqu'à 10 Go par dépôt. |
-| Minutes GitHub Actions | Le rendu complet de la leçon dure environ une heure de CPU par langue (voir le rapport de rendu) | Gratuit et illimité pour un dépôt public ; pour un dépôt privé, compté dans le quota du compte GitHub (2 000 minutes par mois sur le plan gratuit, à revérifier sur la page des tarifs GitHub). C'est le seul coût indirect possible. |
+| Minutes GitHub Actions | Un aperçu complet de la leçon de 8 minutes (FR et EN) prend environ 70 à 90 minutes sur un exécuteur standard ; la limite est fixée à 120 minutes. Un seul rendu par push (les rendus « push » et « pull_request » de la même branche ne se cumulent plus) | Gratuit et illimité pour un dépôt public ; pour un dépôt privé, compté dans le quota du compte GitHub (2 000 minutes par mois sur le plan gratuit, à revérifier sur la page des tarifs GitHub). C'est le seul coût indirect possible. |
 | GPU, cloud | Aucun | Kokoro tourne sur CPU. |
 
 ## 6. Ressources matérielles
