@@ -1404,3 +1404,22 @@ def test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas():
             blocs = np.split(lignes, np.flatnonzero(np.diff(lignes) > 1) + 1)
             numero, barre = blocs[-2], blocs[-1]     # le chiffre, puis la barre en dessous
             assert barre[0] - numero[-1] >= 20, (langue, i, numero[-1], barre[0])
+
+
+def test_soulignement_du_chiffre_cle_sous_la_virgule():
+    """« 50,7 % » : la virgule descend sous la ligne de base ; le soulignement doit passer dessous."""
+    import numpy as np
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        for fmt in ("video", "lecon"):
+            r = Rendu(fiche, langue, CHARTE, fmt, False)
+            ed = fiche.editions[langue]
+            i, s = next((i, s) for i, s in enumerate(ed.scenes) if s.type == "chiffre")
+            px = np.array(r.dessiner(s, i, len(ed.scenes)).convert("RGB")).astype(int)
+            accent = np.abs(px - np.array(r.c["accent"][:3])).sum(axis=2) < 40
+            blanc = np.abs(px - np.array(r.c["texte"][:3])).sum(axis=2) < 40
+            lignes_barre = [y for y in range(px.shape[0]) if blanc[y].sum() > px.shape[1] * 0.3]
+            assert lignes_barre, (langue, fmt)
+            haut_barre = lignes_barre[0]
+            bas_chiffre = max(y for y in range(haut_barre) if accent[y].sum() > 3)
+            assert haut_barre - bas_chiffre >= 10, (langue, fmt, bas_chiffre, haut_barre)

@@ -575,7 +575,9 @@ class Rendu(ScenesPedagogiques):
             x -= pc.getlength(gr)
             d.text((x, y), gr, font=pc, fill=self.c["accent"])
             x -= ecart
-        y += pc.getbbox("0123456789")[3] + 28
+        # Bas réel du chiffre final, virgule comprise (elle descend sous la ligne de base) :
+        # le soulignement ne doit jamais couper le nombre.
+        y += max(pc.getbbox("0123456789")[3], pc.getbbox(final)[3]) + 28
         # Soulignement qui se trace une fois le compteur arrivé.
         s = 1.0 if t is None else ease_out((t - 1.1) / 0.5)
         if s > 0:
