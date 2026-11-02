@@ -19,6 +19,23 @@ PHRASES = {
 }
 
 
+def _adapter(k):
+    """kokoro-onnx 0.5.0 passe « speed » en entier aux exports qui attendent « input_ids »
+    (onnx-community), alors que ces exports l'attendent en flottant : on convertit selon le type
+    déclaré par le fichier ONNX. Sans effet sur le fichier utilisé aujourd'hui."""
+    types = {i.name: i.type for i in k.sess.get_inputs()}
+    run = k.sess.run
+
+    def executer(sorties, entrees):
+        entrees = dict(entrees)
+        if "speed" in entrees and types.get("speed") == "tensor(float)":
+            entrees["speed"] = np.asarray(entrees["speed"], dtype=np.float32)
+        return run(sorties, entrees)
+
+    k.sess.run = executer
+    return k
+
+
 def main() -> int:
     from kokoro_onnx import Kokoro
 
@@ -28,7 +45,7 @@ def main() -> int:
     p.add_argument("voix")
     p.add_argument("--sortie")
     a = p.parse_args()
-    moteurs = {nom: Kokoro(chemin, a.voix) for nom, chemin in (("A", a.onnx_a), ("B", a.onnx_b))}
+    moteurs = {nom: _adapter(Kokoro(chemin, a.voix)) for nom, chemin in (("A", a.onnx_a), ("B", a.onnx_b))}
     lignes = ["## Comparaison du son produit par les deux fichiers ONNX", "",
               f"- A : `{a.onnx_a}`", f"- B : `{a.onnx_b}`", "",
               "| Langue | Voix | Durée A (s) | Durée B (s) | Corrélation | Écart max |", "|---|---|---|---|---|---|"]
