@@ -187,7 +187,7 @@ editions:
           - '1-P_0'
           - '=1-0{,}493'
           - '\approx 0{,}507'
-        voix_off: "Pour obtenir la probabilité d'au moins une coïncidence, on retire donc P zéro de un. Un moins P zéro. Un moins zéro virgule quatre cent quatre-vingt-treize. Environ zéro virgule cinq cent sept."
+        voix_off: "Reste le complément. Au moins une coïncidence, c'est un moins P zéro. Un moins zéro virgule quatre cent quatre-vingt-treize. Environ zéro virgule cinq cent sept."
         verifier:
           - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "1 − P₀"}
       - type: chiffre
@@ -294,10 +294,11 @@ editions:
       - type: etapes
         texte: "Le même calcul, en très grand"
         etapes:
+          - "Codes = *jours*, fichiers = *personnes*"
           - "Codes de 64 bits : *18 milliards de milliards*"
           - "≈ 5 milliards de fichiers : *près d'1 chance sur 2* de collision"
         note: "Les collisions deviennent probables bien avant d'avoir utilisé tous les codes."
-        voix_off: "Les codes jouent le rôle des jours de l'année, et les fichiers celui des personnes. Avec des codes de soixante-quatre bits, il existe environ dix-huit milliards de milliards de valeurs possibles. Pourtant, avec environ cinq milliards de fichiers, la probabilité d'une collision approche déjà une chance sur deux."
+        voix_off: "C'est le même raisonnement. Les codes jouent le rôle des jours de l'année, et les fichiers celui des personnes. Avec des codes de soixante-quatre bits, il existe environ dix-huit milliards de milliards de valeurs possibles. Pourtant, avec environ cinq milliards de fichiers, la probabilité d'une collision approche déjà une chance sur deux."
         verifier:
           - {expression: "2 ** 64 / 1e18", attendu: 18.4, tolerance: 0.1, libelle: "2^64, en milliards de milliards"}
           - {expression: "1 - exp(-(5e9) ** 2 / (2 * 2 ** 64))", attendu: 0.49, tolerance: 0.01, libelle: "P(collision), 5 milliards de fichiers (approximation)"}
@@ -465,7 +466,7 @@ editions:
           - '1-P_0'
           - '=1-0.493'
           - '\approx 0.507'
-        voix_off: "To get the probability of at least one match, we subtract P zero from one. One minus P zero. One minus zero point four nine three. About zero point five oh seven."
+        voix_off: "Now the complement. At least one match is one minus P zero. One minus zero point four nine three. About zero point five oh seven."
         verifier:
           - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "1 − P₀"}
       - type: chiffre
@@ -572,10 +573,11 @@ editions:
       - type: etapes
         texte: "The same math, on a huge scale"
         etapes:
+          - "Codes = *days*, files = *people*"
           - "64-bit codes: *18 billion billion*"
           - "≈ 5 billion files: *close to even odds* of a collision"
         note: "Collisions become likely long before all the codes are used up."
-        voix_off: "The codes play the role of the days of the year, and the files play the people. With sixty-four-bit codes, there are about eighteen billion billion possible values. Yet with around five billion files, the probability of a collision is already close to one in two."
+        voix_off: "It's the same reasoning. The codes play the role of the days of the year, and the files play the people. With sixty-four-bit codes, there are about eighteen billion billion possible values. Yet with around five billion files, the probability of a collision is already close to one in two."
         verifier:
           - {expression: "2 ** 64 / 1e18", attendu: 18.4, tolerance: 0.1, libelle: "2^64, in billion billions"}
           - {expression: "1 - exp(-(5e9) ** 2 / (2 * 2 ** 64))", attendu: 0.49, tolerance: 0.01, libelle: "P(collision), 5 billion files (approximation)"}
