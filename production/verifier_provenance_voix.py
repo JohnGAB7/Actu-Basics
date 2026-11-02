@@ -31,6 +31,8 @@ sys.path.insert(0, str(RACINE))
 from lmec.tts import DOSSIER_VOIX  # noqa: E402
 
 DEPOT = "hexgrad/Kokoro-82M"
+DEPOT_ONNX = "onnx-community/Kokoro-82M-v1.0-ONNX"   # export ONNX publié sur Hugging Face
+SHA_ONNX_UTILISE = "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5"
 VOIX = ("ff_siwis", "af_heart")
 TYPES = {"FloatStorage": np.float32, "HalfStorage": np.float16, "DoubleStorage": np.float64,
          "BFloat16Storage": None}
@@ -89,6 +91,31 @@ def lire_tenseur_pt(contenu: bytes) -> np.ndarray:
     return Lecteur(io.BytesIO(archive.read(f"{prefixe}/data.pkl"))).load()
 
 
+def _section_onnx() -> list[str]:
+    """Informatif : le fichier ONNX utilisé est-il l'un des fichiers publiés par onnx-community ?
+
+    Ne fait pas échouer la vérification : l'export ONNX n'a pas d'équivalent officiel chez
+    hexgrad, c'est un point ouvert documenté dans docs/voice-licenses.md."""
+    lignes = ["## Fichier ONNX", "", f"- SHA-256 du fichier utilisé (`kokoro-v1.0.onnx`) : `{SHA_ONNX_UTILISE}`"]
+    try:
+        info = json.loads(_telecharger(f"https://huggingface.co/api/models/{DEPOT_ONNX}"))
+        licence = (info.get("cardData") or {}).get("license") or "?"
+        arbre = json.loads(_telecharger(f"https://huggingface.co/api/models/{DEPOT_ONNX}/tree/main/onnx"))
+        lignes += [f"- Dépôt comparé : https://huggingface.co/{DEPOT_ONNX} (licence déclarée : **{licence}**, "
+                   f"révision `{info.get('sha', '?')}`)", "", "| Fichier publié | Taille | SHA-256 |", "|---|---|---|"]
+        trouve = None
+        for f in arbre:
+            sha = (f.get("lfs") or {}).get("oid", "")
+            lignes.append(f"| `{f.get('path')}` | {f.get('size')} | `{sha}` |")
+            if sha == SHA_ONNX_UTILISE:
+                trouve = f.get("path")
+        lignes += ["", f"**Le fichier utilisé est identique à `{trouve}` de ce dépôt.**" if trouve else
+                   "**Le fichier utilisé n'est identique à aucun fichier de ce dépôt** (point ouvert maintenu)."]
+    except Exception as exc:   # informatif seulement
+        lignes.append(f"- Comparaison impossible : {exc}")
+    return lignes + [""]
+
+
 def main() -> int:
     parseur = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parseur.add_argument("--sortie", type=Path, default=None)
@@ -115,7 +142,9 @@ def main() -> int:
         ok &= identique
         lignes.append(f"| `{voix}` | {url} | `{hashlib.sha256(contenu).hexdigest()}` | "
                       f"{'oui' if identique else 'NON'} (forme {officiel.shape}, écart max {ecart}) |")
-    lignes += ["", "**Résultat : provenance confirmée.**" if ok else "**Résultat : provenance NON confirmée.**", ""]
+    lignes += ["", "**Résultat (voix) : provenance confirmée.**" if ok
+               else "**Résultat (voix) : provenance NON confirmée.**", ""]
+    lignes += _section_onnx()
     texte = "\n".join(lignes)
     print(texte)
     if args.sortie:
