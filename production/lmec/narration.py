@@ -126,7 +126,9 @@ def durees_avec_voix(durees_visuelles: list[float], narration: Narration, explic
 
 
 def piste_complete(narration: Narration, durees: list[float], travail: Path) -> Path:
-    """Piste unique calée sur les scènes, puis volume normalisé (EBU R128)."""
+    """Piste unique calée sur les scènes, puis volume normalisé (EBU R128).
+
+    loudnorm peut perdre quelques dizaines de ms en fin de piste : apad complète jusqu'à la durée exacte."""
     parties = []
     for vs, d in zip(narration.scenes, durees):
         parties += [(None, AMORCE_S), (vs.wav, vs.duree_voix), (None, max(0.0, d - AMORCE_S - vs.duree_voix))]
@@ -134,8 +136,8 @@ def piste_complete(narration: Narration, durees: list[float], travail: Path) -> 
     _assembler(parties, brute)
     finale = travail / "narration.wav"
     r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(brute),
-                        "-af", f"loudnorm=I={CIBLE_LUFS}:TP=-1.5:LRA=11", "-ar", str(TAUX), "-ac", "1",
-                        "-t", f"{sum(durees):.3f}", str(finale)], capture_output=True, text=True)
+                        "-af", f"loudnorm=I={CIBLE_LUFS}:TP=-1.5:LRA=11,aresample={TAUX},apad=whole_dur={sum(durees):.3f}",
+                        "-ar", str(TAUX), "-ac", "1", str(finale)], capture_output=True, text=True)
     if r.returncode != 0:
         raise ErreurTTS(f"Normalisation du volume impossible : {r.stderr.strip()[:200]}")
     return finale

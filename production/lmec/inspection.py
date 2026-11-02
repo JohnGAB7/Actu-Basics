@@ -87,3 +87,34 @@ def produire_inspection(video: Path, scenes, durees: list[float], animations: li
         _grille(vues, 4).save(chemin, optimize=True)
         sorties.append(chemin)
     return sorties
+
+
+def inspection_logo(rendus: list, editions_scenes, dossier: Path) -> Path | None:
+    """Chaque image portant le logo, à la taille d'un téléphone, zone de protection en vert."""
+    vues = []
+    for rendu in rendus:
+        for (support, index), pose in sorted(rendu.poses.items()):
+            scene = editions_scenes[index]
+            im = rendu.dessiner(scene, index, len(editions_scenes), couverture=(support == "couverture"))
+            im = im.convert("RGBA")
+            calque = Image.new("RGBA", im.size, (0, 0, 0, 0))
+            dc = ImageDraw.Draw(calque)
+            dc.rectangle(pose.boite_protection, outline=(40, 220, 90, 255), width=6)
+            vue = Image.alpha_composite(im, calque).convert("RGB")
+            h = round(vue.height * LARGEUR_MOBILE / vue.width)
+            vues.append(_legende(vue.resize((LARGEUR_MOBILE, h), Image.LANCZOS),
+                                 f"{support} · {pose.variante} · {pose.largeur}px"))
+    if not vues:
+        return None
+    h_max = max(v.height for v in vues)
+    vues = [v if v.height == h_max else _hauteur(v, h_max) for v in vues]
+    dossier.mkdir(parents=True, exist_ok=True)
+    chemin = dossier / "logo-mobile.png"
+    _grille(vues, len(vues)).save(chemin, optimize=True)
+    return chemin
+
+
+def _hauteur(im: Image.Image, h: int) -> Image.Image:
+    cadre = Image.new("RGB", (im.width, h), (230, 230, 230))
+    cadre.paste(im, (0, 0))
+    return cadre

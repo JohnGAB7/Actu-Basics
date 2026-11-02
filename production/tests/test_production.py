@@ -265,7 +265,11 @@ def test_fiche_reelle_coherente_sans_tout_affirmer(tmp_path):
     r = Rapport()
     controler_fiche(charger_fiche(ecrire(tmp_path, fiche_reelle(), "2026-11-pic-population-mondiale")), r, AUJOURD_HUI)
     assert [str(c) for c in r.bloquants] == ["Fiche non validée (statut « brouillon ») : aucun rendu final possible"]
-    assert "Chiffre clé égal au point mis en avant du graphique" in r.ok
+    # Ne dépend pas du contenu éditorial de la fiche (qui peut changer de graphique) :
+    brut = fiche_reelle()
+    mis_en_avant = [p["valeur"] for p in brut["donnees"]["points"] if p.get("mis_en_avant")]
+    egal = mis_en_avant == [brut["chiffre_cle"]["valeur"]]
+    assert ("Chiffre clé égal au point mis en avant du graphique" in r.ok) == egal
     # la machine ne prétend pas avoir vérifié la grandeur mesurée : c'est renvoyé à l'humain
     assert any("même grandeur" in a for a in r.a_verifier)
 
@@ -355,7 +359,7 @@ def test_annees_des_libelles_differentes_fr_en(tmp_path):
 def test_plusieurs_points_mis_en_avant_et_arrondi(tmp_path):
     brut = valider(fiche_reelle())
     brut["donnees"]["points"][0]["mis_en_avant"] = True
-    brut["donnees"]["points"][2]["valeur"] = 10.25
+    brut["donnees"]["points"][-1]["valeur"] = 10.25
     _, avert = constats(tmp_path, brut)
     assert any("2 points mis en avant" in a for a in avert)
     assert any("arrondies" in a for a in avert)
@@ -727,5 +731,258 @@ def test_video_avec_voix_de_test(tmp_path):
     assert abs(durees["video"] - durees["audio"]) < 0.15
     srt = (d / "sous-titres.srt").read_text()
     assert srt.startswith("1\n00:00:00,350")
-    for f in ("planche-video.png", "apercu-mobile.png", "zones-tiktok.png"):
+    for f in ("planche-video.png", "apercu-mobile.png", "zones-tiktok.png", "logo-mobile.png"):
         assert (d / "inspection" / f).exists()
+    rapport = (tmp_path / "exemple-fictif/rapport-qc.md").read_text(encoding="utf-8")
+    assert "Logo sombre (vidéo, scène 6 (fin))" in rapport and "Logo sombre (couverture" in rapport
+
+
+
+# --------------------------------------------------------------------------- logo ACTU-BASICS
+import hashlib  # noqa: E402
+
+from lmec import logo as logo_mod  # noqa: E402
+from lmec.qc import controler_logo, controler_marque  # noqa: E402
+from lmec.rendu import Rendu  # noqa: E402
+
+DOSSIER_LOGOS = RACINE / "assets/brand/actu-basics"
+
+
+def _charte(**modifs):
+    ch = copy.deepcopy(CHARTE)
+    for chemin, valeur in modifs.items():
+        o = ch
+        cles = chemin.split("__")
+        for k in cles[:-1]:
+            o = o.setdefault(k, {})
+        o[cles[-1]] = valeur
+    return ch
+
+
+def _empreintes():
+    return {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in DOSSIER_LOGOS.glob("logo-*")}
+
+
+def _rendu_fin(charte, fmt="video", langue="fr"):
+    fiche = charger_fiche(EXEMPLE)
+    ed = fiche.editions[langue]
+    r = Rendu(fiche, langue, charte, fmt, False)
+    n = len(ed.scenes)
+    im = r.dessiner(ed.scenes[-1], n - 1, n)
+    return r, im, ed
+
+
+def test_fichiers_logo_officiels_presents():
+    from PIL import Image
+    noms = set()
+    for langue in ("fr", "en"):
+        fichiers = logo_mod.fichiers_langue(CHARTE["logo"], langue)
+        assert set(fichiers) == {"clair", "sombre"}
+        for variante, candidats in fichiers.items():
+            trouves = [c for c in candidats if (DOSSIER_LOGOS / c).is_file()]
+            assert trouves, f"logo {langue} {variante} absent de {DOSSIER_LOGOS}"
+            noms.add(trouves[0])
+            im = Image.open(DOSSIER_LOGOS / trouves[0])
+            assert im.mode == "RGBA" and im.width >= 400    # fond transparent autour du disque
+    assert len(noms) == 4                                   # un fichier distinct par langue et par fond
+
+
+def test_logo_choisi_selon_la_langue_et_le_fond():
+    clair = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
+                 couleurs__texte="#06152B")
+    attendu = {("fr", "sombre"): "logo-dark.png", ("fr", "clair"): "logo-light.png",
+               ("en", "sombre"): "logo-dark-en.png", ("en", "clair"): "logo-light-en.png"}
+    for langue in ("fr", "en"):
+        for fond, ch in (("sombre", CHARTE), ("clair", _charte(**clair))):
+            r, _, ed = _rendu_fin(ch, "carrousel", langue)
+            pose = r.poses[("carrousel", len(ed.scenes) - 1)]
+            assert pose.variante == fond
+            assert r.logos.chemins[pose.variante].name == attendu[(langue, fond)]
+            rap = Rapport()
+            controler_logo(langue, r, [("carrousel", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+            assert not rap.bloquants, [str(c) for c in rap.bloquants]
+    # logo d'une autre langue : bloquant
+    r, _, ed = _rendu_fin(CHARTE, "video", "fr")
+    rap = Rapport()
+    controler_logo("en", r, [("video", len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+    assert any("Logo de la langue « fr »" in str(c) for c in rap.bloquants)
+
+
+def test_logo_anglais_absent_bloque(tmp_path):
+    import shutil
+    for f in DOSSIER_LOGOS.glob("logo-*.png"):
+        if "-en" not in f.name:
+            shutil.copy(f, tmp_path / f.name)
+    rap = Rapport()
+    controler_marque(_charte(logo__dossier=str(tmp_path)), rap)
+    assert any("[en]" in str(c) and "introuvable" in str(c) for c in rap.bloquants)
+    assert not any("[fr]" in str(c) for c in rap.bloquants)
+
+
+def test_logo_unique_toutes_langues_accepte():
+    """Ancien format (fichiers.<variante>) : le même logo pour toutes les langues."""
+    ch = _charte(logo__fichiers={"clair": ["logo-light.png"], "sombre": ["logo-dark.png"]})
+    assert logo_mod.charger_logos(ch["logo"], "en").chemins["sombre"].name == "logo-dark.png"
+
+
+def test_logo_lisible_sur_mobile():
+    for langue in ("fr", "en"):
+        for fmt in ("video", "carrousel"):
+            r, _, ed = _rendu_fin(CHARTE, fmt, langue)
+            rap = Rapport()
+            controler_logo(langue, r, [(fmt, len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+            assert not any("peu lisible" in str(c) for c in rap.avertissements), (langue, fmt)
+    ch = _charte(logo__video={"scenes": ["fin"], "largeur_px": 280, "largeur_min_px": 200, "slogan": False})
+    r, _, ed = _rendu_fin(ch, "video", "en")
+    rap = Rapport()
+    controler_logo("en", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+    assert any("Slogan du logo peu lisible" in str(c) for c in rap.avertissements)
+
+
+def test_logo_discret_en_video_sans_slogan_ajoute():
+    for langue in ("fr", "en"):
+        r, im, ed = _rendu_fin(CHARTE, "video", langue)
+        pose = r.poses[("video", len(ed.scenes) - 1)]
+        assert pose.largeur <= 420                                          # discret (440 px avant)
+        assert pose.largeur * 390 / 1080 >= logo_mod.LARGEUR_MOBILE_MIN       # mais lisible sur téléphone
+        sans = _charte(logo__video__slogan=True)
+        r2, im2, _ = _rendu_fin(sans, "video", langue)
+        assert im.tobytes() != im2.tobytes()          # le slogan écrit sous le logo est bien désactivé
+
+
+def test_slogans_et_marque_officiels():
+    assert CHARTE["slogan"] == {"fr": "Éveiller par les chiffres.", "en": "Enlightening through numbers."}
+    assert CHARTE["slogan"] == logo_mod.SLOGANS_OFFICIELS
+    assert CHARTE["marque"] == {"fr": "ACTU-BASICS", "en": "ACTU-BASICS"}
+    r = Rapport()
+    controler_marque(_charte(slogan={"fr": "Éveiller par les chiffres", "en": "Enlightening through numbers."}), r)
+    assert any("Slogan FR" in str(c) for c in r.bloquants)
+
+
+def test_logo_sur_fond_sombre_proportions_et_original_intact():
+    avant = _empreintes()
+    for fmt in ("video", "carrousel"):
+        r, im, ed = _rendu_fin(CHARTE, fmt)
+        pose = r.poses[(fmt, len(ed.scenes) - 1)]
+        assert pose.variante == "sombre" and pose.luminance_fond < 0.5
+        x0, y0, x1, y1 = pose.boite
+        source = logo_mod._ouvrir(str(r.logos.chemins["sombre"]))
+        assert abs((y1 - y0) / (x1 - x0) - source.height / source.width) < 0.01      # jamais déformé
+        assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT                       # rien dans sa zone
+        assert pose.largeur <= pose.largeur_native                                    # jamais agrandi
+        rap = Rapport()
+        controler_logo("fr", r, [(fmt, len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+        assert not rap.bloquants and not rap.avertissements, [str(c) for c in rap.constats]
+    assert _empreintes() == avant                                                     # fichiers d'origine intacts
+
+
+def test_logo_clair_sur_fond_clair():
+    ch = _charte(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
+                 couleurs__texte="#06152B")
+    r, _, ed = _rendu_fin(ch, "carrousel")
+    pose = r.poses[("carrousel", len(ed.scenes) - 1)]
+    assert pose.variante == "clair" and pose.luminance_fond >= 0.5
+
+
+def test_variante_forcee_contraire_au_fond_bloque():
+    ch = _charte(logo__variante="clair")
+    r, _, ed = _rendu_fin(ch)
+    rap = Rapport()
+    controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+    assert any("variante sombre" in str(c) for c in rap.bloquants)
+
+
+@pytest.mark.parametrize("position", logo_mod.POSITIONS)
+def test_positions_configurables_sans_recouvrement(position):
+    """Couverture : le logo est ancré dans la zone de sécurité et le texte lui laisse la place."""
+    ch = _charte(logo__couverture={"actif": True, "position": position, "largeur_px": 240, "marge_px": 20})
+    fiche = charger_fiche(FICHE_REELLE)
+    ed = fiche.editions["fr"]
+    r = Rendu(fiche, "fr", ch, "video", False)
+    r.dessiner(ed.scenes[0], 0, len(ed.scenes), couverture=True)
+    pose = r.poses[("couverture", 0)]
+    g, h, d, b = r.zone
+    x0, y0, x1, y1 = pose.boite
+    assert g + 20 <= x0 and x1 <= d - 20 and h + 20 <= y0 and y1 <= b - 20
+    if position != "centre":   # au centre, le logo ne peut que gêner l'accroche : contrôle qualité
+        assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT, position
+    else:
+        rap = Rapport()
+        controler_logo("fr", r, [("couverture", 0, "accroche")], ch, PLATEFORMES, rap)
+        assert any("touche un texte" in str(c) for c in rap.bloquants)
+
+
+def test_taille_et_marge_configurables():
+    ch = _charte(logo__video={"scenes": ["fin"], "largeur_px": 360, "largeur_min_px": 200, "slogan": False})
+    r, _, ed = _rendu_fin(ch)
+    pose = r.poses[("video", len(ed.scenes) - 1)]
+    assert pose.largeur == 360
+
+
+def test_logo_agrandi_et_petit_sur_mobile_signales(tmp_path):
+    # Copie réduite (dossier temporaire de test, jamais dans le dépôt) pour simuler un fichier trop petit.
+    from PIL import Image
+    for f in DOSSIER_LOGOS.glob("logo-*.png"):
+        Image.open(f).resize((300, 300)).save(tmp_path / f.name)
+    ch = _charte(logo__dossier=str(tmp_path),
+                 logo__video={"scenes": ["fin"], "largeur_px": 440, "largeur_min_px": 400})
+    r, _, ed = _rendu_fin(ch)
+    rap = Rapport()
+    controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+    assert any("agrandi au-delà de sa résolution" in str(c) for c in rap.avertissements)
+    ch = _charte(logo__couverture={"actif": True, "position": "haut_droite", "largeur_px": 150, "marge_px": 0})
+    fiche = charger_fiche(EXEMPLE)
+    r = Rendu(fiche, "fr", ch, "video", False)
+    r.dessiner(fiche.editions["fr"].scenes[0], 0, 6, couverture=True)
+    rap = Rapport()
+    controler_logo("fr", r, [("couverture", 0, "accroche")], ch, PLATEFORMES, rap)
+    assert any("petit sur téléphone" in str(c) for c in rap.avertissements)
+
+
+def test_logo_absent_jamais_remplace(tmp_path):
+    ch = _charte(logo__dossier="assets/brand/inexistant")
+    rap = Rapport()
+    controler_marque(ch, rap)
+    assert any("Logo officiel introuvable" in str(c) and "Aucun logo de substitution" in str(c) for c in rap.bloquants)
+    r, im, ed = _rendu_fin(ch)
+    assert r.poses == {}                                  # rien n'est dessiné à la place du logo
+    # rendu final refusé avant toute production
+    f = ecrire(tmp_path, valider(brut_exemple()))
+    charte = tmp_path / "charte.yaml"
+    charte.write_text(yaml.safe_dump(ch, allow_unicode=True), encoding="utf-8")
+    res = lancer(f, "--mode", "final", "--voix", "test", "--sans-video", "--charte", charte, "--sortie", tmp_path / "s")
+    assert res.returncode == 1 and "Logo officiel introuvable" in res.stdout
+    assert not (tmp_path / "s/exemple-fictif/fr").exists()
+
+
+def test_logo_desactivable():
+    ch = _charte(logo__actif=False)
+    r, _, _ = _rendu_fin(ch)
+    assert r.poses == {}
+    rap = Rapport()
+    controler_marque(ch, rap)
+    assert any("Logo désactivé" in str(c) for c in rap.avertissements)
+
+
+def test_logo_absent_alors_que_prevu_bloque():
+    r, _, ed = _rendu_fin(CHARTE)
+    r.poses.clear()
+    rap = Rapport()
+    controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+    assert any("Logo absent" in str(c) for c in rap.bloquants)
+
+
+def test_ancienne_signature_signalee(tmp_path):
+    _, avert = constats(tmp_path, valider(fiche_reelle()))
+    assert not any("ancienne signature" in a for a in avert)          # fiche corrigée
+    brut = valider(fiche_reelle())
+    brut["editions"]["fr"]["scenes"][-1]["texte"] = "Abonnez-vous pour comprendre le monde, un chiffre à la fois."
+    _, avert = constats(tmp_path, brut)
+    assert any("ancienne signature" in a and "Éveiller par les chiffres." in a for a in avert)
+
+
+def test_aucune_ancienne_signature_dans_les_contenus():
+    for f in list((RACINE / "contenus").rglob("*.yaml")):
+        texte = f.read_text(encoding="utf-8").lower()
+        for ancienne in logo_mod.ANCIENNES_SIGNATURES[2:]:
+            assert ancienne not in texte, f"{f.name} : « {ancienne} »"

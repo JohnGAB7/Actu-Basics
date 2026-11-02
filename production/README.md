@@ -19,7 +19,7 @@ fr/ et en/
   video.mp4                   1080×1920, H.264/AAC, 30 i/s, avec voix
   narration.wav               voix seule
   inspection/                 planche vidéo, aperçu mobile, zones des plateformes
-  miniature.jpg
+  miniature.jpg               couverture, avec le logo
   carrousel/01-….png …        1080×1350
   apercu-carrousel.png        toutes les diapositives sur une image
   sous-titres.srt
@@ -39,7 +39,8 @@ fr/ et en/
 | `lmec/qc.py` | Contrôles qualité (bloquants, avertissements, contrôles humains) et rapport |
 | `lmec/tts.py` | Fournisseurs de voix interchangeables, cache |
 | `lmec/narration.py` | Phrases → voix → durées de scènes → piste audio et repères de sous-titres |
-| `lmec/inspection.py` | Images d'inspection extraites de la vidéo encodée |
+| `lmec/inspection.py` | Images d'inspection extraites de la vidéo encodée (dont `logo-mobile.png`) |
+| `lmec/logo.py` | Logo officiel ACTU-BASICS : variante selon le fond, placement, contrôle de recouvrement ([guide](../docs/technique/logo-et-marque.md)) |
 | `tts.yaml` / `plateformes.yaml` | Voix ; limites des plateformes avec leurs références officielles et dates de vérification (modifiables sans code) |
 | `charte.yaml` | Couleurs, polices, formats, zones de sécurité (modifiable sans code) |
 

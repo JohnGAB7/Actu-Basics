@@ -1,57 +1,51 @@
-# Identité de marque — Le Monde en chiffres
+# Identité de marque — ACTU-BASICS
 
 ## Plateforme de marque
-**Nom français :** Le Monde en chiffres  
-**Nom anglais :** The World in Numbers  
-**Signature FR :** Comprendre le monde, un chiffre à la fois.  
-**Signature EN :** Understanding the world, one number at a time.
+**Nom :** ACTU-BASICS  
+**Signature FR officielle :** Éveiller par les chiffres.  
+**Signature EN :** Enlightening through numbers.
+
+ACTU-BASICS est l'identité de marque du projet précédemment nommé « Le Monde en chiffres / The World in Numbers ». Il s'agit du même projet et du même dépôt, pas d'un projet distinct.
 
 ## Mission
-Rendre les grandes transformations du monde compréhensibles grâce aux données, aux statistiques et à une narration claire.
+Éveiller la curiosité et développer la compréhension du monde grâce aux chiffres, aux statistiques, aux probabilités et à la donnée.
 
 ## Promesse
-Chaque publication apporte un fait utile, correctement contextualisé et facile à retenir. Le chiffre attire l'attention ; l'explication donne sa valeur.
+Chaque publication part d'un chiffre pertinent et le transforme en compréhension : contexte, explication, mise en perspective et source vérifiable.
 
 ## Positionnement
-Un média numérique indépendant de vulgarisation et de journalisme de données, à la croisée de la culture générale, de l'économie, des sciences et des enjeux de société.
-
-## Publics
-Curieux adultes et jeunes adultes, étudiants, professionnels et lecteurs qui souhaitent mieux comprendre le monde sans devoir lire de longs rapports.
+Média éducatif bilingue de vulgarisation scientifique et de data storytelling. Les sujets peuvent couvrir les statistiques, les probabilités, la démographie, l'économie, les sciences, la technologie, l'assurance et les enjeux de société.
 
 ## Personnalité
-- Intelligent, accessible et curieux.
-- Rigoureux sans être académique.
-- Visuellement clair et contemporain.
-- Nuancé, calme et non sensationnaliste.
-- International et ouvert.
-
-## Principes de langage
-- Une idée principale par publication.
-- Des phrases courtes, concrètes et naturelles.
-- Expliquer les termes techniques au premier usage.
-- Distinguer clairement faits, estimations, projections et opinions.
-- Ne jamais dramatiser artificiellement un chiffre.
+- Pédagogique, rigoureux et accessible.
+- Curieux, moderne et international.
+- Visuellement clair, dynamique sans être tapageur.
+- Nuancé et non sensationnaliste.
 
 ## Architecture bilingue
-Le français et l'anglais sont deux éditions éditoriales autonomes. Le fond factuel est partagé, mais les accroches, exemples, références culturelles et formulations sont adaptées à chaque langue. Aucune traduction mécanique.
+Le français et l'anglais sont deux éditions éditoriales autonomes. Le slogan français officiel est « Éveiller par les chiffres. » La signature anglaise retenue est « Enlightening through numbers. » Adapter les formulations naturellement ; ne pas traduire mécaniquement.
 
-## Direction artistique — proposition initiale
-- Bleu nuit : #101D30
-- Or : #F2B84B
-- Ivoire : #F5F5F1
-- Turquoise : #26A6A1
-- Corail : #E76F51
-- Titres : Montserrat ExtraBold ou Archivo Black.
-- Texte : Inter.
-- Chiffres et données : IBM Plex Mono ou Roboto Mono.
+## Identité visuelle
+Les logos officiels sont conservés dans `assets/brand/actu-basics/` :
+- `logo-light.webp` : variante sur fond clair.
+- `logo-dark.webp` : variante sur fond sombre.
+
+Palette indicative extraite de l'identité visuelle :
+- Bleu nuit : #06152B (fond principal).
+- Bleu : #1685D5 (données, courbes et accents).
+- Orange : #FF8500 (accent, progression, mots-clés).
+- Blanc : #FFFFFF (contraste et typographie).
+
+Le logo utilise notamment le symbole sigma, une courbe de distribution, des barres de données et une flèche de progression. Ne pas redessiner, déformer, recolorer ou recomposer le logo.
 
 ## Règles visuelles
 - Formats vidéo verticaux 9:16 ; carrousels 4:5.
 - Un chiffre ou une idée dominante par écran.
 - Contraste élevé et lisibilité sur mobile.
-- Sources et période visibles, sans surcharger la création.
+- Sources, unités et périodes clairement visibles.
 - Graphiques honnêtes : axes, unités, échelles et périmètres explicites.
 - Éviter les visuels décoratifs qui suggèrent une information non démontrée.
+- Garder une zone de respiration autour du logo ; ne jamais le recouvrir par un titre, une donnée ou un sous-titre.
 
 ## Ce que la marque n'est pas
-Un compte de citations, un agrégateur de statistiques sans contexte, un média politique partisan, un compte de contenu généré en masse ou une page de chiffres-chocs invérifiables.
+Un compte de citations, un agrégateur de statistiques sans contexte, un média partisan, un compte de contenu généré en masse ou une page de chiffres-chocs invérifiables.

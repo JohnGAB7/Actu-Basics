@@ -68,6 +68,8 @@ La machine compare des **nombres** et reconnaît les **mots d'échelle** (millie
 | Texte qui ne tient pas dans sa zone malgré la réduction | ⚠️ |
 | Texte principal < 34 px (illisible sur téléphone) | ⚠️ |
 | Durées FR et EN très différentes (> 35 %), ou scène deux fois plus longue dans une langue | ⚠️ |
+| Logo ACTU-BASICS : fichier absent, variante inadaptée au fond, logo recouvert, coupé ou absent, slogan inexact | ❌ (détail : [logo-et-marque.md](logo-et-marque.md)) |
+| Logo sous l'interface d'une plateforme, agrandi (flou) ou trop petit sur téléphone | ⚠️ |
 
 Les limites par plateforme se règlent dans `production/plateformes.yaml`, sans toucher au code. Chaque valeur y a une **référence** : lien vers la page officielle, date de lecture (`verifie_le`) et statut :
 
