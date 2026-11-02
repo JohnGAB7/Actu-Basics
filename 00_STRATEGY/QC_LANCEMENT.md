@@ -90,7 +90,7 @@ Les 37 scènes, le storyboard, les animations et l'architecture sont conservés.
 | Cause des annulations CI | chaque image d'une scène formule recalculait le rendu mathtext (environ 4,5 s par image, plus d'une heure et demie par langue). Images de formule calculées une fois par scène ; le délai CI est revenu à 60 min (il n'a pas été augmenté) |
 | Preuve | run 33, commit `0bb1711` : **success** en 36 min, les deux vidéos dans l'artefact `apercu-33` |
 | Runs 34 et 35 | échec du test de lisibilité de la formule de la scène 17 en CI (note trop longue avec la police du runner), corrigé par `3047721` ; tests verts en CI au run 36 |
-| Commit final testé | voir le résumé de la PR (run sur le dernier commit) |
+| Commit final testé | `1a6d9f0` : run 41 **success** en 32 min (tests verts, FR et EN rendus, artefact `apercu-41`, 71 fichiers), https://github.com/JohnGAB7/le-monde-en-chiffres/actions/runs/41498402407 ; les commits suivants ne touchent que la documentation |
 | Rendu local | FR 671 s, EN 604 s (en parallèle) ; `python3 production/produire.py contenus/fiches/2026-11-lancement-actu-basics.yaml --voix kokoro --langues fr` (puis `en`) |
 | Tests | `python3 -m pytest production/tests -q` : 184 réussis en local |
 | Provenance des voix | workflow « Provenance des voix Kokoro » : voix identiques aux fichiers officiels Apache-2.0 ; détails dans `docs/voice-licenses.md` |
@@ -99,5 +99,5 @@ Les 37 scènes, le storyboard, les animations et l'architecture sont conservés.
 
 - L'écoute humaine des deux narrations (prononciation, rythme, naturel).
 - Le test du débutant (un vrai spectateur).
-- La licence du fichier ONNX réellement utilisé (`kokoro-v1.0.onnx`) : point bloquant avant une publication monétisée, solution proposée dans `docs/voice-licenses.md`.
+- La licence du fichier ONNX réellement utilisé (`kokoro-v1.0.onnx`) : point bloquant avant une publication monétisée, solutions sans frais proposées dans `docs/voice-licenses.md`.
 - La fiche reste en « brouillon » : aucune vidéo n'est publiable en l'état, et rien n'a été publié.
