@@ -40,6 +40,10 @@ Le moteur automatise le rendu, la voix, les sous-titres et une partie des contr�
 
 **Le catalogue n'est pas un stock.** Le programme complet ({{NB_VIDEOS}} vidéos) représenterait, aux mêmes hypothèses, entre {{CHARGE_TOTALE}} heures de travail cumulé, dont {{CHARGE_TOTALE_JG}} heures pour JG, éditions FR et EN comprises dans ces hypothèses mais non encore mesurées séparément. Ce chiffre ne fixe aucun calendrier : il rappelle que l'exhaustivité du catalogue (décision de JG) est une carte de ce qui peut être produit, pas un engagement de production. La capacité bilingue réelle (temps d'adaptation de l'édition EN, relecture EN) est mesurée pendant le pilote, puis le calendrier est fixé vague par vague.
 
+**Ce que la fourchette inclut, et ce qu'elle n'inclut pas.** Elle couvre, pour un épisode maître : la conception et la recherche, la vérification des sources, les scripts FR et EN (l'adaptation anglaise y est comptée, sans mesure séparée), la voix, le rendu et le contrôle qualité, la relecture et la validation de JG, et une boucle de corrections. Elle **n'inclut pas** : les SHORT dérivés, les versions 16:9, la maintenance des vidéos d'actualité à leur date de péremption, ni les reprises lourdes après un refus de JG.
+
+**Pourquoi la part de JG est plus petite.** Les 156 à 312 h correspondent à la seule ligne « Relecture et validation humaine » du tableau (0,5 à 1 h par épisode). Le reste est préparé par Claude et ChatGPT, mais **n'est pas gratuit** : il consomme du temps de calcul et d'abonnement, il produit des erreurs que seule une relecture attrape, et une partie de la supervision (arbitrages, réponses aux questions, choix des sujets sensibles) retombe sur JG sans figurer dans cette ligne. Le pilote mesure la part réelle de JG, supervision comprise.
+
 ## 7.4 Équilibre entre piliers
 
 | | Vague 1 | Vague 2 | Programme complet |

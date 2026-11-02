@@ -31,7 +31,7 @@ Claude fait une recommandation pour chacune, sans la considérer comme acquise. 
 | **A8** | Place de la statistique bayésienne | (a) Bayes dès le niveau 2 (S4.10), méthode bayésienne en branche S12 · (b) Bayésien intégré dès le niveau 3, en parallèle du fréquentiste | **(a)**. Cela reste simple pour le débutant, et la comparaison des deux approches (S12.06) garde l'équilibre. |
 | **A9** | Code à l'écran | (a) Pas de code dans les vidéos, scripts Python et R fournis en description · (b) Python montré à l'écran à partir du niveau 3 · (c) Aucun code | **(a)** au lancement. La chaîne enseigne le raisonnement, pas la programmation. |
 | **A10** | La vidéo de lancement (paradoxe des anniversaires) | (a) Elle compte comme S4.06 dans le stock · (b) S4.06 est refaite en leçon, et la vidéo de lancement garde son rôle de présentation | **(a)**. Elle remplit déjà les objectifs de S4.06. Elle utilise le complément, enseigné en S4.05 : il faudra veiller à ce que S4.05 soit produite avant sa publication. |
-| **A11** | Faut-il un statut pédagogique éditorial, en plus du rôle dans le graphe ? | (a) Non : rôle dans le graphe et parcours suffisent · (b) Oui : un champ éditorial (par exemple « essentiel pour le parcours X »), attribué par l'éditorial, sans jamais dire « optionnel » | **(a)** pour l'instant, (b) si la revue éditoriale le juge utile. Ce choix appartient à ChatGPT, puis à JG. |
+| **A11** | Faut-il un statut pédagogique éditorial, en plus du rôle dans le graphe ? | (a) Non : rôle dans le graphe et parcours suffisent · (b) Oui : un champ éditorial (par exemple « essentiel pour le parcours X »), attribué par l'éditorial, sans jamais dire « optionnel » | **(a)**, recommandation commune de Claude et de ChatGPT (revue de la version 1.8) : pas de statut « essentiel » maintenant ; question à réexaminer après les premiers tests utilisateurs, sans jamais réintroduire « optionnel ». Décision de JG. |
 
 ## 10.3 Points de vigilance pour la suite de la revue
 
@@ -217,4 +217,18 @@ Réponse contradictoire, point par point. « Accord » signifie que la remarque 
 - La vague 1 est passée de 47 à 49 vidéos depuis l'ajout de S1.12 ; l'impact sur le seuil de lancement n'a pas été discuté.
 - Plusieurs nouveaux sujets du pilier 3 (conflits, santé publique, migration) relèvent des sujets sensibles de la constitution éditoriale : ils demandent le veto de JG avant toute fiche, ce que l'audit ne mentionne pas.
 - Des liens « pour aller plus loin » du pilier 3 pointent vers des vidéos de niveau 4 ; c'est voulu (renvoi, pas prérequis), mais l'écart de niveau mérite un signal au spectateur.
+
+## 10.11 Relecture de la version 1.8 par ChatGPT
+
+| Point | Position de Claude | Ce qui change en 1.9 |
+|---|---|---|
+| E5.03, correction trop catégorique | **Accord.** « Biaisée vers les MCO » et « intervalles trop étroits » sont des tendances, pas des certitudes : elles dépendent de la corrélation entre les erreurs et du dispositif. | Cadre posé dans l'énoncé (un instrument, une variable endogène, erreurs robustes, F robuste) ; correction reformulée : signal sérieux de faiblesse, distorsion possible, direction et ampleur dépendant du dispositif, inférence d'Anderson-Rubin. Intuition adoucie. |
+| E5.04, prérequis | **Accord.** Le LATE repose sur les bases des variables instrumentales, pas sur la faiblesse des instruments ; le déroulé de E5.04 n'utilise rien de E5.03. | Prérequis E5.02 au lieu de E5.03. E5.03 et E5.04 deviennent deux suites indépendantes de E5.02. |
+| E5.04, hypothèses et diagnostics | **Accord.** | Objectif ajouté : seule la pertinence se mesure ; indépendance, exclusion et monotonie se défendent par la conception, un test peut au mieux révéler une violation. |
+| Huit exercices sans correction | **Accord**, et c'était déjà la règle implicite. | Règle écrite (section 6.1, modèle YAML) : pas de statut « validée par JG » sans correction détaillée. Le statut de maturité existe déjà dans la fiche (brouillon, revue Claude, revue ChatGPT, validée JG). |
+| Périmètre de la provenance | **Accord.** C'était un vrai trou : un chiffre prononcé ou tracé échappait à la fiche. | Provenance étendue à la narration, aux graphiques et aux comparaisons ; trois natures (source, calcul dérivé, paramètre de simulation) ; entrées, formule et transformations pour un calcul dérivé (section 5.3, YAML). |
+| Charge de production | **Accord.** | Section 7.3 : ce que la fourchette inclut et exclut ; la part de JG correspond à la seule relecture, et le travail de Claude et de ChatGPT n'est ni gratuit ni exempt de supervision. |
+| A11 | **Accord** avec la recommandation (a). | Recommandation commune inscrite en section 10.2 ; la décision reste à JG. |
+
+**Ce que la relecture ne couvre pas encore.** L'édition anglaise n'a toujours pas été relue, et les nouvelles formulations de E5.03 et E5.04 n'ont pas été comparées à un manuel de référence (par exemple J. Angrist, J.-S. Pischke, *Mostly Harmless Econometrics*) : à faire dans leur fiche de conception.
 

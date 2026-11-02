@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.8 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-8.pdf"
+VERSION = "1.9 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-9.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",

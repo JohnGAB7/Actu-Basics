@@ -71,7 +71,7 @@ Chaque épisode d'actualité a un **dossier de sources**, dans la fiche d'actual
 8. **Date de référence à l'écran** (« données 2025, publiées en mars 2026 ») et dans la description.
 9. **Date de péremption** inscrite dans les métadonnées. À cette date, la vidéo est relue : elle est mise à jour, annotée ou retirée, et la correction est consignée.
 
-**Fiche de provenance d'un chiffre.** Chaque chiffre affiché à l'écran, d'actualité ou d'exemple, a sa fiche de provenance dans la fiche de conception (bloc `provenance` de `modeles/fiche-conception-episode.yaml`) :
+**Fiche de provenance d'un chiffre.** Chaque chiffre d'un épisode a sa fiche de provenance, qu'il soit affiché, prononcé dans la narration, tracé dans un graphique ou utilisé dans une comparaison historique. Un chiffre qui n'apparaît pas en texte n'échappe donc pas à la traçabilité. La fiche distingue trois natures : **chiffre issu d'une source**, **calcul dérivé** (on conserve alors la provenance des données d'entrée, la formule et les transformations) et **paramètre de simulation**. Elle est rangée dans la fiche de conception (bloc `provenance` de `modeles/fiche-conception-episode.yaml`) :
 
 | Champ | Question |
 |---|---|

@@ -1,7 +1,7 @@
 # Programme éditorial et pédagogique ACTU-BASICS
 
 Réponse au ticket n° 10. Le livrable est le PDF
-[`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-8.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1-8.pdf),
+[`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-9.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1-9.pdf),
 construit à partir des fichiers de ce dossier. **Statut : projet soumis à la revue de ChatGPT, puis à la validation de JG.**
 
 ## Contenu
@@ -35,5 +35,5 @@ et recalcul des réponses chiffrées (liste `VERIFICATIONS` de `construire.py`) 
 pip install -r programme/requirements.txt
 python programme/construire.py          # contrôles + HTML (programme/sortie/)
 python programme/construire.py --pdf    # + PDF (Node et Playwright requis)
-cp programme/sortie/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-8.pdf programme/
+cp programme/sortie/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-9.pdf programme/
 ```

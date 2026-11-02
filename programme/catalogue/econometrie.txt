@@ -373,12 +373,12 @@ titre_en: Weak instruments and validity
 question: Un instrument qui explique très peu la cause pose-t-il problème ?
 pre: E5.02
 obj: Lire la statistique F de première étape comme une alerte sur l'identification, et non comme un test de validité | Expliquer que la règle « F > 10 » (D. Staiger, J. Stock, Econometrica, 1997) est une règle approximative pour une variable endogène, que les seuils de Stock et Yogo dépendent du nombre d'instruments et du biais toléré, et qu'un test t valide à 5 % demande bien plus (D. Lee, J. McCrary, M. Moreira, J. Porter, American Economic Review, 2022) | Utiliser une inférence robuste aux instruments faibles (test d'Anderson-Rubin), qui reste valide quelle que soit la force de l'instrument | Dire pourquoi aucune statistique F ne valide l'exclusion | Discuter plusieurs instruments et la validité externe
-intuition: Une pichenette trop faible se noie dans le bruit, et l'estimation dérive vers celle des MCO.
+intuition: Une pichenette trop faible se noie dans le bruit : l'estimation et les tests usuels deviennent peu fiables, et l'estimation peut se rapprocher de celle des MCO.
 exemple: Débats autour d'instruments célèbres.
 maths: M2.
 erreurs: Présenter un test de suridentification comme une preuve de validité.
-exercice: F de première étape égal à 3 : que conclure ?
-correction: Avec F = 3, l'instrument est faible : l'estimation par 2SLS est biaisée vers celle des MCO et les intervalles usuels sont trop étroits. On ne conclut pas avec le test t habituel. On peut rapporter un intervalle d'Anderson-Rubin, robuste à la faiblesse de l'instrument, qui sera probablement large, ou chercher un meilleur instrument. Un F élevé n'aurait pas non plus prouvé que l'instrument est valide : l'exclusion reste un argument, pas un test.
+exercice: Cadre : un seul instrument, une seule variable endogène, erreurs robustes à l'hétéroscédasticité. La statistique F de première étape (robuste) vaut 3. Que conclure, et que rapporter ?
+correction: Dans ce cadre, F = 3 est un signal sérieux de faiblesse : le 2SLS et l'inférence conventionnelle (test t, intervalle à ± 1,96 erreur standard) peuvent être fortement distordus. Avec un instrument très faible, l'estimation a tendance à se rapprocher de celle des MCO, mais la direction et l'ampleur de la distorsion dépendent du dispositif (corrélation entre les erreurs, structure de ces erreurs) : on ne peut pas dire à l'avance de combien, ni toujours dans quel sens. On ne conclut donc pas avec le test t habituel. On peut rapporter un intervalle d'Anderson-Rubin, robuste à la faiblesse de l'instrument, qui sera probablement large, ou chercher un meilleur instrument. Un F élevé n'aurait pas non plus prouvé que l'instrument est valide : l'exclusion reste un argument, pas un test.
 duree: 7-9
 format: educational
 forme: lecon
@@ -387,8 +387,8 @@ forme: lecon
 titre: Effet local : qui mesure-t-on vraiment ?
 titre_en: The local average treatment effect
 question: L'effet estimé par un instrument vaut-il pour tout le monde ?
-pre: E5.03
-obj: Définir les « compliers » et l'effet local moyen (LATE) | Énoncer les quatre hypothèses qui identifient le LATE : pertinence (l'instrument change le traitement), indépendance (l'instrument est comme tiré au sort), exclusion (il n'agit que par le traitement), monotonie (aucun « defier » ne fait l'inverse de ce que l'instrument pousse à faire) | Distinguer effet de l'intention de traiter (ITT) et effet du traitement reçu (TOT) dans un plan d'encouragement | Discuter la portée externe d'une estimation par instrument
+pre: E5.02
+obj: Définir les « compliers » et l'effet local moyen (LATE) | Énoncer les quatre hypothèses qui identifient le LATE : pertinence (l'instrument change le traitement), indépendance (l'instrument est comme tiré au sort), exclusion (il n'agit que par le traitement), monotonie (aucun « defier » ne fait l'inverse de ce que l'instrument pousse à faire) | Distinguer ces hypothèses des diagnostics : seule la pertinence se mesure directement (première étape) ; l'indépendance, l'exclusion et la monotonie se défendent par la conception de l'étude, et un test de données peut au mieux révéler certaines violations, jamais les démontrer | Distinguer effet de l'intention de traiter (ITT) et effet du traitement reçu (TOT) dans un plan d'encouragement | Discuter la portée externe d'une estimation par instrument
 intuition: L'instrument ne mesure l'effet que chez ceux qu'il fait changer de comportement.
 exemple: Loterie d'accès à une école ou à une assurance.
 maths: M1-M2.

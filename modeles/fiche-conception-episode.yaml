@@ -4,7 +4,7 @@
 # Rubriques expliquées : programme/sections/06-fiche-type.md
 
 id_programme: ""                # ex. S2.05 : identifiant stable du programme, ne change jamais
-statut: brouillon               # brouillon | revue_claude | revue_chatgpt | valide_jg
+statut: brouillon               # brouillon | revue_claude | revue_chatgpt | valide_jg ; pas de valide_jg sans correction détaillée de chaque exercice chiffré
 
 titres:
   fr: ""
@@ -34,8 +34,11 @@ exemple_reel:                   # facultatif ; obligatoirement sourcé
   description: ""
   source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
 
-provenance:                     # une entrée par chiffre affiché à l'écran (section 5.3)
+provenance:                     # une entrée par chiffre : affiché, prononcé, tracé dans un graphique, comparaison historique, valeur calculée (section 5.3)
   - chiffre: ""
+    support: ecran              # ecran | narration | graphique | comparaison
+    nature: source              # source | calcul_derive | parametre_simulation
+    calcul: {entrees: "", formule: "", transformations: ""}   # pour un calcul dérivé : provenance des entrées, formule, transformations
     definition: ""
     unite: ""
     population: ""
