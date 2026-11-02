@@ -116,7 +116,10 @@ def comparer(officiels: dict[str, np.ndarray], onnx_t: dict[str, np.ndarray]) ->
             exacts[k] = (v.size, cands[0])
         else:
             bits = v.astype(np.float32).ravel().view(np.uint32)
-            part = float(np.isin(bits, tous_bits).mean()) if bits.size else 0.0
+            # tous_bits est trié (np.unique) : recherche dichotomique, sans retrier 81 M de valeurs
+            # à chaque tenseur comme le ferait np.isin (cause du dépassement de délai en CI).
+            pos = np.minimum(np.searchsorted(tous_bits, bits), tous_bits.size - 1)
+            part = float((tous_bits[pos] == bits).mean()) if bits.size else 0.0
             restants[k] = (v.size, part)
     total = sum(v.size for k, v in officiels.items() if v.dtype.kind == "f" and not k.endswith("weight_g"))
     return {"exacts": exacts, "normalises": normalises, "restants": restants, "total": total,
