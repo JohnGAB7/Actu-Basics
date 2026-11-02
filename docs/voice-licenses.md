@@ -9,12 +9,12 @@
 | Élément | Version | Source | Empreinte / taille |
 |---|---|---|---|
 | Modèle Kokoro-82M | v1.0 (publié le 27 janvier 2025 selon la fiche du modèle) | fiche Hugging Face `hexgrad/Kokoro-82M` | — |
-| Conversion ONNX du modèle | `kokoro-v1.0.onnx` (float32, « optimized f32 version from taylorchu/kokoro-onnx ») | publication GitHub `thewh1teagle/kokoro-onnx`, tag `model-files-v1.0` | SHA-256 `7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5`, 325 532 387 octets |
-| Fichier des voix | `voices-v1.0.bin` (vecteurs de style au format npz, 54 voix dont `ff_siwis` et `af_heart`) | même publication | SHA-256 `bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d`, 28 214 398 octets |
-| Code d'inférence | `kokoro-onnx` 0.5.0 | PyPI | épinglé dans `production/requirements-voix.txt` |
+| Conversion ONNX du modèle | `kokoro-v1.0.onnx` (float32, « optimized f32 version from taylorchu/kokoro-onnx ») | https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0 (conversion faite par https://github.com/taylorchu/kokoro-onnx, publication v0.2.0) | SHA-256 `7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5`, 325 532 387 octets |
+| Fichier des voix | `voices-v1.0.bin` (vecteurs de style au format npz, 54 voix dont `ff_siwis` et `af_heart`) | https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0 | SHA-256 `bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d`, 28 214 398 octets |
+| Code d'inférence | `kokoro-onnx` 0.5.0 | PyPI (https://github.com/thewh1teagle/kokoro-onnx) | épinglé dans `production/requirements-voix.txt` |
 | Moteur ONNX | `onnxruntime` 1.29.0 | PyPI | dépendance de kokoro-onnx |
 | Phonémisation | `phonemizer-fork` 3.3.2 | PyPI | dépendance de kokoro-onnx |
-| Bibliothèque espeak-ng | `espeakng-loader` 0.2.4, qui embarque `libespeak-ng.so.1.52.0` | PyPI | dépendance de kokoro-onnx |
+| Bibliothèque espeak-ng | `espeakng-loader` 0.2.4, qui embarque `libespeak-ng.so.1.52.0` | PyPI (https://github.com/thewh1teagle/espeakng-loader) | dépendance de kokoro-onnx |
 | Calcul | `numpy` 2.5.3 | PyPI | — |
 | Secours : Piper | `piper-tts` 1.8.0, voix `fr-siwis-medium` et `en-us-libritts-high` (publication `rhasspy/piper` v0.0.2) | PyPI, GitHub | inchangé |
 
@@ -28,12 +28,14 @@ L'écosystème n'est **pas** couvert en bloc par Apache-2.0. Chaque élément a 
 |---|---|---|---|
 | Poids du modèle Kokoro-82M | Apache-2.0 | fiche du modèle : « License: apache-2.0 », « With Apache-licensed weights » | Usage commercial permis. Conserver la mention de licence si l'on redistribue le modèle (ce que nous ne faisons pas). |
 | Code de référence `hexgrad/kokoro` | Apache-2.0 | dépôt du projet | Non utilisé directement ici. |
-| Conversion ONNX (`kokoro-v1.0.onnx`) et `voices-v1.0.bin` | **Non indiquée** sur la page de publication | page `model-files-v1.0` | Ce sont des conversions des poids Apache-2.0, ce que cette licence autorise. Point ouvert : la publication ne restate pas la licence. |
+| Fichier converti `kokoro-v1.0.onnx` | **Non établie (point ouvert)** | La publication `model-files-v1.0` ne mentionne aucune licence. Le dépôt de conversion `taylorchu/kokoro-onnx` est sous MIT pour son **code**, et sa publication v0.2.0 ne dit rien de la licence des fichiers du modèle. Le README de `thewh1teagle/kokoro-onnx` indique « kokoro model: Apache 2.0 », sans nommer ce fichier. | Il est très probable que la licence Apache-2.0 des poids s'applique au fichier converti, mais **aucune source ne l'écrit pour ce fichier précis**. Je ne l'extrapole pas. À confirmer auprès des auteurs, ou en convertissant nous-mêmes les poids officiels de `hexgrad/Kokoro-82M`. |
+| Fichier de voix `voices-v1.0.bin` (dont `ff_siwis` et `af_heart`) | **Non établie (point ouvert)** | Aucune licence n'est écrite sur la publication. Le fichier regroupe les vecteurs de style des 54 voix de Kokoro v1.0 ; sa provenance n'est pas documentée dans les pages lues (le script `scripts/export.py` du dépôt n'a pas été lu). | Même situation que ci-dessus : à confirmer. La fiche de `hexgrad/Kokoro-82M` couvre en principe les voix publiées avec le modèle, mais VOICES.md n'a pas pu être lu. |
 | `kokoro-onnx` (code) | MIT | fichier `LICENSE` du paquet installé (« Copyright (c) 2025 github.com/thewh1teagle ») | Usage libre, mention de copyright à garder en cas de redistribution. |
 | `onnxruntime` | MIT | métadonnées du paquet | Idem. |
 | `numpy` | BSD-3-Clause et licences permissives associées | métadonnées du paquet | Idem. |
 | `phonemizer-fork` | **GPL-3.0 ou ultérieure** | métadonnées et `LICENSE` du paquet | Voir « Copyleft » ci-dessous. |
-| espeak-ng (`libespeak-ng` 1.52.0, embarqué par `espeakng-loader`) | **GPL-3.0 ou ultérieure** | projet espeak-ng ; le paquet `espeakng-loader` ne déclare aucune licence dans ses métadonnées | Voir « Copyleft » ci-dessous. |
+| `espeakng-loader` (code du chargeur) | MIT | dépôt GitHub (le paquet PyPI ne déclare aucune licence dans ses métadonnées) | Usage libre. |
+| espeak-ng (`libespeak-ng` 1.52.0, embarqué par `espeakng-loader`) | **GPL-3.0 ou ultérieure** | README d'espeak-ng : « released under the GPL version 3 or later license » ; un fichier (`getopt.c`) est sous BSD-2 | Voir « Copyleft » ci-dessous. Le chargeur ne mentionne pas la licence de la bibliothèque qu'il embarque. |
 | Piper (`piper-tts`) | GPL-3.0 ou ultérieure | métadonnées du paquet | Idem, déjà le cas avant Kokoro. |
 | Voix Piper `fr-siwis-medium`, `en-us-libritts-high` | CC BY 4.0 (données d'entraînement) | fiches des voix Piper | Attribution, déjà le cas avant Kokoro. |
 
@@ -65,7 +67,7 @@ Aucune attribution particulière n'est indiquée. La fiche du modèle décrit le
 
 1. **VOICES.md** (notes de qualité et durée d'entraînement par voix) n'a pas pu être lu : Hugging Face est inaccessible depuis l'environnement de travail. À consulter par JG : https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md
 2. **Audio synthétique de modèles fermés** dans les données d'entraînement : la fiche l'assume ; les conditions d'utilisation de ces services tiers ne nous lient pas directement, mais c'est une zone grise à connaître.
-3. La publication des fichiers ONNX ne restate pas la licence Apache-2.0 (point mineur, mentionné par transparence).
+3. **Licence des deux fichiers téléchargés** (`kokoro-v1.0.onnx`, `voices-v1.0.bin`) : non écrite par leurs auteurs (voir section 2). C'est le point ouvert le plus important avant une publication. Deux façons de le lever : obtenir une confirmation écrite des auteurs de `kokoro-onnx`, ou produire nous-mêmes le fichier ONNX à partir des poids officiels Apache-2.0 de `hexgrad/Kokoro-82M`.
 4. Ne pas confondre avec les sites commerciaux qui reprennent le nom « kokoro » : la fiche du modèle précise qu'ils ne sont pas liés au projet. Nous n'en utilisons aucun.
 
 ## 4. Gratuité : preuve qu'aucun service payant n'est appelé
@@ -80,7 +82,7 @@ Aucune attribution particulière n'est indiquée. La fiche du modèle décrit le
 
 | Poste | Estimation | Commentaire |
 |---|---|---|
-| Licences | 0 € | — |
+| Synthèse de la voix | **0 €** | Locale, sur CPU, sans service ni clé. |
 | Téléchargement | ≈ 354 Mo une fois (modèle 326 Mo + voix 28 Mo) | Puis gardé en cache. |
 | Cache GitHub Actions | ≈ 350 Mo pour Kokoro, plus les voix Piper (≈ 200 Mo) | Le cache GitHub est gratuit jusqu'à 10 Go par dépôt. |
 | Minutes GitHub Actions | Un aperçu complet de la leçon de 8 minutes (FR et EN) prend environ 70 à 90 minutes sur un exécuteur standard ; la limite est fixée à 120 minutes. Un seul rendu par push (les rendus « push » et « pull_request » de la même branche ne se cumulent plus) | Gratuit et illimité pour un dépôt public ; pour un dépôt privé, compté dans le quota du compte GitHub (2 000 minutes par mois sur le plan gratuit, à revérifier sur la page des tarifs GitHub). C'est le seul coût indirect possible. |

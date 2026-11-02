@@ -1384,3 +1384,23 @@ def test_prononciation_de_la_marque_dans_la_voix_seulement():
     lex = yaml.safe_load(open(RACINE / "production/tts.yaml", encoding="utf-8"))["prononciation"]
     assert "ACTU-BASICS" not in preparer_pour_voix("Bienvenue sur ACTU-BASICS.", "fr", lex)
     assert "ACTU-BASICS" in preparer_pour_voix("Welcome to ACTU-BASICS.", "en", lex)   # bien lu en anglais
+
+
+def test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas():
+    """La barre d'accent doit passer sous le bas réel du chiffre, avec un espace net."""
+    import numpy as np
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        r = Rendu(fiche, langue, CHARTE, "video", False)
+        ed = fiche.editions[langue]
+        for i, s in enumerate(ed.scenes):
+            if s.type != "titre" or not s.extra.get("numero"):
+                continue
+            px = np.array(r.dessiner(s, i, len(ed.scenes)).convert("RGB")).astype(int)
+            accent = np.array(r.c["accent"][:3])
+            g = r.zone[0]
+            colonne = np.abs(px[:, g + 20:g + 30] - accent).sum(axis=2).min(axis=1) < 40
+            lignes = np.flatnonzero(colonne)
+            blocs = np.split(lignes, np.flatnonzero(np.diff(lignes) > 1) + 1)
+            numero, barre = blocs[-2], blocs[-1]     # le chiffre, puis la barre en dessous
+            assert barre[0] - numero[-1] >= 20, (langue, i, numero[-1], barre[0])

@@ -248,7 +248,10 @@ class ScenesPedagogiques(Animations):
             self.ecrire_riche(d, lt, pt, pas_t, y, self.c["texte"], t, 0.3, centre=False, x_gauche=gc)
             return
         pt, lt, pas_t, ht = self._mesurer_titre(scene.texte, largeur, (bas - haut) // 2, 150, ctx)
-        hn = int(pn.size * 1.0) + 60 if numero else 0
+        # Hauteur réelle du numéro (bas du glyphe), pas la taille nominale de la police : sinon la
+        # barre d'accent mordait sur le bas du grand chiffre.
+        bas_numero = d.textbbox((0, 0), numero, font=pn)[3] if numero else 0
+        hn = 50 + bas_numero + 48 if numero else 0
         y = haut + (bas - haut - ht - hn - 64) // 2
         if numero:
             fond = self._fond.getpixel((g, int(y)))

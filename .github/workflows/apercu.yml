@@ -6,7 +6,10 @@
 name: Aperçu des contenus
 
 on:
+  # Les branches de travail sont rendues via leur pull request ; « push » ne sert que pour main.
+  # Sinon chaque push lançait deux rendus, dont l'un était annulé (affiché « cancelled »).
   push:
+    branches: [main]
     paths: ["contenus/**", "production/**", "assets/brand/**", ".github/workflows/apercu.yml"]
   pull_request:
     paths: ["contenus/**", "production/**", "assets/brand/**", ".github/workflows/apercu.yml"]
