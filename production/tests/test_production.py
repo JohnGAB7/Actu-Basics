@@ -1423,3 +1423,56 @@ def test_soulignement_du_chiffre_cle_sous_la_virgule():
             haut_barre = lignes_barre[0]
             bas_chiffre = max(y for y in range(haut_barre) if accent[y].sum() > 3)
             assert haut_barre - bas_chiffre >= 10, (langue, fmt, bas_chiffre, haut_barre)
+
+
+def _faux_pt(tableau):
+    """Fabrique un fichier au format torch.save (zip + pickle) sans torch, pour tester le lecteur."""
+    import io, pickle, types, zipfile
+    import numpy as np
+    torch = types.ModuleType("torch"); utils = types.ModuleType("torch._utils")
+
+    class FloatStorage:  # noqa: N801
+        pass
+    FloatStorage.__module__, FloatStorage.__qualname__ = "torch", "FloatStorage"
+    torch.FloatStorage = FloatStorage
+
+    def _rebuild_tensor_v2(*a):
+        pass
+    _rebuild_tensor_v2.__module__, _rebuild_tensor_v2.__qualname__ = "torch._utils", "_rebuild_tensor_v2"
+    utils._rebuild_tensor_v2 = _rebuild_tensor_v2
+    sys.modules["torch"], sys.modules["torch._utils"] = torch, utils
+    try:
+        class Tenseur:
+            def __reduce__(self):
+                pas = tuple(s // 4 for s in tableau.strides)
+                return (_rebuild_tensor_v2, ("STOCK", 0, tableau.shape, pas, False, {}))
+
+        class P(pickle.Pickler):
+            def persistent_id(self, obj):
+                return ("storage", FloatStorage, "0", "cpu", tableau.size) if obj == "STOCK" else None
+        flux = io.BytesIO(); P(flux, protocol=2).dump(Tenseur())
+    finally:
+        del sys.modules["torch"], sys.modules["torch._utils"]
+    sortie = io.BytesIO()
+    with zipfile.ZipFile(sortie, "w") as z:
+        z.writestr("archive/data.pkl", flux.getvalue())
+        z.writestr("archive/data/0", np.ascontiguousarray(tableau, dtype=np.float32).tobytes())
+    return sortie.getvalue()
+
+
+def test_lecture_des_voix_officielles_sans_torch():
+    import numpy as np
+    from verifier_provenance_voix import lire_tenseur_pt
+    t = np.random.default_rng(3).standard_normal((510, 1, 256)).astype(np.float32)
+    assert np.array_equal(lire_tenseur_pt(_faux_pt(t)), t)
+
+
+def test_lecture_pt_refuse_les_objets_inattendus():
+    import io, pickle, zipfile
+    from verifier_provenance_voix import lire_tenseur_pt
+    flux = io.BytesIO(); pickle.dump(__import__("os").getcwd, flux)    # un appel de fonction arbitraire
+    z = io.BytesIO()
+    with zipfile.ZipFile(z, "w") as a:
+        a.writestr("archive/data.pkl", flux.getvalue())
+    with pytest.raises(pickle.UnpicklingError):
+        lire_tenseur_pt(z.getvalue())
