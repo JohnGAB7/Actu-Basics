@@ -284,7 +284,7 @@ titre: Sélection et autosélection
 titre_en: Selection and self-selection
 question: Les salaires des femmes qui travaillent représentent-ils ce que gagneraient toutes les femmes ?
 pre: E4.01 | S1.05
-obj: Expliquer le biais de sélection sur l'échantillon et l'autosélection dans un traitement | Présenter l'idée de la correction de Heckman (renvoi E9.02)
+obj: Expliquer le biais de sélection sur l'échantillon et l'autosélection dans un traitement | Présenter l'idée de la correction de Heckman (renvoi E10.02)
 intuition: On n'observe le salaire que de celles qui ont choisi de travailler, et ce choix n'est pas aléatoire.
 exemple: Participation au marché du travail.
 maths: M1-M2.
@@ -616,7 +616,7 @@ forme: lecon
 titre: Modèles VAR et fonctions de réponse
 titre_en: VAR models and impulse responses
 question: Que fait une hausse surprise des taux d'intérêt à l'inflation et à la production ?
-pre: E8.02 | S16.02
+pre: E8.02 | S14.04
 obj: Écrire un VAR à deux variables | Lire une fonction de réponse impulsionnelle et ses bandes d'incertitude | Expliquer pourquoi l'identification des chocs demande des hypothèses
 intuition: Chaque variable est expliquée par le passé de toutes ; un choc se propage ensuite dans le système.
 exemple: Politique monétaire (exemple à sourcer).
@@ -644,13 +644,103 @@ forme: lecon
 
 # MODULE E9
 niveau: 4
+titre: Volatilité conditionnelle : ARCH et GARCH
+titre_en: Conditional volatility: ARCH and GARCH
+titre_court: Volatilité ARCH/GARCH
+pre: S14.04 | S14.05 | S7.05 | E3.02
+maths: M2 → M3
+but: Modéliser une variance qui change avec le temps. S14 modélise la moyenne conditionnelle d'une série ; ce module modélise sa variance conditionnelle, des faits stylisés des rendements jusqu'à la prévision de volatilité évaluée hors échantillon. Il ne dépend pas de E8 : les rendements sont déjà stationnaires. ARCH est né sur l'inflation britannique (Engle, 1982), et non en finance : le module reste donc dans l'économétrie des séries temporelles, avec la finance comme terrain d'application principal. La volatilité stochastique, les GARCH multivariés (DCC) et la volatilité réalisée à haute fréquence sont signalés en bibliographie, sans vidéo.
+
+## E9.01
+titre: Pourquoi la volatilité varie-t-elle dans le temps ?
+titre_en: Why does volatility change over time?
+question: Si personne ne peut prévoir le sens du marché demain, peut-on au moins prévoir son agitation ?
+pre: S14.02 | M1.04
+obj: Calculer un rendement logarithmique | Repérer les regroupements de volatilité sur un graphique des rendements et de leurs carrés | Distinguer l'absence d'autocorrélation des rendements et l'autocorrélation de leurs carrés | Distinguer la volatilité roulante, une estimation, et la variance conditionnelle, une quantité du modèle qui ne s'observe pas
+intuition: Les marchés ont une météo : après une journée agitée, une autre journée agitée est plus probable, même si l'on ignore dans quel sens ira le prix.
+exemple: Rendements journaliers d'un grand indice boursier, avec 2008 et mars 2020 (données publiques à sourcer et dater). Faits stylisés : R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », Quantitative Finance, 2001.
+maths: M1.
+maths_comprendre: M0
+erreurs: Croire que des rendements imprévisibles ont forcément une variance constante ; prendre la volatilité roulante pour la vraie volatilité ; traiter les queues épaisses comme des valeurs aberrantes à supprimer.
+exercice: Un indice passe de 100 à 103 : quel est le rendement logarithmique, en % ? Les rendements ne sont pas autocorrélés, mais leurs carrés le sont : qu'en conclure ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## E9.02
+titre: Du modèle ARCH au GARCH(1,1)
+titre_en: From ARCH to GARCH(1,1)
+question: Comment écrire que la variance de demain dépend des chocs d'aujourd'hui ?
+pre: E9.01 | S14.04 | E3.02
+obj: Écrire séparément l'équation de la moyenne et celle de la variance conditionnelle | Interpréter ω, α et β d'un GARCH(1,1) | Calculer la persistance α + β, la variance de long terme ω / (1 − α − β) et la demi-vie d'un choc | Énoncer les conditions de positivité et la condition α + β < 1 d'une variance inconditionnelle finie
+intuition: Variance de demain = un plancher + une part du choc d'aujourd'hui (α, la réaction à la nouvelle) + une part de la variance d'aujourd'hui (β, la mémoire).
+exemple: R. Engle, Econometrica, 1982 : ARCH appliqué à l'inflation du Royaume-Uni. T. Bollerslev, Journal of Econometrics, 1986 : la généralisation GARCH.
+maths: M2.
+maths_comprendre: M1
+maths_demontrer: M3
+erreurs: Confondre l'équation de la moyenne et celle de la variance ; présenter GARCH(1,1) comme une loi de la nature plutôt qu'un point de départ ; croire que α + β proche de 1 est une anomalie (c'est le cas courant, mais cela peut aussi signaler une rupture non modélisée).
+exercice: Rendements journaliers en %, ω = 0,02, α = 0,08, β = 0,90. Calculer la persistance, la variance de long terme, la volatilité journalière de long terme et la demi-vie d'un choc, en jours. Quelle volatilité annuelle cela donne-t-il, avec 252 jours de bourse ?
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## E9.03
+titre: Estimer, diagnostiquer et prévoir la volatilité : un cas reproductible
+titre_en: Estimating, checking and forecasting volatility: a reproducible case
+question: Comment savoir si un modèle de volatilité prévoit mieux qu'une simple moyenne du passé ?
+pre: E9.02 | S7.05 | S14.05
+obj: Tester des effets ARCH dans des résidus (test ARCH-LM) | Expliquer l'estimation par maximum de vraisemblance, et pourquoi la quasi-vraisemblance reste valable quand la loi est mal choisie | Vérifier les résidus standardisés et leurs carrés | Calculer une prévision de variance à plusieurs horizons | Comparer, sur une période de test, la prévision GARCH à la volatilité historique avec une fonction de perte adaptée | Énoncer les limites : ruptures, instabilité des paramètres, choix de la loi, incertitude de modèle
+intuition: Un bel ajustement sur le passé ne prouve rien : un modèle de volatilité se juge sur des jours qu'il n'a pas vus.
+exemple: Démonstration en cinq étapes sur les rendements journaliers d'un indice (données publiques, licence à vérifier), script fourni en description : graphique, test ARCH-LM, GARCH(1,1), résidus standardisés, prévision hors échantillon contre la volatilité historique. Le carré du rendement est une mesure très bruitée de la variance du jour ; certaines fonctions de perte restent fiables malgré ce bruit (A. Patton, Journal of Econometrics, 2011).
+maths: M2.
+maths_demontrer: M3
+erreurs: Juger le modèle sur son ajustement dans l'échantillon ; comparer une prévision au carré du rendement sans dire que c'est une mesure très bruitée ; croire qu'un test ARCH-LM non significatif prouve l'absence d'effets ARCH.
+exercice: Avec les paramètres de E9.02 (variance de long terme 1, persistance 0,98), la variance prévue pour demain vaut 4. Que prévoit le modèle à 10 jours ? Puis : le test ARCH-LM donne p < 0,001 sur les rendements et p = 0,62 sur les résidus standardisés ; que peut-on conclure, et que ne peut-on pas conclure ?
+duree: 12-16
+format: youtube_lesson
+forme: demonstration
+
+## E9.04
+titre: Mauvaises nouvelles et queues épaisses : GJR-GARCH, EGARCH, loi de Student
+titre_en: Bad news and fat tails: GJR-GARCH, EGARCH and Student-t errors
+question: Pourquoi une baisse de 2 % agite-t-elle plus le marché qu'une hausse de 2 % ?
+pre: E9.03
+obj: Expliquer l'effet de levier et l'asymétrie de la volatilité | Lire le terme d'asymétrie d'un GJR-GARCH et le principe d'un EGARCH | Expliquer pourquoi utiliser une loi de Student pour les innovations, ou des erreurs standard robustes | Comparer des modèles par critères d'information et hors échantillon
+intuition: Les mauvaises nouvelles secouent davantage que les bonnes : le modèle doit pouvoir réagir différemment selon le signe du choc.
+exemple: L. Glosten, R. Jagannathan, D. Runkle, Journal of Finance, 1993 ; D. Nelson, Econometrica, 1991.
+maths: M2.
+erreurs: Ajouter des extensions jusqu'à obtenir un ajustement parfait dans l'échantillon ; croire qu'une loi de Student suffit à décrire le risque extrême.
+exercice: GJR-GARCH avec ω = 0,02, α = 0,03, γ = 0,10, β = 0,90 et une variance du jour égale à 1. Quelle variance prévoit-on pour demain après un choc de −2 ? Et après un choc de +2 ?
+duree: 8-10
+format: educational
+forme: lecon
+option: oui
+
+## E9.05
+titre: Volatilité et mesure du risque : VaR, Expected Shortfall et backtesting
+titre_en: Volatility and risk: VaR, expected shortfall and backtesting
+question: Une perte « qui n'arrive qu'une fois sur cent » arrive-t-elle vraiment une fois sur cent ?
+pre: E9.03 | S5.04
+obj: Définir la VaR et l'Expected Shortfall | Calculer une VaR paramétrique à partir d'une volatilité prévue | Backtester une VaR en comparant le nombre de dépassements à une loi binomiale (test de Kupiec) | Expliquer pourquoi un nombre correct de dépassements ne suffit pas s'ils arrivent en grappes | Dire ce qu'un GARCH ne garantit pas sur les pertes extrêmes
+intuition: Une VaR à 99 % se trompe un jour sur cent par construction : la tester, c'est vérifier qu'elle ne se trompe ni plus souvent, ni par paquets.
+exemple: P. Kupiec, Journal of Derivatives, 1995. Usage de l'Expected Shortfall dans la réglementation bancaire : texte du Comité de Bâle à sourcer et dater lors de la préparation.
+maths: M2.
+erreurs: Lire la VaR comme la perte maximale possible ; supposer la normalité pour les queues de distribution ; valider une VaR sur son seul nombre de dépassements.
+exercice: Volatilité prévue de 1,5 % et loi normale : quelle VaR à 99 % sur un jour (quantile 2,326) ? Sur 250 jours, combien de dépassements attend-on ? On en observe 7 : quelle est la probabilité d'en observer au moins autant si le modèle est juste ?
+duree: 8-10
+format: educational
+forme: lecon
+option: oui
+
+# MODULE E10
+niveau: 4
 titre: Modèles non linéaires et réponses limitées
 titre_en: Nonlinear and limited dependent variable models
 pre: E3 | S10
 maths: M2
 but: Adapter l'économétrie aux décisions binaires, aux variables censurées et aux comptages, avec l'interprétation par effets marginaux propre à l'économie.
 
-## E9.01
+## E10.01
 titre: Probit, logit et effets marginaux
 titre_en: Probit, logit and marginal effects
 question: De combien un an d'études augmente-t-il la probabilité d'avoir un emploi ?
@@ -665,11 +755,11 @@ duree: 8-10
 format: educational
 forme: lecon
 
-## E9.02
+## E10.02
 titre: Tobit et correction de sélection de Heckman
 titre_en: Tobit and Heckman selection
 question: Comment modéliser des dépenses qui valent souvent zéro, ou un salaire observé seulement chez ceux qui travaillent ?
-pre: E9.01 | E4.04
+pre: E10.01 | E4.04
 obj: Distinguer censure (Tobit) et sélection (Heckman) | Décrire la procédure en deux étapes et le besoin d'une variable d'exclusion
 intuition: Les zéros et les absents ne sont pas des observations comme les autres : il faut modéliser pourquoi ils le sont.
 exemple: Dépenses de loisirs ; salaires des femmes.
@@ -681,7 +771,7 @@ format: youtube_lesson
 forme: lecon
 option: oui
 
-## E9.03
+## E10.03
 titre: Modèles de comptage en économie
 titre_en: Count models in economics
 question: Comment modéliser le nombre de brevets déposés par une entreprise ?
@@ -697,7 +787,7 @@ format: educational
 forme: lecon
 option: oui
 
-# MODULE E10
+# MODULE E11
 niveau: 4
 titre: Études de cas économiques
 titre_en: Applied case studies
@@ -705,7 +795,7 @@ pre: E7 | E6
 maths: M2
 but: Rassembler les outils sur des questions économiques réelles. Chaque étude de cas montre la question, les données, la méthode, le résultat, les critiques et ce qui reste débattu. Les chiffres sont revérifiés à la préparation.
 
-## E10.01
+## E11.01
 titre: Que rapporte une année d'études ?
 titre_en: What is a year of schooling worth?
 question: Le diplôme rend-il plus productif, ou signale-t-il seulement des capacités ?
@@ -720,7 +810,7 @@ duree: 12-16
 format: youtube_lesson
 forme: etude_de_cas
 
-## E10.02
+## E11.02
 titre: Le salaire minimum et l'emploi
 titre_en: Minimum wage and employment
 question: Que disent vraiment trente ans d'études ?
@@ -735,7 +825,7 @@ duree: 12-16
 format: youtube_lesson
 forme: etude_de_cas
 
-## E10.03
+## E11.03
 titre: L'élasticité-prix de la demande d'énergie
 titre_en: How much does energy demand respond to prices?
 question: Les gens consomment-ils moins de carburant quand le prix monte ?
@@ -750,7 +840,7 @@ duree: 10-12
 format: youtube_lesson
 forme: etude_de_cas
 
-## E10.04
+## E11.04
 titre: Banques centrales, taux d'intérêt et inflation
 titre_en: Central banks, interest rates and inflation
 question: Comment mesure-t-on l'effet d'une hausse des taux ?

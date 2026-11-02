@@ -8,7 +8,7 @@ construit à partir des fichiers de ce dossier. **Statut : projet soumis à la r
 
 | Chemin | Rôle |
 |---|---|
-| `catalogue/*.txt` | Les 222 entrées de syllabus du programme, rangées en modules : une entrée par vidéo (pas encore la fiche de conception) |
+| `catalogue/*.txt` | Les 227 entrées de syllabus du programme, rangées en modules : une entrée par vidéo (pas encore la fiche de conception) |
 | `sections/*.md` | Les sections rédigées du document (synthèse, architecture, méthode d'actualité, feuille de route, glossaire, bibliographie, arbitrages) |
 | `construire.py` | Contrôle le programme et construit le HTML, puis le PDF |
 | `gabarit.html` | Mise en page (couleurs et logo officiels de `assets/brand/actu-basics/`) |

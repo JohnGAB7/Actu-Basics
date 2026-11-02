@@ -70,12 +70,16 @@ Ces références servent à **concevoir et vérifier** les vidéos. Ce ne sont p
 | M. Hernán, J. Robins, *Causal Inference: What If* (Chapman & Hall/CRC, 2020) · miguelhernan.org/whatifbook | Master | Ouvert (PDF) | ✔ | E1.04, E3.04 |
 | J. Angrist, J.-S. Pischke, *Mastering 'Metrics* (2014) | Accessible | Livre | | E1, E5, E7 |
 | J. Pearl, D. Mackenzie, *The Book of Why* (2018) | Vulgarisation | Livre | | E3.04, S3.06 |
-| J. Wooldridge, *Introductory Econometrics: A Modern Approach* | Licence | Livre | | E2 à E9 |
+| J. Wooldridge, *Introductory Econometrics: A Modern Approach* | Licence | Livre | | E2 à E10 |
 | J. Stock, M. Watson, *Introduction to Econometrics* | Licence | Livre | | E2 à E8 |
 | J. Angrist, J.-S. Pischke, *Mostly Harmless Econometrics* (2009) | Master | Livre | | E4 à E7 |
-| J. Wooldridge, *Econometric Analysis of Cross Section and Panel Data*, 2e éd. (2010) | Master | Livre | | E6, E9 |
+| J. Wooldridge, *Econometric Analysis of Cross Section and Panel Data*, 2e éd. (2010) | Master | Livre | | E6, E10 |
 | G. Imbens, D. Rubin, *Causal Inference for Statistics, Social, and Biomedical Sciences* (2015) | Master | Livre | | E1.04, E7 |
-| J. Hamilton, *Time Series Analysis* (1994) | Master | Livre | | E8 |
+| J. Hamilton, *Time Series Analysis* (1994) | Master | Livre | | E8, E9.02 |
+| C. Francq, J.-M. Zakoïan, *GARCH Models: Structure, Statistical Inference and Financial Applications* (Wiley, 2010 ; édition la plus récente à confirmer) | Master | Livre | | E9 |
+| R. Tsay, *Analysis of Financial Time Series*, 3e éd. (Wiley, 2010) | Master | Livre | | E9 |
+| ENSAE, cours « GARCH and stochastic volatility models » (C. Francq) · ensae.fr/courses/176-garch-and-stochastic-volatility-models | Master | Plan de cours en ligne | ✔ | E9, extensions hors programme (volatilité stochastique) |
+| Université de Bologne, « Econometrics of Financial Markets » (Laurea magistrale, 2026-2027) · unibo.it, insegnamento 521364 | Master | Plan de cours en ligne | ✔ | E9 (test ARCH, ARCH, GARCH, VaR) |
 | W. Greene, *Econometric Analysis* | Master, référence | Livre | | Tout le pilier 2 |
 
 ## 9.5 Sources des exemples historiques et des études citées
@@ -106,6 +110,20 @@ Chaque exemple historique du syllabus renvoie maintenant à une source primaire 
 | Q3.02 | Paradoxe de l'amitié | S. Feld, *American Journal of Sociology*, 1991 |
 | Q3.05 | Main chaude | T. Gilovich, R. Vallone, A. Tversky, *Cognitive Psychology*, 1985 ; J. Miller, A. Sanjurjo, *Econometrica*, 2018 |
 | Q6.01 | Penaltys | P.-A. Chiappori, S. Levitt, T. Groseclose, *AER*, 2002 ; I. Palacios-Huerta, *Review of Economic Studies*, 2003 |
+
+
+Articles fondateurs et articles cités dans le module E9 (métadonnées vérifiées par leur DOI le 2/11/2026) :
+
+| Vidéo | Référence |
+|---|---|
+| E9.02 | R. Engle, « Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation », *Econometrica*, 50(4), 1982, p. 987 et suiv. · doi.org/10.2307/1912773 |
+| E9.02 | T. Bollerslev, « Generalized Autoregressive Conditional Heteroskedasticity », *Journal of Econometrics*, 31(3), 1986, p. 307-327 · doi.org/10.1016/0304-4076(86)90063-1 |
+| E9.02 | T. Bollerslev, « The story of GARCH: A personal odyssey », *Journal of Econometrics*, 234, supplément, 2023, p. 96-100 · doi.org/10.1016/j.jeconom.2023.01.015 |
+| E9.04 | L. Glosten, R. Jagannathan, D. Runkle, *Journal of Finance*, 48(5), 1993, p. 1779-1801 · doi.org/10.1111/j.1540-6261.1993.tb05128.x |
+| E9.04 | D. Nelson, « Conditional Heteroskedasticity in Asset Returns: A New Approach », *Econometrica*, 59(2), 1991, p. 347 et suiv. · doi.org/10.2307/2938260 |
+| E9.05 | P. Kupiec, « Techniques for Verifying the Accuracy of Risk Measurement Models », *Journal of Derivatives*, 3(2), 1995, p. 73-84 · doi.org/10.3905/jod.1995.407942 |
+| E9.01 | R. Cont, « Empirical properties of asset returns: stylized facts and statistical issues », *Quantitative Finance*, 2001 (non revérifié) |
+| E9.03 | A. Patton, « Volatility forecast comparison using imperfect volatility proxies », *Journal of Econometrics*, 2011 (non revérifié) |
 
 ## 9.6 Vulgarisation audiovisuelle à étudier (références de forme, pas de fond)
 

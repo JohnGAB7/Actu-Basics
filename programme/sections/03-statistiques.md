@@ -28,10 +28,11 @@ Le tronc commun (niveaux 1 à 3) est le parcours de référence. Il peut être s
 | **Citoyen curieux** : lire l'actualité sans se faire avoir | S1, S2, S3, puis S4.01 à S4.10 et S6.05 (marge d'erreur) | 40 |
 | **Étudiant** : réussir un premier cours de statistique | Niveaux 1 à 3 complets, avec la boîte à outils M1 et M2 | 100 |
 | **Professionnel des données** | Niveau 3, puis S11, S17 et au choix S13 ou S14 | 60 |
-| **Futur économiste** | S1 à S9, puis pilier 2 (E1 à E7), puis E8 ou E10 | 110 |
+| **Futur économiste** | S1 à S9, puis pilier 2 (E1 à E7), puis E8 ou E11 | 110 |
+| **Finance et risque** | S1 à S9, S14, E2 et E3, puis E9 (volatilité, VaR) | 110 |
 | **Actuariat et assurance** | S5, S7, S10 (avec S10.06), S15, S12 | 50 |
 
-Les vidéos marquées **optionnel** (S18 entièrement, E6.04, E9.02, E9.03, M4) approfondissent sans être nécessaires à la suite.
+Les vidéos marquées **optionnel** (S18 entièrement, E6.04, E9.04, E9.05, E10.02, E10.03, M4) approfondissent sans être nécessaires à la suite.
 
 ## 3.4 Ce que la statistique partage avec d'autres disciplines
 

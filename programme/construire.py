@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.2 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-2.pdf"
+VERSION = "1.3 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-3.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -126,6 +126,17 @@ VERIFICATIONS = [
     ("Q1.02", "log(2) / log(1.05)", 14, "années pour doubler à 5 %"),
     ("Q1.03", "100 * (1 - 0.7 * 0.8)", 44, "réduction totale, en %"),
     ("Q6.03", "600 * sum(1 / k for k in range(1, 601))", 4200, "achats pour un album de 600 images"),
+    ("E9.01", "100 * log(1.03)", 2.96, "rendement logarithmique de 100 à 103, en %"),
+    ("E9.02", "0.08 + 0.90", 0.98, "persistance α + β"),
+    ("E9.02", "0.02 / (1 - 0.08 - 0.90)", 1, "variance de long terme ω / (1 − α − β)"),
+    ("E9.02", "log(0.5) / log(0.98)", 34.3, "demi-vie d'un choc de volatilité, en jours"),
+    ("E9.02", "sqrt(252) * 1", 15.9, "volatilité annuelle de long terme, en %"),
+    ("E9.03", "1 + 0.98 ** 9 * (4 - 1)", 3.5, "variance prévue à 10 jours"),
+    ("E9.04", "0.02 + (0.03 + 0.10) * 2 ** 2 + 0.90 * 1", 1.44, "variance après un choc de −2"),
+    ("E9.04", "0.02 + 0.03 * 2 ** 2 + 0.90 * 1", 1.04, "variance après un choc de +2"),
+    ("E9.05", "2.326 * 1.5", 3.49, "VaR normale à 99 % sur un jour, en %"),
+    ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
+    ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
 ]
 # Tolérances explicites quand le texte arrondit volontairement (« environ »).
 TOLERANCES = {("Q6.03", 4200): 50, ("Q1.02", 14): 0.5, ("S8.09", 64): 0.5}

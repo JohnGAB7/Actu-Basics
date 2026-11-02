@@ -193,7 +193,7 @@ titre: Séries temporelles
 titre_en: Time series
 pre: S9
 maths: M2
-but: Analyser des données ordonnées dans le temps, où chaque observation dépend des précédentes. Cette branche couvre la description, la modélisation univariée et la prévision ; les VAR, la cointégration et les usages causaux sont traités en économétrie (E8) pour éviter les doublons.
+but: Analyser des données ordonnées dans le temps, où chaque observation dépend des précédentes. Cette branche couvre la description, la modélisation univariée et la prévision ; les VAR, la cointégration et les usages causaux sont traités en économétrie (E8), et la volatilité conditionnelle (ARCH, GARCH) en E9, pour éviter les doublons.
 
 ## S14.01
 titre: Tendance, saisonnalité, bruit
