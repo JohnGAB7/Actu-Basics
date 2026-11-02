@@ -29,9 +29,10 @@ concurrency:
 jobs:
   apercu:
     runs-on: ubuntu-latest
-    # Une leçon de 8 minutes en FR et en EN demande environ 70 à 90 minutes de rendu sur un
-    # exécuteur standard (voix Kokoro sur CPU, puis images et encodage). Voir docs/voice-licenses.md.
-    timeout-minutes: 120
+    # Cause des annulations précédentes : chaque image des scènes « formule » recalculait le rendu
+    # mathtext (≈ 4,5 s par image, plus d'une heure et demie par langue). Corrigé par un cache ;
+    # la limite d'origine de 60 minutes suffit de nouveau.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 

@@ -268,14 +268,25 @@ class ScenesPedagogiques(Animations):
         lignes = scene.extra["formule"]
         resultat = scene.extra.get("resultat_en_valeur", len(lignes) > 1)
         ecart = 56
-        try:
-            ims = images_formules(lignes, self.c["texte"], zc[2] - zc[0], max(120, bas - haut_c - 40),
-                                  interligne=ecart, taille_max=150)
-            if resultat:
-                ims[-1] = self._formule_couleur(lignes, ims, zc[2] - zc[0], max(120, bas - haut_c - 40), ecart)
-        except Exception as exc:   # signalé par le contrôle qualité (formule illisible)
-            self.alertes.append(f"Formule non rendue ({ctx}) : {exc}")
+        # Les images de formule ne dépendent pas du temps : calculées une fois par scène et réutilisées
+        # pour chaque image de la vidéo. Sans ce cache, chaque image recalculait le rendu mathtext
+        # (environ 4,5 s par image), soit plus d'une heure et demie pour les deux formules longues.
+        cle = (tuple(lignes), resultat, zc[2] - zc[0], max(120, bas - haut_c - 40), ecart,
+               self.c["texte"], self.c["accent"])
+        cache = self.__dict__.setdefault("_cache_formules", {})
+        if cle not in cache:
+            try:
+                ims = images_formules(lignes, self.c["texte"], zc[2] - zc[0], max(120, bas - haut_c - 40),
+                                      interligne=ecart, taille_max=150)
+                if resultat:
+                    ims[-1] = self._formule_couleur(lignes, ims, zc[2] - zc[0], max(120, bas - haut_c - 40), ecart)
+                cache[cle] = ims
+            except Exception as exc:   # signalé par le contrôle qualité (formule illisible)
+                cache[cle] = exc
+        if isinstance(cache[cle], Exception):
+            self.alertes.append(f"Formule non rendue ({ctx}) : {cache[cle]}")
             return
+        ims = list(cache[cle])
         if ims and min(im.height for im in ims) < 70 and not self.colonnes:
             self.alertes.append(f"Formule petite sur mobile ({ctx}) : la couper en plusieurs lignes")
         total = sum(im.height for im in ims) + ecart * (len(ims) - 1)

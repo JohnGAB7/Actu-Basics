@@ -59,6 +59,9 @@ prononciation:
   fr:
     ONU: "Onu"
     DESA: "Désa"
+    # Kokoro lisait « aktybazik ». Écriture phonétique pour la voix seulement (« actu bèï-siks ») ;
+    # le nom de marque écrit reste ACTU-BASICS dans les images et les sous-titres. À valider à l'oreille par JG.
+    ACTU-BASICS: "Actu Bèyssixe"
   en:
     UN: "U.N."
     DESA: "Desa"

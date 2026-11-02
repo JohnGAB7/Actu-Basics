@@ -1376,3 +1376,11 @@ def test_pas_de_coupure_au_milieu_d_une_expression():
     assert "n(n − 1)" in mots and "÷ 2" in mots
     assert [w for w, _, _ in mots_riches("Multiplier, puis 1 − P₀")][-1] == "− P₀"
     assert len(mots_riches("(voir le rapport de rendu complet)")) == 6   # parenthèse longue : coupable
+
+
+def test_prononciation_de_la_marque_dans_la_voix_seulement():
+    import yaml
+    from lmec.narration import preparer_pour_voix
+    lex = yaml.safe_load(open(RACINE / "production/tts.yaml", encoding="utf-8"))["prononciation"]
+    assert "ACTU-BASICS" not in preparer_pour_voix("Bienvenue sur ACTU-BASICS.", "fr", lex)
+    assert "ACTU-BASICS" in preparer_pour_voix("Welcome to ACTU-BASICS.", "en", lex)   # bien lu en anglais
