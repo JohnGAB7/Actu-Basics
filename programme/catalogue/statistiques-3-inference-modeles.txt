@@ -1,0 +1,769 @@
+# Pilier 1 — Statistiques · Niveau 3 « Inférence et modèles »
+
+# MODULE S6
+niveau: 3
+titre: Échantillonnage et distributions d'échantillonnage
+titre_en: Sampling and sampling distributions
+pre: S5 | S1
+maths: M1 → M2
+but: Le pont entre probabilités et statistique : si l'on refaisait l'enquête, le résultat changerait. Comprendre de combien est le cœur de toute inférence. Tout est d'abord montré par simulation, puis justifié par le théorème central limite.
+
+## S6.01
+titre: Paramètre et statistique
+titre_en: Parameter versus statistic
+question: Quelle différence entre « la proportion de votants pour A » et « la proportion de votants pour A dans mon sondage » ?
+pre: S5.13 | S1.05
+obj: Distinguer paramètre (inconnu, fixe) et statistique (calculée, variable) | Utiliser les notations μ, p et x̄, p̂
+intuition: Le paramètre est la cible ; la statistique est la flèche, qui change à chaque tir.
+exemple: Proportion de gauchers dans un pays et dans un échantillon de 100 personnes.
+maths: M1.
+erreurs: Parler de « la vraie moyenne de l'échantillon ».
+exercice: Dans quatre phrases, identifier paramètres et statistiques.
+duree: 4-5
+format: educational
+forme: lecon
+
+## S6.02
+titre: La distribution d'échantillonnage
+titre_en: The sampling distribution
+question: Si 1 000 instituts faisaient le même sondage, quels résultats obtiendrait-on ?
+pre: S6.01
+obj: Construire par simulation une distribution d'échantillonnage | Distinguer distribution des données et distribution d'une statistique
+intuition: Chaque échantillon donne un chiffre ; l'ensemble de ces chiffres possibles a lui-même une distribution.
+exemple: 1 000 sondages simulés de 1 000 personnes dans une population où p = 0,52.
+maths: M1.
+erreurs: Confondre l'histogramme des données avec celui des moyennes.
+exercice: Prédire la forme de la distribution des moyennes avant de lancer la simulation.
+duree: 6-8
+format: educational
+forme: simulation
+
+## S6.03
+titre: Erreur standard et racine de n
+titre_en: Standard error and the square-root law
+question: Pourquoi faut-il quatre fois plus de personnes pour diviser la marge d'erreur par deux ?
+pre: S6.02 | S5.12
+obj: Calculer l'erreur standard d'une moyenne et d'une proportion | Expliquer la loi en racine de n
+intuition: La précision s'achète cher : elle progresse comme la racine du nombre d'observations.
+exemple: Coût d'un sondage de 1 000 contre 4 000 personnes.
+maths: M1 (racines).
+erreurs: Croire que la précision dépend de la taille de la population (et non de l'échantillon).
+exercice: p = 0,5, n = 1 000 : erreur standard ? (≈ 0,016)
+duree: 5-7
+format: educational
+forme: lecon
+
+## S6.04
+titre: Plans de sondage : stratifier, grapper, pondérer
+titre_en: Survey designs: strata, clusters and weights
+question: Comment un sondage de 1 000 personnes peut-il représenter 50 millions d'électeurs ?
+pre: S6.03 | S1.05
+obj: Décrire sondage aléatoire simple, stratifié, en grappes et par quotas | Expliquer le principe des poids de redressement
+intuition: Stratifier, c'est garantir que chaque groupe est présent ; pondérer, c'est corriger ceux qui manquent.
+exemple: Pratiques de sondage d'opinion (méthode des quotas courante en France).
+maths: M1.
+erreurs: Croire que la méthode des quotas a la même théorie d'erreur que le tirage aléatoire.
+exercice: Un échantillon contient 30 % de moins de 35 ans pour 40 % dans la population : quel poids leur donner ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## S6.05
+titre: La marge d'erreur d'un sondage
+titre_en: The margin of error
+question: 51 % contre 49 % avec ± 3 points : qui gagne ?
+pre: S6.03
+obj: Calculer une marge d'erreur à 95 % pour une proportion | Expliquer ce que la marge d'erreur couvre et ne couvre pas (non-réponse, biais, changement d'avis)
+intuition: La marge d'erreur mesure seulement le hasard du tirage, pas les autres erreurs.
+exemple: Lecture de sondages électoraux (exemples à dater lors de la préparation).
+maths: M1.
+erreurs: Croire qu'un écart dans la marge prouve une égalité ; oublier que la marge de l'écart est plus grande que celle de chaque score.
+exercice: n = 1 000, p̂ = 0,5 : marge d'erreur à 95 % ? (≈ 3,1 points)
+duree: 6-8
+format: educational
+forme: lecon
+
+## S6.06
+titre: Khi-deux, Student et Fisher : d'où viennent ces lois ?
+titre_en: Where chi-square, t and F come from
+question: Pourquoi utilise-t-on une loi de Student au lieu de la loi normale avec un petit échantillon ?
+pre: S6.03 | S5.09
+obj: Décrire comment chaque loi naît d'une construction à partir de lois normales | Expliquer pourquoi estimer l'écart-type élargit les queues
+intuition: Quand on estime aussi la dispersion, on est un peu moins sûr : la cloche s'aplatit et ses queues s'épaississent.
+exemple: Gosset (« Student ») et le contrôle qualité de la bière chez Guinness.
+maths: M2.
+erreurs: Utiliser une table sans savoir ce qu'elle représente.
+exercice: Que devient la loi de Student quand n devient grand ?
+duree: 7-9
+format: educational
+forme: lecon
+
+# MODULE S7
+niveau: 3
+titre: Estimation et intervalles de confiance
+titre_en: Estimation and confidence intervals
+pre: S6
+maths: M2
+but: Donner une valeur plausible à un paramètre inconnu, et surtout une fourchette honnête. On introduit les qualités d'un estimateur, la vraisemblance, puis l'intervalle de confiance, avec un soin particulier pour son interprétation correcte.
+
+## S7.01
+titre: Estimateurs : biais, variance, erreur quadratique
+titre_en: Estimators: bias, variance and mean squared error
+question: Pourquoi divise-t-on parfois par n − 1 pour calculer une variance ?
+pre: S6.02 | S2.08
+obj: Définir biais et variance d'un estimateur avec l'image de la cible | Montrer par simulation que diviser par n sous-estime la variance | Comparer deux estimateurs par leur erreur quadratique moyenne
+intuition: Un bon tireur est à la fois centré (peu de biais) et régulier (peu de variance).
+exemple: Simulation de 10 000 petits échantillons.
+maths: M2.
+erreurs: Croire qu'un estimateur sans biais est toujours meilleur.
+exercice: Lequel de deux tireurs (biaisé mais régulier, centré mais dispersé) préférer selon l'objectif ?
+duree: 7-9
+format: educational
+forme: simulation
+
+## S7.02
+titre: Consistance et efficacité
+titre_en: Consistency and efficiency
+question: Un estimateur doit-il s'améliorer quand on a plus de données ?
+pre: S7.01
+obj: Définir la consistance | Comparer la moyenne et la médiane comme estimateurs du centre d'une loi normale
+intuition: Un bon estimateur finit par trouver la cible quand les données s'accumulent.
+exemple: Moyenne et médiane d'échantillons normaux, puis de lois à queues épaisses.
+maths: M2.
+erreurs: Croire qu'il existe un estimateur meilleur dans toutes les situations.
+exercice: Sous quelle loi la médiane bat-elle la moyenne ?
+duree: 5-7
+format: educational
+forme: simulation
+
+## S7.03
+titre: La méthode des moments
+titre_en: The method of moments
+question: Comment estimer un paramètre en égalant ce que l'on voit à ce que la théorie prévoit ?
+pre: S7.01
+obj: Appliquer la méthode des moments à une loi simple (Poisson, exponentielle)
+intuition: Si la théorie dit que la moyenne vaut λ, on prend la moyenne observée.
+exemple: Estimer un taux d'arrivée à partir de comptages.
+maths: M2.
+erreurs: Appliquer la méthode sans vérifier que le modèle convient.
+exercice: Estimer le paramètre d'une loi exponentielle de moyenne observée 4 min.
+duree: 5-6
+format: educational
+forme: lecon
+
+## S7.04
+titre: La vraisemblance
+titre_en: Likelihood
+question: Quelle valeur du paramètre rend ce que l'on a observé le moins surprenant ?
+pre: S7.01 | S5.04
+obj: Écrire la vraisemblance d'un petit échantillon binomial | Distinguer probabilité (des données sachant le paramètre) et vraisemblance (du paramètre sachant les données)
+intuition: On fait varier le paramètre et l'on regarde lequel rend les données les plus probables.
+exemple: 7 faces sur 10 lancers : courbe de vraisemblance de p.
+maths: M2 (produits, logarithmes).
+erreurs: Lire la vraisemblance comme la probabilité du paramètre.
+exercice: Laquelle des valeurs p = 0,5 ou p = 0,7 rend 7 faces sur 10 plus vraisemblable ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## S7.05
+titre: Le maximum de vraisemblance
+titre_en: Maximum likelihood estimation
+question: Comment trouver le sommet de la vraisemblance par le calcul ?
+pre: S7.04
+obj: Passer au logarithme et dériver pour obtenir l'estimateur du maximum de vraisemblance | Retrouver p̂ = k/n et μ̂ = x̄
+intuition: Le sommet d'une colline se trouve là où la pente s'annule.
+exemple: Binomiale, puis normale, puis Poisson.
+maths: M2 (dérivées).
+erreurs: Oublier de vérifier qu'il s'agit d'un maximum ; prendre le logarithme sans expliquer pourquoi c'est permis.
+exercice: Retrouver l'estimateur de λ pour une loi de Poisson.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S7.06
+titre: Ce que veut dire « intervalle de confiance à 95 % »
+titre_en: What a 95% confidence interval really means
+question: Y a-t-il 95 % de chances que la vraie valeur soit dans mon intervalle ?
+pre: S6.05 | S7.01
+obj: Interpréter correctement un intervalle de confiance comme procédure | Le montrer avec 100 intervalles simulés dont environ 5 ratent la cible
+intuition: C'est la méthode qui réussit 95 fois sur 100 ; un intervalle donné contient ou non la valeur.
+exemple: Animation de 100 intervalles autour d'une valeur connue.
+maths: M2.
+erreurs: « 95 % de chances que μ soit dedans » ; « 95 % des données sont dans l'intervalle ».
+exercice: Choisir parmi quatre phrases la seule interprétation correcte.
+duree: 6-8
+format: educational
+forme: simulation
+
+## S7.07
+titre: Intervalle de confiance d'une moyenne
+titre_en: A confidence interval for a mean
+question: Quel est le temps de trajet moyen des salariés d'une ville, avec quelle précision ?
+pre: S7.06 | S6.06
+obj: Construire un IC de Student pas à pas | Dire comment le niveau de confiance et n changent la largeur
+intuition: Estimation ± (combien d'erreurs standard) × (erreur standard).
+exemple: Échantillon de 25 temps de trajet.
+maths: M2.
+erreurs: Utiliser 1,96 avec un très petit échantillon sans le dire ; oublier l'hypothèse d'indépendance.
+exercice: x̄ = 32, s = 10, n = 25 : IC à 95 % (t ≈ 2,064) ? (≈ 27,9 à 36,1)
+duree: 6-8
+format: educational
+forme: lecon
+
+## S7.08
+titre: Intervalle de confiance d'une proportion
+titre_en: A confidence interval for a proportion
+question: Quelle fourchette donner à « 12 % des clients sont insatisfaits » ?
+pre: S7.06
+obj: Construire un IC de Wald puis présenter une méthode plus fiable pour les petites proportions (Wilson)
+intuition: Près de 0 ou de 1, la cloche est coincée contre un mur : la formule simple se trompe.
+exemple: 0 incident sur 50 vols d'essai : la « règle de trois » (≈ 3/n).
+maths: M2.
+erreurs: Donner un intervalle qui sort de [0, 1].
+exercice: 0 événement sur 300 essais : borne supérieure approximative à 95 % ? (≈ 1 %)
+duree: 6-8
+format: educational
+forme: lecon
+
+## S7.09
+titre: Quelle taille d'échantillon faut-il ?
+titre_en: How big a sample do you need?
+question: Combien de personnes interroger pour une marge d'erreur de 2 points ?
+pre: S7.08 | S6.03
+obj: Calculer une taille d'échantillon pour une précision donnée | Expliquer les compromis coût, précision et sous-groupes
+intuition: On inverse la formule de la marge d'erreur.
+exemple: Budget d'une enquête de satisfaction ; précision dans un sous-groupe de 10 %.
+maths: M1.
+erreurs: Oublier que l'analyse de sous-groupes demande un échantillon beaucoup plus grand.
+exercice: Marge de 2 points à 95 % avec p = 0,5 ? (≈ 2 401)
+duree: 5-7
+format: educational
+forme: lecon
+
+# MODULE S8
+niveau: 3
+titre: Tests statistiques
+titre_en: Hypothesis testing
+pre: S7
+maths: M2
+but: Apprendre à décider avec des données sans se raconter d'histoires. Le module insiste autant sur la logique et les contresens que sur les procédures, et se termine par la crise de reproductibilité pour donner un esprit critique.
+
+## S8.01
+titre: La logique d'un test : le procès
+titre_en: The logic of a test: the courtroom
+question: Comment décider si une pièce est truquée ?
+pre: S7.06
+obj: Formuler hypothèse nulle et hypothèse alternative | Expliquer le raisonnement par l'absurde probabiliste | Dire pourquoi « ne pas rejeter » n'est pas « accepter »
+intuition: Présumé innocent : on ne condamne que si les preuves seraient très surprenantes en cas d'innocence.
+exemple: Pièce lancée 100 fois, 62 faces.
+maths: M2.
+erreurs: « On a prouvé H₀ ».
+exercice: Formuler H₀ et H₁ pour trois situations.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S8.02
+titre: La p-value, sans contresens
+titre_en: The p-value, without the myths
+question: Une p-value de 0,03, est-ce 3 % de chances que l'hypothèse soit vraie ?
+pre: S8.01
+obj: Donner la définition exacte d'une p-value | Réfuter les quatre contresens les plus courants | Calculer une p-value par simulation
+intuition: Si rien de spécial ne se passait, à quel point serait-il rare de voir un résultat au moins aussi extrême ?
+exemple: Simulation de 10 000 pièces honnêtes, comparaison avec 62 faces sur 100.
+maths: M2.
+erreurs: p = P(H₀ vraie) ; p < 0,05 = effet important ; p > 0,05 = absence d'effet.
+exercice: Classer huit phrases en correctes et incorrectes.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S8.03
+titre: Erreurs de type I et II, puissance
+titre_en: Type I and II errors, and power
+question: Un test peut-il passer à côté d'un vrai effet ?
+pre: S8.02
+obj: Définir α, β et puissance | Expliquer le compromis entre les deux erreurs | Dire comment n et la taille d'effet changent la puissance
+intuition: Une alarme trop sensible sonne pour rien ; trop peu sensible, elle rate l'incendie.
+exemple: Détecteur de fumée ; essai clinique sous-dimensionné.
+maths: M2.
+erreurs: Conclure « pas d'effet » à partir d'une étude peu puissante.
+exercice: Que se passe-t-il pour β si l'on abaisse α de 5 % à 1 % sans changer n ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## S8.04
+titre: Comparer des moyennes : le test t
+titre_en: Comparing means: the t-test
+question: Le nouveau procédé réduit-il vraiment le temps de fabrication ?
+pre: S8.02 | S7.07
+obj: Mener un test t à un échantillon et à deux échantillons | Vérifier les conditions et interpréter le résultat dans le contexte
+intuition: Différence observée divisée par le bruit attendu : un rapport signal sur bruit.
+exemple: Temps de fabrication avant et après une modification.
+maths: M2.
+erreurs: Oublier l'hypothèse d'indépendance ; utiliser un test à deux échantillons sur des données appariées.
+exercice: Calculer la statistique t sur un petit exemple chiffré.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S8.05
+titre: Données appariées
+titre_en: Paired data
+question: Mesurer les mêmes personnes avant et après change-t-il le calcul ?
+pre: S8.04
+obj: Reconnaître des données appariées | Montrer que travailler sur les différences augmente la précision
+intuition: Chacun est son propre témoin : on retire la variabilité entre personnes.
+exemple: Tension artérielle avant et après un programme sportif.
+maths: M2.
+erreurs: Traiter avant et après comme deux groupes indépendants.
+exercice: Calculer la moyenne et l'écart-type des différences sur 6 couples.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S8.06
+titre: Proportions et test du khi-deux
+titre_en: Proportions and the chi-square test
+question: Le choix d'un moyen de transport dépend-il de la région ?
+pre: S8.02 | S3.02 | S6.06
+obj: Tester l'égalité de deux proportions | Calculer les effectifs attendus sous indépendance et la statistique du khi-deux
+intuition: Comparer ce que l'on observe à ce que l'on observerait si les deux variables n'avaient rien à voir.
+exemple: Tableau croisé transport × région.
+maths: M2.
+erreurs: Appliquer le khi-deux à des pourcentages au lieu d'effectifs ; effectifs attendus trop petits.
+exercice: Calculer les effectifs attendus d'un tableau 2 × 2.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S8.07
+titre: Taille d'effet et importance pratique
+titre_en: Effect size and practical importance
+question: Un résultat « très significatif » peut-il être sans importance ?
+pre: S8.03
+obj: Distinguer significativité statistique et importance pratique | Calculer et interpréter une taille d'effet (différence absolue, d de Cohen)
+intuition: Avec un million de personnes, même une différence minuscule devient « significative ».
+exemple: Un régime qui fait perdre 200 g en un an, sur un très grand échantillon.
+maths: M1-M2.
+erreurs: Lire « significatif » comme « important ».
+exercice: Deux études : laquelle a l'effet le plus important, laquelle le plus significatif ?
+duree: 5-7
+format: educational
+forme: lecon
+
+## S8.08
+titre: Intervalles de confiance et tests : deux faces d'une même pièce
+titre_en: Confidence intervals and tests: two sides of one coin
+question: Pourquoi un intervalle de confiance dit-il plus qu'une p-value ?
+pre: S8.02 | S7.07
+obj: Montrer l'équivalence entre test bilatéral à 5 % et IC à 95 % | Présenter un résultat par une estimation et son intervalle
+intuition: L'intervalle contient toutes les valeurs que le test n'aurait pas rejetées.
+exemple: Effet d'un traitement présenté par p-value seule puis par IC.
+maths: M2.
+erreurs: Ne publier que la p-value.
+exercice: Un IC à 95 % va de 0,2 à 1,8 : que dit le test de H₀ : effet = 0 ?
+duree: 5-6
+format: educational
+forme: lecon
+
+## S8.09
+titre: Tests multiples, p-hacking et reproductibilité
+titre_en: Multiple testing, p-hacking and the replication crisis
+question: Si l'on teste 20 couleurs de bonbons, combien sembleront « liées à l'acné » par hasard ?
+pre: S8.03
+obj: Calculer la probabilité d'au moins un faux positif sur k tests | Expliquer les corrections (Bonferroni, taux de fausses découvertes) | Décrire pré-enregistrement et réplication
+intuition: Si l'on cherche assez longtemps, le hasard finit toujours par offrir un résultat.
+exemple: 20 tests indépendants à 5 % : 1 − 0,95²⁰ ≈ 64 % de chances d'au moins un faux positif.
+maths: M1-M2.
+erreurs: Ne rapporter que les analyses « qui marchent ».
+exercice: Avec 10 tests, quel seuil de Bonferroni utiliser ? (0,005)
+duree: 8-10
+format: educational
+forme: etude_de_cas
+
+# MODULE S9
+niveau: 3
+titre: Régression linéaire et ANOVA
+titre_en: Linear regression and ANOVA
+pre: S8 | S3
+maths: M2 (M3 en option pour l'écriture matricielle)
+but: Modéliser une variable par d'autres, en interprétant chaque coefficient et en vérifiant le modèle. Ce module est le socle commun avec l'économétrie : le pilier 2 y renvoie au lieu de le refaire, et se concentre ensuite sur l'identification causale.
+
+## S9.01
+titre: La régression linéaire simple
+titre_en: Simple linear regression
+question: De combien le prix d'un appartement augmente-t-il par mètre carré supplémentaire ?
+pre: S3.07 | S7.05
+obj: Écrire le modèle y = a + bx + erreur | Obtenir les formules des moindres carrés et les calculer sur 5 points | Interpréter la pente dans les unités
+intuition: La pente est le changement moyen de y associé à une unité de x de plus, dans les données observées.
+exemple: Prix et surface d'appartements (données publiques à choisir).
+maths: M2 (dérivées pour l'optimisation).
+erreurs: Lire la pente comme un effet causal ; extrapoler.
+exercice: Calculer pente et ordonnée à l'origine sur 5 points.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S9.02
+titre: R² et résidus
+titre_en: R-squared and residuals
+question: Un R² de 0,3, est-ce un mauvais modèle ?
+pre: S9.01
+obj: Calculer des résidus et décomposer la variance (expliquée et résiduelle) | Interpréter R² sans le surinterpréter
+intuition: R² est la part de la dispersion de y que la droite « retrouve ».
+exemple: Deux modèles : R² faible mais utile, R² élevé mais trompeur.
+maths: M2.
+erreurs: Juger un modèle au seul R² ; croire qu'un R² élevé prouve la causalité.
+exercice: Calculer R² à partir des sommes de carrés données.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S9.03
+titre: Inférence sur les coefficients
+titre_en: Inference for regression coefficients
+question: La pente observée pourrait-elle être due au hasard ?
+pre: S9.02 | S8.04
+obj: Interpréter erreur standard, statistique t et IC d'une pente | Énoncer les hypothèses (linéarité, indépendance, variance constante, normalité pour les petits échantillons)
+intuition: Une autre série d'appartements donnerait une autre pente : de combien varierait-elle ?
+exemple: Sortie de régression commentée ligne par ligne.
+maths: M2.
+erreurs: Lire un tableau de régression sans regarder les erreurs standard.
+exercice: Pente 3 200 €/m², erreur standard 400 : IC à 95 % approximatif ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## S9.04
+titre: Régression multiple : « toutes choses égales par ailleurs »
+titre_en: Multiple regression: holding other things constant
+question: Le prix d'un appartement dépend-il de la surface une fois le quartier pris en compte ?
+pre: S9.03
+obj: Interpréter un coefficient de régression multiple à autres variables fixées | Montrer comment l'ajout d'une variable modifie un coefficient | Présenter l'écriture matricielle en option
+intuition: Comparer des appartements qui ne diffèrent que par la surface, autant que les données le permettent.
+exemple: Surface, quartier et étage.
+maths: M2, M3 en option (matrices).
+erreurs: Croire que « contrôler » une variable élimine toute confusion.
+exercice: Expliquer pourquoi le coefficient de la surface baisse quand on ajoute le nombre de pièces.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S9.05
+titre: Variables indicatrices et interactions
+titre_en: Dummy variables and interactions
+question: L'effet de l'expérience sur le salaire est-il le même dans tous les secteurs ?
+pre: S9.04
+obj: Coder une variable qualitative par des indicatrices | Interpréter un terme d'interaction
+intuition: Une interaction dit : « l'effet de x dépend de z ».
+exemple: Salaire, expérience et secteur.
+maths: M2.
+erreurs: Inclure toutes les modalités et l'ordonnée à l'origine (piège des indicatrices) ; interpréter un effet principal sans regarder l'interaction.
+exercice: Écrire le salaire prédit pour chaque secteur à partir d'une équation donnée.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S9.06
+titre: Diagnostics : résidus, hétéroscédasticité, points influents
+titre_en: Diagnostics: residuals, heteroscedasticity, influence
+question: Comment savoir si un modèle de régression ment ?
+pre: S9.03
+obj: Lire un graphique des résidus | Repérer hétéroscédasticité, non-linéarité et points influents (levier, distance de Cook)
+intuition: Les résidus doivent ressembler à du bruit ; toute forme est un message.
+exemple: Quartet d'Anscombe, version régression.
+maths: M2.
+erreurs: Ne jamais regarder les résidus ; supprimer un point influent sans justification.
+exercice: Associer quatre graphiques de résidus à quatre problèmes.
+duree: 8-10
+format: educational
+forme: demonstration
+
+## S9.07
+titre: Transformations et non-linéarité
+titre_en: Transformations and non-linearity
+question: Pourquoi les économistes prennent-ils si souvent le logarithme ?
+pre: S9.06
+obj: Interpréter une pente après transformation logarithmique (en %) | Utiliser un terme quadratique
+intuition: Le logarithme transforme des multiplications en additions et des pourcentages en différences.
+exemple: Revenu et dépenses ; relation âge-salaire en cloche.
+maths: M1-M2 (logarithmes).
+erreurs: Interpréter un coefficient en log comme en niveau.
+exercice: Modèle log(y) = 2 + 0,05x : effet approximatif d'une unité de x sur y ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## S9.08
+titre: Multicolinéarité
+titre_en: Multicollinearity
+question: Pourquoi deux variables très liées rendent-elles les coefficients instables ?
+pre: S9.04
+obj: Expliquer la multicolinéarité et son effet sur les erreurs standard | Lire un facteur d'inflation de la variance
+intuition: Si deux variables bougent toujours ensemble, les données ne peuvent pas dire laquelle compte.
+exemple: Surface et nombre de pièces.
+maths: M2.
+erreurs: Supprimer une variable importante pour « régler » la colinéarité.
+exercice: Que deviennent les prédictions quand la multicolinéarité est forte ?
+duree: 5-7
+format: educational
+forme: lecon
+
+## S9.09
+titre: L'ANOVA à un facteur
+titre_en: One-way ANOVA
+question: Trois engrais donnent-ils des rendements différents ?
+pre: S8.04 | S9.02
+obj: Décomposer la variabilité totale en variabilité entre groupes et dans les groupes | Calculer et interpréter la statistique F | Relier l'ANOVA à la régression avec indicatrices
+intuition: Les groupes diffèrent-ils plus entre eux que leurs membres ne diffèrent à l'intérieur ?
+exemple: Rendements agricoles (Fisher à Rothamsted).
+maths: M2.
+erreurs: Enchaîner des tests t deux à deux sans correction.
+exercice: Compléter un tableau d'ANOVA.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S9.10
+titre: Plans d'expérience et ANOVA à deux facteurs
+titre_en: Experimental design and two-way ANOVA
+question: Comment tester deux facteurs à la fois sans multiplier les essais ?
+pre: S9.09 | S9.05 | S1.06
+obj: Décrire un plan factoriel et le principe des blocs | Interpréter effets principaux et interaction
+intuition: Bien planifier l'expérience vaut mieux que bien analyser une expérience mal faite.
+exemple: Température × durée de cuisson ; test A/B à deux facteurs.
+maths: M2.
+erreurs: Ignorer l'interaction.
+exercice: Lire un graphique d'interaction.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S9.11
+titre: Choisir et valider un modèle
+titre_en: Choosing and validating a model
+question: Un modèle qui colle parfaitement aux données est-il un bon modèle ?
+pre: S9.06 | S9.08
+obj: Expliquer le surajustement | Comparer des modèles par validation sur données mises de côté et par critères (AIC, BIC) | Distinguer modèle pour expliquer et modèle pour prédire
+intuition: Un modèle qui apprend le bruit par cœur échoue sur de nouvelles données.
+exemple: Polynômes de degré 1, 3 et 15 sur les mêmes points.
+maths: M2.
+erreurs: Évaluer un modèle sur les données qui ont servi à le construire.
+exercice: Lequel de trois modèles choisir au vu des erreurs d'entraînement et de test ?
+duree: 8-10
+format: educational
+forme: demonstration
+
+# MODULE S10
+niveau: 3
+titre: Modèles linéaires généralisés
+titre_en: Generalized linear models
+pre: S9
+maths: M2
+but: Étendre la régression aux réponses qui ne sont pas des mesures continues : oui ou non, comptages, montants positifs. Module charnière vers les métiers (assurance, santé publique, marketing) et vers l'apprentissage statistique.
+
+## S10.01
+titre: Quand la droite ne suffit plus
+titre_en: When a straight line is not enough
+question: Que se passe-t-il si l'on prédit une probabilité avec une droite ?
+pre: S9.06
+obj: Montrer qu'une régression linéaire peut prédire des probabilités hors de [0, 1] ou des comptages négatifs | Présenter l'idée de fonction de lien
+intuition: Il faut une courbe qui respecte les bornes de ce que l'on prédit.
+exemple: Probabilité d'achat selon le prix.
+maths: M2.
+erreurs: Appliquer les MCO à tout.
+exercice: Repérer les prédictions impossibles d'un modèle linéaire donné.
+duree: 5-6
+format: educational
+forme: lecon
+
+## S10.02
+titre: Cotes et régression logistique
+titre_en: Odds and logistic regression
+question: Comment prédire la probabilité qu'un client résilie son abonnement ?
+pre: S10.01 | S7.05
+obj: Passer de probabilité à cote et à log-cote | Écrire et interpréter un modèle logistique | Expliquer pourquoi il est estimé par maximum de vraisemblance
+intuition: La courbe en S transforme n'importe quel score en probabilité entre 0 et 1.
+exemple: Résiliation selon l'ancienneté et le nombre de réclamations.
+maths: M2 (exponentielle, logarithme).
+erreurs: Lire un coefficient logistique comme un effet en points de probabilité.
+exercice: Probabilité 0,2 : quelle cote ? (0,25)
+duree: 8-10
+format: educational
+forme: lecon
+
+## S10.03
+titre: Interpréter un rapport de cotes
+titre_en: Interpreting odds ratios
+question: « Deux fois plus de risques » : risque relatif ou rapport de cotes ?
+pre: S10.02
+obj: Calculer un rapport de cotes et un risque relatif dans un tableau 2 × 2 | Expliquer quand ils sont proches et quand ils divergent
+intuition: Pour des événements rares, les deux se ressemblent ; pour des événements fréquents, non.
+exemple: Lecture d'une étude épidémiologique (exemple à sourcer).
+maths: M1-M2.
+erreurs: Présenter un rapport de cotes comme un risque relatif.
+exercice: Calculer les deux mesures dans un tableau donné.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S10.04
+titre: Compter : régression de Poisson et surdispersion
+titre_en: Counting: Poisson regression and overdispersion
+question: Comment modéliser le nombre de sinistres d'un assuré ?
+pre: S10.02 | S5.06
+obj: Écrire une régression de Poisson avec une durée d'exposition | Diagnostiquer la surdispersion et présenter la binomiale négative
+intuition: On modélise le taux, puis on le multiplie par le temps d'exposition.
+exemple: Sinistres automobiles selon l'âge du conducteur.
+maths: M2.
+erreurs: Oublier l'exposition ; ignorer une variance bien supérieure à la moyenne.
+exercice: Interpréter un coefficient 0,3 dans un modèle de Poisson (×1,35 sur le taux).
+duree: 8-10
+format: educational
+forme: lecon
+
+## S10.05
+titre: Le cadre GLM : famille, lien, déviance
+titre_en: The GLM framework: family, link, deviance
+question: Qu'ont en commun la régression linéaire, logistique et de Poisson ?
+pre: S10.04
+obj: Décrire un GLM par sa loi, son prédicteur linéaire et sa fonction de lien | Utiliser la déviance pour comparer des modèles emboîtés
+intuition: Une seule recette, trois ingrédients à choisir.
+exemple: Tableau comparatif des trois modèles vus.
+maths: M2.
+erreurs: Choisir la famille par habitude plutôt que par la nature de la réponse.
+exercice: Associer cinq variables réponses à une famille et un lien.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S10.06
+titre: Montants positifs : Gamma et Tweedie
+titre_en: Positive amounts: Gamma and Tweedie models
+question: Comment une assurance estime-t-elle le coût moyen d'un sinistre, et la prime pure ?
+pre: S10.05
+obj: Justifier une loi Gamma pour des montants positifs et asymétriques | Décomposer la prime pure en fréquence × sévérité | Présenter le modèle de Tweedie comme alternative
+intuition: Combien de sinistres, et combien coûte chacun : deux questions, deux modèles.
+exemple: Tarification automobile (données d'exemple publiques à choisir).
+maths: M2.
+erreurs: Modéliser des montants très asymétriques avec une loi normale.
+exercice: Fréquence 0,08 sinistre par an, coût moyen 2 500 € : prime pure ? (200 €)
+duree: 10-12
+format: youtube_lesson
+forme: etude_de_cas
+
+## S10.07
+titre: Effets aléatoires et modèles mixtes
+titre_en: Random effects and mixed models
+question: Comment comparer des hôpitaux qui ont très peu de patients ?
+pre: S10.05 | S9.05
+obj: Expliquer l'idée d'effet aléatoire et de rétrécissement vers la moyenne | Distinguer données groupées et observations indépendantes
+intuition: Un petit hôpital avec un résultat extrême est probablement moins extrême qu'il n'y paraît.
+exemple: Classements d'établissements (avec prudence de formulation).
+maths: M2.
+erreurs: Classer des groupes sans tenir compte de leur taille.
+exercice: Pourquoi le meilleur et le pire taux viennent-ils souvent des plus petits groupes ?
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+# MODULE S11
+niveau: 3
+titre: Méthodes computationnelles et robustesse
+titre_en: Computational methods and robustness
+pre: S8
+maths: M1 → M2
+but: Quand les formules manquent ou que les hypothèses sont douteuses, l'ordinateur permet de simuler, rééchantillonner et vérifier. Ce module rend aussi le travail reproductible. Il peut être suivi en parallèle de S9 et S10.
+
+## S11.01
+titre: Monte-Carlo : calculer en simulant
+titre_en: Monte Carlo: computing by simulation
+question: Peut-on estimer π en lançant des points au hasard ?
+pre: S5.12
+obj: Estimer une quantité par simulation | Évaluer la précision d'une estimation Monte-Carlo (erreur en 1/√n)
+intuition: Si l'on sait simuler une situation, on sait estimer ce qui s'y passe.
+exemple: Points dans un carré et un quart de disque ; probabilité d'un retard en chaîne.
+maths: M1.
+erreurs: Oublier de quantifier l'erreur de simulation.
+exercice: Combien de points faut-il pour gagner une décimale de précision ? (100 fois plus)
+duree: 6-8
+format: educational
+forme: simulation
+
+## S11.02
+titre: Le bootstrap
+titre_en: The bootstrap
+question: Comment obtenir un intervalle de confiance pour une médiane sans formule ?
+pre: S11.01 | S7.06
+obj: Décrire l'algorithme du bootstrap (tirage avec remise) | Construire un IC bootstrap par percentiles | Citer ses limites (petits échantillons, dépendance)
+intuition: L'échantillon joue le rôle de la population : on le rééchantillonne pour voir comment la statistique varie.
+exemple: Médiane des loyers d'un échantillon de 40 logements.
+maths: M1.
+erreurs: Croire que le bootstrap crée de l'information ; l'appliquer à des données dépendantes sans adaptation.
+exercice: Faire à la main 3 rééchantillons d'un échantillon de 5 valeurs.
+duree: 8-10
+format: educational
+forme: simulation
+
+## S11.03
+titre: Les tests de permutation
+titre_en: Permutation tests
+question: Si le traitement n'avait aucun effet, à quel point les étiquettes pourraient-elles être mélangées ?
+pre: S11.01 | S8.02
+obj: Réaliser un test de permutation | Relier la p-value de permutation à la définition générale
+intuition: Sous H₀, les étiquettes « traité » et « témoin » sont interchangeables : on les mélange.
+exemple: Petite expérience à deux groupes de 6.
+maths: M1.
+erreurs: Mélanger des données appariées comme si elles étaient indépendantes.
+exercice: Combien de façons de répartir 12 personnes en deux groupes de 6 ? (924)
+duree: 7-9
+format: educational
+forme: simulation
+
+## S11.04
+titre: Méthodes non paramétriques et rangs
+titre_en: Nonparametric methods and ranks
+question: Que faire si les données sont très asymétriques ou ordinales ?
+pre: S8.04
+obj: Appliquer un test de Mann-Whitney et de Wilcoxon sur un petit exemple | Dire ce que l'on gagne et ce que l'on perd à passer aux rangs
+intuition: Remplacer les valeurs par leur classement neutralise les valeurs extrêmes.
+exemple: Satisfaction notée de 1 à 5 dans deux magasins.
+maths: M1.
+erreurs: Croire que les tests non paramétriques n'ont aucune hypothèse.
+exercice: Classer deux petits groupes et calculer la somme des rangs.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S11.05
+titre: La validation croisée
+titre_en: Cross-validation
+question: Comment estimer la performance d'un modèle sur des données qu'il n'a jamais vues ?
+pre: S9.11
+obj: Décrire la validation croisée à k blocs | Expliquer les fuites d'information et comment les éviter
+intuition: On fait passer au modèle plusieurs examens blancs sur des parties qu'il n'a pas révisées.
+exemple: Choix du degré d'un polynôme ; prévision avec données temporelles (blocs dans l'ordre).
+maths: M1.
+erreurs: Préparer les données sur l'ensemble avant de découper.
+exercice: Repérer la fuite d'information dans une procédure décrite.
+duree: 6-8
+format: educational
+forme: demonstration
+
+## S11.06
+titre: Reproductibilité et bonnes pratiques
+titre_en: Reproducible analysis
+question: Pourquoi une analyse doit-elle pouvoir être refaite par quelqu'un d'autre ?
+pre: S11.01
+obj: Décrire une chaîne reproductible (données brutes, script, graine aléatoire, versions) | Présenter les outils courants (R, Python, carnets) sans en faire un cours de programmation
+intuition: Un résultat que personne ne peut refaire n'est pas un résultat solide.
+exemple: Une erreur de tableur célèbre en économie (Reinhart-Rogoff, 2013).
+maths: Aucune.
+erreurs: Modifier les données brutes à la main ; ne pas fixer la graine.
+exercice: Lister ce qu'il faut transmettre pour qu'une analyse soit refaite à l'identique.
+duree: 6-8
+format: educational
+forme: etude_de_cas

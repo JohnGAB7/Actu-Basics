@@ -1,0 +1,462 @@
+# Pilier 1 — Statistiques · Niveau 1 « Découverte »
+# Format du fichier : voir programme/LISEZMOI.md. Une ligne « clé: valeur ».
+# Les listes sont séparées par « | ». « pre » cite des identifiants d'unités.
+
+# MODULE S1
+niveau: 1
+titre: Culture des données
+titre_en: Data literacy
+pre: -
+maths: M0
+but: Avant de calculer quoi que ce soit, comprendre d'où vient une donnée, ce qu'elle mesure et ce qu'elle ne mesure pas. C'est la porte d'entrée de tout le parcours : un spectateur qui s'arrête ici sait déjà poser les bonnes questions à un chiffre.
+
+## S1.01
+titre: Qu'est-ce qu'une donnée ?
+titre_en: What actually counts as data?
+question: Pourquoi « combien de personnes vivent en France ? » est-elle une question statistique, et pas « quel âge a ma voisine ? » ?
+pre: -
+obj: Distinguer une question statistique (qui suppose de la variabilité) d'une question factuelle unique | Reconnaître qu'une donnée est le résultat d'une mesure, faite par quelqu'un, selon une définition
+intuition: Une donnée n'est pas un fait brut tombé du ciel : c'est une réponse enregistrée à une question précise, posée d'une certaine manière.
+exemple: La « taille » d'une ville change selon que l'on compte la commune, l'agglomération ou l'aire urbaine.
+maths: Aucune.
+erreurs: Croire qu'un chiffre est neutre ou « objectif » parce qu'il est un nombre.
+exercice: Parmi cinq questions, lesquelles sont statistiques ? Reformuler les autres pour qu'elles le deviennent.
+duree: 3-5
+format: educational
+forme: lecon
+
+## S1.02
+titre: Population, individu, variable
+titre_en: Population, unit, variable
+question: Quand on dit « les Français dorment 7 h par nuit », de qui parle-t-on exactement, et qu'a-t-on mesuré ?
+pre: S1.01
+obj: Identifier dans une phrase la population, l'unité statistique et la variable | Expliquer pourquoi changer l'unité (ménage ou personne) change le résultat
+intuition: Toute statistique répond à trois questions : sur qui, sur quoi, et comment.
+exemple: Revenu « par ménage » ou « par personne » : deux chiffres différents pour la même réalité.
+maths: Aucune.
+erreurs: Comparer deux chiffres qui ne portent pas sur la même population ou la même unité.
+exercice: Décomposer trois titres de presse en population, unité et variable.
+duree: 4-6
+format: educational
+forme: lecon
+
+## S1.03
+titre: Types de variables et échelles de mesure
+titre_en: Types of variables and measurement scales
+question: Peut-on calculer la moyenne de codes postaux ou de niveaux de satisfaction ?
+pre: S1.02
+obj: Classer une variable : qualitative nominale, ordinale, quantitative discrète ou continue | Dire quelles opérations ont un sens selon l'échelle (nominale, ordinale, d'intervalle, de rapport)
+intuition: Un nombre n'est pas toujours une quantité : parfois c'est une étiquette, parfois un rang.
+exemple: 20 °C n'est pas « deux fois plus chaud » que 10 °C, alors que 20 kg pèse bien deux fois 10 kg.
+maths: Aucune.
+erreurs: Faire la moyenne d'étiquettes ; traiter une échelle de satisfaction de 1 à 5 comme des distances égales sans le dire.
+exercice: Associer dix variables à leur type et à l'opération interdite correspondante.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S1.04
+titre: D'où viennent les données ?
+titre_en: Where do numbers come from?
+question: Comment sait-on combien il y a de chômeurs, de naissances ou de voitures électriques ?
+pre: S1.02
+obj: Distinguer recensement, enquête par sondage, données administratives et données de capteurs ou de plateformes | Citer une force et une limite de chaque source
+intuition: Chaque façon de collecter laisse sa trace dans le chiffre : ce qui n'est pas collecté n'existe pas dans les données.
+exemple: Le chômage au sens du BIT (enquête) et les inscrits à France Travail (fichier administratif) ne donnent pas le même nombre.
+maths: Aucune.
+erreurs: Penser qu'un chiffre officiel et un chiffre administratif mesurent forcément la même chose.
+exercice: Pour trois chiffres donnés, retrouver le type de source et une limite probable.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S1.05
+titre: Échantillon et biais de sélection
+titre_en: Samples and selection bias
+question: Comment un sondage de 2,4 millions de réponses a-t-il pu se tromper plus qu'un sondage de quelques milliers ?
+pre: S1.04
+obj: Expliquer ce qu'est un échantillon représentatif | Reconnaître un biais de sélection et expliquer pourquoi la taille ne le corrige pas
+intuition: Un grand échantillon mal choisi reste mal choisi : on mesure très précisément la mauvaise population.
+exemple: Le sondage du Literary Digest (élection américaine de 1936) face à l'échantillon plus petit de Gallup.
+maths: Proportions.
+erreurs: « Plus c'est grand, plus c'est fiable » ; confondre volontaires et échantillon aléatoire.
+exercice: Repérer le biais dans trois enquêtes (avis en ligne, sondage téléphonique fixe, questionnaire à la sortie d'une salle de sport).
+duree: 5-8
+format: educational
+forme: etude_de_cas
+
+## S1.06
+titre: Observer ou expérimenter
+titre_en: Observing versus experimenting
+question: Pourquoi les essais de médicaments tirent-ils au sort qui reçoit le traitement ?
+pre: S1.05
+obj: Distinguer étude observationnelle et expérience | Expliquer le rôle du tirage au sort (randomisation) et du groupe témoin
+intuition: Si c'est le hasard qui décide qui est traité, les deux groupes se ressemblent sur tout le reste, y compris ce qu'on ne voit pas.
+exemple: Les buveurs de café vivent-ils plus longtemps ? Ce qu'une étude observationnelle peut et ne peut pas conclure.
+maths: Aucune.
+erreurs: Conclure à un effet causal à partir d'une simple comparaison de groupes qui se sont choisis eux-mêmes.
+exercice: Classer quatre études (observationnelle ou expérimentale) et dire laquelle permet une conclusion causale.
+duree: 5-8
+format: educational
+forme: lecon
+
+## S1.07
+titre: Données manquantes, erreurs et définitions qui changent
+titre_en: Missing data, errors and shifting definitions
+question: Un chiffre qui « explose » d'une année sur l'autre a-t-il vraiment changé, ou est-ce la façon de le mesurer ?
+pre: S1.04
+obj: Repérer une rupture de série (changement de définition ou de méthode) | Expliquer pourquoi des données manquantes ne sont pas toujours manquantes « au hasard »
+intuition: Un trou dans les données raconte souvent une histoire : qui ne répond pas, et pourquoi ?
+exemple: La hausse apparente d'un délit après un changement de procédure d'enregistrement.
+maths: Aucune.
+erreurs: Ignorer les non-réponses ; comparer une série avant et après un changement de méthode.
+exercice: Sur un graphique fourni, trouver l'indice d'une rupture de série.
+duree: 5-7
+format: educational
+forme: etude_de_cas
+
+## S1.08
+titre: Pourcentages, points de pourcentage et taux
+titre_en: Percentages, percentage points and rates
+question: Un taux qui passe de 2 % à 3 % a-t-il augmenté de 1 % ou de 50 % ?
+pre: S1.02
+obj: Calculer une évolution en pourcentage et en points | Distinguer effectif, proportion et taux (pour 1 000, pour 100 000)
+intuition: Le pourcentage dépend toujours d'une base : « pour cent de quoi ? ».
+exemple: Hausse de 50 % puis baisse de 50 % : on ne revient pas au point de départ.
+maths: M0 (fractions, règle de trois).
+erreurs: Additionner des pourcentages ; confondre points et pourcentage.
+exercice: Un prix augmente de 20 % puis baisse de 20 %. Quel est l'effet total ?
+duree: 4-6
+format: educational
+forme: lecon
+
+## S1.09
+titre: Lire et critiquer un graphique
+titre_en: Reading a chart without being fooled
+question: Comment le même chiffre peut-il paraître catastrophique ou anodin selon le graphique ?
+pre: S1.08
+obj: Repérer un axe tronqué, une double échelle, une surface trompeuse | Vérifier titre, unité, période et source avant d'interpréter
+intuition: Un graphique est un argument : il faut le lire comme on lit un texte, en commençant par les axes.
+exemple: Le même indice tracé avec un axe qui commence à 0 puis à 95.
+maths: M0 (lecture de graphique).
+erreurs: Juger une évolution à la pente sans regarder l'échelle.
+exercice: Trouver les trois défauts d'un graphique volontairement trompeur.
+duree: 5-7
+format: educational
+forme: demonstration
+
+## S1.10
+titre: Données, éthique et vie privée
+titre_en: Data, ethics and privacy
+question: Peut-on retrouver une personne dans des données « anonymes » ?
+pre: S1.04
+obj: Expliquer la différence entre anonymisation et pseudonymisation | Citer un risque de réidentification et une bonne pratique
+intuition: Plus on croise de colonnes, plus chaque ligne devient unique.
+exemple: Date de naissance, sexe et code postal suffisent souvent à rendre une personne unique dans un fichier.
+maths: Aucune.
+erreurs: Croire qu'enlever le nom suffit à anonymiser.
+exercice: Combien de combinaisons (jour de naissance × sexe × commune) pour une commune de 2 000 habitants ? Qu'en conclure ?
+duree: 4-6
+format: educational
+forme: lecon
+
+# MODULE S2
+niveau: 1
+titre: Décrire une variable
+titre_en: Describing one variable
+pre: S1
+maths: M0
+but: Résumer une liste de valeurs sans la trahir : tableaux, graphiques, centre, dispersion. Chaque indicateur est introduit par le problème qu'il résout, puis par son calcul à la main sur un exemple minuscule.
+
+## S2.01
+titre: Fréquences et tableaux
+titre_en: Counts, frequencies and tables
+question: Comment résumer 1 000 réponses sans les lire une par une ?
+pre: S1.03
+obj: Construire un tableau d'effectifs et de fréquences | Calculer des fréquences cumulées
+intuition: Compter, puis rapporter au total : c'est déjà de la statistique.
+exemple: Modes de transport domicile-travail d'une classe ou d'une entreprise.
+maths: M0.
+erreurs: Oublier le total ; comparer des effectifs de groupes de tailles différentes.
+exercice: Compléter un tableau d'effectifs et de fréquences à partir de 20 réponses.
+duree: 3-5
+format: educational
+forme: demonstration
+
+## S2.02
+titre: Diagrammes en barres et histogrammes
+titre_en: Bar charts and histograms
+question: Pourquoi un histogramme n'est-il pas un diagramme en barres ?
+pre: S2.01
+obj: Choisir le bon graphique selon le type de variable | Montrer comment le choix des classes change l'histogramme
+intuition: Dans un histogramme, c'est la surface qui compte, pas la hauteur.
+exemple: Les mêmes temps de trajet avec 5, 10 et 30 classes.
+maths: M0 (aires).
+erreurs: Classes de largeurs inégales sans corriger les hauteurs ; espaces entre les barres d'un histogramme.
+exercice: Lequel de deux histogrammes de mêmes données est trompeur, et pourquoi ?
+duree: 4-6
+format: educational
+forme: demonstration
+
+## S2.03
+titre: La forme d'une distribution
+titre_en: The shape of a distribution
+question: Que nous apprend la silhouette d'un histogramme avant tout calcul ?
+pre: S2.02
+obj: Décrire une distribution : symétrie, asymétrie, un ou plusieurs modes, queue | Relier une forme à une explication plausible
+intuition: Deux bosses signalent souvent deux populations mélangées.
+exemple: Les tailles d'adultes (deux sexes mélangés) ; les revenus (longue queue à droite).
+maths: Aucune.
+erreurs: Résumer une distribution à deux bosses par un seul chiffre.
+exercice: Associer quatre histogrammes à quatre variables (âge au décès, revenus, notes d'examen, tailles).
+duree: 4-6
+format: educational
+forme: lecon
+
+## S2.04
+titre: La moyenne, ce qu'elle dit vraiment
+titre_en: What the mean really tells you
+question: Que veut dire « en moyenne » ?
+pre: S2.01
+obj: Calculer une moyenne simple et pondérée | Interpréter la moyenne comme point d'équilibre et comme partage égal
+intuition: La moyenne, c'est ce que chacun aurait si l'on mettait tout en commun et qu'on redistribuait à parts égales.
+exemple: Note moyenne pondérée par les coefficients.
+maths: M0, puis notation Σ présentée pas à pas (M1).
+erreurs: Moyenne de moyennes de groupes de tailles différentes.
+exercice: Deux classes de 10 et 30 élèves ont 12 et 8 de moyenne. Quelle est la moyenne générale ?
+duree: 4-6
+format: educational
+forme: lecon
+
+## S2.05
+titre: Moyenne ou médiane ?
+titre_en: Mean or median?
+question: Pourquoi le « salaire moyen » est-il plus élevé que ce que gagne la plupart des gens ?
+pre: S2.04 | S2.03
+obj: Calculer une médiane (nombre pair et impair de valeurs) | Prévoir le sens de l'écart entre moyenne et médiane selon l'asymétrie | Choisir l'indicateur adapté à une question
+intuition: Une seule valeur extrême déplace la moyenne, presque jamais la médiane.
+exemple: Un milliardaire entre dans un café de 10 personnes.
+maths: M0.
+erreurs: Croire que la moitié des gens gagnent plus que le salaire moyen.
+exercice: Calculer moyenne et médiane de 7 salaires, puis après l'arrivée d'un très haut salaire.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S2.06
+titre: Quantiles, quartiles et boîte à moustaches
+titre_en: Quantiles, quartiles and box plots
+question: Comment décrire « le haut », « le bas » et « le milieu » d'une distribution ?
+pre: S2.05
+obj: Calculer quartiles et déciles sur un petit exemple | Lire et construire une boîte à moustaches | Interpréter un rapport interdécile (D9/D1)
+intuition: Couper la population rangée en tranches égales, comme on coupe un gâteau.
+exemple: Le rapport D9/D1 des niveaux de vie publié par les instituts statistiques.
+maths: M0.
+erreurs: Confondre le 9e décile (une valeur) et les 10 % les plus riches (un groupe).
+exercice: Lire une boîte à moustaches : médiane, écart interquartile, valeurs atypiques.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S2.07
+titre: Mesurer la dispersion simplement
+titre_en: Measuring spread, simply
+question: Deux villes ont 15 °C de moyenne annuelle. Ont-elles le même climat ?
+pre: S2.06
+obj: Calculer l'étendue et l'écart interquartile | Expliquer pourquoi un centre seul ne suffit pas
+intuition: Le centre dit où l'on est ; la dispersion dit à quel point on peut s'en éloigner.
+exemple: Brest et Strasbourg : moyennes proches, écarts saisonniers très différents (chiffres à vérifier à la préparation).
+maths: M0.
+erreurs: Juger deux distributions sur la seule moyenne.
+exercice: Classer trois séries de la moins à la plus dispersée sans calcul, puis vérifier.
+duree: 4-5
+format: educational
+forme: lecon
+
+## S2.08
+titre: Variance et écart-type
+titre_en: Variance and standard deviation
+question: Pourquoi élève-t-on les écarts au carré au lieu de les additionner ?
+pre: S2.07 | S2.04
+obj: Calculer à la main la variance et l'écart-type de 4 valeurs | Expliquer pourquoi la somme des écarts à la moyenne vaut zéro | Interpréter un écart-type dans l'unité des données
+intuition: Mesurer la distance moyenne au centre ; le carré empêche les écarts positifs et négatifs de s'annuler.
+exemple: Temps d'attente de deux lignes de bus de même moyenne.
+maths: M1 (carrés, racines, Σ).
+erreurs: Oublier de prendre la racine ; débat n ou n − 1 présenté sans explication (renvoi vers S7.01).
+exercice: Calculer l'écart-type de 2, 4, 4, 6.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S2.09
+titre: Valeurs atypiques : erreur ou information ?
+titre_en: Outliers: mistake or message?
+question: Faut-il supprimer une valeur qui « dépasse » ?
+pre: S2.06 | S2.08
+obj: Repérer une valeur atypique avec la règle des 1,5 × écart interquartile | Décider entre correction, conservation et analyse séparée en justifiant
+intuition: Une valeur étrange est d'abord une question à poser, pas une ligne à effacer.
+exemple: Une taille de 17 m dans un fichier (erreur de saisie) contre un revenu de 10 millions (réel).
+maths: M0.
+erreurs: Supprimer les atypiques pour « améliorer » un résultat.
+exercice: Pour trois valeurs atypiques décrites, choisir la bonne action.
+duree: 4-6
+format: educational
+forme: etude_de_cas
+
+## S2.10
+titre: Le score z : comparer l'incomparable
+titre_en: The z-score: comparing apples and oranges
+question: Un 15 en maths vaut-il mieux qu'un 14 en philosophie ?
+pre: S2.08
+obj: Calculer un score z | Utiliser la standardisation pour comparer deux valeurs de distributions différentes
+intuition: Mesurer une valeur en « nombre d'écarts-types au-dessus de la moyenne ».
+exemple: Comparer des performances sportives entre disciplines.
+maths: M1.
+erreurs: Croire que la standardisation rend une distribution normale.
+exercice: Moyenne 12, écart-type 2 en maths ; moyenne 10, écart-type 3 en philosophie : quelle note est la plus remarquable ?
+duree: 4-6
+format: educational
+forme: lecon
+
+# MODULE S3
+niveau: 1
+titre: Décrire des relations entre variables
+titre_en: Describing relationships
+pre: S2
+maths: M0 → M1
+but: Passer d'une variable à deux : comparer des groupes, croiser, mesurer une association, et apprendre très tôt ce qu'une association ne prouve pas. La droite d'ajustement est montrée ici en intuition ; sa théorie vient au niveau 3.
+
+## S3.01
+titre: Comparer des groupes
+titre_en: Comparing groups
+question: Les trains sont-ils plus en retard le lundi ? Comment le voir d'un coup d'œil ?
+pre: S2.06
+obj: Comparer des distributions avec des boîtes côte à côte | Décrire une différence en centre et en dispersion
+intuition: Comparer des distributions entières, pas seulement deux moyennes.
+exemple: Retards par jour de la semaine.
+maths: M0.
+erreurs: Conclure à une différence à partir de deux moyennes très proches.
+exercice: Lire quatre boîtes et classer les jours.
+duree: 4-5
+format: educational
+forme: demonstration
+
+## S3.02
+titre: Tableaux croisés et pourcentages conditionnels
+titre_en: Cross-tabs and conditional percentages
+question: « 80 % des accidents impliquent un conducteur qui n'a pas bu » : faut-il alors boire avant de conduire ?
+pre: S1.08 | S2.01
+obj: Construire un tableau croisé | Calculer des pourcentages en ligne et en colonne et choisir ceux qui répondent à la question
+intuition: Tout dépend du dénominateur : parmi qui calcule-t-on le pourcentage ?
+exemple: Accidents et alcool, en tenant compte de la part de conducteurs sobres sur la route.
+maths: M0.
+erreurs: Lire un pourcentage de colonne comme un pourcentage de ligne.
+exercice: Dans un tableau donné, calculer le risque d'accident pour chaque groupe.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S3.03
+titre: Le paradoxe de Simpson
+titre_en: Simpson's paradox
+question: Comment un traitement peut-il être meilleur dans chaque groupe mais pire au total ?
+pre: S3.02
+obj: Reproduire un paradoxe de Simpson sur un tableau | Expliquer le rôle d'une variable de confusion dans l'agrégation
+intuition: Le total mélange des groupes de tailles différentes : c'est la composition qui renverse la tendance.
+exemple: Admissions à Berkeley (1973) ou traitements des calculs rénaux.
+maths: M0.
+erreurs: Toujours faire confiance au chiffre agrégé, ou toujours au chiffre détaillé.
+exercice: Calculer les taux par groupe et au total dans un tableau 2 × 2 × 2.
+duree: 6-8
+format: educational
+forme: paradoxe
+
+## S3.04
+titre: Le nuage de points
+titre_en: Scatter plots
+question: Comment voir si deux quantités varient ensemble ?
+pre: S2.03
+obj: Construire et lire un nuage de points | Décrire forme, sens, intensité et points atypiques d'une relation
+intuition: Chaque point est un individu ; la forme du nuage est l'histoire.
+exemple: PIB par habitant et espérance de vie (en échelle normale puis logarithmique).
+maths: M1 (repère, échelle logarithmique en intuition).
+erreurs: Ignorer un groupe de points séparés ; oublier que l'échelle log change la forme.
+exercice: Décrire quatre nuages en une phrase chacun.
+duree: 4-6
+format: educational
+forme: demonstration
+
+## S3.05
+titre: La corrélation
+titre_en: Correlation
+question: Que mesure exactement un coefficient de corrélation de 0,8 ?
+pre: S3.04 | S2.10
+obj: Interpréter r entre −1 et 1 | Montrer que r ne mesure que la relation linéaire | Calculer r sur 4 points à l'aide des scores z
+intuition: r est la moyenne des produits des scores z : les points « en haut à droite » et « en bas à gauche » le font monter.
+exemple: Le quartet d'Anscombe : quatre nuages, même corrélation.
+maths: M1.
+erreurs: Lire r = 0 comme « aucune relation » ; lire r comme une pente.
+exercice: Associer cinq nuages à cinq valeurs de r.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S3.06
+titre: Corrélation n'est pas causalité
+titre_en: Correlation is not causation
+question: Les ventes de glaces font-elles augmenter les noyades ?
+pre: S3.05 | S1.06
+obj: Proposer une variable de confusion pour une corrélation donnée | Distinguer confusion, causalité inverse et coïncidence
+intuition: Quand deux choses bougent ensemble, une troisième tire souvent les ficelles.
+exemple: Glaces et noyades (la chaleur) ; corrélations fortuites entre séries sans lien.
+maths: Aucune.
+erreurs: Croire qu'une corrélation forte est plus « causale » qu'une faible.
+exercice: Pour trois corrélations, proposer une explication non causale.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S3.07
+titre: Tracer une droite dans un nuage
+titre_en: Drawing a line through the cloud
+question: Quelle est « la meilleure » droite qui passe au milieu des points ?
+pre: S3.05
+obj: Expliquer le critère des moindres carrés avec des carrés visibles | Utiliser une droite pour une prévision prudente dans le domaine observé
+intuition: On cherche la droite qui rend les carrés des erreurs verticales les plus petits possible.
+exemple: Taille des parents et des enfants : la régression vers la moyenne de Galton.
+maths: M1 (équation de droite).
+erreurs: Extrapoler loin des données ; inverser x et y sans le savoir.
+exercice: Parmi trois droites tracées, laquelle a la plus petite somme des carrés ?
+duree: 5-7
+format: educational
+forme: demonstration
+
+## S3.08
+titre: Évolutions dans le temps : indices et moyennes mobiles
+titre_en: Change over time: indices and moving averages
+question: Comment comparer l'évolution du prix du pain et du loyer depuis 2000 ?
+pre: S1.08 | S2.04
+obj: Calculer un indice base 100 | Lisser une série par une moyenne mobile | Repérer une saisonnalité
+intuition: Ramener tout le monde au même point de départ pour comparer les trajectoires.
+exemple: Indices de prix base 100 ; nombre de cas hebdomadaires lissé sur 7 jours.
+maths: M0.
+erreurs: Comparer des niveaux au lieu d'évolutions ; prendre une variation saisonnière pour une tendance.
+exercice: Convertir une petite série en indice base 100.
+duree: 5-7
+format: educational
+forme: lecon
+
+## S3.09
+titre: Explorer un jeu de données de A à Z
+titre_en: Exploring a real dataset, start to finish
+question: Que faire face à un tableau de données réel que l'on n'a jamais vu ?
+pre: S3.01 | S3.05 | S3.08 | S1.07
+obj: Appliquer la démarche complète : question, provenance, nettoyage, description, graphique, limites, communication | Rédiger une conclusion honnête en trois phrases
+intuition: La statistique est une enquête : on part d'une question et l'on revient avec une réponse et ses limites.
+exemple: Un jeu de données public (par exemple naissances par mois et par région), source à choisir à la préparation.
+maths: M0-M1.
+erreurs: Commencer par un calcul avant d'avoir regardé les données.
+exercice: Formuler trois questions à poser au jeu de données avant tout graphique.
+duree: 12-20
+format: youtube_lesson
+forme: etude_de_cas

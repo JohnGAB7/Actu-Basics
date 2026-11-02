@@ -1,0 +1,542 @@
+# Pilier 1 — Statistiques · Niveau 4 « Branches avancées »
+# Les branches ne forment pas une suite : chacune a ses propres prérequis.
+# Un spectateur peut suivre S14 (séries temporelles) sans S13 (multivarié).
+
+# MODULE S12
+niveau: 4
+titre: Statistique bayésienne
+titre_en: Bayesian statistics
+pre: S7 | S8
+maths: M2
+but: Traiter le paramètre lui-même comme incertain et mettre à jour cette incertitude avec les données. Le théorème de Bayes est déjà connu depuis S4.10 ; ici il devient une méthode d'inférence complète, comparée honnêtement à l'approche fréquentiste.
+
+## S12.01
+titre: De Bayes au raisonnement bayésien
+titre_en: From Bayes' rule to Bayesian inference
+question: Peut-on donner une probabilité à la valeur d'un paramètre ?
+pre: S4.10 | S7.04
+obj: Écrire a posteriori ∝ vraisemblance × a priori | Mettre à jour une croyance sur une grille de valeurs
+intuition: On part d'une opinion, les données la corrigent, et plus elles sont nombreuses plus elles l'emportent.
+exemple: Taux de clic d'une publicité, estimé jour après jour.
+maths: M2.
+erreurs: Croire que l'a priori est arbitraire donc sans valeur, ou qu'il ne compte jamais.
+exercice: Mettre à jour une grille de 5 valeurs possibles après une observation.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S12.02
+titre: Lois conjuguées : le modèle bêta-binomial
+titre_en: Conjugate priors: the beta-binomial model
+question: Comment mettre à jour une proportion en ajoutant simplement des succès et des échecs ?
+pre: S12.01
+obj: Utiliser la loi bêta comme a priori d'une proportion | Calculer l'a posteriori et sa moyenne
+intuition: L'a priori Bêta(a, b) se lit comme « a succès et b échecs imaginaires ».
+exemple: Taux de réussite d'un nouveau joueur de tirs au but.
+maths: M2.
+erreurs: Choisir un a priori très informatif sans le dire.
+exercice: A priori Bêta(2, 2), 7 succès sur 10 : moyenne a posteriori ? (9/14 ≈ 0,64)
+duree: 8-10
+format: educational
+forme: lecon
+
+## S12.03
+titre: Intervalles de crédibilité et décisions
+titre_en: Credible intervals and decisions
+question: Quelle est la différence entre un intervalle de crédibilité et un intervalle de confiance ?
+pre: S12.02 | S7.06
+obj: Calculer et interpréter un intervalle de crédibilité | Comparer son interprétation avec celle d'un IC
+intuition: Ici, la phrase « 95 % de chances que le paramètre soit dans l'intervalle » devient correcte, au prix d'un a priori.
+exemple: Test A/B bayésien : probabilité que B soit meilleur que A.
+maths: M2.
+erreurs: Mélanger les deux interprétations.
+exercice: Associer quatre phrases à l'approche bayésienne ou fréquentiste.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S12.04
+titre: Simuler l'a posteriori : l'idée des MCMC
+titre_en: Sampling the posterior: the idea behind MCMC
+question: Que faire quand l'a posteriori n'a pas de formule ?
+pre: S12.03 | S16.02
+obj: Décrire l'algorithme de Metropolis comme une promenade aléatoire guidée | Lire des diagnostics simples de convergence
+intuition: Un promeneur qui passe plus de temps là où la probabilité est forte finit par en dessiner la carte.
+exemple: Animation d'une chaîne de Metropolis sur une courbe à deux bosses.
+maths: M2.
+erreurs: Utiliser les premiers tirages d'une chaîne qui n'a pas convergé.
+exercice: Pourquoi accepter parfois un pas vers une zone moins probable ?
+duree: 10-14
+format: youtube_lesson
+forme: simulation
+
+## S12.05
+titre: Modèles hiérarchiques bayésiens
+titre_en: Bayesian hierarchical models
+question: Comment estimer le taux de réussite de 50 écoles dont certaines ont 10 élèves ?
+pre: S12.03 | S10.07
+obj: Décrire un modèle hiérarchique et le partage d'information entre groupes | Relier au rétrécissement vu en S10.07
+intuition: Chaque groupe emprunte de l'information aux autres, d'autant plus qu'il est petit.
+exemple: Les huit écoles (exemple classique de Rubin, 1981).
+maths: M2.
+erreurs: Traiter chaque groupe seul ou tous les groupes comme identiques.
+exercice: Classer trois estimations (séparée, commune, hiérarchique) de la plus à la moins prudente.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S12.06
+titre: Bayésien ou fréquentiste ? Une comparaison honnête
+titre_en: Bayesian or frequentist? An honest comparison
+question: Faut-il choisir son camp ?
+pre: S12.03 | S8.08
+obj: Comparer les deux approches sur un même problème | Dire dans quelles situations chacune est la plus utile
+intuition: Deux langages pour l'incertitude, qui se rejoignent souvent avec beaucoup de données.
+exemple: Même jeu de données analysé des deux façons.
+maths: M2.
+erreurs: Présenter l'une comme « la vraie » statistique.
+exercice: Pour trois situations (essai clinique réglementaire, petit échantillon avec connaissances préalables, prévision), proposer une approche et la justifier.
+duree: 8-10
+format: educational
+forme: lecon
+
+# MODULE S13
+niveau: 4
+titre: Analyse multivariée
+titre_en: Multivariate analysis
+pre: S9
+maths: M3
+but: Résumer, visualiser et classer des données à nombreuses variables. La tradition française de l'analyse des données (ACP, AFC, ACM) y a une place naturelle. La boîte à outils M3 (vecteurs, matrices, valeurs propres) est un prérequis explicite.
+
+## S13.01
+titre: Les données comme nuage dans un espace à p dimensions
+titre_en: Data as a cloud in many dimensions
+question: Comment « voir » des données à 20 variables ?
+pre: S9.04
+obj: Représenter un individu comme un point et une variable comme un axe | Calculer une matrice de corrélation et la lire
+intuition: On ne peut pas voir 20 dimensions, mais on peut chercher la meilleure photo en 2 dimensions.
+exemple: Profils nutritionnels d'aliments.
+maths: M3.
+erreurs: Lire une matrice de corrélation comme un ensemble de relations causales.
+exercice: Repérer les groupes de variables corrélées dans une matrice donnée.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S13.02
+titre: L'analyse en composantes principales
+titre_en: Principal component analysis
+question: Comment résumer 20 variables par 2 sans perdre l'essentiel ?
+pre: S13.01
+obj: Expliquer l'ACP comme recherche des directions de plus grande dispersion | Interpréter part de variance, cercle des corrélations et carte des individus | Dire quand standardiser
+intuition: Tourner le nuage pour le photographier sous l'angle où il est le plus étalé.
+exemple: Indicateurs socio-économiques de pays (source à choisir).
+maths: M3 (valeurs propres).
+erreurs: Interpréter la proximité de deux individus mal représentés ; oublier de standardiser des variables d'unités différentes.
+exercice: Lire un cercle des corrélations et nommer les deux premiers axes.
+duree: 12-16
+format: youtube_lesson
+forme: lecon
+
+## S13.03
+titre: Analyse des correspondances (AFC et ACM)
+titre_en: Correspondence analysis
+question: Comment cartographier un grand tableau croisé ou un questionnaire ?
+pre: S13.02 | S8.06
+obj: Décrire l'AFC comme une ACP adaptée aux tableaux de contingence | Interpréter la proximité entre modalités
+intuition: Placer côte à côte les lignes et les colonnes qui « s'attirent » plus que sous l'indépendance.
+exemple: Pratiques culturelles et catégories d'âge.
+maths: M3.
+erreurs: Interpréter la distance entre une ligne et une colonne comme une distance ordinaire.
+exercice: Interpréter une carte factorielle simple.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S13.04
+titre: Classification non supervisée : k-moyennes et hiérarchique
+titre_en: Clustering: k-means and hierarchical clustering
+question: Comment former des groupes de clients sans savoir à l'avance lesquels existent ?
+pre: S13.01
+obj: Dérouler l'algorithme des k-moyennes à la main sur 6 points | Lire un dendrogramme | Discuter le choix du nombre de groupes
+intuition: Rassembler ce qui se ressemble, séparer ce qui diffère, selon une distance choisie.
+exemple: Segmentation de clients ou de villes.
+maths: M1-M3 (distances).
+erreurs: Croire que les groupes trouvés existent forcément dans la réalité.
+exercice: Faire deux itérations des k-moyennes sur 6 points.
+duree: 10-12
+format: youtube_lesson
+forme: demonstration
+
+## S13.05
+titre: Classification supervisée et analyse discriminante
+titre_en: Supervised classification and discriminant analysis
+question: Comment classer un nouvel e-mail en spam ou non ?
+pre: S13.02 | S10.02
+obj: Distinguer classification supervisée et non supervisée | Comparer analyse discriminante linéaire et régression logistique | Lire une matrice de confusion
+intuition: Apprendre une frontière à partir d'exemples étiquetés.
+exemple: Filtre anti-spam ; diagnostic à partir de mesures.
+maths: M3.
+erreurs: Juger un classifieur à sa seule exactitude sur des classes déséquilibrées.
+exercice: Calculer exactitude, sensibilité et précision dans une matrice de confusion.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+# MODULE S14
+niveau: 4
+titre: Séries temporelles
+titre_en: Time series
+pre: S9
+maths: M2
+but: Analyser des données ordonnées dans le temps, où chaque observation dépend des précédentes. Cette branche couvre la description, la modélisation univariée et la prévision ; les VAR, la cointégration et les usages causaux sont traités en économétrie (E8) pour éviter les doublons.
+
+## S14.01
+titre: Tendance, saisonnalité, bruit
+titre_en: Trend, seasonality and noise
+question: Comment séparer ce qui monte, ce qui revient et ce qui est aléatoire ?
+pre: S3.08
+obj: Décomposer une série en tendance, saison et résidu | Choisir entre modèle additif et multiplicatif
+intuition: Une série est une superposition : il faut décoller les couches une à une.
+exemple: Consommation d'électricité mensuelle.
+maths: M1.
+erreurs: Comparer un mois à celui d'avant sans tenir compte de la saison.
+exercice: Lire une décomposition et dire ce qui est tendance et ce qui est saison.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S14.02
+titre: Autocorrélation et stationnarité
+titre_en: Autocorrelation and stationarity
+question: Hier aide-t-il à prévoir aujourd'hui ?
+pre: S14.01 | S5.10
+obj: Calculer et lire une autocorrélation | Expliquer la stationnarité et pourquoi elle importe
+intuition: Une série stationnaire « oublie » son point de départ ; une marche aléatoire, jamais.
+exemple: Températures journalières contre cours de bourse.
+maths: M2.
+erreurs: Appliquer des tests qui supposent l'indépendance à des données autocorrélées.
+exercice: Associer trois corrélogrammes à trois séries.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S14.03
+titre: Lissage exponentiel
+titre_en: Exponential smoothing
+question: Comment prévoir les ventes de la semaine prochaine sans modèle compliqué ?
+pre: S14.01
+obj: Calculer un lissage exponentiel simple | Décrire les extensions avec tendance et saisonnalité (Holt-Winters)
+intuition: Le passé récent compte plus que le passé lointain, avec un poids qui décroît.
+exemple: Ventes hebdomadaires d'un commerce.
+maths: M1.
+erreurs: Choisir le paramètre de lissage au jugé sans validation.
+exercice: Calculer deux étapes de lissage avec α = 0,3.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S14.04
+titre: Modèles ARMA et ARIMA
+titre_en: ARMA and ARIMA models
+question: Comment modéliser une série qui dépend de ses propres valeurs passées ?
+pre: S14.02
+obj: Décrire les composantes AR, MA et la différenciation | Choisir un ordre à l'aide des corrélogrammes et de critères
+intuition: Aujourd'hui = une part d'hier + un choc nouveau + une trace des chocs passés.
+exemple: Série mensuelle de passagers aériens.
+maths: M2.
+erreurs: Différencier une série déjà stationnaire.
+exercice: Simuler mentalement un AR(1) avec coefficient 0,9 puis −0,9.
+duree: 12-16
+format: youtube_lesson
+forme: lecon
+
+## S14.05
+titre: Prévoir avec son incertitude
+titre_en: Forecasting with honest uncertainty
+question: Pourquoi une prévision sans fourchette est-elle incomplète ?
+pre: S14.03 | S14.04 | S11.05
+obj: Construire et lire un intervalle de prévision qui s'élargit avec l'horizon | Évaluer une prévision sur une période mise de côté
+intuition: Plus on regarde loin, plus le brouillard s'épaissit.
+exemple: Prévisions de demande d'électricité.
+maths: M2.
+erreurs: Évaluer une prévision sur les données d'apprentissage ; mélanger l'ordre du temps en validation.
+exercice: Pourquoi l'intervalle à 12 mois est-il plus large que l'intervalle à 1 mois ?
+duree: 7-9
+format: educational
+forme: lecon
+
+# MODULE S15
+niveau: 4
+titre: Analyse de survie
+titre_en: Survival analysis
+pre: S7 | S10
+maths: M2
+but: Étudier des durées jusqu'à un événement (décès, panne, résiliation, retour à l'emploi) quand certaines observations sont incomplètes. Branche très utilisée en santé, en assurance et en analyse de la clientèle.
+
+## S15.01
+titre: La censure : quand on ne connaît pas la fin
+titre_en: Censoring: when the story is not over
+question: Comment calculer une durée de vie moyenne quand certains sont encore vivants ?
+pre: S7.01
+obj: Définir la censure à droite | Montrer pourquoi ignorer ou exclure les observations censurées biaise le résultat
+intuition: « Encore vivant à 5 ans » est une information, pas une donnée manquante.
+exemple: Durée d'abonnement de clients, dont certains sont encore abonnés.
+maths: M1.
+erreurs: Calculer la moyenne des seules durées observées jusqu'au bout.
+exercice: Dans un petit tableau, repérer les observations censurées.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S15.02
+titre: La courbe de Kaplan-Meier
+titre_en: The Kaplan-Meier curve
+question: Comment tracer une courbe de survie avec des données censurées ?
+pre: S15.01 | S4.07
+obj: Calculer pas à pas un estimateur de Kaplan-Meier sur 8 individus | Lire une médiane de survie et comparer deux courbes
+intuition: À chaque événement, on multiplie par la part de ceux qui « passent » parmi ceux encore observés.
+exemple: Essai thérapeutique fictif, deux bras.
+maths: M1.
+erreurs: Lire la fin de la courbe, où il reste très peu d'individus, comme une certitude.
+exercice: Compléter un tableau de Kaplan-Meier.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S15.03
+titre: Risque instantané et modèle de Cox
+titre_en: Hazard and the Cox model
+question: Comment mesurer l'effet d'un facteur sur le risque à chaque instant ?
+pre: S15.02 | S10.05
+obj: Définir le risque instantané | Interpréter un rapport de risques (hazard ratio) | Énoncer l'hypothèse des risques proportionnels
+intuition: Comparer, à chaque instant, le risque de deux groupes encore présents.
+exemple: Lecture d'une publication médicale (exemple à sourcer).
+maths: M2.
+erreurs: Lire un hazard ratio de 2 comme « deux fois moins de survie ».
+exercice: Interpréter un hazard ratio de 0,7 avec son IC.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+# MODULE S16
+niveau: 4
+titre: Processus stochastiques
+titre_en: Stochastic processes
+pre: S5
+maths: M2 → M3
+but: Modéliser des phénomènes aléatoires qui évoluent dans le temps : marches, files d'attente, chaînes d'états. Branche partagée avec les probabilités appliquées, la finance et la recherche opérationnelle ; on y garde une visée intuitive.
+
+## S16.01
+titre: La marche aléatoire
+titre_en: The random walk
+question: Un ivrogne qui fait des pas au hasard revient-il toujours à son point de départ ?
+pre: S5.11
+obj: Simuler une marche aléatoire | Montrer que l'écart typique au départ croît comme √n | Expliquer la ruine du joueur
+intuition: Le hasard additionné s'éloigne du départ, mais bien plus lentement qu'on ne le croit.
+exemple: Ruine du joueur face au casino.
+maths: M1-M2.
+erreurs: Voir des tendances dans une marche aléatoire.
+exercice: Après 100 pas de ±1, quel est l'écart typique au départ ? (10)
+duree: 7-9
+format: educational
+forme: simulation
+
+## S16.02
+titre: Les chaînes de Markov
+titre_en: Markov chains
+question: Comment prévoir la météo de demain en ne connaissant que celle d'aujourd'hui ?
+pre: S4.09 | S16.01
+obj: Écrire une matrice de transition | Calculer la distribution après deux étapes | Expliquer la distribution stationnaire
+intuition: Le futur ne dépend que du présent, pas du chemin pour y arriver.
+exemple: Météo à deux états ; classement de pages web (idée du PageRank).
+maths: M3 (produit matriciel).
+erreurs: Appliquer l'hypothèse de Markov à un système qui a de la mémoire.
+exercice: Matrice 2 × 2 donnée : probabilité de pluie dans deux jours.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S16.03
+titre: Processus de Poisson et files d'attente
+titre_en: Poisson processes and queues
+question: Pourquoi une file d'attente explose-t-elle quand le guichet est occupé à 95 % ?
+pre: S5.08 | S16.02
+obj: Décrire le processus de Poisson | Utiliser le modèle M/M/1 pour relier taux d'occupation et attente moyenne
+intuition: Près de la saturation, chaque client supplémentaire allonge l'attente de tous de façon disproportionnée.
+exemple: Urgences, caisses de supermarché, serveurs informatiques.
+maths: M2.
+erreurs: Croire qu'un guichet occupé à 90 % a « encore de la marge ».
+exercice: Occupation 0,5 puis 0,9 : comment varie le nombre moyen de clients dans le système ρ/(1 − ρ) ? (1 puis 9)
+duree: 8-10
+format: educational
+forme: lecon
+
+## S16.04
+titre: Du hasard continu : le mouvement brownien
+titre_en: Brownian motion, intuitively
+question: Que devient une marche aléatoire quand les pas deviennent minuscules et très rapides ?
+pre: S16.01 | S5.13
+obj: Présenter le mouvement brownien comme limite d'une marche aléatoire | Citer ses usages (physique, finance) et ses limites
+intuition: Une marche aléatoire vue de loin, avec le théorème central limite à chaque instant.
+exemple: Pollen dans l'eau (Brown, Einstein) ; modèles de prix d'actifs et leurs limites.
+maths: M2.
+erreurs: Croire que les marchés suivent exactement ce modèle.
+exercice: Pourquoi les accroissements sur des intervalles disjoints sont-ils indépendants ?
+duree: 8-10
+format: educational
+forme: lecon
+
+# MODULE S17
+niveau: 4
+titre: Apprentissage statistique et passerelles vers le machine learning
+titre_en: Statistical learning and the bridge to machine learning
+titre_court: Apprentissage statistique et ML
+pre: S9 | S11
+maths: M2 → M3
+but: Montrer ce que le machine learning doit à la statistique, et ce qui relève d'autres disciplines (informatique, optimisation, ingénierie des données). L'objectif n'est pas de former des ingénieurs, mais de donner les idées qui permettent de comprendre et de critiquer un modèle prédictif.
+
+## S17.01
+titre: Expliquer ou prédire ?
+titre_en: To explain or to predict?
+question: Un modèle qui prédit bien explique-t-il le phénomène ?
+pre: S9.11 | S3.06
+obj: Distinguer objectifs de description, de prédiction et d'explication causale | Dire quelle évaluation convient à chacun
+intuition: Le chant du coq prédit le lever du soleil ; il ne le cause pas.
+exemple: Prédire la résiliation contre comprendre pourquoi les clients partent.
+maths: Aucune.
+erreurs: Utiliser un modèle prédictif pour décider d'une intervention causale.
+exercice: Classer cinq questions en description, prédiction ou causalité.
+duree: 6-8
+format: educational
+forme: lecon
+
+## S17.02
+titre: Le compromis biais-variance
+titre_en: The bias-variance trade-off
+question: Pourquoi un modèle plus complexe peut-il prédire moins bien ?
+pre: S17.01 | S7.01
+obj: Décomposer l'erreur de prédiction en biais, variance et bruit | Relier complexité et surajustement
+intuition: Trop simple, le modèle rate la forme ; trop souple, il épouse le bruit.
+exemple: Polynômes de degrés croissants, courbes d'erreur d'entraînement et de test.
+maths: M2.
+erreurs: Juger un modèle sur les données d'apprentissage.
+exercice: Lire une courbe d'erreur de test et choisir la complexité.
+duree: 7-9
+format: educational
+forme: demonstration
+
+## S17.03
+titre: Régularisation : ridge et lasso
+titre_en: Regularization: ridge and lasso
+question: Que faire quand on a plus de variables que d'observations ?
+pre: S17.02 | S9.08
+obj: Expliquer la pénalisation des coefficients | Comparer ridge (rétrécit) et lasso (sélectionne) | Choisir la pénalité par validation croisée
+intuition: On fait payer au modèle chaque coefficient trop grand.
+exemple: Prédire un prix avec des centaines de caractéristiques.
+maths: M2-M3.
+erreurs: Interpréter les coefficients pénalisés comme des effets non biaisés.
+exercice: Que devient le modèle quand la pénalité tend vers zéro ? vers l'infini ?
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S17.04
+titre: Arbres de décision et forêts aléatoires
+titre_en: Decision trees and random forests
+question: Comment un modèle peut-il apprendre une suite de questions oui ou non ?
+pre: S17.02 | S11.02
+obj: Construire un petit arbre de décision | Expliquer comment une forêt réduit la variance (bootstrap et agrégation)
+intuition: Un arbre seul est instable ; la moyenne de nombreux arbres un peu différents l'est beaucoup moins.
+exemple: Accord d'un prêt (données fictives) ; prudence sur les biais.
+maths: M1.
+erreurs: Lire l'importance des variables comme un effet causal.
+exercice: Prédire avec un arbre donné pour trois individus.
+duree: 10-12
+format: youtube_lesson
+forme: demonstration
+
+## S17.05
+titre: Évaluer un classifieur
+titre_en: Evaluating a classifier
+question: Un modèle exact à 99 % est-il un bon modèle ?
+pre: S13.05 | S4.10
+obj: Calculer précision, rappel et score F1 | Lire une courbe ROC et l'AUC | Relier au problème des faux positifs vu en S4.10
+intuition: Si 1 % des transactions sont frauduleuses, dire « jamais de fraude » donne 99 % d'exactitude.
+exemple: Détection de fraude bancaire.
+maths: M1.
+erreurs: Se fier à l'exactitude sur des classes déséquilibrées.
+exercice: Calculer précision et rappel dans une matrice de confusion.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S17.06
+titre: Ce qui relève de la statistique, ce qui relève d'ailleurs
+titre_en: What is statistics, and what is not
+question: Un réseau de neurones est-il un modèle statistique ?
+pre: S17.04 | S17.05
+obj: Situer les réseaux de neurones et les grands modèles de langage par rapport aux modèles statistiques | Dire ce qui relève de l'optimisation, de l'informatique et de l'ingénierie des données | Citer les questions statistiques qui restent (biais, incertitude, généralisation, équité)
+intuition: Un modèle d'apprentissage reste un estimateur entraîné sur un échantillon : toutes les questions de ce parcours s'y appliquent.
+exemple: Biais d'un modèle de reconnaissance entraîné sur des données non représentatives.
+maths: M2-M3 (en intuition).
+erreurs: Croire que plus de données règlent les problèmes de biais de sélection.
+exercice: Pour un modèle décrit, lister trois questions statistiques à poser avant de lui faire confiance.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+# MODULE S18
+niveau: 4
+titre: Compléments théoriques et pratiques avancés
+titre_en: Advanced theory and practice
+pre: S7 | S10
+maths: M2 → M4
+but: Parcours optionnel pour les spectateurs qui veulent la théorie derrière les méthodes (précision maximale d'un estimateur, approximations) et une question pratique majeure souvent ignorée : les données manquantes.
+
+## S18.01
+titre: Information de Fisher et borne de Cramér-Rao
+titre_en: Fisher information and the Cramér-Rao bound
+question: Existe-t-il une précision maximale pour estimer un paramètre ?
+pre: S7.05 | S7.02
+obj: Interpréter l'information de Fisher comme courbure de la log-vraisemblance | Énoncer la borne de Cramér-Rao et l'appliquer à la binomiale
+intuition: Plus la vraisemblance est pointue, plus les données « désignent » clairement le paramètre.
+exemple: Proportion binomiale : variance minimale p(1 − p)/n.
+maths: M2-M4.
+erreurs: Croire que la borne est toujours atteinte.
+exercice: Calculer l'information de Fisher d'une observation de Bernoulli.
+duree: 12-16
+format: youtube_lesson
+forme: lecon
+option: oui
+
+## S18.02
+titre: La méthode delta
+titre_en: The delta method
+question: Comment obtenir l'erreur standard d'un rapport ou d'un logarithme d'estimateurs ?
+pre: S18.01
+obj: Appliquer la méthode delta à une transformation simple | Comparer avec le bootstrap
+intuition: Une petite erreur sur x devient une petite erreur sur f(x), multipliée par la pente de f.
+exemple: Erreur standard d'un rapport de cotes.
+maths: M2.
+erreurs: Appliquer la méthode loin de son domaine de validité (petits échantillons, fortes non-linéarités).
+exercice: Erreur standard de log(p̂) à partir de celle de p̂.
+duree: 8-10
+format: educational
+forme: lecon
+option: oui
+
+## S18.03
+titre: Données manquantes et imputation multiple
+titre_en: Missing data and multiple imputation
+question: Que faire des réponses manquantes d'une enquête ?
+pre: S1.07 | S10.05
+obj: Distinguer données manquantes complètement au hasard, au hasard et non au hasard | Expliquer pourquoi l'analyse des seuls cas complets peut biaiser | Décrire le principe de l'imputation multiple
+intuition: Remplacer un trou par une seule valeur fait croire à une certitude qu'on n'a pas ; en imputer plusieurs garde l'incertitude.
+exemple: Revenus non déclarés dans une enquête.
+maths: M2.
+erreurs: Remplacer les manquants par la moyenne.
+exercice: Dans trois scénarios, dire quel mécanisme de non-réponse est le plus plausible.
+duree: 10-12
+format: youtube_lesson
+forme: lecon

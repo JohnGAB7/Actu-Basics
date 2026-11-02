@@ -1,0 +1,206 @@
+# Boîte à outils mathématique (série transversale)
+# Rappels courts, à regarder juste avant la vidéo qui en a besoin. Ils ne
+# bloquent pas le parcours principal : chaque vidéo indique son niveau M requis
+# et renvoie au rappel correspondant.
+
+# MODULE M0
+niveau: 1
+titre: Niveau M0 — Calcul de base
+titre_en: Level M0 — Everyday arithmetic
+pre: -
+maths: M0
+but: Ce qu'il faut pour suivre tout le niveau 1 : fractions, proportions, pourcentages, ordres de grandeur, lecture de graphique.
+
+## M0.01
+titre: Fractions, ratios et règle de trois
+titre_en: Fractions, ratios and proportional reasoning
+question: Comment passer de « 3 sur 12 » à « 25 % » sans calculatrice ?
+pre: -
+obj: Simplifier une fraction | Appliquer la règle de trois | Convertir fraction, décimal et pourcentage
+duree: 3-5
+format: educational
+forme: rappel
+
+## M0.02
+titre: Ordres de grandeur et notation scientifique
+titre_en: Orders of magnitude and scientific notation
+question: Un milliard, c'est combien de millions, et comment l'écrire simplement ?
+pre: M0.01
+obj: Écrire un nombre en notation scientifique | Comparer deux grandeurs par leur ordre de grandeur
+duree: 3-5
+format: educational
+forme: rappel
+
+## M0.03
+titre: Lire un graphique et un repère
+titre_en: Reading axes and coordinates
+question: Que représente un point sur un graphique ?
+pre: M0.01
+obj: Lire des coordonnées | Lire une échelle graduée régulière
+duree: 2-4
+format: educational
+forme: rappel
+
+# MODULE M1
+niveau: 2
+titre: Niveau M1 — Algèbre et fonctions
+titre_en: Level M1 — Algebra and functions
+pre: M0
+maths: M1
+but: Ce qu'il faut pour les niveaux 2 et 3 : équations, fonctions, puissances, racines, logarithmes, notation Σ.
+
+## M1.01
+titre: Lire une formule : variables, indices et notation Σ
+titre_en: Reading a formula: variables, subscripts and sigma notation
+question: Que veut dire Σ xᵢ, et comment le lire à voix haute ?
+pre: M0.01
+obj: Développer une somme écrite en notation Σ | Lire un indice
+duree: 4-6
+format: educational
+forme: rappel
+
+## M1.02
+titre: Équations et droites
+titre_en: Equations and straight lines
+question: Comment lire y = a + bx ?
+pre: M0.03
+obj: Résoudre une équation du premier degré | Interpréter pente et ordonnée à l'origine
+duree: 4-6
+format: educational
+forme: rappel
+
+## M1.03
+titre: Puissances et racines
+titre_en: Powers and roots
+question: Pourquoi √n revient-il partout en statistique ?
+pre: M0.02
+obj: Calculer avec des puissances et des racines | Utiliser les règles de calcul principales
+duree: 4-6
+format: educational
+forme: rappel
+
+## M1.04
+titre: Exponentielle et logarithme
+titre_en: Exponentials and logarithms
+question: Pourquoi le logarithme transforme-t-il des multiplications en additions ?
+pre: M1.03
+obj: Utiliser les propriétés du logarithme | Relier croissance exponentielle et doublement
+duree: 6-8
+format: educational
+forme: rappel
+
+## M1.05
+titre: Factorielle et suites géométriques
+titre_en: Factorials and geometric series
+question: Que valent 5! et 1 + 1/2 + 1/4 + … ?
+pre: M1.03
+obj: Calculer une factorielle | Sommer une suite géométrique
+duree: 4-6
+format: educational
+forme: rappel
+
+# MODULE M2
+niveau: 3
+titre: Niveau M2 — Analyse
+titre_en: Level M2 — Calculus
+pre: M1
+maths: M2
+but: Ce qu'il faut pour le niveau 3 et la plupart des branches : dérivées, optimisation, intégrales comme aires, fonctions de plusieurs variables.
+
+## M2.01
+titre: La dérivée comme pente
+titre_en: The derivative as a slope
+question: Comment trouver le sommet d'une courbe ?
+pre: M1.02
+obj: Interpréter une dérivée comme une pente locale | Trouver un maximum en annulant la dérivée
+duree: 6-8
+format: educational
+forme: rappel
+
+## M2.02
+titre: L'intégrale comme aire
+titre_en: The integral as an area
+question: Pourquoi une probabilité continue est-elle une aire ?
+pre: M2.01
+obj: Interpréter une intégrale comme une aire sous une courbe | Calculer l'aire d'un rectangle et d'un triangle sous une densité simple
+duree: 6-8
+format: educational
+forme: rappel
+
+## M2.03
+titre: Fonctions de plusieurs variables et dérivées partielles
+titre_en: Functions of several variables
+question: Comment minimiser une erreur qui dépend de deux paramètres à la fois ?
+pre: M2.01
+obj: Calculer une dérivée partielle | Interpréter le minimum d'une fonction de deux variables
+duree: 6-8
+format: educational
+forme: rappel
+
+# MODULE M3
+niveau: 4
+titre: Niveau M3 — Algèbre linéaire
+titre_en: Level M3 — Linear algebra
+pre: M2
+maths: M3
+but: Ce qu'il faut pour la régression multiple en écriture matricielle, l'analyse multivariée et les chaînes de Markov.
+
+## M3.01
+titre: Vecteurs et matrices de données
+titre_en: Vectors and data matrices
+question: Comment ranger 1 000 individus et 20 variables dans un seul objet ?
+pre: M1.01
+obj: Lire une matrice de données | Calculer un produit scalaire
+duree: 6-8
+format: educational
+forme: rappel
+
+## M3.02
+titre: Le produit matriciel
+titre_en: Matrix multiplication
+question: Que fait une matrice quand on la multiplie par un vecteur ?
+pre: M3.01
+obj: Calculer un produit matriciel 2 × 2 | L'interpréter comme une transformation
+duree: 6-8
+format: educational
+forme: rappel
+
+## M3.03
+titre: Valeurs propres et vecteurs propres
+titre_en: Eigenvalues and eigenvectors
+question: Quelles directions une transformation laisse-t-elle inchangées ?
+pre: M3.02
+obj: Interpréter un vecteur propre géométriquement | Relier valeurs propres et variance en ACP
+duree: 8-10
+format: educational
+forme: rappel
+
+# MODULE M4
+niveau: 4
+titre: Niveau M4 — Fondements théoriques
+titre_en: Level M4 — Theoretical foundations
+pre: M3
+maths: M4
+but: Uniquement pour les branches théoriques (S18) : convergence, espaces probabilisés. Le parcours principal n'en a pas besoin.
+
+## M4.01
+titre: Suites, séries et convergence
+titre_en: Sequences, series and convergence
+question: Que veut dire « tendre vers » ?
+pre: M2.01
+obj: Expliquer la convergence d'une suite | Distinguer convergence en probabilité et presque sûre en intuition
+duree: 8-10
+format: educational
+forme: rappel
+option: oui
+
+## M4.02
+titre: Espace probabilisé : pourquoi les mathématiciens ont formalisé le hasard
+titre_en: Probability spaces: why chance was formalised
+question: Pourquoi a-t-on besoin d'un cadre axiomatique (Kolmogorov, 1933) ?
+pre: M4.01
+obj: Énoncer les trois axiomes des probabilités | Dire quand ce cadre devient indispensable
+duree: 8-10
+format: educational
+forme: rappel
+option: oui

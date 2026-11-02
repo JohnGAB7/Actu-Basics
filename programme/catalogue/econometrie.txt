@@ -1,0 +1,717 @@
+# Pilier 2 — Économétrie
+# Prérequis communs : le module S9 (régression) n'est pas refait ici. L'économétrie
+# part de ses acquis et se concentre sur l'identification : quand une régression
+# mesure-t-elle un effet causal, et à quelles conditions ?
+
+# MODULE E1
+niveau: 2
+titre: Données économiques et questions causales
+titre_en: Economic data and causal questions
+pre: S1 | S3
+maths: M1
+but: Poser le cadre propre à l'économie : des données rarement expérimentales, des grandeurs nominales et réelles, et une question centrale (que se passerait-il si…?). Accessible dès le niveau 2, avant toute régression.
+
+## E1.01
+titre: Coupe, série, panel : les trois formes de données économiques
+titre_en: Cross-section, time series, panel
+question: Pourquoi la même question sur le chômage se traite-t-elle différemment selon la forme des données ?
+pre: S1.02
+obj: Distinguer données en coupe, séries temporelles et données de panel | Citer pour chacune une question typique et une difficulté
+intuition: Une photo, un film, ou un film de nombreuses personnes à la fois.
+exemple: Salaires d'une année, PIB trimestriel d'un pays, revenus des mêmes ménages suivis pendant 10 ans.
+maths: Aucune.
+erreurs: Appliquer à une série temporelle des méthodes qui supposent des observations indépendantes.
+exercice: Classer cinq jeux de données.
+duree: 4-6
+format: educational
+forme: lecon
+
+## E1.02
+titre: Nominal ou réel : corriger de l'inflation
+titre_en: Nominal or real: adjusting for inflation
+question: Un salaire de 1 500 € en 2000 vaut-il plus ou moins qu'un salaire de 2 000 € aujourd'hui ?
+pre: S3.08
+obj: Déflater une série par un indice de prix | Expliquer ce que mesure un indice des prix et ses limites
+intuition: Ce qui compte, c'est ce que l'argent permet d'acheter.
+exemple: Salaire minimum en euros courants et en euros constants (chiffres à vérifier à la préparation).
+maths: M0-M1.
+erreurs: Comparer des montants de dates différentes sans correction ; confondre baisse de l'inflation et baisse des prix.
+exercice: Indice des prix 80 puis 120 : que vaut 1 500 € de la première date en euros de la seconde ? (2 250 €)
+duree: 5-7
+format: educational
+forme: lecon
+
+## E1.03
+titre: Logarithmes, taux de croissance et élasticités
+titre_en: Logs, growth rates and elasticities
+question: Que veut dire « une hausse de 10 % du prix fait baisser la demande de 3 % » ?
+pre: E1.02
+obj: Approcher un taux de croissance par une différence de logarithmes | Définir et interpréter une élasticité
+intuition: L'élasticité compare des variations relatives, sans se soucier des unités.
+exemple: Prix du carburant et consommation.
+maths: M1 (logarithmes).
+erreurs: Confondre élasticité et pente.
+exercice: Une élasticité de −0,3 et une hausse de prix de 20 % : variation de la demande ? (≈ −6 %)
+duree: 6-8
+format: educational
+forme: lecon
+
+## E1.04
+titre: La question causale : contrefactuels et résultats potentiels
+titre_en: The causal question: counterfactuals and potential outcomes
+question: Comment savoir ce qu'auraient gagné les diplômés s'ils n'avaient pas fait d'études ?
+pre: S3.06 | S1.06
+obj: Définir un effet causal par la comparaison de deux résultats potentiels | Expliquer le « problème fondamental » de l'inférence causale | Définir effet moyen et biais de sélection
+intuition: Pour chaque personne, on ne voit qu'un des deux mondes possibles ; l'autre est le contrefactuel.
+exemple: Effet d'une formation professionnelle.
+maths: M1.
+erreurs: Comparer traités et non-traités comme si les groupes étaient identiques.
+exercice: Dans un tableau de résultats potentiels fictifs, calculer l'effet moyen et l'écart naïf.
+duree: 8-10
+format: educational
+forme: lecon
+
+# MODULE E2
+niveau: 3
+titre: Le modèle linéaire en économie (MCO)
+titre_en: The linear model in economics (OLS)
+pre: S9 | E1
+maths: M2 (M3 en option)
+but: Reprendre les moindres carrés ordinaires avec le regard de l'économiste : interprétation des coefficients, formes fonctionnelles, propriétés et sens précis du « contrôle ».
+
+## E2.01
+titre: Du modèle économique au modèle économétrique
+titre_en: From economic model to econometric model
+question: Comment passer d'une théorie (« le salaire dépend de l'éducation ») à une équation estimable ?
+pre: S9.04 | E1.04
+obj: Écrire un modèle économétrique avec un terme d'erreur et dire ce qu'il contient | Distinguer paramètre d'intérêt et paramètres de nuisance
+intuition: Le terme d'erreur contient tout ce que l'on n'a pas mesuré : c'est là que se cachent les problèmes.
+exemple: Équation de salaire de Mincer.
+maths: M2.
+erreurs: Croire que le terme d'erreur n'est que du bruit de mesure.
+exercice: Lister trois facteurs contenus dans l'erreur d'une équation de salaire.
+duree: 6-8
+format: educational
+forme: lecon
+
+## E2.02
+titre: Interpréter les coefficients selon la forme fonctionnelle
+titre_en: Interpreting coefficients across functional forms
+question: Que signifie un coefficient de 0,08 sur les années d'études dans une équation en log du salaire ?
+pre: E2.01 | E1.03 | S9.07
+obj: Interpréter un coefficient en niveau-niveau, log-niveau, niveau-log et log-log
+intuition: Le logarithme transforme l'unité de lecture en pourcentage.
+exemple: Rendement d'une année d'études.
+maths: M1-M2.
+erreurs: Lire 0,08 en log comme « 0,08 € de plus ».
+exercice: Interpréter quatre coefficients selon la forme du modèle.
+duree: 6-8
+format: educational
+forme: lecon
+
+## E2.03
+titre: Propriétés des MCO : le théorème de Gauss-Markov
+titre_en: OLS properties: the Gauss-Markov theorem
+question: Sous quelles conditions les MCO sont-ils le meilleur choix ?
+pre: E2.01 | S7.01
+obj: Énoncer les hypothèses de Gauss-Markov | Dire laquelle est indispensable pour l'absence de biais (exogénéité) et lesquelles concernent la précision
+intuition: La condition décisive est que l'erreur ne soit pas liée aux variables explicatives.
+exemple: Tableau des hypothèses et de ce que l'on perd quand chacune tombe.
+maths: M2-M3.
+erreurs: Croire que la normalité des erreurs est nécessaire pour l'absence de biais.
+exercice: Pour trois violations, dire si l'estimateur est biaisé ou seulement imprécis.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E2.04
+titre: Que fait vraiment le « contrôle » ? Frisch-Waugh-Lovell
+titre_en: What controlling really does: Frisch-Waugh-Lovell
+question: Ajouter une variable de contrôle revient-il à comparer des personnes « identiques » ?
+pre: E2.03
+obj: Montrer qu'un coefficient de régression multiple est une régression sur des résidus | Expliquer ce qu'un contrôle retire et ce qu'il ne retire pas
+intuition: Contrôler, c'est retirer de x et de y la part expliquée par le contrôle, puis comparer ce qui reste.
+exemple: Salaire, études et âge.
+maths: M2-M3.
+erreurs: Croire que le contrôle supprime toute confusion non mesurée.
+exercice: Reproduire en deux étapes un coefficient obtenu en régression multiple.
+duree: 8-10
+format: educational
+forme: demonstration
+
+# MODULE E3
+niveau: 3
+titre: Inférence, spécification et diagnostics
+titre_en: Inference, specification and diagnostics
+pre: E2
+maths: M2
+but: Juger la précision et la solidité d'une régression économique : tests joints, erreurs standard robustes et groupées, choix de spécification, et le piège des mauvais contrôles.
+
+## E3.01
+titre: Tests t et F, restrictions linéaires
+titre_en: t and F tests, linear restrictions
+question: Les rendements d'échelle sont-ils constants dans une fonction de production ?
+pre: E2.03 | S9.03
+obj: Mener un test t sur un coefficient et un test F joint | Tester une restriction linéaire (somme de coefficients égale à 1)
+intuition: On compare un modèle contraint et un modèle libre : la contrainte coûte-t-elle beaucoup ?
+exemple: Fonction de Cobb-Douglas en logarithmes.
+maths: M2.
+erreurs: Conclure qu'un groupe de variables est inutile parce que chaque t est faible.
+exercice: Calculer une statistique F à partir des sommes des carrés de deux modèles.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E3.02
+titre: Erreurs standard robustes et groupées
+titre_en: Robust and clustered standard errors
+question: Pourquoi des observations d'une même école ou d'une même région faussent-elles la précision ?
+pre: E3.01 | S9.06
+obj: Expliquer l'hétéroscédasticité et la correction de White | Expliquer pourquoi des observations groupées exigent des erreurs groupées
+intuition: Cent élèves d'une même classe n'apportent pas cent informations indépendantes.
+exemple: Effet d'une réforme appliquée par région.
+maths: M2.
+erreurs: Grouper avec très peu de groupes sans le signaler.
+exercice: Une politique varie au niveau de 10 régions : à quel niveau grouper les erreurs ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## E3.03
+titre: Erreurs de spécification
+titre_en: Specification errors
+question: Comment savoir si la forme du modèle est la bonne ?
+pre: E3.01 | E2.02
+obj: Repérer une forme fonctionnelle erronée (test RESET, résidus) | Tester une rupture structurelle (test de Chow)
+intuition: Un modèle mal spécifié donne des coefficients précis… pour la mauvaise question.
+exemple: Relation salaire-expérience non linéaire.
+maths: M2.
+erreurs: Ajouter des variables jusqu'à obtenir des étoiles.
+exercice: Interpréter un test de Chow avant et après une réforme.
+duree: 7-9
+format: educational
+forme: lecon
+
+## E3.04
+titre: Les mauvais contrôles
+titre_en: Bad controls
+question: Faut-il contrôler par la profession pour mesurer l'effet des études sur le salaire ?
+pre: E2.04
+obj: Distinguer facteur de confusion, médiateur et collisionneur | Expliquer pourquoi contrôler un médiateur ou un collisionneur biaise l'effet
+intuition: Contrôler une conséquence de la cause, c'est effacer une partie de l'effet que l'on cherche.
+exemple: Études, profession et salaire ; graphes causaux simples.
+maths: M1.
+erreurs: « Plus on contrôle, mieux c'est ».
+exercice: Dans trois graphes causaux, dire quelle variable contrôler.
+duree: 8-10
+format: educational
+forme: lecon
+
+# MODULE E4
+niveau: 3
+titre: Endogénéité
+titre_en: Endogeneity
+pre: E2 | E3
+maths: M2
+but: Le cœur de l'économétrie : identifier les trois grandes sources de corrélation entre l'erreur et les variables explicatives, et mesurer le sens et l'ampleur du biais qu'elles créent.
+
+## E4.01
+titre: Le biais de variable omise
+titre_en: Omitted variable bias
+question: Le rendement des études est-il surestimé si l'on ne mesure pas les capacités ?
+pre: E2.04 | E1.04
+obj: Écrire la formule du biais de variable omise | Prévoir le signe du biais à partir de deux corrélations
+intuition: La variable cachée est attribuée à tort à la variable observée qui lui ressemble.
+exemple: Capacités, études et salaire.
+maths: M2.
+erreurs: Croire que le biais disparaît avec plus de données.
+exercice: Prévoir le signe du biais dans trois situations.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E4.02
+titre: La simultanéité : offre et demande
+titre_en: Simultaneity: supply and demand
+question: Pourquoi une régression des quantités sur les prix ne donne-t-elle ni l'offre ni la demande ?
+pre: E4.01
+obj: Expliquer pourquoi prix et quantités sont déterminés ensemble | Montrer graphiquement le problème d'identification
+intuition: Chaque point observé est un croisement de deux courbes qui bougent toutes les deux.
+exemple: Marché du poisson (exemple classique de Graddy) ou des produits agricoles.
+maths: M1-M2.
+erreurs: Appeler « courbe de demande » un simple nuage prix-quantité.
+exercice: Que faut-il pour retrouver la courbe de demande ? (un déplacement de l'offre seule)
+duree: 8-10
+format: educational
+forme: lecon
+
+## E4.03
+titre: Erreur de mesure et biais d'atténuation
+titre_en: Measurement error and attenuation bias
+question: Que se passe-t-il quand la variable explicative est mal mesurée ?
+pre: E4.01
+obj: Montrer qu'une erreur de mesure classique sur x rapproche le coefficient de zéro | Distinguer erreur sur x et erreur sur y
+intuition: Le bruit dilue la relation : la pente s'aplatit.
+exemple: Revenus déclarés dans une enquête.
+maths: M2.
+erreurs: Conclure à un effet faible alors que la variable est mal mesurée.
+exercice: Fiabilité de 0,8 : que devient une vraie pente de 1 ? (0,8)
+duree: 6-8
+format: educational
+forme: lecon
+
+## E4.04
+titre: Sélection et autosélection
+titre_en: Selection and self-selection
+question: Les salaires des femmes qui travaillent représentent-ils ce que gagneraient toutes les femmes ?
+pre: E4.01 | S1.05
+obj: Expliquer le biais de sélection sur l'échantillon et l'autosélection dans un traitement | Présenter l'idée de la correction de Heckman (renvoi E9.02)
+intuition: On n'observe le salaire que de celles qui ont choisi de travailler, et ce choix n'est pas aléatoire.
+exemple: Participation au marché du travail.
+maths: M1-M2.
+erreurs: Traiter l'échantillon observé comme représentatif.
+exercice: Repérer la sélection dans trois études.
+duree: 7-9
+format: educational
+forme: lecon
+
+# MODULE E5
+niveau: 3
+titre: Variables instrumentales et 2SLS
+titre_en: Instrumental variables and 2SLS
+pre: E4
+maths: M2
+but: Une première réponse à l'endogénéité : trouver une source de variation de la cause qui n'agit sur le résultat que par elle. La crédibilité de l'instrument est discutée autant que la technique.
+
+## E5.01
+titre: L'idée d'un instrument
+titre_en: The idea of an instrument
+question: Comment mesurer l'effet des études si l'on ne peut pas tirer au sort qui étudie ?
+pre: E4.01
+obj: Énoncer les deux conditions d'un instrument (pertinence, exclusion) | Calculer l'estimateur de Wald sur un exemple simple
+intuition: Chercher une « pichenette » extérieure qui pousse certaines personnes vers le traitement sans toucher le reste.
+exemple: Date de naissance et scolarité obligatoire (Angrist et Krueger, 1991), avec ses critiques.
+maths: M1-M2.
+erreurs: Choisir un instrument qui influence directement le résultat.
+exercice: Juger trois instruments proposés.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E5.02
+titre: Les doubles moindres carrés
+titre_en: Two-stage least squares
+question: Comment utiliser un instrument dans une régression ?
+pre: E5.01
+obj: Décrire les deux étapes des 2SLS | Expliquer pourquoi les erreurs standard ne se calculent pas comme une simple seconde régression
+intuition: On ne garde que la part de la cause prédite par l'instrument, la part « propre ».
+exemple: Demande de poisson instrumentée par la météo en mer.
+maths: M2-M3.
+erreurs: Faire les deux étapes « à la main » et publier les erreurs standard de la seconde.
+exercice: Interpréter une première et une seconde étape fournies.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E5.03
+titre: Instruments faibles et validité
+titre_en: Weak instruments and validity
+question: Un instrument qui explique très peu la cause pose-t-il problème ?
+pre: E5.02
+obj: Lire la statistique F de première étape | Expliquer le biais des instruments faibles | Dire pourquoi l'exclusion ne se teste pas complètement
+intuition: Une pichenette trop faible se noie dans le bruit, et l'estimation dérive vers celle des MCO.
+exemple: Débats autour d'instruments célèbres.
+maths: M2.
+erreurs: Présenter un test de suridentification comme une preuve de validité.
+exercice: F de première étape égal à 3 : que conclure ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## E5.04
+titre: Effet local : qui mesure-t-on vraiment ?
+titre_en: The local average treatment effect
+question: L'effet estimé par un instrument vaut-il pour tout le monde ?
+pre: E5.03
+obj: Définir les « compliers » et l'effet local moyen (LATE) | Discuter la portée externe d'une estimation par instrument
+intuition: L'instrument ne mesure l'effet que chez ceux qu'il fait changer de comportement.
+exemple: Loterie d'accès à une école ou à une assurance.
+maths: M1-M2.
+erreurs: Généraliser un LATE à toute la population.
+exercice: Classer des individus en compliers, always-takers et never-takers.
+duree: 8-10
+format: educational
+forme: lecon
+
+# MODULE E6
+niveau: 3
+titre: Données de panel
+titre_en: Panel data
+pre: E3 | E4.01
+maths: M2
+but: Suivre les mêmes individus, entreprises ou pays dans le temps pour neutraliser ce qui ne change pas. Il précède les méthodes d'évaluation (E7), dont la différence de différences échelonnée (E7.04) a besoin des effets fixes.
+
+## E6.01
+titre: Pourquoi suivre les mêmes unités ?
+titre_en: Why follow the same units?
+question: Que gagne-t-on à observer les mêmes entreprises pendant dix ans ?
+pre: E1.01 | E4.01
+obj: Décrire la structure d'un panel | Expliquer comment les différences premières éliminent un facteur constant
+intuition: Comparer chacun à lui-même efface tout ce qui ne bouge pas chez lui.
+exemple: Productivité d'entreprises suivies dans le temps.
+maths: M1.
+erreurs: Empiler les années comme des observations indépendantes.
+exercice: Calculer une différence première sur deux périodes.
+duree: 6-8
+format: educational
+forme: lecon
+
+## E6.02
+titre: Effets fixes
+titre_en: Fixed effects
+question: Comment neutraliser tout ce qui est propre à chaque pays sans le mesurer ?
+pre: E6.01
+obj: Expliquer l'estimateur intra (« within ») | Dire ce qu'il ne peut pas estimer (variables constantes dans le temps) | Ajouter des effets fixes temporels
+intuition: On ne garde que les variations de chaque unité autour de sa propre moyenne.
+exemple: Taux d'imposition et activité des régions.
+maths: M2.
+erreurs: Croire que les effets fixes éliminent aussi les facteurs qui changent dans le temps.
+exercice: Peut-on estimer l'effet du sexe sur le salaire avec des effets fixes individuels ?
+duree: 8-10
+format: educational
+forme: lecon
+
+## E6.03
+titre: Effets aléatoires et test de Hausman
+titre_en: Random effects and the Hausman test
+question: Quand peut-on utiliser aussi les différences entre unités ?
+pre: E6.02
+obj: Comparer effets fixes et effets aléatoires | Interpréter un test de Hausman et ses limites
+intuition: Les effets aléatoires sont plus précis, mais seulement si les différences cachées ne sont pas liées aux variables étudiées.
+exemple: Salaires et formation en entreprise.
+maths: M2.
+erreurs: Choisir le modèle uniquement d'après le test.
+exercice: Que conclure si les deux estimations diffèrent beaucoup ?
+duree: 7-9
+format: educational
+forme: lecon
+
+## E6.04
+titre: Panels dynamiques
+titre_en: Dynamic panels
+question: Que se passe-t-il quand le passé de la variable explique son présent ?
+pre: E6.02 | E5.02
+obj: Expliquer le biais de Nickell | Présenter l'idée des estimateurs par la méthode des moments généralisée (Arellano-Bond) et leurs risques
+intuition: Avec peu de périodes, retirer la moyenne individuelle crée un lien artificiel entre retard et erreur.
+exemple: Persistance de l'emploi dans les entreprises.
+maths: M2-M3.
+erreurs: Multiplier les instruments sans contrôle.
+exercice: Pourquoi le biais diminue-t-il quand le nombre de périodes augmente ?
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+option: oui
+
+# MODULE E7
+niveau: 3
+titre: Méthodes d'évaluation et causalité
+titre_en: Research designs for causal inference
+pre: E4 | E5.01
+maths: M2
+but: La « révolution de la crédibilité » : des stratégies qui reposent sur la conception de l'étude plus que sur le modèle. Chaque vidéo suit la même grille : estimand, contrefactuel, hypothèses, menaces, diagnostics, portée externe.
+
+## E7.01
+titre: L'expérience randomisée, étalon de référence
+titre_en: Randomized experiments, the benchmark
+question: Pourquoi le tirage au sort règle-t-il le problème du contrefactuel ?
+pre: E1.04 | S8.04
+obj: Montrer que la randomisation rend le biais de sélection nul en espérance | Citer les limites (attrition, non-conformité, éthique, portée externe)
+intuition: Le hasard crée deux groupes semblables sur tout, y compris l'invisible.
+exemple: Expériences de terrain en économie du développement (exemples à sourcer).
+maths: M1-M2.
+erreurs: Croire qu'un essai randomisé est automatiquement généralisable.
+exercice: Repérer le problème dans un essai décrit (attrition différentielle).
+duree: 8-10
+format: educational
+forme: lecon
+
+## E7.02
+titre: Expériences naturelles
+titre_en: Natural experiments
+question: Peut-on trouver une expérience que personne n'a organisée ?
+pre: E7.01
+obj: Reconnaître une expérience naturelle et son argument d'identification | Discuter la plausibilité du « comme si c'était aléatoire »
+intuition: Parfois, une règle, une loterie ou un accident répartit les gens presque au hasard.
+exemple: Loterie de visas ou loterie militaire (exemples à sourcer).
+maths: M1.
+erreurs: Appeler expérience naturelle toute variation non expliquée.
+exercice: Juger le caractère « comme aléatoire » de trois situations.
+duree: 7-9
+format: educational
+forme: etude_de_cas
+
+## E7.03
+titre: Différences de différences
+titre_en: Difference-in-differences
+question: Une hausse du salaire minimum réduit-elle l'emploi ?
+pre: E7.01 | E3.02
+obj: Calculer un estimateur de différences de différences dans un tableau 2 × 2 | Énoncer l'hypothèse de tendances parallèles et la vérifier visuellement
+intuition: Le groupe témoin montre ce qui serait arrivé au groupe traité sans la mesure.
+exemple: Card et Krueger (1994), restauration rapide au New Jersey et en Pennsylvanie.
+maths: M1.
+erreurs: Ignorer des tendances différentes avant la mesure.
+exercice: Calculer l'effet dans un tableau de quatre moyennes.
+duree: 8-10
+format: educational
+forme: etude_de_cas
+
+## E7.04
+titre: Différences de différences échelonnées et études d'événements
+titre_en: Staggered adoption and event studies
+question: Que faire quand la mesure arrive à des dates différentes selon les régions ?
+pre: E7.03 | E6.02
+obj: Lire un graphique d'étude d'événement | Expliquer pourquoi l'estimateur classique à double effet fixe peut être biaisé avec des effets hétérogènes
+intuition: Comparer des régions déjà traitées à d'autres déjà traitées peut produire des effets de signe trompeur.
+exemple: Réformes adoptées par vagues (exemple à sourcer).
+maths: M2.
+erreurs: Appliquer mécaniquement le modèle à double effet fixe.
+exercice: Repérer un pré-effet sur un graphique d'événement.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## E7.05
+titre: La régression sur discontinuité
+titre_en: Regression discontinuity
+question: Les élèves juste au-dessus d'un seuil d'admission réussissent-ils mieux que ceux juste en dessous ?
+pre: E7.01 | S9.07
+obj: Expliquer la logique du seuil | Distinguer discontinuité nette et floue | Citer les tests de manipulation et de continuité
+intuition: Juste autour du seuil, être d'un côté ou de l'autre tient presque du hasard.
+exemple: Seuil de taille de classe (règle de Maïmonide, Angrist et Lavy, 1999).
+maths: M2.
+erreurs: Utiliser des observations loin du seuil ; ignorer une manipulation du score.
+exercice: Lire un graphique de discontinuité et estimer le saut.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E7.06
+titre: Le contrôle synthétique
+titre_en: Synthetic control
+question: Comment évaluer une politique appliquée à une seule région ?
+pre: E7.03
+obj: Construire l'idée d'un témoin synthétique comme moyenne pondérée de régions | Expliquer les tests placebo
+intuition: Fabriquer un « jumeau » à partir d'un mélange d'autres régions qui imitait bien l'avant.
+exemple: Réunification allemande ou loi anti-tabac californienne (Abadie et coauteurs).
+maths: M2.
+erreurs: Juger l'effet sans vérifier la qualité de l'ajustement avant la mesure.
+exercice: Lire un graphique de contrôle synthétique et ses placebos.
+duree: 8-10
+format: educational
+forme: etude_de_cas
+
+# MODULE E8
+niveau: 4
+titre: Séries temporelles économiques
+titre_en: Time-series econometrics
+pre: E3 | S14.02
+maths: M2 → M3
+but: Les spécificités macroéconomiques : régressions fallacieuses, racines unitaires, relations de long terme et chocs. La modélisation univariée et la prévision sont dans la branche statistique S14 ; ce module y renvoie.
+
+## E8.01
+titre: Autocorrélation des erreurs et erreurs HAC
+titre_en: Serial correlation and HAC standard errors
+question: Pourquoi une régression sur des données trimestrielles surestime-t-elle souvent sa précision ?
+pre: S14.02 | E3.02
+obj: Détecter l'autocorrélation des résidus | Utiliser des erreurs standard robustes à l'hétéroscédasticité et à l'autocorrélation (Newey-West)
+intuition: Des erreurs qui se suivent apportent moins d'information indépendante qu'il n'y paraît.
+exemple: Consommation et revenu trimestriels.
+maths: M2.
+erreurs: Garder les erreurs standard classiques sur des séries.
+exercice: Lire un test de Durbin-Watson ou de Breusch-Godfrey.
+duree: 7-9
+format: educational
+forme: lecon
+
+## E8.02
+titre: Racines unitaires et régressions fallacieuses
+titre_en: Unit roots and spurious regressions
+question: Comment deux séries sans lien peuvent-elles afficher un R² de 0,9 ?
+pre: E8.01 | S16.01
+obj: Expliquer une racine unitaire et une régression fallacieuse | Lire un test de Dickey-Fuller augmenté
+intuition: Deux marches aléatoires indépendantes ont souvent l'air de se suivre.
+exemple: Simulation de deux marches aléatoires indépendantes (Granger et Newbold, 1974).
+maths: M2.
+erreurs: Régresser des niveaux non stationnaires sans précaution.
+exercice: Que faire avant de régresser deux séries tendancielles ?
+duree: 8-10
+format: educational
+forme: simulation
+
+## E8.03
+titre: Cointégration et modèle à correction d'erreur
+titre_en: Cointegration and error correction
+question: Deux séries qui dérivent peuvent-elles rester liées à long terme ?
+pre: E8.02
+obj: Définir la cointégration | Interpréter un modèle à correction d'erreur (court terme et retour vers l'équilibre)
+intuition: Un promeneur et son chien : chacun erre, mais la laisse les empêche de trop s'éloigner.
+exemple: Consommation et revenu ; prix d'un même bien sur deux marchés.
+maths: M2.
+erreurs: Différencier des séries cointégrées et perdre la relation de long terme.
+exercice: Interpréter un coefficient de correction d'erreur de −0,25.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## E8.04
+titre: Modèles VAR et fonctions de réponse
+titre_en: VAR models and impulse responses
+question: Que fait une hausse surprise des taux d'intérêt à l'inflation et à la production ?
+pre: E8.02 | S16.02
+obj: Écrire un VAR à deux variables | Lire une fonction de réponse impulsionnelle et ses bandes d'incertitude | Expliquer pourquoi l'identification des chocs demande des hypothèses
+intuition: Chaque variable est expliquée par le passé de toutes ; un choc se propage ensuite dans le système.
+exemple: Politique monétaire (exemple à sourcer).
+maths: M3.
+erreurs: Donner une lecture causale à un VAR sans hypothèse d'identification.
+exercice: Lire une fonction de réponse et décrire l'effet à 4 et 12 trimestres.
+duree: 12-16
+format: youtube_lesson
+forme: lecon
+
+## E8.05
+titre: Causalité au sens de Granger : ce que le mot veut dire
+titre_en: Granger causality: what the word does and does not mean
+question: Si A aide à prévoir B, A cause-t-il B ?
+pre: E8.04 | S17.01
+obj: Définir la causalité de Granger comme capacité de prévision | Expliquer pourquoi ce n'est pas une causalité au sens de E1.04
+intuition: Les cartes de vœux « causent » Noël au sens de Granger.
+exemple: Indicateurs avancés de conjoncture.
+maths: M2.
+erreurs: Présenter un test de Granger comme une preuve d'effet causal.
+exercice: Proposer un exemple où A précède B sans le causer.
+duree: 6-8
+format: educational
+forme: lecon
+
+# MODULE E9
+niveau: 4
+titre: Modèles non linéaires et réponses limitées
+titre_en: Nonlinear and limited dependent variable models
+pre: E3 | S10
+maths: M2
+but: Adapter l'économétrie aux décisions binaires, aux variables censurées et aux comptages, avec l'interprétation par effets marginaux propre à l'économie.
+
+## E9.01
+titre: Probit, logit et effets marginaux
+titre_en: Probit, logit and marginal effects
+question: De combien un an d'études augmente-t-il la probabilité d'avoir un emploi ?
+pre: S10.02 | E2.02
+obj: Comparer modèle linéaire de probabilité, logit et probit | Calculer et interpréter un effet marginal moyen
+intuition: L'effet d'une variable sur une probabilité dépend de l'endroit où l'on se trouve sur la courbe en S.
+exemple: Participation au marché du travail.
+maths: M2.
+erreurs: Comparer directement les coefficients d'un logit et d'un probit.
+exercice: Interpréter un effet marginal moyen de 0,04.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E9.02
+titre: Tobit et correction de sélection de Heckman
+titre_en: Tobit and Heckman selection
+question: Comment modéliser des dépenses qui valent souvent zéro, ou un salaire observé seulement chez ceux qui travaillent ?
+pre: E9.01 | E4.04
+obj: Distinguer censure (Tobit) et sélection (Heckman) | Décrire la procédure en deux étapes et le besoin d'une variable d'exclusion
+intuition: Les zéros et les absents ne sont pas des observations comme les autres : il faut modéliser pourquoi ils le sont.
+exemple: Dépenses de loisirs ; salaires des femmes.
+maths: M2.
+erreurs: Appliquer Heckman sans variable d'exclusion crédible.
+exercice: Classer trois situations en censure ou sélection.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+option: oui
+
+## E9.03
+titre: Modèles de comptage en économie
+titre_en: Count models in economics
+question: Comment modéliser le nombre de brevets déposés par une entreprise ?
+pre: S10.04
+obj: Appliquer Poisson et binomiale négative à des données économiques | Interpréter les coefficients comme des semi-élasticités
+intuition: Même logique qu'en S10.04, avec une lecture en pourcentage.
+exemple: Brevets et dépenses de recherche.
+maths: M2.
+erreurs: Ignorer l'excès de zéros.
+exercice: Interpréter un coefficient de 0,2 sur le logarithme des dépenses de recherche.
+duree: 6-8
+format: educational
+forme: lecon
+option: oui
+
+# MODULE E10
+niveau: 4
+titre: Études de cas économiques
+titre_en: Applied case studies
+pre: E7 | E6
+maths: M2
+but: Rassembler les outils sur des questions économiques réelles. Chaque étude de cas montre la question, les données, la méthode, le résultat, les critiques et ce qui reste débattu. Les chiffres sont revérifiés à la préparation.
+
+## E10.01
+titre: Que rapporte une année d'études ?
+titre_en: What is a year of schooling worth?
+question: Le diplôme rend-il plus productif, ou signale-t-il seulement des capacités ?
+pre: E5.04 | E4.01
+obj: Comparer estimations par MCO, par instrument et par jumeaux | Discuter capital humain et signal
+intuition: Chaque méthode répond à une question un peu différente, et la vérité se lit dans leur confrontation.
+exemple: Littérature sur les rendements de l'éducation (sources à choisir).
+maths: M2.
+erreurs: Présenter un seul chiffre comme « le » rendement.
+exercice: Expliquer pourquoi l'estimation par instrument est parfois plus élevée que les MCO.
+duree: 12-16
+format: youtube_lesson
+forme: etude_de_cas
+
+## E10.02
+titre: Le salaire minimum et l'emploi
+titre_en: Minimum wage and employment
+question: Que disent vraiment trente ans d'études ?
+pre: E7.03 | E7.06
+obj: Résumer les principales stratégies d'identification utilisées | Distinguer résultats robustes et points débattus
+intuition: La réponse dépend du niveau du salaire minimum, du marché du travail et de la méthode.
+exemple: Card et Krueger et leurs suites (sources à vérifier à la préparation).
+maths: M1-M2.
+erreurs: Généraliser un résultat local à tout niveau de salaire minimum.
+exercice: Pourquoi une hausse modérée et une hausse forte peuvent-elles avoir des effets différents ?
+duree: 12-16
+format: youtube_lesson
+forme: etude_de_cas
+
+## E10.03
+titre: L'élasticité-prix de la demande d'énergie
+titre_en: How much does energy demand respond to prices?
+question: Les gens consomment-ils moins de carburant quand le prix monte ?
+pre: E5.02 | E1.03
+obj: Distinguer élasticité de court et de long terme | Expliquer le problème de simultanéité et une stratégie d'identification
+intuition: À court terme, on garde sa voiture ; à long terme, on peut en changer.
+exemple: Carburants et électricité (sources à choisir).
+maths: M2.
+erreurs: Confondre élasticité de court et de long terme.
+exercice: Interpréter une élasticité de −0,1 à court terme et de −0,5 à long terme.
+duree: 10-12
+format: youtube_lesson
+forme: etude_de_cas
+
+## E10.04
+titre: Banques centrales, taux d'intérêt et inflation
+titre_en: Central banks, interest rates and inflation
+question: Comment mesure-t-on l'effet d'une hausse des taux ?
+pre: E8.04
+obj: Présenter les approches (VAR identifiés, chocs à haute fréquence) | Dire ce qui est consensuel et ce qui est incertain
+intuition: Isoler la part « surprise » d'une décision pour mesurer ce qu'elle change.
+exemple: Décisions de politique monétaire (sources à choisir et dater).
+maths: M2-M3.
+erreurs: Attribuer toute baisse de l'inflation à la politique monétaire.
+exercice: Pourquoi une hausse de taux anticipée a-t-elle un effet différent d'une hausse surprise ?
+duree: 12-16
+format: youtube_lesson
+forme: etude_de_cas
