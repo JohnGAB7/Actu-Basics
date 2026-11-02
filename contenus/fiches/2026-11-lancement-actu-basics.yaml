@@ -168,7 +168,7 @@ editions:
           - '\times\cdots\times\dfrac{343}{365}'
           - '\approx 0{,}493'
         voix_off: "Ces probabilités se multiplient. Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu : trois cent soixante-cinq sur trois cent soixante-cinq, puis trois cent soixante-quatre sur trois cent soixante-cinq, puis trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite, jusqu'à trois cent quarante-trois sur trois cent soixante-cinq. Résultat : environ zéro virgule quatre cent quatre-vingt-treize, soit quarante-neuf virgule trois pour cent."
-        note: "P₀ : les 23 anniversaires sont tous différents. Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu."
+        note: "P₀ : les 23 anniversaires sont tous différents. Chaque fraction : aucune coïncidence jusque-là."
         verifier:
           - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P₀, 23 personnes"}
       - type: animation
