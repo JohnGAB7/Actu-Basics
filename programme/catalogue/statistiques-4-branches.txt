@@ -19,6 +19,8 @@ obj: Écrire a posteriori ∝ vraisemblance × a priori | Mettre à jour une cro
 intuition: On part d'une opinion, les données la corrigent, et plus elles sont nombreuses plus elles l'emportent.
 exemple: Taux de clic d'une publicité, estimé jour après jour.
 maths: M2.
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Croire que l'a priori est arbitraire donc sans valeur, ou qu'il ne compte jamais.
 exercice: Mettre à jour une grille de 5 valeurs possibles après une observation.
 duree: 8-10
@@ -77,7 +79,7 @@ question: Comment estimer le taux de réussite de 50 écoles dont certaines ont 
 pre: S12.03 | S10.07
 obj: Décrire un modèle hiérarchique et le partage d'information entre groupes | Relier au rétrécissement vu en S10.07
 intuition: Chaque groupe emprunte de l'information aux autres, d'autant plus qu'il est petit.
-exemple: Les huit écoles (exemple classique de Rubin, 1981).
+exemple: Les huit écoles (D. Rubin, Journal of Educational Statistics, 1981), repris dans Bayesian Data Analysis.
 maths: M2.
 erreurs: Traiter chaque groupe seul ou tous les groupes comme identiques.
 exercice: Classer trois estimations (séparée, commune, hiérarchique) de la plus à la moins prudente.
@@ -127,11 +129,13 @@ forme: lecon
 titre: L'analyse en composantes principales
 titre_en: Principal component analysis
 question: Comment résumer 20 variables par 2 sans perdre l'essentiel ?
-pre: S13.01
+pre: S13.01 | M3.03
 obj: Expliquer l'ACP comme recherche des directions de plus grande dispersion | Interpréter part de variance, cercle des corrélations et carte des individus | Dire quand standardiser
 intuition: Tourner le nuage pour le photographier sous l'angle où il est le plus étalé.
 exemple: Indicateurs socio-économiques de pays (source à choisir).
 maths: M3 (valeurs propres).
+maths_comprendre: M2
+maths_demontrer: M3
 erreurs: Interpréter la proximité de deux individus mal représentés ; oublier de standardiser des variables d'unités différentes.
 exercice: Lire un cercle des corrélations et nommer les deux premiers axes.
 duree: 12-16
@@ -349,7 +353,7 @@ question: Comment prévoir la météo de demain en ne connaissant que celle d'au
 pre: S4.09 | S16.01
 obj: Écrire une matrice de transition | Calculer la distribution après deux étapes | Expliquer la distribution stationnaire
 intuition: Le futur ne dépend que du présent, pas du chemin pour y arriver.
-exemple: Météo à deux états ; classement de pages web (idée du PageRank).
+exemple: Météo à deux états ; classement de pages web (idée du PageRank : S. Brin, L. Page, 1998).
 maths: M3 (produit matriciel).
 erreurs: Appliquer l'hypothèse de Markov à un système qui a de la mémoire.
 exercice: Matrice 2 × 2 donnée : probabilité de pluie dans deux jours.
@@ -503,6 +507,8 @@ obj: Interpréter l'information de Fisher comme courbure de la log-vraisemblance
 intuition: Plus la vraisemblance est pointue, plus les données « désignent » clairement le paramètre.
 exemple: Proportion binomiale : variance minimale p(1 − p)/n.
 maths: M2-M4.
+maths_comprendre: M2
+maths_demontrer: M4
 erreurs: Croire que la borne est toujours atteinte.
 exercice: Calculer l'information de Fisher d'une observation de Bernoulli.
 duree: 12-16

@@ -1,14 +1,14 @@
 # Programme éditorial et pédagogique ACTU-BASICS
 
 Réponse au ticket n° 10. Le livrable est le PDF
-[`PROGRAMME_EDITORIAL_ACTU-BASICS_v1.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1.pdf),
+[`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-1.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1-1.pdf),
 construit à partir des fichiers de ce dossier. **Statut : projet soumis à la revue de ChatGPT, puis à la validation de JG.**
 
 ## Contenu
 
 | Chemin | Rôle |
 |---|---|
-| `catalogue/*.txt` | Les 218 vidéos du programme, rangées en modules : une fiche par vidéo |
+| `catalogue/*.txt` | Les 219 entrées de syllabus du programme, rangées en modules : une entrée par vidéo (pas encore la fiche de conception) |
 | `sections/*.md` | Les sections rédigées du document (synthèse, architecture, méthode d'actualité, feuille de route, glossaire, bibliographie, arbitrages) |
 | `construire.py` | Contrôle le programme et construit le HTML, puis le PDF |
 | `gabarit.html` | Mise en page (couleurs et logo officiels de `assets/brand/actu-basics/`) |
@@ -35,5 +35,5 @@ et recalcul des réponses chiffrées (liste `VERIFICATIONS` de `construire.py`) 
 pip install -r programme/requirements.txt
 python programme/construire.py          # contrôles + HTML (programme/sortie/)
 python programme/construire.py --pdf    # + PDF (Node et Playwright requis)
-cp programme/sortie/PROGRAMME_EDITORIAL_ACTU-BASICS_v1.pdf programme/
+cp programme/sortie/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-1.pdf programme/
 ```

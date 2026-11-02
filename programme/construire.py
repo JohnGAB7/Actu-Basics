@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.0 — projet soumis à revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1.pdf"
+VERSION = "1.1 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-1.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -325,6 +325,42 @@ def puces(items: list[str]) -> str:
     return "<ul>" + "".join(f"<li>{e(x)}</li>" for x in items) + "</ul>"
 
 
+VERBES_APPLIQUER = ("Calculer", "Construire", "Appliquer", "Mener", "Estimer", "Réaliser", "Simuler", "Écrire", "Utiliser",
+                    "Coder", "Déflater", "Lisser", "Traduire", "Obtenir", "Dérouler", "Compléter", "Retrouver", "Tester",
+                    "Approcher", "Convertir", "Simplifier", "Résoudre", "Sommer", "Mettre", "Décomposer", "Classer", "Lire",
+                    "Exprimer", "Reproduire", "Interpréter", "Choisir", "Identifier", "Associer", "Représenter", "Formuler")
+MARQUEURS_CRITIQUER = ("Distinguer", "Repérer", "Juger", "Discuter", "Réfuter", "Diagnostiquer", "Évaluer", "limite", "Critiquer", "Reconnaître",
+                       "contresens", "piège", "ne couvre pas", "biais", "Dire quand", "Dire ce qu", "plausibilité", "crédib", "portée")
+
+
+def maitrise(u: "Unite") -> list[str]:
+    """Niveaux de maîtrise visés, déduits des verbes des objectifs observables."""
+    objs = u.liste("obj")
+    out = ["comprendre"]
+    if any(o.split()[0] in VERBES_APPLIQUER for o in objs if o.split()):
+        out.append("appliquer")
+    if any(m in o for o in objs for m in MARQUEURS_CRITIQUER):
+        out.append("critiquer")
+    return out
+
+
+def niveau_maths(texte: str) -> int:
+    t = re.split(r"en option|en intuition", texte)[0]
+    niveaux = [int(x) for x in re.findall(r"M(\d)", t)]
+    return max(niveaux) if niveaux else 0
+
+
+def niveaux_maths(u: "Unite") -> tuple[int, int, int]:
+    """(comprendre, appliquer, démontrer). Le champ maths donne le niveau pour appliquer ;
+    maths_comprendre et maths_demontrer le précisent quand ils diffèrent."""
+    c = u.champs
+    app = niveau_maths(c.get("maths", ""))
+    comp = niveau_maths(c["maths_comprendre"]) if c.get("maths_comprendre") else (
+        app - 1 if app >= 2 and c.get("forme") in ("simulation", "demonstration", "paradoxe") else app)
+    demo = niveau_maths(c["maths_demontrer"]) if c.get("maths_demontrer") else app
+    return comp, app, max(demo, app)
+
+
 def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[str]]) -> str:
     c = u.champs
     illustrations = ILLUSTRATIONS
@@ -335,7 +371,13 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
         f'<span class="chip">{minutes(*u.duree)}</span>',
     ]
     if c.get("maths"):
-        chips.append(f'<span class="chip">Maths : {e(c["maths"].rstrip("."))}</span>')
+        comp, app, demo = niveaux_maths(u)
+        if comp == app == demo:
+            chips.append(f'<span class="chip">Maths M{app}</span>')
+        else:
+            chips.append(f'<span class="chip">Maths : comprendre M{comp} · appliquer M{app} · démontrer M{demo}</span>')
+    if u.pilier != "M":
+        chips.append(f'<span class="chip maitrise">Maîtrise : {" · ".join(maitrise(u))}</span>')
     if u.optionnelle:
         chips.append('<span class="chip opt">Optionnel</span>')
     lignes = []
@@ -352,6 +394,8 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
     if illustrations.get(u.id):
         ligne("Illustré par", liens(illustrations[u.id], unites))
     ligne("Objectifs", puces(u.liste("obj")))
+    if c.get("maths") and c["maths"].rstrip(".") not in ("Aucune", "M0", "M1", "M2", "M3"):
+        ligne("Notions mathématiques", e(c["maths"]))
     for cle, lib in [("intuition", "Intuition d'abord"), ("exemple", "Exemple fil rouge"), ("erreurs", "Idées fausses à prévenir"), ("exercice", "Vérification"), ("sources", "Sources à mobiliser")]:
         if c.get(cle):
             ligne(lib, e(c[cle]))
@@ -629,6 +673,9 @@ def main() -> int:
     for k, (_, ids) in enumerate(v, 1):
         for p in "SEQM":
             contexte[f"V{k}_{p}"] = str(sum(1 for i in ids if unites[i].pilier == p))
+    n1 = len(v[0][1])
+    contexte["CHARGE_V1"] = f"{n1 * 4.5:.0f} et {n1 * 9:.0f}"
+    contexte["CHARGE_V1_JG"] = f"{n1 * 0.5:.0f} à {n1 * 1:.0f}"
     for p in "SEQM":
         contexte[f"H_{p}"] = f"{sum(sum(u.duree) / 2 for u in unites.values() if u.pilier == p) / 60:.0f}"
     corps = rendre_sections(contexte)

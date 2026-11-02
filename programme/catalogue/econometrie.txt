@@ -118,6 +118,8 @@ obj: Énoncer les hypothèses de Gauss-Markov | Dire laquelle est indispensable 
 intuition: La condition décisive est que l'erreur ne soit pas liée aux variables explicatives.
 exemple: Tableau des hypothèses et de ce que l'on perd quand chacune tombe.
 maths: M2-M3.
+maths_comprendre: M2
+maths_demontrer: M3
 erreurs: Croire que la normalité des erreurs est nécessaire pour l'absence de biais.
 exercice: Pour trois violations, dire si l'estimateur est biaisé ou seulement imprécis.
 duree: 8-10
@@ -133,6 +135,8 @@ obj: Montrer qu'un coefficient de régression multiple est une régression sur d
 intuition: Contrôler, c'est retirer de x et de y la part expliquée par le contrôle, puis comparer ce qui reste.
 exemple: Salaire, études et âge.
 maths: M2-M3.
+maths_comprendre: M2
+maths_demontrer: M3
 erreurs: Croire que le contrôle supprime toute confusion non mesurée.
 exercice: Reproduire en deux étapes un coefficient obtenu en régression multiple.
 duree: 8-10
@@ -237,7 +241,7 @@ question: Pourquoi une régression des quantités sur les prix ne donne-t-elle n
 pre: E4.01
 obj: Expliquer pourquoi prix et quantités sont déterminés ensemble | Montrer graphiquement le problème d'identification
 intuition: Chaque point observé est un croisement de deux courbes qui bougent toutes les deux.
-exemple: Marché du poisson (exemple classique de Graddy) ou des produits agricoles.
+exemple: Le marché aux poissons de Fulton à New York (K. Graddy, Journal of Economic Perspectives, 2006).
 maths: M1-M2.
 erreurs: Appeler « courbe de demande » un simple nuage prix-quantité.
 exercice: Que faut-il pour retrouver la courbe de demande ? (un déplacement de l'offre seule)
@@ -290,7 +294,7 @@ question: Comment mesurer l'effet des études si l'on ne peut pas tirer au sort 
 pre: E4.01
 obj: Énoncer les deux conditions d'un instrument (pertinence, exclusion) | Calculer l'estimateur de Wald sur un exemple simple
 intuition: Chercher une « pichenette » extérieure qui pousse certaines personnes vers le traitement sans toucher le reste.
-exemple: Date de naissance et scolarité obligatoire (Angrist et Krueger, 1991), avec ses critiques.
+exemple: Trimestre de naissance et scolarité obligatoire (J. Angrist, A. Krueger, Quarterly Journal of Economics, 1991), et la critique des instruments faibles (J. Bound, D. Jaeger, R. Baker, Journal of the American Statistical Association, 1995).
 maths: M1-M2.
 erreurs: Choisir un instrument qui influence directement le résultat.
 exercice: Juger trois instruments proposés.
@@ -457,7 +461,7 @@ question: Une hausse du salaire minimum réduit-elle l'emploi ?
 pre: E7.01 | E3.02
 obj: Calculer un estimateur de différences de différences dans un tableau 2 × 2 | Énoncer l'hypothèse de tendances parallèles et la vérifier visuellement
 intuition: Le groupe témoin montre ce qui serait arrivé au groupe traité sans la mesure.
-exemple: Card et Krueger (1994), restauration rapide au New Jersey et en Pennsylvanie.
+exemple: Restauration rapide au New Jersey et en Pennsylvanie (D. Card, A. Krueger, American Economic Review, 1994).
 maths: M1.
 erreurs: Ignorer des tendances différentes avant la mesure.
 exercice: Calculer l'effet dans un tableau de quatre moyennes.
@@ -487,7 +491,7 @@ question: Les élèves juste au-dessus d'un seuil d'admission réussissent-ils m
 pre: E7.01 | S9.07
 obj: Expliquer la logique du seuil | Distinguer discontinuité nette et floue | Citer les tests de manipulation et de continuité
 intuition: Juste autour du seuil, être d'un côté ou de l'autre tient presque du hasard.
-exemple: Seuil de taille de classe (règle de Maïmonide, Angrist et Lavy, 1999).
+exemple: Seuil de taille de classe, la « règle de Maïmonide » en Israël (J. Angrist, V. Lavy, Quarterly Journal of Economics, 1999).
 maths: M2.
 erreurs: Utiliser des observations loin du seuil ; ignorer une manipulation du score.
 exercice: Lire un graphique de discontinuité et estimer le saut.
@@ -502,7 +506,7 @@ question: Comment évaluer une politique appliquée à une seule région ?
 pre: E7.03
 obj: Construire l'idée d'un témoin synthétique comme moyenne pondérée de régions | Expliquer les tests placebo
 intuition: Fabriquer un « jumeau » à partir d'un mélange d'autres régions qui imitait bien l'avant.
-exemple: Réunification allemande ou loi anti-tabac californienne (Abadie et coauteurs).
+exemple: Programme anti-tabac californien (A. Abadie, A. Diamond, J. Hainmueller, Journal of the American Statistical Association, 2010) ; réunification allemande (mêmes auteurs, American Journal of Political Science, 2015).
 maths: M2.
 erreurs: Juger l'effet sans vérifier la qualité de l'ajustement avant la mesure.
 exercice: Lire un graphique de contrôle synthétique et ses placebos.
@@ -540,7 +544,7 @@ question: Comment deux séries sans lien peuvent-elles afficher un R² de 0,9 ?
 pre: E8.01 | S16.01
 obj: Expliquer une racine unitaire et une régression fallacieuse | Lire un test de Dickey-Fuller augmenté
 intuition: Deux marches aléatoires indépendantes ont souvent l'air de se suivre.
-exemple: Simulation de deux marches aléatoires indépendantes (Granger et Newbold, 1974).
+exemple: Simulation de deux marches aléatoires indépendantes (C. Granger, P. Newbold, Journal of Econometrics, 1974).
 maths: M2.
 erreurs: Régresser des niveaux non stationnaires sans précaution.
 exercice: Que faire avant de régresser deux séries tendancielles ?
@@ -678,7 +682,7 @@ question: Que disent vraiment trente ans d'études ?
 pre: E7.03 | E7.06
 obj: Résumer les principales stratégies d'identification utilisées | Distinguer résultats robustes et points débattus
 intuition: La réponse dépend du niveau du salaire minimum, du marché du travail et de la méthode.
-exemple: Card et Krueger et leurs suites (sources à vérifier à la préparation).
+exemple: Card et Krueger (1994) et la littérature qui a suivi : synthèses récentes à choisir et dater lors de la préparation.
 maths: M1-M2.
 erreurs: Généraliser un résultat local à tout niveau de salaire minimum.
 exercice: Pourquoi une hausse modérée et une hausse forte peuvent-elles avoir des effets différents ?

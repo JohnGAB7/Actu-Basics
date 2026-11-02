@@ -139,9 +139,9 @@ question: Pourquoi les vieux bâtiments semblent-ils mieux construits que les ne
 renvoi: S1.05
 obj: Reconnaître le biais du survivant dans trois situations | Expliquer l'exemple des avions de la Seconde Guerre mondiale (Abraham Wald)
 intuition: On ne voit que ce qui a survécu ; les échecs ont disparu des données.
-exemple: Avions revenus de mission ; entreprises qui ont réussi.
+exemple: Avions revenus de mission : le travail d'Abraham Wald pour le Statistical Research Group (M. Mangel, F. Samaniego, Journal of the American Statistical Association, 1984) ; entreprises qui ont réussi.
 erreurs: Tirer des leçons des seuls gagnants.
-sources: Récit historique à vérifier (sources secondaires sérieuses)
+sources: Mangel et Samaniego (1984) ; rapports originaux de Wald (1943) si accessibles
 duree: 1-1.5
 format: short
 forme: paradoxe
@@ -192,7 +192,7 @@ obj: Expliquer le paradoxe de l'amitié par un petit réseau | Le relier au para
 intuition: Les personnes très connectées apparaissent dans beaucoup de listes d'amis.
 exemple: Réseau de 6 personnes dessiné à l'écran.
 erreurs: Y voir un défaut personnel.
-sources: Calcul pur (Feld, 1991)
+sources: Calcul pur ; S. Feld, American Journal of Sociology, 1991
 duree: 1-1.5
 format: short
 forme: paradoxe
@@ -234,7 +234,7 @@ obj: Présenter l'étude de 1985 (Gilovich, Vallone, Tversky) et sa remise en ca
 intuition: Même les chercheurs peuvent se tromper en comptant des séries.
 exemple: Simulation de séries de tirs indépendants.
 erreurs: Croire qu'une conclusion scientifique est figée.
-sources: Articles originaux
+sources: T. Gilovich, R. Vallone, A. Tversky, Cognitive Psychology, 1985 ; J. Miller, A. Sanjurjo, Econometrica, 2018
 duree: 8-10
 format: educational
 forme: etude_de_cas
@@ -296,7 +296,7 @@ question: Une espérance de vie de 35 ans au Moyen Âge veut-elle dire qu'on mou
 renvoi: S2.05 | S15.02
 obj: Expliquer que l'espérance de vie à la naissance est une moyenne sensible à la mortalité infantile | Distinguer espérance de vie à la naissance et à 60 ans
 intuition: Beaucoup de décès de bébés tirent la moyenne vers le bas, même si les adultes vivaient longtemps.
-exemple: Tables de mortalité historiques (sources démographiques à vérifier).
+exemple: Tables de mortalité historiques (Human Mortality Database, travaux de l'Ined), série à choisir lors de la préparation.
 erreurs: Lire l'espérance de vie comme l'âge typique du décès.
 sources: Ined, Human Mortality Database, ONU
 duree: 5-7
@@ -396,9 +396,9 @@ question: Pourquoi un tireur doit-il être imprévisible ?
 renvoi: S5.02
 obj: Présenter l'idée d'équilibre en stratégies mixtes | Montrer qu'être prévisible coûte des buts
 intuition: Si le gardien sait où vous tirez, vous perdez votre avantage.
-exemple: Études sur les penaltys (sources à vérifier).
+exemple: Penaltys du football professionnel (P.-A. Chiappori, S. Levitt, T. Groseclose, American Economic Review, 2002 ; I. Palacios-Huerta, Review of Economic Studies, 2003).
 erreurs: Croire qu'il existe un « meilleur côté » fixe.
-sources: Articles d'économie du sport
+sources: Articles originaux cités
 duree: 4-6
 format: educational
 forme: etude_de_cas

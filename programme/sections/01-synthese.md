@@ -1,7 +1,7 @@
 # Synthèse pour décision {#synthese}
 
 <div class="encadre statut" markdown="1">
-**Statut du document.** Version {{VERSION}}, construite le {{DATE}}. Proposition structurée par Claude (direction technique et production) en réponse au ticket n° 10. Elle intègre le cadrage envoyé par ChatGPT dans le ticket. Elle doit encore passer la revue indépendante de ChatGPT, puis être validée par JG. Rien n'est publié, rien n'est fusionné dans `main`. Les décisions à prendre sont rassemblées en section 10.
+**Statut du document.** Version {{VERSION}}, construite le {{DATE}}. Proposition structurée par Claude (direction technique et production) en réponse au ticket n° 10. Elle intègre le cadrage de ChatGPT dans le ticket et les corrections de sa première revue de la version 1 (voir l'historique en fin de synthèse). La revue de ChatGPT se poursuit, puis JG valide. Rien n'est publié, rien n'est fusionné dans `main`. Les décisions à prendre sont rassemblées en section 10.
 </div>
 
 ## Ce que la chaîne enseignera
@@ -15,11 +15,15 @@ ACTU-BASICS apprend à **raisonner avec des chiffres**. Le but n'est pas d'empil
 | **3. Quotidien et actualité** | Une sous-série intemporelle (déjà {{NB_QUOTIDIEN}} sujets) et une sous-série d'actualité, avec une méthode de sélection et de vérification, sans chiffres figés | {{NB_QUOTIDIEN}} + flux | ≈ {{H_Q}} h |
 | *Boîte à outils maths* | Des rappels courts (fractions, logarithmes, dérivées, matrices), à voir juste avant la vidéo qui en a besoin | {{NB_MATHS}} | ≈ {{H_M}} h |
 
-Au total, **{{NB_VIDEOS}} vidéos réparties en {{NB_MODULES}} modules, soit environ {{HEURES_TOTAL}} heures de contenu**. Chaque vidéo a sa fiche : question centrale, prérequis, objectifs observables, intuition, exemple, notions mathématiques, idées fausses à prévenir, exercice, durée et format.
+Au total, **{{NB_VIDEOS}} vidéos réparties en {{NB_MODULES}} modules, soit environ {{HEURES_TOTAL}} heures de contenu**. Chaque vidéo a une **entrée de syllabus** : question centrale, prérequis, objectifs observables, maîtrise visée, intuition, exemple, niveaux mathématiques, idées fausses à prévenir, exercice, durée et format.
+
+<div class="encadre" markdown="1">
+**Entrée de syllabus ou fiche de conception.** Une entrée de syllabus dit *quoi* enseigner et *dans quel ordre*. Elle ne remplace pas la **fiche de conception** (section 6), qui détaille le déroulé, les formules expliquées, les calculs vérifiés, les sources précises, la correction et l'adaptation anglaise. Aujourd'hui, **une seule vidéo a une fiche complète** : le paradoxe des anniversaires (S4.06, vidéo de lancement). Les fiches de conception seront écrites vague par vague, juste avant la production.
+</div>
 
 ## Dans quel ordre
 
-1. **Niveau 1 · Découverte** (aucun prérequis) : d'où viennent les données, décrire une variable, décrire une relation. Corrélation et causalité sont distinguées dès ce niveau.
+1. **Niveau 1 · Découverte** (aucun prérequis) : d'où viennent les données, un premier contact avec le hasard (S1.11, sans formule), décrire une variable, décrire une relation. Corrélation et causalité sont distinguées dès ce niveau.
 2. **Niveau 2 · Fondamentaux** : le hasard et les probabilités, puis les variables aléatoires, jusqu'à la loi des grands nombres et au théorème central limite.
 3. **Niveau 3 · Inférence et modèles** : échantillonnage, estimation, tests, régression, ANOVA, modèles linéaires généralisés, méthodes de simulation.
 4. **Niveau 4 · Branches avancées**, à suivre au choix et non en ligne droite : statistique bayésienne, analyse multivariée, séries temporelles, survie, processus stochastiques, apprentissage statistique et passerelles vers le machine learning.
@@ -40,16 +44,23 @@ Deux vagues, sans publication avant que le stock soit suffisant :
 - **Vague 1 · « Lire un chiffre sans se faire avoir »** : {{NB_V1}} vidéos, environ {{H_V1}} h. Niveau 1 complet, premières notions de probabilités, premiers sujets du quotidien et d'économie.
 - **Vague 2 · « Le hasard apprivoisé »** : {{NB_V2}} vidéos, environ {{H_V2}} h. Niveau 2 complet, avec les rappels mathématiques nécessaires.
 
-Elles commencent par une **phase pilote de 5 vidéos**, qui sert à mesurer le temps réel de production et de relecture avant de s'engager sur un rythme.
+Elles commencent par une **phase pilote interne de 5 vidéos**. Elle sert à mesurer le temps réel de travail humain et à tester la compréhension auprès de spectateurs débutants. Ce n'est pas une mini-série à publier dans cet ordre.
 
 ## Ce que JG doit décider
 
 Les dix arbitrages de la section 10, dont les plus structurants :
 
 1. adopter les trois piliers et leur correspondance avec les quatre familles actuelles du moteur ;
-2. fixer le seuil de lancement (proposition : vague 1 terminée et au moins 12 semaines de publication en stock) ;
+2. fixer le seuil de lancement (proposition : vague 1 terminée et au moins 12 semaines de publication en stock, comptées en épisodes entièrement validés en FR et en EN) ;
 3. reporter les vidéos d'actualité aux semaines qui précèdent le lancement ;
 4. choisir le format des leçons longues (vertical ou 16:9).
+
+## Historique des versions
+
+| Version | Changements |
+|---|---|
+| 1.0 | Première proposition structurée de Claude |
+| 1.1 | Corrections après la première revue de ChatGPT : randomisation (S1.06), théorème central limite (S5.13), hypothèses de la marge d'erreur (S6.03, S6.05), premier contact avec le hasard au niveau 1 (S1.11), niveaux mathématiques séparés (comprendre, appliquer, démontrer), maîtrise visée par vidéo, sources des exemples historiques, liens de la bibliographie vérifiés, pilote, unité de stock et charge de travail précisés, minima de la grille d'actualité, décisions déjà prises distinguées des recommandations |
 
 ## Sommaire
 

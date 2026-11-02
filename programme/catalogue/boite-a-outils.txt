@@ -100,12 +100,12 @@ format: educational
 forme: rappel
 
 # MODULE M2
-niveau: 3
+niveau: 2
 titre: Niveau M2 — Analyse
 titre_en: Level M2 — Calculus
 pre: M1
 maths: M2
-but: Ce qu'il faut pour le niveau 3 et la plupart des branches : dérivées, optimisation, intégrales comme aires, fonctions de plusieurs variables.
+but: Ce qu'il faut pour formaliser à partir de la fin du niveau 2 (densités), puis au niveau 3 et dans la plupart des branches : dérivées, optimisation, intégrales comme aires, fonctions de plusieurs variables.
 
 ## M2.01
 titre: La dérivée comme pente

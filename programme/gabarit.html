@@ -71,8 +71,8 @@ svg .pointille { stroke-dasharray: 4 3; }
 /* Modules et fiches */
 .module { margin-bottom: 4mm; }
 .module-entete { break-inside: avoid; }
-.section[data-fichier^="10"] table td:nth-child(1) { width: 20mm; }
-.section[data-fichier^="10"] table td:nth-child(2) { width: 42mm; }
+.section[data-fichier^="10"] table:has(th:nth-child(4)) td:nth-child(1) { width: 20mm; }
+.section[data-fichier^="10"] table:has(th:nth-child(4)) td:nth-child(2) { width: 42mm; }
 .module-tete { display: flex; align-items: center; gap: 4mm; margin: 6mm 0 2mm; break-after: avoid; }
 .module-tete .mid { font-family: "Anton", sans-serif; font-size: 20pt; color: var(--bleu); min-width: 16mm; }
 .module[id^="E"] .module-tete .mid { color: var(--orange); }
@@ -100,6 +100,7 @@ table.sommaire td:first-child { width: 14mm; }
 .chip.fmt-youtube_lesson { border-color: var(--nuit); color: #fff; background: var(--nuit); font-weight: 600; }
 .chip.fmt-short { border-color: var(--orange); color: var(--orange); font-weight: 600; }
 .chip.opt { border-color: var(--orange); color: var(--orange); }
+.chip.maitrise { border-color: #2a9d8f; color: #2a9d8f; }
 table.fiche { margin: 0 0 1mm; font-size: 8.3pt; }
 table.fiche th { width: 32mm; color: var(--gris); font-weight: 600; background: none; padding: 0.8mm 2mm 0.8mm 0; }
 table.fiche td { padding: 0.8mm 0; }

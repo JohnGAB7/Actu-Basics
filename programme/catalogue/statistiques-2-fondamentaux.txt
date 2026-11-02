@@ -75,7 +75,7 @@ question: Quelle est la probabilité d'obtenir au moins un 6 en quatre lancers ?
 pre: S4.01
 obj: Représenter des événements par un diagramme de Venn | Utiliser le complément et la formule de l'union | Repérer des événements incompatibles
 intuition: « Au moins un » est presque toujours plus facile à calculer par son contraire : « aucun ».
-exemple: Le problème du chevalier de Méré (au moins un 6 en 4 lancers, au moins un double 6 en 24 lancers).
+exemple: Le problème du chevalier de Méré (au moins un 6 en 4 lancers, au moins un double 6 en 24 lancers), discuté dans la correspondance entre Pascal et Fermat (1654).
 maths: M1.
 erreurs: Additionner des probabilités d'événements qui se recouvrent.
 exercice: Probabilité d'au moins un 6 en 4 lancers : 1 − (5/6)⁴ ≈ 51,8 %.
@@ -120,7 +120,7 @@ question: Après cinq « rouge » à la roulette, le noir est-il « dû » ?
 pre: S4.07 | S4.02
 obj: Définir l'indépendance par P(A | B) = P(A) | Expliquer pourquoi une suite passée n'influence pas un tirage indépendant
 intuition: La roulette n'a pas de mémoire ; c'est notre cerveau qui en a une.
-exemple: Le casino de Monte-Carlo, 1913 (longue série de noirs, récit à vérifier à la préparation).
+exemple: Une suite de 5 rouges simulée des milliers de fois : le tirage suivant est rouge environ une fois sur deux (à la roulette européenne, 18 chances sur 37).
 maths: M1.
 erreurs: Confondre indépendance et incompatibilité.
 exercice: Deux événements incompatibles de probabilité non nulle peuvent-ils être indépendants ?
@@ -263,7 +263,7 @@ question: Combien d'appels un standard reçoit-il en une minute ?
 pre: S5.04
 obj: Reconnaître une situation de Poisson (événements rares et indépendants à taux constant) | Calculer une probabilité de Poisson | Interpréter λ comme moyenne et variance
 intuition: Une binomiale avec énormément d'essais et une probabilité minuscule.
-exemple: Les morts par ruade de cheval dans l'armée prussienne (Bortkiewicz, 1898) ; appels à un standard.
+exemple: Les morts par ruade de cheval dans 14 corps de l'armée prussienne de 1875 à 1894 (L. von Bortkiewicz, Das Gesetz der kleinen Zahlen, 1898) ; appels à un standard.
 maths: M1 (exponentielle).
 erreurs: Appliquer Poisson à des événements groupés (épidémies, embouteillages).
 exercice: En moyenne 2 appels par minute : probabilité d'aucun appel ? (≈ 13,5 %)
@@ -275,11 +275,13 @@ forme: lecon
 titre: Variables continues et densité
 titre_en: Continuous variables and density
 question: Quelle est la probabilité qu'une personne mesure exactement 1,75 m ?
-pre: S5.01 | S2.02
+pre: S5.01 | S2.02 | M2.02
 obj: Expliquer qu'une probabilité continue est une aire sous une densité | Calculer une probabilité simple avec une densité uniforme | Lire une fonction de répartition
 intuition: L'histogramme dont on rend les classes infiniment fines devient une courbe.
 exemple: Heure d'arrivée d'un bus entre 8 h et 8 h 10.
 maths: M2 (aire sous une courbe, idée d'intégrale).
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Lire la hauteur de la densité comme une probabilité.
 exercice: Bus uniforme entre 0 et 10 minutes : P(attente > 7 min) ?
 duree: 6-8
@@ -310,6 +312,8 @@ obj: Décrire la loi normale par sa moyenne et son écart-type | Utiliser la rè
 intuition: Quand beaucoup de petites causes indépendantes s'additionnent, on obtient une cloche.
 exemple: Planche de Galton ; tailles d'adultes d'un même sexe ; contre-exemple des revenus.
 maths: M2.
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Supposer que tout est normal ; ignorer les queues épaisses.
 exercice: Moyenne 170 cm, écart-type 7 cm : quelle part dépasse 184 cm ? (≈ 2,3 %)
 duree: 7-9
@@ -355,6 +359,8 @@ obj: Énoncer la loi des grands nombres avec des mots puis en symboles | Montrer
 intuition: La moyenne de beaucoup de tirages se rapproche de l'espérance, mais lentement.
 exemple: Gains d'un casino sur un an ; mutualisation des risques en assurance.
 maths: M2 (racine, limite en intuition).
+maths_comprendre: M1
+maths_demontrer: M4
 erreurs: Croire que la loi des grands nombres corrige les écarts passés.
 exercice: Combien de tirages faut-il pour diviser l'écart-type de la moyenne par 10 ? (100 fois plus)
 duree: 6-8
@@ -366,11 +372,13 @@ titre: Le théorème central limite
 titre_en: The central limit theorem
 question: Pourquoi la moyenne de dés très peu « normaux » finit-elle par dessiner une cloche ?
 pre: S5.12 | S5.09
-obj: Énoncer le théorème central limite et ses conditions | Le constater par simulation sur des lois très asymétriques | Expliquer pourquoi il est la clé de l'inférence
-intuition: Additionner beaucoup de hasards indépendants fabrique de la normalité, quelle que soit la forme de départ.
+obj: Énoncer le théorème central limite dans sa version classique et ses conditions (observations indépendantes, de même loi, de variance finie) | Le constater par simulation sur des lois asymétriques, en voyant que la convergence est plus lente quand l'asymétrie est forte | Expliquer pourquoi il est la clé de l'inférence
+intuition: Quand on additionne beaucoup de hasards indépendants dont aucun ne domine, la somme, une fois centrée et mise à l'échelle, ressemble de plus en plus à une cloche. Ce sont les moyennes qui deviennent approximativement normales, pas les observations.
 exemple: Simulation : moyennes de 1, 2, 5, 30 dés ; moyennes de temps d'attente exponentiels.
 maths: M2.
-erreurs: Croire que ce sont les données qui deviennent normales (c'est la moyenne) ; oublier l'indépendance.
+maths_comprendre: M1
+maths_demontrer: M4
+erreurs: Croire que ce sont les données qui deviennent normales (c'est la moyenne) ; oublier l'indépendance ou la variance finie (contre-exemple : la loi de Cauchy, dont la moyenne ne se stabilise jamais) ; croire que n = 30 suffit toujours.
 exercice: Avec n = 100, l'écart-type de la moyenne est-il 10 fois plus petit que celui d'une observation ?
 duree: 8-10
 format: educational

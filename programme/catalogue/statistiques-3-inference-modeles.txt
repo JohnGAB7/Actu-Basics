@@ -43,11 +43,11 @@ titre: Erreur standard et racine de n
 titre_en: Standard error and the square-root law
 question: Pourquoi faut-il quatre fois plus de personnes pour diviser la marge d'erreur par deux ?
 pre: S6.02 | S5.12
-obj: Calculer l'erreur standard d'une moyenne et d'une proportion | Expliquer la loi en racine de n
+obj: Calculer l'erreur standard d'une moyenne et d'une proportion pour un échantillon aléatoire simple | Expliquer la loi en racine de n et ses conditions (tirage aléatoire, observations indépendantes) | Dire quand la taille de la population compte (correction de population finie, échantillon qui dépasse quelques pour cent de la population)
 intuition: La précision s'achète cher : elle progresse comme la racine du nombre d'observations.
 exemple: Coût d'un sondage de 1 000 contre 4 000 personnes.
 maths: M1 (racines).
-erreurs: Croire que la précision dépend de la taille de la population (et non de l'échantillon).
+erreurs: Croire que la précision dépend en général de la taille de la population plutôt que de celle de l'échantillon ; appliquer la formule à un échantillon qui n'est pas aléatoire ou à des observations groupées.
 exercice: p = 0,5, n = 1 000 : erreur standard ? (≈ 0,016)
 duree: 5-7
 format: educational
@@ -73,11 +73,11 @@ titre: La marge d'erreur d'un sondage
 titre_en: The margin of error
 question: 51 % contre 49 % avec ± 3 points : qui gagne ?
 pre: S6.03
-obj: Calculer une marge d'erreur à 95 % pour une proportion | Expliquer ce que la marge d'erreur couvre et ne couvre pas (non-réponse, biais, changement d'avis)
+obj: Calculer une marge d'erreur à 95 % pour une proportion issue d'un échantillon aléatoire | Expliquer ce que la marge d'erreur couvre (le hasard du tirage) et ne couvre pas (non-réponse, biais de couverture, formulation de la question, changement d'avis) | Expliquer qu'un sondage par quotas n'a pas de marge d'erreur probabiliste au sens strict (renvoi S6.04)
 intuition: La marge d'erreur mesure seulement le hasard du tirage, pas les autres erreurs.
 exemple: Lecture de sondages électoraux (exemples à dater lors de la préparation).
 maths: M1.
-erreurs: Croire qu'un écart dans la marge prouve une égalité ; oublier que la marge de l'écart est plus grande que celle de chaque score.
+erreurs: Croire qu'un écart dans la marge prouve une égalité ; oublier que la marge de l'écart entre deux candidats est plus grande que celle de chaque score ; présenter la marge d'un sondage par quotas comme une garantie probabiliste.
 exercice: n = 1 000, p̂ = 0,5 : marge d'erreur à 95 % ? (≈ 3,1 points)
 duree: 6-8
 format: educational
@@ -90,8 +90,10 @@ question: Pourquoi utilise-t-on une loi de Student au lieu de la loi normale ave
 pre: S6.03 | S5.09
 obj: Décrire comment chaque loi naît d'une construction à partir de lois normales | Expliquer pourquoi estimer l'écart-type élargit les queues
 intuition: Quand on estime aussi la dispersion, on est un peu moins sûr : la cloche s'aplatit et ses queues s'épaississent.
-exemple: Gosset (« Student ») et le contrôle qualité de la bière chez Guinness.
+exemple: W. S. Gosset, chimiste chez Guinness, publie sous le pseudonyme « Student » (« The Probable Error of a Mean », Biometrika, 1908).
 maths: M2.
+maths_comprendre: M1
+maths_demontrer: M3
 erreurs: Utiliser une table sans savoir ce qu'elle représente.
 exercice: Que devient la loi de Student quand n devient grand ?
 duree: 7-9
@@ -115,6 +117,8 @@ obj: Définir biais et variance d'un estimateur avec l'image de la cible | Montr
 intuition: Un bon tireur est à la fois centré (peu de biais) et régulier (peu de variance).
 exemple: Simulation de 10 000 petits échantillons.
 maths: M2.
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Croire qu'un estimateur sans biais est toujours meilleur.
 exercice: Lequel de deux tireurs (biaisé mais régulier, centré mais dispersé) préférer selon l'objectif ?
 duree: 7-9
@@ -155,11 +159,13 @@ forme: lecon
 titre: La vraisemblance
 titre_en: Likelihood
 question: Quelle valeur du paramètre rend ce que l'on a observé le moins surprenant ?
-pre: S7.01 | S5.04
+pre: S7.01 | S5.04 | M1.04
 obj: Écrire la vraisemblance d'un petit échantillon binomial | Distinguer probabilité (des données sachant le paramètre) et vraisemblance (du paramètre sachant les données)
 intuition: On fait varier le paramètre et l'on regarde lequel rend les données les plus probables.
 exemple: 7 faces sur 10 lancers : courbe de vraisemblance de p.
 maths: M2 (produits, logarithmes).
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Lire la vraisemblance comme la probabilité du paramètre.
 exercice: Laquelle des valeurs p = 0,5 ou p = 0,7 rend 7 faces sur 10 plus vraisemblable ?
 duree: 7-9
@@ -170,11 +176,13 @@ forme: lecon
 titre: Le maximum de vraisemblance
 titre_en: Maximum likelihood estimation
 question: Comment trouver le sommet de la vraisemblance par le calcul ?
-pre: S7.04
+pre: S7.04 | M2.01 | M1.04
 obj: Passer au logarithme et dériver pour obtenir l'estimateur du maximum de vraisemblance | Retrouver p̂ = k/n et μ̂ = x̄
 intuition: Le sommet d'une colline se trouve là où la pente s'annule.
 exemple: Binomiale, puis normale, puis Poisson.
-maths: M2 (dérivées).
+maths: M2 (dérivée d'un logarithme ; rappels M1.04 et M2.01 avant la vidéo).
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Oublier de vérifier qu'il s'agit d'un maximum ; prendre le logarithme sans expliquer pourquoi c'est permis.
 exercice: Retrouver l'estimateur de λ pour une loi de Poisson.
 duree: 10-14
@@ -273,6 +281,8 @@ obj: Donner la définition exacte d'une p-value | Réfuter les quatre contresens
 intuition: Si rien de spécial ne se passait, à quel point serait-il rare de voir un résultat au moins aussi extrême ?
 exemple: Simulation de 10 000 pièces honnêtes, comparaison avec 62 faces sur 100.
 maths: M2.
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: p = P(H₀ vraie) ; p < 0,05 = effet important ; p > 0,05 = absence d'effet.
 exercice: Classer huit phrases en correctes et incorrectes.
 duree: 7-9
@@ -400,7 +410,9 @@ pre: S3.07 | S7.05
 obj: Écrire le modèle y = a + bx + erreur | Obtenir les formules des moindres carrés et les calculer sur 5 points | Interpréter la pente dans les unités
 intuition: La pente est le changement moyen de y associé à une unité de x de plus, dans les données observées.
 exemple: Prix et surface d'appartements (données publiques à choisir).
-maths: M2 (dérivées pour l'optimisation).
+maths: M1 pour appliquer les formules ; M2 (dérivées partielles, rappel M2.03) pour les démontrer.
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Lire la pente comme un effet causal ; extrapoler.
 exercice: Calculer pente et ordonnée à l'origine sur 5 points.
 duree: 10-14
@@ -446,6 +458,8 @@ obj: Interpréter un coefficient de régression multiple à autres variables fix
 intuition: Comparer des appartements qui ne diffèrent que par la surface, autant que les données le permettent.
 exemple: Surface, quartier et étage.
 maths: M2, M3 en option (matrices).
+maths_comprendre: M2
+maths_demontrer: M3
 erreurs: Croire que « contrôler » une variable élimine toute confusion.
 exercice: Expliquer pourquoi le coefficient de la surface baisse quand on ajoute le nombre de pièces.
 duree: 10-14
@@ -519,7 +533,7 @@ question: Trois engrais donnent-ils des rendements différents ?
 pre: S8.04 | S9.02
 obj: Décomposer la variabilité totale en variabilité entre groupes et dans les groupes | Calculer et interpréter la statistique F | Relier l'ANOVA à la régression avec indicatrices
 intuition: Les groupes diffèrent-ils plus entre eux que leurs membres ne diffèrent à l'intérieur ?
-exemple: Rendements agricoles (Fisher à Rothamsted).
+exemple: Essais d'engrais de la station agronomique de Rothamsted, où Fisher développe l'analyse de la variance (R. A. Fisher, Statistical Methods for Research Workers, 1925).
 maths: M2.
 erreurs: Enchaîner des tests t deux à deux sans correction.
 exercice: Compléter un tableau d'ANOVA.
@@ -589,6 +603,8 @@ obj: Passer de probabilité à cote et à log-cote | Écrire et interpréter un 
 intuition: La courbe en S transforme n'importe quel score en probabilité entre 0 et 1.
 exemple: Résiliation selon l'ancienneté et le nombre de réclamations.
 maths: M2 (exponentielle, logarithme).
+maths_comprendre: M1
+maths_demontrer: M2
 erreurs: Lire un coefficient logistique comme un effet en points de probabilité.
 exercice: Probabilité 0,2 : quelle cote ? (0,25)
 duree: 8-10
@@ -760,7 +776,7 @@ question: Pourquoi une analyse doit-elle pouvoir être refaite par quelqu'un d'a
 pre: S11.01
 obj: Décrire une chaîne reproductible (données brutes, script, graine aléatoire, versions) | Présenter les outils courants (R, Python, carnets) sans en faire un cours de programmation
 intuition: Un résultat que personne ne peut refaire n'est pas un résultat solide.
-exemple: Une erreur de tableur célèbre en économie (Reinhart-Rogoff, 2013).
+exemple: L'erreur de tableur de Reinhart et Rogoff, mise au jour par une réplication (T. Herndon, M. Ash, R. Pollin, Cambridge Journal of Economics, 2014).
 maths: Aucune.
 erreurs: Modifier les données brutes à la main ; ne pas fixer la graine.
 exercice: Lister ce qu'il faut transmettre pour qu'une analyse soit refaite à l'identique.

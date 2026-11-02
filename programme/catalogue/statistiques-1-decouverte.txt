@@ -77,7 +77,7 @@ question: Comment un sondage de 2,4 millions de réponses a-t-il pu se tromper p
 pre: S1.04
 obj: Expliquer ce qu'est un échantillon représentatif | Reconnaître un biais de sélection et expliquer pourquoi la taille ne le corrige pas
 intuition: Un grand échantillon mal choisi reste mal choisi : on mesure très précisément la mauvaise population.
-exemple: Le sondage du Literary Digest (élection américaine de 1936) face à l'échantillon plus petit de Gallup.
+exemple: Le sondage du Literary Digest (élection présidentielle américaine de 1936) face à l'échantillon plus petit de Gallup. Source : P. Squire, « Why the 1936 Literary Digest Poll Failed », Public Opinion Quarterly, 1988.
 maths: Proportions.
 erreurs: « Plus c'est grand, plus c'est fiable » ; confondre volontaires et échantillon aléatoire.
 exercice: Repérer le biais dans trois enquêtes (avis en ligne, sondage téléphonique fixe, questionnaire à la sortie d'une salle de sport).
@@ -90,11 +90,11 @@ titre: Observer ou expérimenter
 titre_en: Observing versus experimenting
 question: Pourquoi les essais de médicaments tirent-ils au sort qui reçoit le traitement ?
 pre: S1.05
-obj: Distinguer étude observationnelle et expérience | Expliquer le rôle du tirage au sort (randomisation) et du groupe témoin
-intuition: Si c'est le hasard qui décide qui est traité, les deux groupes se ressemblent sur tout le reste, y compris ce qu'on ne voit pas.
-exemple: Les buveurs de café vivent-ils plus longtemps ? Ce qu'une étude observationnelle peut et ne peut pas conclure.
+obj: Distinguer étude observationnelle et expérience | Expliquer le rôle du tirage au sort (randomisation) et du groupe témoin | Expliquer pourquoi un déséquilibre fortuit reste possible dans un essai donné, et pourquoi on compare quand même les caractéristiques initiales des groupes
+intuition: Si c'est le hasard qui décide qui est traité, aucun facteur, visible ou non, ne peut pousser systématiquement les uns vers le traitement : en moyenne sur tous les tirages possibles, les groupes s'équilibrent. Dans un essai donné, le hasard peut pourtant produire un écart, surtout avec peu de participants.
+exemple: Les buveurs de café vivent-ils plus longtemps ? Ce qu'une étude observationnelle peut et ne peut pas conclure. Puis un tirage au sort simulé de 20 personnes, dont 7 fumeurs : une répartition 6 contre 1 arrive par pur hasard, d'où le tableau des caractéristiques initiales publié dans tout essai.
 maths: Aucune.
-erreurs: Conclure à un effet causal à partir d'une simple comparaison de groupes qui se sont choisis eux-mêmes.
+erreurs: Conclure à un effet causal à partir d'une simple comparaison de groupes qui se sont choisis eux-mêmes ; croire que la randomisation garantit des groupes identiques dans chaque essai.
 exercice: Classer quatre études (observationnelle ou expérimentale) et dire laquelle permet une conclusion causale.
 duree: 5-8
 format: educational
@@ -156,6 +156,21 @@ exemple: Date de naissance, sexe et code postal suffisent souvent à rendre une 
 maths: Aucune.
 erreurs: Croire qu'enlever le nom suffit à anonymiser.
 exercice: Combien de combinaisons (jour de naissance × sexe × commune) pour une commune de 2 000 habitants ? Qu'en conclure ?
+duree: 4-6
+format: educational
+forme: lecon
+
+## S1.11
+titre: Premier contact avec le hasard : chance, fréquence, risque
+titre_en: A first look at chance: odds, frequency, risk
+question: Que veut dire « une chance sur dix », et pourquoi le hasard est-il partout dans les données ?
+pre: S1.08
+obj: Exprimer une chance sous forme de fraction, de fréquence et de pourcentage | Expliquer avec un exemple pourquoi deux échantillons de la même population donnent des résultats différents | Distinguer « rare » et « impossible »
+intuition: Avant toute formule, une probabilité se lit comme une fréquence : sur 1 000 situations semblables, combien de fois cela arrive-t-il ? C'est aussi pour cela que chaque chiffre tiré d'un échantillon contient une part de hasard.
+exemple: Lancer un dé 60 fois : on n'obtient presque jamais exactement 10 six. Même idée pour deux sondages faits le même jour.
+maths: M0.
+erreurs: Croire qu'un événement « rare » ne peut pas arriver, ou qu'une chance sur dix signifie « au dixième essai ».
+exercice: Traduire quatre phrases (« 1 risque sur 500 », « 0,2 % », « 2 pour 1 000 », « 20 sur 10 000 ») en une même écriture : laquelle est différente ?
 duree: 4-6
 format: educational
 forme: lecon
@@ -363,7 +378,7 @@ question: Comment un traitement peut-il être meilleur dans chaque groupe mais p
 pre: S3.02
 obj: Reproduire un paradoxe de Simpson sur un tableau | Expliquer le rôle d'une variable de confusion dans l'agrégation
 intuition: Le total mélange des groupes de tailles différentes : c'est la composition qui renverse la tendance.
-exemple: Admissions à Berkeley (1973) ou traitements des calculs rénaux.
+exemple: Admissions aux études doctorales de Berkeley, 1973 (P. Bickel, E. Hammel, J. O'Connell, Science, 1975) ou traitements des calculs rénaux (C. Charig et coll., British Medical Journal, 1986).
 maths: M0.
 erreurs: Toujours faire confiance au chiffre agrégé, ou toujours au chiffre détaillé.
 exercice: Calculer les taux par groupe et au total dans un tableau 2 × 2 × 2.
@@ -393,7 +408,7 @@ question: Que mesure exactement un coefficient de corrélation de 0,8 ?
 pre: S3.04 | S2.10
 obj: Interpréter r entre −1 et 1 | Montrer que r ne mesure que la relation linéaire | Calculer r sur 4 points à l'aide des scores z
 intuition: r est la moyenne des produits des scores z : les points « en haut à droite » et « en bas à gauche » le font monter.
-exemple: Le quartet d'Anscombe : quatre nuages, même corrélation.
+exemple: Le quartet d'Anscombe : quatre nuages, même corrélation (F. Anscombe, The American Statistician, 1973).
 maths: M1.
 erreurs: Lire r = 0 comme « aucune relation » ; lire r comme une pente.
 exercice: Associer cinq nuages à cinq valeurs de r.
@@ -423,7 +438,7 @@ question: Quelle est « la meilleure » droite qui passe au milieu des points ?
 pre: S3.05
 obj: Expliquer le critère des moindres carrés avec des carrés visibles | Utiliser une droite pour une prévision prudente dans le domaine observé
 intuition: On cherche la droite qui rend les carrés des erreurs verticales les plus petits possible.
-exemple: Taille des parents et des enfants : la régression vers la moyenne de Galton.
+exemple: Taille des parents et des enfants : la « régression vers la médiocrité » de Galton (F. Galton, Journal of the Anthropological Institute, 1886).
 maths: M1 (équation de droite).
 erreurs: Extrapoler loin des données ; inverser x et y sans le savoir.
 exercice: Parmi trois droites tracées, laquelle a la plus petite somme des carrés ?

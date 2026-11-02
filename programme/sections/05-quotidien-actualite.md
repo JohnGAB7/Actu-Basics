@@ -38,7 +38,13 @@ Un sujet d'actualité n'est pas retenu parce qu'il est « tendance ». On part d
 | **Valeur ajoutée d'ACTU-BASICS** | Déjà bien expliqué partout | Angle chiffré absent ou mal traité ailleurs |
 | **Risque éditorial** (noté à l'envers) | Sujet sensible sans données solides | Sujet sans risque de stigmatisation ou de récupération |
 
-**Seuils proposés** : 12 sur 18 au moins, et aucun critère à 0. Les sujets sensibles listés dans la constitution éditoriale (santé, criminalité, conflits, politique, migration, religion, identité, pauvreté) demandent en plus une double relecture et au moins 2 sur 3 en fiabilité des sources.
+**Règles de décision proposées** (les trois doivent être remplies) :
+
+1. **Score total** d'au moins 12 sur 18, et **aucun critère à 0** ;
+2. **Minima sur les critères décisifs** : au moins 2 sur 3 en *fiabilité des sources* et au moins 2 sur 3 en *intérêt pédagogique*. Un sujet très important mais mal sourcé ou sans notion à transmettre est donc refusé, quel que soit son total ;
+3. **Veto éditorial humain**, indépendant du score : l'éditorial (ChatGPT) ou JG peut écarter un sujet qui remplit les seuils, par exemple pour un risque de récupération ou un contexte trop instable. Le motif du veto est consigné.
+
+Les sujets sensibles listés dans la constitution éditoriale (santé, criminalité, conflits, politique, migration, religion, identité, pauvreté) demandent en plus une double relecture et au moins 2 sur 3 en *risque éditorial*.
 
 Répartition thématique visée pour l'actualité, reprise de la constitution éditoriale (section 2) : démographie 20 %, économie et argent 20 %, IA et technologie 20 %, sciences 15 %, société 15 %, comparaisons internationales 10 %.
 

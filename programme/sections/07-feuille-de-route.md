@@ -12,15 +12,33 @@ Ces {{NB_VIDEOS}} vidéos représentent plusieurs années de production. Le prem
 
 | Phase | Contenu | But | Condition pour passer à la suite |
 |---|---|---|---|
-| **0 · Pilote** | 5 vidéos de la vague 1, choisies pour couvrir les formes (leçon, paradoxe, SHORT) plutôt que dans l'ordre : S1.08, S2.05, S3.06, Q3.01, Q2.04 | Mesurer le temps réel de conception, de relecture et de rendu. Régler le gabarit pédagogique et la boucle de revue. | Les 5 vidéos sont validées par JG. Le temps moyen par vidéo est connu. |
+| **0 · Pilote interne** | 5 vidéos de la vague 1, choisies pour couvrir les formes (leçon, paradoxe, SHORT) plutôt que dans l'ordre : S1.08, S2.05, S3.06, Q3.01, Q2.04. **Ce n'est pas une mini-série publiable dans cet ordre** : S3.06, par exemple, suppose S3.05. | Mesurer le temps réel de travail humain (recherche, écriture, relecture, contrôle). Régler le gabarit pédagogique et la boucle de revue. **Tester la compréhension** : quelques spectateurs débutants répondent à l'exercice sans aide, avant et après la vidéo. | Les 5 vidéos sont validées par JG. Le temps humain par vidéo est mesuré. La majorité des testeurs réussit l'exercice après la vidéo. |
 | **1 · Vague 1** | {{NB_V1}} vidéos, environ {{H_V1}} h : niveau 1 complet, boîte à outils M0, premières probabilités, 10 sujets du quotidien, 2 vidéos d'économie | Un parcours « Lire un chiffre sans se faire avoir » complet, utile seul | Vague complète et validée |
 | **2 · Vague 2** | {{NB_V2}} vidéos, environ {{H_V2}} h : niveau 2 complet, rappels M1 et M2, 8 sujets du quotidien, contrefactuels | Un second parcours « Le hasard apprivoisé » | Au moins la moitié produite avant le lancement |
 | **3 · Pré-lancement** | 4 à 6 vidéos d'actualité, choisies avec la grille de la section 5.2 | Une actualité fraîche au moment du lancement | Revalidation des chiffres moins de 7 jours avant la mise en ligne |
 | **4 · Lancement puis flux** | Publication du stock selon le rythme choisi par JG. En parallèle : niveau 3, pilier 2 (E2 à E5) et actualité. | Garder au moins 8 semaines d'avance | Décision de JG |
 
-**Seuil de lancement proposé** : vague 1 terminée **et** au moins **12 semaines de publication en stock** au rythme qui sera choisi. Par exemple, avec 3 vidéos EDUCATIONAL par semaine, il faut 36 vidéos, soit la vague 1 seule. Avec 5 par semaine, il faut 60 vidéos, soit la vague 1 et une partie de la vague 2. Chaque EDUCATIONAL peut produire un ou deux SHORT d'accroche, qui s'ajoutent au stock sans travail pédagogique supplémentaire.
+**Unité de stock.** Une vidéo ne compte dans le stock que lorsqu'elle est **entièrement prête à publier** : contenu validé par l'éditorial et par JG, calculs vérifiés, éditions FR **et** EN rendues, audio et sous-titres contrôlés, miniature, titre, description et métadonnées prêts. On compte les **épisodes maîtres** (une notion, un script). Les éditions FR et EN d'un même épisode ne comptent pas double. Un SHORT dérivé ne compte que s'il a été produit et contrôlé comme les autres, et il est compté à part.
 
-## 7.3 Équilibre entre piliers
+**Seuil de lancement proposé** : vague 1 terminée **et** au moins **12 semaines de publication en stock**, en épisodes maîtres prêts à publier, au rythme qui sera choisi. Par exemple, avec 3 épisodes EDUCATIONAL par semaine, il faut 36 épisodes, soit la vague 1 seule. Avec 5 par semaine, il faut 60 épisodes, soit la vague 1 et une partie de la vague 2. Les SHORT dérivés s'ajoutent au calendrier, mais pas au calcul du seuil.
+
+**Stock actuel validé** : 1 épisode maître, la vidéo de lancement (S4.06), en attente de validation finale de sa voix et de son habillage sonore. Les prototypes précédents (pic de population mondiale, LMEC-2026-003) sont des essais techniques, pas des épisodes du programme.
+
+## 7.3 Charge de travail : ce que l'on sait et ce que l'on mesurera
+
+Le moteur automatise le rendu, la voix, les sous-titres et une partie des contrôles. Il ne supprime ni la recherche, ni l'écriture, ni la relecture humaine. Les ordres de grandeur ci-dessous sont des **hypothèses de départ**, non mesurées. La phase pilote sert à les remplacer par des chiffres réels.
+
+| Étape, par épisode maître EDUCATIONAL | Hypothèse | Qui |
+|---|---|---|
+| Fiche de conception, recherche et sources | 2 à 4 h | Éditorial (ChatGPT), relu par Claude |
+| Scripts FR et EN, fiche de production YAML | 1 à 2 h | Éditorial et production |
+| Rendu, contrôle qualité, revue image par image, corrections | 1 à 2 h | Production (Claude), en grande partie automatisé |
+| Relecture et validation humaine | 0,5 à 1 h | JG |
+| **Total, dont temps de JG** | **4,5 à 9 h, dont 0,5 à 1 h pour JG** | |
+
+À ce rythme, la vague 1 ({{NB_V1}} épisodes) représenterait entre {{CHARGE_V1}} heures de travail cumulé, dont {{CHARGE_V1_JG}} heures pour JG. C'est bien au-delà de l'objectif de 10 minutes par jour visé à terme pour la publication courante. La conséquence est simple : **la capacité de relecture de JG fixe le rythme**, et le seuil de lancement doit être recalculé après la phase pilote. Les SHORT dérivés ajoutent environ 0,5 à 1 h chacun, et les versions 16:9 éventuelles une reprise de mise en page.
+
+## 7.4 Équilibre entre piliers
 
 | | Vague 1 | Vague 2 | Programme complet |
 |---|---|---|---|
@@ -31,13 +49,13 @@ Ces {{NB_VIDEOS}} vidéos représentent plusieurs années de production. Le prem
 
 Le pilier 1 domine les deux premières vagues parce qu'il porte les prérequis de tout le reste. Le pilier 3 y occupe environ un cinquième des vidéos. C'est lui qui attire de nouveaux spectateurs, et ses vidéos se comprennent sans le cursus. L'économétrie est volontairement réduite au départ : ses modules centraux (E2 à E7) demandent la régression (S9), qui n'arrive qu'au niveau 3. Si JG veut plus d'économie dès le lancement, la solution est d'ajouter des sujets du quotidien à forte composante économique (Q1, Q4), et non d'avancer la théorie (arbitrage A5).
 
-## 7.4 Ordre de production
+## 7.5 Ordre de production
 
 L'ordre ci-dessous est calculé par le script. Il respecte tous les prérequis et suit, à prérequis égaux, l'ordre de lecture du programme. Les sujets du quotidien sont intercalés dès que la notion qu'ils illustrent est produite, pour varier le stock.
 
 {{PREMIER_CATALOGUE}}
 
-## 7.5 Ce qui est opérationnel et ce qui reste à faire
+## 7.6 Ce qui est opérationnel et ce qui reste à faire
 
 | Opérationnel aujourd'hui | Reste à faire avant la phase pilote |
 |---|---|
@@ -47,4 +65,4 @@ L'ordre ci-dessous est calculé par le script. Il respecte tous les prérequis e
 | Contrôle des prérequis et des calculs de ce programme (`programme/construire.py`) | Nouveaux modèles d'animation pour le niveau 1 (histogramme, boîte à moustaches, nuage de points) |
 | Modèle de fiche de conception (`modeles/fiche-conception-episode.yaml`) | Identité sonore définitive (prototype synthétique à ce jour) |
 
-**Risques principaux.** (1) La capacité de relecture humaine est le vrai goulot d'étranglement : la phase pilote sert à la mesurer. (2) Le format long 16:9 n'a pas encore été jugé sur un vrai cours. (3) Les vidéos d'actualité vieillissent : elles sont donc produites en dernier. (4) Les exemples réels « à sourcer » demandent un travail de recherche qui n'est pas encore fait. Ils sont signalés dans chaque fiche.
+**Risques principaux.** (1) La capacité de relecture humaine est le vrai goulot d'étranglement : la phase pilote sert à la mesurer (section 7.3). (2) Le format long 16:9 n'a pas encore été jugé sur un vrai cours. (3) Les vidéos d'actualité vieillissent : elles sont donc produites en dernier. (4) Les exemples réels « à sourcer » demandent un travail de recherche qui n'est pas encore fait. Ils sont signalés dans chaque fiche.
