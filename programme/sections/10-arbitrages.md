@@ -100,3 +100,67 @@ Restent hors du catalogue, faute d'être des sujets statistiques : l'architectur
 
 Le pilier 3 reste ouvert par construction : il s'enrichit en continu selon la méthode de la section 5.
 
+
+## 10.8 Audit des familles proposées par ChatGPT (contribution sur la version 1.4)
+
+Pour chaque famille : ce qui existait, et ce que la version 1.6 ajoute (« + » : nouvelle vidéo ; « obj. » : objectifs complétés dans une vidéo existante). Une famille déjà couverte n'est pas doublée : une leçon enseigne une compétence identifiable.
+
+**A. Statistiques**
+
+| Famille | Couverture | Version 1.6 |
+|---|---|---|
+| A1 Données manquantes | S1.07 (intuition), S18.03 (MCAR, MAR, MNAR, imputation multiple) | obj. S18.03 : indicateurs de manquants, limites de l'imputation simple |
+| A2 Erreurs de mesure, qualité | S1.07 en partie, E4.03 (atténuation) | + S1.12 fiabilité, validité, biais de mesure |
+| A3 Plan d'expérience, essais | S1.06, S9.10, S9.13, E7.01 | + S9.14 aveugle, conformité, attrition, intention de traiter |
+| A4 Puissance | S7.09, S8.03 | obj. S8.03 : effet minimal détectable, « non significatif » |
+| A5 Tests multiples | S8.09 | obj. S8.09 : Holm, Benjamini-Hochberg, HARKing, exploration et confirmation |
+| A6 Rééchantillonnage | S11.02 (bootstrap), S11.03 (permutation) | + S11.09 jackknife, BCa, bootstrap par blocs |
+| A7 Statistique robuste | S2.09 (valeurs atypiques) | + S11.10 moyenne tronquée, MAD, M-estimateurs, régression robuste |
+| A8 Survie | S15.01 à S15.04 | obj. S15.01 à S15.03 : censure à gauche, log-rank, vérification des risques proportionnels |
+| A9 Valeurs extrêmes | S18.06 | obj. S18.06 : GEV, GPD, niveau de retour |
+| A10 Données spatiales | S14.08 | obj. S14.08 : MAUP |
+| A11 Longitudinal, modèles mixtes | S10.07, S12.05 | obj. S10.07 : pente aléatoire, ICC, modèle mixte ou erreurs groupées |
+| A12 Non paramétrique | S11.04, S11.03 | obj. S11.04 : ce que teste vraiment Mann-Whitney, Kruskal-Wallis |
+| A13 Fonctionnel, haute dimension | S17.03 (ridge, lasso) | + S13.09 données fonctionnelles, + S17.10 haute dimension et inférence après sélection ; obj. S17.03 : elastic net |
+| A14 Enquêtes avancées | S6.04, S6.07, S6.08 | + S6.09 effet de plan, poids de réplication |
+| A15 Données de composition | absente | + S13.10 |
+
+**B. Économétrie**
+
+| Famille | Couverture | Version 1.6 |
+|---|---|---|
+| B1 Expériences naturelles, encouragement | E7.02, E5.04 | obj. E5.04 et E7.02 : ITT et TOT, non-conformité |
+| B2 Régression sur discontinuité | E7.05 | obj. E7.05 : bande passante, placebos, validité locale |
+| B3 Contrôle synthétique | E7.06 | obj. E7.06 : pré-ajustement, placebos, contrôle synthétique généralisé |
+| B4 Panel dynamique | E6.04 | obj. E6.04 : GMM système, prolifération des instruments, diagnostics |
+| B5 Séries structurelles | S14.04, S14.05, S14.07 | obj. S14.04 : SARIMA ; ruptures en B14 |
+| B6 Cointégration | E8.03 | obj. E8.03 : Engle-Granger, Johansen, VECM |
+| B7 Prévision et évaluation | S14.05, E9.03 | + S14.09 fenêtres, fuite temporelle, métriques, calibration |
+| B8 Économétrie spatiale | E6.05 | obj. E6.05 : SAR, SEM, SDM, effets directs et indirects |
+| B9 Régression quantile | S9.12 | + E10.06 quantiles conditionnels et inconditionnels |
+| B10 Choix discret, durée | E10.01, E10.04, S15 | + E10.07 logit emboîté et mixte, + E10.08 modèles de durée en économie |
+| B11 Instruments avancés | E5.03 | obj. E5.03 : Anderson-Rubin, plusieurs instruments |
+| B12 Inférence causale moderne | E7.08 | obj. E7.08 : échantillonnage croisé |
+| B13 Équations simultanées | E4.02 (intuition) | + E5.06 identification, 2SLS et 3SLS |
+| B14 Ruptures et régimes | E9.06 (régimes de volatilité) | + E8.08 Chow, Bai-Perron |
+
+**C. Quotidien et actualité**
+
+| Thème | Couverture | Version 1.6 |
+|---|---|---|
+| Démographie | Q4.04, Q4.06 | + module Q7 : Q7.03 fécondité, Q7.04 migrations |
+| Travail et inégalités | Q4.02, Q4.03, Q4.07 | + Q4.08 écart de salaire brut ou ajusté, + Q4.09 mobilité sociale |
+| Logement | absent | + module Q9 (2 vidéos) |
+| Énergie et climat | Q2.05 | + module Q8 (3 vidéos) |
+| Santé publique | Q2.01, Q2.03 | + Q7.01 incidence et prévalence, + Q7.02 taux standardisés |
+| Éducation | absent | + module Q11 (2 vidéos) |
+| Conflits | absent | + module Q13 (2 vidéos, protocole renforcé) |
+| Commerce et mondialisation | absent | + Q10.03 |
+| Dette et finances publiques | absent | + Q10.01, Q10.02 |
+| Technologie et IA | Q5.01 à Q5.04 | + Q5.05 ce que mesure un score d'IA |
+| Information et médias | Q4.05, S1.09 | + module Q12 : agrégation de sondages, causalité inversée |
+| Agriculture et alimentation | absent | + module Q14 (2 vidéos) |
+| Transport et ville | Q2.02 | + module Q15 (2 vidéos) |
+| Sport | Q6.01 à Q6.03 | + Q6.04 expected goals, + Q6.05 force du calendrier |
+
+Pour l'actualité, ces thèmes sont aussi des familles de questions à activer quand un événement et des sources primaires le justifient (section 5.2) ; ils ne figent aucun chiffre.

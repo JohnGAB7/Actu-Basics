@@ -37,8 +37,8 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.5 — projet en revue"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-5.pdf"
+VERSION = "1.6 — projet en revue"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-6.pdf"
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -159,6 +159,14 @@ VERIFICATIONS = [
     ("E4.06", "0.8 * 0.7 + 0.2", 0.76, "borne haute du taux d'emploi"),
     ("E5.05", "3 - 1", 2, "degrés de suridentification"),
     ("S9.13", "2 ** (5 - 2)", 8, "essais d'un plan 2^(5−2)"),
+    ("S6.09", "1 + 0.5 ** 2", 1.25, "effet de plan de Kish"),
+    ("S6.09", "1000 / (1 + 0.5 ** 2)", 800, "taille d'échantillon effective"),
+    ("S9.14", "3 / 0.6", 5, "effet du traitement reçu (estimateur de Wald)"),
+    ("S11.10", "(1 + 2 + 3 + 4 + 100) / 5", 22, "moyenne"),
+    ("S11.10", "(2 + 3 + 4) / 3", 3, "moyenne tronquée à 20 %"),
+    ("S14.09", "100 * abs(2 - 1) / 1", 100, "erreur en % pour une valeur réelle de 1"),
+    ("S14.09", "100 * abs(101 - 100) / 100", 1, "erreur en % pour une valeur réelle de 100"),
+    ("E10.08", "1 / 0.2", 5, "durée moyenne de chômage, en mois"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
 ]

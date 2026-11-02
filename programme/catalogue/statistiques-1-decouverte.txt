@@ -175,6 +175,22 @@ duree: 4-6
 format: educational
 forme: lecon
 
+## S1.12
+titre: Mesurer juste : fiabilité, validité et biais de mesure
+titre_en: Measuring well: reliability, validity and measurement bias
+question: Un très grand jeu de données peut-il donner une conclusion très précise… et fausse ?
+pre: S1.07
+obj: Distinguer erreur aléatoire (bruit) et erreur systématique (biais) | Distinguer fiabilité (mesurer pareil deux fois) et validité (mesurer la bonne chose) | Repérer erreurs de saisie, doublons, unités incohérentes et ruptures de définition | Expliquer pourquoi plus de données réduit le bruit mais jamais le biais
+intuition: Une balance qui ajoute toujours deux kilos est très fiable et toujours fausse ; peser un million de personnes avec elle n'y change rien.
+exemple: Grippe et recherches en ligne (D. Lazer et coll., « The Parable of Google Flu », Science, 2014).
+maths: M0.
+erreurs: Croire qu'un grand échantillon corrige tout ; confondre précision et exactitude.
+exercice: Une enquête de 2 millions de réponses en ligne donne une marge d'erreur de 0,1 point. Pourquoi ce chiffre peut-il être trompeur ?
+correction: La marge d'erreur ne mesure que le bruit d'un tirage aléatoire. Si les répondants en ligne diffèrent de la population, le biais reste entier, quelle que soit la taille.
+duree: 6-8
+format: educational
+forme: lecon
+
 # MODULE S2
 niveau: 1
 titre: Décrire une variable

@@ -238,6 +238,39 @@ duree: 10-12
 format: youtube_lesson
 forme: lecon
 
+## S13.09
+titre: Données fonctionnelles : des courbes comme observations
+titre_en: Functional data: curves as observations
+question: Comment comparer les courbes de croissance de milliers d'enfants ?
+pre: S13.02 | S11.07
+obj: Représenter chaque individu par une courbe lissée | Décrire l'ACP fonctionnelle | Interpréter une courbe moyenne et ses modes de variation
+intuition: Chaque enfant n'est plus un point mais une trajectoire ; on cherche les grandes façons dont les trajectoires diffèrent.
+exemple: Courbes de croissance de Berkeley (J. Ramsay, B. Silverman, Functional Data Analysis, Springer, 2005).
+maths: M3.
+maths_comprendre: M1
+erreurs: Traiter chaque point de mesure comme une variable indépendante.
+exercice: Quelle différence entre la courbe moyenne et la courbe d'un enfant « moyen » ?
+correction: La moyenne point par point peut aplatir les poussées de croissance, qui n'arrivent pas au même âge chez tous : la courbe moyenne ne ressemble à aucun enfant réel.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S13.10
+titre: Données de composition : des parts qui font 100 %
+titre_en: Compositional data: shares that add up to 100%
+question: Pourquoi deux parts d'un budget semblent-elles liées alors qu'elles ne le sont pas ?
+pre: S13.02 | M1.04
+obj: Expliquer la contrainte de somme et ses effets sur les corrélations | Utiliser des log-ratios | Interpréter une composition (budget, parts de marché, alimentation)
+intuition: Si une part monte, une autre doit baisser : une corrélation négative apparaît même sans aucun lien réel.
+exemple: Structure du budget des ménages ; J. Aitchison, The Statistical Analysis of Compositional Data, 1986.
+maths: M2.
+erreurs: Calculer des corrélations sur des parts brutes.
+exercice: Un budget n'a que deux postes, A et B. Quelle est la corrélation entre leurs parts ?
+correction: Exactement −1 : la part de B vaut 1 moins la part de A. Cette corrélation ne dit rien du comportement des ménages.
+duree: 7-9
+format: educational
+forme: lecon
+
 # MODULE S14
 niveau: 4
 titre: Séries temporelles
@@ -296,7 +329,7 @@ titre: Modèles ARMA et ARIMA
 titre_en: ARMA and ARIMA models
 question: Comment modéliser une série qui dépend de ses propres valeurs passées ?
 pre: S14.02
-obj: Décrire les composantes AR, MA et la différenciation | Choisir un ordre à l'aide des corrélogrammes et de critères
+obj: Décrire les composantes AR, MA et la différenciation | Choisir un ordre à l'aide des corrélogrammes et de critères | Ajouter une saisonnalité (SARIMA)
 intuition: Aujourd'hui = une part d'hier + un choc nouveau + une trace des chocs passés.
 exemple: Série mensuelle de passagers aériens.
 maths: M2.
@@ -359,13 +392,29 @@ titre: Données spatiales : autocorrélation spatiale et krigeage
 titre_en: Spatial data: spatial autocorrelation and kriging
 question: Comment estimer la pollution là où il n'y a pas de capteur ?
 pre: S14.02 | S9.04
-obj: Calculer l'idée d'une autocorrélation spatiale (indice de Moran) | Lire un variogramme | Expliquer le krigeage comme une interpolation pondérée avec incertitude
+obj: Calculer l'idée d'une autocorrélation spatiale (indice de Moran) | Lire un variogramme | Expliquer le krigeage comme une interpolation pondérée avec incertitude | Expliquer le problème de l'unité spatiale modifiable (MAUP) : les résultats changent avec le découpage
 intuition: Comme dans le temps, ce qui est proche se ressemble : on prédit un lieu à partir de ses voisins.
 exemple: Concentrations de particules fines mesurées par des stations (données publiques à sourcer).
 maths: M2.
 erreurs: Traiter des observations voisines comme indépendantes ; ignorer l'incertitude des cartes interpolées.
 exercice: Pourquoi une carte de pollution est-elle plus incertaine loin des capteurs ?
 correction: Le krigeage pondère les mesures voisines : loin des capteurs, il y a peu d'information proche, et la variance de prédiction augmente.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S14.09
+titre: Évaluer une prévision sans tricher
+titre_en: Evaluating forecasts honestly
+question: Comment savoir si un modèle de prévision bat vraiment la prévision « demain comme aujourd'hui » ?
+pre: S14.05
+obj: Évaluer avec des fenêtres glissantes ou croissantes, sans fuite d'information future | Comparer à une prévision naïve | Choisir entre MAE, RMSE et MAPE selon leurs limites | Vérifier la calibration d'intervalles de prévision
+intuition: On se met à la place du prévisionniste d'hier, avec seulement les données qu'il avait.
+exemple: Prévision de la demande d'électricité ; compétitions M de prévision (S. Makridakis, à sourcer).
+maths: M1.
+erreurs: Mélanger l'ordre du temps en validation ; utiliser le MAPE quand les valeurs peuvent être proches de zéro.
+exercice: Une valeur réelle de 1 est prévue à 2, une valeur réelle de 100 est prévue à 101. Quelle est l'erreur en pourcentage de chacune ?
+correction: 100 % pour la première, 1 % pour la seconde, alors que l'erreur absolue est la même (1). Le MAPE donne un poids énorme aux petites valeurs.
 duree: 8-10
 format: educational
 forme: lecon
@@ -383,7 +432,7 @@ titre: La censure : quand on ne connaît pas la fin
 titre_en: Censoring: when the story is not over
 question: Comment calculer une durée de vie moyenne quand certains sont encore vivants ?
 pre: S7.01
-obj: Définir la censure à droite | Montrer pourquoi ignorer ou exclure les observations censurées biaise le résultat
+obj: Définir la censure à droite | Montrer pourquoi ignorer ou exclure les observations censurées biaise le résultat | Distinguer censure à droite, censure à gauche et troncature
 intuition: « Encore vivant à 5 ans » est une information, pas une donnée manquante.
 exemple: Durée d'abonnement de clients, dont certains sont encore abonnés.
 maths: M1.
@@ -398,7 +447,7 @@ titre: La courbe de Kaplan-Meier
 titre_en: The Kaplan-Meier curve
 question: Comment tracer une courbe de survie avec des données censurées ?
 pre: S15.01 | S4.07
-obj: Calculer pas à pas un estimateur de Kaplan-Meier sur 8 individus | Lire une médiane de survie et comparer deux courbes
+obj: Calculer pas à pas un estimateur de Kaplan-Meier sur 8 individus | Lire une médiane de survie et comparer deux courbes | Comparer deux courbes avec le test du log-rank
 intuition: À chaque événement, on multiplie par la part de ceux qui « passent » parmi ceux encore observés.
 exemple: Essai thérapeutique fictif, deux bras.
 maths: M1.
@@ -413,7 +462,7 @@ titre: Risque instantané et modèle de Cox
 titre_en: Hazard and the Cox model
 question: Comment mesurer l'effet d'un facteur sur le risque à chaque instant ?
 pre: S15.02 | S10.05
-obj: Définir le risque instantané | Interpréter un rapport de risques (hazard ratio) | Énoncer l'hypothèse des risques proportionnels
+obj: Définir le risque instantané | Interpréter un rapport de risques (hazard ratio) | Énoncer l'hypothèse des risques proportionnels | Vérifier l'hypothèse des risques proportionnels (résidus de Schoenfeld, courbes log-log)
 intuition: Comparer, à chaque instant, le risque de deux groupes encore présents.
 exemple: Lecture d'une publication médicale (exemple à sourcer).
 maths: M2.
@@ -551,7 +600,7 @@ titre: Régularisation : ridge et lasso
 titre_en: Regularization: ridge and lasso
 question: Que faire quand on a plus de variables que d'observations ?
 pre: S17.02 | S9.08
-obj: Expliquer la pénalisation des coefficients | Comparer ridge (rétrécit) et lasso (sélectionne) | Choisir la pénalité par validation croisée
+obj: Expliquer la pénalisation des coefficients | Comparer ridge (rétrécit), lasso (sélectionne) et elastic net (combine les deux) | Choisir la pénalité par validation croisée
 intuition: On fait payer au modèle chaque coefficient trop grand.
 exemple: Prédire un prix avec des centaines de caractéristiques.
 maths: M2-M3.
@@ -655,6 +704,23 @@ duree: 7-9
 format: educational
 forme: lecon
 
+## S17.10
+titre: Haute dimension : sélection, prédiction et inférence
+titre_en: High-dimensional data: selection, prediction and inference
+question: Avec 10 000 variables et 200 individus, que peut-on encore conclure ?
+pre: S17.03 | S11.05 | S8.09
+obj: Expliquer l'elastic net et pourquoi le lasso choisit au hasard entre variables corrélées | Utiliser une validation croisée imbriquée pour évaluer un modèle réglé | Expliquer pourquoi les p-values après sélection sont trop optimistes | Distinguer variables utiles pour prédire et variables causales
+intuition: Avec plus de variables que d'individus, il y a toujours une combinaison qui « explique » tout : c'est le hasard qui a gagné.
+exemple: Expression de milliers de gènes chez quelques centaines de patients.
+maths: M2.
+maths_demontrer: M3
+erreurs: Régler la pénalité et évaluer le modèle sur les mêmes plis ; interpréter les variables retenues par le lasso comme les vraies causes.
+exercice: Pourquoi faut-il une validation croisée imbriquée quand on choisit la pénalité par validation croisée ?
+correction: Le choix de la pénalité a déjà utilisé les plis de validation : l'erreur mesurée sur ces plis est optimiste. Une boucle extérieure, jamais vue pendant le réglage, donne une estimation honnête.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
 # MODULE S18
 niveau: 4
 titre: Compléments théoriques et pratiques avancés
@@ -700,7 +766,7 @@ titre: Données manquantes et imputation multiple
 titre_en: Missing data and multiple imputation
 question: Que faire des réponses manquantes d'une enquête ?
 pre: S1.07 | S10.05
-obj: Distinguer données manquantes complètement au hasard, au hasard et non au hasard | Expliquer pourquoi l'analyse des seuls cas complets peut biaiser | Décrire le principe de l'imputation multiple
+obj: Distinguer données manquantes complètement au hasard, au hasard et non au hasard | Expliquer pourquoi l'analyse des seuls cas complets peut biaiser | Décrire le principe de l'imputation multiple | Repérer le mécanisme par des indicateurs de données manquantes | Dire pourquoi l'imputation simple (par la moyenne) sous-estime l'incertitude
 intuition: Remplacer un trou par une seule valeur fait croire à une certitude qu'on n'a pas ; en imputer plusieurs garde l'incertitude.
 exemple: Revenus non déclarés dans une enquête.
 maths: M2.
@@ -749,7 +815,7 @@ titre: La théorie des valeurs extrêmes
 titre_en: Extreme value theory
 question: Comment estimer la hauteur d'une crue centennale avec cinquante ans de données ?
 pre: S5.09 | S7.05 | S2.06
-obj: Distinguer maxima par blocs et dépassements de seuil | Définir une période de retour | Calculer la probabilité d'au moins un événement centennal sur une période | Énoncer les limites de l'extrapolation
+obj: Distinguer maxima par blocs et dépassements de seuil | Définir une période de retour | Calculer la probabilité d'au moins un événement centennal sur une période | Énoncer les limites de l'extrapolation | Nommer les lois limites : loi des valeurs extrêmes généralisée (GEV) pour les maxima, loi de Pareto généralisée (GPD) pour les dépassements | Lire un niveau de retour avec son intervalle
 intuition: Les maxima ont leur propre loi, comme les moyennes ont la loi normale : on peut extrapoler, prudemment.
 exemple: Crues et digues aux Pays-Bas ; niveaux de la mer (à sourcer).
 maths: M2.

@@ -368,7 +368,7 @@ titre: Instruments faibles et validité
 titre_en: Weak instruments and validity
 question: Un instrument qui explique très peu la cause pose-t-il problème ?
 pre: E5.02
-obj: Lire la statistique F de première étape | Expliquer le biais des instruments faibles | Dire pourquoi l'exclusion ne se teste pas complètement
+obj: Lire la statistique F de première étape | Expliquer le biais des instruments faibles | Dire pourquoi l'exclusion ne se teste pas complètement | Utiliser une inférence robuste aux instruments faibles (test d'Anderson-Rubin) | Discuter plusieurs instruments et la validité externe
 intuition: Une pichenette trop faible se noie dans le bruit, et l'estimation dérive vers celle des MCO.
 exemple: Débats autour d'instruments célèbres.
 maths: M2.
@@ -383,7 +383,7 @@ titre: Effet local : qui mesure-t-on vraiment ?
 titre_en: The local average treatment effect
 question: L'effet estimé par un instrument vaut-il pour tout le monde ?
 pre: E5.03
-obj: Définir les « compliers » et l'effet local moyen (LATE) | Discuter la portée externe d'une estimation par instrument
+obj: Définir les « compliers » et l'effet local moyen (LATE) | Discuter la portée externe d'une estimation par instrument | Distinguer effet de l'intention de traiter (ITT) et effet du traitement reçu (TOT) dans un plan d'encouragement
 intuition: L'instrument ne mesure l'effet que chez ceux qu'il fait changer de comportement.
 exemple: Loterie d'accès à une école ou à une assurance.
 maths: M1-M2.
@@ -406,6 +406,23 @@ maths_comprendre: M2
 erreurs: Croire qu'un test de Hansen non significatif prouve la validité des instruments.
 exercice: Avec 3 instruments et 1 variable endogène, combien de degrés de suridentification ?
 correction: 3 − 1 = 2 conditions en surnombre, que le test de Hansen confronte entre elles.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## E5.06
+titre: Systèmes d'équations simultanées : identification, 2SLS et 3SLS
+titre_en: Simultaneous equation systems: identification, 2SLS and 3SLS
+question: Comment estimer à la fois l'offre et la demande d'un marché ?
+pre: E5.02 | E4.02
+obj: Écrire un système d'équations simultanées | Appliquer les conditions d'ordre et de rang | Comparer estimation équation par équation (2SLS) et estimation jointe (3SLS)
+intuition: Pour reconnaître la demande, il faut une variable qui ne déplace que l'offre, et inversement.
+exemple: Marché du poisson de Fulton à New York (K. Graddy, Journal of Economic Perspectives, 2006).
+maths: M3.
+maths_comprendre: M1
+erreurs: Croire qu'une équation est identifiée parce que le système est grand.
+exercice: L'équation de demande contient le prix (endogène) et le revenu. L'équation d'offre contient le prix et la météo. Laquelle est identifiée ?
+correction: La demande est identifiée par la météo, exclue de la demande et présente dans l'offre. L'offre est identifiée par le revenu, exclu de l'offre. Chacune a exactement un instrument : les deux sont juste identifiées.
 duree: 10-12
 format: youtube_lesson
 forme: lecon
@@ -468,7 +485,7 @@ titre: Panels dynamiques
 titre_en: Dynamic panels
 question: Que se passe-t-il quand le passé de la variable explique son présent ?
 pre: E6.02 | E5.02
-obj: Expliquer le biais de Nickell | Présenter l'idée des estimateurs par la méthode des moments généralisée (Arellano-Bond) et leurs risques
+obj: Expliquer le biais de Nickell | Présenter l'idée des estimateurs par la méthode des moments généralisée (Arellano-Bond) et leurs risques | Comparer GMM en différences et GMM système | Repérer la prolifération des instruments et lire les diagnostics (test de Hansen, autocorrélation d'ordre 2)
 intuition: Avec peu de périodes, retirer la moyenne individuelle crée un lien artificiel entre retard et erreur.
 exemple: Persistance de l'emploi dans les entreprises.
 maths: M2-M3.
@@ -484,7 +501,7 @@ titre_en: Spatial econometrics
 question: Le chômage d'une région dépend-il de celui de ses voisines ?
 pre: E6.02 | E3.02
 renvoi: S14.08
-obj: Écrire une matrice de voisinage | Distinguer décalage spatial de la variable et erreurs spatialement corrélées | Expliquer le problème de la réflexion de Manski
+obj: Écrire une matrice de voisinage | Distinguer décalage spatial de la variable et erreurs spatialement corrélées | Expliquer le problème de la réflexion de Manski | Distinguer modèles SAR, SEM et SDM | Calculer l'idée d'effets directs et indirects (débordements)
 intuition: Les régions s'influencent, mais elles partagent aussi des chocs communs : il faut séparer les deux.
 exemple: L. Anselin, Spatial Econometrics: Methods and Models, Kluwer, 1988.
 maths: M3.
@@ -524,7 +541,7 @@ titre: Expériences naturelles
 titre_en: Natural experiments
 question: Peut-on trouver une expérience que personne n'a organisée ?
 pre: E7.01
-obj: Reconnaître une expérience naturelle et son argument d'identification | Discuter la plausibilité du « comme si c'était aléatoire »
+obj: Reconnaître une expérience naturelle et son argument d'identification | Discuter la plausibilité du « comme si c'était aléatoire » | Repérer une assignation imparfaite et la non-conformité dans une expérience naturelle
 intuition: Parfois, une règle, une loterie ou un accident répartit les gens presque au hasard.
 exemple: Loterie de visas ou loterie militaire (exemples à sourcer).
 maths: M1.
@@ -569,7 +586,7 @@ titre: La régression sur discontinuité
 titre_en: Regression discontinuity
 question: Les élèves juste au-dessus d'un seuil d'admission réussissent-ils mieux que ceux juste en dessous ?
 pre: E7.01 | S9.07
-obj: Expliquer la logique du seuil | Distinguer discontinuité nette et floue | Citer les tests de manipulation et de continuité
+obj: Expliquer la logique du seuil | Distinguer discontinuité nette et floue | Citer les tests de manipulation et de continuité | Choisir une bande passante et montrer la sensibilité du résultat | Mener des tests placebo à de faux seuils | Dire que l'effet n'est valable qu'au voisinage du seuil
 intuition: Juste autour du seuil, être d'un côté ou de l'autre tient presque du hasard.
 exemple: Seuil de taille de classe, la « règle de Maïmonide » en Israël (J. Angrist, V. Lavy, Quarterly Journal of Economics, 1999).
 maths: M2.
@@ -584,7 +601,7 @@ titre: Le contrôle synthétique
 titre_en: Synthetic control
 question: Comment évaluer une politique appliquée à une seule région ?
 pre: E7.03
-obj: Construire l'idée d'un témoin synthétique comme moyenne pondérée de régions | Expliquer les tests placebo
+obj: Construire l'idée d'un témoin synthétique comme moyenne pondérée de régions | Expliquer les tests placebo | Juger la qualité de l'ajustement avant l'intervention | Mener des placebos dans l'espace et dans le temps | Présenter le contrôle synthétique généralisé et les limites de l'inférence
 intuition: Fabriquer un « jumeau » à partir d'un mélange d'autres régions qui imitait bien l'avant.
 exemple: Programme anti-tabac californien (A. Abadie, A. Diamond, J. Hainmueller, Journal of the American Statistical Association, 2010) ; réunification allemande (mêmes auteurs, American Journal of Political Science, 2015).
 maths: M2.
@@ -615,7 +632,7 @@ titre_en: Heterogeneous effects and causal machine learning
 question: Un traitement efficace en moyenne l'est-il pour tout le monde ?
 pre: E7.07 | S11.05 | S9.05
 renvoi: S17.04
-obj: Distinguer effet moyen et effet conditionnel (CATE) | Décrire l'idée du double apprentissage automatique (double ML) et des forêts causales | Expliquer pourquoi l'apprentissage ne remplace pas l'hypothèse d'identification
+obj: Distinguer effet moyen et effet conditionnel (CATE) | Décrire l'idée du double apprentissage automatique (double ML) et des forêts causales | Expliquer pourquoi l'apprentissage ne remplace pas l'hypothèse d'identification | Expliquer l'échantillonnage croisé (cross-fitting) et le risque de surapprentissage qu'il évite
 intuition: L'apprentissage automatique sert à bien prédire les variables de contrôle, la stratégie d'identification sert à mesurer l'effet.
 exemple: V. Chernozhukov et coll., Econometrics Journal, 2018 (double ML) ; S. Wager, S. Athey, JASA, 2018 (forêts causales).
 maths: M2.
@@ -669,7 +686,7 @@ titre: Cointégration et modèle à correction d'erreur
 titre_en: Cointegration and error correction
 question: Deux séries qui dérivent peuvent-elles rester liées à long terme ?
 pre: E8.02
-obj: Définir la cointégration | Interpréter un modèle à correction d'erreur (court terme et retour vers l'équilibre)
+obj: Définir la cointégration | Interpréter un modèle à correction d'erreur (court terme et retour vers l'équilibre) | Décrire les tests d'Engle-Granger et de Johansen | Écrire un modèle vectoriel à correction d'erreur (VECM) | Dire qu'une relation de long terme n'est pas une causalité
 intuition: Un promeneur et son chien : chacun erre, mais la laisse les empêche de trop s'éloigner.
 exemple: Consommation et revenu ; prix d'un même bien sur deux marchés.
 maths: M2.
@@ -737,6 +754,22 @@ maths: M2.
 erreurs: Choisir des séries témoins elles-mêmes touchées par l'événement.
 exercice: Pourquoi une série témoin touchée par la même campagne sous-estime-t-elle l'effet ?
 correction: Le contrefactuel monte avec elle : l'écart mesuré est plus petit que l'effet réel.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E8.08
+titre: Ruptures structurelles : quand la relation change
+titre_en: Structural breaks: when the relationship changes
+question: La relation entre chômage et inflation est-elle la même qu'il y a quarante ans ?
+pre: E8.02 | E3.01
+obj: Appliquer un test de Chow à une date connue | Décrire la recherche de ruptures à dates inconnues (Bai-Perron) | Distinguer rupture de paramètres de la moyenne et changement de régime de volatilité (E9.06)
+intuition: Un modèle estimé sur toute la période fait la moyenne de deux mondes qui n'existent plus séparément.
+exemple: Courbe de Phillips ; J. Bai, P. Perron, Econometrica, 1998.
+maths: M2.
+erreurs: Choisir la date de rupture en regardant les données, puis la tester comme si elle était connue d'avance.
+exercice: Pourquoi le test de Chow devient-il trop favorable à la rupture si l'on choisit la date au vu du graphique ?
+correction: On a choisi la date qui maximise l'écart : la statistique n'a plus la loi supposée sous l'hypothèse nulle. Il faut des valeurs critiques adaptées à une date inconnue (tests de type sup-F).
 duree: 8-10
 format: educational
 forme: lecon
@@ -1003,6 +1036,54 @@ exercice: Pourquoi une régression naïve de la quantité sur le prix sous-estim
 correction: Les prix montent quand la demande est forte (simultanéité, E4.02) : sans instrument, une part de la demande se mêle à l'effet du prix.
 duree: 10-12
 format: youtube_lesson
+forme: lecon
+
+## E10.06
+titre: Effets sur toute la distribution : quantiles conditionnels et inconditionnels
+titre_en: Effects on the whole distribution: conditional and unconditional quantiles
+question: Une hausse du taux de syndicalisation réduit-elle les inégalités de salaire ?
+pre: S9.12 | E2.02
+obj: Distinguer quantile conditionnel et quantile inconditionnel | Décrire la régression sur fonction d'influence recentrée (RIF) | Interpréter un effet sur le 10e et le 90e centile de la distribution des salaires
+intuition: Un effet au 90e centile « à caractéristiques données » n'est pas l'effet sur le 90e centile de toute la population.
+exemple: S. Firpo, N. Fortin, T. Lemieux, Econometrica, 2009.
+maths: M2.
+erreurs: Lire un coefficient de régression quantile conditionnelle comme un effet sur la distribution globale.
+exercice: Pourquoi l'effet d'un diplôme au 90e centile conditionnel diffère-t-il de son effet sur le 90e centile de tous les salaires ?
+correction: Le quantile conditionnel compare des personnes aux caractéristiques identiques ; le quantile inconditionnel mélange tous les groupes. Changer la part de diplômés déplace la distribution globale différemment.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E10.07
+titre: Logit emboîté et logit mixte
+titre_en: Nested and mixed logit
+question: Comment modéliser des choix où certaines options se ressemblent ?
+pre: E10.04
+obj: Regrouper les options proches dans un logit emboîté | Décrire le logit mixte et l'hétérogénéité des préférences | Distinguer choix observé et préférence latente
+intuition: Le bus bleu et le bus rouge vont dans le même nid : on choisit d'abord le mode, puis l'option.
+exemple: K. Train, Discrete Choice Methods with Simulation, 2e éd., Cambridge University Press, 2009 (accès libre en ligne, à vérifier).
+maths: M2.
+erreurs: Lire les coefficients d'un logit mixte comme ceux d'une personne type.
+exercice: Pourquoi le logit emboîté corrige-t-il le problème du bus bleu et du bus rouge ?
+correction: Les deux bus sont dans le même nid : un nouveau bus prend ses passagers surtout dans ce nid, et pas proportionnellement à la voiture et au train.
+duree: 8-10
+format: educational
+forme: lecon
+
+## E10.08
+titre: Modèles de durée en économie
+titre_en: Duration models in economics
+question: Plus on reste au chômage, moins on a de chances d'en sortir : vrai effet ou effet de sélection ?
+pre: S15.03 | E10.01
+obj: Définir un taux de sortie et une durée moyenne | Distinguer dépendance à la durée réelle et hétérogénéité non observée | Interpréter un modèle de durée avec censure
+intuition: Ceux qui restent longtemps au chômage ne sont pas forcément pénalisés par la durée : ce sont peut-être ceux qui avaient le moins de chances dès le départ.
+exemple: Durées de chômage (T. Lancaster, The Econometric Analysis of Transition Data, 1990).
+maths: M2.
+erreurs: Lire une baisse du taux de sortie avec la durée comme un effet causal de la durée.
+exercice: Un taux de sortie constant vaut 0,2 par mois. Quelle est la durée moyenne de chômage ?
+correction: Avec un taux constant, la durée suit une loi exponentielle (ou géométrique en temps discret) de moyenne 1 / 0,2 = 5 mois.
+duree: 8-10
+format: educational
 forme: lecon
 
 # MODULE E11

@@ -132,6 +132,22 @@ duree: 7-9
 format: educational
 forme: lecon
 
+## S6.09
+titre: Variance sous plan complexe : effet de plan et poids de réplication
+titre_en: Variance under complex designs: design effects and replicate weights
+question: Pourquoi 1 000 répondants d'un sondage par grappes valent-ils moins que 1 000 répondants tirés au hasard ?
+pre: S6.08 | S6.03
+obj: Définir l'effet de plan et la taille d'échantillon effective | Calculer l'effet de plan dû à la dispersion des poids (formule de Kish) | Décrire les poids de réplication (bootstrap, jackknife de sondage) | Expliquer pourquoi une erreur standard « classique » est trop optimiste
+intuition: Des personnes du même quartier se ressemblent : chacune apporte moins d'information neuve.
+exemple: Grandes enquêtes publiques qui diffusent des poids de réplication (à sourcer, par exemple l'enquête américaine ACS).
+maths: M1.
+erreurs: Analyser des données d'enquête pondérées comme un échantillon aléatoire simple.
+exercice: Les poids d'une enquête de 1 000 personnes ont un coefficient de variation de 0,5. Quel effet de plan, et quelle taille effective ?
+correction: Effet de plan de Kish : 1 + 0,5² = 1,25. Taille effective : 1 000 / 1,25 = 800 personnes.
+duree: 8-10
+format: educational
+forme: lecon
+
 # MODULE S7
 niveau: 3
 titre: Estimation et intervalles de confiance
@@ -326,7 +342,7 @@ titre: Erreurs de type I et II, puissance
 titre_en: Type I and II errors, and power
 question: Un test peut-il passer à côté d'un vrai effet ?
 pre: S8.02
-obj: Définir α, β et puissance | Expliquer le compromis entre les deux erreurs | Dire comment n et la taille d'effet changent la puissance
+obj: Définir α, β et puissance | Expliquer le compromis entre les deux erreurs | Dire comment n et la taille d'effet changent la puissance | Calculer l'ordre de grandeur d'un effet minimal détectable | Expliquer pourquoi « non significatif » ne veut pas dire « aucun effet »
 intuition: Une alarme trop sensible sonne pour rien ; trop peu sensible, elle rate l'incendie.
 exemple: Détecteur de fumée ; essai clinique sous-dimensionné.
 maths: M2.
@@ -416,7 +432,7 @@ titre: Tests multiples, p-hacking et reproductibilité
 titre_en: Multiple testing, p-hacking and the replication crisis
 question: Si l'on teste 20 couleurs de bonbons, combien sembleront « liées à l'acné » par hasard ?
 pre: S8.03
-obj: Calculer la probabilité d'au moins un faux positif sur k tests | Expliquer les corrections (Bonferroni, taux de fausses découvertes) | Décrire pré-enregistrement et réplication
+obj: Calculer la probabilité d'au moins un faux positif sur k tests | Appliquer les corrections de Bonferroni et de Holm, et la procédure de Benjamini-Hochberg pour le taux de fausses découvertes | Distinguer recherche exploratoire et confirmatoire ; repérer p-hacking et HARKing (hypothèse formulée après avoir vu les résultats) | Décrire pré-enregistrement et réplication
 intuition: Si l'on cherche assez longtemps, le hasard finit toujours par offrir un résultat.
 exemple: 20 tests indépendants à 5 % : 1 − 0,95²⁰ ≈ 64 % de chances d'au moins un faux positif.
 maths: M1-M2.
@@ -668,6 +684,22 @@ duree: 8-10
 format: educational
 forme: lecon
 
+## S9.14
+titre: Conduire un essai randomisé : aveugle, conformité, attrition
+titre_en: Running a randomized trial: blinding, compliance and attrition
+question: Que peut-il encore mal tourner une fois le tirage au sort effectué ?
+pre: S1.06 | S8.03 | S9.10
+obj: Choisir l'unité de randomisation (individu, classe, village) et dire ce qu'elle change | Expliquer placebo, simple et double aveugle | Distinguer analyse en intention de traiter et traitement reçu | Repérer attrition, contamination et non-conformité | Calculer l'effet du traitement reçu à partir de l'effet en intention de traiter
+intuition: Le tirage au sort crée deux groupes comparables ; tout ce qui arrive ensuite peut défaire cette comparabilité.
+exemple: Essais cliniques et rapports CONSORT ; essais par grappes en éducation (à sourcer).
+maths: M1.
+erreurs: Retirer de l'analyse les personnes qui n'ont pas suivi le traitement ; ignorer la corrélation intra-grappe.
+exercice: On offre un programme à 1 000 personnes tirées au sort ; 60 % le suivent. L'effet en intention de traiter vaut 3 points. Quel est l'effet chez ceux qui le suivent, si l'offre n'agit qu'à travers le programme ?
+correction: Estimateur de Wald : 3 / 0,6 = 5 points. L'hypothèse clé est que l'offre seule n'a aucun effet (exclusion) et que personne du groupe témoin ne suit le programme.
+duree: 10-12
+format: youtube_lesson
+forme: lecon
+
 # MODULE S10
 niveau: 3
 titre: Modèles linéaires généralisés
@@ -773,7 +805,7 @@ titre: Effets aléatoires et modèles mixtes
 titre_en: Random effects and mixed models
 question: Comment comparer des hôpitaux qui ont très peu de patients ?
 pre: S10.05 | S9.05
-obj: Expliquer l'idée d'effet aléatoire et de rétrécissement vers la moyenne | Distinguer données groupées et observations indépendantes
+obj: Expliquer l'idée d'effet aléatoire et de rétrécissement vers la moyenne | Distinguer données groupées et observations indépendantes | Distinguer ordonnée à l'origine aléatoire et pente aléatoire | Calculer et interpréter la corrélation intra-classe (ICC) | Comparer modèle mixte et erreurs standard groupées : modéliser la dépendance ou seulement corriger l'inférence
 intuition: Un petit hôpital avec un résultat extrême est probablement moins extrême qu'il n'y paraît.
 exemple: Classements d'établissements (avec prudence de formulation).
 maths: M2.
@@ -841,7 +873,7 @@ titre: Méthodes non paramétriques et rangs
 titre_en: Nonparametric methods and ranks
 question: Que faire si les données sont très asymétriques ou ordinales ?
 pre: S8.04
-obj: Appliquer un test de Mann-Whitney et de Wilcoxon sur un petit exemple | Dire ce que l'on gagne et ce que l'on perd à passer aux rangs
+obj: Appliquer un test de Mann-Whitney et de Wilcoxon sur un petit exemple | Dire ce que l'on gagne et ce que l'on perd à passer aux rangs | Dire ce que teste réellement Mann-Whitney (la probabilité qu'une valeur d'un groupe dépasse une valeur de l'autre), qui n'est une comparaison de médianes que sous des hypothèses de forme | Étendre à plusieurs groupes (Kruskal-Wallis)
 intuition: Remplacer les valeurs par leur classement neutralise les valeurs extrêmes.
 exemple: Satisfaction notée de 1 à 5 dans deux magasins.
 maths: M1.
@@ -911,6 +943,39 @@ erreurs: Choisir la fenêtre pour obtenir la forme attendue ; lire une bosse due
 exercice: Que se passe-t-il quand la fenêtre devient très grande, puis très petite ?
 correction: Très grande : une seule bosse lisse qui efface la structure. Très petite : un pic par observation, qui reproduit le bruit.
 duree: 6-8
+format: educational
+forme: lecon
+
+## S11.09
+titre: Rééchantillonner plus finement : jackknife, BCa et données dépendantes
+titre_en: Resampling further: jackknife, BCa and dependent data
+question: Le bootstrap simple marche-t-il toujours ?
+pre: S11.02 | S7.01
+obj: Calculer une estimation jackknife du biais | Expliquer pourquoi l'intervalle BCa corrige le percentile | Utiliser un bootstrap par blocs pour des séries temporelles | Dire quand le bootstrap échoue (maximum, très petits échantillons, plans complexes)
+intuition: Rééchantillonner suppose que les observations sont interchangeables ; si elles se suivent, il faut tirer des morceaux entiers.
+exemple: Intervalle de confiance d'une médiane ; série de ventes journalières.
+maths: M2.
+erreurs: Bootstrapper des observations dépendantes comme si elles étaient indépendantes.
+exercice: Pourquoi tirer des jours au hasard dans une série de températures sous-estime-t-il l'incertitude ?
+correction: Les jours consécutifs se ressemblent. Les tirer séparément détruit cette dépendance : la variabilité simulée est trop faible. Le bootstrap par blocs garde la dépendance à l'intérieur de chaque bloc.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S11.10
+titre: La statistique robuste
+titre_en: Robust statistics
+question: Comment résumer des données quand quelques valeurs extrêmes faussent tout ?
+pre: S2.09 | S9.06
+obj: Calculer une moyenne tronquée et l'écart absolu médian (MAD) | Expliquer le point de rupture d'un estimateur | Décrire l'idée d'un M-estimateur et d'une régression robuste | Distinguer erreur, valeur rare et observation influente
+intuition: Un bon résumé ne doit pas basculer parce qu'une seule personne a déclaré un revenu de dix milliards.
+exemple: Temps de réponse d'un serveur informatique, avec quelques pannes.
+maths: M1.
+maths_demontrer: M2
+erreurs: Supprimer les valeurs gênantes sans le dire ; croire qu'une méthode robuste dispense de comprendre les valeurs extrêmes.
+exercice: Données : 1, 2, 3, 4, 100. Comparer la moyenne et la moyenne tronquée à 20 %.
+correction: Moyenne : 110 / 5 = 22. Moyenne tronquée à 20 % (on retire une valeur à chaque bout) : (2 + 3 + 4) / 3 = 3.
+duree: 8-10
 format: educational
 forme: lecon
 
