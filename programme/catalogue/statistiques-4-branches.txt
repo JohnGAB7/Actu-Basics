@@ -835,3 +835,143 @@ duree: 10-12
 format: youtube_lesson
 forme: lecon
 
+
+# MODULE S19
+niveau: 4
+titre: Passerelles vers l'IA et l'informatique
+titre_en: Bridges to AI and computer science
+titre_court: Passerelles IA et informatique
+pre: S17
+maths: M2 → M3
+but: Expliquer les notions d'informatique et d'IA qui entourent les modèles statistiques et que le spectateur croise dans l'actualité : architectures des réseaux de neurones, modèles de langue, optimisation à grande échelle, mise en production, limites du calcul, droit et éthique des algorithmes. Ces sujets ne relèvent pas surtout de la statistique (section 3.4), mais ils sont pertinents pour comprendre les chiffres de l'IA (décision de JG). Chaque vidéo part d'une question statistique et dit ce qui relève de l'ingénierie.
+
+## S19.01
+titre: Réseaux profonds : couches, activations et rétropropagation
+titre_en: Deep networks: layers, activations and backpropagation
+question: Comment un réseau à plusieurs couches apprend-il ses millions de paramètres ?
+pre: S17.08 | M2.03
+obj: Décrire une couche comme une combinaison linéaire suivie d'une activation | Compter les paramètres d'un petit réseau | Expliquer la rétropropagation comme l'application répétée de la règle de dérivation en chaîne | Dire pourquoi plus de paramètres que d'observations ne condamne pas automatiquement à surapprendre, sans en faire une garantie
+intuition: Chaque couche fabrique de nouvelles variables ; la rétropropagation répartit l'erreur finale entre tous les réglages, de la sortie vers l'entrée.
+exemple: Réseau 4-3-1 dessiné à l'écran, puis ordres de grandeur des grands modèles (à sourcer).
+maths: M2.
+maths_demontrer: M3
+erreurs: Croire que la rétropropagation imite le cerveau ; croire que le nombre de paramètres mesure l'intelligence d'un modèle.
+exercice: Un réseau a 4 entrées, une couche cachée de 3 neurones et 1 sortie, chaque neurone ayant un biais. Combien de paramètres compte-t-il ?
+correction: Couche cachée : 4 × 3 poids + 3 biais = 15. Sortie : 3 poids + 1 biais = 4. Total : 19 paramètres.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S19.02
+titre: Réseaux convolutifs : voir avec des poids partagés
+titre_en: Convolutional networks: seeing with shared weights
+question: Pourquoi les réseaux qui lisent les images n'ont-ils pas un poids par pixel ?
+pre: S19.01
+obj: Expliquer le filtre de convolution comme un même petit motif cherché partout dans l'image | Comparer le nombre de paramètres d'une couche convolutive et d'une couche dense | Relier le partage des poids à une hypothèse sur les données (un motif a le même sens partout) | Citer une limite : sensibilité à des perturbations invisibles pour l'œil humain
+intuition: Une loupe qui glisse sur l'image et cherche partout le même motif, au lieu d'apprendre chaque pixel séparément.
+exemple: Détection de bords sur une image de chiffre manuscrit (MNIST).
+maths: M1-M2.
+erreurs: Croire qu'un réseau convolutif « voit » comme un humain ; oublier que le partage des poids est une hypothèse.
+exercice: Une image de 28 × 28 pixels en niveaux de gris. Couche convolutive : 8 filtres de 3 × 3, avec un biais chacun. Couche dense : 8 neurones reliés à tous les pixels, avec un biais chacun. Comptez les paramètres des deux couches.
+correction: Convolutive : 8 × (3 × 3 + 1) = 80 paramètres. Dense : 8 × (784 + 1) = 6 280 paramètres. Le partage des poids divise le nombre de paramètres par près de 80, au prix d'une hypothèse sur les images.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S19.03
+titre: Modèles de langue : prédire le mot suivant
+titre_en: Language models: predicting the next word
+question: Que calcule réellement un modèle comme ceux des assistants conversationnels ?
+pre: S19.01 | S4.01
+obj: Décrire un modèle de langue comme une loi de probabilité sur le mot suivant | Calculer une probabilité par la fonction softmax à partir de scores | Expliquer l'attention comme une moyenne pondérée des mots déjà lus | Expliquer pourquoi une réponse fluide peut être fausse (hallucination) : le modèle optimise la vraisemblance du texte, pas la vérité
+intuition: Un autocomplétion géant : à chaque pas, une distribution de probabilité sur tous les mots possibles.
+exemple: Compléter « Le chat dort sur le… » avec trois candidats et leurs scores.
+maths: M1-M2.
+maths_demontrer: M3
+erreurs: Prendre une probabilité élevée pour une garantie de vérité ; croire que le modèle consulte une base de faits.
+exercice: Trois mots candidats ont les scores 2, 1 et 0. Quelle probabilité la fonction softmax donne-t-elle au premier ?
+correction: e² / (e² + e¹ + e⁰) = 7,39 / (7,39 + 2,72 + 1) ≈ 0,665, soit environ 66,5 %. Les deux autres reçoivent environ 24,5 % et 9 %.
+duree: 10-14
+format: youtube_lesson
+forme: lecon
+
+## S19.04
+titre: Optimiser à grande échelle : la descente de gradient stochastique
+titre_en: Optimisation at scale: stochastic gradient descent
+question: Comment ajuster un modèle quand les données ne tiennent pas en mémoire ?
+pre: S17.08 | M2.01
+obj: Faire un pas de descente de gradient à la main | Expliquer le rôle du taux d'apprentissage (trop petit : lent ; trop grand : divergence) | Expliquer pourquoi un gradient calculé sur un petit lot est une estimation bruitée du vrai gradient | Dire ce qui relève de l'optimisation numérique (méthodes adaptatives, calcul distribué) et n'est pas détaillé
+intuition: Descendre une montagne dans le brouillard en regardant seulement la pente sous ses pieds, estimée sur quelques cailloux.
+exemple: Ajuster une droite de régression par descente de gradient et comparer aux moindres carrés exacts.
+maths: M2.
+erreurs: Croire que la descente trouve toujours le meilleur minimum ; confondre convergence de l'algorithme et qualité du modèle.
+exercice: On minimise f(w) = (w − 3)² en partant de w = 0, avec un taux d'apprentissage de 0,1. Quelle est la valeur de w après un pas ?
+correction: f'(w) = 2(w − 3), donc f'(0) = −6. Nouveau w = 0 − 0,1 × (−6) = 0,6. On se rapproche du minimum w = 3 sans l'atteindre en un pas.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S19.05
+titre: Modèles génératifs : fabriquer des textes et des images
+titre_en: Generative models: producing text and images
+question: Comment une machine produit-elle une image ou un texte qui n'existait pas ?
+pre: S19.03 | S5.01
+obj: Expliquer la génération comme un tirage dans une loi apprise | Expliquer l'effet de la température sur la diversité des tirages | Distinguer ressemblance avec les données d'entraînement et exactitude | Repérer les questions statistiques posées : biais des données d'entraînement, mémorisation, évaluation
+intuition: Apprendre la forme d'un nuage de points, puis y tirer de nouveaux points plausibles.
+exemple: Générer des phrases avec une température basse puis haute à partir d'un même modèle jouet.
+maths: M1-M2.
+maths_demontrer: M3
+erreurs: Croire qu'un contenu généré est une copie ou, à l'inverse, qu'il ne doit rien aux données ; confondre plausible et vrai.
+exercice: Avec une température plus basse, la probabilité du mot le plus probable augmente-t-elle ou diminue-t-elle ? Pourquoi ?
+correction: Elle augmente : diviser les scores par une température plus basse creuse les écarts avant le softmax, et le tirage devient plus prévisible.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S19.06
+titre: Du modèle à la production : données, dérive et surveillance
+titre_en: From model to production: data, drift and monitoring
+question: Pourquoi un modèle qui marchait très bien se met-il à se tromper ?
+pre: S17.05 | S17.01
+obj: Distinguer dérive des données (les entrées changent) et dérive du concept (la relation change) | Expliquer pourquoi la performance mesurée avant le déploiement ne vaut que si les données futures ressemblent aux données de test | Proposer une surveillance simple : comparer chaque mois la distribution des entrées et le taux d'erreur | Dire ce qui relève du génie logiciel (pipelines, versionnement, infrastructure)
+intuition: Un modèle est une photo du passé ; le monde, lui, continue de bouger.
+exemple: Un modèle de détection de fraude après un changement de moyen de paiement (cas fictif).
+maths: M1.
+erreurs: Croire qu'un modèle validé l'est pour toujours ; ne surveiller que la performance globale et rater un sous-groupe.
+exercice: Un classifieur avait 5 % d'erreurs en test ; il en fait 12 % trois mois après son déploiement. Citez deux explications possibles et ce que vous vérifiez pour les départager.
+correction: Dérive des données : comparer la distribution des entrées récentes à celle du test. Dérive du concept : à entrées comparables, vérifier si la relation entre entrées et résultat a changé (taux d'erreur par sous-groupe, réentraînement sur données récentes). Un problème de données (capteur, codage) est une troisième piste.
+duree: 7-9
+format: educational
+forme: lecon
+
+## S19.07
+titre: Ce qu'un ordinateur peut calculer : complexité et explosion combinatoire
+titre_en: What a computer can compute: complexity and combinatorial explosion
+question: Pourquoi ne peut-on pas simplement essayer toutes les combinaisons ?
+pre: S4.03 | S17.10
+obj: Calculer le nombre de sous-ensembles de variables | Distinguer un temps de calcul qui croît comme n, comme n² ou comme 2ⁿ | Expliquer pourquoi la sélection exhaustive de variables devient impossible, et ce que fait le lasso à la place | Évoquer l'existence de problèmes indécidables ou intraitables, sans les démontrer
+intuition: Doubler les données double parfois le temps de calcul ; ajouter une variable peut le doubler aussi.
+exemple: Sélection de variables parmi 30 candidates.
+maths: M1.
+erreurs: Croire qu'un ordinateur assez puissant résout tout ; confondre « long à calculer » et « impossible à calculer ».
+exercice: Combien de sous-ensembles de variables peut-on former à partir de 30 variables candidates ? À un million de modèles ajustés par seconde, combien de temps faut-il pour tous les essayer ?
+correction: 2³⁰ = 1 073 741 824 sous-ensembles. À un million par seconde : environ 1 074 secondes, soit près de 18 minutes. Avec 60 variables, 2⁶⁰ modèles demanderaient plus de 36 000 ans.
+duree: 8-10
+format: educational
+forme: lecon
+
+## S19.08
+titre: Algorithmes, droit et éthique
+titre_en: Algorithms, law and ethics
+question: Qui est responsable quand un algorithme décide ?
+pre: S17.06 | S1.10 | S17.05
+obj: Distinguer trois questions : un modèle est-il exact, est-il équitable, est-il légal ? | Expliquer pourquoi plusieurs définitions statistiques de l'équité ne peuvent pas, en général, être satisfaites en même temps quand les taux de base diffèrent | Situer les grands cadres juridiques (protection des données, réglementation européenne de l'IA) sans donner d'avis juridique | Formuler une question de transparence à poser à tout système de décision automatisée
+intuition: Un même taux d'erreur moyen peut cacher des erreurs très différentes selon les groupes.
+exemple: Débat sur un outil de prédiction de récidive aux États-Unis (à sourcer) ; RGPD et règlement européen sur l'IA (textes et dates à vérifier lors de la préparation).
+maths: M1.
+erreurs: Croire qu'un algorithme est neutre parce qu'il est mathématique ; croire qu'enlever une variable sensible suffit à supprimer une discrimination.
+exercice: Deux groupes ont des taux de base différents. Pourquoi un classifieur peut-il avoir la même précision dans les deux groupes et des taux de faux positifs différents ?
+correction: La précision (part de vrais positifs parmi les prédictions positives) dépend du taux de base. À taux de base différents, égaliser la précision oblige en général à accepter des taux de faux positifs ou de faux négatifs différents : on ne peut pas tout égaliser à la fois, sauf classifieur parfait. Choisir quelle égalité défendre est une décision éthique et juridique, pas seulement statistique.
+duree: 10-12
+format: youtube_lesson
+forme: lecon

@@ -18,7 +18,7 @@ Le moteur de production et `00_STRATEGY/ARCHITECTURE_EDITORIALE.md` utilisent qu
 
 | Pilier du programme | Famille dans la fiche (moteur) | Type de fiche |
 |---|---|---|
-| 1 · Statistiques, modules S1 à S3, S6 à S18 | `apprendre_les_statistiques` | `pedagogique` |
+| 1 · Statistiques, modules S1 à S3, S6 à S19 | `apprendre_les_statistiques` | `pedagogique` |
 | 1 · Statistiques, modules S4 et S5 (probabilités) | `comprendre_les_probabilites` | `pedagogique` |
 | 1 · Branches appliquées (S10.06, S17) | `statistiques_en_pratique` | `pedagogique` |
 | 2 · Économétrie | `statistiques_en_pratique` *(arbitrage A1 : piliers au-dessus des familles, moteur inchangé)* | `pedagogique` |

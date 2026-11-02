@@ -14,7 +14,7 @@ Les décisions éditoriales appartiennent à ChatGPT, et JG arbitre. Le 2/11/202
 | Rôles : Claude structure, ChatGPT relit, JG valide le PDF final | Ticket n° 10 ; LMEC-DEC-002 |
 | Toutes les vidéos pédagogiquement pertinentes sont intégrées au catalogue, y compris les approfondissements et les spécialisations. Aucune n'est marquée optionnelle : c'est au spectateur de choisir. Le catalogue est exhaustif, l'ordre de production se priorise | Message de JG, 2/11/2026 ; règle d'exhaustivité proposée par ChatGPT sur la PR n° 12 |
 | Arbitrages A1 à A11 : toutes les recommandations de Claude de la section 10.2 sont retenues | Message de JG, 2/11/2026 (« oui sur tout donc tout OK ») |
-| Pas de vidéos sur des sujets non statistiques (architecture des réseaux de neurones, génie logiciel) : ils restent « évoqués, non enseignés » (section 3.4) | Message de JG, 2/11/2026 |
+| Les sujets non statistiques sont intégrés quand ils sont pertinents : module S19 « Passerelles vers l'IA et l'informatique » (réseaux profonds, réseaux convolutifs, modèles de langue, descente de gradient stochastique, modèles génératifs, mise en production, complexité, droit et éthique des algorithmes) | Message de JG, 2/11/2026 (« des vidéos hors statistiques oui aussi si pertinentes ») |
 | Feu vert pour préparer les fiches des sujets sensibles (conflits, santé, migration), avec la double relecture de la constitution éditoriale | Message de JG, 2/11/2026 |
 | Marque ACTU-BASICS, slogans « Éveiller par les chiffres. » et “Enlightening through numbers.” | Identité de marque |
 
@@ -100,7 +100,7 @@ En appliquant la règle d'exhaustivité, Claude a comparé le catalogue aux prog
 | Économétrie | E4.06 identification partielle · E5.05 GMM · E6.05 économétrie spatiale · E7.08 effets hétérogènes et apprentissage automatique causal · E8.06 projections locales · E8.07 effet d'un événement sur une série (modèles structurels bayésiens) · E9.10 mémoire longue de la volatilité · E10.04 choix discrets multinomiaux · E10.05 modèles structurels de demande |
 | Quotidien | Q2.06 pourquoi les études se contredisent · Q4.07 le seuil de pauvreté · Q5.04 quand une IA annonce 90 % de confiance |
 
-Restent hors du catalogue, faute d'être des sujets statistiques : l'architecture des réseaux de neurones, l'optimisation numérique à grande échelle, le génie logiciel des données, la théorie de la calculabilité (section 3.4). L'éthique et le droit des algorithmes sont abordés à partir des questions statistiques (S1.10, S17.06). **Question à JG** : faut-il aussi leur consacrer des vidéos ?
+Ces sujets non statistiques (architecture des réseaux de neurones, optimisation numérique à grande échelle, génie logiciel des données, calculabilité, éthique et droit des algorithmes) ont désormais leurs vidéos dans le module S19, sur décision de JG (section 10.1).
 
 Le pilier 3 reste ouvert par construction : il s'enrichit en continu selon la méthode de la section 5.
 

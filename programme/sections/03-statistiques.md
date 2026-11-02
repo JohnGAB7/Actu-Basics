@@ -27,7 +27,7 @@ Le tronc commun (niveaux 1 à 3) est le parcours de référence. Il peut être s
 |---|---|---|
 | **Citoyen curieux** : lire l'actualité sans se faire avoir | S1, S2, S3, puis S4.01 à S4.10 et S6.05 (marge d'erreur) | 40 |
 | **Étudiant** : réussir un premier cours de statistique | Niveaux 1 à 3 complets, avec la boîte à outils M1 et M2 | 100 |
-| **Professionnel des données** | Niveau 3, puis S11, S17 et au choix S13 ou S14 | 60 |
+| **Professionnel des données** | Niveau 3, puis S11, S17, S19 et au choix S13 ou S14 | 70 |
 | **Futur économiste** | S1 à S9, puis pilier 2 (E1 à E7), puis E8 ou E11 | 110 |
 | **Finance et risque** | S1 à S9, S14, E2 et E3, puis E9 (volatilité, VaR) | 110 |
 | **Actuariat et assurance** | S5, S7, S10 (avec S10.06), S15, S12 | 50 |
@@ -42,9 +42,9 @@ Chaque vidéo porte aussi son **état** : « Conçue » quand sa fiche de concep
 
 ## 3.4 Ce que la statistique partage avec d'autres disciplines
 
-Le ticket demande de préciser ce qui relève des statistiques et ce qui relève d'autres disciplines. La branche S17 est conçue comme une **passerelle**, et non comme un cours de machine learning :
+Le ticket demande de préciser ce qui relève des statistiques et ce qui relève d'autres disciplines. La branche S17 est conçue comme une **passerelle**, et non comme un cours de machine learning. Les sujets de la colonne de droite ont, depuis la version 1.10, leurs propres vidéos dans le module **S19 « Passerelles vers l'IA et l'informatique »** (décision de JG : les sujets non statistiques sont intégrés quand ils sont pertinents). Ces vidéos partent toujours d'une question statistique et disent ce qui relève de l'ingénierie :
 
-| Relève de la statistique (traité ici) | Relève surtout d'autres disciplines (évoqué, non enseigné) |
+| Relève de la statistique (traité ici) | Relève surtout d'autres disciplines (module S19) |
 |---|---|
 | Biais, variance, surajustement, validation | Architecture des réseaux de neurones (informatique) |
 | Incertitude d'une prédiction, calibration | Algorithmes d'optimisation à grande échelle (optimisation numérique) |
