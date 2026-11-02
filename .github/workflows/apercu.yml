@@ -1,11 +1,15 @@
 # APERÇU — à chaque modification d'une fiche ou du code.
 # Accepte les brouillons : tout rendu qui a une erreur bloquante porte le filigrane
 # « BROUILLON · NON VALIDÉ ». Ces fichiers ne sont JAMAIS à publier.
-# Voix : Piper (gratuite, locale). Aucune clé d'API n'est utilisée ici.
+# Voix : Kokoro (gratuite, locale, exécutée sur le runner), Piper en secours. Aucune clé d'API,
+# aucun service payant (tts.yaml : gratuit_uniquement). Licences : docs/voice-licenses.md
 name: Aperçu des contenus
 
 on:
+  # Les branches de travail sont rendues via leur pull request ; « push » ne sert que pour main.
+  # Sinon chaque push lançait deux rendus, dont l'un était annulé (affiché « cancelled »).
   push:
+    branches: [main]
     paths: ["contenus/**", "production/**", "assets/brand/**", ".github/workflows/apercu.yml"]
   pull_request:
     paths: ["contenus/**", "production/**", "assets/brand/**", ".github/workflows/apercu.yml"]
@@ -19,10 +23,19 @@ on:
 permissions:
   contents: read
 
+# Un push sur une branche avec PR déclenche « push » et « pull_request » : un seul rendu suffit.
+# Le plus récent annule le précédent (moins de minutes GitHub Actions consommées).
+concurrency:
+  group: apercu-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   apercu:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Cause des annulations précédentes : chaque image des scènes « formule » recalculait le rendu
+    # mathtext (≈ 4,5 s par image, plus d'une heure et demie par langue). Corrigé par un cache ;
+    # la limite d'origine de 60 minutes suffit de nouveau.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -60,8 +73,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .cache-tts
-          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: tts-piper-
+          key: tts-kokoro-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: tts-kokoro-
 
       - name: Rendu d'aperçu
         env:
@@ -69,20 +82,30 @@ jobs:
         run: |
           if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
           [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
-          python production/produire.py $FICHES --mode apercu --voix piper
+          python production/produire.py $FICHES --mode apercu --voix kokoro
 
       - name: Cache des voix déjà synthétisées (sauvegarde)
         if: always()
         uses: actions/cache/save@v4
         with:
           path: .cache-tts
-          key: tts-piper-${{ github.run_id }}-${{ github.run_attempt }}
+          key: tts-kokoro-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Résumé lisible dans GitHub
         if: always()
         run: |
           echo "> ⚠️ Rendu d'**aperçu** : à relire, jamais à publier. Fichiers à publier = workflow « Validation finale »." >> "$GITHUB_STEP_SUMMARY"
           if [ -f sortie/resume.md ]; then cat sortie/resume.md >> "$GITHUB_STEP_SUMMARY"; else echo "Aucun résumé produit." >> "$GITHUB_STEP_SUMMARY"; fi
+
+      # Inventaire de l'artefact (taille, SHA-256, durée, résolution, audio de chaque fichier).
+      # Fait échouer le run si une langue rendue n'a pas sa vidéo avec piste audio ou un fichier attendu.
+      - name: Inventaire de l'artefact
+        if: always()
+        run: |
+          mkdir -p sortie
+          set +e; python production/inventaire.py sortie/ --sortie sortie/INVENTAIRE.md > /dev/null; code=$?; set -e
+          [ -f sortie/INVENTAIRE.md ] && cat sortie/INVENTAIRE.md >> "$GITHUB_STEP_SUMMARY"
+          exit $code
 
       - uses: actions/upload-artifact@v4
         if: always()

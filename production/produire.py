@@ -30,12 +30,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lmec.carrousel import planche_apercu, produire_carrousel  # noqa: E402
 from lmec.fiche import LANGUES, FicheInvalide, charger_fiche  # noqa: E402
 from lmec.inspection import inspection_logo, produire_inspection  # noqa: E402
-from lmec.narration import durees_avec_voix, piste_complete, produire_voix, reperes_sous_titres  # noqa: E402
+from lmec.narration import AMORCE_S, durees_avec_voix, piste_complete, produire_voix, reperes_sous_titres  # noqa: E402
+from lmec.pedagogie import controler_duree_format  # noqa: E402
+from lmec.son import habiller  # noqa: E402
 from lmec.qc import (Rapport, controler_fiche, controler_lisibilite, controler_logo, controler_longueurs, controler_marque,  # noqa: E402
                      controler_plateformes, controler_video, ecrire_rapport)
 from lmec.rendu import Rendu  # noqa: E402
 from lmec.textes import ecrire_metadonnees, ecrire_script_voix, ecrire_srt, legende_complete  # noqa: E402
-from lmec.tts import Cache, ErreurTTS, charger_env, creer_fournisseur  # noqa: E402
+from lmec.tts import Cache, ErreurTTS, charger_env, creer_avec_secours  # noqa: E402
 from lmec.video import durees_visuelles, produire_video, sonder_video  # noqa: E402
 
 RACINE = Path(__file__).resolve().parent
@@ -97,7 +99,8 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
         dossier.mkdir(parents=True)
         travail = dossier / "_travail"
 
-        rendu_v = Rendu(fiche, langue, charte, "video", True)
+        format_v = fiche.format_image          # « video » (vertical) ou « lecon » (16:9)
+        rendu_v = Rendu(fiche, langue, charte, format_v, True)
         durees = durees_visuelles(edition, rendu_v)
         explicites = [s.duree for s in edition.scenes]
 
@@ -111,12 +114,21 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
                 dossier_manuel = ((chemin.parent / edition.audio) if edition.audio
                                   else DEPOT / "audio" / fiche.id / langue).resolve()
             try:
-                fournisseur = creer_fournisseur(nom_voix, config_tts, langue, dossier_manuel)
+                fournisseur, bascule = creer_avec_secours(nom_voix, config_tts, langue, dossier_manuel)
+                if bascule:
+                    rapport.avertir(bascule, langue)
                 narration = produire_voix(fiche, edition, fournisseur, cache, travail, lexique)
                 durees, notes = durees_avec_voix(durees, narration, explicites)
                 for n in notes:
                     rapport.avertir(n, langue)
+                caler_sur_la_voix(rendu_v, edition, narration, durees)
                 piste = piste_complete(narration, durees, travail)
+                son = charte.get("son") or {}
+                if fiche.habillage_sonore and son.get("actif", True):
+                    fin = next((i for i, s in enumerate(edition.scenes) if s.type == "fin"), None)
+                    piste = habiller(piste, durees, son, travail / "narration-habillee.wav", fin,
+                                     rendu_v.reperes_sonores(edition.scenes, durees))
+                    rapport.ok.append(f"[{langue}] Habillage sonore ajouté (signature, nappe et repères, prototype)")
                 voix_info = {"fournisseur": narration.fournisseur, "publiable": narration.publiable,
                              "config": fournisseur.config}
                 rapport.ok.append(f"[{langue}] Narration produite ({narration.fournisseur}) : "
@@ -132,8 +144,11 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
 
         # ---- Contrôles dépendant des durées
         legende = legende_complete(fiche, edition)
-        controler_plateformes(langue, sum(durees), legende, edition.titre, len(edition.hashtags),
-                              charte, plateformes, rapport)
+        if fiche.pedagogique:
+            controler_duree_format(fiche, langue, sum(durees), rapport)
+        if format_v == "video" and fiche.format == "short":
+            controler_plateformes(langue, sum(durees), legende, edition.titre, len(edition.hashtags),
+                                  charte, plateformes, rapport)
         durees_langues[langue] = durees
 
         final_bloque = args.mode == "final" and rapport.bloquants
@@ -143,13 +158,15 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
         filigrane = bool(rapport.bloquants)
 
         # ---- Carrousel, textes
-        rendu_c = Rendu(fiche, langue, charte, "carrousel", filigrane)
-        images = produire_carrousel(rendu_c, edition, dossier / "carrousel")
-        planche_apercu(images, dossier / "apercu-carrousel.png")
-        for a in rendu_c.alertes:
-            rapport.avertir(a, langue)
-        controler_logo(langue, rendu_c, [("carrousel", i, s.type) for i, s in enumerate(edition.scenes)
-                                         if rendu_c.logo_prevu(s)], charte, plateformes, rapport)
+        rendu_c = None
+        if fiche.format == "short":   # les vidéos pédagogiques longues n'ont pas de carrousel
+            rendu_c = Rendu(fiche, langue, charte, "carrousel", filigrane)
+            images = produire_carrousel(rendu_c, edition, dossier / "carrousel")
+            planche_apercu(images, dossier / "apercu-carrousel.png")
+            for a in rendu_c.alertes:
+                rapport.avertir(a, langue)
+            controler_logo(langue, rendu_c, [("carrousel", i, s.type) for i, s in enumerate(edition.scenes)
+                                             if rendu_c.logo_prevu(s)], charte, plateformes, rapport)
         reperes = reperes_sous_titres(narration, durees) if narration else None
         ecrire_srt(fiche, edition, durees, dossier / "sous-titres.srt", reperes)
         ecrire_script_voix(fiche, edition, durees, dossier / "script-voix-off.txt", lexique)
@@ -169,15 +186,18 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
             if rendu_v.logo_prevu(edition.scenes[0], couverture=True):
                 attendus.append(("couverture", 0, edition.scenes[0].type))
             controler_logo(langue, rendu_v, attendus, charte, plateformes, rapport)
-            controler_video(langue, sonder_video(dossier / "video.mp4"), charte["formats"]["video"], rapport)
+            controler_video(langue, sonder_video(dossier / "video.mp4"), charte["formats"][format_v], rapport)
             controler_lisibilite(langue, rendu_v.tailles, rapport)
             if not args.sans_inspection:
                 produire_inspection(dossier / "video.mp4", edition.scenes, durees,
                                     [rendu_v.duree_animation(s) for s in edition.scenes],
-                                    plateformes, dossier / "inspection")
-                rendu_v.brouillon = rendu_c.brouillon = False   # images d'inspection sans filigrane
-                inspection_logo([rendu_v, rendu_c], edition.scenes, dossier / "inspection")
-                rendu_v.brouillon = rendu_c.brouillon = filigrane
+                                    plateformes if format_v == "video" else {"cibles": []}, dossier / "inspection")
+                rendus = [r for r in (rendu_v, rendu_c) if r]
+                for r in rendus:   # images d'inspection sans filigrane
+                    r.brouillon = False
+                inspection_logo(rendus, edition.scenes, dossier / "inspection")
+                for r in rendus:
+                    r.brouillon = filigrane
         shutil.rmtree(travail, ignore_errors=True)
         voix_txt = voix_info["fournisseur"] or "aucune"
         lignes_resume.append([langue.upper(), f"{sum(durees):.1f} s", voix_txt, str(len(edition.scenes)),
@@ -194,6 +214,18 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
     print(f"{etat}\nRapport : {racine_sortie / 'rapport-qc.md'}")
     resume += _resume(fiche, rapport, etat, lignes_resume, args.mode)
     return args.mode == "apercu" or not rapport.bloquants
+
+
+def caler_sur_la_voix(rendu: Rendu, edition, narration, durees: list[float]) -> None:
+    """Étapes et compte à rebours calés sur la voix ; temps de réflexion ajouté après chaque exercice."""
+    for i, (scene, vs) in enumerate(zip(edition.scenes, narration.scenes)):
+        # Début de chaque PHRASE (la synthèse découpe aussi sur « : » et « ; », pas les étapes).
+        rendu.reperes[id(scene)] = [AMORCE_S + ph.debut for k, ph in enumerate(vs.phrases)
+                            if k == 0 or vs.phrases[k - 1].texte.rstrip()[-1:] in ".!?…"]
+        rendu.fins_voix[id(scene)] = AMORCE_S + vs.duree_voix + 0.2
+        if scene.type == "exercice" and not scene.duree:
+            besoin = rendu.fins_voix[id(scene)] + scene.extra.get("pause", 3) + 0.8
+            durees[i] = round(max(durees[i], besoin), 3)
 
 
 def _resume(fiche, rapport, etat, lignes, mode) -> list[str]:
@@ -217,7 +249,7 @@ def main() -> int:
     parseur = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parseur.add_argument("fiches", nargs="+", type=Path)
     parseur.add_argument("--mode", choices=("apercu", "final"), default="apercu")
-    parseur.add_argument("--voix", help="fournisseur de voix : piper | openai | elevenlabs | manuel | test")
+    parseur.add_argument("--voix", help="fournisseur de voix : kokoro (défaut) | piper | openai | elevenlabs | manuel | test")
     parseur.add_argument("--sortie", default="sortie", help="dossier de sortie (défaut : sortie/)")
     parseur.add_argument("--langues", nargs="+", choices=LANGUES, default=list(LANGUES))
     parseur.add_argument("--sans-video", action="store_true", help="carrousels et textes seulement")

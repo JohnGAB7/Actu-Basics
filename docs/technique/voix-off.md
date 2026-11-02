@@ -3,8 +3,8 @@
 ## En bref
 
 - La voix est **générée automatiquement** à partir des textes de la fiche, en FR et en EN.
-- Le fournisseur est **interchangeable** sans toucher au code : `piper` (gratuit, local), `openai`, `elevenlabs`, `manuel` (vos enregistrements), `test` (bip, pour les tests uniquement).
-- Par défaut : **Piper**, gratuit et sans compte, **pour les aperçus**. Aucune dépense n'a été engagée.
+- Le fournisseur est **interchangeable** sans toucher au code : `kokoro` (gratuit, local, par défaut), `piper` (gratuit, local, secours), `openai`, `elevenlabs`, `manuel` (vos enregistrements), `test` (bip, pour les tests uniquement).
+- Par défaut : **Kokoro** (décision de JG, novembre 2026), gratuit, local et sans compte ; FR `ff_siwis`, EN `af_heart`. Si Kokoro est absent, **Piper** prend le relais (`secours`) et le rapport le signale. `gratuit_uniquement: true` refuse tout service payant. Licences et coûts : [voice-licenses.md](../voice-licenses.md).
 - **La qualité de publication n'est validée pour aucune voix.** Elle se juge à l'oreille, par une personne, sur la vidéo finale (voir l'état ci-dessous).
 - Une vidéo **sans voix n'est jamais présentée comme prête** : si la voix échoue, le rapport passe en ❌ BLOQUÉ, l'aperçu porte le filigrane et le mode final refuse de produire.
 
@@ -12,6 +12,7 @@
 
 | Fournisseur | Ce qui a été testé | Ce qui ne l'a pas été | Usage |
 |---|---|---|---|
+| Kokoro | Synthèse réelle FR et EN en local, hors réseau (test automatique) ; lecture des nombres et symboles vérifiée par phonétisation ; durées, sous-titres et montage de la leçon des anniversaires | **Écoute humaine** de JG | ✅ Aperçus. Publication : seulement après écoute et accord |
 | Piper | Synthèse réelle FR et EN, en local et dans GitHub Actions ; durées, sous-titres et montage vérifiés | **Écoute humaine** : la prononciation n'a pas été jugée à l'oreille | ✅ Aperçus. Publication : seulement après écoute et accord |
 | OpenAI | Le code est écrit d'après la documentation de l'API. Tests automatiques : clé absente, erreurs réseau et HTTP (refus clair, jamais de vidéo muette présentée comme prête) | **Aucun appel réel** : pas de clé, aucune dépense engagée. Format de réponse, qualité FR et coût réel non vérifiés | ⚠️ Non validé en production. Premier essai à faire sur un aperçu, puis écoute |
 | ElevenLabs | Idem : code écrit d'après la documentation, erreurs testées sans clé | **Aucun appel réel** (pas d'abonnement) | ⚠️ Non validé en production |
@@ -55,6 +56,8 @@ Pour chaque scène, la voix lit :
 | autres | le texte affiché |
 
 Si une scène a un champ `voix_off`, c'est lui qui est lu à la place (choix éditorial). Les astérisques de mise en valeur ne sont jamais lus.
+
+Avant la synthèse, `lecture.py` réécrit les nombres et symboles pour qu'ils soient dits correctement (« 50,7 % » → « 50 virgule 7 pour cent », EN « 0.493 » → « 0 point four nine three », « − » → « moins », « ≈ » → « environ », « 365/365 » → « 365 sur 365 », « 2⁶⁴ » → « 2 puissance 64 »). Les sous-titres et les images gardent l'écriture de la fiche.
 
 Le fichier `script-voix-off.txt` de chaque rendu montre, scène par scène, le texte écrit et, s'il diffère, le texte réellement envoyé à la synthèse (ligne « Dit »).
 

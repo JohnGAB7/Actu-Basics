@@ -1,0 +1,59 @@
+name: Provenance des voix Kokoro
+
+# Vérifie que les voix ff_siwis et af_heart du fichier voices-v1.0.bin (sans licence écrite)
+# sont identiques aux fichiers officiels du dépôt hexgrad/Kokoro-82M (licence Apache-2.0).
+# Lecture publique sur Hugging Face, sans compte, sans clé, sans coût (hors minutes Actions).
+on:
+  pull_request:
+    paths: ["production/tts.yaml", "production/verifier_provenance_voix.py", "production/comparer_onnx_kokoro.py", "production/comparer_poids_onnx.py", ".github/workflows/provenance-voix.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dépendances
+        run: pip install -r production/requirements.txt kokoro-onnx==0.5.0 onnx
+      - name: Fichier de voix utilisé (vérifié par SHA-256)
+        run: |
+          mkdir -p production/voix
+          curl -sSL -o production/voix/voices-v1.0.bin \
+            https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+          echo "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d  production/voix/voices-v1.0.bin" | sha256sum -c
+      - name: Comparaison avec les voix officielles
+        run: python production/verifier_provenance_voix.py --sortie provenance-voix.md
+      - name: Poids du fichier ONNX utilisé comparés aux poids officiels Apache-2.0
+        run: |
+          curl -sSL -o production/voix/kokoro-v1.0.onnx \
+            https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+          echo "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5  production/voix/kokoro-v1.0.onnx" | sha256sum -c
+          curl -sSL -o kokoro-v1_0.pth \
+            https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth
+          python production/comparer_poids_onnx.py kokoro-v1_0.pth production/voix/kokoro-v1.0.onnx --sortie provenance-voix.md
+      - name: Son produit par le fichier ONNX utilisé et par l'export Apache-2.0 d'onnx-community (informatif)
+        continue-on-error: true
+        run: |
+          curl -sSL -o production/voix/kokoro-v1.0.onnx \
+            https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+          echo "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5  production/voix/kokoro-v1.0.onnx" | sha256sum -c
+          curl -sSL -o production/voix/onnx-community-model.onnx \
+            https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231/onnx/model.onnx
+          echo "8fbea51ea711f2af382e88c833d9e288c6dc82ce5e98421ea61c058ce21a34cb  production/voix/onnx-community-model.onnx" | sha256sum -c
+          python production/comparer_onnx_kokoro.py production/voix/kokoro-v1.0.onnx \
+            production/voix/onnx-community-model.onnx production/voix/voices-v1.0.bin --sortie provenance-voix.md
+      - name: Résumé
+        if: always()
+        run: cat provenance-voix.md >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: provenance-voix
+          path: provenance-voix.md

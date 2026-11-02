@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Télécharge les modèles de voix Piper listés dans production/tts.yaml vers production/voix/.
+"""Télécharge les modèles de voix (Kokoro, Piper) listés dans production/tts.yaml vers production/voix/.
+Les fichiers Kokoro sont vérifiés par empreinte SHA-256 : un fichier différent est refusé.
 
     python production/telecharger_voix.py
 """
 from __future__ import annotations
 
+import hashlib
 import io
 import sys
 import tarfile
@@ -17,9 +19,31 @@ RACINE = Path(__file__).resolve().parent
 DOSSIER = RACINE / "voix"
 
 
+def _sha256(chemin: Path) -> str:
+    h = hashlib.sha256()
+    with open(chemin, "rb") as f:
+        while bloc := f.read(1 << 20):
+            h.update(bloc)
+    return h.hexdigest()
+
+
 def main() -> int:
     config = yaml.safe_load((RACINE / "tts.yaml").read_text(encoding="utf-8"))
     DOSSIER.mkdir(exist_ok=True)
+    for nom, info in (config.get("kokoro_telechargements") or {}).items():
+        cible = DOSSIER / nom
+        if not (cible.exists() and _sha256(cible) == info["sha256"]):
+            print(f"↓ {nom} ({info['url']})")
+            temporaire = cible.with_suffix(cible.suffix + ".partiel")
+            with urllib.request.urlopen(info["url"], timeout=1800) as rep, open(temporaire, "wb") as f:
+                while bloc := rep.read(1 << 20):
+                    f.write(bloc)
+            if _sha256(temporaire) != info["sha256"]:
+                temporaire.unlink()
+                print(f"❌ {nom} : empreinte SHA-256 inattendue, fichier refusé")
+                return 1
+            temporaire.replace(cible)
+        print(f"✓ {nom} (SHA-256 vérifiée)")
     for modele, url in (config.get("piper_telechargements") or {}).items():
         if (DOSSIER / modele).exists() and (DOSSIER / f"{modele}.json").exists():
             print(f"✓ {modele} déjà présent")

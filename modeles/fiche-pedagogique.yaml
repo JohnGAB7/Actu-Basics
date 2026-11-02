@@ -1,0 +1,74 @@
+# Modèle de fiche PÉDAGOGIQUE (statistiques, probabilités, applications).
+# Pour une fiche d'actualité, utiliser modeles/fiche-contenu.yaml.
+# Guide complet : docs/technique/fiches-pedagogiques.md
+id: AAAA-MM-JJ-sujet-court            # = nom du fichier, minuscules et tirets
+type_fiche: pedagogique
+famille: comprendre_les_probabilites  # apprendre_les_statistiques | comprendre_les_probabilites | statistiques_en_pratique | presentation
+format: educational                   # short (15-90 s) | educational (1 min 30-10 min) | youtube_lesson (16:9, 5-60 min)
+habillage_sonore: false               # true : signature sonore et nappe (prototype)
+theme: ""
+
+pedagogie:
+  niveau: decouverte                  # decouverte | lycee | licence | master | professionnel
+  objectifs:                          # « À la fin, vous saurez… »
+    fr: [""]
+    en: [""]
+  prerequis:
+    fr: [""]
+    en: [""]
+  hypotheses:                         # modèle utilisé (ex. « 365 jours équiprobables »)
+    fr: ""
+    en: ""
+
+# Facultatif : obligatoire dès qu'un fait extérieur (étude, statistique publiée) est cité.
+sources: []
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+editions:
+  fr:
+    titre: ""
+    legende: |
+
+    hashtags: []
+    scenes:
+      - type: accroche                # question, paradoxe ou situation concrète
+        texte: ""
+      - type: exercice                # question posée au spectateur + compte à rebours
+        texte: ""
+        pause: 3                      # secondes de réflexion après la voix
+      - type: correction
+        reponse: ""                   # et/ou etapes: [...]
+        verifier:                     # nombres RECALCULÉS par la machine (un écart bloque)
+          - {expression: "", attendu: 0, libelle: ""}
+      - type: titre                   # chapitre
+        numero: 1
+        texte: ""
+      - type: etapes                  # lignes qui apparaissent quand la voix les annonce
+        texte: ""
+        etapes: ["", ""]
+        voix_off: ""                  # une phrase d'introduction, puis une phrase par étape
+      - type: formule                 # notation LaTeX (mathtext) ; une ligne ou une liste de lignes
+        texte: ""
+        formule: ['']
+        voix_off: ""                  # obligatoire : une formule ne se lit pas telle quelle
+      - type: courbe                  # courbe CALCULÉE (ou points: [[x, y], ...])
+        texte: ""
+        courbe: {variable: n, de: 1, a: 50, expression: "", format_y: pourcent, axe_x: "", reperes: []}
+      - type: chiffre                 # chiffre propre à la scène
+        valeur: 0
+        suffixe: {fr: " %", en: "%"}
+        texte: ""
+      - type: texte
+        texte: ""
+      - type: fin
+        texte: ""
+  en:
+    titre: ""
+    legende: |
+
+    hashtags: []
+    scenes: []                        # mêmes scènes, adaptées (pas traduites mot à mot)

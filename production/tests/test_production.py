@@ -588,11 +588,14 @@ def test_duree_imposee_trop_courte_allongee(tmp_path):
     assert notes and all(d > 1.0 for d in durees)
 
 
+PAYANT_AUTORISE = {"gratuit_uniquement": False}   # tests des intégrations payantes, sans appel réel
+
+
 def test_fournisseurs_sans_cle():
     with pytest.raises(ErreurTTS, match="OPENAI_API_KEY"):
-        creer_fournisseur("openai", {}, "fr").verifier()
+        creer_fournisseur("openai", PAYANT_AUTORISE, "fr").verifier()
     with pytest.raises(ErreurTTS, match="ELEVENLABS_API_KEY"):
-        creer_fournisseur("elevenlabs", {}, "fr").verifier()
+        creer_fournisseur("elevenlabs", PAYANT_AUTORISE, "fr").verifier()
     with pytest.raises(ErreurTTS, match="inconnu"):
         creer_fournisseur("robot", {}, "fr")
 
@@ -627,7 +630,7 @@ def test_api_simulee_sans_appel_reel(tmp_path, monkeypatch, nom, cle, config):
     import urllib.error
     import urllib.request
     monkeypatch.setenv(cle, "cle-factice")
-    f = creer_fournisseur(nom, {"voix": {"fr": {nom: config}}}, "fr")
+    f = creer_fournisseur(nom, {**PAYANT_AUTORISE, "voix": {"fr": {nom: config}}}, "fr")
     envoyes = []
     audio = _wav_bref(tmp_path / "ref.wav")
 
@@ -986,3 +989,590 @@ def test_aucune_ancienne_signature_dans_les_contenus():
         texte = f.read_text(encoding="utf-8").lower()
         for ancienne in logo_mod.ANCIENNES_SIGNATURES[2:]:
             assert ancienne not in texte, f"{f.name} : « {ancienne} »"
+
+
+# --------------------------------------------------------------------------- fiches pédagogiques
+from lmec import pedagogie  # noqa: E402
+from lmec.formules import formule_valide  # noqa: E402
+
+LANCEMENT = RACINE / "contenus/fiches/2026-11-lancement-actu-basics.yaml"
+
+
+def brut_lancement():
+    return yaml.safe_load(LANCEMENT.read_text(encoding="utf-8"))
+
+
+def constats_pedago(tmp_path, brut):
+    r = Rapport()
+    controler_fiche(charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics")), r, AUJOURD_HUI)
+    return r
+
+
+def test_fiche_de_lancement_chargee_et_calculs_justes(tmp_path):
+    fiche = charger_fiche(LANCEMENT)
+    assert fiche.pedagogique and fiche.format == "educational" and fiche.format_image == "video"
+    assert fiche.famille == "presentation" and fiche.habillage_sonore
+    r = constats_pedago(tmp_path, valider(brut_lancement()))
+    assert not r.bloquants, [str(c) for c in r.bloquants]
+    recalcules = [o for o in r.ok if "recalculé" in o]
+    assert len(recalcules) >= 2 * 9                           # chaque nombre annoncé est recalculé
+    assert any("Chaque exercice a sa correction" in o for o in r.ok)
+
+
+def test_calcul_faux_bloque(tmp_path):
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "chiffre")
+    scene["verifier"][0]["attendu"] = 60.7                    # faute de frappe dans le résultat
+    r = constats_pedago(tmp_path, brut)
+    assert any("annoncé 60.7, recalculé 50.7" in str(c) for c in r.bloquants)
+
+
+def test_exercice_sans_correction_bloque(tmp_path):
+    brut = valider(brut_lancement())
+    brut["editions"]["en"]["scenes"] = [s for s in brut["editions"]["en"]["scenes"] if s["type"] != "correction"]
+    r = constats_pedago(tmp_path, brut)
+    assert any("exercice(s) sans correction" in str(c) for c in r.bloquants)
+
+
+def test_scenes_pedagogiques_refusees_dans_une_fiche_actualite(tmp_path):
+    brut = valider(brut_exemple())
+    brut["editions"]["fr"]["scenes"].insert(1, {"type": "formule", "texte": "x", "formule": "a=b", "voix_off": "a"})
+    with pytest.raises(FicheInvalide, match="réservé aux fiches pédagogiques"):
+        charger_fiche(ecrire(tmp_path, brut))
+
+
+def test_fiche_pedagogique_incomplete(tmp_path):
+    brut = valider(brut_lancement())
+    del brut["pedagogie"]["objectifs"]
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "formule")
+    del scene["voix_off"]
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "pedagogie.objectifs" in str(exc.value) and "voix_off" in str(exc.value)
+
+
+def test_formule_illisible_bloque(tmp_path):
+    assert formule_valide(r"\frac{1}{2}") is None
+    assert formule_valide(r"\frac{1") is not None
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "formule")
+    scene["formule"] = [r"\frac{365"]
+    r = constats_pedago(tmp_path, brut)
+    assert any("formule illisible" in str(c) for c in r.bloquants)
+
+
+@pytest.mark.parametrize("expression", ['__import__("os")', "().__class__", 'open("x")', "10**10**10",
+                                        "range(10**9)", "comb(10**9, 3)", "lambda: 1", '"a" * 10**8',
+                                        "factorial(10**6)", "x"])
+def test_evaluateur_refuse_le_dangereux(expression):
+    with pytest.raises(pedagogie.CalculInvalide):
+        pedagogie.evaluer(expression)
+
+
+def test_evaluateur_et_courbe():
+    assert pedagogie.evaluer("comb(23, 2)") == 253
+    assert abs(pedagogie.evaluer("1 - prod((365 - k) / 365 for k in range(23))") - 0.5073) < 1e-4
+    assert pedagogie.tolerance_par_defaut(0.507) == pytest.approx(0.0005)
+    assert pedagogie.tolerance_par_defaut(253) == pytest.approx(0.5)
+    pts = pedagogie.points_courbe({"variable": "n", "de": 1, "a": 70, "expression": "n * 2"})
+    assert len(pts) == 70 and pts[-1] == (70, 140)
+
+
+@pytest.mark.parametrize("fmt", ["video", "lecon"])
+def test_rendu_des_scenes_pedagogiques(fmt):
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
+        for i, s in enumerate(ed.scenes):
+            im = r.dessiner(s, i, len(ed.scenes))
+            assert im.size == ((1080, 1920) if fmt == "video" else (1920, 1080))
+            for t in (0.0, 0.7, r.duree_animation(s)):              # animations sans erreur
+                r.dessiner(s, i, len(ed.scenes), t)
+        assert not r.alertes, r.alertes
+        assert ("video" if fmt == "video" else "lecon", len(ed.scenes) - 1) in r.poses   # logo de fin
+
+
+def test_etapes_calees_sur_la_voix():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    i = next(k for k, s in enumerate(ed.scenes) if s.type == "etapes")
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    r.reperes[id(ed.scenes[i])] = [0.35, 2.0, 3.5, 6.0]     # intro + une phrase par étape
+    assert r.duree_animation(ed.scenes[i]) == pytest.approx(6.5)   # indépendant de l'ordre de dessin
+    assert r._debuts_etapes(ed.scenes[i], 3) == [2.0, 3.5, 6.0]
+    vide = r.dessiner(ed.scenes[i], i, len(ed.scenes), 1.0)
+    pleine = r.dessiner(ed.scenes[i], i, len(ed.scenes), 7.0)
+    assert vide.tobytes() != pleine.tobytes()
+
+
+def test_habillage_sonore(tmp_path):
+    import wave
+    from lmec import son
+    voix = tmp_path / "voix.wav"
+    son._ecrire(voix, np_sinus(2.0))
+    sortie = son.habiller(voix, [1.0, 2.0], CHARTE["son"], tmp_path / "mix.wav", index_fin=1)
+    with wave.open(str(sortie)) as w:
+        assert w.getframerate() == 48000 and abs(w.getnframes() / 48000 - 3.0) < 0.01
+    m = son._lire(sortie)
+    assert m.max() <= 10 ** (-1 / 20) + 1e-3                  # crête ≤ -1 dBFS
+    assert abs(m[int(1.5 * 48000):int(2.0 * 48000)]).max() > 0.05   # signature présente sur la fin
+
+
+def np_sinus(duree):
+    import numpy as np
+    t = np.arange(int(duree * 48000)) / 48000
+    return 0.3 * np.sin(2 * np.pi * 220 * t)
+
+
+def test_fiche_actualite_inchangee():
+    fiche = charger_fiche(FICHE_REELLE)
+    assert fiche.type_fiche == "actualite" and fiche.format == "short" and not fiche.habillage_sonore
+
+
+def test_scene_animation_et_note(tmp_path):
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    anim = next(s for s in ed.scenes if s.type == "animation" and s.extra["animation"].get("n") == 4)
+    assert anim.extra["animation"]["modele"] == "paires" and len(anim.extra["etapes"]) == 5
+    assert any(s.extra.get("note", "").startswith("Hypothèses") for s in ed.scenes)
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    i = ed.scenes.index(anim)
+    debut, fin = r.dessiner(anim, i, len(ed.scenes), 1.0), r.dessiner(anim, i, len(ed.scenes), 9.0)
+    assert debut.tobytes() != fin.tobytes()                   # les paires se tracent
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"] if s["type"] == "animation")
+    scene["animation"] = {"modele": "spirale", "n": 500}
+    scene["note"] = "x" * 200
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "modele" in str(exc.value) and "note" in str(exc.value)
+
+
+@pytest.mark.parametrize("modele", ["foule", "paires", "doublon", "calendrier", "complement"])
+def test_chaque_modele_d_animation_se_construit_phase_par_phase(modele):
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        scenes = [s for s in ed.scenes if s.type == "animation" and s.extra["animation"]["modele"] == modele]
+        assert scenes, modele
+        r = Rendu(fiche, langue, CHARTE, "video", False)
+        for s in scenes:
+            i = ed.scenes.index(s)
+            plan = r._plan_animation(s)
+            assert not s.extra.get("etapes") or len(s.extra["etapes"]) == len(plan)   # une légende par phase
+            fin = r.duree_animation(s)
+            images = [r.dessiner(s, i, len(ed.scenes), t).tobytes() for t in (0.0, fin / 2, fin)]
+            assert len(set(images)) == 3, f"{modele} : l'image doit évoluer pendant l'animation"
+        assert not r.alertes
+
+
+def test_animation_calee_sur_les_phrases_de_la_voix():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    s = next(s for s in ed.scenes if s.type == "animation" and s.extra["animation"].get("n") == 4)
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    r.reperes[id(s)] = [0.35, 2.0, 4.0, 8.0, 12.0, 15.0]    # intro + une phrase par phase
+    assert [p["debut"] for p in r._plan_animation(s)] == [2.0, 4.0, 8.0, 12.0, 15.0]
+    assert r.duree_animation(s) == pytest.approx(15.0 + 0.8 + 0.8)
+
+
+def test_legendes_et_phases_d_animation_doivent_correspondre(tmp_path):
+    brut = valider(brut_lancement())
+    scene = next(s for s in brut["editions"]["fr"]["scenes"]
+                 if s["type"] == "animation" and s["animation"].get("n") == 4)
+    scene["etapes"] = scene["etapes"][:3]
+    with pytest.raises(FicheInvalide, match="une légende par phase"):
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+
+
+def test_correction_etapes_puis_reponse_sur_la_derniere_phrase():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    s = next(s for s in ed.scenes if s.type == "correction" and len(s.extra.get("etapes", [])) == 2)
+    r = Rendu(fiche, "fr", CHARTE, "video", False)
+    r.reperes[id(s)] = [0.35, 4.0, 8.0]
+    assert r._debuts_etapes(s, 2) == [0.35, 4.0] and r._debut_reponse(s) == 8.0
+
+
+def test_courbe_avec_quatre_reperes_et_seuil():
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    s = next(s for s in ed.scenes if s.type == "courbe" and s.extra["courbe"].get("seuil"))
+    assert [rep["x"] for rep in s.extra["courbe"]["reperes"]] == [23, 40, 41, 50]
+    for fmt in ("video", "lecon"):
+        r = Rendu(fiche, "fr", CHARTE, fmt, False)
+        r.dessiner(s, ed.scenes.index(s), len(ed.scenes))
+        assert not r.alertes
+
+
+def test_application_cryptographie_verifiee():
+    """L'application concrète (collisions d'empreintes) est recalculée comme le reste, et prudente."""
+    assert pedagogie.evaluer("1 - exp(-(5e9) ** 2 / (2 * 2 ** 64))") == pytest.approx(0.49, abs=0.01)
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        textes = " ".join(s.voix_off for s in fiche.editions[langue].scenes).lower()
+        assert "collision" in textes
+        assert "sécuris" not in textes and "secure" not in textes and "fraud" not in textes
+
+
+def test_reperes_sonores_et_signature():
+    from lmec import son
+    fiche = charger_fiche(LANCEMENT)
+    ed = fiche.editions["fr"]
+    r = Rendu(fiche, "fr", CHARTE, "video", True)
+    durees = [r.duree_animation(s) + 2 for s in ed.scenes]
+    reperes = r.reperes_sonores(ed.scenes, durees)
+    pauses = sum(int(s.extra.get("pause", 3)) for s in ed.scenes if s.type == "exercice")
+    assert sum(1 for _, n in reperes if n == "tic") == pauses                # un tic par seconde de réflexion
+    assert sum(1 for _, n in reperes if n == "revele") == sum(1 for s in ed.scenes if s.type == "chiffre") \
+        + sum(1 for s in ed.scenes if s.type == "correction" and s.extra.get("reponse"))
+    assert all(0 <= t < sum(durees) for t, _ in reperes)
+    sig = son.signature()
+    assert abs(sig).max() == pytest.approx(1.0) and (sig == son.signature()).all()   # identique à chaque rendu
+    assert abs(sig[-100:]).max() < 0.01                                       # extinction douce
+
+
+def test_pauses_de_narration_selon_la_ponctuation():
+    from lmec.narration import pause_apres
+    assert pause_apres("Une question ?") > pause_apres("Une phrase.") > pause_apres("Une énumération :")
+
+
+# --------------------------------------------------------------------------- gratuité et Kokoro
+from lmec import tts as tts_mod  # noqa: E402
+
+
+@pytest.mark.parametrize("nom", ["openai", "elevenlabs"])
+def test_service_payant_refuse_par_defaut(nom, monkeypatch):
+    """Gratuité imposée (tts.yaml) : un fournisseur payant est refusé, et aucune requête ne part."""
+    config = yaml.safe_load((RACINE / "production/tts.yaml").read_text(encoding="utf-8"))
+    assert config["gratuit_uniquement"] is True and config["fournisseur"] == "kokoro"
+    with pytest.raises(tts_mod.ServicePayantRefuse, match="gratuit_uniquement"):
+        creer_fournisseur(nom, config, "fr")
+    with pytest.raises(tts_mod.ServicePayantRefuse):
+        creer_fournisseur(nom, {}, "fr")                     # sans réglage : gratuité par défaut
+    import urllib.request
+    appels = []
+    monkeypatch.setattr(urllib.request, "urlopen", lambda *a, **k: appels.append(a))
+    with pytest.raises(tts_mod.ServicePayantRefuse):
+        tts_mod._requete("https://api.openai.com/v1/audio/speech", {}, {})
+    assert not appels                                         # bloqué avant le réseau
+
+
+def test_qc_bloque_un_service_payant(tmp_path):
+    r = lancer(EXEMPLE, "--voix", "elevenlabs", "--sans-video", "--sortie", tmp_path)
+    rapport = (tmp_path / "exemple-fictif/rapport-qc.md").read_text()
+    assert "BLOQUÉ" in rapport and "gratuit_uniquement" in rapport
+
+
+def test_kokoro_absent_bascule_sur_le_secours(tmp_path, monkeypatch):
+    monkeypatch.setattr(tts_mod, "DOSSIER_VOIX", tmp_path)            # aucun modèle Kokoro ici
+    config = {"secours": {"kokoro": "test"}, "voix": {"fr": {"kokoro": {"voix": "ff_siwis"}}}}
+    f, note = tts_mod.creer_avec_secours("kokoro", config, "fr")
+    assert f.nom == "test" and "secours" in note
+    with pytest.raises(ErreurTTS):
+        tts_mod.creer_avec_secours("kokoro", {"voix": {"fr": {"kokoro": {"voix": "ff_siwis"}}}}, "fr")
+
+
+def _kokoro_disponible():
+    try:
+        import kokoro_onnx  # noqa: F401
+    except ImportError:
+        return False
+    return (tts_mod.DOSSIER_VOIX / "kokoro-v1.0.onnx").exists() and (tts_mod.DOSSIER_VOIX / "voices-v1.0.bin").exists()
+
+
+@pytest.mark.skipif(not _kokoro_disponible(), reason="Kokoro non installé ou modèle non téléchargé")
+@pytest.mark.parametrize("langue, voix, texte", [
+    ("fr", "ff_siwis", "Cinquante virgule sept pour cent, avec vingt-trois personnes."),
+    ("en", "af_heart", "Fifty point seven percent, with twenty-three people."),
+])
+def test_kokoro_local_sans_reseau(tmp_path, monkeypatch, langue, voix, texte):
+    """Kokoro synthétise sans aucun accès réseau (toute connexion est interdite pendant le test)."""
+    import socket
+
+    def interdit(*a, **k):
+        raise AssertionError("connexion réseau tentée pendant la synthèse")
+    monkeypatch.setattr(socket.socket, "connect", interdit)
+    config = yaml.safe_load((RACINE / "production/tts.yaml").read_text(encoding="utf-8"))
+    f, note = tts_mod.creer_avec_secours("kokoro", config, langue)
+    assert f.nom == "kokoro" and note is None and f.config["voix"] == voix
+    f.synthetiser(texte, tmp_path / "k.wav")
+    import wave
+    with wave.open(str(tmp_path / "k.wav")) as w:
+        assert w.getframerate() == 48000 and w.getnchannels() == 1
+    assert 2.0 < duree_wav(tmp_path / "k.wav") < 8.0
+
+
+# --- Lecture des nombres et symboles par la voix (Kokoro et Piper passent par espeak-ng) ---
+
+@pytest.mark.parametrize("langue,ecrit,dit", [
+    ("fr", "50,7 %", "50 virgule 7 pour cent"),
+    ("fr", "P₀ ≈ 0,493.", "P zéro environ 0 virgule 493."),
+    ("fr", "1 − P₀", "1 moins P zéro"),
+    ("fr", "365/365 × 364/365", "365 sur 365 fois 364 sur 365"),
+    ("fr", "2⁶⁴ ≈ 18 400", "2 puissance 64 environ 18400"),
+    ("fr", "23 × 22 ÷ 2 = 253", "23 fois 22 divisé par 2 égale 253"),
+    ("fr", "41 - 40 = 1", "41 moins 40 égale 1"),
+    ("fr", "Le 29 février 2028, 1,2,3.", "Le 29 février 2028, 1,2,3."),
+    ("en", "50.7%", "50 point seven percent"),
+    ("en", "P₀ ≈ 0.493.", "P zero about 0 point four nine three."),
+    ("en", "18,400,000 pairs", "18400000 pairs"),
+    ("en", "2⁶⁴ and 1 − P₀", "2 to the power of 64 and 1 minus P zero"),
+    ("en", "365/365 × 364/365", "365 over 365 times 364 over 365"),
+    ("en", "On 29 February 2028, the SHA-256 hash.", "On 29 February 2028, the SHA-256 hash."),
+])
+def test_lecture_des_nombres_et_symboles(langue, ecrit, dit):
+    from lmec.lecture import normaliser_lecture
+    assert normaliser_lecture(ecrit, langue) == dit
+
+
+def test_lecture_appliquee_apres_le_lexique_et_pas_aux_sous_titres():
+    from lmec.narration import preparer_pour_voix
+    lex = {"fr": {"ONU": "Onu"}}
+    assert preparer_pour_voix("L'ONU : 50,7 %.", "fr", lex) == "L'Onu : 50 virgule 7 pour cent."
+
+
+def test_kokoro_prononce_les_nombres_normalises():
+    """Vérifie la phonétisation réelle (espeak-ng via Kokoro) quand le modèle est installé."""
+    from lmec.narration import preparer_pour_voix
+    from lmec.tts import DOSSIER_VOIX
+    kokoro_onnx = pytest.importorskip("kokoro_onnx")
+    modele, voix = DOSSIER_VOIX / "kokoro-v1.0.onnx", DOSSIER_VOIX / "voices-v1.0.bin"
+    if not (modele.exists() and voix.exists()):
+        pytest.skip("modèle Kokoro absent")
+    k = kokoro_onnx.Kokoro(str(modele), str(voix))
+    fr = k.tokenizer.phonemize(preparer_pour_voix("50,7 % et 1 − P₀", "fr", {}), "fr-fr")
+    assert "viʁɡˈyl" in fr and "mwˈɛ̃" in fr and "mˈaɪnəs" not in fr
+    en = k.tokenizer.phonemize(preparer_pour_voix("0.493 ≈ 2⁶⁴", "en", {}), "en-us")
+    assert "pˈɔɪnt" in en and "pˈaʊɚ" in en and "hˈʌndɹɪd nˈaɪnti" not in en
+
+
+def test_enveloppe_de_voix_rapide_et_identique_a_la_convolution():
+    """Une vidéo de 8 minutes ne doit pas bloquer l'habillage sonore (ancienne convolution O(n·k))."""
+    import time
+    import numpy as np
+    from lmec import son
+    x = np.random.default_rng(1).standard_normal(48000 * 3)
+    k = int(0.25 * 48000)
+    ref = np.convolve(np.abs(x), np.ones(k) / k, mode="same")
+    assert np.allclose(son._enveloppe(x), np.clip(ref / np.percentile(ref, 95), 0, 1), atol=1e-9)
+    debut = time.time()
+    son._enveloppe(np.zeros(48000 * 480))
+    assert time.time() - debut < 15
+
+
+def test_sous_titres_sur_deux_lignes_lisibles_sur_mobile():
+    from lmec.textes import deux_lignes
+    t = deux_lignes("Et si les chiffres changeaient votre façon de voir le monde ?")
+    assert t.count("\n") == 1 and all(len(l) <= 42 for l in t.split("\n"))
+    assert not t.split("\n")[1].startswith("?")
+    assert deux_lignes("Commençons par un défi.") == "Commençons par un défi."
+
+
+def test_pas_de_coupure_au_milieu_d_une_expression():
+    from lmec.rendu import mots_riches
+    def mots(t):
+        return [w.replace("\u00a0", " ") for w, _, _ in mots_riches(t)]
+    assert "n(n − 1) ÷ 2" in mots("Compter les paires : *n(n − 1) ÷ 2*")   # formule sur une ligne
+    assert "780 ÷ 365 > 2," in mots("40 personnes : 780 ÷ 365 > 2, impossible")
+    assert mots("Multiplier, puis 1 − P₀")[-1] == "− P₀"
+    assert len(mots_riches("(voir le rapport de rendu complet)")) == 6   # parenthèse longue : coupable
+
+
+def test_prononciation_de_la_marque_dans_la_voix_seulement():
+    import yaml
+    from lmec.narration import preparer_pour_voix
+    lex = yaml.safe_load(open(RACINE / "production/tts.yaml", encoding="utf-8"))["prononciation"]
+    assert "ACTU-BASICS" not in preparer_pour_voix("Bienvenue sur ACTU-BASICS.", "fr", lex)
+    assert "ACTU-BASICS" in preparer_pour_voix("Welcome to ACTU-BASICS.", "en", lex)   # bien lu en anglais
+
+
+def test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas():
+    """La barre d'accent doit passer sous le bas réel du chiffre, avec un espace net."""
+    import numpy as np
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        r = Rendu(fiche, langue, CHARTE, "video", False)
+        ed = fiche.editions[langue]
+        for i, s in enumerate(ed.scenes):
+            if s.type != "titre" or not s.extra.get("numero"):
+                continue
+            px = np.array(r.dessiner(s, i, len(ed.scenes)).convert("RGB")).astype(int)
+            accent = np.array(r.c["accent"][:3])
+            g = r.zone[0]
+            colonne = np.abs(px[:, g + 20:g + 30] - accent).sum(axis=2).min(axis=1) < 40
+            lignes = np.flatnonzero(colonne)
+            blocs = np.split(lignes, np.flatnonzero(np.diff(lignes) > 1) + 1)
+            numero, barre = blocs[-2], blocs[-1]     # le chiffre, puis la barre en dessous
+            assert barre[0] - numero[-1] >= 20, (langue, i, numero[-1], barre[0])
+
+
+def test_soulignement_du_chiffre_cle_sous_la_virgule():
+    """« 50,7 % » : la virgule descend sous la ligne de base ; le soulignement doit passer dessous."""
+    import numpy as np
+    fiche = charger_fiche(LANCEMENT)
+    for langue in ("fr", "en"):
+        for fmt in ("video", "lecon"):
+            r = Rendu(fiche, langue, CHARTE, fmt, False)
+            ed = fiche.editions[langue]
+            i, s = next((i, s) for i, s in enumerate(ed.scenes) if s.type == "chiffre")
+            px = np.array(r.dessiner(s, i, len(ed.scenes)).convert("RGB")).astype(int)
+            accent = np.abs(px - np.array(r.c["accent"][:3])).sum(axis=2) < 40
+            blanc = np.abs(px - np.array(r.c["texte"][:3])).sum(axis=2) < 40
+            lignes_barre = [y for y in range(px.shape[0]) if blanc[y].sum() > px.shape[1] * 0.3]
+            assert lignes_barre, (langue, fmt)
+            haut_barre = lignes_barre[0]
+            bas_chiffre = max(y for y in range(haut_barre) if accent[y].sum() > 3)
+            assert haut_barre - bas_chiffre >= 10, (langue, fmt, bas_chiffre, haut_barre)
+
+
+def _faux_pt(tableau):
+    """Fabrique un fichier au format torch.save (zip + pickle) sans torch, pour tester le lecteur."""
+    import io, pickle, types, zipfile
+    import numpy as np
+    torch = types.ModuleType("torch"); utils = types.ModuleType("torch._utils")
+
+    class FloatStorage:  # noqa: N801
+        pass
+    FloatStorage.__module__, FloatStorage.__qualname__ = "torch", "FloatStorage"
+    torch.FloatStorage = FloatStorage
+
+    def _rebuild_tensor_v2(*a):
+        pass
+    _rebuild_tensor_v2.__module__, _rebuild_tensor_v2.__qualname__ = "torch._utils", "_rebuild_tensor_v2"
+    utils._rebuild_tensor_v2 = _rebuild_tensor_v2
+    sys.modules["torch"], sys.modules["torch._utils"] = torch, utils
+    try:
+        class Tenseur:
+            def __reduce__(self):
+                pas = tuple(s // 4 for s in tableau.strides)
+                return (_rebuild_tensor_v2, ("STOCK", 0, tableau.shape, pas, False, {}))
+
+        class P(pickle.Pickler):
+            def persistent_id(self, obj):
+                return ("storage", FloatStorage, "0", "cpu", tableau.size) if obj == "STOCK" else None
+        flux = io.BytesIO(); P(flux, protocol=2).dump(Tenseur())
+    finally:
+        del sys.modules["torch"], sys.modules["torch._utils"]
+    sortie = io.BytesIO()
+    with zipfile.ZipFile(sortie, "w") as z:
+        z.writestr("archive/data.pkl", flux.getvalue())
+        z.writestr("archive/data/0", np.ascontiguousarray(tableau, dtype=np.float32).tobytes())
+    return sortie.getvalue()
+
+
+def test_lecture_des_voix_officielles_sans_torch():
+    import numpy as np
+    from verifier_provenance_voix import lire_tenseur_pt
+    t = np.random.default_rng(3).standard_normal((510, 1, 256)).astype(np.float32)
+    assert np.array_equal(lire_tenseur_pt(_faux_pt(t)), t)
+
+
+def test_lecture_pt_refuse_les_objets_inattendus():
+    import io, pickle, zipfile
+    from verifier_provenance_voix import lire_tenseur_pt
+    flux = io.BytesIO(); pickle.dump(__import__("os").getcwd, flux)    # un appel de fonction arbitraire
+    z = io.BytesIO()
+    with zipfile.ZipFile(z, "w") as a:
+        a.writestr("archive/data.pkl", flux.getvalue())
+    with pytest.raises(pickle.UnpicklingError):
+        lire_tenseur_pt(z.getvalue())
+
+
+def test_lecture_pth_officiel_sans_torch():
+    import numpy as np
+    from comparer_poids_onnx import lire_pth
+    t = np.arange(12, dtype=np.float32).reshape(3, 4)
+    assert np.array_equal(lire_pth(_faux_pt(t)), t)
+
+
+def test_comparaison_des_poids_onnx():
+    """Transposition, portes réordonnées et poids normalisés sont reconnus ; une valeur changée ne l'est pas."""
+    import numpy as np
+    from comparer_poids_onnx import comparer
+    rng = np.random.default_rng(0)
+    a, b = rng.standard_normal((8, 5), dtype=np.float32), rng.standard_normal((16, 3), dtype=np.float32)
+    g, v = rng.random((4, 1, 1), dtype=np.float32) + 0.5, rng.standard_normal((4, 2, 3), dtype=np.float32)
+    w = (g * v / np.sqrt((v.astype(np.float64) ** 2).reshape(4, -1).sum(1)).reshape(4, 1, 1)).astype(np.float32)
+    c = rng.standard_normal(50, dtype=np.float32)
+    c_modifie = c.copy(); c_modifie[:10] += 1.0
+    officiels = {"lin.weight": a, "lstm.weight_ih": b, "conv.weight_g": g, "conv.weight_v": v, "autre": c}
+    onnx_t = {"x": a.T.copy(), "y": np.concatenate([b[8:], b[:8]]), "z": w, "k": c_modifie,
+              "forme": np.array([1, 2], dtype=np.int64)}
+    res = comparer(officiels, onnx_t)
+    assert set(res["exacts"]) == {"lin.weight", "lstm.weight_ih"}
+    assert len(res["normalises"]) == 1
+    taille, part = res["restants"]["autre"]
+    assert taille == 50 and abs(part - 0.8) < 1e-9
+
+
+def _occurrences_barres(fiche, langue, fmt, instants=(None, 0.3, 0.6, 1.2, 1.8, 3.0)):
+    """Rend chaque scène à plusieurs instants en enregistrant chaque texte (boîte réelle des glyphes)
+    et chaque barre fine (rectangle ≤ 20 px de haut). Retourne, pour chaque barre posée sous un grand
+    texte (≥ 150 px), l'écart vertical entre le bas réel du glyphe et le haut de la barre."""
+    from PIL import ImageDraw
+    from lmec import rendu as module_rendu
+    journal = []
+
+    class Enregistreur(ImageDraw.ImageDraw):
+        def text(self, xy, txt, *a, **k):
+            f = k.get("font")
+            if f is not None and str(txt).strip():
+                journal[-1][0].append((str(txt), f.size, self.textbbox(xy, txt, font=f)))
+            return super().text(xy, txt, *a, **k)
+
+        def rectangle(self, box, *a, **k):
+            if box[3] - box[1] <= 20 and box[2] - box[0] >= 1:
+                journal[-1][1].append(tuple(box))
+            return super().rectangle(box, *a, **k)
+
+    origine = module_rendu.ImageDraw.Draw
+    resultats = []
+    try:
+        module_rendu.ImageDraw.Draw = lambda im, mode=None: Enregistreur(im, mode)
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
+        scenes = fiche.editions[langue].scenes
+        for i, s in enumerate(scenes):
+            for t in instants:
+                journal.append(([], []))
+                r.dessiner(s, i, len(scenes), t=t)
+                textes, barres = journal[-1]
+                for barre in barres:
+                    for txt, taille, (x0, y0, x1, y1) in textes:
+                        chevauche = x0 < barre[2] and barre[0] < x1
+                        if taille >= 150 and chevauche and y0 < barre[1]:
+                            resultats.append((i, s.type, t, txt, barre[1] - y1, (min(x0, barre[0]), y0, max(x1, barre[2]), barre[3])))
+    finally:
+        module_rendu.ImageDraw.Draw = origine
+    return resultats
+
+
+@pytest.mark.parametrize("chemin", sorted((RACINE / "contenus/fiches").glob("*.yaml")), ids=lambda p: p.stem)
+def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
+    """Composant commun : sous TOUT grand chiffre (numéro de chapitre, chiffre clé, quelle que soit la
+    scène), la barre reste sous le glyphe entier avec une marge nette, à chaque instant de l'animation,
+    en français et en anglais, en vertical comme en 16:9."""
+    fiche = charger_fiche(chemin)
+    vus = 0
+    for langue in fiche.editions:
+        for fmt in ("video", "lecon", "carrousel"):
+            for i, type_, t, txt, ecart, _ in _occurrences_barres(fiche, langue, fmt):
+                vus += 1
+                assert ecart >= 10, (chemin.name, langue, fmt, f"scène {i + 1} {type_}", t, txt, ecart)
+    assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
+
+
+def test_inventaire_signale_une_video_manquante(tmp_path):
+    """L'inventaire de l'artefact échoue si une langue rendue n'a pas sa vidéo."""
+    sys.path.insert(0, str(RACINE / "production"))
+    import inventaire
+    for langue in ("fr", "en"):
+        d = tmp_path / "fiche" / langue
+        d.mkdir(parents=True)
+        for nom in inventaire.ATTENDUS:
+            (d / nom).write_text("{}" if nom.endswith(".json") else "x", encoding="utf-8")
+    (tmp_path / "fiche/en/video.mp4").unlink()
+    texte, erreurs = inventaire.inventorier(tmp_path)
+    assert "fiche/en/video.mp4 manquant" in erreurs
+    assert "| `fr/video.mp4` |" in texte and "## Contrôle" in texte

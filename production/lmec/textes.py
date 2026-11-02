@@ -25,12 +25,31 @@ def _texte_parle(scene: Scene, fiche: Fiche, langue: str) -> str:
     if scene.voix_off:
         return scene.voix_off
     if scene.type == "chiffre":
-        chiffre = f"{formater_chiffre(fiche.chiffre, langue)} {unite(fiche.chiffre, langue)}".strip()
+        source = scene.extra if scene.extra.get("valeur") is not None else fiche.chiffre
+        chiffre = f"{formater_chiffre(source, langue)} {unite(source, langue)}".strip()
         return f"{chiffre}. {scene.texte}".strip()
     if scene.type == "source":
         noms = ", ".join(_texte_langue(s["nom"], langue) for s in fiche.sources)
         return f"Source : {noms}" if langue == "fr" else f"Source: {noms}"
+    if scene.type == "etapes" or (scene.type == "correction" and scene.extra.get("etapes")):
+        lignes = [scene.texte] + scene.extra.get("etapes", []) + [scene.extra.get("reponse", "")]
+        return ". ".join(l.rstrip(".") for l in lignes if l)
+    if scene.type == "correction" and scene.extra.get("reponse"):
+        return f"{scene.texte} {scene.extra['reponse']}".strip()
     return scene.texte
+
+
+LIGNE_SOUS_TITRE = 42   # caractères par ligne, lisibles sur mobile
+
+
+def deux_lignes(texte: str) -> str:
+    """Coupe un sous-titre trop long en deux lignes équilibrées, à l'espace le plus proche du milieu."""
+    if len(texte) <= LIGNE_SOUS_TITRE or " " not in texte:
+        return texte
+    milieu = len(texte) / 2
+    espaces = [i for i, c in enumerate(texte) if c == " " and texte[i + 1:i + 2] not in ("?", "!", ":", ";", "»")]
+    i = min(espaces or [texte.index(" ")], key=lambda k: abs(k - milieu))
+    return texte[:i] + "\n" + texte[i + 1:]
 
 
 def decouper_sous_titres(texte: str) -> list[str]:
@@ -80,7 +99,7 @@ def ecrire_srt(fiche: Fiche, edition: Edition, durees: list[float], destination:
             t += duree
     blocs = []
     for n, (debut, fin, texte) in enumerate(reperes, 1):
-        texte = typographie(texte, edition.langue)
+        texte = deux_lignes(typographie(texte, edition.langue))
         blocs.append(f"{n}\n{_horodatage(debut)} --> {_horodatage(max(debut + 0.3, fin - 0.04))}\n{texte}\n")
     destination.write_text("\n".join(blocs), encoding="utf-8")
 
@@ -107,7 +126,7 @@ def legende_complete(fiche: Fiche, edition: Edition) -> str:
     noms = ", ".join(_texte_langue(s["nom"], langue) for s in fiche.sources)
     source = (f"Source : {noms} ({fiche.contexte('periode', langue)})" if langue == "fr"
               else f"Source: {noms} ({fiche.contexte('periode', langue)})")
-    morceaux = [edition.legende.strip(), typographie(source, langue)]
+    morceaux = [edition.legende.strip()] + ([typographie(source, langue)] if noms else [])
     if edition.hashtags:
         morceaux.append(" ".join(edition.hashtags))
     return "\n\n".join(morceaux)
@@ -119,12 +138,14 @@ def ecrire_metadonnees(fiche: Fiche, edition: Edition, durees: list[float], doss
     (dossier / "legende.txt").write_text(legende + "\n", encoding="utf-8")
     meta = {
         "id": fiche.id, "langue": edition.langue, "theme": fiche.theme,
+        "type_fiche": fiche.type_fiche, "famille": fiche.famille, "format": fiche.format,
         "titre": edition.titre, "legende": legende, "hashtags": edition.hashtags,
         "sources": fiche.sources, "periode": fiche.contexte("periode", edition.langue),
         "perimetre": fiche.contexte("perimetre", edition.langue),
         "validation": {"statut": fiche.statut, "valide_par": fiche.valide_par,
                        "date": fiche.date_validation},
         "duree_video_s": round(sum(durees), 2),
+        "durees_scenes_s": [round(d, 2) for d in durees],
         "mode": mode,
         "voix": voix or {"fournisseur": None},
         "fichiers": {"video": "video.mp4", "sous_titres": "sous-titres.srt",

@@ -6,6 +6,7 @@ Avant toute modification du moteur de rendu ou production de contenu :
 - lire `00_STRATEGY/BRAND_IDENTITY.md` ;
 - lire `assets/brand/actu-basics/BRAND_GUIDELINES.md` ;
 - utiliser les logos officiels présents dans `assets/brand/actu-basics/` ;
+- pour une fiche pédagogique (statistiques, probabilités) : lire `00_STRATEGY/ARCHITECTURE_EDITORIALE.md` et `docs/technique/fiches-pedagogiques.md` ;
 - respecter les slogans : FR « Éveiller par les chiffres. » ; EN « Enlightening through numbers. ».
 
 Ne jamais générer une approximation du logo, le déformer ou modifier ses couleurs. Utiliser la variante claire sur fond clair et la variante sombre sur fond sombre. Prévoir une intégration configurable dans les vidéos, carrousels et couvertures, avec vérification des zones de sécurité et de la lisibilité mobile.

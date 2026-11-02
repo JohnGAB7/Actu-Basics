@@ -1,0 +1,601 @@
+# Vidéo de présentation ACTU-BASICS — PROTOTYPE, version 3 (direction éditoriale de JG, novembre 2026).
+# Titre de travail : « Et si les chiffres changeaient votre façon de voir le monde ? »
+# Critère de réussite : le spectateur a réellement appris. Il peut réexpliquer le raisonnement du
+# paradoxe des anniversaires et refaire un calcul simple. La durée découle de cet objectif (6 à 8 min).
+# Le raisonnement est construit à l'image à partir de 4 personnes. Tous les nombres sont recalculés
+# par la machine (blocs « verifier »). Relecture humaine de la logique pédagogique obligatoire.
+# Storyboard détaillé : 00_STRATEGY/STORYBOARD_LANCEMENT.md
+id: 2026-11-lancement-actu-basics
+type_fiche: pedagogique
+famille: presentation
+format: educational
+habillage_sonore: true
+theme: "Présentation d'ACTU-BASICS : comprendre le paradoxe des anniversaires"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Expliquer pourquoi 23 personnes donnent environ 50,7 % de chances qu'au moins deux partagent un anniversaire"
+      - "Compter les paires possibles et comprendre pourquoi on divise par 2"
+      - "Comprendre pourquoi on calcule d'abord la probabilité qu'aucun anniversaire ne coïncide"
+      - "Comprendre le produit des probabilités conditionnelles et le complément à 1"
+      - "Résoudre un problème similaire : le seuil de 90 % est atteint à 41 personnes"
+      - "Expliquer pourquoi l'intuition spontanée peut se tromper"
+    en:
+      - "Explain why 23 people give about a 50.7% chance that at least two share a birthday"
+      - "Count the possible pairs and understand why we divide by 2"
+      - "Understand why we first compute the probability that no birthdays match"
+      - "Understand the product of conditional probabilities and the complement rule"
+      - "Solve a similar problem: the 90% threshold is reached with 41 people"
+      - "Explain why our first intuition can be wrong"
+  prerequis:
+    fr: ["Aucun : savoir multiplier et lire une fraction"]
+    en: ["None: multiplication and reading a fraction"]
+  hypotheses:
+    fr: "365 jours, anniversaires également probables, 29 février ignoré (modèle classique)"
+    en: "365 days, equally likely birthdays, February 29 ignored (standard model)"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+editions:
+  fr:
+    titre: "Et si les chiffres changeaient votre façon de voir le monde ?"
+    legende: |
+      23 personnes dans une pièce : quelle est la probabilité qu'au moins deux d'entre elles aient le même anniversaire ? Au lieu de donner la réponse, on la construit pas à pas : compter les paires, passer par le contraire, multiplier les probabilités. Puis on s'entraîne, et on découvre une application réelle : les collisions d'empreintes numériques. Bienvenue sur ACTU-BASICS. Hypothèses : 365 jours également probables, 29 février ignoré.
+    hashtags: [probabilites, statistiques, maths]
+    scenes:
+      # ---------------------------------------------------------------- A. Le défi
+      - type: accroche
+        texte: "Et si les chiffres changeaient *votre façon de voir* le monde ?"
+        voix_off: "Et si les chiffres changeaient votre façon de voir le monde ? Commençons par un défi."
+      - type: animation
+        texte: "23 personnes dans une pièce"
+        animation: {modele: foule, n: 23}
+        voix_off: "Voici vingt-trois personnes réunies dans une pièce."
+      - type: exercice
+        texte: "Quelle est la probabilité qu'au moins *deux d'entre elles* aient le même anniversaire ?"
+        etiquette: "DÉFI"
+        pause: 5
+        voix_off: "Quelle est la probabilité qu'au moins deux d'entre elles aient le même anniversaire ? Même jour, même mois. Choisissez une estimation, et gardez-la en tête."
+      - type: texte
+        texte: "Nos hypothèses : *365 jours*, tous *également probables*"
+        note: "Le 29 février est ignoré."
+        voix_off: "Pour calculer, fixons nos hypothèses : une année de trois cent soixante-cinq jours, et chaque jour a la même chance d'être une date d'anniversaire. On ignore le vingt-neuf février. Et plutôt que de vous donner la réponse, construisons-la ensemble."
+      # ---------------------------------------------------------------- B. Ce qu'on compare
+      - type: titre
+        numero: 1
+        texte: "Compter les paires"
+        voix_off: "Première étape : comprendre ce que l'on compare."
+      - type: texte
+        texte: "Une coïncidence concerne toujours *deux* personnes : une *paire*"
+        voix_off: "Une coïncidence d'anniversaire concerne toujours deux personnes, autrement dit une paire. Combien de paires peut-on former ? Commençons tout petit."
+      - type: animation
+        texte: "Avec 4 personnes"
+        animation: {modele: paires, n: 4, phases: [apparition, personne, personne, personne, total]}
+        etapes:
+          - "4 personnes : A, B, C et D"
+          - "A : *3* paires"
+          - "B : *2* nouvelles paires"
+          - "C : *1* nouvelle paire"
+          - "3 + 2 + 1 = *6 paires*"
+        voix_off: "Prenons seulement quatre personnes. Appelons-les A, B, C et D. A peut former une paire avec B, avec C et avec D : trois paires. B forme deux nouvelles paires, avec C et avec D ; la paire formée par A et B est déjà comptée. C ne forme plus qu'une nouvelle paire, avec D. Au total : trois, plus deux, plus un, soit six paires."
+        verifier:
+          - {expression: "comb(4, 2)", attendu: 6, libelle: "Paires parmi 4 personnes"}
+          - {expression: "3 + 2 + 1", attendu: 6, libelle: "3 + 2 + 1"}
+      - type: animation
+        texte: "Une autre façon de compter"
+        animation: {modele: doublon, phases: [aller, retour, fusion, legende]}
+        etapes:
+          - "A choisit B"
+          - "B choisit A"
+          - "C'est la *même paire*"
+          - "4 × 3 = 12 choix, ÷ 2 = *6 paires*"
+        voix_off: "Il existe une autre façon de compter : chaque personne choisit un partenaire parmi les trois autres, soit quatre fois trois, douze choix. Quand A choisit B, on compte une paire. Mais quand B choisit A, on compte la même paire une deuxième fois. A avec B, ou B avec A : c'est exactement la même paire. Chaque paire est donc comptée deux fois : douze divisé par deux, on retrouve bien six paires."
+        verifier:
+          - {expression: "4 * 3 / 2", attendu: 6, libelle: "4 × 3 ÷ 2"}
+      # ---------------------------------------------------------------- C. Généraliser à 23
+      - type: animation
+        texte: "Avec 23 personnes"
+        animation: {modele: paires, n: 23, depuis: 4, phases: [apparition, personne, personne, personne, reste]}
+        etapes:
+          - "De 4 à *23 personnes*"
+          - "1re personne : *22* paires"
+          - "2e personne : *21* nouvelles paires"
+          - "3e personne : *20* nouvelles paires"
+          - "22 + 21 + 20 + … + 1 = *253*"
+        voix_off: "Passons maintenant à vingt-trois personnes. Le raisonnement reste le même, seul le groupe grandit. La première personne forme vingt-deux paires, une avec chacune des autres. La deuxième forme vingt et une nouvelles paires. La troisième, vingt. Et ainsi de suite jusqu'à la dernière : vingt-deux, plus vingt et un, plus vingt, jusqu'à un, cela fait deux cent cinquante-trois paires."
+        verifier:
+          - {expression: "sum(range(1, 23))", attendu: 253, libelle: "22 + 21 + … + 1"}
+      - type: formule
+        texte: "Le raccourci"
+        formule:
+          - '22+21+20+\cdots+1=253'
+          - '\dfrac{23\times 22}{2}=253'
+          - '\dfrac{n\,(n-1)}{2}'
+        voix_off: "Cette somme a un raccourci. On vient d'additionner vingt-deux, plus vingt et un, et ainsi de suite jusqu'à un. C'est exactement vingt-trois fois vingt-deux, divisé par deux : chacune des vingt-trois personnes choisit parmi vingt-deux partenaires, et chaque paire est comptée deux fois. Pour n personnes, le nombre de paires est donc n fois n moins un, divisé par deux."
+        note: "n(n − 1) ÷ 2 se lit « n fois n moins un, divisé par deux »."
+        verifier:
+          - {expression: "23 * 22 / 2", attendu: 253, libelle: "23 × 22 ÷ 2"}
+          - {expression: "comb(23, 2)", attendu: 253, libelle: "Paires parmi 23 personnes"}
+      - type: exercice
+        texte: "Combien de paires avec *10 personnes* ?"
+        pause: 5
+        voix_off: "À vous : combien de paires peut-on former avec dix personnes ?"
+      - type: correction
+        etapes:
+          - "10 × 9 ÷ 2"
+        reponse: "45 paires"
+        voix_off: "Dix fois neuf, quatre-vingt-dix. Divisé par deux : quarante-cinq paires."
+        verifier:
+          - {expression: "comb(10, 2)", attendu: 45, libelle: "Paires parmi 10 personnes"}
+      - type: etapes
+        texte: "253 paires, mais *pas* 253 chances qui s'additionnent"
+        etapes:
+          - "Les paires se chevauchent : A–B et A–C partagent *A*"
+          - "Donc 253 ÷ 365 n'est *pas* la réponse"
+          - "40 personnes : 780 ÷ 365 > 2, *impossible* pour une probabilité"
+        voix_off: "Attention : ces deux cent cinquante-trois paires ne sont pas indépendantes. Elles se chevauchent : les paires formées par A et B, et par A et C, partagent la même personne A. On ne peut donc pas simplement calculer deux cent cinquante-trois sur trois cent soixante-cinq. D'ailleurs, avec quarante personnes, ce calcul donnerait plus de deux, alors qu'une probabilité ne dépasse jamais un."
+        verifier:
+          - {expression: "comb(40, 2)", attendu: 780, libelle: "Paires parmi 40 personnes"}
+          - {expression: "comb(40, 2) / 365", attendu: 2.14, tolerance: 0.01, libelle: "780 ÷ 365"}
+      # ---------------------------------------------------------------- D. Calculer la probabilité
+      - type: titre
+        numero: 2
+        texte: "Calculer la probabilité"
+        voix_off: "Deuxième étape : calculer la probabilité."
+      - type: texte
+        texte: "Plus simple : la probabilité que *tous* les anniversaires soient *différents*"
+        voix_off: "Au moins une coïncidence, c'est compliqué à compter : une paire, deux paires, trois personnes nées le même jour. Il est beaucoup plus simple de calculer le contraire : la probabilité que tous les anniversaires soient différents."
+      - type: animation
+        texte: "Une personne après l'autre"
+        animation: {modele: calendrier, n: 23, phases: [personne, personne, personne, reste]}
+        etapes:
+          - "1re personne : *365* jours sur 365"
+          - "2e : *364* jours sur 365 pour éviter la 1re"
+          - "3e : *363* jours sur 365"
+          - "Jusqu'à la 23e : *343* jours sur 365"
+        voix_off: "Faisons entrer les personnes une par une. La première peut être née n'importe quel jour : trois cent soixante-cinq jours sur trois cent soixante-cinq. Pour ne pas tomber le même jour que la première, il reste à la deuxième trois cent soixante-quatre jours sur trois cent soixante-cinq. Si les deux premières sont différentes, la troisième doit éviter deux jours : trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite : la vingt-troisième doit éviter vingt-deux jours déjà pris, il lui en reste trois cent quarante-trois."
+        verifier:
+          - {expression: "365 - 22", attendu: 343, libelle: "Jours libres pour la 23e personne"}
+      - type: formule
+        texte: "On *multiplie* ces probabilités"
+        formule:
+          - 'P_0=\dfrac{365}{365}\times\dfrac{364}{365}\times\dfrac{363}{365}'
+          - '\times\cdots\times\dfrac{343}{365}'
+          - '\approx 0{,}493'
+        voix_off: "Ces probabilités se multiplient. Chaque fraction suppose qu'aucune coïncidence n'a encore eu lieu : trois cent soixante-cinq sur trois cent soixante-cinq, puis trois cent soixante-quatre sur trois cent soixante-cinq, puis trois cent soixante-trois sur trois cent soixante-cinq. Et ainsi de suite, jusqu'à trois cent quarante-trois sur trois cent soixante-cinq. Résultat : environ zéro virgule quatre cent quatre-vingt-treize, soit quarante-neuf virgule trois pour cent."
+        note: "P₀ : tous différents. Chaque fraction : pas encore de coïncidence."
+        verifier:
+          - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P₀, 23 personnes"}
+      - type: animation
+        texte: "L'un ou l'autre"
+        animation: {modele: complement, valeur: 0.493, phases: [gauche, droite, total]}
+        etapes:
+          - "Tous différents : *49,3 %*"
+          - "Au moins une coïncidence : *50,7 %*"
+          - "Ensemble : *100 %*"
+        voix_off: "Il n'y a que deux possibilités. Soit tous les anniversaires sont différents : quarante-neuf virgule trois pour cent. Soit au moins deux personnes partagent le même : c'est tout le reste. Les deux ensemble font cent pour cent."
+        verifier:
+          - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "Part « tous différents »"}
+      - type: formule
+        texte: "Le *complément* à 1"
+        formule:
+          - '1-P_0'
+          - '=1-0{,}493'
+          - '\approx 0{,}507'
+        voix_off: "Reste le complément. Au moins une coïncidence, c'est un moins P zéro. Un moins zéro virgule quatre cent quatre-vingt-treize. Environ zéro virgule cinq cent sept."
+        verifier:
+          - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "1 − P₀"}
+      - type: chiffre
+        valeur: 50.7
+        suffixe: {fr: " %", en: "%"}
+        decimales: 1
+        texte: "de chances qu'au moins deux des 23 personnes aient *le même anniversaire*"
+        note: "Hypothèses : 365 jours également probables, 29 février ignoré."
+        voix_off: "Cinquante virgule sept pour cent. Avec seulement vingt-trois personnes, une coïncidence est déjà plus probable que son absence. Était-ce votre estimation ?"
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(23)))", attendu: 50.7, libelle: "P(au moins une coïncidence, 23 personnes), en %"}
+      # ---------------------------------------------------------------- E. L'intuition
+      - type: titre
+        numero: 3
+        texte: "Pourquoi notre intuition se trompe"
+        voix_off: "Pourquoi ce résultat surprend-il autant ?"
+      - type: animation
+        texte: "Une intuition incomplète"
+        animation: {modele: paires, n: 23, phases: [vous, reste]}
+        etapes:
+          - "Votre anniversaire face aux 22 autres : *22* paires"
+          - "Tout le monde avec tout le monde : *253* paires"
+        voix_off: "Spontanément, on pense souvent à son propre anniversaire. Face aux vingt-deux autres, cela ne fait que vingt-deux paires, et environ six pour cent de chances que quelqu'un partage le vôtre. Mais la question porte sur tout le groupe : toutes les paires comptent, et il y en a deux cent cinquante-trois."
+        verifier:
+          - {expression: "100 * (1 - (364 / 365) ** 22)", attendu: 6, tolerance: 0.2, libelle: "P(quelqu'un partage votre anniversaire), en %"}
+      - type: texte
+        texte: "Une intuition *possible*, mais *incomplète* : la coïncidence peut concerner *n'importe quelle* paire"
+        voix_off: "Notre intuition n'est pas absurde : elle répond à une autre question, celle de votre propre anniversaire. Le paradoxe vient de là."
+      # ---------------------------------------------------------------- F. S'entraîner
+      - type: titre
+        numero: 4
+        texte: "À vous de jouer"
+        voix_off: "Et maintenant, à vous de jouer."
+      - type: courbe
+        texte: "La probabilité *monte vite*"
+        courbe:
+          variable: n
+          de: 1
+          a: 60
+          expression: "1 - prod((365 - k) / 365 for k in range(int(n)))"
+          format_y: pourcent
+          y_max: 1
+          axe_x: "Nombre de personnes"
+          reperes:
+            - {x: 23, label: "23 : 50,7 %"}
+            - {x: 50, label: "50 : 97,0 %"}
+        voix_off: "Voici la probabilité d'au moins une coïncidence, selon le nombre de personnes. À vingt-trois personnes, on dépasse tout juste cinquante pour cent. À cinquante personnes, on atteint quatre-vingt-dix-sept pour cent."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(50)))", attendu: 97.0, libelle: "P(50 personnes), en %"}
+      - type: exercice
+        texte: "À partir de combien de personnes dépasse-t-on *90 %* ?"
+        pause: 6
+        voix_off: "À partir de combien de personnes la probabilité dépasse-t-elle quatre-vingt-dix pour cent ? Prenez le temps de faire votre estimation."
+      - type: correction
+        etapes:
+          - "40 personnes : 89,1 %"
+          - "41 personnes : *90,3 %*"
+        reponse: "41 personnes"
+        voix_off: "Avec quarante personnes, on est à quatre-vingt-neuf virgule un pour cent : pas encore. Avec quarante et une, on passe à quatre-vingt-dix virgule trois pour cent. Il faut donc quarante et une personnes."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(40)))", attendu: 89.1, libelle: "P(40 personnes), en %"}
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(41)))", attendu: 90.3, libelle: "P(41 personnes), en %"}
+      - type: courbe
+        texte: "Le seuil de *90 %* est franchi à 41"
+        courbe:
+          variable: n
+          de: 1
+          a: 60
+          expression: "1 - prod((365 - k) / 365 for k in range(int(n)))"
+          format_y: pourcent
+          y_max: 1
+          seuil: 0.9
+          axe_x: "Nombre de personnes"
+          reperes:
+            - {x: 23, label: "23 : 50,7 %"}
+            - {x: 40, label: "40 : 89,1 %"}
+            - {x: 41, label: "41 : 90,3 %"}
+            - {x: 50, label: "50 : 97,0 %"}
+        voix_off: "Sur la courbe, on voit bien le passage. Vingt-trois personnes : cinquante virgule sept pour cent. Quarante : quatre-vingt-neuf virgule un. Quarante et une : quatre-vingt-dix virgule trois, le seuil est franchi. Cinquante : quatre-vingt-dix-sept pour cent."
+      - type: texte
+        texte: "Chaque nouvelle personne apporte *plus de paires* que la précédente"
+        note: "La 41e personne ajoute 40 paires à elle seule."
+        voix_off: "Pourquoi la courbe monte-t-elle si vite ? Parce que chaque nouvelle personne apporte plus de paires que la précédente : la quarante et unième en ajoute quarante à elle seule."
+        verifier:
+          - {expression: "comb(41, 2) - comb(40, 2)", attendu: 40, libelle: "Paires ajoutées par la 41e personne"}
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Compter les paires : *n(n − 1) ÷ 2*"
+          - "Passer par le contraire : *tous différents*"
+          - "Multiplier, puis *1 − P₀*"
+        voix_off: "Récapitulons la méthode. Un : compter les paires, n fois n moins un, divisé par deux. Deux : passer par le contraire, la probabilité que tous les anniversaires soient différents. Trois : multiplier les fractions, puis retirer le résultat de un."
+      # ---------------------------------------------------------------- G. Le monde réel
+      - type: titre
+        numero: 5
+        texte: "Et dans le monde réel ?"
+        voix_off: "Ce raisonnement sert aussi bien au-delà des anniversaires."
+      - type: etapes
+        texte: "Les *empreintes numériques*"
+        etapes:
+          - "Un fichier → un code court : son *empreinte*"
+          - "Deux fichiers différents, même code : une *collision*"
+        voix_off: "En informatique, on résume souvent un fichier par un code court, son empreinte numérique. Comme il existe bien plus de fichiers possibles que de codes, deux fichiers différents peuvent parfois recevoir la même empreinte : c'est une collision."
+      - type: etapes
+        texte: "Le même calcul, en très grand"
+        etapes:
+          - "Codes = *jours*, fichiers = *personnes*"
+          - "Codes de 64 bits : *18 milliards de milliards*"
+          - "≈ 5 milliards de fichiers : *près d'1 chance sur 2* de collision"
+        note: "Les collisions deviennent probables bien avant d'avoir utilisé tous les codes."
+        voix_off: "C'est le même raisonnement. Les codes jouent le rôle des jours de l'année, et les fichiers celui des personnes. Avec des codes de soixante-quatre bits, il existe environ dix-huit milliards de milliards de valeurs possibles. Pourtant, avec environ cinq milliards de fichiers, la probabilité d'une collision approche déjà une chance sur deux."
+        verifier:
+          - {expression: "2 ** 64 / 1e18", attendu: 18.4, tolerance: 0.1, libelle: "2^64, en milliards de milliards"}
+          - {expression: "1 - exp(-(5e9) ** 2 / (2 * 2 ** 64))", attendu: 0.49, tolerance: 0.01, libelle: "P(collision), 5 milliards de fichiers (approximation)"}
+      - type: texte
+        texte: "D'où des empreintes bien plus longues, par exemple de *256 bits*"
+        voix_off: "C'est l'une des raisons pour lesquelles on utilise aujourd'hui des empreintes bien plus longues, par exemple de deux cent cinquante-six bits : il faudrait alors un nombre astronomique de fichiers pour qu'une collision devienne probable."
+      - type: etapes
+        texte: "ACTU-BASICS, quatre piliers"
+        disposition: cartes
+        etapes:
+          - "Comprendre le monde par les chiffres"
+          - "Apprendre les statistiques"
+          - "Comprendre les probabilités"
+          - "Les statistiques en pratique"
+        voix_off: "Voilà ce que nous ferons ensemble sur ACTU-BASICS. Comprendre le monde par les chiffres, à partir de l'actualité. Apprendre les statistiques, pas à pas. Comprendre les probabilités, comme aujourd'hui. Et découvrir les statistiques en pratique, dans les métiers qui les utilisent."
+      - type: texte
+        texte: "Un chiffre ne raconte pas toujours toute l'histoire. *Apprendre à le comprendre change notre façon de voir le monde.*"
+        voix_off: "Un chiffre ne raconte pas toujours toute l'histoire. Apprendre à le comprendre change notre façon de voir le monde."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à voir le monde autrement."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What if numbers changed the way you see the world?"
+    legende: |
+      23 people in a room: what are the odds that at least two of them share a birthday? Instead of just giving the answer, we build it step by step: count the pairs, flip the question, multiply the probabilities. Then you practice, and we look at a real-world use: hash collisions. Welcome to ACTU-BASICS. Assumptions: 365 equally likely days, February 29 ignored.
+    hashtags: [probability, statistics, math]
+    scenes:
+      # ---------------------------------------------------------------- A. The challenge
+      - type: accroche
+        texte: "What if numbers changed *the way you see* the world?"
+        voix_off: "What if numbers changed the way you see the world? Let's start with a challenge."
+      - type: animation
+        texte: "23 people in a room"
+        animation: {modele: foule, n: 23}
+        voix_off: "Here are twenty-three people in a room."
+      - type: exercice
+        texte: "What are the odds that at least *two of them* share a birthday?"
+        etiquette: "CHALLENGE"
+        pause: 5
+        voix_off: "What are the odds that at least two of them share a birthday? Same day, same month. Make a guess, and keep it in mind."
+      - type: texte
+        texte: "Our assumptions: *365 days*, all *equally likely*"
+        note: "February 29 is ignored."
+        voix_off: "To work it out, let's set our assumptions: a year of three hundred sixty-five days, and every day is equally likely to be someone's birthday. We'll ignore February twenty-ninth. And rather than handing you the answer, let's build it together."
+      # ---------------------------------------------------------------- B. What we compare
+      - type: titre
+        numero: 1
+        texte: "Counting pairs"
+        voix_off: "Step one: understand what we're comparing."
+      - type: texte
+        texte: "A shared birthday always involves *two* people: a *pair*"
+        voix_off: "A shared birthday always involves two people. In other words, a pair. So how many pairs can we make? Let's start very small."
+      - type: animation
+        texte: "With 4 people"
+        animation: {modele: paires, n: 4, phases: [apparition, personne, personne, personne, total]}
+        etapes:
+          - "4 people: A, B, C and D"
+          - "A: *3* pairs"
+          - "B: *2* new pairs"
+          - "C: *1* new pair"
+          - "3 + 2 + 1 = *6 pairs*"
+        voix_off: "Take just four people. Let's call them A, B, C and D. A can pair up with B, with C and with D: three pairs. B makes two new pairs, with C and with D; the pair of A and B is already counted. C has only one new pair left, with D. In total: three, plus two, plus one, that's six pairs."
+        verifier:
+          - {expression: "comb(4, 2)", attendu: 6, libelle: "Pairs among 4 people"}
+          - {expression: "3 + 2 + 1", attendu: 6, libelle: "3 + 2 + 1"}
+      - type: animation
+        texte: "Another way to count"
+        animation: {modele: doublon, phases: [aller, retour, fusion, legende]}
+        etapes:
+          - "A picks B"
+          - "B picks A"
+          - "It's the *same pair*"
+          - "4 × 3 = 12 picks, ÷ 2 = *6 pairs*"
+        voix_off: "There's another way to count: each person picks a partner among the three others, so four times three, twelve picks. When A picks B, we count one pair. But when B picks A, we count that same pair a second time. A with B, or B with A: it's exactly the same pair. So every pair is counted twice: twelve divided by two, and we're back to six pairs."
+        verifier:
+          - {expression: "4 * 3 / 2", attendu: 6, libelle: "4 × 3 ÷ 2"}
+      # ---------------------------------------------------------------- C. Up to 23
+      - type: animation
+        texte: "With 23 people"
+        animation: {modele: paires, n: 23, depuis: 4, phases: [apparition, personne, personne, personne, reste]}
+        etapes:
+          - "From 4 to *23 people*"
+          - "Person 1: *22* pairs"
+          - "Person 2: *21* new pairs"
+          - "Person 3: *20* new pairs"
+          - "22 + 21 + 20 + … + 1 = *253*"
+        voix_off: "Now let's go up to twenty-three people. The reasoning is the same, only the group is bigger. The first person makes twenty-two pairs, one with each of the others. The second makes twenty-one new pairs. The third, twenty. And so on down to the last one: twenty-two, plus twenty-one, plus twenty, all the way down to one, gives two hundred fifty-three pairs."
+        verifier:
+          - {expression: "sum(range(1, 23))", attendu: 253, libelle: "22 + 21 + … + 1"}
+      - type: formule
+        texte: "The shortcut"
+        formule:
+          - '22+21+20+\cdots+1=253'
+          - '\dfrac{23\times 22}{2}=253'
+          - '\dfrac{n\,(n-1)}{2}'
+        voix_off: "This sum has a shortcut. We just added twenty-two, plus twenty-one, and so on down to one. That's exactly twenty-three times twenty-two, divided by two: each of the twenty-three people picks among twenty-two partners, and every pair gets counted twice. So for n people, the number of pairs is n times n minus one, divided by two."
+        note: "n(n − 1) ÷ 2 reads \"n times n minus one, divided by two\"."
+        verifier:
+          - {expression: "23 * 22 / 2", attendu: 253, libelle: "23 × 22 ÷ 2"}
+          - {expression: "comb(23, 2)", attendu: 253, libelle: "Pairs among 23 people"}
+      - type: exercice
+        texte: "How many pairs with *10 people*?"
+        pause: 5
+        voix_off: "Your turn: how many pairs can you make with ten people?"
+      - type: correction
+        etapes:
+          - "10 × 9 ÷ 2"
+        reponse: "45 pairs"
+        voix_off: "Ten times nine is ninety. Divided by two: forty-five pairs."
+        verifier:
+          - {expression: "comb(10, 2)", attendu: 45, libelle: "Pairs among 10 people"}
+      - type: etapes
+        texte: "253 pairs, but *not* 253 chances you can add up"
+        etapes:
+          - "Pairs overlap: A–B and A–C share *A*"
+          - "So 253 ÷ 365 is *not* the answer"
+          - "40 people: 780 ÷ 365 > 2, *impossible* for a probability"
+        voix_off: "Careful: these two hundred fifty-three pairs are not independent. They overlap: the pair of A and B and the pair of A and C share the same person, A. So we can't just compute two hundred fifty-three out of three hundred sixty-five. In fact, with forty people, that calculation would give more than two, and a probability can never be more than one."
+        verifier:
+          - {expression: "comb(40, 2)", attendu: 780, libelle: "Pairs among 40 people"}
+          - {expression: "comb(40, 2) / 365", attendu: 2.14, tolerance: 0.01, libelle: "780 ÷ 365"}
+      # ---------------------------------------------------------------- D. The probability
+      - type: titre
+        numero: 2
+        texte: "Working out the probability"
+        voix_off: "Step two: work out the probability."
+      - type: texte
+        texte: "Easier: the probability that *all* birthdays are *different*"
+        voix_off: "At least one match is hard to count: one pair, two pairs, three people born on the same day. It's much easier to compute the opposite: the probability that all the birthdays are different."
+      - type: animation
+        texte: "One person at a time"
+        animation: {modele: calendrier, n: 23, phases: [personne, personne, personne, reste]}
+        etapes:
+          - "Person 1: *365* days out of 365"
+          - "Person 2: *364* out of 365 to avoid person 1"
+          - "Person 3: *363* out of 365"
+          - "Up to person 23: *343* out of 365"
+        voix_off: "Let's bring people in one at a time. The first person can be born on any day: three hundred sixty-five days out of three hundred sixty-five. To avoid the first person's birthday, the second has three hundred sixty-four days out of three hundred sixty-five. If the first two are different, the third must avoid two days: three hundred sixty-three out of three hundred sixty-five. And so on: the twenty-third person must avoid twenty-two days already taken, which leaves three hundred forty-three."
+        verifier:
+          - {expression: "365 - 22", attendu: 343, libelle: "Days left for person 23"}
+      - type: formule
+        texte: "We *multiply* these probabilities"
+        formule:
+          - 'P_0=\dfrac{365}{365}\times\dfrac{364}{365}\times\dfrac{363}{365}'
+          - '\times\cdots\times\dfrac{343}{365}'
+          - '\approx 0.493'
+        voix_off: "These probabilities multiply. Each fraction assumes there's been no match so far: three hundred sixty-five over three hundred sixty-five, then three hundred sixty-four over three hundred sixty-five, then three hundred sixty-three over three hundred sixty-five. And so on, all the way to three hundred forty-three over three hundred sixty-five. The result: about zero point four nine three, or forty-nine point three percent."
+        note: "P₀: all 23 birthdays different. Each fraction: no match so far."
+        verifier:
+          - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "P₀, 23 people"}
+      - type: animation
+        texte: "One or the other"
+        animation: {modele: complement, valeur: 0.493, phases: [gauche, droite, total]}
+        etapes:
+          - "All different: *49.3%*"
+          - "At least one match: *50.7%*"
+          - "Together: *100%*"
+        voix_off: "There are only two possibilities. Either all the birthdays are different: forty-nine point three percent. Or at least two people share one: that's everything else. Together, they make one hundred percent."
+        verifier:
+          - {expression: "prod((365 - k) / 365 for k in range(23))", attendu: 0.493, libelle: "Share \"all different\""}
+      - type: formule
+        texte: "The *complement* rule"
+        formule:
+          - '1-P_0'
+          - '=1-0.493'
+          - '\approx 0.507'
+        voix_off: "Now the complement. At least one match is one minus P zero. One minus zero point four nine three. About zero point five oh seven."
+        verifier:
+          - {expression: "1 - prod((365 - k) / 365 for k in range(23))", attendu: 0.507, libelle: "1 − P₀"}
+      - type: chiffre
+        valeur: 50.7
+        suffixe: {fr: " %", en: "%"}
+        decimales: 1
+        texte: "chance that at least two of the 23 people *share a birthday*"
+        note: "Assumptions: 365 equally likely days, February 29 ignored."
+        voix_off: "Fifty point seven percent. With just twenty-three people, a match is already more likely than not. Was that your guess?"
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(23)))", attendu: 50.7, libelle: "P(at least one match, 23 people), in %"}
+      # ---------------------------------------------------------------- E. Intuition
+      - type: titre
+        numero: 3
+        texte: "Why our intuition fails"
+        voix_off: "So why is this result so surprising?"
+      - type: animation
+        texte: "Half the picture"
+        animation: {modele: paires, n: 23, phases: [vous, reste]}
+        etapes:
+          - "Your birthday vs the 22 others: *22* pairs"
+          - "Everyone with everyone: *253* pairs"
+        voix_off: "Our first instinct is often to think about our own birthday. Against the twenty-two others, that's only twenty-two pairs, and about a six percent chance that someone shares yours. But the question is about the whole group: every pair counts, and there are two hundred fifty-three of them."
+        verifier:
+          - {expression: "100 * (1 - (364 / 365) ** 22)", attendu: 6, tolerance: 0.2, libelle: "P(someone shares your birthday), in %"}
+      - type: texte
+        texte: "A *reasonable* instinct, but *incomplete*: the match can involve *any* pair"
+        voix_off: "That instinct isn't silly: it answers a different question, the one about your own birthday. That's where the paradox comes from."
+      # ---------------------------------------------------------------- F. Practice
+      - type: titre
+        numero: 4
+        texte: "Your turn"
+        voix_off: "Now it's your turn."
+      - type: courbe
+        texte: "The probability *climbs fast*"
+        courbe:
+          variable: n
+          de: 1
+          a: 60
+          expression: "1 - prod((365 - k) / 365 for k in range(int(n)))"
+          format_y: pourcent
+          y_max: 1
+          axe_x: "Number of people"
+          reperes:
+            - {x: 23, label: "23: 50.7%"}
+            - {x: 50, label: "50: 97.0%"}
+        voix_off: "Here's the probability of at least one match, by number of people. With twenty-three people, it just passes fifty percent. With fifty people, it reaches ninety-seven percent."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(50)))", attendu: 97.0, libelle: "P(50 people), in %"}
+      - type: exercice
+        texte: "How many people does it take to pass *90%*?"
+        pause: 6
+        voix_off: "How many people does it take for the probability to pass ninety percent? Take your time and make a guess."
+      - type: correction
+        etapes:
+          - "40 people: 89.1%"
+          - "41 people: *90.3%*"
+        reponse: "41 people"
+        voix_off: "With forty people, you're at eighty-nine point one percent: not quite. With forty-one, you reach ninety point three percent. So it takes forty-one people."
+        verifier:
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(40)))", attendu: 89.1, libelle: "P(40 people), in %"}
+          - {expression: "100 * (1 - prod((365 - k) / 365 for k in range(41)))", attendu: 90.3, libelle: "P(41 people), in %"}
+      - type: courbe
+        texte: "The *90%* line is crossed at 41"
+        courbe:
+          variable: n
+          de: 1
+          a: 60
+          expression: "1 - prod((365 - k) / 365 for k in range(int(n)))"
+          format_y: pourcent
+          y_max: 1
+          seuil: 0.9
+          axe_x: "Number of people"
+          reperes:
+            - {x: 23, label: "23: 50.7%"}
+            - {x: 40, label: "40: 89.1%"}
+            - {x: 41, label: "41: 90.3%"}
+            - {x: 50, label: "50: 97.0%"}
+        voix_off: "On the curve, you can see the crossing. Twenty-three people: fifty point seven percent. Forty: eighty-nine point one. Forty-one: ninety point three, and the line is crossed. Fifty: ninety-seven percent."
+      - type: texte
+        texte: "Each new person brings *more pairs* than the one before"
+        note: "Person 41 adds 40 pairs all alone."
+        voix_off: "Why does the curve climb so fast? Because each new person brings more pairs than the one before: the forty-first adds forty all by itself."
+        verifier:
+          - {expression: "comb(41, 2) - comb(40, 2)", attendu: 40, libelle: "Pairs added by person 41"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Count the pairs: *n(n − 1) ÷ 2*"
+          - "Flip the question: *all different*"
+          - "Multiply, then *1 − P₀*"
+        voix_off: "Let's recap the method. One: count the pairs, n times n minus one, divided by two. Two: flip the question, and find the probability that all birthdays are different. Three: multiply the fractions, then subtract the result from one."
+      # ---------------------------------------------------------------- G. Real world
+      - type: titre
+        numero: 5
+        texte: "What about the real world?"
+        voix_off: "This reasoning goes far beyond birthdays."
+      - type: etapes
+        texte: "Digital *fingerprints*"
+        etapes:
+          - "A file → a short code: its *hash*"
+          - "Two different files, same code: a *collision*"
+        voix_off: "In computing, a file is often summed up by a short code, called a hash, a kind of digital fingerprint. Since there are far more possible files than codes, two different files can sometimes get the same hash: that's a collision."
+      - type: etapes
+        texte: "The same math, on a huge scale"
+        etapes:
+          - "Codes = *days*, files = *people*"
+          - "64-bit codes: *18 billion billion*"
+          - "≈ 5 billion files: *close to even odds* of a collision"
+        note: "Collisions become likely long before all the codes are used up."
+        voix_off: "It's the same reasoning. The codes play the role of the days of the year, and the files play the people. With sixty-four-bit codes, there are about eighteen billion billion possible values. Yet with around five billion files, the probability of a collision is already close to one in two."
+        verifier:
+          - {expression: "2 ** 64 / 1e18", attendu: 18.4, tolerance: 0.1, libelle: "2^64, in billion billions"}
+          - {expression: "1 - exp(-(5e9) ** 2 / (2 * 2 ** 64))", attendu: 0.49, tolerance: 0.01, libelle: "P(collision), 5 billion files (approximation)"}
+      - type: texte
+        texte: "Hence much longer hashes, like *256 bits*"
+        voix_off: "That's one reason why today's hashes are much longer, for example two hundred fifty-six bits: you would then need an astronomical number of files before a collision became likely."
+      - type: etapes
+        texte: "ACTU-BASICS, four pillars"
+        disposition: cartes
+        etapes:
+          - "Understanding the world through numbers"
+          - "Learning statistics"
+          - "Understanding probability"
+          - "Statistics in practice"
+        voix_off: "Here's what we'll do together on ACTU-BASICS. Understand the world through numbers, starting from the news. Learn statistics, step by step. Understand probability, just like today. And discover statistics in practice, in the jobs that use them."
+      - type: texte
+        texte: "A number doesn't always tell the whole story. *Learning to understand it changes the way we see the world.*"
+        voix_off: "A number doesn't always tell the whole story. Learning to understand it changes the way we see the world."
+      - type: fin
+        texte: "Follow to learn to see the world differently."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -111,7 +111,10 @@ def nombres(texte: str, langue: str) -> list[float]:
 
 
 def _textes_edition(ed) -> list[str]:
-    return [ed.titre, ed.legende] + [s.texte for s in ed.scenes] + [s.voix_off for s in ed.scenes if s.voix_off]
+    return ([ed.titre, ed.legende] + [s.texte for s in ed.scenes] + [s.voix_off for s in ed.scenes if s.voix_off]
+            + [e for s in ed.scenes for e in s.extra.get("etapes", [])]
+            + [s.extra["reponse"] for s in ed.scenes if s.extra.get("reponse")]
+            + [s.extra["note"] for s in ed.scenes if s.extra.get("note")])
 
 
 # --------------------------------------------------------------------------- fiche
@@ -159,11 +162,11 @@ def controler_editions(fiche: Fiche, r: Rapport) -> None:
     for langue in LANGUES:
         ed = fiche.editions[langue]
         types = [s.type for s in ed.scenes]
-        for t in SCENES_OBLIGATOIRES:
+        for t in (SCENES_OBLIGATOIRES if not fiche.pedagogique else ("fin",)):
             r.verifier(t in types, f"Scène « {t} » présente", f"Scène obligatoire « {t} » absente", langue=langue)
-        if types and types[0] != "accroche":
+        if types and types[0] != "accroche" and not fiche.pedagogique:
             r.avertir("La vidéo ne commence pas par l'accroche", langue)
-        if types and types[-1] != "fin":
+        if types and types[-1] != "fin" and not fiche.pedagogique:
             r.avertir("La vidéo ne se termine pas par la scène de fin", langue)
         r.verifier(len(ed.legende.strip()) >= 40, "Légende renseignée",
                    "Légende trop courte pour être utile (< 40 caractères)", AVERTISSEMENT, langue)
@@ -416,7 +419,12 @@ def controler_fiche(fiche: Fiche, r: Rapport, aujourd_hui: dt.date | None = None
     controler_validation(fiche, r, aujourd_hui)
     controler_sources(fiche, r, aujourd_hui)
     controler_editions(fiche, r)
-    controler_coherence(fiche, r)
+    if fiche.pedagogique:
+        from .pedagogie import controler_pedagogie
+        _coherence_textes(fiche, r)
+        controler_pedagogie(fiche, r)
+    else:
+        controler_coherence(fiche, r)
 
 
 # --------------------------------------------------------------------------- rendus
@@ -525,11 +533,12 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         if pose.largeur > pose.largeur_native:
             r.avertir(f"Logo agrandi au-delà de sa résolution ({pose.largeur} px pour un fichier de "
                       f"{pose.largeur_native} px, {lieu}) : risque de flou, fournir un fichier plus grand", langue)
-        if pose.largeur * 390 / w < _logo.LARGEUR_MOBILE_MIN:
-            r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * 390 / w)} px à l'écran, {lieu})", langue)
+        ecran_tel = 844 if support == "lecon" else 390   # téléphone tenu à l'horizontale pour un cours 16:9
+        if pose.largeur * ecran_tel / w < _logo.LARGEUR_MOBILE_MIN:
+            r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * ecran_tel / w)} px à l'écran, {lieu})", langue)
         lis = (charte.get("logo") or {}).get("lisibilite") or {}
         if lis.get(langue):
-            ecran = pose.largeur * 390 / w
+            ecran = pose.largeur * ecran_tel / w
             nom, slogan = ecran * lis[langue]["nom"], ecran * lis[langue]["slogan"]
             if nom < lis.get("nom_min_px", 8):
                 r.avertir(f"Nom ACTU-BASICS du logo peu lisible sur téléphone ({nom:.1f} px de haut, {lieu})",
@@ -542,7 +551,7 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
                     or y1 > h - zone_c["bas"])
             if hors:
                 r.avertir(f"Logo hors des marges du carrousel ({lieu})", langue)
-        else:
+        elif support != "lecon":
             for cle in plateformes["cibles"]:
                 p = plateformes["plateformes"][cle]
                 z = p["zone_ui"]

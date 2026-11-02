@@ -4,6 +4,8 @@ Chaque fournisseur transforme UNE phrase en un fichier WAV. Le reste de la chaî
 (découpage, durées, sous-titres, montage) ne dépend pas du fournisseur.
 
 Fournisseurs :
+  kokoro      local, gratuit, hors ligne (paquet `kokoro-onnx` + modèle Kokoro-82M téléchargé) ;
+              moteur prioritaire, Piper en secours (voir docs/voice-licenses.md)
   piper       local, gratuit, hors ligne (paquet `piper-tts` + modèle de voix téléchargé)
   openai      API OpenAI (clé OPENAI_API_KEY), payant à l'usage
   elevenlabs  API ElevenLabs (clé ELEVENLABS_API_KEY), abonnement
@@ -11,6 +13,10 @@ Fournisseurs :
   test        bip de synthèse pour les tests automatiques ; JAMAIS publiable
 
 Aucune clé n'est lue ailleurs que dans les variables d'environnement.
+
+Garde-fou de gratuité : avec `gratuit_uniquement: true` dans tts.yaml (réglage par défaut), un
+fournisseur payant est refusé dès sa création, et toute requête vers une API payante est bloquée
+avant de partir. Seuls les fournisseurs locaux restent possibles.
 """
 from __future__ import annotations
 
@@ -145,7 +151,19 @@ def _charger_piper(chemin: str):
     return _CACHE_PIPER[chemin]
 
 
+FOURNISSEURS_PAYANTS = ("openai", "elevenlabs")
+# Activé par creer_fournisseur quand tts.yaml impose la gratuité : dernier verrou avant le réseau.
+_GRATUIT_UNIQUEMENT = {"actif": False}
+
+
+class ServicePayantRefuse(ErreurTTS):
+    """Tentative d'utiliser un service payant alors que la gratuité est imposée."""
+
+
 def _requete(url: str, entetes: dict, corps: dict) -> bytes:
+    if _GRATUIT_UNIQUEMENT["actif"]:
+        raise ServicePayantRefuse(f"Appel refusé vers {url.split('/')[2]} : service payant, interdit par "
+                                  "« gratuit_uniquement: true » (tts.yaml)")
     req = urllib.request.Request(url, data=json.dumps(corps).encode(), headers=entetes, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=DELAI_API_S) as rep:
@@ -155,6 +173,64 @@ def _requete(url: str, entetes: dict, corps: dict) -> bytes:
         raise ErreurTTS(f"{url.split('/')[2]} a répondu {exc.code} : {detail}") from exc
     except urllib.error.URLError as exc:
         raise ErreurTTS(f"Réseau indisponible pour {url.split('/')[2]} : {exc.reason}") from exc
+
+
+class Kokoro(Fournisseur):
+    """Kokoro-82M (ONNX), exécuté en local sur le processeur. Aucun appel réseau à la synthèse."""
+    nom = "kokoro"
+    TAUX = 24000
+
+    def _fichiers(self) -> tuple[Path, Path]:
+        modele = DOSSIER_VOIX / self.config.get("modele", "kokoro-v1.0.onnx")
+        voix = DOSSIER_VOIX / self.config.get("fichier_voix", "voices-v1.0.bin")
+        for f in (modele, voix):
+            if not f.exists():
+                raise ErreurTTS(f"Fichier Kokoro introuvable : {f}. Lancez : python production/telecharger_voix.py")
+        return modele, voix
+
+    def empreinte_modele(self) -> str:
+        try:
+            modele, voix = self._fichiers()
+        except ErreurTTS:
+            return "absent"
+        return f"{modele.name}:{modele.stat().st_size}|{voix.name}:{voix.stat().st_size}"
+
+    def verifier(self) -> None:
+        try:
+            import kokoro_onnx  # noqa: F401
+        except ImportError as exc:
+            raise ErreurTTS("Paquet « kokoro-onnx » absent : pip install -r production/requirements-voix.txt") from exc
+        self._fichiers()
+        if not self.config.get("voix"):
+            raise ErreurTTS(f"tts.yaml : voix.{self.langue}.kokoro.voix manquant (ex. ff_siwis, af_heart)")
+        if self.config["voix"] not in _charger_kokoro(*map(str, self._fichiers())).get_voices():
+            raise ErreurTTS(f"Voix Kokoro « {self.config['voix']} » absente du fichier de voix")
+
+    def synthetiser(self, texte: str, destination: Path) -> None:
+        import numpy as np
+        moteur = _charger_kokoro(*map(str, self._fichiers()))
+        echantillons, taux = moteur.create(texte, voice=self.config["voix"], speed=self.config.get("vitesse", 1.0),
+                                           lang=self.config.get("langue", "fr-fr" if self.langue == "fr" else "en-us"))
+        brut = destination.with_suffix(".kokoro.wav")
+        with wave.open(str(brut), "wb") as w:
+            w.setnchannels(1)
+            w.setsampwidth(2)
+            w.setframerate(taux)
+            w.writeframes((np.clip(echantillons, -1, 1) * 32767).astype(np.int16).tobytes())
+        _vers_wav(brut, destination)
+        brut.unlink(missing_ok=True)
+
+
+_CACHE_KOKORO: dict = {}
+
+
+def _charger_kokoro(modele: str, voix: str):
+    import logging
+    logging.getLogger("kokoro_onnx").setLevel(logging.ERROR)
+    if (modele, voix) not in _CACHE_KOKORO:
+        from kokoro_onnx import Kokoro as MoteurKokoro
+        _CACHE_KOKORO[(modele, voix)] = MoteurKokoro(modele, voix)
+    return _CACHE_KOKORO[(modele, voix)]
 
 
 class OpenAI(Fournisseur):
@@ -250,16 +326,39 @@ class VoixTest(Fournisseur):
             w.writeframes(bytes(images))
 
 
-FOURNISSEURS = {c.nom: c for c in (Piper, OpenAI, ElevenLabs, Manuel, VoixTest)}
+FOURNISSEURS = {c.nom: c for c in (Kokoro, Piper, OpenAI, ElevenLabs, Manuel, VoixTest)}
 
 
 def creer_fournisseur(nom: str, config_tts: dict, langue: str, dossier_manuel: Path | None = None) -> Fournisseur:
     if nom not in FOURNISSEURS:
         raise ErreurTTS(f"Fournisseur TTS inconnu « {nom} » ({', '.join(FOURNISSEURS)})")
+    _GRATUIT_UNIQUEMENT["actif"] = bool(config_tts.get("gratuit_uniquement", True))
+    if _GRATUIT_UNIQUEMENT["actif"] and nom in FOURNISSEURS_PAYANTS:
+        raise ServicePayantRefuse(f"Fournisseur « {nom} » payant refusé : tts.yaml impose « gratuit_uniquement: true ». "
+                                  "Le passer à false est une décision de dépense, réservée à JG.")
     cfg = ((config_tts.get("voix") or {}).get(langue) or {}).get(nom, {})
     if nom == "manuel":
         return Manuel(cfg, langue, dossier_manuel)
     return FOURNISSEURS[nom](cfg, langue)
+
+
+def creer_avec_secours(nom: str, config_tts: dict, langue: str,
+                       dossier_manuel: Path | None = None) -> tuple[Fournisseur, str | None]:
+    """Crée le fournisseur et vérifie qu'il est utilisable ; sinon, bascule sur le fournisseur de
+    secours de tts.yaml (« secours: {kokoro: piper} »). Retourne (fournisseur, note de bascule)."""
+    principal = creer_fournisseur(nom, config_tts, langue, dossier_manuel)
+    try:
+        principal.verifier()
+        return principal, None
+    except ServicePayantRefuse:
+        raise
+    except ErreurTTS as exc:
+        secours = (config_tts.get("secours") or {}).get(nom)
+        if not secours:
+            raise
+        remplacant = creer_fournisseur(secours, config_tts, langue, dossier_manuel)
+        remplacant.verifier()
+        return remplacant, f"Voix « {nom} » indisponible ({exc}) : secours « {secours} » utilisé"
 
 
 class Cache:
