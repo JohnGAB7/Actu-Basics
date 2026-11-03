@@ -4,6 +4,7 @@
 #   python production/produire.py FICHE --voix openai
 #   ou variable d'environnement LMEC_TTS=elevenlabs
 fournisseur: kokoro         # kokoro | piper | openai | elevenlabs | manuel | test
+# Choix définitif de JG (2026-11-03, PR #15) : Kokoro pour le FR (ff_siwis) et pour l'EN. Piper reste le secours.
 
 # Gratuité imposée (décision de JG) : aucun service payant, aucune clé, aucun crédit.
 # Avec true, openai et elevenlabs sont refusés et aucune requête payante ne part.
