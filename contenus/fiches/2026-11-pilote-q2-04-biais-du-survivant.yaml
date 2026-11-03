@@ -59,7 +59,7 @@ editions:
     scenes:
       - type: accroche
         texte: "On n'examine que *les avions revenus*. Que peut-on en conclure ?"
-        voix_off: "Pendant la Seconde Guerre mondiale, des analystes étudient les dégâts sur les avions qui reviennent de mission. Mais que peuvent-ils vraiment en conclure ?"
+        voix_off: "Seconde Guerre mondiale : des analystes étudient les dégâts des avions qui reviennent de mission. Que peuvent-ils vraiment en conclure ?"
       - type: animation
         texte: "Un *filtre* invisible"
         animation: {modele: selection, icone: avion, n: 8, restants: 5}
@@ -84,7 +84,7 @@ editions:
           - "Des entreprises sont *créées*"
           - "Beaucoup *disparaissent*"
           - "On n'entend que *les survivantes*"
-        voix_off: "Le même filtre agit ailleurs. Des entreprises sont créées. Beaucoup disparaissent en route. Et l'on n'entend plus que les survivantes raconter leurs recettes, alors que les disparues faisaient peut-être pareil."
+        voix_off: "Le même filtre agit ailleurs. Des entreprises sont créées. Beaucoup disparaissent. Et l'on n'entend que les survivantes raconter leurs recettes, alors que les disparues faisaient peut-être pareil."
       - type: texte
         texte: "Le *biais du survivant*"
         voix_off: "C'est le biais du survivant : tirer une conclusion à partir des seuls cas qui ont passé un filtre de sélection, en oubliant ceux qui ont disparu avant d'être observés."
@@ -100,7 +100,7 @@ editions:
       - type: texte
         texte: "*Qui manque* dans les données ?"
         note: "Pour aller plus loin : la leçon « Échantillon et biais de sélection »."
-        voix_off: "Retenez la question à poser : qui manque dans les données ? Pour aller plus loin, voyez la leçon sur l'échantillon et le biais de sélection."
+        voix_off: "Retenez la question : qui manque dans les données ? Pour aller plus loin : la leçon sur l'échantillon et le biais de sélection."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
