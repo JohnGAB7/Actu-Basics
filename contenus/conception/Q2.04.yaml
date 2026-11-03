@@ -43,18 +43,18 @@ affirmations_qualitatives:
     statut: sourcee
     source: "Rapport de Wald (CRC 432) : titre et partie I (avions revenus après i impacts, A_i)"
     verification: "Lu mot à mot le 2026-11-03"
-  - affirmation: "Une première intuition semblait évidente : renforcer les zones les plus touchées"
-    statut: hypothese
-    source: ""
-    verification: "Formulée comme une intuition, pas comme une décision historique attribuée à quelqu'un. Non trouvée dans la partie lue du rapport de Wald. À confirmer dans Mangel et Samaniego (1984) avant de la présenter comme un fait"
-  - affirmation: "Les zones très touchées pouvaient être survivables ; une zone peu touchée pouvait signaler un impact qui empêchait le retour"
+  - affirmation: "La méthode de Wald part des avions revenus selon leur nombre d'impacts et tient compte du nombre total d'avions engagés"
+    statut: sourcee
+    source: "Rapport de Wald (CRC 432), partie I : A_i (revenus après i impacts) et N (avions engagés)"
+    verification: "Lu mot à mot le 2026-11-03. Le récit des « zones peu touchées » est retiré (V2) : absent de la partie lue"
+  - affirmation: "8 avions, 5 revenus ; 8 entreprises, 3 encore actives"
     statut: illustration
     source: ""
-    verification: "Mécanisme général au conditionnel, signalé à l'écran (note). Non attribué à Wald : la partie lue de son rapport raisonne sur le nombre d'impacts, pas sur des zones"
-  - affirmation: "Une méthode d'Abraham Wald estime la vulnérabilité à partir des dégâts des survivants"
-    statut: sourcee
-    source: "Rapport de Wald (CRC 432), titre ; note à l'écran sur la dernière scène"
-    verification: "Lu le 2026-11-03"
+    verification: "Nombres fictifs, annoncés à l'écran et dans la voix"
+  - affirmation: "Les entreprises qui ont fermé faisaient peut-être pareil"
+    statut: hypothese
+    source: ""
+    verification: "Au conditionnel (« peut-être ») : illustration, pas un fait"
 
 cycle_enquete:
   question: "Montrée : où renforcer les avions ?"
@@ -78,15 +78,15 @@ hypotheses_et_limites:
 
 reproductibilite: "Pas de calcul ; référence DOI dans la fiche de production"
 
-deroule:
-  - {etape: question, contenu: "Impacts visibles sur les avions revenus ; première intuition : renforcer les zones les plus touchées"}
-  - {etape: raisonnement, contenu: "Il manquait les avions qui ne revenaient pas"}
-  - {etape: formalisation, contenu: "Cartes : observés (revenus) / absents des données (perdus)"}
-  - {etape: raisonnement, contenu: "Relire les impacts : très touché = souvent supportable ; peu touché = pouvait empêcher le retour (conditionnel)"}
-  - {etape: application, contenu: "Qui manque dans les données, et pourquoi ?"}
-  - {etape: rappel, contenu: "Définition du biais du survivant ; méthode de Wald en note"}
-  # Storyboard de ChatGPT, scènes 1 et 2 (silhouettes d'avions, avions qui s'effacent) : non réalisables
-  # avec le moteur actuel. Piste : un modèle d'animation « avions » dans lmec/animations.py, sur décision de JG.
+deroule:   # V2 après la revue audiovisuelle de la PR #15 (cible 80 à 90 s)
+  - {etape: question, contenu: "On n'examine que les avions revenus : que peut-on en conclure ?"}
+  - {etape: raisonnement, contenu: "Animation « selection » : 8 partis, 5 revenus, 3 absents ; données = survivants ; flèche « sélection par la survie »"}
+  - {etape: formalisation, contenu: "Méthode de Wald : avions revenus selon le nombre d'impacts, nombre total d'avions engagés"}
+  - {etape: application, contenu: "Animation « selection » : entreprises créées, disparues, survivantes"}
+  - {etape: rappel, contenu: "Définition du biais du survivant"}
+  - {etape: exercice, contenu: "Une étude ne porte que sur les entreprises encore en activité : quel groupe manque ?"}
+  - {etape: correction, contenu: "Celles qui ont fermé, éliminées avant l'observation"}
+  - {etape: rappel, contenu: "Qui manque dans les données ? Renvoi à S1.05"}
 
 formules: []
 calculs_a_verifier: []
@@ -94,7 +94,7 @@ calculs_a_verifier: []
 idees_fausses:
   - {idee: "Tirer des leçons des seuls gagnants", desamorcee_a_l_etape: "Le même piège, partout"}
 
-exercice: {question: "", correction: "", pause_secondes: 0}   # Capsule sans exercice (programme, section 2.4)
+exercice: {question: "Une étude ne porte que sur les entreprises encore en activité. Quel groupe manque ?", correction: "Celles qui ont fermé : éliminées avant l'observation", pause_secondes: 3}   # Ajouté après la revue audiovisuelle
 
 preuve_apprentissage:
   tache: "Nommer le biais dans une situation nouvelle"
@@ -112,5 +112,5 @@ licences: "Aucune image extérieure. Voix Kokoro (licence Apache 2.0, voir docs/
 
 controle:
   test_du_debutant: "À mesurer au pilote : le testeur répond à la question de transfert"
-  relecture_definitions: "Claude, 3/11/2026 ; revue de la PR #15 prise en compte (source lue, objectifs réduits, récit des zones rétrogradé en illustration) ; JG à faire"
+  relecture_definitions: "Claude, 3/11/2026 ; revue de la PR #15 prise en compte (source lue, objectifs réduits, récit des zones retiré, mécanisme animé, question de transfert corrigée) ; JG à faire"
   controle_mobile: "Voir sortie/<id>/fr/inspection après rendu"

@@ -199,6 +199,16 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
         conf["depuis"] = entier("depuis", 1, max(1, (conf.get("n") or 2) - 1))
     if modele == "calendrier" and a.get("jours") is not None:
         conf["jours"] = entier("jours", 2, 400)
+    if modele == "selection":
+        from .animations import ICONES_SELECTION
+        conf["n"] = entier("n", 2, 12)
+        conf["restants"] = entier("restants", 1, max(1, (conf.get("n") or 2) - 1))
+        icone = a.get("icone", "avion")
+        if icone not in ICONES_SELECTION:
+            erreurs.append(f"{ctx}.animation.icone : {' ou '.join(ICONES_SELECTION)}")
+            conf["icone"] = None
+        else:
+            conf["icone"] = icone
     if modele == "complement":
         v = a.get("valeur")
         if not _nombre(v) or not 0 < v < 1:

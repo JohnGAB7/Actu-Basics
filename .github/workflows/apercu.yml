@@ -53,19 +53,60 @@ jobs:
   # Liste des fiches à rendre : une tâche de rendu par fiche, en parallèle. Rendre toutes les
   # fiches à la suite dépassait la limite de 60 minutes dès qu'il y avait plusieurs leçons longues
   # (PR #15, cinq vidéos pilotes de 4 à 5 minutes en FR et EN).
+  # Ne rendre que les fiches de production touchées (design de la PR #16, repris avec trois corrections) :
+  # - pull_request : diff depuis la base de fusion (« base...head »), pas depuis la pointe de main, sinon
+  #   les fiches modifiées sur main après la création de la branche seraient rendues à tort ;
+  # - push : si le commit précédent est inconnu (premier push, force-push), rendu témoin seulement ;
+  # - moteur, charte, marque ou workflow modifiés : rendu témoin AJOUTÉ aux fiches modifiées (une fiche
+  #   d'actualité et la fiche pédagogique de lancement, qui couvre les scènes pédagogiques).
+  # Lancement manuel : la fiche demandée, ou tout le catalogue si le champ est vide.
   liste:
     runs-on: ubuntu-latest
     outputs:
       fiches: ${{ steps.fiches.outputs.fiches }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - id: fiches
+        shell: bash
         env:
-          FICHE_DEMANDEE: ${{ github.event.inputs.fiche }}
+          EVENT_NAME: ${{ github.event_name }}
+          FICHE_DEMANDEE: ${{ inputs.fiche }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_SHA: ${{ github.sha }}
         run: |
-          if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
-          [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
-          echo "fiches=$(printf '%s\n' $FICHES | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          TEMOINS=("contenus/exemples/exemple-fictif.yaml" "contenus/fiches/2026-11-lancement-actu-basics.yaml")
+          FICHES=()
+          DIFF=""
+          case "$EVENT_NAME" in
+            workflow_dispatch)
+              if [[ -n "$FICHE_DEMANDEE" ]]; then FICHES=("$FICHE_DEMANDEE")
+              else mapfile -t FICHES < <(find contenus/fiches -maxdepth 1 -type f -name '*.yaml' | sort); fi ;;
+            pull_request)
+              DIFF="$PR_BASE_SHA...$PR_HEAD_SHA" ;;
+            push)
+              if [[ ! "$PUSH_BEFORE" =~ ^0+$ ]] && git cat-file -e "$PUSH_BEFORE^{commit}" 2>/dev/null; then
+                DIFF="$PUSH_BEFORE..$PUSH_SHA"
+              else
+                echo "Commit précédent inconnu : rendu témoin seulement."
+                FICHES=("${TEMOINS[@]}")
+              fi ;;
+          esac
+          if [[ -n "$DIFF" ]]; then
+            mapfile -t FICHES < <(git diff --name-only --diff-filter=ACMRT "$DIFF" -- 'contenus/fiches/*.yaml' | sort)
+            if git diff --name-only "$DIFF" -- production assets/brand .github/workflows/apercu.yml | grep -q .; then
+              echo "Moteur, charte ou workflow modifiés : rendu témoin ajouté."
+              FICHES+=("${TEMOINS[@]}")
+            fi
+          fi
+          (( ${#FICHES[@]} )) || FICHES=("${TEMOINS[0]}")
+          FICHES_JSON="$(printf '%s\n' "${FICHES[@]}" | sort -u | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')"
+          echo "Fiches à rendre : $FICHES_JSON"
+          echo "fiches=$FICHES_JSON" >> "$GITHUB_OUTPUT"
 
   apercu:
     needs: liste
@@ -76,6 +117,9 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      # Limite de simultanéité (PR #16). Elle n'économise pas de minutes : seul le filtrage des fiches
+      # le fait. Cinq rendus en parallèle couvrent une vague de pilote sans file d'attente.
+      max-parallel: 5
       matrix:
         fiche: ${{ fromJSON(needs.liste.outputs.fiches) }}
     steps:

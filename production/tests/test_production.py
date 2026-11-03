@@ -571,7 +571,9 @@ def test_cache_lexique_et_nettoyage(tmp_path):
 def test_workflows_persistent_le_cache():
     for nom in ("apercu.yml", "validation-finale.yml"):
         wf = yaml.safe_load((RACINE / ".github/workflows" / nom).read_text(encoding="utf-8"))
-        etapes = next(iter(wf["jobs"].values()))["steps"]
+        # Le job qui rend les vidéos (apercu.yml en a plusieurs : tests, liste, rendus par fiche).
+        etapes = next(j["steps"] for j in wf["jobs"].values()
+                      if any("produire.py" in str(e.get("run", "")) for e in j.get("steps", [])))
         restaure = [e for e in etapes if str(e.get("uses", "")).startswith("actions/cache/restore")]
         sauve = [e for e in etapes if str(e.get("uses", "")).startswith("actions/cache/save")]
         assert restaure and sauve, nom
@@ -1147,6 +1149,32 @@ def test_scene_animation_et_note(tmp_path):
     with pytest.raises(FicheInvalide) as exc:
         charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
     assert "modele" in str(exc.value) and "note" in str(exc.value)
+
+
+def test_animation_selection_par_la_survie(tmp_path):
+    """Modèle « selection » (Q2.04) : les absentes s'estompent, les survivantes descendent dans le cadre
+    des données ; une légende par phase ; paramètres invalides refusés."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-pilote-q2-04-biais-du-survivant.yaml")
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        scenes = [s for s in ed.scenes if s.type == "animation" and s.extra["animation"]["modele"] == "selection"]
+        assert {s.extra["animation"]["icone"] for s in scenes} == {"avion", "entreprise"}
+        r = Rendu(fiche, langue, CHARTE, "video", False)
+        for s in scenes:
+            i = ed.scenes.index(s)
+            plan = r._plan_animation(s)
+            assert len(plan) == len(s.extra["etapes"])
+            images = [r.dessiner(s, i, len(ed.scenes), p["debut"] + p["duree"] + 0.2).tobytes() for p in plan]
+            assert len(set(images)) == len(images)          # chaque phase change l'image
+    from lmec.animations import Animations
+    assert Animations._disparues(8, 5) == {1, 4, 6} and len(Animations._disparues(8, 3)) == 5
+    brut = valider(brut_lancement())
+    scene = next(x for x in brut["editions"]["fr"]["scenes"] if x["type"] == "animation")
+    scene["animation"] = {"modele": "selection", "icone": "bateau", "n": 8, "restants": 8}
+    scene.pop("etapes", None)
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "animation.icone" in str(exc.value) and "animation.restants" in str(exc.value)
 
 
 def test_courbe_en_points_avec_plusieurs_seuils(tmp_path):

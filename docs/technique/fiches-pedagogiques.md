@@ -39,6 +39,7 @@ Modèles d'animation et leurs phases :
 | `doublon` | — | `aller`, `retour`, `fusion`, `legende` | A → B puis B → A, les deux flèches fusionnent : « A–B = B–A », d'où la division par 2 |
 | `calendrier` | `n` (≤ 365), `jours` | `personne` (répétable), `reste` | Grille de 365 jours ; chaque personne prend un jour libre ; ligne « Tous différents : xx,x % » |
 | `complement` | `valeur` (entre 0 et 1) | `gauche`, `droite`, `total` | Barre coupée en deux : P₀ et 1 − P₀, avec leurs pourcentages, puis une accolade sur l'ensemble |
+| `selection` | `n` (≤ 12), `restants` (< n), `icone` : `avion` (défaut) ou `entreprise` | `depart`, `selection`, `echantillon`, `filtre` | Biais du survivant : n pictogrammes (« 8 au départ ») ; les absents s'estompent (« 5 revenus · 3 absents ») ; les survivants descendent dans le cadre « Données observées » ; une flèche « sélection par la survie » relie les deux. Pictogrammes génériques dessinés par le moteur |
 
 Le contrôle refuse une animation dont le nombre de légendes (`etapes`) diffère du nombre de phases.
 
