@@ -94,7 +94,7 @@ editions:
           - "La *commune* de Paris : *2,1 millions*"
           - "L'*agglomération*, bâti continu : *11,0 millions*"
           - "L'*aire d'attraction*, avec les communes où vivent ceux qui y travaillent : *13,3 millions*"
-        note: "Insee, recensement 2023 : 2 103 778 ; 11 013 774 ; 13 320 752 habitants."
+        note: "Insee, recensement 2023 : 2 103 778, 11 013 774 et 13 320 752 habitants."
         voix_off: "L'Insee publie trois chiffres, pour trois définitions de Paris. La commune de Paris, dans ses limites administratives : deux virgule un millions d'habitants. L'agglomération, c'est-à-dire Paris et les communes qui forment avec elle une zone de bâti continu : onze millions. L'aire d'attraction, qui ajoute les communes dont une bonne partie des habitants vient travailler dans l'agglomération : treize virgule trois millions."
         verifier:
           - {expression: "2103778 / 1e6", attendu: 2.1, libelle: "Commune de Paris, en millions"}
@@ -113,7 +113,7 @@ editions:
         voix_off: "Un chiffre n'est donc pas neutre ou objectif simplement parce que c'est un nombre. Il dépend de la question posée et de la définition choisie. Avant de comparer deux chiffres, vérifiez qu'ils répondent à la même question."
       # ---------------------------------------------------------------- exercice
       - type: exercice
-        texte: "Laquelle est une question *statistique* ? A : « Quelle est la hauteur de la tour Eiffel ? » B : « Combien de temps les Parisiens mettent-ils pour aller travailler ? »"
+        texte: "A : la hauteur de la tour Eiffel. B : le temps de trajet des Parisiens. Laquelle est une question *statistique* ?"
         pause: 5
         voix_off: "À vous. Laquelle de ces deux questions est une question statistique ? A : quelle est la hauteur de la tour Eiffel ? B : combien de temps les Parisiens mettent-ils pour aller travailler ?"
       - type: correction
@@ -182,7 +182,7 @@ editions:
           - "The *city* of Paris: *2.1 million*"
           - "The *built-up area*: *11.0 million*"
           - "The *catchment area*, adding the towns where many of its workers live: *13.3 million*"
-        note: "Insee, 2023 census: 2,103,778; 11,013,774; 13,320,752 people."
+        note: "Insee, 2023 census: 2,103,778, 11,013,774 and 13,320,752 people."
         voix_off: "Insee publishes three figures, for three definitions of Paris. The city of Paris, within its official boundaries: two point one million people. The built-up area, meaning Paris and the surrounding towns that form one continuous urban area with it: eleven million. The catchment area, which adds the towns where a large share of residents commute to work in that urban area: thirteen point three million."
         verifier:
           - {expression: "2103778 / 1e6", attendu: 2.1, libelle: "City of Paris, millions"}
@@ -200,7 +200,7 @@ editions:
         texte: "A number isn't neutral: it depends on *the question asked*"
         voix_off: "So a figure isn't neutral or objective just because it's a number. It depends on the question asked and on the definition chosen. Before comparing two figures, check that they answer the same question."
       - type: exercice
-        texte: "Which one is a *statistical* question? A: \"How tall is the Eiffel Tower?\" B: \"How long do Parisians take to get to work?\""
+        texte: "A: the height of the Eiffel Tower. B: how long Parisians take to get to work. Which one is a *statistical* question?"
         pause: 5
         voix_off: "Your turn. Which of these two questions is a statistical question? A: how tall is the Eiffel Tower? B: how long do Parisians take to get to work?"
       - type: correction

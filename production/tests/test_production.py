@@ -1437,6 +1437,7 @@ def test_un_nombre_ne_se_coupe_pas():
     assert mots("Sept salaires : 1 500, 1 600")[-2:] == ["1 500,", "1 600"]   # liste : coupable entre deux nombres
     assert mots("les 3 enfants") == ["les", "3", "enfants"]
     assert "5 min" in mots("Court intervalle : 5 min sur 20") and "1 point" in mots("écart de 1 point")
+    assert "2,1 millions" in mots("La commune de Paris : 2,1 millions") and "20 °C" in mots("à 20 °C")
 
 
 def test_prononciation_de_la_marque_dans_la_voix_seulement():

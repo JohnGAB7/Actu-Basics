@@ -85,7 +85,7 @@ def _mots(texte: str) -> list[str]:
 def insecables_nombres(texte: str) -> str:
     """« 1 600 € » -> « 1\u00a0600\u00a0€ » : les espaces internes d'un nombre deviennent insécables."""
     texte = re.sub(r"(?<=\d) (?=\d{3}(?!\d))", "\u00a0", texte)
-    return re.sub(r"(?<=\d) (?=(?:[€$£]|(?:min|minutes?|h|s|km|kg|points?)\b))", "\u00a0", texte)
+    return re.sub(r"(?<=\d) (?=(?:[€$£]|(?:min|minutes?|h|s|km|kg|points?|millions?|milliards?|billions?|°C|K)\b))", "\u00a0", texte)
 
 
 def mots_riches(texte: str) -> list[tuple[str, bool, bool]]:
