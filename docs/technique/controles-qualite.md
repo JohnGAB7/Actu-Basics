@@ -2,7 +2,7 @@
 
 Trois niveaux, toujours séparés dans `rapport-qc.md` :
 
-- **❌ Bloquant** : le mode final refuse de produire ; en aperçu, les fichiers portent le filigrane.
+- **❌ Bloquant** : le mode final refuse de produire ; en aperçu, le rapport passe en ❌ BLOQUÉ (filigrane seulement avec `--filigrane`).
 - **⚠️ Avertissement** : à regarder, n'empêche pas la production.
 - **Contrôles humains** : ce que la machine ne sait pas vérifier.
 

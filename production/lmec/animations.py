@@ -12,7 +12,10 @@ Modèles :
 - doublon     : A choisit B, B choisit A, c'est la même paire (pourquoi on divise par 2) ;
 - calendrier  : 365 cases ; chaque personne prend un jour, la fraction de jours encore libres
                 et la probabilité « tous différents » se mettent à jour ;
-- complement  : une barre de 100 % partagée entre un événement et son contraire.
+- complement  : une barre de 100 % partagée entre un événement et son contraire ;
+- selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
+                celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
+                des données observées, « filtre » trace la flèche « sélection par la survie ».
 """
 from __future__ import annotations
 
@@ -21,13 +24,14 @@ import random
 
 from .formatage import formater_nombre
 
-MODELES = ("foule", "paires", "doublon", "calendrier", "complement")
+MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
     "doublon": ("aller", "retour", "fusion", "legende"),
     "calendrier": ("personne", "reste"),
     "complement": ("gauche", "droite", "total"),
+    "selection": ("depart", "selection", "echantillon", "filtre"),
 }
 PHASES_DEFAUT = {
     "foule": ["apparition"],
@@ -35,11 +39,24 @@ PHASES_DEFAUT = {
     "doublon": ["aller", "retour", "fusion"],
     "calendrier": ["personne", "personne", "personne", "reste"],
     "complement": ["gauche", "droite"],
+    "selection": ["depart", "selection", "echantillon", "filtre"],
 }
 LIBELLES = {
     "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents"},
     "en": {"paires": "pairs", "paire": "pair", "jours": "days still free", "tous": "All different"},
 }
+# Modèle « selection » : libellés selon l'icône et la langue.
+LIBELLES_SELECTION = {
+    ("avion", "fr"): {"depart": "au départ", "restants": "revenus", "absents": "absents",
+                      "donnees": "Données observées", "filtre": "sélection par la survie"},
+    ("avion", "en"): {"depart": "set out", "restants": "returned", "absents": "missing",
+                      "donnees": "Observed data", "filtre": "selection by survival"},
+    ("entreprise", "fr"): {"depart": "créées", "restants": "encore actives", "absents": "disparues",
+                           "donnees": "Témoignages recueillis", "filtre": "sélection par la survie"},
+    ("entreprise", "en"): {"depart": "founded", "restants": "still active", "absents": "closed",
+                           "donnees": "Stories we hear", "filtre": "selection by survival"},
+}
+ICONES_SELECTION = ("avion", "entreprise")
 LETTRES = "ABCDEF"
 PAUSE_PHASES = 0.5          # s entre deux phases quand la voix ne donne pas de repères
 
@@ -94,7 +111,8 @@ class Animations:
                     k = n
         else:
             durees = {"apparition": 1.8, "aller": 1.0, "retour": 1.0, "fusion": 1.0, "legende": 0.6,
-                      "gauche": 1.2, "droite": 1.2, "total": 0.8}
+                      "gauche": 1.2, "droite": 1.2, "total": 0.8,
+                      "depart": 1.6, "selection": 1.4, "echantillon": 1.4, "filtre": 1.0}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -441,3 +459,111 @@ class Animations:
             c = _melange(fond, self.c["accent"], k)
             yb = y - 40
             d.line((g + 10, yb + 24, g + 10, yb, dr - 10, yb, dr - 10, yb + 24), fill=c, width=6)
+
+    # ------------------------------------------------------------------ sélection par la survie
+    @staticmethod
+    def _disparues(n: int, restants: int) -> set[int]:
+        """Indices des icônes qui disparaissent, réparties dans la rangée (pas toutes au bout)."""
+        absents = n - restants
+        return {round((j + 0.5) * n / absents - 0.5) for j in range(absents)} if absents else set()
+
+    def _avion(self, d, cx, cy, r, couleur, contour=False):
+        """Avion vu de dessus, nez vers le haut : fuselage, ailes, empennage. Pictogramme générique."""
+        fuselage = [(cx, cy - r), (cx + r * 0.13, cy - r * 0.75), (cx + r * 0.13, cy + r * 0.75),
+                    (cx, cy + r * 0.9), (cx - r * 0.13, cy + r * 0.75), (cx - r * 0.13, cy - r * 0.75)]
+        ailes = [(cx - r * 0.12, cy - r * 0.25), (cx - r, cy + r * 0.2), (cx - r, cy + r * 0.38),
+                 (cx - r * 0.12, cy + r * 0.12), (cx + r * 0.12, cy + r * 0.12), (cx + r, cy + r * 0.38),
+                 (cx + r, cy + r * 0.2), (cx + r * 0.12, cy - r * 0.25)]
+        queue = [(cx - r * 0.1, cy + r * 0.55), (cx - r * 0.42, cy + r * 0.82), (cx - r * 0.42, cy + r * 0.95),
+                 (cx, cy + r * 0.82), (cx + r * 0.42, cy + r * 0.95), (cx + r * 0.42, cy + r * 0.82),
+                 (cx + r * 0.1, cy + r * 0.55)]
+        for forme in (ailes, queue, fuselage):
+            if contour:
+                d.polygon(forme, outline=couleur, width=3)
+            else:
+                d.polygon(forme, fill=couleur)
+
+    def _entreprise(self, d, cx, cy, r, couleur, contour=False):
+        """Immeuble simple : bloc et toit plat, trois rangées de fenêtres."""
+        x0, x1, y0, y1 = cx - r * 0.62, cx + r * 0.62, cy - r * 0.85, cy + r * 0.9
+        if contour:
+            d.rectangle((x0, y0, x1, y1), outline=couleur, width=3)
+            return
+        d.rectangle((x0, y0, x1, y1), fill=couleur)
+        fond = self.c["fond"]
+        for li in range(3):
+            for co in range(2):
+                fx = x0 + r * (0.22 + co * 0.6)
+                fy = y0 + r * (0.25 + li * 0.5)
+                d.rectangle((fx, fy, fx + r * 0.34, fy + r * 0.28), fill=fond)
+
+    def _anim_selection(self, d, scene, plan, zone, t, ctx):
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        n, restants, icone = conf["n"], conf["restants"], conf.get("icone", "avion")
+        lib = LIBELLES_SELECTION[(icone, self.langue)]
+        dessiner = self._avion if icone == "avion" else self._entreprise
+        g, haut, dr, bas = zone
+        par_nature = {p["nature"]: p for p in plan}
+        k_de = {nom: (_ease(self._avancee(par_nature[nom], t)) if nom in par_nature else 0.0)
+                for nom in PHASES["selection"]}
+        if t is None:
+            k_de = {nom: (1.0 if nom in par_nature else 0.0) for nom in k_de}
+        fond = self._fond.getpixel((int((g + dr) / 2), int((haut + bas) / 2)))
+        p_cpt = self.police("gras", 46 if not self.colonnes else 42)
+        p_lbl = self.police("regulier", 38 if not self.colonnes else 34)
+        # Mise en page calculée sur la hauteur disponible : rangée, compteur, flèche, cadre.
+        h_cpt, fleche_min, marge_cadre = p_cpt.size + 20, 110, 80
+        pas = min((dr - g) / n, 150)
+        r = max(18.0, min(pas * 0.4, (bas - haut - h_cpt - fleche_min - marge_cadre - 60) / 4))
+        x0 = (g + dr) / 2 - pas * n / 2
+        y_pop = haut + r + 20
+        disparues = self._disparues(n, restants)
+        survivantes = [i for i in range(n) if i not in disparues]
+        hauteur_cadre = 2 * r + marge_cadre
+        y_cadre = max(y_pop + r + h_cpt + fleche_min + 20, bas - hauteur_cadre - 10)
+        demi_largeur = max(pas * restants / 2 + 40, p_lbl.getlength(lib["donnees"]) / 2 + 30)
+        x_cadre0, x_cadre1 = (g + dr) / 2 - demi_largeur, (g + dr) / 2 + demi_largeur
+        y_obs = y_cadre + marge_cadre - 20 + r
+        p_dep = par_nature.get("depart")
+        for i in range(n):
+            cx = x0 + (i + 0.5) * pas
+            a = 1.0 if t is None or not p_dep else _ease((t - p_dep["debut"] - i * p_dep["duree"] / n) / 0.35)
+            if a <= 0:
+                continue
+            if i in disparues:
+                # L'icône s'estompe et monte : elle ne reviendra pas dans les données.
+                k = k_de["selection"]
+                dessiner(d, cx, y_pop - 24 * k, r, _melange(fond, self.c["texte"], a * (1 - 0.8 * k)))
+            elif k_de["echantillon"] <= 0:
+                dessiner(d, cx, y_pop, r, _melange(fond, self.c["texte"], a))
+        # Compteurs sous la rangée.
+        y_txt = y_pop + r + 14
+        if k_de["selection"] > 0:
+            texte = f"{restants} {lib['restants']} · {n - restants} {lib['absents']}"
+            couleur = _melange(fond, self.c["accent"], k_de["selection"])
+        elif k_de["depart"] > 0:
+            texte, couleur = f"{n} {lib['depart']}", _melange(fond, self.c["texte"], k_de["depart"])
+        else:
+            texte = ""
+        if texte:
+            d.text(((g + dr) / 2 - p_cpt.getlength(texte) / 2, y_txt), texte, font=p_cpt, fill=couleur)
+        # Les survivantes descendent dans le cadre des données observées.
+        k = k_de["echantillon"]
+        if k > 0:
+            d.rounded_rectangle((x_cadre0, y_cadre, x_cadre1, y_cadre + hauteur_cadre), radius=26,
+                                outline=_melange(fond, self.c["accent"], k), width=5)
+            d.text((x_cadre0 + 24, y_cadre + 10), lib["donnees"], font=p_lbl,
+                   fill=_melange(fond, self.c["accent"], k))
+            for rang, i in enumerate(survivantes):
+                xa, xb = x0 + (i + 0.5) * pas, (g + dr) / 2 - pas * restants / 2 + (rang + 0.5) * pas
+                dessiner(d, xa + (xb - xa) * k, y_pop + (y_obs - y_pop) * k, r, _melange(fond, self.c["texte"], k))
+        # Flèche : de la population de départ aux données, filtrée par la survie.
+        k = k_de["filtre"]
+        if k > 0:
+            couleur = _melange(fond, self.c["accent"], k)
+            xa, ya, yb = (g + dr) / 2, y_txt + p_cpt.size + 24, y_cadre - 14
+            self._fleche(d, (xa, ya - 60), (xa, yb + 60), 0, k, couleur, 8)   # _fleche rogne 64 px aux bouts
+            lbl = lib["filtre"]
+            d.text((xa + 24, (ya + yb) / 2 - p_lbl.size / 2), lbl, font=p_lbl, fill=couleur)
+

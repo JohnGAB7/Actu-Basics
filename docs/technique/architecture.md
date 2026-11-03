@@ -58,7 +58,7 @@ Pourquoi un fichier YAML plutôt qu'un outil graphique :
 
 Garde-fous intégrés :
 
-- Deux modes : `apercu` accepte les brouillons mais filigrane tout rendu qui a une erreur bloquante ; `final` refuse toute fiche non validée ou avec une erreur bloquante, y compris une voix manquante ou de test.
+- Deux modes : `apercu` accepte les brouillons, sans filigrane par défaut depuis le 2026-11-03 (option `--filigrane` pour le remettre sur un rendu bloqué) ; `final` refuse toute fiche non validée ou avec une erreur bloquante, y compris une voix manquante ou de test.
 - Une vidéo sans voix n'est jamais présentée comme prête, sauf choix éditorial explicite (`narration: false`).
 - Les contrôles distinguent bloquants, avertissements et contrôles humains ; la vérification factuelle reste humaine ([controles-qualite.md](controles-qualite.md)).
 - Rien n'est jamais publié automatiquement : la chaîne s'arrête au fichier prêt à publier.
@@ -136,7 +136,7 @@ Les plateformes exigent de signaler certains contenus générés par IA : point 
 ## 10. Arborescence ajoutée
 
 ```
-.github/workflows/apercu.yml       Aperçu automatique (brouillons acceptés, filigrane)
+.github/workflows/apercu.yml       Aperçu automatique (brouillons acceptés, sans filigrane)
 .github/workflows/validation-finale.yml  Rendu final manuel (refuse ce qui n'est pas prêt)
 .env.example                       Modèle de fichier de clés local (le vrai .env n'est jamais versionné)
 contenus/fiches/                   Fiches à produire (une par sujet)

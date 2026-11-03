@@ -2,8 +2,10 @@
 """Fiche de contenu -> vidéos verticales avec voix, carrousels, sous-titres, légendes, rapport (FR + EN).
 
 Deux modes :
-  apercu (défaut)  accepte les fiches en brouillon ; tout rendu qui a une erreur bloquante
-                   porte le filigrane « BROUILLON · NON VALIDÉ ». Jamais publiable tel quel.
+  apercu (défaut)  accepte les fiches en brouillon. Sans filigrane depuis la décision de JG
+                   (2026-11-03, PR #15) : la vidéo adoptée est la vidéo livrée, sans nouveau rendu.
+                   L'option --filigrane remet « BROUILLON · NON VALIDÉ » sur tout rendu qui a une
+                   erreur bloquante. Le rapport QC indique toujours l'état (❌ BLOQUÉ, ⚠️, ✅).
   final            refuse toute fiche non validée ou avec une erreur bloquante (voix comprise) ;
                    seul ce mode produit des fichiers prêts à publier.
 
@@ -155,7 +157,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
         if final_bloque:
             print(f"  ❌ {langue} : erreurs bloquantes, rien n'est produit en mode final")
             continue
-        filigrane = bool(rapport.bloquants)
+        filigrane = args.filigrane and bool(rapport.bloquants)   # désactivé par défaut (JG, 2026-11-03)
 
         # ---- Carrousel, textes
         rendu_c = None
@@ -254,6 +256,8 @@ def main() -> int:
     parseur.add_argument("--langues", nargs="+", choices=LANGUES, default=list(LANGUES))
     parseur.add_argument("--sans-video", action="store_true", help="carrousels et textes seulement")
     parseur.add_argument("--sans-inspection", action="store_true", help="ne pas générer les images d'inspection")
+    parseur.add_argument("--filigrane", action="store_true",
+                         help="remettre le filigrane « BROUILLON » sur les aperçus bloqués (désactivé par défaut)")
     parseur.add_argument("--verifier", action="store_true", help="contrôler la fiche sans rien produire")
     parseur.add_argument("--brouillon-autorise", action="store_true", help=argparse.SUPPRESS)  # ancien nom d'« apercu »
     parseur.add_argument("--charte", type=Path, default=RACINE / "charte.yaml")

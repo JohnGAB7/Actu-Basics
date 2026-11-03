@@ -199,6 +199,16 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
         conf["depuis"] = entier("depuis", 1, max(1, (conf.get("n") or 2) - 1))
     if modele == "calendrier" and a.get("jours") is not None:
         conf["jours"] = entier("jours", 2, 400)
+    if modele == "selection":
+        from .animations import ICONES_SELECTION
+        conf["n"] = entier("n", 2, 12)
+        conf["restants"] = entier("restants", 1, max(1, (conf.get("n") or 2) - 1))
+        icone = a.get("icone", "avion")
+        if icone not in ICONES_SELECTION:
+            erreurs.append(f"{ctx}.animation.icone : {' ou '.join(ICONES_SELECTION)}")
+            conf["icone"] = None
+        else:
+            conf["icone"] = icone
     if modele == "complement":
         v = a.get("valeur")
         if not _nombre(v) or not 0 < v < 1:
@@ -286,6 +296,12 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
                 extra["courbe"] = dict(c, _points=pts)
             except (CalculInvalide, KeyError, TypeError, ValueError) as exc:
                 erreurs.append(f"{ctx}.courbe : {exc}")
+            if c.get("style", "ligne") not in ("ligne", "points"):
+                erreurs.append(f"{ctx}.courbe.style : « ligne » (défaut) ou « points »")
+            seuils = c.get("seuils")
+            if seuils is not None and not (isinstance(seuils, list) and all(
+                    isinstance(x, dict) and _nombre(x.get("valeur")) for x in seuils)):
+                erreurs.append(f"{ctx}.courbe.seuils : liste de {{valeur, label}}, valeur numérique")
     if s.get("verifier") is not None:
         verifs = s["verifier"]
         if not isinstance(verifs, list):

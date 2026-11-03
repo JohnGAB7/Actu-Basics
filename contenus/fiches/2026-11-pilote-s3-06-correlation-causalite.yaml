@@ -1,0 +1,222 @@
+# Phase pilote ACTU-BASICS, vidéo 3 sur 5 : S3.06 « Corrélation n'est pas causalité »
+# Fiche de conception : contenus/conception/S3.06.yaml
+# Exemples fictifs ou de raisonnement : aucun chiffre réel, aucune étude citée.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
+id: 2026-11-pilote-s3-06-correlation-causalite
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S3.06 · Corrélation n'est pas causalité"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Proposer une variable de confusion pour une corrélation donnée"
+      - "Distinguer confusion, causalité inverse et coïncidence"
+      - "Expliquer pourquoi une corrélation forte n'est pas plus « causale » qu'une faible"
+    en:
+      - "Suggest a confounding variable for a given correlation"
+      - "Tell apart confounding, reverse causation and coincidence"
+      - "Explain why a strong correlation is no more \"causal\" than a weak one"
+  prerequis:
+    fr: ["S3.05 : la corrélation", "S1.06 : observer ou expérimenter"]
+    en: ["S3.05: correlation", "S1.06: observing versus experimenting"]
+  hypotheses:
+    fr: "Exemples de raisonnement, sans données réelles"
+    en: "Reasoning examples, with no real data"
+
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
+
+editions:
+  fr:
+    titre: "Les glaces font-elles se noyer ?"
+    legende: |
+      Quand les ventes de glaces montent, les noyades aussi. Faut-il interdire les glaces ? Bien sûr que non : une troisième variable, la chaleur, fait bouger les deux. On apprend à reconnaître trois explications qui n'ont rien de causal (confusion, causalité inverse, coïncidence) et à comprendre ce qu'il faut pour établir une cause. Exemples de raisonnement, sans données réelles. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, correlation, causalite]
+    scenes:
+      - type: accroche
+        texte: "Quand les ventes de glaces montent, *les noyades aussi*"
+        voix_off: "Quand les ventes de glaces montent, les noyades augmentent aussi. Faut-il en conclure que les glaces font se noyer ?"
+      - type: exercice
+        texte: "Glaces et noyades montent ensemble. *Pourquoi ?*"
+        etiquette: "DÉFI"
+        pause: 4
+        voix_off: "Prenez quelques secondes. Comment expliquer que ces deux choses montent ensemble ?"
+      - type: titre
+        numero: 1
+        texte: "Le troisième facteur"
+        voix_off: "La réponse tient en un mot : la chaleur."
+      - type: etapes
+        texte: "La chaleur *tire les deux ficelles*"
+        etapes:
+          - "Il fait chaud → on achète *plus de glaces*"
+          - "Il fait chaud → on se baigne plus → *plus de noyades*"
+          - "Glaces et noyades montent *ensemble*, sans lien de cause"
+        voix_off: "La chaleur agit sur les deux. Quand il fait chaud, on achète plus de glaces. Quand il fait chaud, on se baigne aussi davantage, et les noyades augmentent. Les deux courbes montent donc ensemble, sans que l'une cause l'autre."
+      - type: correction
+        etapes:
+          - "Glaces et noyades ont une *cause commune*"
+        reponse: "La chaleur : une variable de confusion"
+        voix_off: "Réponse au défi : glaces et noyades ont une cause commune. La chaleur est ce qu'on appelle une variable de confusion."
+      - type: texte
+        texte: "*Corrélation* : deux variables bougent ensemble. *Causalité* : l'une fait bouger l'autre."
+        voix_off: "Rappelons la différence. Une corrélation dit seulement que deux variables bougent ensemble. Une causalité dit que si l'on change l'une, l'autre change. La première se lit dans des données. La seconde demande bien plus."
+      - type: titre
+        numero: 2
+        texte: "Trois explications sans cause"
+        voix_off: "Quand deux variables sont corrélées, au moins trois explications n'ont rien de causal."
+      - type: etapes
+        texte: "1. La *confusion*"
+        etapes:
+          - "Un troisième facteur agit sur les deux"
+          - "Plus il y a de pompiers sur un incendie, plus les dégâts sont grands"
+          - "Facteur caché : *la taille du feu*"
+        voix_off: "Première explication, la confusion : un troisième facteur agit sur les deux variables. Exemple : plus il y a de pompiers sur un incendie, plus les dégâts sont importants. Les pompiers ne causent pas les dégâts : un grand feu attire beaucoup de pompiers, et fait beaucoup de dégâts."
+      - type: etapes
+        texte: "2. La *causalité inverse*"
+        etapes:
+          - "La cause va dans *l'autre sens*"
+          - "Ceux qui voient souvent un médecin sont plus souvent malades"
+          - "C'est la maladie qui *amène* chez le médecin"
+        voix_off: "Deuxième explication, la causalité inverse : il y a bien une cause, mais dans l'autre sens. Les personnes qui consultent souvent un médecin sont plus souvent malades. Ce n'est pas le médecin qui rend malade : c'est la maladie qui amène chez le médecin."
+      - type: etapes
+        texte: "3. La *coïncidence*"
+        etapes:
+          - "Deux séries qui montent *avec le temps*"
+          - "Comparer beaucoup de séries : certaines collent *par hasard*"
+        voix_off: "Troisième explication, la coïncidence. Deux séries qui augmentent toutes les deux au fil des années seront corrélées, même sans aucun lien : le temps qui passe suffit. Et si l'on compare des centaines de séries entre elles, certaines finiront par se ressembler, simplement par hasard."
+      - type: titre
+        numero: 3
+        texte: "Forte ne veut pas dire causale"
+        voix_off: "Un dernier piège, très répandu."
+      - type: texte
+        texte: "Une corrélation *très forte* peut être *entièrement* due à la confusion"
+        note: "La force d'une corrélation mesure à quel point les points s'alignent, pas pourquoi."
+        voix_off: "On croit souvent qu'une corrélation très forte est forcément causale. C'est faux. Glaces et noyades peuvent être très fortement corrélées, et la chaleur expliquer tout le lien. La force d'une corrélation dit à quel point deux variables bougent ensemble, jamais pourquoi."
+      - type: etapes
+        texte: "Comment établir une *cause* ?"
+        etapes:
+          - "Tirage au sort : il *tend à équilibrer* les facteurs, en moyenne sur les tirages"
+          - "Dans une expérience donnée, des écarts peuvent *subsister par hasard*"
+          - "Sans expérience : *nommer* les facteurs de confusion et les mesurer"
+        voix_off: "Alors, comment établir une cause ? Dans une expérience randomisée, les participants sont répartis par tirage au sort entre les groupes : ce procédé tend à équilibrer les facteurs connus et inconnus entre les groupes, en moyenne sur les tirages. Mais dans une expérience particulière, des différences peuvent subsister simplement par hasard ; la randomisation renforce donc l'interprétation causale, sans garantir des groupes parfaitement identiques. Quand une expérience est impossible, il faut au moins nommer les facteurs de confusion possibles et les prendre en compte ; l'économétrie consacre tout un pilier à cette question."
+      - type: exercice
+        texte: "Une explication *non causale* pour chacune : 1. Les enfants aux grands pieds lisent mieux. 2. Les élèves qui prennent des cours particuliers ont de moins bonnes notes. 3. Les ventes de smartphones et le prix des loyers ont monté ensemble pendant dix ans."
+        pause: 10
+        voix_off: "À vous. Pour chacune de ces trois corrélations, trouvez une explication qui ne soit pas causale. Un : les enfants qui ont de grands pieds lisent mieux. Deux : les élèves qui prennent des cours particuliers ont de moins bonnes notes. Trois : les ventes de smartphones et le prix des loyers ont augmenté ensemble pendant dix ans."
+      - type: correction
+        etapes:
+          - "1. Confusion : *l'âge* fait grandir les pieds et progresser en lecture"
+          - "2. Causalité inverse : ce sont *les mauvaises notes* qui mènent aux cours"
+          - "3. Coïncidence : deux séries qui montent *avec le temps*"
+        reponse: "Confusion, causalité inverse, coïncidence"
+        voix_off: "Voici une réponse possible pour chacune. Un, la confusion : l'âge fait à la fois grandir les pieds et progresser en lecture. Deux, la causalité inverse : ce sont souvent les mauvaises notes qui amènent à prendre des cours. Trois, la coïncidence : deux séries qui augmentent avec le temps, sans lien entre elles."
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Corrélation : deux variables *bougent ensemble*"
+          - "Avant de conclure : *confusion*, *causalité inverse*, *coïncidence* ?"
+          - "Une corrélation forte n'est *pas plus causale*"
+        voix_off: "Récapitulons. Un : une corrélation dit seulement que deux variables bougent ensemble. Deux : avant de conclure à une cause, cherchez une confusion, une causalité inverse ou une coïncidence. Trois : une corrélation forte n'est pas plus causale qu'une faible."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Does ice cream make people drown?"
+    legende: |
+      When ice cream sales go up, so do drownings. Should we ban ice cream? Of course not: a third variable, hot weather, drives both. Learn to spot three explanations that have nothing to do with cause and effect (confounding, reverse causation, coincidence), and what it actually takes to establish a cause. Reasoning examples, no real data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, correlation, causation]
+    scenes:
+      - type: accroche
+        texte: "When ice cream sales go up, *so do drownings*"
+        voix_off: "When ice cream sales go up, drownings go up too. Does that mean ice cream makes people drown?"
+      - type: exercice
+        texte: "Ice cream and drownings rise together. *Why?*"
+        etiquette: "CHALLENGE"
+        pause: 4
+        voix_off: "Take a few seconds. How would you explain these two things rising together?"
+      - type: titre
+        numero: 1
+        texte: "The third factor"
+        voix_off: "The answer comes down to two words: hot weather."
+      - type: etapes
+        texte: "Hot weather *pulls both strings*"
+        etapes:
+          - "It's hot → people buy *more ice cream*"
+          - "It's hot → more swimming → *more drownings*"
+          - "Ice cream and drownings rise *together*, with no causal link"
+        voix_off: "Hot weather affects both. When it's hot, people buy more ice cream. When it's hot, people also swim more, and drownings go up. So the two curves rise together, even though neither one causes the other."
+      - type: correction
+        etapes:
+          - "Ice cream and drownings share *a common cause*"
+        reponse: "Hot weather: a confounding variable"
+        voix_off: "Here's the answer to the challenge: ice cream and drownings share a common cause. Hot weather is what's called a confounding variable."
+      - type: texte
+        texte: "*Correlation*: two variables move together. *Causation*: one makes the other move."
+        voix_off: "Let's be clear about the difference. A correlation only says that two variables move together. Causation says that if you change one, the other changes. You can read the first straight from data. The second takes much more."
+      - type: titre
+        numero: 2
+        texte: "Three explanations without a cause"
+        voix_off: "When two variables are correlated, there are at least three explanations that involve no cause and effect."
+      - type: etapes
+        texte: "1. *Confounding*"
+        etapes:
+          - "A third factor affects both"
+          - "The more firefighters at a fire, the more damage"
+          - "Hidden factor: *the size of the fire*"
+        voix_off: "First, confounding: a third factor affects both variables. For example, the more firefighters there are at a fire, the more damage there is. Firefighters don't cause the damage. A big fire brings lots of firefighters, and does lots of damage."
+      - type: etapes
+        texte: "2. *Reverse causation*"
+        etapes:
+          - "The cause runs *the other way*"
+          - "People who see a doctor often are more often ill"
+          - "Illness is what *brings* people to the doctor"
+        voix_off: "Second, reverse causation: there is a cause, but it runs the other way. People who see a doctor often are ill more often. Doctors aren't making them ill. Being ill is what brings people to the doctor."
+      - type: etapes
+        texte: "3. *Coincidence*"
+        etapes:
+          - "Two series that both rise *over time*"
+          - "Compare lots of series: some will match *by chance*"
+        voix_off: "Third, coincidence. Two series that both rise over the years will be correlated, even if they have nothing to do with each other: the passing of time is enough. And if you compare hundreds of series, some will end up looking alike purely by chance."
+      - type: titre
+        numero: 3
+        texte: "Strong doesn't mean causal"
+        voix_off: "One last trap, and a very common one."
+      - type: texte
+        texte: "A *very strong* correlation can be *entirely* due to confounding"
+        note: "The strength of a correlation measures how well the points line up, not why."
+        voix_off: "People often assume a very strong correlation must be causal. It isn't so. Ice cream and drownings can be very strongly correlated, and hot weather can still explain the whole link. The strength of a correlation tells you how closely two variables move together, never why."
+      - type: etapes
+        texte: "How do you establish a *cause*?"
+        etapes:
+          - "Random assignment *tends to balance* factors, on average over assignments"
+          - "In any one experiment, differences can *remain by chance*"
+          - "No experiment? *Name* the confounders, and measure them"
+        voix_off: "So how do you establish a cause? In a randomized experiment, participants are assigned to groups by chance: this tends to balance both known and unknown factors across the groups, on average over repeated random assignments. But in any one experiment, some differences may remain simply by chance; randomization therefore strengthens a causal interpretation, but it does not guarantee perfectly identical groups. When an experiment isn't possible, you at least need to name the possible confounders and account for them; econometrics devotes a whole pillar to this question."
+      - type: exercice
+        texte: "Find a *non-causal* explanation for each: 1. Kids with bigger feet read better. 2. Students who get private tutoring have lower grades. 3. Smartphone sales and rents rose together for ten years."
+        pause: 10
+        voix_off: "Your turn. For each of these three correlations, find an explanation that isn't causal. One: children with bigger feet read better. Two: students who get private tutoring have lower grades. Three: smartphone sales and rents rose together for ten years."
+      - type: correction
+        etapes:
+          - "1. Confounding: *age* grows feet and improves reading"
+          - "2. Reverse causation: *low grades* lead to tutoring"
+          - "3. Coincidence: two series that rise *over time*"
+        reponse: "Confounding, reverse causation, coincidence"
+        voix_off: "Here's one possible answer for each. One, confounding: age makes feet grow and reading improve at the same time. Two, reverse causation: it's often low grades that lead students to get tutoring. Three, coincidence: two series that rise over time, with no link between them."
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Correlation: two variables *move together*"
+          - "Before concluding: *confounding*, *reverse causation*, *coincidence*?"
+          - "A strong correlation is *no more causal*"
+        voix_off: "Let's recap. One: a correlation only says that two variables move together. Two: before you conclude there's a cause, look for confounding, reverse causation or coincidence. Three: a strong correlation is no more causal than a weak one."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -571,7 +571,9 @@ def test_cache_lexique_et_nettoyage(tmp_path):
 def test_workflows_persistent_le_cache():
     for nom in ("apercu.yml", "validation-finale.yml"):
         wf = yaml.safe_load((RACINE / ".github/workflows" / nom).read_text(encoding="utf-8"))
-        etapes = next(iter(wf["jobs"].values()))["steps"]
+        # Le job qui rend les vidéos (apercu.yml en a plusieurs : tests, liste, rendus par fiche).
+        etapes = next(j["steps"] for j in wf["jobs"].values()
+                      if any("produire.py" in str(e.get("run", "")) for e in j.get("steps", [])))
         restaure = [e for e in etapes if str(e.get("uses", "")).startswith("actions/cache/restore")]
         sauve = [e for e in etapes if str(e.get("uses", "")).startswith("actions/cache/save")]
         assert restaure and sauve, nom
@@ -1149,6 +1151,52 @@ def test_scene_animation_et_note(tmp_path):
     assert "modele" in str(exc.value) and "note" in str(exc.value)
 
 
+def test_animation_selection_par_la_survie(tmp_path):
+    """Modèle « selection » (Q2.04) : les absentes s'estompent, les survivantes descendent dans le cadre
+    des données ; une légende par phase ; paramètres invalides refusés."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-pilote-q2-04-biais-du-survivant.yaml")
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        scenes = [s for s in ed.scenes if s.type == "animation" and s.extra["animation"]["modele"] == "selection"]
+        assert {s.extra["animation"]["icone"] for s in scenes} == {"avion", "entreprise"}
+        r = Rendu(fiche, langue, CHARTE, "video", False)
+        for s in scenes:
+            i = ed.scenes.index(s)
+            plan = r._plan_animation(s)
+            assert len(plan) == len(s.extra["etapes"])
+            images = [r.dessiner(s, i, len(ed.scenes), p["debut"] + p["duree"] + 0.2).tobytes() for p in plan]
+            assert len(set(images)) == len(images)          # chaque phase change l'image
+    from lmec.animations import Animations
+    assert Animations._disparues(8, 5) == {1, 4, 6} and len(Animations._disparues(8, 3)) == 5
+    brut = valider(brut_lancement())
+    scene = next(x for x in brut["editions"]["fr"]["scenes"] if x["type"] == "animation")
+    scene["animation"] = {"modele": "selection", "icone": "bateau", "n": 8, "restants": 8}
+    scene.pop("etapes", None)
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "animation.icone" in str(exc.value) and "animation.restants" in str(exc.value)
+
+
+def test_courbe_en_points_avec_plusieurs_seuils(tmp_path):
+    """« style: points » pose des points sans les relier ; « seuils » trace plusieurs pointillés étiquetés
+    (moyenne et médiane ensemble, S2.05). Valeurs invalides refusées."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-pilote-s2-05-moyenne-ou-mediane.yaml")
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe")
+    assert s.extra["courbe"]["style"] == "points" and len(s.extra["courbe"]["seuils"]) == 2
+    i = ed.scenes.index(s)
+    points = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None)
+    s.extra["courbe"] = dict(s.extra["courbe"], style="ligne")
+    ligne = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None)
+    assert points.tobytes() != ligne.tobytes()
+    brut = valider(brut_lancement())
+    scene = next(x for x in brut["editions"]["fr"]["scenes"] if x["type"] == "courbe")
+    scene["courbe"] = dict(scene["courbe"], style="barres", seuils=[{"label": "sans valeur"}])
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "courbe.style" in str(exc.value) and "courbe.seuils" in str(exc.value)
+
+
 @pytest.mark.parametrize("modele", ["foule", "paires", "doublon", "calendrier", "complement"])
 def test_chaque_modele_d_animation_se_construit_phase_par_phase(modele):
     fiche = charger_fiche(LANCEMENT)
@@ -1380,6 +1428,17 @@ def test_pas_de_coupure_au_milieu_d_une_expression():
     assert len(mots_riches("(voir le rapport de rendu complet)")) == 6   # parenthèse longue : coupable
 
 
+def test_un_nombre_ne_se_coupe_pas():
+    from lmec.rendu import mots_riches
+    def mots(t):
+        return [w.replace("\u00a0", " ") for w, _, _ in mots_riches(t)]
+    m = mots("Ils gagnent de *1 600 €* à 2 800 € par mois, puis 200 000 €")
+    assert "1 600 €" in m and "2 800 €" in m and "200 000 €" in m
+    assert mots("Sept salaires : 1 500, 1 600")[-2:] == ["1 500,", "1 600"]   # liste : coupable entre deux nombres
+    assert mots("les 3 enfants") == ["les", "3", "enfants"]
+    assert "5 min" in mots("Court intervalle : 5 min sur 20") and "1 point" in mots("écart de 1 point")
+
+
 def test_prononciation_de_la_marque_dans_la_voix_seulement():
     import yaml
     from lmec.narration import preparer_pour_voix
@@ -1560,7 +1619,11 @@ def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
             for i, type_, t, txt, ecart, _ in _occurrences_barres(fiche, langue, fmt):
                 vus += 1
                 assert ecart >= 10, (chemin.name, langue, fmt, f"scène {i + 1} {type_}", t, txt, ecart)
-    assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
+    # Une capsule sans chapitre ni chiffre (Q2.04) n'a aucun grand chiffre : rien à vérifier.
+    a_des_grands_chiffres = not fiche.pedagogique or any(
+        s.type in ("titre", "chiffre") for e in fiche.editions.values() for s in e.scenes)
+    if a_des_grands_chiffres:
+        assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
 
 
 def test_inventaire_signale_une_video_manquante(tmp_path):

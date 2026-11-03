@@ -1,0 +1,88 @@
+# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: Q3.01
+statut: valide_jg   # 2026-11-03, PR #15
+fiche_production: contenus/fiches/2026-11-pilote-q3-01-paradoxe-du-bus.yaml
+
+titres: {fr: "Pourquoi votre bus semble toujours en retard", en: "Why your bus always seems late"}
+question_centrale:
+  fr: "Si un bus passe toutes les 10 minutes en moyenne, pourquoi attend-on souvent plus de 5 minutes ?"
+  en: "If a bus comes every 10 minutes on average, why do you often wait more than 5?"
+position: {pilier: quotidien, niveau: 1, module: Q3, rang_dans_module: 1}
+public: {prerequis: [S2.04], niveau_maths: M0, rappel_conseille: []}
+
+objectifs:
+  fr:
+    - "Expliquer le paradoxe de l'inspection : on tombe plus souvent dans les longs intervalles"
+    - "Calculer l'attente moyenne quand les intervalles entre bus valent 5 et 15 minutes"
+    - "Repérer d'autres situations où ce biais apparaît"
+  en:
+    - "Explain the inspection paradox: you are more likely to land in a long gap"
+    - "Work out the average wait when the gaps between buses are 5 and 15 minutes"
+    - "Spot other situations where the same bias shows up"
+
+intuition: "Les longs intervalles occupent plus de temps, donc on a plus de chances d'y arriver."
+exemple_fil_rouge: "Bus alternant 5 et 15 minutes."
+exemple_reel: {description: "Aucun : calcul pur.", source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}}
+
+provenance:
+  - {chiffre: "5, 15, 2, 18 minutes", support: ecran, nature: parametre_simulation, calcul: {entrees: "Intervalles fictifs", formule: "attente moyenne = E[L²] / (2 E[L])", transformations: ""}, definition: "Intervalle entre deux bus", unite: "minutes", population: "", periode: "", couverture: "", revisions: "", source_primaire: {organisme: "", url: "", consulte_le: ""}, incertitude: "Aucune", comparabilite: ""}
+  - {chiffre: "10 minutes pour des bus au hasard", support: ecran, nature: calcul_derive, calcul: {entrees: "Intervalles exponentiels de moyenne 10", formule: "E[L²] / (2 E[L]) = 2 × 10² / 20 = 10", transformations: ""}, definition: "", unite: "minutes", population: "", periode: "", couverture: "", revisions: "", source_primaire: {organisme: "", url: "", consulte_le: ""}, incertitude: "", comparabilite: ""}
+
+affirmations_qualitatives:
+  - {affirmation: "Dans la réalité, les bus se rattrapent et se suivent de près", statut: hypothese, source: "", verification: "Phénomène connu (« bus bunching ») ; formulé sans chiffre ; à sourcer si un chiffre est ajouté"}
+  - {affirmation: "Les élèves vivent en moyenne des classes plus chargées que la moyenne des classes", statut: sourcee, source: "Conséquence mathématique du paradoxe de l'inspection (dès que les tailles varient)", verification: "Vraie sauf si toutes les classes ont la même taille"}
+
+cycle_enquete:
+  question: "Montrée"
+  population_et_mesure: "Montrée : intervalles en minutes, voyageur arrivant au hasard"
+  origine_des_donnees: "Calcul pur"
+  exploration: ""
+  methode_et_raison: "Montrée : pondérer chaque intervalle par sa durée"
+  hypotheses: "Montrée à l'écran (note) : arrivée au hasard, sans regarder l'horaire"
+  resultat_et_incertitude: "Valeurs exactes sous les hypothèses"
+  interpretation_permise_et_interdite: "Montrée : le biais vient de l'irrégularité, pas du nombre de bus"
+  reproductibilite: "Calculs à l'écran, recalculés par le moteur"
+
+donnees_ou_simulation: {type: calcul_pur, raison_du_choix: "Deux intervalles suffisent à montrer le mécanisme ; la simulation prévue au programme peut s'ajouter en version longue", source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}, parametres_simulation: ""}
+hypotheses_et_limites:
+  - {hypothese: "Le voyageur arrive au hasard", intuition: "Il ne consulte pas l'horaire", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Un voyageur qui consulte l'horaire attend moins ; le paradoxe ne s'applique plus"}
+  - {hypothese: "Cas des 10 minutes d'attente : passages suivant un processus de Poisson (intervalles exponentiels de moyenne 10 min)", intuition: "C'est cette hypothèse précise, et non « des bus au hasard » en général, qui donne 10 minutes", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Formulation précisée après la revue de la PR #15"}
+
+reproductibilite: "Blocs verifier"
+
+deroule:
+  - {etape: question, contenu: "Accroche ; bus réguliers : 5 min"}
+  - {etape: donnees, contenu: "Intervalles 5 et 15 ; défi"}
+  - {etape: raisonnement, contenu: "25 % et 75 % de chances"}
+  - {etape: formalisation, contenu: "Attente pondérée : 6,25 min ; formule générale vérifiée"}
+  - {etape: limites, contenu: "Bus entièrement au hasard : 10 min (renvoi S5.08)"}
+  - {etape: exercice, contenu: "2 et 18 minutes"}
+  - {etape: correction, contenu: "8,2 min"}
+  - {etape: application, contenu: "Classes, salle de sport, hôpital"}
+  - {etape: rappel, contenu: "Trois points"}
+
+formules:
+  - {formule: "0,25 × 2,5 + 0,75 × 7,5", explication_symboles: "chances de tomber dans chaque intervalle × attente moyenne dans cet intervalle", conditions: "arrivée au hasard"}
+
+calculs_a_verifier:
+  - {expression: "0.25 * 2.5 + 0.75 * 7.5", attendu: 6.25, libelle: "Attente moyenne"}
+  - {expression: "0.1 * 1 + 0.9 * 9", attendu: 8.2, libelle: "Exercice"}
+
+idees_fausses:
+  - {idee: "L'attente moyenne vaut toujours la moitié de l'intervalle moyen", desamorcee_a_l_etape: "Chiffre 6,25 min"}
+
+exercice: {question: "Intervalles de 2 et 18 minutes : attente moyenne ?", correction: "0,1 × 1 + 0,9 × 9 = 8,2 min", pause_secondes: 8}
+
+preuve_apprentissage:
+  tache: "Calculer l'attente moyenne pour des intervalles de 4 et 16 minutes (6,8 min)"
+  question_de_transfert: "Une école a une classe de 10 élèves et une de 30. Quelle taille de classe moyenne vivent les élèves ? (25)"
+  diagnostic_d_erreur: "« Il y a autant de longs que de courts intervalles, donc j'ai une chance sur deux de tomber dans un long » : pourquoi est-ce faux ?"
+  limite_a_enoncer: "Le paradoxe suppose qu'on arrive au hasard"
+
+duree_estimee_min: [5, 6]
+format: educational
+raison_du_format: "Paradoxe à construire, avec un calcul et un exercice"
+derives_short: ["Le paradoxe du bus en 40 s"]
+adaptation_en: "Mêmes nombres ; formulations propres à l'anglais (« gap », « turn up »)."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."
+controle: {test_du_debutant: "À mesurer au pilote", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu"}

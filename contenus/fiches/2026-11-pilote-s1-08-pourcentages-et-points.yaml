@@ -1,0 +1,308 @@
+# Phase pilote ACTU-BASICS, vidéo 1 sur 5 : S1.08 « Pourcentages, points de pourcentage et taux »
+# Fiche de conception : contenus/conception/S1.08.yaml
+# Calcul pur, nombres fictifs. Aucun fait extérieur chiffré.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
+id: 2026-11-pilote-s1-08-pourcentages-et-points
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.08 · Pourcentages, points de pourcentage et taux"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer une évolution en pourcentage et en points de pourcentage"
+      - "Expliquer pourquoi une hausse puis une baisse de même pourcentage ne s'annulent pas"
+      - "Distinguer un effectif, une proportion et un taux pour 100 000"
+    en:
+      - "Work out a change both in percent and in percentage points"
+      - "Explain why a rise and a fall of the same percentage don't cancel out"
+      - "Tell apart a count, a proportion and a rate per 100,000"
+  prerequis:
+    fr: ["S1.02 : population, unité, variable", "Savoir calculer une fraction"]
+    en: ["S1.02: population, unit, variable", "Working out a fraction"]
+  hypotheses:
+    fr: "Nombres fictifs, choisis pour que les calculs se suivent de tête"
+    en: "Made-up numbers, chosen so the arithmetic is easy to follow"
+
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
+
+editions:
+  fr:
+    titre: "1 % ou 50 % ? Pourcentages et points"
+    legende: |
+      Un taux passe de 2 % à 3 % : a-t-il augmenté de 1 % ou de 50 % ? Les deux réponses se défendent, à condition de dire « pour cent de quoi ». On apprend à distinguer points de pourcentage et pourcentage d'évolution, à comprendre pourquoi +50 % puis −50 % ne ramènent pas au départ, et à comparer deux villes avec un taux pour 100 000. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, pourcentages, chiffres]
+    scenes:
+      - type: accroche
+        texte: "Un taux passe de 2 % à 3 %. Hausse de *1 %*, ou de *50 %* ?"
+        voix_off: "Un taux passe de deux pour cent à trois pour cent. A-t-il augmenté de un pour cent, ou de cinquante pour cent ?"
+      - type: exercice
+        texte: "De 2 % à 3 % : *1 %* ou *50 %* ?"
+        etiquette: "DÉFI"
+        pause: 4
+        voix_off: "Choisissez votre réponse avant la suite. Un pour cent, ou cinquante pour cent ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Pour cent de quoi ?"
+        voix_off: "Pour répondre, il faut d'abord revenir à ce qu'est un pourcentage."
+      - type: formule
+        texte: "Un pourcentage est une *part d'une base*"
+        formule:
+          - '\mathrm{pourcentage}=\dfrac{\mathrm{partie}}{\mathrm{base}}\times 100'
+          - '\dfrac{6}{30}\times 100=20\ \%'
+        voix_off: "Un pourcentage, c'est une partie rapportée à une base, multipliée par cent. Dans une classe de trente élèves, six viennent à vélo. Six sur trente, multiplié par cent : vingt pour cent."
+        note: "La base ici : les 30 élèves de la classe."
+        verifier:
+          - {expression: "6 / 30 * 100", attendu: 20, libelle: "Part des élèves à vélo, en %"}
+      - type: texte
+        texte: "Un pourcentage sans sa base *ne veut rien dire*. Toujours demander : *pour cent de quoi ?*"
+        voix_off: "Un pourcentage sans sa base ne veut rien dire. Le bon réflexe, c'est toujours de demander : pour cent de quoi ?"
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Points ou pourcentage ?"
+        voix_off: "Revenons à notre taux, qui passe de deux à trois pour cent."
+      - type: etapes
+        texte: "De 2 % à 3 % : deux façons de mesurer"
+        etapes:
+          - "L'écart : 3 − 2 = *1 point* de pourcentage"
+          - "L'évolution : (3 − 2) ÷ 2 = *+50 %*"
+        voix_off: "Il y a deux façons, toutes les deux justes, de mesurer ce changement. La première mesure l'écart entre les deux taux : trois moins deux, un point de pourcentage. La seconde mesure l'évolution par rapport au départ : l'écart de un, divisé par le taux de départ, deux, soit une hausse de cinquante pour cent."
+        verifier:
+          - {expression: "3 - 2", attendu: 1, libelle: "Écart en points"}
+          - {expression: "(3 - 2) / 2 * 100", attendu: 50, libelle: "Évolution, en %"}
+      - type: chiffre
+        valeur: 50
+        prefixe: "+"
+        suffixe: {fr: " %", en: "%"}
+        texte: "d'évolution, pour un écart de *1 point*"
+        voix_off: "Réponse au défi : les deux nombres décrivent le même changement. Plus cinquante pour cent d'évolution, pour un écart de un point de pourcentage."
+        verifier:
+          - {expression: "(3 - 2) / 2 * 100", attendu: 50, libelle: "Évolution de 2 % à 3 %, en %"}
+      - type: formule
+        texte: "L'évolution *en pourcentage*"
+        formule:
+          - '\mathrm{\acute{e}volution}=\dfrac{\mathrm{arriv\acute{e}e}-\mathrm{d\acute{e}part}}{\mathrm{d\acute{e}part}}\times 100'
+        voix_off: "L'évolution en pourcentage se calcule toujours de la même façon : la valeur d'arrivée moins la valeur de départ, divisé par la valeur de départ, multiplié par cent. La base, cette fois, c'est la valeur de départ."
+      - type: texte
+        texte: "« +1 % » pour dire *+1 point* : une confusion fréquente"
+        note: "Passer de 2 % à 2,02 % : voilà ce qu'est une hausse de 1 %."
+        voix_off: "La seule réponse fausse serait donc de dire que le taux a augmenté de un pour cent. Une hausse de un pour cent ferait passer le taux de deux pour cent à deux virgule zéro deux pour cent. Quand on compare deux pourcentages, on parle d'écart en points, ou d'évolution en pourcentage, en le disant clairement."
+        verifier:
+          - {expression: "2 * 1.01", attendu: 2.02, libelle: "2 % augmenté de 1 %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Les pourcentages ne s'additionnent pas"
+        voix_off: "Deuxième piège : enchaîner deux pourcentages."
+      - type: etapes
+        texte: "+50 %, puis −50 %"
+        etapes:
+          - "Départ : *100 €*"
+          - "+50 % : 100 × 1,5 = *150 €*"
+          - "−50 % : 150 × 0,5 = *75 €*"
+        voix_off: "Un prix de départ : cent euros. Il augmente de cinquante pour cent : on multiplie par un virgule cinq, il passe à cent cinquante euros. Puis il baisse de cinquante pour cent : on multiplie par zéro virgule cinq, il tombe à soixante-quinze euros."
+        verifier:
+          - {expression: "100 * 1.5", attendu: 150, libelle: "Après +50 %"}
+          - {expression: "100 * 1.5 * 0.5", attendu: 75, libelle: "Après −50 %"}
+      - type: formule
+        texte: "On *multiplie* les coefficients"
+        formule:
+          - '1{,}5\times 0{,}5=0{,}75'
+          - '\mathrm{soit}\ -25\ \%'
+        voix_off: "Pour enchaîner des évolutions, on ne les additionne pas : on multiplie leurs coefficients. Un virgule cinq fois zéro virgule cinq, cela fait zéro virgule soixante-quinze. Au total, une baisse de vingt-cinq pour cent. La baisse s'applique à un prix déjà augmenté, donc à une base plus grande."
+        verifier:
+          - {expression: "1.5 * 0.5", attendu: 0.75, libelle: "Coefficient total"}
+          - {expression: "(1.5 * 0.5 - 1) * 100", attendu: -25, libelle: "Évolution totale, en %"}
+      - type: exercice
+        texte: "Un prix augmente de *20 %*, puis baisse de *20 %*. Quel est l'effet total ?"
+        pause: 6
+        voix_off: "À vous. Un prix augmente de vingt pour cent, puis baisse de vingt pour cent. Quel est l'effet total ?"
+      - type: correction
+        etapes:
+          - "Coefficients : 1,2 et 0,8"
+          - "1,2 × 0,8 = 0,96"
+        reponse: "Le prix final est 4 % plus bas"
+        voix_off: "Une hausse de vingt pour cent, c'est multiplier par un virgule deux. Une baisse de vingt pour cent, c'est multiplier par zéro virgule huit. Un virgule deux fois zéro virgule huit : zéro virgule quatre-vingt-seize. Le prix final est quatre pour cent plus bas qu'au départ."
+        verifier:
+          - {expression: "1.2 * 0.8", attendu: 0.96, libelle: "Coefficient total"}
+          - {expression: "(1.2 * 0.8 - 1) * 100", attendu: -4, libelle: "Évolution totale, en %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Effectif, proportion, taux"
+        voix_off: "Dernier outil : comparer des groupes de tailles différentes."
+      - type: etapes
+        texte: "Deux villes, une même maladie"
+        etapes:
+          - "Ville A : *50* cas pour 20 000 habitants"
+          - "Ville B : *120* cas pour 100 000 habitants"
+        note: "Cas comptés sur la même période, avec la même définition."
+        voix_off: "Prenons un exemple fictif : deux villes et une même maladie, comptée sur la même période et avec la même définition des cas. La ville A compte cinquante cas, pour vingt mille habitants. La ville B en compte cent vingt, pour cent mille habitants."
+      - type: etapes
+        texte: "Le *taux pour 100 000* remet tout à la même échelle"
+        etapes:
+          - "A : 50 ÷ 20 000 × 100 000 = *250*"
+          - "B : 120 ÷ 100 000 × 100 000 = *120*"
+          - "B a *plus de cas*, A a un *taux plus élevé*"
+        voix_off: "Pour comparer, on calcule un taux pour cent mille habitants : le nombre de cas, divisé par la population, multiplié par cent mille. La ville A obtient deux cent cinquante cas pour cent mille. La ville B, cent vingt. La ville B a plus de cas, mais le taux observé est environ deux fois plus élevé dans la ville A."
+        verifier:
+          - {expression: "50 / 20000 * 100000", attendu: 250, libelle: "Taux de A pour 100 000"}
+          - {expression: "120 / 100000 * 100000", attendu: 120, libelle: "Taux de B pour 100 000"}
+      - type: texte
+        texte: "L'*effectif* compte. La *proportion* et le *taux* comparent."
+        note: "Taux brut : des populations d'âges différents peuvent aussi expliquer un écart."
+        voix_off: "Retenez la différence. L'effectif compte les cas. La proportion et le taux rapportent ces cas à une base, et ce sont eux qui permettent de comparer. Dans une comparaison réelle, il faudrait aussi vérifier que les populations sont comparables, notamment leur structure par âge."
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Toujours demander : *pour cent de quoi ?*"
+          - "Écart en *points*, évolution en *pourcentage*"
+          - "Enchaîner des évolutions : *multiplier* les coefficients"
+          - "Comparer des groupes : un *taux*, pas un effectif"
+        voix_off: "Récapitulons. Un : un pourcentage a toujours une base, demandez laquelle. Deux : l'écart entre deux taux se dit en points, leur évolution en pourcentage. Trois : pour enchaîner des évolutions, on multiplie les coefficients. Quatre : pour comparer des groupes de tailles différentes, on utilise un taux, pas un effectif."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "1% or 50%? Percentages and points"
+    legende: |
+      A rate goes from 2% to 3%: did it rise by 1% or by 50%? Both answers can be defended, as long as you say "percent of what". Learn to tell percentage points from percentage change, see why +50% then −50% doesn't bring you back where you started, and compare two towns with a rate per 100,000. Made-up examples, all numbers checked. Series "Reading numbers without being fooled".
+    hashtags: [statistics, percentages, numbers]
+    scenes:
+      - type: accroche
+        texte: "A rate goes from 2% to 3%. Up *1%*, or up *50%*?"
+        voix_off: "A rate goes from two percent to three percent. Did it rise by one percent, or by fifty percent?"
+      - type: exercice
+        texte: "From 2% to 3%: *1%* or *50%*?"
+        etiquette: "CHALLENGE"
+        pause: 4
+        voix_off: "Pick your answer before we go on. One percent, or fifty percent?"
+      - type: titre
+        numero: 1
+        texte: "Percent of what?"
+        voix_off: "To answer, we first need to go back to what a percentage is."
+      - type: formule
+        texte: "A percentage is *a share of a base*"
+        formule:
+          - '\mathrm{percentage}=\dfrac{\mathrm{part}}{\mathrm{base}}\times 100'
+          - '\dfrac{6}{30}\times 100=20\%'
+        voix_off: "A percentage is a part divided by a base, times one hundred. In a class of thirty students, six cycle to school. Six out of thirty, times one hundred: twenty percent."
+        note: "The base here: the 30 students in the class."
+        verifier:
+          - {expression: "6 / 30 * 100", attendu: 20, libelle: "Share of students who cycle, %"}
+      - type: texte
+        texte: "A percentage without its base *means nothing*. Always ask: *percent of what?*"
+        voix_off: "A percentage without its base means nothing. The right reflex is always to ask: percent of what?"
+      - type: titre
+        numero: 2
+        texte: "Points or percent?"
+        voix_off: "Back to our rate, going from two to three percent."
+      - type: etapes
+        texte: "From 2% to 3%: two ways to measure"
+        etapes:
+          - "The gap: 3 − 2 = *1 percentage point*"
+          - "The change: (3 − 2) ÷ 2 = *+50%*"
+        voix_off: "There are two ways to measure this change, and both are correct. The first measures the gap between the two rates: three minus two, one percentage point. The second measures the change relative to where we started: a gap of one, divided by the starting rate of two, which is a fifty percent increase."
+        verifier:
+          - {expression: "3 - 2", attendu: 1, libelle: "Gap in points"}
+          - {expression: "(3 - 2) / 2 * 100", attendu: 50, libelle: "Change, %"}
+      - type: chiffre
+        valeur: 50
+        prefixe: "+"
+        suffixe: {fr: " %", en: "%"}
+        texte: "change, for a gap of *1 point*"
+        voix_off: "So here's the answer to the challenge: both numbers describe the same change. A fifty percent rise, for a gap of one percentage point."
+        verifier:
+          - {expression: "(3 - 2) / 2 * 100", attendu: 50, libelle: "Change from 2% to 3%, %"}
+      - type: formule
+        texte: "Percentage *change*"
+        formule:
+          - '\mathrm{change}=\dfrac{\mathrm{new}-\mathrm{old}}{\mathrm{old}}\times 100'
+        voix_off: "Percentage change is always worked out the same way: the new value minus the old value, divided by the old value, times one hundred. This time, the base is the starting value."
+      - type: texte
+        texte: "Saying \"+1%\" for *+1 point*: a common point of confusion"
+        note: "Going from 2% to 2.02%: that's what a 1% rise looks like."
+        voix_off: "So the only wrong answer is to say the rate went up by one percent. A one percent rise would take the rate from two percent to two point zero two percent. When you compare two percentages, talk about the gap in points, or the change in percent, and say which one you mean."
+        verifier:
+          - {expression: "2 * 1.01", attendu: 2.02, libelle: "2% raised by 1%"}
+      - type: titre
+        numero: 3
+        texte: "Percentages don't add up"
+        voix_off: "Second trap: stacking two percentages."
+      - type: etapes
+        texte: "+50%, then −50%"
+        etapes:
+          - "Start: *€100*"
+          - "+50%: 100 × 1.5 = *€150*"
+          - "−50%: 150 × 0.5 = *€75*"
+        voix_off: "Start with a price of one hundred euros. It goes up by fifty percent: multiply by one point five, and it's now one hundred fifty euros. Then it drops by fifty percent: multiply by zero point five, and it falls to seventy-five euros."
+        verifier:
+          - {expression: "100 * 1.5", attendu: 150, libelle: "After +50%"}
+          - {expression: "100 * 1.5 * 0.5", attendu: 75, libelle: "After −50%"}
+      - type: formule
+        texte: "You *multiply* the factors"
+        formule:
+          - '1.5\times 0.5=0.75'
+          - '\mathrm{that\ is}\ -25\%'
+        voix_off: "To stack changes, you don't add them. You multiply their factors. One point five times zero point five is zero point seven five. Overall, that's a twenty-five percent drop. The fall applies to a price that has already gone up, so to a bigger base."
+        verifier:
+          - {expression: "1.5 * 0.5", attendu: 0.75, libelle: "Overall factor"}
+          - {expression: "(1.5 * 0.5 - 1) * 100", attendu: -25, libelle: "Overall change, %"}
+      - type: exercice
+        texte: "A price rises by *20%*, then falls by *20%*. What's the overall effect?"
+        pause: 6
+        voix_off: "Your turn. A price rises by twenty percent, then falls by twenty percent. What's the overall effect?"
+      - type: correction
+        etapes:
+          - "Factors: 1.2 and 0.8"
+          - "1.2 × 0.8 = 0.96"
+        reponse: "The final price is 4% lower"
+        voix_off: "A twenty percent rise means multiplying by one point two. A twenty percent fall means multiplying by zero point eight. One point two times zero point eight: zero point nine six. The final price is four percent lower than where it started."
+        verifier:
+          - {expression: "1.2 * 0.8", attendu: 0.96, libelle: "Overall factor"}
+          - {expression: "(1.2 * 0.8 - 1) * 100", attendu: -4, libelle: "Overall change, %"}
+      - type: titre
+        numero: 4
+        texte: "Count, proportion, rate"
+        voix_off: "One last tool: comparing groups of different sizes."
+      - type: etapes
+        texte: "Two towns, one disease"
+        etapes:
+          - "Town A: *50* cases among 20,000 people"
+          - "Town B: *120* cases among 100,000 people"
+        note: "Cases counted over the same period, with the same definition."
+        voix_off: "Take a fictional example: two towns and the same disease, counted over the same observation period and with the same case definition. Town A has fifty cases among twenty thousand residents. Town B has one hundred twenty cases among one hundred thousand residents."
+      - type: etapes
+        texte: "A *rate per 100,000* puts everything on the same scale"
+        etapes:
+          - "A: 50 ÷ 20,000 × 100,000 = *250*"
+          - "B: 120 ÷ 100,000 × 100,000 = *120*"
+          - "B has *more cases*, A has a *higher rate*"
+        voix_off: "To compare them, work out a rate per one hundred thousand people: the number of cases, divided by the population, times one hundred thousand. Town A gets two hundred fifty cases per hundred thousand. Town B gets one hundred twenty. Town B has more cases, but the observed rate is about twice as high in town A."
+        verifier:
+          - {expression: "50 / 20000 * 100000", attendu: 250, libelle: "Rate in A per 100,000"}
+          - {expression: "120 / 100000 * 100000", attendu: 120, libelle: "Rate in B per 100,000"}
+      - type: texte
+        texte: "A *count* tells you how many. A *proportion* or a *rate* lets you compare."
+        note: "Crude rate: populations of different ages can also explain a gap."
+        voix_off: "Remember the difference. A count tells you how many cases there are. A proportion or a rate divides those cases by a base, and that's what lets you compare. In a real-world comparison, we would also need to check whether the populations are comparable, including their age structures."
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Always ask: *percent of what?*"
+          - "Gaps in *points*, changes in *percent*"
+          - "Stacking changes: *multiply* the factors"
+          - "Comparing groups: use a *rate*, not a count"
+        voix_off: "Let's recap. One: a percentage always has a base, so ask what it is. Two: the gap between two rates is in points, their change is in percent. Three: to stack changes, multiply the factors. Four: to compare groups of different sizes, use a rate, not a count."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

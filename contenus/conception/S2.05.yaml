@@ -1,0 +1,140 @@
+# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S2.05
+statut: valide_jg   # 2026-11-03, PR #15
+fiche_production: contenus/fiches/2026-11-pilote-s2-05-moyenne-ou-mediane.yaml
+
+titres:
+  fr: "Moyenne ou médiane ?"
+  en: "Mean or median?"
+question_centrale:
+  fr: "Pourquoi la plupart des gens gagnent-ils moins que le salaire moyen ?"
+  en: "Why do most people earn less than the average salary?"
+
+position: {pilier: statistiques, niveau: 1, module: S2, rang_dans_module: 5}
+
+public:
+  prerequis: [S2.04, S2.03]
+  niveau_maths: M0
+  rappel_conseille: [M0.01]
+
+objectifs:
+  fr:
+    - "Calculer une médiane avec un nombre impair, puis pair, de valeurs"
+    - "Prévoir dans quel sens la moyenne s'écarte de la médiane quand la distribution est asymétrique"
+    - "Choisir l'indicateur qui répond à une question donnée"
+  en:
+    - "Find the median of an odd and of an even number of values"
+    - "Predict which way the mean moves away from the median in a skewed distribution"
+    - "Choose the summary that answers a given question"
+
+intuition: "Une seule valeur extrême déplace la moyenne, presque jamais la médiane."
+exemple_fil_rouge: "Neuf clients d'un café (1 600 à 2 800 € par mois, moyenne et médiane 2 200 €). Un dixième client à 200 000 € entre : moyenne 21 980 €, médiane 2 250 €."
+exemple_reel:
+  description: "Aucun dans la version pilote. La fiche du programme prévoyait une distribution réelle des salaires (Insee, ONS ou BLS) : elle est reportée pour ne citer aucun chiffre non vérifié. À ajouter avec sa fiche de provenance avant la version finale si JG le souhaite."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "Salaires du café et de l'exercice"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude", formule: "", transformations: ""}
+    definition: "Salaires mensuels fictifs, en euros"
+    unite: "euros par mois"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Moyennes, médianes, 90 %"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Salaires fictifs ci-dessus", formule: "somme / n ; valeur de rang (n + 1) / 2", transformations: "aucune"}
+    definition: "Moyenne arithmétique et médiane"
+    unite: "euros par mois ; pourcentage de clients"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: ""
+
+affirmations_qualitatives:
+  - {affirmation: "Les salaires et les patrimoines ont souvent une longue traîne vers le haut", statut: hypothese, source: "", verification: "À sourcer (Insee, distribution des salaires du privé) avant la version finale, ou à reformuler en exemple"}
+  - {affirmation: "Si la moyenne dépasse la médiane, au moins la moitié des valeurs est sous la moyenne", statut: sourcee, source: "Définition de la médiane (propriété mathématique)", verification: "Vraie dès que la moyenne est strictement au-dessus de la médiane"}
+  - {affirmation: "Beaucoup pensent que la moitié des gens gagne plus que le salaire moyen", statut: hypothese, source: "", verification: "Question du défi d'ouverture, à mesurer dans le test pilote"}
+
+cycle_enquete:
+  question: "Montrée : que gagne un salarié typique ?"
+  population_et_mesure: "Montrée : les clients du café, salaire mensuel"
+  origine_des_donnees: "Montrée : exemple fictif"
+  exploration: "Supposée : les valeurs sont lues dans la note à l'écran"
+  methode_et_raison: "Montrée : moyenne puis médiane, et pourquoi"
+  hypotheses: "Montrée : nombres fictifs"
+  resultat_et_incertitude: "Pas d'incertitude : population complète, pas d'échantillon"
+  interpretation_permise_et_interdite: "Montrée : choisir l'indicateur selon la question"
+  reproductibilite: "Tous les calculs sont à l'écran et recalculés par le moteur"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Des nombres ronds, qu'on suit de tête, isolent l'effet d'une seule valeur extrême"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Population complète, pas d'échantillon", intuition: "On décrit, on n'infère pas", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Avec un échantillon, moyenne et médiane auraient une incertitude (S6)"}
+
+reproductibilite: "Calculs entièrement à l'écran ; blocs verifier de la fiche de production"
+
+deroule:
+  - {etape: question, contenu: "Accroche et défi : quelle part gagne moins que la moyenne ?"}
+  - {etape: donnees, contenu: "Neuf clients, moyenne 2 200 €"}
+  - {etape: raisonnement, contenu: "Le client riche : moyenne 21 980 €, 90 % sous la moyenne"}
+  - {etape: formalisation, contenu: "Médiane : ranger, milieu, position (n + 1) / 2, cas pair"}
+  - {etape: raisonnement, contenu: "Médiane du café 2 200 puis 2 250 € ; règle selon la forme de la distribution ; réponse au défi"}
+  - {etape: exercice, contenu: "Sept salaires, puis un huitième à 20 000 €"}
+  - {etape: correction, contenu: "1 800 / 1 800, puis 4 075 / 1 850"}
+  - {etape: application, contenu: "Quel indicateur pour quelle question"}
+  - {etape: limites, contenu: "La médiane ignore l'ampleur des écarts"}
+  - {etape: rappel, contenu: "Trois points à retenir"}
+
+formules:
+  - {formule: "moyenne = somme / nombre", explication_symboles: "somme des valeurs, nombre de valeurs", conditions: "variable quantitative"}
+  - {formule: "position = (n + 1) / 2", explication_symboles: "n : nombre de valeurs rangées", conditions: "position non entière : moyenne des deux valeurs voisines"}
+
+calculs_a_verifier:
+  - {expression: "19800 / 9", attendu: 2200, libelle: "Moyenne des 9 salaires"}
+  - {expression: "(19800 + 200000) / 10", attendu: 21980, libelle: "Moyenne des 10 salaires"}
+  - {expression: "(2200 + 2300) / 2", attendu: 2250, libelle: "Médiane des 10 salaires"}
+  - {expression: "(12600 + 20000) / 8", attendu: 4075, libelle: "Moyenne de l'exercice après"}
+  - {expression: "(1800 + 1900) / 2", attendu: 1850, libelle: "Médiane de l'exercice après"}
+
+idees_fausses:
+  - {idee: "La moitié des gens gagne plus que le salaire moyen", desamorcee_a_l_etape: "chiffre 90 %, puis réponse au défi"}
+  - {idee: "La médiane est toujours meilleure", desamorcee_a_l_etape: "Laquelle choisir ? et limite de la médiane"}
+
+exercice:
+  question: "Sept salaires : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000, 2 100 €. Moyenne et médiane, puis après l'arrivée d'un salaire de 20 000 €."
+  correction: "Avant : 12 600 / 7 = 1 800 €, médiane 1 800 €. Après : 32 600 / 8 = 4 075 €, médiane (1 800 + 1 900) / 2 = 1 850 €."
+  pause_secondes: 8
+
+preuve_apprentissage:
+  tache: "Calculer la médiane de 6 valeurs données, sans aide"
+  question_de_transfert: "Dans un village, un château vaut 30 millions d'euros et les maisons entre 150 000 et 300 000 €. Le prix moyen d'un logement décrit-il bien le village ? Quel indicateur choisir ?"
+  diagnostic_d_erreur: "« Le salaire moyen a augmenté, donc la plupart des salariés gagnent plus qu'avant » : pourquoi est-ce faux ?"
+  limite_a_enoncer: "La médiane ne dit rien de l'ampleur des écarts"
+
+duree_estimee_min: [5, 7]
+format: educational
+raison_du_format: "Une notion, un exemple fil rouge et un exercice : le format principal du cursus"
+derives_short: ["Le milliardaire entre dans le café : la moyenne s'envole, la médiane ne bouge pas (30 à 45 s)"]
+
+adaptation_en: "Mêmes nombres et même raisonnement. Euros conservés pour garder des nombres identiques ; séparateur de milliers anglais. Titres et phrases écrits pour l'anglais, sans calque."
+licences: "Aucune donnée extérieure. Voix Kokoro (licence Apache 2.0, voir docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
+controle:
+  test_du_debutant: "À mesurer au pilote : le testeur réussit la question de transfert et énonce la limite de la médiane"
+  relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire"
+  controle_mobile: "Voir sortie/<id>/fr/inspection après rendu"

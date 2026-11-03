@@ -15,7 +15,7 @@ Tout se fait depuis le site GitHub. Aucune installation n'est nécessaire.
 | 7. Publier | Applications des plateformes | Vidéo + `legende.txt` ; carrousel = images `carrousel/` ; activer la mention IA si voix de synthèse |
 | 8. Archiver | GitHub | Déplacer la fiche vers `contenus/publie/` |
 
-**Règle simple** : un fichier qui porte le filigrane « BROUILLON · NON VALIDÉ » ne se publie jamais. Seul l'artefact `final-…` contient des fichiers à publier.
+**Règle simple** : rien ne se publie sans l'accord explicite de JG. Les aperçus ne portent plus de filigrane (décision de JG, 2026-11-03) : l'état se lit dans `rapport-qc.md` (❌ BLOQUÉ, ⚠️ À VÉRIFIER, ✅). L'option `--filigrane` remet le bandeau « BROUILLON · NON VALIDÉ » si besoin.
 
 ## 2. Contenu d'un artefact
 

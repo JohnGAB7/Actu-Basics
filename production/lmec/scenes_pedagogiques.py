@@ -481,21 +481,34 @@ class ScenesPedagogiques(Animations):
             lbl = typographie(c["axe_x"], self.langue)
             d.text((droite - p_axe.getlength(lbl), bas_g + 64), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
-        if c.get("seuil") is not None:   # seuil horizontal (ex. 90 %), en pointillés
-            ys = Y(float(c["seuil"]))
+        # Seuils horizontaux en pointillés : « seuil » (ex. 0.9, étiqueté par sa valeur) et/ou « seuils »,
+        # liste de {valeur, label} (ex. moyenne et médiane affichées ensemble). Couleurs : accent, puis texte.
+        seuils = ([{"valeur": c["seuil"]}] if c.get("seuil") is not None else []) + list(c.get("seuils") or [])
+        for n_s, seuil in enumerate(seuils):
+            ys = Y(float(seuil["valeur"]))
+            couleur = self.c["accent"] if n_s % 2 == 0 else self.c["texte"]
             xx = gauche
             while xx < droite:
-                d.line((xx, ys, min(xx + 16, droite), ys), fill=_melange(fond, self.c["accent"], 0.8 * a_axes), width=4)
+                d.line((xx, ys, min(xx + 16, droite), ys), fill=_melange(fond, couleur, 0.8 * a_axes), width=4)
                 xx += 30
-            lbl = fmt_y(float(c["seuil"]))
-            d.text((gauche + 16, ys - p_axe.size - 12), lbl, font=p_axe, fill=_melange(fond, self.c["accent"], a_axes))
-        # Courbe tracée progressivement.
+            lbl = typographie(seuil.get("label") or fmt_y(float(seuil["valeur"])), self.langue)
+            # Seuils pairs à gauche, impairs à droite : deux seuils proches ne se chevauchent pas.
+            lx = gauche + 16 if n_s % 2 == 0 else droite - 16 - p_axe.getlength(lbl)
+            ly = ys - p_axe.size - 12
+            if len(seuils) > 1:   # fond sous l'étiquette : les pointillés voisins ne la traversent pas
+                d.rectangle((lx - 8, ly - 2, lx + p_axe.getlength(lbl) + 8, ly + p_axe.size + 8), fill=fond)
+            d.text((lx, ly), lbl, font=p_axe, fill=_melange(fond, couleur, a_axes))
+        # Courbe tracée progressivement, ou points posés un à un (« style: points », pour des valeurs
+        # individuelles comme dix salaires rangés : un trait suggérerait une continuité qui n'existe pas).
         k = 1.0 if t is None else _ease((t - 0.6) / TRACE_COURBE)
         if k <= 0:
             return
         x_lim = xmin + (xmax - xmin) * k
         trace = [(X(x), Y(v)) for x, v in pts if x <= x_lim + 1e-9]
-        if len(trace) >= 2:
+        if c.get("style") == "points":
+            for px, py in trace:
+                d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=self.c["accent"])
+        elif len(trace) >= 2:
             d.line(trace, fill=self.c["accent"], width=10, joint="curve")
         # Repères : point, pointillés, étiquette. Ils apparaissent quand la courbe les atteint et, si la
         # voix est connue, sur la phrase qui les annonce (une phrase d'introduction, puis une par repère).

@@ -6,7 +6,7 @@
 - Le fournisseur est **interchangeable** sans toucher au code : `kokoro` (gratuit, local, par défaut), `piper` (gratuit, local, secours), `openai`, `elevenlabs`, `manuel` (vos enregistrements), `test` (bip, pour les tests uniquement).
 - Par défaut : **Kokoro** (décision de JG, novembre 2026), gratuit, local et sans compte ; FR `ff_siwis`, EN `af_heart`. Si Kokoro est absent, **Piper** prend le relais (`secours`) et le rapport le signale. `gratuit_uniquement: true` refuse tout service payant. Licences et coûts : [voice-licenses.md](../voice-licenses.md).
 - **La qualité de publication n'est validée pour aucune voix.** Elle se juge à l'oreille, par une personne, sur la vidéo finale (voir l'état ci-dessous).
-- Une vidéo **sans voix n'est jamais présentée comme prête** : si la voix échoue, le rapport passe en ❌ BLOQUÉ, l'aperçu porte le filigrane et le mode final refuse de produire.
+- Une vidéo **sans voix n'est jamais présentée comme prête** : si la voix échoue, le rapport passe en ❌ BLOQUÉ et le mode final refuse de produire.
 
 ## État réel des intégrations (novembre 2026)
 

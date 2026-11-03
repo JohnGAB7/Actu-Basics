@@ -1,0 +1,116 @@
+# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: Q2.04
+statut: valide_jg   # 2026-11-03, PR #15
+fiche_production: contenus/fiches/2026-11-pilote-q2-04-biais-du-survivant.yaml
+
+titres:
+  fr: "Que disent les avions revenus ?"
+  en: "What do the returning planes tell us?"
+question_centrale:
+  fr: "Pourquoi les vieux bâtiments semblent-ils mieux construits que les neufs ?"
+  en: "Why do old buildings seem better built than new ones?"
+
+position: {pilier: quotidien, niveau: 1, module: Q2, rang_dans_module: 4}
+
+public:
+  prerequis: []
+  niveau_maths: M0
+  rappel_conseille: []
+  renvoi: [S1.05]
+
+objectifs:   # Réduits à un seul après la revue de la PR #15 (capsule d'une minute)
+  fr:
+    - "Reconnaître le biais du survivant : se demander ce qui manque dans les données"
+  en:
+    - "Spot survivorship bias: ask what is missing from the data"
+
+intuition: "On ne voit que ce qui a survécu ; les échecs ont disparu des données."
+exemple_fil_rouge: "Les avions revenus de mission : ils ne disent pas tout, car les avions abattus manquent aux données. Script proposé par ChatGPT (2e revue de la PR #15), intégré tel quel."
+exemple_reel:
+  description: "Méthode d'Abraham Wald pour estimer la vulnérabilité des avions à partir des dégâts des survivants. Partie lue mot à mot (environ 60 %) : probabilité d'être abattu selon le NOMBRE d'impacts, à partir des avions revenus ayant reçu i impacts (A_i) et du nombre d'avions engagés (N). Aucune zone de l'avion n'est nommée dans cette partie."
+  source:
+    organisme: "Center for Naval Analyses (réédition) ; Journal of the American Statistical Association"
+    titre: "A. Wald, A Method of Estimating Plane Vulnerability Based on Damage of Survivors, CRC 432, juillet 1980 ; M. Mangel et F. J. Samaniego, Abraham Wald's Work on Aircraft Survivability, JASA 79(386), 1984, p. 259-267"
+    url: "https://apps.dtic.mil/sti/pdfs/ADA091073.pdf ; https://doi.org/10.1080/01621459.1984.10478038"
+    date_publication: "1980-07 (réédition) ; 1984-06"
+    periode_donnees: "Seconde Guerre mondiale"
+    consulte_le: "2026-11-03. Rapport de Wald lu à environ 60 % (texte DTIC, OCR partiellement illisible) ; article de 1984 : notice Crossref seulement"
+
+provenance: []   # Aucun chiffre à l'écran ni dans la voix.
+
+affirmations_qualitatives:
+  - affirmation: "Pendant la guerre, des analystes ont étudié les dégâts des avions revenus de mission"
+    statut: sourcee
+    source: "Rapport de Wald (CRC 432) : titre et partie I (avions revenus après i impacts, A_i)"
+    verification: "Lu mot à mot le 2026-11-03"
+  - affirmation: "La méthode de Wald part des avions revenus selon leur nombre d'impacts et tient compte du nombre total d'avions engagés"
+    statut: sourcee
+    source: "Rapport de Wald (CRC 432), partie I : A_i (revenus après i impacts) et N (avions engagés)"
+    verification: "Lu mot à mot le 2026-11-03. Le récit des « zones peu touchées » est retiré (V2) : absent de la partie lue"
+  - affirmation: "8 avions, 5 revenus ; 8 entreprises, 3 encore actives"
+    statut: hypothese   # illustration annoncée comme telle
+    source: ""
+    verification: "Nombres fictifs, annoncés à l'écran et dans la voix"
+  - affirmation: "Les entreprises qui ont fermé faisaient peut-être pareil"
+    statut: hypothese
+    source: ""
+    verification: "Au conditionnel (« peut-être ») : illustration, pas un fait"
+
+cycle_enquete:
+  question: "Montrée : où renforcer les avions ?"
+  population_et_mesure: "Montrée : seulement les avions revenus"
+  origine_des_donnees: "Montrée : c'est le cœur du biais"
+  exploration: "Non traitée (format court)"
+  methode_et_raison: "Montrée en mots : raisonner sur les absents"
+  hypotheses: "Récit simplifié, signalé dans les hypothèses de la fiche"
+  resultat_et_incertitude: "Non traitée (format court)"
+  interpretation_permise_et_interdite: "Montrée : ne pas tirer de leçon des seuls survivants"
+  reproductibilite: "Source citée à l'écran et dans la légende"
+
+donnees_ou_simulation:
+  type: recit_source
+  raison_du_choix: "Une capsule de paradoxe d'une seule idée, sans calcul ; l'exemple historique est le plus parlant"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Récit simplifié", intuition: "Le travail de Wald était une méthode statistique, pas une seule remarque", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "La leçon S1.05 traite le biais de sélection en détail"}
+
+reproductibilite: "Pas de calcul ; référence DOI dans la fiche de production"
+
+deroule:   # V2 après la revue audiovisuelle de la PR #15 (cible 80 à 90 s)
+  - {etape: question, contenu: "On n'examine que les avions revenus : que peut-on en conclure ?"}
+  - {etape: raisonnement, contenu: "Animation « selection » : 8 partis, 5 revenus, 3 absents ; données = survivants ; flèche « sélection par la survie »"}
+  - {etape: formalisation, contenu: "Méthode de Wald : avions revenus selon le nombre d'impacts, nombre total d'avions engagés"}
+  - {etape: application, contenu: "Animation « selection » : entreprises créées, disparues, survivantes"}
+  - {etape: rappel, contenu: "Définition du biais du survivant"}
+  - {etape: exercice, contenu: "Une étude ne porte que sur les entreprises encore en activité : quel groupe manque ?"}
+  - {etape: correction, contenu: "Celles qui ont fermé, éliminées avant l'observation"}
+  - {etape: rappel, contenu: "Qui manque dans les données ? Renvoi à S1.05"}
+
+formules: []
+calculs_a_verifier: []
+
+idees_fausses:
+  - {idee: "Tirer des leçons des seuls gagnants", desamorcee_a_l_etape: "Le même piège, partout"}
+
+exercice: {question: "Une étude ne porte que sur les entreprises encore en activité. Quel groupe manque ?", correction: "Celles qui ont fermé : éliminées avant l'observation", pause_secondes: 3}   # Ajouté après la revue audiovisuelle
+
+preuve_apprentissage:
+  tache: "Nommer le biais dans une situation nouvelle"
+  question_de_transfert: "Une étude montre que les musiciens célèbres ont commencé tôt la musique. Faut-il en conclure que commencer tôt rend célèbre ? Qui manque dans les données ?"
+  diagnostic_d_erreur: "« Les chats qui tombent du dixième étage s'en sortent mieux que ceux du cinquième, d'après les cliniques vétérinaires » : quel animal manque dans ces données ?"
+  limite_a_enoncer: "Savoir qu'il manque des données ne dit pas ce qu'elles contiennent : il faut les chercher ou les modéliser"
+
+duree_estimee_min: [1, 1.5]
+format: short
+raison_du_format: "Capsule de paradoxe d'une seule idée, sans exercice, qui renvoie vers S1.05 (programme, section 2.4)"
+derives_short: []
+
+adaptation_en: "Même récit et mêmes nuances. Aucune année lue dans la voix ; sources en pied de page et dans la légende."
+licences: "Aucune image extérieure. Voix Kokoro (licence Apache 2.0, voir docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
+controle:
+  test_du_debutant: "À mesurer au pilote : le testeur répond à la question de transfert"
+  relecture_definitions: "Claude, 3/11/2026 ; revue de la PR #15 prise en compte (source lue, objectifs réduits, récit des zones retiré, mécanisme animé, question de transfert corrigée) ; JG à faire"
+  controle_mobile: "Voir sortie/<id>/fr/inspection après rendu"

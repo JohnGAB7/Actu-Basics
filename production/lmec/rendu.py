@@ -82,6 +82,12 @@ def _mots(texte: str) -> list[str]:
     return [m for m in _BLANCS.split(texte) if m]
 
 
+def insecables_nombres(texte: str) -> str:
+    """« 1 600 € » -> « 1\u00a0600\u00a0€ » : les espaces internes d'un nombre deviennent insécables."""
+    texte = re.sub(r"(?<=\d) (?=\d{3}(?!\d))", "\u00a0", texte)
+    return re.sub(r"(?<=\d) (?=(?:[€$£]|(?:min|minutes?|h|s|km|kg|points?)\b))", "\u00a0", texte)
+
+
 def mots_riches(texte: str) -> list[tuple[str, bool, bool]]:
     """« Plus de *8 milliards*, vite » -> [(Plus, F, F), (de, F, F), (8, V, F), (milliards, V, F), (",", F, V), (vite, F, F)].
 
@@ -94,6 +100,9 @@ def mots_riches(texte: str) -> list[tuple[str, bool, bool]]:
     # Multiplications, divisions et comparaisons restent aussi avec leur opérande de gauche
     # (« 780 ÷ 365 > 2 » sur une ligne) ; les longues sommes « 22 + 21 + … » restent coupables.
     texte = re.sub(r"(?<=[\w)]) (?=[÷×=<>≈≤≥]\u00a0)", "\u00a0", texte)
+    # Un nombre ne se coupe pas : ni entre ses groupes de milliers (« 1 600 », « 200 000 »),
+    # ni avant son unité (« 2 200 € », « 5 min », « 1 point »).
+    texte = insecables_nombres(texte)
     mots: list[tuple[str, bool, bool]] = []
     pos = 0
     morceaux = []
@@ -446,7 +455,7 @@ class Rendu(ScenesPedagogiques):
     def _note(self, d, note, g, dr, bas, t, depart=0.9) -> int:
         """Petite mention discrète en bas de la zone (hypothèse, précision). Retourne le nouveau bas."""
         p = self.police("regulier", 40 if self.format != "lecon" else 36)
-        mots, lignes, ligne = note.split(), [], ""
+        mots, lignes, ligne = _mots(insecables_nombres(note)), [], ""
         for m in mots:
             essai = f"{ligne} {m}".strip()
             if p.getlength(essai) > (dr - g) * 0.9 and ligne:

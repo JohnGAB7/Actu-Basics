@@ -1,0 +1,160 @@
+# Phase pilote ACTU-BASICS, vidéo 5 sur 5 : Q2.04 « Le biais du survivant » (SHORT, capsule de paradoxe)
+# Fiche de conception : contenus/conception/Q2.04.yaml
+# Sources lues le 2026-11-03 :
+# - A. Wald, « A Method of Estimating Plane Vulnerability Based on Damage of Survivors », réédité par le CNA
+#   (CRC 432, juillet 1980), https://apps.dtic.mil/sti/pdfs/ADA091073.pdf. Environ 60 % du texte lu mot à mot :
+#   la méthode estime la probabilité qu'un avion soit abattu selon le NOMBRE d'impacts, à partir des avions
+#   revenus (A_i) et du nombre d'avions engagés (N). Aucune zone de l'avion n'est nommée dans la partie lue.
+# - M. Mangel et F. J. Samaniego, JASA 79(386), 1984, DOI 10.1080/01621459.1984.10478038 (notice Crossref).
+# V2 (revue audiovisuelle de la PR #15) : mécanisme MONTRÉ par une animation « selection » (avions
+# partis, absents estompés, survivants dans le cadre des données, flèche « sélection par la survie »),
+# nombres fictifs annoncés. Le récit des « zones peu touchées » est retiré : la partie lue du rapport
+# de Wald porte sur le nombre d'impacts et le nombre d'avions engagés, c'est ce qui est dit de sa méthode.
+# Question de transfert avec correction ; renvoi à S1.05.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
+id: 2026-11-pilote-q2-04-biais-du-survivant
+type_fiche: pedagogique
+famille: comprendre_les_probabilites
+format: short
+habillage_sonore: true
+theme: "Q2.04 · Le biais du survivant"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Reconnaître le biais du survivant : se demander ce qui manque dans les données"
+    en:
+      - "Spot survivorship bias: ask what is missing from the data"
+  prerequis:
+    fr: ["Aucun. Pour aller plus loin : S1.05, échantillon et biais de sélection"]
+    en: ["None. To go further: S1.05, samples and selection bias"]
+  hypotheses:
+    fr: "Nombres fictifs (8 avions, 5 revenus ; 8 entreprises, 3 encore actives) pour illustrer le mécanisme"
+    en: "Made-up numbers (8 planes, 5 returned; 8 companies, 3 still active) to illustrate the mechanism"
+
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
+
+sources:
+  - nom:
+      fr: "A. Wald, réédition CNA (CRC 432), 1980"
+      en: "A. Wald, CNA reprint (CRC 432), 1980"
+    url: "https://apps.dtic.mil/sti/pdfs/ADA091073.pdf"
+    date_consultation: "2026-11-03"
+  - nom:
+      fr: "Mangel et Samaniego, J. Am. Stat. Assoc., 1984"
+      en: "Mangel and Samaniego, J. Am. Stat. Assoc., 1984"
+    url: "https://doi.org/10.1080/01621459.1984.10478038"
+    date_consultation: "2026-11-03"
+
+editions:
+  fr:
+    titre: "Que disent les avions revenus ?"
+    legende: |
+      Pendant la Seconde Guerre mondiale, des analystes étudient les dégâts sur les avions qui reviennent de mission. Mais les avions perdus manquent aux données : un filtre, la survie, a trié ce que l'on peut observer. Le statisticien Abraham Wald a proposé une méthode qui en tient compte. C'est le biais du survivant, et il se cache aussi derrière les recettes des entreprises qui ont réussi. Nombres de l'animation fictifs. Sources : A. Wald, « A Method of Estimating Plane Vulnerability Based on Damage of Survivors », réédition du Center for Naval Analyses (CRC 432), 1980 ; M. Mangel et F. J. Samaniego, « Abraham Wald's Work on Aircraft Survivability », Journal of the American Statistical Association, 1984. Pour aller plus loin : la leçon sur l'échantillon et le biais de sélection.
+    hashtags: [statistiques, biaisdusurvivant, probabilites]
+    scenes:
+      - type: accroche
+        texte: "On n'examine que *les avions revenus*. Que peut-on en conclure ?"
+        voix_off: "Seconde Guerre mondiale : des analystes étudient les dégâts des avions qui reviennent de mission. Que peuvent-ils vraiment en conclure ?"
+      - type: animation
+        texte: "Un *filtre* invisible"
+        animation: {modele: selection, icone: avion, n: 8, restants: 5}
+        etapes:
+          - "Imaginons *8 avions* en mission"
+          - "*5 reviennent*, 3 manquent"
+          - "Les données ne contiennent que *les survivants*"
+          - "Entre les deux : une *sélection par la survie*"
+        note: "Nombres fictifs, pour illustrer le mécanisme."
+        voix_off: "Imaginons une mission, avec des nombres fictifs. Huit avions partent. Cinq reviennent, trois manquent à l'appel. Les analystes ne peuvent examiner que les cinq survivants. Entre les avions partis et les données, un filtre a joué : la survie."
+      - type: etapes
+        texte: "La méthode d'*Abraham Wald*"
+        etapes:
+          - "Partir des avions revenus, selon leur *nombre d'impacts*"
+          - "Tenir compte du *nombre total* d'avions engagés"
+        note: "A. Wald, réédition CNA (CRC 432), 1980."
+        voix_off: "Le statisticien Abraham Wald a proposé une méthode pour ce problème. Elle part des avions revenus, classés selon le nombre d'impacts reçus. Et elle tient compte du nombre total d'avions engagés, pour estimer ce qui est arrivé aux absents."
+      - type: animation
+        texte: "Le même filtre : *les entreprises*"
+        animation: {modele: selection, icone: entreprise, n: 8, restants: 3, phases: [depart, selection, echantillon]}
+        etapes:
+          - "Des entreprises sont *créées*"
+          - "Beaucoup *disparaissent*"
+          - "On n'entend que *les survivantes*"
+        voix_off: "Le même filtre agit ailleurs. Des entreprises sont créées. Beaucoup disparaissent. Et l'on n'entend que les survivantes raconter leurs recettes, alors que les disparues faisaient peut-être pareil."
+      - type: texte
+        texte: "Le *biais du survivant*"
+        voix_off: "C'est le biais du survivant : tirer une conclusion à partir des seuls cas qui ont passé un filtre de sélection, en oubliant ceux qui ont disparu avant d'être observés."
+      - type: exercice
+        texte: "Une étude ne porte que sur les entreprises *encore en activité*. Quel groupe *manque* ?"
+        pause: 3
+        voix_off: "À vous. Une étude ne porte que sur les entreprises encore en activité. Quel groupe manque ?"
+      - type: correction
+        etapes:
+          - "Éliminées *avant l'observation*"
+        reponse: "Celles qui ont fermé"
+        voix_off: "Elles ont été éliminées avant l'observation. Ce sont les entreprises qui ont fermé."
+      - type: texte
+        texte: "*Qui manque* dans les données ?"
+        note: "Pour aller plus loin : la leçon « Échantillon et biais de sélection »."
+        voix_off: "Retenez la question : qui manque dans les données ? Pour aller plus loin : la leçon sur l'échantillon et le biais de sélection."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What do the returning planes tell us?"
+    legende: |
+      During the Second World War, analysts examined the damage on aircraft returning from missions. But the planes that were lost are missing from the data: a filter, survival, sorted what could be observed. The statistician Abraham Wald proposed a method that accounts for it. This is survivorship bias, and it also hides behind the recipes of successful companies. The numbers in the animation are made up. Sources: A. Wald, "A Method of Estimating Plane Vulnerability Based on Damage of Survivors", Center for Naval Analyses reprint (CRC 432), 1980; M. Mangel and F. J. Samaniego, "Abraham Wald's Work on Aircraft Survivability", Journal of the American Statistical Association, 1984. To go further: the lesson on samples and selection bias.
+    hashtags: [statistics, survivorshipbias, probability]
+    scenes:
+      - type: accroche
+        texte: "We only examine *the planes that came back*. What can we conclude?"
+        voix_off: "During the Second World War, analysts examined the damage on aircraft returning from missions. But what could they really conclude from it?"
+      - type: animation
+        texte: "An invisible *filter*"
+        animation: {modele: selection, icone: avion, n: 8, restants: 5}
+        etapes:
+          - "Imagine *8 planes* on a mission"
+          - "*5 come back*, 3 are missing"
+          - "The data contain *only the survivors*"
+          - "In between: *selection by survival*"
+        note: "Made-up numbers, to illustrate the mechanism."
+        voix_off: "Imagine a mission, with made-up numbers. Eight planes set out. Five come back, and three are missing. The analysts can only examine the five survivors. Between the planes that set out and the data, a filter was at work: survival."
+      - type: etapes
+        texte: "*Abraham Wald's* method"
+        etapes:
+          - "Start from the returning planes, by their *number of hits*"
+          - "Account for the *total number* of planes sent out"
+        note: "A. Wald, CNA reprint (CRC 432), 1980."
+        voix_off: "The statistician Abraham Wald proposed a method for this problem. It starts from the planes that returned, sorted by the number of hits they took. And it accounts for the total number of planes sent out, to estimate what happened to the missing ones."
+      - type: animation
+        texte: "The same filter: *companies*"
+        animation: {modele: selection, icone: entreprise, n: 8, restants: 3, phases: [depart, selection, echantillon]}
+        etapes:
+          - "Companies are *founded*"
+          - "Many *disappear*"
+          - "We only hear from *the survivors*"
+        voix_off: "The same filter works elsewhere. Companies are founded. Many disappear along the way. And we only hear the survivors share their recipes, even though the ones that closed may have done exactly the same."
+      - type: texte
+        texte: "*Survivorship bias*"
+        voix_off: "This is survivorship bias: drawing conclusions from the cases that passed a selection filter while overlooking those that disappeared before they could be observed."
+      - type: exercice
+        texte: "A study only looks at companies *still in business*. Which group is *missing*?"
+        pause: 3
+        voix_off: "Your turn. A study only looks at companies still in business. Which group is missing?"
+      - type: correction
+        etapes:
+          - "Removed *before anyone looked*"
+        reponse: "The ones that closed"
+        voix_off: "They were removed before anyone could observe them. They're the companies that closed."
+      - type: texte
+        texte: "*Who is missing* from the data?"
+        note: "To go further: the lesson \"Samples and selection bias\"."
+        voix_off: "Remember the question to ask: who is missing from the data? To go further, watch the lesson on samples and selection bias."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

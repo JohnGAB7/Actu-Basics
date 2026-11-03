@@ -1,6 +1,6 @@
 # APERÇU — à chaque modification d'une fiche ou du code.
-# Accepte les brouillons : tout rendu qui a une erreur bloquante porte le filigrane
-# « BROUILLON · NON VALIDÉ ». Ces fichiers ne sont JAMAIS à publier.
+# Accepte les brouillons. Pas de filigrane (décision de JG, 2026-11-03) : l'état de chaque
+# rendu se lit dans le rapport QC. Rien ne se publie sans l'accord explicite de JG.
 # Voix : Kokoro (gratuite, locale, exécutée sur le runner), Piper en secours. Aucune clé d'API,
 # aucun service payant (tts.yaml : gratuit_uniquement). Licences : docs/voice-licenses.md
 name: Aperçu des contenus
@@ -30,12 +30,98 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Tests du moteur, une seule fois (indépendants des fiches).
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: production/requirements*.txt
+      - name: Outils système (ffmpeg, police Inter)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-inter
+      - name: Dépendances Python
+        run: pip install -r production/requirements.txt -r production/requirements-voix.txt pytest
+      - name: Tests
+        run: python -m pytest production/tests -q
+
+  # Liste des fiches à rendre : une tâche de rendu par fiche, en parallèle. Rendre toutes les
+  # fiches à la suite dépassait la limite de 60 minutes dès qu'il y avait plusieurs leçons longues
+  # (PR #15, cinq vidéos pilotes de 4 à 5 minutes en FR et EN).
+  # Ne rendre que les fiches de production touchées (design de la PR #16, repris avec trois corrections) :
+  # - pull_request : diff depuis la base de fusion (« base...head »), pas depuis la pointe de main, sinon
+  #   les fiches modifiées sur main après la création de la branche seraient rendues à tort ;
+  # - push : si le commit précédent est inconnu (premier push, force-push), rendu témoin seulement ;
+  # - moteur, charte, marque ou workflow modifiés : rendu témoin AJOUTÉ aux fiches modifiées (une fiche
+  #   d'actualité et la fiche pédagogique de lancement, qui couvre les scènes pédagogiques).
+  # Lancement manuel : la fiche demandée, ou tout le catalogue si le champ est vide.
+  liste:
+    runs-on: ubuntu-latest
+    outputs:
+      fiches: ${{ steps.fiches.outputs.fiches }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: fiches
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          FICHE_DEMANDEE: ${{ inputs.fiche }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          TEMOINS=("contenus/exemples/exemple-fictif.yaml" "contenus/fiches/2026-11-lancement-actu-basics.yaml")
+          FICHES=()
+          DIFF=""
+          case "$EVENT_NAME" in
+            workflow_dispatch)
+              if [[ -n "$FICHE_DEMANDEE" ]]; then FICHES=("$FICHE_DEMANDEE")
+              else mapfile -t FICHES < <(find contenus/fiches -maxdepth 1 -type f -name '*.yaml' | sort); fi ;;
+            pull_request)
+              DIFF="$PR_BASE_SHA...$PR_HEAD_SHA" ;;
+            push)
+              if [[ ! "$PUSH_BEFORE" =~ ^0+$ ]] && git cat-file -e "$PUSH_BEFORE^{commit}" 2>/dev/null; then
+                DIFF="$PUSH_BEFORE..$PUSH_SHA"
+              else
+                echo "Commit précédent inconnu : rendu témoin seulement."
+                FICHES=("${TEMOINS[@]}")
+              fi ;;
+          esac
+          if [[ -n "$DIFF" ]]; then
+            mapfile -t FICHES < <(git diff --name-only --diff-filter=ACMRT "$DIFF" -- 'contenus/fiches/*.yaml' | sort)
+            if git diff --name-only "$DIFF" -- production assets/brand .github/workflows/apercu.yml | grep -q .; then
+              echo "Moteur, charte ou workflow modifiés : rendu témoin ajouté."
+              FICHES+=("${TEMOINS[@]}")
+            fi
+          fi
+          (( ${#FICHES[@]} )) || FICHES=("${TEMOINS[0]}")
+          FICHES_JSON="$(printf '%s\n' "${FICHES[@]}" | sort -u | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')"
+          echo "Fiches à rendre : $FICHES_JSON"
+          echo "fiches=$FICHES_JSON" >> "$GITHUB_OUTPUT"
+
   apercu:
+    needs: liste
     runs-on: ubuntu-latest
     # Cause des annulations précédentes : chaque image des scènes « formule » recalculait le rendu
     # mathtext (≈ 4,5 s par image, plus d'une heure et demie par langue). Corrigé par un cache ;
-    # la limite d'origine de 60 minutes suffit de nouveau.
+    # la limite d'origine de 60 minutes suffit de nouveau, pour une fiche.
     timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      # Limite de simultanéité (PR #16). Elle n'économise pas de minutes : seul le filtrage des fiches
+      # le fait. Cinq rendus en parallèle couvrent une vague de pilote sans file d'attente.
+      max-parallel: 5
+      matrix:
+        fiche: ${{ fromJSON(needs.liste.outputs.fiches) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -51,10 +137,13 @@ jobs:
           sudo apt-get install -y -qq ffmpeg fonts-inter
 
       - name: Dépendances Python
-        run: pip install -r production/requirements.txt -r production/requirements-voix.txt pytest
+        run: pip install -r production/requirements.txt -r production/requirements-voix.txt
 
-      - name: Tests
-        run: python -m pytest production/tests -q
+      - name: Nom de la fiche
+        id: nom
+        env:
+          FICHE: ${{ matrix.fiche }}
+        run: echo "nom=$(basename "$FICHE" .yaml)" >> "$GITHUB_OUTPUT"
 
       - name: Modèles de voix (cache)
         uses: actions/cache@v4
@@ -67,29 +156,28 @@ jobs:
 
       # Cache des phrases déjà synthétisées. Chaque fichier est nommé par l'empreinte
       # (voix + configuration complète + texte exact) : un texte ou une voix modifiés ne
-      # réutilisent jamais un ancien audio. La clé change à chaque exécution pour que le
-      # cache s'enrichisse ; restore-keys reprend le plus récent.
+      # réutilisent jamais un ancien audio. Une clé par fiche, pour que les tâches parallèles
+      # ne s'écrasent pas ; restore-keys reprend le plus récent.
       - name: Cache des voix déjà synthétisées (restauration)
         uses: actions/cache/restore@v4
         with:
           path: .cache-tts
-          key: tts-kokoro-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: tts-kokoro-
+          key: tts-kokoro-${{ steps.nom.outputs.nom }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            tts-kokoro-${{ steps.nom.outputs.nom }}-
+            tts-kokoro-
 
       - name: Rendu d'aperçu
         env:
-          FICHE_DEMANDEE: ${{ github.event.inputs.fiche }}
-        run: |
-          if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
-          [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
-          python production/produire.py $FICHES --mode apercu --voix kokoro
+          FICHE: ${{ matrix.fiche }}
+        run: python production/produire.py "$FICHE" --mode apercu --voix kokoro
 
       - name: Cache des voix déjà synthétisées (sauvegarde)
         if: always()
         uses: actions/cache/save@v4
         with:
           path: .cache-tts
-          key: tts-kokoro-${{ github.run_id }}-${{ github.run_attempt }}
+          key: tts-kokoro-${{ steps.nom.outputs.nom }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Résumé lisible dans GitHub
         if: always()
@@ -110,6 +198,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: apercu-${{ github.run_number }}
+          name: apercu-${{ github.run_number }}-${{ steps.nom.outputs.nom }}
           path: sortie/
           retention-days: 14
