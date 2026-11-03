@@ -6,8 +6,10 @@
 #   la méthode estime la probabilité qu'un avion soit abattu selon le NOMBRE d'impacts, à partir des avions
 #   revenus (A_i) et du nombre d'avions engagés (N). Aucune zone de l'avion n'est nommée dans la partie lue.
 # - M. Mangel et F. J. Samaniego, JASA 79(386), 1984, DOI 10.1080/01621459.1984.10478038 (notice Crossref).
-# Conséquence (revue de la PR #15) : on n'attribue pas à Wald le récit populaire des « zones peu touchées ».
-# Ce raisonnement est présenté comme une illustration simplifiée, annoncée comme telle à l'écran.
+# Script : proposition de ChatGPT (2e revue de la PR #15), intégrée telle quelle. Mécanisme général au
+# conditionnel (« pouvaient », « pouvait »), sans zone précise de l'avion ni citation attribuée à Wald.
+# Storyboard : les silhouettes d'avions qui s'effacent ne sont pas réalisables avec le moteur actuel
+# (aucun modèle d'animation « avions ») ; remplacées par des cartes « observés / absents des données ».
 # Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
 id: 2026-11-pilote-q2-04-biais-du-survivant
 type_fiche: pedagogique
@@ -27,8 +29,8 @@ pedagogie:
     fr: ["Aucun. Pour aller plus loin : S1.05, échantillon et biais de sélection"]
     en: ["None. To go further: S1.05, samples and selection bias"]
   hypotheses:
-    fr: "Récit historique simplifié ; l'exemple des zones touchées est une illustration, pas la méthode de Wald"
-    en: "Simplified historical account; the hit-areas example is an illustration, not Wald's method"
+    fr: "Mécanisme général au conditionnel ; aucune zone précise de l'avion n'est avancée"
+    en: "General mechanism, stated as a possibility; no specific aircraft area is claimed"
 
 validation:
   statut: brouillon
@@ -51,37 +53,36 @@ editions:
   fr:
     titre: "Que disent les avions revenus ?"
     legende: |
-      Pendant la Seconde Guerre mondiale, on observe les impacts sur les avions revenus de mission. Mais ces avions ne disent pas tout : ceux qui ont été abattus manquent aux données. Le statisticien Abraham Wald a mis au point une méthode pour estimer la vulnérabilité des avions à partir des dégâts des survivants, en tenant compte des avions perdus. C'est le biais du survivant : on ne voit que ce qui a survécu. Le même piège se cache derrière les vieux bâtiments « mieux construits » et les conseils des entreprises qui ont réussi. Sources : A. Wald, réédition du Center for Naval Analyses, 1980 ; M. Mangel et F. J. Samaniego, Journal of the American Statistical Association, 1984. Pour aller plus loin : la leçon sur l'échantillon et le biais de sélection.
+      Pendant la Seconde Guerre mondiale, les analystes ont étudié les impacts visibles sur les avions qui revenaient de mission. Mais il manquait une information essentielle : les avions qui ne revenaient pas. C'est le biais du survivant : tirer une conclusion à partir des seuls cas qui ont passé un filtre de sélection, en oubliant ceux qui ont disparu avant d'être observés. Sources : A. Wald, « A Method of Estimating Plane Vulnerability Based on Damage of Survivors », réédition du Center for Naval Analyses (CRC 432), 1980 ; M. Mangel et F. J. Samaniego, « Abraham Wald's Work on Aircraft Survivability », Journal of the American Statistical Association, 1984. Pour aller plus loin : la leçon sur l'échantillon et le biais de sélection.
     hashtags: [statistiques, biaisdusurvivant, probabilites]
     scenes:
       - type: accroche
-        texte: "On compte les impacts sur les avions revenus. *Que nous apprennent-ils ?*"
-        voix_off: "Seconde Guerre mondiale : on compte les impacts sur les avions qui rentrent de mission. Que nous apprennent-ils vraiment ?"
-      - type: etapes
-        texte: "Le *piège*"
-        etapes:
-          - "On n'observe que les avions *revenus*"
-          - "Les avions abattus *manquent* aux données"
-        voix_off: "Le piège est discret. On n'observe que les avions revenus. Ceux qui ont été abattus manquent aux données."
-      - type: etapes
-        texte: "La méthode d'*Abraham Wald*"
-        etapes:
-          - "Estimer la vulnérabilité à partir des *survivants*"
-          - "En tenant compte des avions *perdus*"
-        voix_off: "Le statisticien Abraham Wald a mis au point une méthode pour cela. Elle estime la vulnérabilité des avions à partir des dégâts observés sur les survivants. Et elle tient compte, par le calcul, des avions qui ne sont pas revenus."
+        texte: "Les avions revenus sont criblés d'impacts. *Que faut-il renforcer ?*"
+        voix_off: "Pendant la Seconde Guerre mondiale, les analystes ont étudié les impacts visibles sur les avions qui revenaient de mission. Une première intuition semblait évidente : renforcer les zones qui présentaient le plus d'impacts."
       - type: texte
-        texte: "Une zone *rarement touchée* sur les survivants ? Les avions touchés là ne sont *peut-être pas revenus*"
-        note: "Illustration simplifiée du raisonnement, pas le détail de la méthode de Wald."
-        voix_off: "Une illustration simple : si une zone est rarement touchée sur les avions revenus, c'est peut-être que les avions touchés là ne revenaient pas."
+        texte: "Il manquait *les avions qui ne revenaient pas*"
+        voix_off: "Mais il manquait une information essentielle : les avions qui ne revenaient pas."
       - type: etapes
-        texte: "Le *biais du survivant*, partout"
+        texte: "*Observés* et *absents*"
+        disposition: cartes
         etapes:
-          - "Vieux bâtiments « mieux construits » ? Les *fragiles* ont été démolis"
-          - "Conseils des entreprises qui ont *réussi* ? Celles qui ont fermé faisaient *peut-être pareil*"
-        voix_off: "C'est le biais du survivant, et il est partout. Les vieux bâtiments semblent mieux construits, mais les plus fragiles ont été démolis. Et les conseils des entreprises qui ont réussi oublient celles qui ont fermé en faisant peut-être pareil."
+          - "Observés : les avions *revenus*"
+          - "Absents des données : les avions *perdus*"
+        voix_off: "Les avions observés étaient précisément ceux qui avaient survécu. D'un côté, les avions revenus, que l'on pouvait examiner. De l'autre, les avions perdus, absents des données."
+      - type: etapes
+        texte: "Relire les *impacts*"
+        etapes:
+          - "Zone *très touchée* : un impact souvent supportable"
+          - "Zone *peu touchée* : un impact pouvait *empêcher le retour*"
+        note: "Mécanisme général : aucune zone précise de l'avion n'est avancée ici."
+        voix_off: "Il fallait donc relire les impacts. Les zones très touchées sur ces appareils pouvaient être des zones où un impact était souvent supportable. À l'inverse, une zone peu touchée sur les avions revenus pouvait mériter une attention particulière : un impact à cet endroit pouvait empêcher l'avion de rentrer."
       - type: texte
-        texte: "Avant de conclure : *qui manque* dans les données ?"
-        voix_off: "Avant de conclure, demandez-vous : qui manque dans les données ?"
+        texte: "*Qui manque* dans les données, et *pourquoi* ?"
+        voix_off: "La leçon n'est pas de regarder seulement les données disponibles. C'est aussi de se demander quelles données sont absentes, et pourquoi elles le sont."
+      - type: texte
+        texte: "Le *biais du survivant*"
+        note: "Estimer la vulnérabilité à partir des survivants : méthode d'A. Wald (réédition CNA, 1980)."
+        voix_off: "C'est le biais du survivant : tirer une conclusion à partir des seuls cas qui ont passé un filtre de sélection, en oubliant ceux qui ont disparu avant d'être observés."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -89,37 +90,36 @@ editions:
   en:
     titre: "What do the returning planes tell us?"
     legende: |
-      During the Second World War, the hits on planes returning from missions were studied. But those planes don't tell the whole story: the ones shot down are missing from the data. The statistician Abraham Wald developed a method to estimate how vulnerable planes were from the damage on the survivors, while accounting for the planes that were lost. That is survivorship bias: you only see what survived. The same trap lies behind old buildings that seem "better built" and the advice of companies that succeeded. Sources: A. Wald, Center for Naval Analyses reprint, 1980; M. Mangel and F. J. Samaniego, Journal of the American Statistical Association, 1984. To go further: the lesson on samples and selection bias.
+      During the Second World War, analysts examined the visible bullet holes on aircraft that returned from missions. But one crucial group was missing: the aircraft that never returned. This is survivorship bias: drawing conclusions from the cases that passed a selection filter while overlooking those that disappeared before they could be observed. Sources: A. Wald, "A Method of Estimating Plane Vulnerability Based on Damage of Survivors", Center for Naval Analyses reprint (CRC 432), 1980; M. Mangel and F. J. Samaniego, "Abraham Wald's Work on Aircraft Survivability", Journal of the American Statistical Association, 1984. To go further: the lesson on samples and selection bias.
     hashtags: [statistics, survivorshipbias, probability]
     scenes:
       - type: accroche
-        texte: "We count the hits on the planes that came back. *What do they tell us?*"
-        voix_off: "World War Two: the hits are counted on the planes coming back from missions. What do they really tell us?"
-      - type: etapes
-        texte: "The *trap*"
-        etapes:
-          - "We only see the planes that *came back*"
-          - "The planes shot down are *missing* from the data"
-        voix_off: "The trap is easy to miss. We only see the planes that came back. The ones shot down are missing from the data."
-      - type: etapes
-        texte: "*Abraham Wald's* method"
-        etapes:
-          - "Estimate vulnerability from the *survivors*"
-          - "While accounting for the planes that were *lost*"
-        voix_off: "The statistician Abraham Wald developed a method for exactly this. It estimates how vulnerable the planes were from the damage seen on the survivors. And it accounts, through calculation, for the planes that never came back."
+        texte: "The returning planes are riddled with holes. *What should be reinforced?*"
+        voix_off: "During the Second World War, analysts examined the visible bullet holes on aircraft that returned from missions. An initial idea seemed obvious: reinforce the areas with the most damage."
       - type: texte
-        texte: "An area *rarely hit* on the survivors? Planes hit there *may not have made it back*"
-        note: "A simplified illustration of the reasoning, not the details of Wald's method."
-        voix_off: "A simple illustration: if an area is rarely hit on the planes that returned, it may be because the planes hit there didn't make it back."
+        texte: "Missing: *the aircraft that never returned*"
+        voix_off: "But one crucial group was missing: the aircraft that never returned."
       - type: etapes
-        texte: "*Survivorship bias*, everywhere"
+        texte: "*Observed* and *missing*"
+        disposition: cartes
         etapes:
-          - "Old buildings \"better built\"? The *weak* ones were torn down"
-          - "Advice from companies that *succeeded*? The ones that failed *may have done the same*"
-        voix_off: "That's survivorship bias, and it's everywhere. Old buildings seem better built, but the weakest ones were torn down. And advice from successful companies leaves out the ones that failed, even though they may have done exactly the same things."
+          - "Observed: the aircraft that *returned*"
+          - "Missing from the data: the aircraft *lost*"
+        voix_off: "The aircraft being examined were precisely the ones that had survived. On one side, the aircraft that returned, which could be examined. On the other, the aircraft that were lost, missing from the data."
+      - type: etapes
+        texte: "Rereading the *damage*"
+        etapes:
+          - "Area with *many* holes: damage often survivable"
+          - "Area with *few* holes: damage there might have *prevented the return*"
+        note: "General mechanism: no specific area of the aircraft is claimed here."
+        voix_off: "So the damage had to be read again. Areas with many bullet holes on these aircraft could therefore be areas where damage was often survivable. By contrast, an area with few bullet holes on returning aircraft could deserve particular attention: damage there might have prevented an aircraft from making it back."
       - type: texte
-        texte: "Before concluding: *who is missing* from the data?"
-        voix_off: "Before concluding, ask yourself: who is missing from the data?"
+        texte: "*Who is missing* from the data, and *why*?"
+        voix_off: "The lesson is not to look only at the data we can see. We must also ask which data are missing, and why."
+      - type: texte
+        texte: "*Survivorship bias*"
+        note: "Estimating vulnerability from the survivors: A. Wald's method (CNA reprint, 1980)."
+        voix_off: "This is survivorship bias: drawing conclusions from the cases that passed a selection filter while overlooking those that disappeared before they could be observed."
       - type: fin
         texte: "Follow to learn to read the numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

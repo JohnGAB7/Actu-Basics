@@ -1149,6 +1149,26 @@ def test_scene_animation_et_note(tmp_path):
     assert "modele" in str(exc.value) and "note" in str(exc.value)
 
 
+def test_courbe_en_points_avec_plusieurs_seuils(tmp_path):
+    """« style: points » pose des points sans les relier ; « seuils » trace plusieurs pointillés étiquetés
+    (moyenne et médiane ensemble, S2.05). Valeurs invalides refusées."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-pilote-s2-05-moyenne-ou-mediane.yaml")
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe")
+    assert s.extra["courbe"]["style"] == "points" and len(s.extra["courbe"]["seuils"]) == 2
+    i = ed.scenes.index(s)
+    points = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None)
+    s.extra["courbe"] = dict(s.extra["courbe"], style="ligne")
+    ligne = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None)
+    assert points.tobytes() != ligne.tobytes()
+    brut = valider(brut_lancement())
+    scene = next(x for x in brut["editions"]["fr"]["scenes"] if x["type"] == "courbe")
+    scene["courbe"] = dict(scene["courbe"], style="barres", seuils=[{"label": "sans valeur"}])
+    with pytest.raises(FicheInvalide) as exc:
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+    assert "courbe.style" in str(exc.value) and "courbe.seuils" in str(exc.value)
+
+
 @pytest.mark.parametrize("modele", ["foule", "paires", "doublon", "calendrier", "complement"])
 def test_chaque_modele_d_animation_se_construit_phase_par_phase(modele):
     fiche = charger_fiche(LANCEMENT)

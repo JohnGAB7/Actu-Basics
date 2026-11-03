@@ -95,6 +95,7 @@ editions:
           - '0{,}25\times 2{,}5+0{,}75\times 7{,}5'
           - '=0{,}625+5{,}625'
           - '=6{,}25\ \mathrm{min}'
+        note: "Condition : le voyageur arrive à un instant indépendant des horaires des bus."
         voix_off: "On combine les deux, chacun avec ses chances. Vingt-cinq pour cent de chances d'attendre deux minutes et demie, plus soixante-quinze pour cent de chances d'attendre sept minutes et demie. Cela fait zéro virgule six cent vingt-cinq, plus cinq virgule six cent vingt-cinq : six minutes et quart."
         verifier:
           - {expression: "0.25 * 2.5 + 0.75 * 7.5", attendu: 6.25, libelle: "Attente moyenne, en min"}
@@ -110,7 +111,7 @@ editions:
       - type: texte
         texte: "Plus les bus sont *irréguliers*, plus on attend"
         note: "Processus de Poisson (intervalles exponentiels de moyenne 10 min) : 10 min d'attente moyenne."
-        voix_off: "Et plus les bus sont irréguliers, plus l'attente moyenne s'allonge. Si les passages suivaient un processus de Poisson, c'est-à-dire des intervalles exponentiels de dix minutes en moyenne, vous attendriez en moyenne dix minutes. C'est l'objet d'une autre vidéo, sur la loi exponentielle."
+        voix_off: "Et plus les bus sont irréguliers, plus l'attente moyenne s'allonge. Imaginons maintenant que les bus arrivent selon un processus de Poisson, avec un intervalle moyen de dix minutes entre deux bus. Les temps entre les arrivées suivent alors une loi exponentielle. Dans ce modèle, même si l'intervalle moyen est de dix minutes, l'attente moyenne d'une personne qui arrive à un instant choisi au hasard est elle aussi de dix minutes. C'est l'objet d'une autre vidéo, sur la loi exponentielle."
       - type: exercice
         texte: "Les intervalles valent maintenant *2* et *18 minutes*. Quelle est l'attente moyenne ?"
         pause: 8
@@ -137,7 +138,7 @@ editions:
           - "Un élève pris au hasard est plus souvent dans une classe *chargée*"
           - "Au hasard d'une visite, on croise surtout les *habitués*"
           - "Interrogés à un instant donné, les malades ont surtout des maladies *longues*"
-        voix_off: "On retrouve le même mécanisme dans bien d'autres situations. Un élève choisi au hasard se trouve plus souvent dans une grande classe : vue par les élèves, la taille moyenne des classes dépasse donc la moyenne calculée classe par classe. Dans une salle de sport, au hasard d'une visite, on croise surtout ceux qui y vont souvent. Et si l'on interroge les malades présents un jour donné dans un hôpital, on trouve surtout des maladies longues, qui restent plus longtemps."
+        voix_off: "On retrouve le même mécanisme dans bien d'autres situations. Si l'on choisit une classe au hasard, chaque classe a la même probabilité d'être choisie ; mais si l'on choisit un élève au hasard, les grandes classes ont davantage de chances d'être représentées, car elles comptent plus d'élèves. Dans une salle de sport, au hasard d'une visite, on croise surtout ceux qui y vont souvent. Et si l'on interroge les malades présents un jour donné dans un hôpital, on trouve surtout des maladies longues, qui restent plus longtemps."
       - type: etapes
         texte: "Ce qu'il faut retenir"
         etapes:
@@ -210,6 +211,7 @@ editions:
           - '0.25\times 2.5+0.75\times 7.5'
           - '=0.625+5.625'
           - '=6.25\ \mathrm{min}'
+        note: "Condition: the rider arrives at a time independent of the bus timetable."
         voix_off: "Combine the two, each with its own chance. A twenty-five percent chance of waiting two and a half minutes, plus a seventy-five percent chance of waiting seven and a half. That's zero point six two five, plus five point six two five: six and a quarter minutes."
         verifier:
           - {expression: "0.25 * 2.5 + 0.75 * 7.5", attendu: 6.25, libelle: "Average wait, min"}
@@ -225,7 +227,7 @@ editions:
       - type: texte
         texte: "The more *irregular* the buses, the longer you wait"
         note: "Poisson process (exponential gaps averaging 10 min): a 10-minute average wait."
-        voix_off: "And the more irregular the buses, the longer the average wait. If arrivals followed a Poisson process, meaning exponential gaps that average ten minutes, you'd wait ten minutes on average. That's the subject of another video, on the exponential distribution."
+        voix_off: "And the more irregular the buses, the longer the average wait. Now suppose buses arrive according to a Poisson process, with an average of ten minutes between arrivals. The time between arrivals then follows an exponential distribution. In this model, even though the average time between buses is ten minutes, a person arriving at a randomly chosen time also waits ten minutes on average. That's the subject of another video, on the exponential distribution."
       - type: exercice
         texte: "Now the gaps are *2* and *18 minutes*. What's the average wait?"
         pause: 8
@@ -252,7 +254,7 @@ editions:
           - "A student picked at random is more often in a *big* class"
           - "Drop by a gym at random: you mostly meet the *regulars*"
           - "Survey patients on a given day: you mostly find *long* illnesses"
-        voix_off: "The same mechanism turns up in many other places. A student picked at random is more likely to be in a big class: seen from the students' side, the average class size is larger than the average worked out class by class. Drop by a gym at a random moment, and you'll mostly meet the people who go often. And if you survey the patients in a hospital on a given day, you'll mostly find long illnesses, because those patients stay longer."
+        voix_off: "The same mechanism turns up in many other places. If we choose a class at random, every class has the same chance of being selected; but if we choose a student at random, larger classes are more likely to be represented, because they contain more students. Drop by a gym at a random moment, and you'll mostly meet the people who go often. And if you survey the patients in a hospital on a given day, you'll mostly find long illnesses, because those patients stay longer."
       - type: etapes
         texte: "Key takeaways"
         etapes:

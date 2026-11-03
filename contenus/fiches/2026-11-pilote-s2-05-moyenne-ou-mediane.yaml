@@ -128,12 +128,15 @@ editions:
         texte: "Les dix salaires, *du plus bas au plus haut*"
         courbe:
           points: [[1, 1600], [2, 1800], [3, 1900], [4, 2000], [5, 2200], [6, 2300], [7, 2500], [8, 2700], [9, 2800], [10, 200000]]
-          seuil: 21980
+          style: points
+          seuils:
+            - {valeur: 21980, label: "Moyenne : 21 980 €"}
+            - {valeur: 2250, label: "Médiane : 2 250 €"}
           axe_x: "Rang du client"
           reperes:
             - {x: 10, label: "200 000 €"}
-        note: "Pointillés : moyenne, 21 980 €. Médiane : 2 250 €, au ras de l'axe."
-        voix_off: "Rangeons les dix salaires, du plus bas au plus haut : la médiane, au milieu, reste au ras de l'axe, à deux mille deux cent cinquante euros. Le dixième salaire, deux cent mille euros, tire à lui seul la moyenne, en pointillés, au-dessus de neuf salaires sur dix."
+        note: "Neuf salaires groupés en bas, un seul tout en haut."
+        voix_off: "Rangeons les dix salaires, du plus bas au plus haut : neuf restent groupés, la médiane avec eux, à deux mille deux cent cinquante euros. Le dixième, deux cent mille euros, tire à lui seul la moyenne jusqu'à vingt et un mille neuf cent quatre-vingts euros, au-dessus de neuf salaires sur dix."
         verifier:
           - {expression: "(1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10", attendu: 21980, libelle: "Moyenne des dix salaires du graphique"}
       - type: etapes
@@ -167,7 +170,7 @@ editions:
       - type: titre
         numero: 3
         texte: "Laquelle choisir ?"
-        voix_off: "Alors, faut-il toujours préférer la médiane ? Non : tout dépend de la question."
+        voix_off: "La moyenne est sensible aux valeurs extrêmes : une seule valeur très élevée peut la tirer vers le haut. La médiane, elle, dépend de la position centrale des valeurs ordonnées. Cela ne signifie pas qu'elle est toujours meilleure : le bon indicateur dépend de la question que l'on cherche à éclairer."
       - type: etapes
         texte: "Chaque indicateur répond à *sa* question"
         etapes:
@@ -282,12 +285,15 @@ editions:
         texte: "The ten salaries, *lowest to highest*"
         courbe:
           points: [[1, 1600], [2, 1800], [3, 1900], [4, 2000], [5, 2200], [6, 2300], [7, 2500], [8, 2700], [9, 2800], [10, 200000]]
-          seuil: 21980
+          style: points
+          seuils:
+            - {valeur: 21980, label: "Mean: €21,980"}
+            - {valeur: 2250, label: "Median: €2,250"}
           axe_x: "Customer rank"
           reperes:
             - {x: 10, label: "€200,000"}
-        note: "Dotted line: mean, €21,980. Median: €2,250, right along the axis."
-        voix_off: "Let's line up the ten salaries, from lowest to highest: the median, in the middle, stays right along the axis, at two thousand two hundred fifty euros. The tenth salary, two hundred thousand euros, single-handedly drags the mean, the dotted line, above nine salaries out of ten."
+        note: "Nine salaries clustered at the bottom, a single one at the top."
+        voix_off: "Let's line up the ten salaries, from lowest to highest: nine stay clustered together, and the median stays with them, at two thousand two hundred fifty euros. The tenth, two hundred thousand euros, single-handedly drags the mean up to twenty-one thousand nine hundred eighty euros, above nine salaries out of ten."
         verifier:
           - {expression: "(1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10", attendu: 21980, libelle: "Mean of the ten salaries in the chart"}
       - type: etapes
@@ -319,7 +325,7 @@ editions:
       - type: titre
         numero: 3
         texte: "Which one should you use?"
-        voix_off: "So should you always prefer the median? No. It depends on the question."
+        voix_off: "The mean is sensitive to extreme values: a single very large value can pull it upwards. The median, by contrast, is determined by the middle position in the ordered data. That does not make it universally better: the right measure depends on the question we want to answer."
       - type: etapes
         texte: "Each summary answers *its own* question"
         etapes:

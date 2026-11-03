@@ -286,6 +286,12 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
                 extra["courbe"] = dict(c, _points=pts)
             except (CalculInvalide, KeyError, TypeError, ValueError) as exc:
                 erreurs.append(f"{ctx}.courbe : {exc}")
+            if c.get("style", "ligne") not in ("ligne", "points"):
+                erreurs.append(f"{ctx}.courbe.style : « ligne » (défaut) ou « points »")
+            seuils = c.get("seuils")
+            if seuils is not None and not (isinstance(seuils, list) and all(
+                    isinstance(x, dict) and _nombre(x.get("valeur")) for x in seuils)):
+                erreurs.append(f"{ctx}.courbe.seuils : liste de {{valeur, label}}, valeur numérique")
     if s.get("verifier") is not None:
         verifs = s["verifier"]
         if not isinstance(verifs, list):

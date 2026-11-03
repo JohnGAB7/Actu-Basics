@@ -25,7 +25,7 @@ objectifs:   # Réduits à un seul après la revue de la PR #15 (capsule d'une m
     - "Spot survivorship bias: ask what is missing from the data"
 
 intuition: "On ne voit que ce qui a survécu ; les échecs ont disparu des données."
-exemple_fil_rouge: "Les avions revenus de mission : ils ne disent pas tout, car les avions abattus manquent aux données."
+exemple_fil_rouge: "Les avions revenus de mission : ils ne disent pas tout, car les avions abattus manquent aux données. Script proposé par ChatGPT (2e revue de la PR #15), intégré tel quel."
 exemple_reel:
   description: "Méthode d'Abraham Wald pour estimer la vulnérabilité des avions à partir des dégâts des survivants. Partie lue mot à mot (environ 60 %) : probabilité d'être abattu selon le NOMBRE d'impacts, à partir des avions revenus ayant reçu i impacts (A_i) et du nombre d'avions engagés (N). Aucune zone de l'avion n'est nommée dans cette partie."
   source:
@@ -39,26 +39,22 @@ exemple_reel:
 provenance: []   # Aucun chiffre à l'écran ni dans la voix.
 
 affirmations_qualitatives:
-  - affirmation: "Abraham Wald a mis au point une méthode pour estimer la vulnérabilité des avions à partir des dégâts des avions revenus"
+  - affirmation: "Pendant la guerre, des analystes ont étudié les dégâts des avions revenus de mission"
     statut: sourcee
-    source: "Rapport de Wald (CRC 432) : titre, et partie I, qui utilise le nombre A_i d'avions revenus après i impacts"
+    source: "Rapport de Wald (CRC 432) : titre et partie I (avions revenus après i impacts, A_i)"
     verification: "Lu mot à mot le 2026-11-03"
-  - affirmation: "La méthode tient compte, par le calcul, des avions qui ne sont pas revenus"
-    statut: sourcee
-    source: "Rapport de Wald, partie I : le calcul utilise le nombre N d'avions engagés, et pas seulement les avions revenus"
-    verification: "Lu mot à mot le 2026-11-03"
-  - affirmation: "Une zone rarement touchée sur les survivants signale peut-être une zone où un impact empêchait le retour"
+  - affirmation: "Une première intuition semblait évidente : renforcer les zones les plus touchées"
+    statut: hypothese
+    source: ""
+    verification: "Formulée comme une intuition, pas comme une décision historique attribuée à quelqu'un. Non trouvée dans la partie lue du rapport de Wald. À confirmer dans Mangel et Samaniego (1984) avant de la présenter comme un fait"
+  - affirmation: "Les zones très touchées pouvaient être survivables ; une zone peu touchée pouvait signaler un impact qui empêchait le retour"
     statut: illustration
     source: ""
-    verification: "Non attribuée à Wald : la partie lue de son rapport raisonne sur le nombre d'impacts, pas sur des zones. Présentée à l'écran comme « illustration simplifiée », au conditionnel. À rattacher à une source si JG souhaite l'attribuer"
-  - affirmation: "Les vieux bâtiments semblent mieux construits parce que les plus fragiles ont disparu"
-    statut: hypothese
-    source: ""
-    verification: "Illustration de raisonnement, pas une affirmation sur la qualité réelle du bâti ancien. Le texte dit « semblent »"
-  - affirmation: "Les entreprises qui ont fermé faisaient peut-être pareil"
-    statut: hypothese
-    source: ""
-    verification: "Formulé au conditionnel (« peut-être ») : illustration, pas un fait"
+    verification: "Mécanisme général au conditionnel, signalé à l'écran (note). Non attribué à Wald : la partie lue de son rapport raisonne sur le nombre d'impacts, pas sur des zones"
+  - affirmation: "Une méthode d'Abraham Wald estime la vulnérabilité à partir des dégâts des survivants"
+    statut: sourcee
+    source: "Rapport de Wald (CRC 432), titre ; note à l'écran sur la dernière scène"
+    verification: "Lu le 2026-11-03"
 
 cycle_enquete:
   question: "Montrée : où renforcer les avions ?"
@@ -83,12 +79,14 @@ hypotheses_et_limites:
 reproductibilite: "Pas de calcul ; référence DOI dans la fiche de production"
 
 deroule:
-  - {etape: question, contenu: "Les impacts sur les avions revenus : que nous apprennent-ils ?"}
-  - {etape: raisonnement, contenu: "Le piège : les avions abattus manquent aux données"}
-  - {etape: raisonnement, contenu: "La méthode de Wald : estimer la vulnérabilité à partir des survivants, en tenant compte des avions perdus"}
-  - {etape: illustration, contenu: "Une zone rarement touchée sur les survivants (illustration simplifiée, annoncée comme telle)"}
-  - {etape: application, contenu: "Nom du biais ; vieux bâtiments ; conseils des entreprises qui ont réussi"}
-  - {etape: rappel, contenu: "Qui manque dans les données ?"}
+  - {etape: question, contenu: "Impacts visibles sur les avions revenus ; première intuition : renforcer les zones les plus touchées"}
+  - {etape: raisonnement, contenu: "Il manquait les avions qui ne revenaient pas"}
+  - {etape: formalisation, contenu: "Cartes : observés (revenus) / absents des données (perdus)"}
+  - {etape: raisonnement, contenu: "Relire les impacts : très touché = souvent supportable ; peu touché = pouvait empêcher le retour (conditionnel)"}
+  - {etape: application, contenu: "Qui manque dans les données, et pourquoi ?"}
+  - {etape: rappel, contenu: "Définition du biais du survivant ; méthode de Wald en note"}
+  # Storyboard de ChatGPT, scènes 1 et 2 (silhouettes d'avions, avions qui s'effacent) : non réalisables
+  # avec le moteur actuel. Piste : un modèle d'animation « avions » dans lmec/animations.py, sur décision de JG.
 
 formules: []
 calculs_a_verifier: []

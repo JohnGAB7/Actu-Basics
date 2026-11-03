@@ -145,21 +145,21 @@ editions:
           - "Ville A : *50* cas pour 20 000 habitants"
           - "Ville B : *120* cas pour 100 000 habitants"
         note: "Cas comptés sur la même période, avec la même définition."
-        voix_off: "Prenons deux villes et une même maladie, comptée sur la même période et avec la même définition des cas. La ville A compte cinquante cas, pour vingt mille habitants. La ville B en compte cent vingt, pour cent mille habitants."
+        voix_off: "Prenons un exemple fictif : deux villes et une même maladie, comptée sur la même période et avec la même définition des cas. La ville A compte cinquante cas, pour vingt mille habitants. La ville B en compte cent vingt, pour cent mille habitants."
       - type: etapes
         texte: "Le *taux pour 100 000* remet tout à la même échelle"
         etapes:
           - "A : 50 ÷ 20 000 × 100 000 = *250*"
           - "B : 120 ÷ 100 000 × 100 000 = *120*"
           - "B a *plus de cas*, A a un *taux plus élevé*"
-        voix_off: "Pour comparer, on calcule un taux pour cent mille habitants : le nombre de cas, divisé par la population, multiplié par cent mille. La ville A obtient deux cent cinquante cas pour cent mille. La ville B, cent vingt. La ville B a plus de cas, mais la maladie y est deux fois moins fréquente que dans la ville A."
+        voix_off: "Pour comparer, on calcule un taux pour cent mille habitants : le nombre de cas, divisé par la population, multiplié par cent mille. La ville A obtient deux cent cinquante cas pour cent mille. La ville B, cent vingt. La ville B a plus de cas, mais le taux observé est environ deux fois plus élevé dans la ville A."
         verifier:
           - {expression: "50 / 20000 * 100000", attendu: 250, libelle: "Taux de A pour 100 000"}
           - {expression: "120 / 100000 * 100000", attendu: 120, libelle: "Taux de B pour 100 000"}
       - type: texte
         texte: "L'*effectif* compte. La *proportion* et le *taux* comparent."
         note: "Taux brut : des populations d'âges différents peuvent aussi expliquer un écart."
-        voix_off: "Retenez la différence. L'effectif compte les cas. La proportion et le taux rapportent ces cas à une base, et ce sont eux qui permettent de comparer. Attention tout de même : un taux brut peut aussi refléter des populations différentes, par exemple l'une plus âgée que l'autre."
+        voix_off: "Retenez la différence. L'effectif compte les cas. La proportion et le taux rapportent ces cas à une base, et ce sont eux qui permettent de comparer. Dans une comparaison réelle, il faudrait aussi vérifier que les populations sont comparables, notamment leur structure par âge."
       - type: etapes
         texte: "Ce qu'il faut retenir"
         etapes:
@@ -229,7 +229,7 @@ editions:
           - '\mathrm{change}=\dfrac{\mathrm{new}-\mathrm{old}}{\mathrm{old}}\times 100'
         voix_off: "Percentage change is always worked out the same way: the new value minus the old value, divided by the old value, times one hundred. This time, the base is the starting value."
       - type: texte
-        texte: "Saying \"+1%\" for *+1 point*: a common mix-up"
+        texte: "Saying \"+1%\" for *+1 point*: a common point of confusion"
         note: "Going from 2% to 2.02%: that's what a 1% rise looks like."
         voix_off: "So the only wrong answer is to say the rate went up by one percent. A one percent rise would take the rate from two percent to two point zero two percent. When you compare two percentages, talk about the gap in points, or the change in percent, and say which one you mean."
         verifier:
@@ -280,21 +280,21 @@ editions:
           - "Town A: *50* cases among 20,000 people"
           - "Town B: *120* cases among 100,000 people"
         note: "Cases counted over the same period, with the same definition."
-        voix_off: "Take two towns and the same disease, counted over the same period and with the same definition of a case. Town A has fifty cases among twenty thousand residents. Town B has one hundred twenty cases among one hundred thousand residents."
+        voix_off: "Take a fictional example: two towns and the same disease, counted over the same observation period and with the same case definition. Town A has fifty cases among twenty thousand residents. Town B has one hundred twenty cases among one hundred thousand residents."
       - type: etapes
         texte: "A *rate per 100,000* puts everything on the same scale"
         etapes:
           - "A: 50 ÷ 20,000 × 100,000 = *250*"
           - "B: 120 ÷ 100,000 × 100,000 = *120*"
           - "B has *more cases*, A has a *higher rate*"
-        voix_off: "To compare them, work out a rate per one hundred thousand people: the number of cases, divided by the population, times one hundred thousand. Town A gets two hundred fifty cases per hundred thousand. Town B gets one hundred twenty. Town B has more cases, but the disease is half as common there as in town A."
+        voix_off: "To compare them, work out a rate per one hundred thousand people: the number of cases, divided by the population, times one hundred thousand. Town A gets two hundred fifty cases per hundred thousand. Town B gets one hundred twenty. Town B has more cases, but the observed rate is about twice as high in town A."
         verifier:
           - {expression: "50 / 20000 * 100000", attendu: 250, libelle: "Rate in A per 100,000"}
           - {expression: "120 / 100000 * 100000", attendu: 120, libelle: "Rate in B per 100,000"}
       - type: texte
         texte: "A *count* tells you how many. A *proportion* or a *rate* lets you compare."
         note: "Crude rate: populations of different ages can also explain a gap."
-        voix_off: "Remember the difference. A count tells you how many cases there are. A proportion or a rate divides those cases by a base, and that's what lets you compare. One caution, though: a crude rate can also reflect different populations, for example one older than the other."
+        voix_off: "Remember the difference. A count tells you how many cases there are. A proportion or a rate divides those cases by a base, and that's what lets you compare. In a real-world comparison, we would also need to check whether the populations are comparable, including their age structures."
       - type: etapes
         texte: "Key takeaways"
         etapes:
