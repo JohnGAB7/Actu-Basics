@@ -1380,6 +1380,17 @@ def test_pas_de_coupure_au_milieu_d_une_expression():
     assert len(mots_riches("(voir le rapport de rendu complet)")) == 6   # parenthèse longue : coupable
 
 
+def test_un_nombre_ne_se_coupe_pas():
+    from lmec.rendu import mots_riches
+    def mots(t):
+        return [w.replace("\u00a0", " ") for w, _, _ in mots_riches(t)]
+    m = mots("Ils gagnent de *1 600 €* à 2 800 € par mois, puis 200 000 €")
+    assert "1 600 €" in m and "2 800 €" in m and "200 000 €" in m
+    assert mots("Sept salaires : 1 500, 1 600")[-2:] == ["1 500,", "1 600"]   # liste : coupable entre deux nombres
+    assert mots("les 3 enfants") == ["les", "3", "enfants"]
+    assert "5 min" in mots("Court intervalle : 5 min sur 20") and "1 point" in mots("écart de 1 point")
+
+
 def test_prononciation_de_la_marque_dans_la_voix_seulement():
     import yaml
     from lmec.narration import preparer_pour_voix
@@ -1560,7 +1571,11 @@ def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
             for i, type_, t, txt, ecart, _ in _occurrences_barres(fiche, langue, fmt):
                 vus += 1
                 assert ecart >= 10, (chemin.name, langue, fmt, f"scène {i + 1} {type_}", t, txt, ecart)
-    assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
+    # Une capsule sans chapitre ni chiffre (Q2.04) n'a aucun grand chiffre : rien à vérifier.
+    a_des_grands_chiffres = not fiche.pedagogique or any(
+        s.type in ("titre", "chiffre") for e in fiche.editions.values() for s in e.scenes)
+    if a_des_grands_chiffres:
+        assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
 
 
 def test_inventaire_signale_une_video_manquante(tmp_path):

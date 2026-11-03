@@ -35,8 +35,8 @@ validation:
 
 sources:
   - nom:
-      fr: "M. Mangel et F. J. Samaniego, « Abraham Wald's Work on Aircraft Survivability », Journal of the American Statistical Association, 1984"
-      en: "M. Mangel and F. J. Samaniego, \"Abraham Wald's Work on Aircraft Survivability\", Journal of the American Statistical Association, 1984"
+      fr: "Mangel et Samaniego, J. Am. Stat. Assoc., 1984"
+      en: "Mangel and Samaniego, J. Am. Stat. Assoc., 1984"
     url: "https://doi.org/10.1080/01621459.1984.10478038"
     date_consultation: "2026-11-03"
 
@@ -49,36 +49,33 @@ editions:
     scenes:
       - type: accroche
         texte: "Les avions revenus sont criblés d'impacts. *Où les blinder ?*"
-        voix_off: "Pendant la Seconde Guerre mondiale, on examine les avions qui rentrent de mission, couverts d'impacts. Où faut-il ajouter du blindage ?"
+        voix_off: "Seconde Guerre mondiale : les avions qui rentrent de mission sont criblés d'impacts. Où ajouter du blindage ?"
       - type: etapes
         texte: "L'idée *évidente*"
         etapes:
           - "Repérer les zones *les plus touchées*"
           - "Les *renforcer*"
-        voix_off: "L'idée qui vient d'abord paraît évidente. On repère les zones les plus touchées. Et on les renforce."
+        voix_off: "L'idée évidente. Repérer les zones les plus touchées. Et les renforcer."
       - type: etapes
         texte: "La question d'*Abraham Wald*"
         etapes:
           - "On n'a examiné que les avions *revenus*"
           - "Les avions touchés ailleurs *ne sont pas revenus*"
           - "Zones peu touchées sur les survivants : là où un impact *empêchait le retour*"
-        voix_off: "Le statisticien Abraham Wald pose une autre question. On n'a examiné que les avions revenus. Ceux qui ont été touchés ailleurs ne sont jamais rentrés. Les zones peu touchées sur les survivants sont donc celles où un impact empêchait le retour : c'est là qu'il faut regarder."
+        voix_off: "Le statisticien Abraham Wald voit le piège. On n'a examiné que les avions revenus. Ceux touchés ailleurs ne sont jamais rentrés. Les zones peu touchées sur les survivants sont donc celles où un impact empêchait le retour."
       - type: texte
         texte: "Le *biais du survivant* : on ne voit que *ce qui a survécu*"
         note: "Les échecs ont disparu des données avant qu'on les regarde."
-        voix_off: "C'est le biais du survivant : on ne voit que ce qui a survécu, et les échecs ont disparu des données avant qu'on les regarde."
+        voix_off: "C'est le biais du survivant : on ne voit que ce qui a survécu."
       - type: etapes
         texte: "Le même piège, *partout*"
         etapes:
           - "Vieux bâtiments « mieux construits » ? Les *fragiles* ont été démolis"
           - "Conseils des entreprises qui ont *réussi* ? Celles qui ont fermé faisaient *peut-être pareil*"
-        voix_off: "Le même piège se cache partout. Les vieux bâtiments semblent mieux construits, mais les plus fragiles ont disparu depuis longtemps. Et les conseils des entreprises qui ont réussi oublient celles qui ont fermé, qui faisaient peut-être exactement pareil."
+        voix_off: "Ce piège est partout. Les vieux bâtiments semblent mieux construits, mais les plus fragiles ont été démolis. Et les conseils des entreprises qui ont réussi oublient celles qui ont fermé en faisant peut-être pareil."
       - type: texte
         texte: "Avant de conclure : *qui manque* dans les données ?"
-        voix_off: "Avant de tirer une leçon, posez toujours la question : qui manque dans les données ?"
-      - type: source
-        texte: "D'où vient cette histoire ?"
-        voix_off: "Source : Mangel et Samaniego, Journal of the American Statistical Association, mille neuf cent quatre-vingt-quatre."
+        voix_off: "Avant de conclure, demandez-vous : qui manque dans les données ?"
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -91,36 +88,33 @@ editions:
     scenes:
       - type: accroche
         texte: "The planes that came back are riddled with hits. *Where do you add armour?*"
-        voix_off: "During the Second World War, the planes returning from missions are examined, covered in hits. Where should the armour go?"
+        voix_off: "World War Two: the planes coming back from missions are riddled with hits. Where do you add armour?"
       - type: etapes
         texte: "The *obvious* idea"
         etapes:
           - "Find the areas *hit the most*"
           - "*Reinforce* them"
-        voix_off: "The first idea seems obvious. Find the areas that were hit the most. Then reinforce them."
+        voix_off: "The obvious idea. Find the areas hit the most. Then reinforce them."
       - type: etapes
         texte: "*Abraham Wald's* question"
         etapes:
           - "Only the planes that *came back* were examined"
           - "Planes hit elsewhere *never came back*"
           - "Areas rarely hit on survivors: where a hit *stopped the return*"
-        voix_off: "The statistician Abraham Wald asked a different question. Only the planes that came back were examined. The ones hit elsewhere never made it home. So the areas rarely hit on the survivors are where a hit stopped a plane from returning: that's where to look."
+        voix_off: "The statistician Abraham Wald saw the trap. Only the planes that came back were examined. The ones hit elsewhere never made it home. So the areas rarely hit on the survivors are where a hit stopped a plane from returning."
       - type: texte
         texte: "*Survivorship bias*: you only see *what survived*"
         note: "The failures vanished from the data before anyone looked."
-        voix_off: "That's survivorship bias: you only see what survived, and the failures vanished from the data before anyone looked."
+        voix_off: "That's survivorship bias: you only see what survived."
       - type: etapes
         texte: "The same trap, *everywhere*"
         etapes:
           - "Old buildings \"better built\"? The *weak* ones were torn down"
           - "Advice from companies that *succeeded*? The ones that closed *may have done the same*"
-        voix_off: "The same trap is everywhere. Old buildings seem better built, but the weakest ones disappeared long ago. And advice from companies that succeeded forgets the ones that closed, which may have done exactly the same."
+        voix_off: "This trap is everywhere. Old buildings seem better built, but the weakest ones were torn down. And advice from companies that succeeded forgets the ones that closed doing maybe the same."
       - type: texte
         texte: "Before concluding: *who is missing* from the data?"
-        voix_off: "Before drawing a lesson, always ask: who is missing from the data?"
-      - type: source
-        texte: "Where does this story come from?"
-        voix_off: "Source: Mangel and Samaniego, Journal of the American Statistical Association, nineteen eighty-four."
+        voix_off: "Before concluding, ask yourself: who is missing from the data?"
       - type: fin
         texte: "Follow to learn to read the numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."
