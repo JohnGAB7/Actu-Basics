@@ -1,6 +1,6 @@
 # APERÇU — à chaque modification d'une fiche ou du code.
-# Accepte les brouillons : tout rendu qui a une erreur bloquante porte le filigrane
-# « BROUILLON · NON VALIDÉ ». Ces fichiers ne sont JAMAIS à publier.
+# Accepte les brouillons. Pas de filigrane (décision de JG, 2026-11-03) : l'état de chaque
+# rendu se lit dans le rapport QC. Rien ne se publie sans l'accord explicite de JG.
 # Voix : Kokoro (gratuite, locale, exécutée sur le runner), Piper en secours. Aucune clé d'API,
 # aucun service payant (tts.yaml : gratuit_uniquement). Licences : docs/voice-licenses.md
 name: Aperçu des contenus
