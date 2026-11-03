@@ -1,6 +1,6 @@
 # Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
 id_programme: Q3.01
-statut: revue_claude
+statut: valide_jg   # 2026-11-03, PR #15
 fiche_production: contenus/fiches/2026-11-pilote-q3-01-paradoxe-du-bus.yaml
 
 titres: {fr: "Pourquoi votre bus semble toujours en retard", en: "Why your bus always seems late"}

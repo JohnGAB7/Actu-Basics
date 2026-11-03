@@ -1,6 +1,6 @@
 # Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
 id_programme: Q2.04
-statut: revue_claude
+statut: valide_jg   # 2026-11-03, PR #15
 fiche_production: contenus/fiches/2026-11-pilote-q2-04-biais-du-survivant.yaml
 
 titres:
@@ -48,7 +48,7 @@ affirmations_qualitatives:
     source: "Rapport de Wald (CRC 432), partie I : A_i (revenus après i impacts) et N (avions engagés)"
     verification: "Lu mot à mot le 2026-11-03. Le récit des « zones peu touchées » est retiré (V2) : absent de la partie lue"
   - affirmation: "8 avions, 5 revenus ; 8 entreprises, 3 encore actives"
-    statut: illustration
+    statut: hypothese   # illustration annoncée comme telle
     source: ""
     verification: "Nombres fictifs, annoncés à l'écran et dans la voix"
   - affirmation: "Les entreprises qui ont fermé faisaient peut-être pareil"

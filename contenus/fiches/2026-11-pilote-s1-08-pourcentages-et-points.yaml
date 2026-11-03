@@ -1,7 +1,7 @@
 # Phase pilote ACTU-BASICS, vidéo 1 sur 5 : S1.08 « Pourcentages, points de pourcentage et taux »
 # Fiche de conception : contenus/conception/S1.08.yaml
 # Calcul pur, nombres fictifs. Aucun fait extérieur chiffré.
-# Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
 id: 2026-11-pilote-s1-08-pourcentages-et-points
 type_fiche: pedagogique
 famille: apprendre_les_statistiques
@@ -27,10 +27,10 @@ pedagogie:
     fr: "Nombres fictifs, choisis pour que les calculs se suivent de tête"
     en: "Made-up numbers, chosen so the arithmetic is easy to follow"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
 
 editions:
   fr:

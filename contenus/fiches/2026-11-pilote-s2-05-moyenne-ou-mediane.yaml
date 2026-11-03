@@ -1,7 +1,7 @@
 # Phase pilote ACTU-BASICS, vidéo 2 sur 5 : S2.05 « Moyenne ou médiane ? »
 # Fiche de conception : contenus/conception/S2.05.yaml
 # Calcul pur, nombres fictifs choisis pour être suivis de tête. Aucun fait extérieur chiffré.
-# Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
 id: 2026-11-pilote-s2-05-moyenne-ou-mediane
 type_fiche: pedagogique
 famille: apprendre_les_statistiques
@@ -27,10 +27,10 @@ pedagogie:
     fr: "Salaires mensuels fictifs, choisis pour que les calculs se suivent de tête"
     en: "Made-up monthly salaries, chosen so the arithmetic is easy to follow"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
 
 editions:
   fr:

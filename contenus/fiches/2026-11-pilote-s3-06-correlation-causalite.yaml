@@ -1,7 +1,7 @@
 # Phase pilote ACTU-BASICS, vidéo 3 sur 5 : S3.06 « Corrélation n'est pas causalité »
 # Fiche de conception : contenus/conception/S3.06.yaml
 # Exemples fictifs ou de raisonnement : aucun chiffre réel, aucune étude citée.
-# Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
 id: 2026-11-pilote-s3-06-correlation-causalite
 type_fiche: pedagogique
 famille: apprendre_les_statistiques
@@ -27,10 +27,10 @@ pedagogie:
     fr: "Exemples de raisonnement, sans données réelles"
     en: "Reasoning examples, with no real data"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
 
 editions:
   fr:

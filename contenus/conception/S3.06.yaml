@@ -1,6 +1,6 @@
 # Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
 id_programme: S3.06
-statut: revue_claude
+statut: valide_jg   # 2026-11-03, PR #15
 fiche_production: contenus/fiches/2026-11-pilote-s3-06-correlation-causalite.yaml
 
 titres: {fr: "Les glaces font-elles se noyer ?", en: "Does ice cream make people drown?"}

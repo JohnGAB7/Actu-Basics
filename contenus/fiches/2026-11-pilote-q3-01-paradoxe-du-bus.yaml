@@ -2,7 +2,7 @@
 # Fiche de conception : contenus/conception/Q3.01.yaml
 # Calcul pur (paradoxe de l'inspection). Hypothèse : le voyageur arrive à un instant au hasard,
 # sans consulter les horaires. Aucun fait extérieur chiffré.
-# Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
 id: 2026-11-pilote-q3-01-paradoxe-du-bus
 type_fiche: pedagogique
 famille: comprendre_les_probabilites
@@ -28,10 +28,10 @@ pedagogie:
     fr: "Le voyageur arrive à un instant pris au hasard, sans regarder les horaires ; les bus alternent des intervalles de 5 et de 15 minutes"
     en: "The rider turns up at a random moment, without checking the timetable; buses alternate gaps of 5 and 15 minutes"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
 
 editions:
   fr:

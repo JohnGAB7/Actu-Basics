@@ -1,6 +1,6 @@
 # Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
 id_programme: S1.08
-statut: revue_claude
+statut: valide_jg   # 2026-11-03, PR #15
 fiche_production: contenus/fiches/2026-11-pilote-s1-08-pourcentages-et-points.yaml
 
 titres: {fr: "1 % ou 50 % ? Pourcentages et points", en: "1% or 50%? Percentages and points"}

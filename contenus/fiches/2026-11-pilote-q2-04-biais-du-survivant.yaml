@@ -11,7 +11,7 @@
 # nombres fictifs annoncés. Le récit des « zones peu touchées » est retiré : la partie lue du rapport
 # de Wald porte sur le nombre d'impacts et le nombre d'avions engagés, c'est ce qui est dit de sa méthode.
 # Question de transfert avec correction ; renvoi à S1.05.
-# Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
+# Statut : validé par JG le 2026-11-03 (PR #15). Publication soumise à son accord explicite.
 id: 2026-11-pilote-q2-04-biais-du-survivant
 type_fiche: pedagogique
 famille: comprendre_les_probabilites
@@ -33,10 +33,10 @@ pedagogie:
     fr: "Nombres fictifs (8 avions, 5 revenus ; 8 entreprises, 3 encore actives) pour illustrer le mécanisme"
     en: "Made-up numbers (8 planes, 5 returned; 8 companies, 3 still active) to illustrate the mechanism"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la PR #15 (publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-03"
 
 sources:
   - nom:
