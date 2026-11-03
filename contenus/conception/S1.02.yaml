@@ -1,0 +1,55 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S1.02
+statut: revue_claude   # 2026-11-03 : à relire par ChatGPT, puis validation de JG
+fiche_production: contenus/fiches/2026-11-n1-s1-02-population-individu-variable.yaml
+
+titres: {fr: "De qui parle ce chiffre ? Population, individu, variable", en: "Who is this number about? Population, unit, variable"}
+question_centrale:
+  fr: "Quand on dit « les Français dorment 7 h par nuit », de qui parle-t-on, et qu'a-t-on mesuré ?"
+  en: "When we say \"people in France sleep 7 hours a night\", who are we talking about, and what was measured?"
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 2}
+public: {prerequis: [S1.01], niveau_maths: M0, rappel_conseille: []}
+
+intuition: "Toute statistique répond à trois questions : sur qui, sur quoi, et comment."
+exemple_fil_rouge: "Un titre fictif sur le sommeil ; un village fictif de 3 ménages."
+exemple_reel:
+  description: "Aucun : titres et nombres fictifs, annoncés comme tels."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - {chiffre: "Tous les nombres", support: ecran_et_voix, nature: parametre_simulation, calcul: {entrees: "Valeurs fictives", formule: "9 000 ÷ 3 ; 9 000 ÷ 7", transformations: "arrondi à l'euro"}, definition: "", unite: "€ par mois", population: "Fictive", periode: "", couverture: "", revisions: "", source_primaire: {organisme: "", url: "", consulte_le: ""}, incertitude: "Aucune", comparabilite: ""}
+
+affirmations_qualitatives:
+  - {affirmation: "Sommeil déclaré ou mesuré : deux variables différentes", statut: hypothese, source: "", verification: "Raisonnement général, sans chiffre"}
+
+deroule:
+  - {etape: question, contenu: "« Les Français dorment 7 heures » : de qui parle-t-on ?"}
+  - {etape: formalisation, contenu: "Population, individu, variable"}
+  - {etape: application, contenu: "Décomposer le titre"}
+  - {etape: raisonnement, contenu: "Village : revenu par ménage ou par personne"}
+  - {etape: exercice, contenu: "Titre sur les téléphones des collégiens"}
+  - {etape: correction, contenu: "Les trois briques à préciser"}
+  - {etape: rappel, contenu: "Sur qui, sur quoi, comment"}
+
+calculs_a_verifier:
+  - {expression: "9000 / 3", attendu: 3000, libelle: "Par ménage"}
+  - {expression: "9000 / 7", attendu: 1286, libelle: "Par personne"}
+
+idees_fausses:
+  - {idee: "Comparer des chiffres qui ne portent pas sur la même population ou la même unité", desamorcee_a_l_etape: "Changer d'unité change le chiffre"}
+
+exercice: {question: "« 30 % des collégiens ont un téléphone avant 11 ans » : population, individu, variable ?", correction: "Collégiens (où, quand ?) ; un collégien ; téléphone avant 11 ans, oui ou non", pause_secondes: 6}
+
+preuve_apprentissage:
+  tache: "Répondre à la question de transfert sans aide"
+  question_de_transfert: "« Le panier moyen est de 52 € » : quelle est la population, l'individu, la variable ? Un panier par client ou par passage en caisse ?"
+  diagnostic_d_erreur: "« Le revenu moyen par ménage a baissé, donc chacun gagne moins » : quelle explication oublie-t-on ? (ménages plus petits)"
+  limite_a_enoncer: "Préciser l'individu ne suffit pas : il faut aussi la période et la façon de mesurer"
+
+duree_estimee_min: [4, 6]
+format: educational
+declinaisons: [vertical_9_16, youtube_16_9]   # demande de JG, 2026-11-03 : une version par plateforme
+derives_short: ["Par ménage ou par personne : 3 000 € ou 1 286 € (40 s)"]
+adaptation_en: "Mêmes nombres ; décimales et séparateurs anglais ; noms d'organismes expliqués (Insee, France Travail)."
+licences: "Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+controle: {test_du_debutant: "À mesurer", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu (inspection)"}

@@ -1,0 +1,65 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S1.05
+statut: revue_claude   # 2026-11-03 : à relire par ChatGPT, puis validation de JG
+fiche_production: contenus/fiches/2026-11-n1-s1-05-echantillon-et-biais-de-selection.yaml
+
+titres: {fr: "2,4 millions de réponses, et faux : le biais de sélection", en: "2.4 million answers, and wrong: selection bias"}
+question_centrale:
+  fr: "Comment un sondage de 2,4 millions de réponses a-t-il pu se tromper de vainqueur ?"
+  en: "How could a poll with 2.4 million answers pick the wrong winner?"
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 5}
+public: {prerequis: [S1.04], niveau_maths: M0, rappel_conseille: []}
+
+intuition: "Un grand échantillon mal choisi reste mal choisi : on mesure très précisément la mauvaise population."
+exemple_fil_rouge: "Le sondage du Literary Digest, élection présidentielle américaine de 1936."
+exemple_reel:
+  description: "Literary Digest 1936 : environ 10 millions de bulletins envoyés, près de 2,4 millions retournés (environ 24 %), Landon 54 %, Roosevelt 41 % ; Roosevelt obtient 61 % des voix. Chiffres de Gallup non cités (non lus)."
+  source:
+    organisme: "Social Science History ; Statistics, Politics and Policy"
+    titre: "D. Lusinchi, « President Landon and the 1936 Literary Digest Poll: Were Automobile and Telephone Owners to Blame? », 2012 ; S. Lohr et J. M. Brick, « Roosevelt Predicted to Win: Revisiting the 1936 Literary Digest Poll », 2017"
+    url: "https://pdixon.stat.iastate.edu/stat587/resources/president-landon-and-the-1936-literary-digest-poll-were-automobile-and-telephone-owners-to-blame.pdf ; https://www.gwern.net/doc/statistics/bias/2017-lohr.pdf"
+    date_publication: "2012 ; 2017"
+    periode_donnees: "1936"
+    consulte_le: "2026-11-03. Lusinchi lu mot à mot p. 24 à 37 environ ; Lohr et Brick p. 65-66. Copies hébergées par des tiers : DOI à ajouter"
+
+provenance:
+  - {chiffre: "10 millions ; 2,4 millions ; 24 % ; 54 % ; 41 % ; 61 %", support: ecran_et_voix, nature: donnee_publiee, calcul: {entrees: "Lusinchi 2012, p. 26", formule: "2,4 ÷ 10 × 100 = 24", transformations: ""}, definition: "Part des voix exprimées", unite: "%", population: "Électeurs américains, 1936", periode: "1936", couverture: "États-Unis", revisions: "", source_primaire: {organisme: "Lusinchi (2012), citant le Literary Digest et le US Census", url: "https://pdixon.stat.iastate.edu/stat587/resources/president-landon-and-the-1936-literary-digest-poll-were-automobile-and-telephone-owners-to-blame.pdf", consulte_le: "2026-11-03"}, incertitude: "« in the neighborhood of 10 million », « nearly 2.4 million » : ordres de grandeur", comparabilite: ""}
+
+affirmations_qualitatives:
+  - {affirmation: "Les adresses venaient notamment d'annuaires téléphoniques et de listes de propriétaires de voitures", statut: sourcee, source: "Titre et propos de Lusinchi (2012) ; Lohr et Brick (2017), p. 66 (Gallup accuse la base de sondage)", verification: "Lu le 2026-11-03"}
+  - {affirmation: "Squire (1988) : la base de sondage et la non-réponse ont joué toutes les deux", statut: sourcee, source: "Lohr et Brick (2017), p. 66 ; Lusinchi (2012), p. 33", verification: "Lu le 2026-11-03"}
+  - {affirmation: "Les personnes sans téléphone fixe sont souvent plus jeunes", statut: hypothese, source: "", verification: "Formulation prudente ; à sourcer ou retirer"}
+  - {affirmation: "Les avis en ligne viennent surtout des clients très contents ou très déçus", statut: hypothese, source: "", verification: "Formulation prudente ; à sourcer ou adoucir"}
+
+deroule:
+  - {etape: question, contenu: "2,4 millions de réponses, et faux"}
+  - {etape: application, contenu: "Le Literary Digest, 1936 ; 24 % de retours"}
+  - {etape: formalisation, contenu: "Population, échantillon, représentatif"}
+  - {etape: raisonnement, contenu: "Deux filtres : la liste et les réponses"}
+  - {etape: formalisation, contenu: "Biais de sélection"}
+  - {etape: raisonnement, contenu: "La taille réduit le hasard, pas le biais"}
+  - {etape: exercice, contenu: "Avis en ligne, téléphone fixe, salle de sport"}
+  - {etape: rappel, contenu: "Comment choisi ? Qui n'a pas répondu ?"}
+
+calculs_a_verifier:
+  - {expression: "2.4 / 10 * 100", attendu: 24, libelle: "Taux de retour"}
+
+idees_fausses:
+  - {idee: "Plus c'est grand, plus c'est fiable", desamorcee_a_l_etape: "La taille ne corrige pas le biais"}
+  - {idee: "Confondre volontaires et échantillon aléatoire", desamorcee_a_l_etape: "Exercice"}
+
+exercice: {question: "Qui manque : avis en ligne, sondage par téléphone fixe, questionnaire à la sortie d'une salle de sport ?", correction: "Les clients moyennement satisfaits ; ceux sans fixe ; ceux qui ne vont pas à la salle", pause_secondes: 6}
+
+preuve_apprentissage:
+  tache: "Répondre à la question de transfert sans aide"
+  question_de_transfert: "Un sondage en ligne d'un site de jeux vidéo montre que 80 % des Français jouent chaque jour. Qui manque dans l'échantillon ?"
+  diagnostic_d_erreur: "« Notre enquête a 50 000 réponses, elle est donc représentative » : qu'est-ce qui manque à ce raisonnement ?"
+  limite_a_enoncer: "Un tirage aléatoire n'empêche pas la non-réponse : il faut aussi la mesurer et la corriger"
+
+duree_estimee_min: [5, 8]
+format: educational
+declinaisons: [vertical_9_16, youtube_16_9]   # demande de JG, 2026-11-03 : une version par plateforme
+derives_short: ["2,4 millions de réponses et un mauvais vainqueur (50 s)"]
+adaptation_en: "Mêmes nombres ; décimales et séparateurs anglais ; noms d'organismes expliqués (Insee, France Travail)."
+licences: "Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+controle: {test_du_debutant: "À mesurer", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu (inspection)"}

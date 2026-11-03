@@ -1,0 +1,233 @@
+# Niveau 1, vague 1, lot 1 : S1.05 « Échantillon et biais de sélection » (EDUCATIONAL, étude de cas)
+# Fiche de conception : contenus/conception/S1.05.yaml
+# Sources lues le 2026-11-03 (partie lue mot à mot indiquée dans la fiche de conception) :
+# - D. Lusinchi, « President Landon and the 1936 Literary Digest Poll », Social Science History 36(1), 2012,
+#   p. 26 : « mailed out in the neighborhood of 10 million "ballots" » ; « nearly 2.4 million were returned,
+#   for a response rate of roughly 24 percent » ; Landon « 54 percent », Roosevelt « 41 percent » ;
+#   « Roosevelt obtained 61 percent of the vote ». p. 33 : Squire (1988) retient les deux biais.
+# - S. Lohr et J. M. Brick, « Roosevelt Predicted to Win », Statistics, Politics and Policy 8(1), 2017,
+#   p. 65-66 : mêmes chiffres ; Squire (1988) : « the low response rate combined with the flawed sample ».
+# Les chiffres du sondage Gallup ne sont PAS cités : ils n'ont pas été lus dans le texte.
+# Statut : brouillon. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-05-echantillon-et-biais-de-selection
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.05 · Échantillon et biais de sélection"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Expliquer ce qu'est un échantillon représentatif"
+      - "Reconnaître un biais de sélection et expliquer pourquoi la taille de l'échantillon ne le corrige pas"
+    en:
+      - "Explain what a representative sample is"
+      - "Spot selection bias and explain why a bigger sample doesn't fix it"
+  prerequis:
+    fr: ["S1.04 : d'où viennent les données ?"]
+    en: ["S1.04: where numbers come from"]
+  hypotheses:
+    fr: "Chiffres de 1936 tels que rapportés par Lusinchi (2012) et Lohr et Brick (2017) ; récit simplifié"
+    en: "1936 figures as reported by Lusinchi (2012) and Lohr and Brick (2017); simplified account"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources:
+  - nom:
+      fr: "D. Lusinchi, Social Science History, 2012"
+      en: "D. Lusinchi, Social Science History, 2012"
+    url: "https://pdixon.stat.iastate.edu/stat587/resources/president-landon-and-the-1936-literary-digest-poll-were-automobile-and-telephone-owners-to-blame.pdf"
+    date_consultation: "2026-11-03"
+  - nom:
+      fr: "S. Lohr et J. M. Brick, Statistics, Politics and Policy, 2017"
+      en: "S. Lohr and J. M. Brick, Statistics, Politics and Policy, 2017"
+    url: "https://www.gwern.net/doc/statistics/bias/2017-lohr.pdf"
+    date_consultation: "2026-11-03"
+
+editions:
+  fr:
+    titre: "2,4 millions de réponses, et faux : le biais de sélection"
+    legende: |
+      En 1936, le magazine américain Literary Digest envoie environ 10 millions de bulletins pour prédire l'élection présidentielle. Près de 2,4 millions reviennent : le sondage annonce Alfred Landon gagnant avec 54 %. Franklin Roosevelt est réélu avec 61 % des voix. Comment un échantillon aussi grand a-t-il pu se tromper autant ? On apprend ce qu'est un échantillon représentatif, et pourquoi la taille ne corrige pas un biais de sélection. Sources : D. Lusinchi, Social Science History, 2012 ; S. Lohr et J. M. Brick, Statistics, Politics and Policy, 2017. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, sondage, biais]
+    scenes:
+      - type: accroche
+        texte: "*2,4 millions* de réponses. Et pourtant, le sondage s'est *trompé de vainqueur*."
+        voix_off: "Deux virgule quatre millions de réponses. Et pourtant, ce sondage s'est trompé de vainqueur."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le sondage géant de 1936"
+        voix_off: "Nous sommes aux États-Unis, en mille neuf cent trente-six."
+      - type: etapes
+        texte: "Le Literary Digest prédit l'élection"
+        etapes:
+          - "Environ *10 millions* de bulletins envoyés"
+          - "Près de *2,4 millions* reviennent"
+          - "Prévision : Landon *54 %*, Roosevelt *41 %*"
+          - "Résultat : Roosevelt réélu avec *61 %* des voix"
+        note: "Chiffres rapportés par D. Lusinchi, Social Science History, 2012."
+        voix_off: "Le magazine Literary Digest veut prédire l'élection présidentielle. Il envoie environ dix millions de bulletins par la poste. Près de deux virgule quatre millions lui reviennent. Le magazine annonce que le républicain Alfred Landon l'emportera avec cinquante-quatre pour cent des voix, contre quarante et un pour cent au président Franklin Roosevelt. Le jour du vote, Roosevelt est réélu, avec soixante et un pour cent des voix."
+        verifier:
+          - {expression: "2.4 / 10 * 100", attendu: 24, libelle: "Taux de retour des bulletins, en %"}
+      - type: chiffre
+        valeur: 24
+        suffixe: {fr: " %", en: "%"}
+        texte: "des bulletins seulement sont revenus"
+        note: "Près de 2,4 millions de retours sur environ 10 millions d'envois."
+        voix_off: "Un détail compte beaucoup : seulement vingt-quatre pour cent des bulletins sont revenus."
+        verifier:
+          - {expression: "2.4 / 10 * 100", attendu: 24, libelle: "Taux de retour, en %"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Un échantillon représentatif"
+        voix_off: "Pour comprendre l'erreur, il faut définir ce qu'est un bon échantillon."
+      - type: etapes
+        texte: "Trois mots à connaître"
+        disposition: cartes
+        etapes:
+          - "*Population* : tous les électeurs"
+          - "*Échantillon* : ceux que l'on interroge"
+          - "*Représentatif* : il ressemble à la population"
+        voix_off: "La population, ici, ce sont tous les électeurs. L'échantillon, ce sont les personnes que l'on interroge vraiment. Un échantillon est représentatif quand il ressemble à la population pour ce que l'on veut mesurer : ici, le vote."
+      - type: etapes
+        texte: "Deux filtres entre les électeurs et les réponses"
+        etapes:
+          - "*La liste* : adresses tirées notamment d'annuaires téléphoniques et de listes de propriétaires de voitures"
+          - "*Les réponses* : ceux qui renvoient le bulletin ne votent pas comme les autres"
+        note: "Selon Squire (1988), cité par Lohr et Brick (2017), les deux biais ont joué."
+        voix_off: "Entre les électeurs et les bulletins reçus, il y a eu deux filtres. Le premier, c'est la liste d'envoi : les adresses venaient notamment d'annuaires téléphoniques et de listes de propriétaires de voitures, qui ne représentaient pas tous les électeurs. Le second, ce sont les réponses : les personnes qui ont pris la peine de renvoyer leur bulletin penchaient davantage pour Landon. Les chercheurs discutent encore de la part de chaque filtre, mais tous deux ont faussé l'échantillon."
+      - type: texte
+        texte: "C'est un *biais de sélection* : l'échantillon ne ressemble plus à la population"
+        voix_off: "C'est ce qu'on appelle un biais de sélection : la façon de choisir ou de recueillir l'échantillon le rend différent de la population, de façon systématique."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La taille ne corrige pas le biais"
+        voix_off: "Et c'est là que la leçon devient surprenante."
+      - type: etapes
+        texte: "Plus de réponses, et alors ?"
+        etapes:
+          - "Plus de réponses réduit *le hasard*"
+          - "Mais pas *le biais* : on mesure très bien la mauvaise population"
+        voix_off: "Interroger plus de monde réduit les erreurs dues au hasard. Mais cela ne corrige pas un biais. Avec deux virgule quatre millions de réponses, le Literary Digest mesurait très précisément l'opinion de ceux qui lui répondaient, pas celle de tous les électeurs."
+      - type: texte
+        texte: "Un grand échantillon *mal choisi* reste *mal choisi*"
+        voix_off: "Retenez-le : un grand échantillon mal choisi reste mal choisi. Ce qui compte d'abord, c'est la façon dont on le choisit, pas sa taille."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Qui *manque* ? Avis laissés *en ligne*. Sondage par *téléphone fixe*. Questionnaire sur le sport, à la sortie d'une *salle de sport*."
+        pause: 6
+        voix_off: "À vous. Dans chacune de ces trois enquêtes, qui risque de manquer ? Des avis laissés en ligne sur un restaurant. Un sondage réalisé uniquement par téléphone fixe. Un questionnaire sur l'activité physique, distribué à la sortie d'une salle de sport."
+      - type: correction
+        etapes:
+          - "En ligne : surtout les *très contents* et les *très déçus*"
+          - "Téléphone fixe : il manque ceux qui *n'en ont pas*"
+          - "Salle de sport : il manque ceux qui *n'y vont pas*"
+        reponse: "Trois échantillons qui se sélectionnent eux-mêmes"
+        voix_off: "En ligne, ce sont surtout les clients très contents ou très déçus qui prennent la peine d'écrire. Par téléphone fixe, il manque toutes les personnes qui n'en ont pas, souvent les plus jeunes. À la sortie d'une salle de sport, il manque précisément ceux qui n'y vont pas. Dans les trois cas, l'échantillon ne ressemble pas à la population."
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Demander : *comment* l'échantillon a-t-il été choisi ?"
+          - "Demander : *qui* n'a pas répondu ?"
+          - "La *taille* ne remplace pas la *représentativité*"
+        voix_off: "Récapitulons. Devant un sondage, demandez comment l'échantillon a été choisi. Demandez qui n'a pas répondu. Et souvenez-vous que la taille ne remplace jamais la représentativité."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "2.4 million answers, and wrong: selection bias"
+    legende: |
+      In 1936, the American magazine Literary Digest mailed out about 10 million ballots to predict the presidential election. Nearly 2.4 million came back: the poll said Alf Landon would win with 54%. Franklin Roosevelt was re-elected with 61% of the vote. How could such a huge sample get it so wrong? We learn what a representative sample is, and why size doesn't fix selection bias. Sources: D. Lusinchi, Social Science History, 2012; S. Lohr and J. M. Brick, Statistics, Politics and Policy, 2017. Series "Reading numbers without being fooled".
+    hashtags: [statistics, polls, bias]
+    scenes:
+      - type: accroche
+        texte: "*2.4 million* answers. And yet the poll *picked the wrong winner*."
+        voix_off: "Two point four million answers. And yet this poll picked the wrong winner."
+      - type: titre
+        numero: 1
+        texte: "The giant poll of 1936"
+        voix_off: "We're in the United States, in nineteen thirty-six."
+      - type: etapes
+        texte: "The Literary Digest predicts the election"
+        etapes:
+          - "About *10 million* ballots mailed out"
+          - "Nearly *2.4 million* come back"
+          - "Forecast: Landon *54%*, Roosevelt *41%*"
+          - "Result: Roosevelt re-elected with *61%* of the vote"
+        note: "Figures as reported by D. Lusinchi, Social Science History, 2012."
+        voix_off: "The Literary Digest magazine wants to predict the presidential election. It mails out about ten million ballots. Nearly two point four million come back. The magazine announces that the Republican, Alf Landon, will win with fifty-four percent of the vote, against forty-one percent for President Franklin Roosevelt. On election day, Roosevelt is re-elected, with sixty-one percent of the vote."
+        verifier:
+          - {expression: "2.4 / 10 * 100", attendu: 24, libelle: "Ballot return rate, %"}
+      - type: chiffre
+        valeur: 24
+        suffixe: {fr: " %", en: "%"}
+        texte: "of the ballots came back, no more"
+        note: "Nearly 2.4 million returned out of about 10 million mailed."
+        voix_off: "One detail matters a lot: only twenty-four percent of the ballots came back."
+        verifier:
+          - {expression: "2.4 / 10 * 100", attendu: 24, libelle: "Return rate, %"}
+      - type: titre
+        numero: 2
+        texte: "A representative sample"
+        voix_off: "To understand the mistake, we need to define what a good sample is."
+      - type: etapes
+        texte: "Three words to know"
+        disposition: cartes
+        etapes:
+          - "*Population*: all the voters"
+          - "*Sample*: the people you ask"
+          - "*Representative*: it looks like the population"
+        voix_off: "The population, here, is all the voters. The sample is the people you actually ask. A sample is representative when it looks like the population for what you want to measure: here, the vote."
+      - type: etapes
+        texte: "Two filters between the voters and the answers"
+        etapes:
+          - "*The list*: addresses taken notably from telephone directories and car owner lists"
+          - "*The answers*: those who mail back the ballot don't vote like the others"
+        note: "According to Squire (1988), cited by Lohr and Brick (2017), both biases played a part."
+        voix_off: "Between the voters and the ballots received, there were two filters. The first was the mailing list: the addresses came notably from telephone directories and lists of car owners, which didn't represent all voters. The second was who answered: the people who bothered to mail back their ballot leaned more towards Landon. Researchers still debate how much each filter mattered, but both skewed the sample."
+      - type: texte
+        texte: "That's *selection bias*: the sample no longer looks like the population"
+        voix_off: "This is called selection bias: the way the sample is chosen or collected makes it systematically different from the population."
+      - type: titre
+        numero: 3
+        texte: "Size doesn't fix bias"
+        voix_off: "And this is where the lesson gets surprising."
+      - type: etapes
+        texte: "More answers, so what?"
+        etapes:
+          - "More answers reduce *chance error*"
+          - "But not *bias*: you measure the wrong population very precisely"
+        voix_off: "Asking more people reduces errors due to chance. But it doesn't fix bias. With two point four million answers, the Literary Digest measured very precisely the opinion of the people who answered it, not that of all voters."
+      - type: texte
+        texte: "A big sample *badly chosen* is still *badly chosen*"
+        voix_off: "Remember this: a big sample that's badly chosen is still badly chosen. What matters first is how you choose it, not how big it is."
+      - type: exercice
+        texte: "Who's *missing*? Reviews left *online*. A poll by *landline* only. A survey on exercise, handed out outside a *gym*."
+        pause: 6
+        voix_off: "Your turn. In each of these three surveys, who is likely to be missing? Reviews of a restaurant left online. A poll carried out by landline only. A survey on physical activity, handed out outside a gym."
+      - type: correction
+        etapes:
+          - "Online: mostly the *very happy* and the *very disappointed*"
+          - "Landline: missing those who *don't have one*"
+          - "Gym: missing those who *don't go*"
+        reponse: "Three samples that select themselves"
+        voix_off: "Online, it's mostly very happy or very disappointed customers who bother to write. By landline, you miss everyone who doesn't have one, often younger people. Outside a gym, you miss precisely the people who don't go. In all three cases, the sample doesn't look like the population."
+      - type: etapes
+        texte: "What to remember"
+        etapes:
+          - "Ask: *how* was the sample chosen?"
+          - "Ask: *who* didn't answer?"
+          - "*Size* is no substitute for *representativeness*"
+        voix_off: "Let's recap. When you see a poll, ask how the sample was chosen. Ask who didn't answer. And remember that size is never a substitute for representativeness."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -1,0 +1,209 @@
+# Niveau 1, vague 1, lot 1 : S1.03 « Types de variables et échelles de mesure » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S1.03.yaml
+# Raisonnement et conversions seuls (0 °C = 273,15 K, définition du kelvin) ; aucun fait extérieur chiffré.
+# Statut : brouillon. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-03-types-de-variables
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.03 · Types de variables et échelles de mesure"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Classer une variable : qualitative nominale ou ordinale, quantitative discrète ou continue"
+      - "Dire quelles opérations ont un sens selon l'échelle : nominale, ordinale, d'intervalle, de rapport"
+    en:
+      - "Classify a variable: nominal or ordinal categories, discrete or continuous quantities"
+      - "Say which operations make sense on each scale: nominal, ordinal, interval, ratio"
+  prerequis:
+    fr: ["S1.02 : population, individu, variable"]
+    en: ["S1.02: population, unit, variable"]
+  hypotheses:
+    fr: "Exemples choisis pour l'illustration ; conversion 0 °C = 273,15 K"
+    en: "Examples chosen for illustration; conversion 0 °C = 273.15 K"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+editions:
+  fr:
+    titre: "Peut-on faire la moyenne de codes postaux ?"
+    legende: |
+      La moyenne de deux codes postaux, cela a-t-il un sens ? Et 20 °C, est-ce deux fois plus chaud que 10 °C ? Un nombre n'est pas toujours une quantité : parfois c'est une étiquette, parfois un rang. On apprend à classer une variable et à savoir quelles opérations ont un sens sur chaque échelle de mesure. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, variables, chiffres]
+    scenes:
+      - type: accroche
+        texte: "Peut-on calculer la *moyenne* de codes postaux ?"
+        voix_off: "Peut-on calculer la moyenne de deux codes postaux ? Et vingt degrés, est-ce deux fois plus chaud que dix degrés ?"
+      - type: exercice
+        texte: "(75 001 + 13 001) ÷ 2 = *44 001*. Ce résultat a-t-il *un sens* ?"
+        etiquette: "DÉFI"
+        pause: 4
+        note: "75001 : Paris ; 13001 : Marseille."
+        voix_off: "Faisons le calcul avec un code postal de Paris et un de Marseille. Soixante-quinze mille un, plus treize mille un, divisé par deux : quarante-quatre mille un. Ce résultat a-t-il un sens ?"
+        verifier:
+          - {expression: "(75001 + 13001) / 2", attendu: 44001, libelle: "Moyenne de deux codes postaux"}
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Un nombre n'est pas toujours une quantité"
+        voix_off: "Pour répondre, il faut savoir quel type de variable on manipule."
+      - type: etapes
+        texte: "Quatre types de variables"
+        disposition: cartes
+        etapes:
+          - "*Nominale* : une étiquette, sans ordre"
+          - "*Ordinale* : un rang, avec un ordre"
+          - "*Discrète* : on compte"
+          - "*Continue* : on mesure"
+        voix_off: "Il existe quatre grands types de variables. Une variable nominale est une étiquette, sans ordre : un code postal, une couleur, une nationalité. Une variable ordinale est un rang : une note de satisfaction de un à cinq, une mention à un examen. Une variable discrète se compte : le nombre d'enfants d'une famille. Une variable continue se mesure : une taille, une durée, un poids."
+      - type: texte
+        texte: "Les deux premières sont *qualitatives*, les deux autres *quantitatives*"
+        voix_off: "Les variables nominales et ordinales sont dites qualitatives : elles décrivent une catégorie, même quand on l'écrit avec des chiffres. Les variables discrètes et continues sont quantitatives : elles mesurent une quantité."
+      - type: correction
+        etapes:
+          - "Un code postal est une *étiquette* : variable nominale"
+          - "44 001 ne décrit *aucun* lieu « moyen »"
+        reponse: "Non : la moyenne d'étiquettes n'a pas de sens"
+        voix_off: "Réponse au défi. Un code postal s'écrit avec des chiffres, mais c'est une étiquette : une variable nominale. Le résultat, quarante-quatre mille un, ne désigne aucun lieu situé entre les deux villes. La moyenne d'étiquettes n'a pas de sens."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Quelles opérations ont un sens ?"
+        voix_off: "Chaque type de variable autorise certaines opérations, et pas d'autres. On parle d'échelles de mesure."
+      - type: etapes
+        texte: "Quatre échelles, de la plus pauvre à la plus riche"
+        etapes:
+          - "*Nominale* : égal ou différent"
+          - "*Ordinale* : en plus, classer"
+          - "*Intervalle* : en plus, mesurer des écarts"
+          - "*Rapport* : en plus, dire « deux fois plus »"
+        voix_off: "Il y a quatre échelles. Sur une échelle nominale, on peut seulement dire si deux valeurs sont égales ou différentes, et compter. Sur une échelle ordinale, on peut en plus les classer. Sur une échelle d'intervalle, on peut en plus mesurer des écarts : la température en degrés Celsius. Sur une échelle de rapport, on peut en plus dire deux fois plus : les kilos, les euros, les durées."
+      - type: etapes
+        texte: "20 °C, deux fois plus chaud que 10 °C ?"
+        etapes:
+          - "20 kg = *2 ×* 10 kg : le zéro veut dire « rien »"
+          - "0 °C n'est *pas* une absence de chaleur"
+          - "En kelvins : 293,15 ÷ 283,15 ≈ *1,035*"
+        note: "0 °C = 273,15 K ; le zéro des kelvins est le zéro absolu."
+        voix_off: "Comparons. Vingt kilos, c'est bien deux fois dix kilos, parce que zéro kilo veut dire aucun poids. Mais zéro degré Celsius n'est pas une absence de chaleur : c'est la température où l'eau gèle, un repère choisi par convention. Avec une échelle dont le zéro est vraiment nul, les kelvins, passer de dix à vingt degrés, c'est passer de deux cent quatre-vingt-trois à deux cent quatre-vingt-treize kelvins : environ trois virgule cinq pour cent de plus, pas le double."
+        verifier:
+          - {expression: "20 / 10", attendu: 2, libelle: "20 kg ÷ 10 kg"}
+          - {expression: "(20 + 273.15) / (10 + 273.15)", attendu: 1.035, libelle: "20 °C ÷ 10 °C en kelvins"}
+          - {expression: "((20 + 273.15) / (10 + 273.15) - 1) * 100", attendu: 3.5, libelle: "Écart en %"}
+      - type: texte
+        texte: "Une note de *1 à 5* : la moyenne suppose des écarts égaux, *dites-le*"
+        voix_off: "Et les notes de satisfaction de un à cinq ? On calcule souvent leur moyenne. Mais c'est supposer que l'écart entre un et deux vaut l'écart entre quatre et cinq, ce que rien ne garantit. Si on le fait, il faut le dire, ou donner plutôt la part de chaque note."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Les étoiles d'un hôtel, de 1 à 5 : quel *type* ? Un 4 étoiles est-il *deux fois* meilleur qu'un 2 étoiles ?"
+        pause: 5
+        voix_off: "À vous. Les étoiles d'un hôtel, de une à cinq : quel est le type de cette variable ? Et un hôtel quatre étoiles est-il deux fois meilleur qu'un deux étoiles ?"
+      - type: correction
+        etapes:
+          - "Les étoiles sont un *rang* : variable ordinale"
+          - "On peut *classer*, pas calculer de rapport"
+        reponse: "Ordinale : « deux fois meilleur » n'a pas de sens"
+        voix_off: "Les étoiles donnent un rang : c'est une variable ordinale. On peut dire qu'un quatre étoiles est classé au-dessus d'un deux étoiles. Mais dire qu'il est deux fois meilleur n'a pas de sens : les étoiles ne mesurent pas une quantité."
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Un nombre peut être une *étiquette*, un *rang* ou une *quantité*"
+          - "L'échelle dit quelles *opérations* ont un sens"
+          - "« Deux fois plus » exige un *vrai zéro*"
+        voix_off: "Récapitulons. Un nombre peut être une étiquette, un rang ou une quantité. L'échelle de mesure dit quelles opérations ont un sens. Et pour dire deux fois plus, il faut une échelle avec un vrai zéro."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Can you average postcodes? Types of variables"
+    legende: |
+      Does the average of two postcodes mean anything? And is 20 °C twice as hot as 10 °C? A number isn't always a quantity: sometimes it's a label, sometimes a rank. We learn to classify a variable and to know which operations make sense on each measurement scale. Series "Reading numbers without being fooled".
+    hashtags: [statistics, variables, numbers]
+    scenes:
+      - type: accroche
+        texte: "Can you take the *average* of postcodes?"
+        voix_off: "Can you take the average of two postcodes? And is twenty degrees twice as hot as ten degrees?"
+      - type: exercice
+        texte: "(75,001 + 13,001) ÷ 2 = *44,001*. Does this result *mean anything*?"
+        etiquette: "CHALLENGE"
+        pause: 4
+        note: "75001 and 13001: French postcodes in Paris and Marseille."
+        voix_off: "Let's do the sum with two French postcodes, one in Paris and one in Marseille. Seventy-five thousand and one, plus thirteen thousand and one, divided by two: forty-four thousand and one. Does this result mean anything?"
+        verifier:
+          - {expression: "(75001 + 13001) / 2", attendu: 44001, libelle: "Average of two postcodes"}
+      - type: titre
+        numero: 1
+        texte: "A number isn't always a quantity"
+        voix_off: "To answer, you need to know what type of variable you're dealing with."
+      - type: etapes
+        texte: "Four types of variables"
+        disposition: cartes
+        etapes:
+          - "*Nominal*: a label, with no order"
+          - "*Ordinal*: a rank, with an order"
+          - "*Discrete*: you count"
+          - "*Continuous*: you measure"
+        voix_off: "There are four main types of variables. A nominal variable is a label, with no order: a postcode, a colour, a nationality. An ordinal variable is a rank: a satisfaction score from one to five, an exam grade. A discrete variable is counted: the number of children in a family. A continuous variable is measured: a height, a duration, a weight."
+      - type: texte
+        texte: "The first two are *categorical*, the other two *numerical*"
+        voix_off: "Nominal and ordinal variables are called categorical: they describe a category, even when it's written with digits. Discrete and continuous variables are numerical: they measure a quantity."
+      - type: correction
+        etapes:
+          - "A postcode is a *label*: a nominal variable"
+          - "44,001 describes *no* \"average\" place"
+        reponse: "No: averaging labels makes no sense"
+        voix_off: "The answer to the challenge. A postcode is written with digits, but it's a label: a nominal variable. The result, forty-four thousand and one, doesn't point to any place halfway between the two cities. Averaging labels makes no sense."
+      - type: titre
+        numero: 2
+        texte: "Which operations make sense?"
+        voix_off: "Each type of variable allows some operations and not others. These are called measurement scales."
+      - type: etapes
+        texte: "Four scales, from poorest to richest"
+        etapes:
+          - "*Nominal*: equal or different"
+          - "*Ordinal*: also, rank"
+          - "*Interval*: also, measure differences"
+          - "*Ratio*: also, say \"twice as much\""
+        voix_off: "There are four scales. On a nominal scale, you can only say whether two values are equal or different, and count them. On an ordinal scale, you can also rank them. On an interval scale, you can also measure differences: temperature in degrees Celsius. On a ratio scale, you can also say twice as much: kilos, euros, durations."
+      - type: etapes
+        texte: "Is 20 °C twice as hot as 10 °C?"
+        etapes:
+          - "20 kg = *2 ×* 10 kg: zero means \"nothing\""
+          - "0 °C is *not* an absence of heat"
+          - "In kelvins: 293.15 ÷ 283.15 ≈ *1.035*"
+        note: "0 °C = 273.15 K; zero kelvin is absolute zero."
+        voix_off: "Let's compare. Twenty kilos really is twice ten kilos, because zero kilos means no weight at all. But zero degrees Celsius isn't an absence of heat: it's the temperature at which water freezes, a reference point chosen by convention. On a scale whose zero truly means nothing, kelvins, going from ten to twenty degrees means going from two hundred and eighty-three to two hundred and ninety-three kelvins: about three and a half percent more, not double."
+        verifier:
+          - {expression: "20 / 10", attendu: 2, libelle: "20 kg ÷ 10 kg"}
+          - {expression: "(20 + 273.15) / (10 + 273.15)", attendu: 1.035, libelle: "20 °C ÷ 10 °C in kelvins"}
+          - {expression: "((20 + 273.15) / (10 + 273.15) - 1) * 100", attendu: 3.5, libelle: "Difference in %"}
+      - type: texte
+        texte: "A score from *1 to 5*: averaging assumes equal gaps, *say so*"
+        voix_off: "What about satisfaction scores from one to five? People often average them. But that assumes the gap between one and two is the same as the gap between four and five, which nothing guarantees. If you do it, say so, or give the share of each score instead."
+      - type: exercice
+        texte: "Hotel stars, from 1 to 5: which *type*? Is a 4-star hotel *twice* as good as a 2-star one?"
+        pause: 5
+        voix_off: "Your turn. Hotel stars, from one to five: what type of variable is this? And is a four-star hotel twice as good as a two-star one?"
+      - type: correction
+        etapes:
+          - "Stars are a *rank*: an ordinal variable"
+          - "You can *rank*, not compute a ratio"
+        reponse: "Ordinal: \"twice as good\" makes no sense"
+        voix_off: "Stars give a rank: it's an ordinal variable. You can say a four-star hotel is ranked above a two-star one. But saying it's twice as good makes no sense: stars don't measure a quantity."
+      - type: etapes
+        texte: "What to remember"
+        etapes:
+          - "A number can be a *label*, a *rank* or a *quantity*"
+          - "The scale tells you which *operations* make sense"
+          - "\"Twice as much\" needs a *true zero*"
+        voix_off: "Let's recap. A number can be a label, a rank or a quantity. The measurement scale tells you which operations make sense. And to say twice as much, you need a scale with a true zero."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

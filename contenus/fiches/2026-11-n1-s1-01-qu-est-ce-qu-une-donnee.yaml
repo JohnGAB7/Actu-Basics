@@ -1,0 +1,221 @@
+# Niveau 1, vague 1, lot 1 : S1.01 « Qu'est-ce qu'une donnée ? » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S1.01.yaml
+# Source lue le 2026-11-03 : Insee, Comparateur de territoires, Paris (commune 75056, unité urbaine
+# 00851, aire d'attraction 001), « Population en 2023 », RP2023 exploitations principales, géographie
+# au 01/01/2026, paru le 27/08/2026 :
+# https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001
+# Commune 2 103 778 ; unité urbaine 11 013 774 ; aire d'attraction 13 320 752.
+# Statut : brouillon. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-01-qu-est-ce-qu-une-donnee
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.01 · Qu'est-ce qu'une donnée ?"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer une question statistique, dont les réponses varient, d'une question à réponse unique"
+      - "Reconnaître qu'une donnée est le résultat d'une mesure, faite par quelqu'un, selon une définition"
+    en:
+      - "Tell a statistical question, whose answers vary, from a question with a single answer"
+      - "Recognise that a data point is the result of a measurement, made by someone, under a definition"
+  prerequis:
+    fr: ["Aucun : première vidéo du parcours"]
+    en: ["None: first video of the course"]
+  hypotheses:
+    fr: "Populations de l'Insee arrondies au dixième de million à l'écran ; nombres exacts dans la note"
+    en: "Insee populations rounded to a tenth of a million on screen; exact figures in the note"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources:
+  - nom:
+      fr: "Insee, recensement de la population 2023 (comparateur de territoires, 2026)"
+      en: "Insee, 2023 population census (territory comparison tool, 2026)"
+    url: "https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001"
+    date_consultation: "2026-11-03"
+
+editions:
+  fr:
+    titre: "Combien d'habitants à Paris ? Qu'est-ce qu'une donnée"
+    legende: |
+      Combien d'habitants à Paris : 2,1 millions, 11 millions ou 13,3 millions ? Les trois chiffres sont exacts, parce que chacun répond à une définition différente de « Paris ». Première leçon du parcours : ce qui fait une question statistique, et pourquoi une donnée est toujours une mesure, faite par quelqu'un, selon une définition. Source : Insee, recensement de la population 2023 (commune, unité urbaine et aire d'attraction de Paris). Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, donnees, chiffres]
+    scenes:
+      - type: accroche
+        texte: "Combien d'habitants à Paris ? *2,1 millions*, *11 millions* ou *13,3 millions* ?"
+        voix_off: "Combien d'habitants vivent à Paris ? Deux virgule un millions, onze millions, ou treize virgule trois millions ?"
+      - type: exercice
+        texte: "2,1, 11 ou 13,3 millions : *lequel* est juste ?"
+        etiquette: "DÉFI"
+        pause: 4
+        voix_off: "Choisissez votre réponse avant la suite. Lequel de ces trois chiffres est le bon ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Une question statistique"
+        voix_off: "Pour répondre, commençons par une question plus simple : qu'est-ce qu'une question statistique ?"
+      - type: etapes
+        texte: "Deux questions, deux natures"
+        etapes:
+          - "« Quel âge a ma voisine ? » : *une seule réponse*"
+          - "« Quel âge ont les habitants de ma rue ? » : des réponses qui *varient*"
+        voix_off: "Comparons deux questions. Quel âge a ma voisine ? Il y a une seule réponse, il suffit de la lui demander. Quel âge ont les habitants de ma rue ? Là, les réponses varient d'une personne à l'autre."
+      - type: texte
+        texte: "Une question statistique attend des réponses qui *varient*"
+        voix_off: "C'est la différence essentielle. Une question statistique porte sur un groupe, et elle attend des réponses qui varient. Les statistiques servent à décrire et à comprendre cette variabilité."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Une donnée est une mesure"
+        voix_off: "Deuxième idée : une donnée ne tombe pas du ciel."
+      - type: etapes
+        texte: "Derrière chaque donnée"
+        disposition: cartes
+        etapes:
+          - "Une *question* précise"
+          - "Une *définition* de ce qu'on compte"
+          - "Quelqu'un qui *mesure*, à une date"
+        voix_off: "Derrière chaque donnée, il y a trois choses. Une question précise. Une définition de ce que l'on compte. Et quelqu'un qui mesure, à une date donnée, avec une méthode."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Combien d'habitants à Paris ?"
+        voix_off: "Revenons à Paris, avec les chiffres du recensement de l'Insee."
+      - type: etapes
+        texte: "Trois définitions de « Paris »"
+        etapes:
+          - "La *commune* de Paris : *2,1 millions*"
+          - "L'*agglomération*, bâti continu : *11,0 millions*"
+          - "L'*aire d'attraction*, avec les communes où vivent ceux qui y travaillent : *13,3 millions*"
+        note: "Insee, recensement 2023 : 2 103 778 ; 11 013 774 ; 13 320 752 habitants."
+        voix_off: "L'Insee publie trois chiffres, pour trois définitions de Paris. La commune de Paris, dans ses limites administratives : deux virgule un millions d'habitants. L'agglomération, c'est-à-dire Paris et les communes qui forment avec elle une zone de bâti continu : onze millions. L'aire d'attraction, qui ajoute les communes dont une bonne partie des habitants vient travailler dans l'agglomération : treize virgule trois millions."
+        verifier:
+          - {expression: "2103778 / 1e6", attendu: 2.1, libelle: "Commune de Paris, en millions"}
+          - {expression: "11013774 / 1e6", attendu: 11.0, libelle: "Unité urbaine de Paris, en millions"}
+          - {expression: "13320752 / 1e6", attendu: 13.3, libelle: "Aire d'attraction de Paris, en millions"}
+      - type: chiffre
+        valeur: 6.3
+        prefixe: "×"
+        texte: "d'habitants entre la commune et l'aire d'attraction"
+        voix_off: "Réponse au défi : les trois chiffres sont justes. Selon la définition, le nombre d'habitants est multiplié par plus de six."
+        note: "13 320 752 ÷ 2 103 778 ≈ 6,3. Insee, recensement 2023."
+        verifier:
+          - {expression: "13320752 / 2103778", attendu: 6.3, libelle: "Rapport aire d'attraction / commune"}
+      - type: texte
+        texte: "Un nombre n'est pas neutre : il dépend de *la question posée*"
+        voix_off: "Un chiffre n'est donc pas neutre ou objectif simplement parce que c'est un nombre. Il dépend de la question posée et de la définition choisie. Avant de comparer deux chiffres, vérifiez qu'ils répondent à la même question."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Laquelle est une question *statistique* ? A : « Quelle est la hauteur de la tour Eiffel ? » B : « Combien de temps les Parisiens mettent-ils pour aller travailler ? »"
+        pause: 5
+        voix_off: "À vous. Laquelle de ces deux questions est une question statistique ? A : quelle est la hauteur de la tour Eiffel ? B : combien de temps les Parisiens mettent-ils pour aller travailler ?"
+      - type: correction
+        etapes:
+          - "A : *une seule* valeur, à mesurer une fois"
+          - "B : des durées qui *varient* d'une personne à l'autre"
+        reponse: "B est une question statistique"
+        voix_off: "La question A n'a qu'une réponse : on la mesure une fois. La question B porte sur des milliers de personnes, et les durées varient de l'une à l'autre. C'est donc B, la question statistique."
+      - type: etapes
+        texte: "Trois questions à poser à un chiffre"
+        etapes:
+          - "Quelle *question* ?"
+          - "Quelle *définition* ?"
+          - "Qui a *mesuré*, et *quand* ?"
+        voix_off: "Retenez trois questions à poser à n'importe quel chiffre. À quelle question répond-il ? Avec quelle définition ? Et qui l'a mesuré, et quand ?"
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "How many people live in Paris? What counts as data"
+    legende: |
+      How many people live in Paris: 2.1 million, 11 million or 13.3 million? All three figures are correct, because each answers a different definition of "Paris". First lesson of the course: what makes a question statistical, and why a data point is always a measurement, made by someone, under a definition. Source: Insee, 2023 population census (commune, urban unit and catchment area of Paris). Series "Reading numbers without being fooled".
+    hashtags: [statistics, data, numbers]
+    scenes:
+      - type: accroche
+        texte: "How many people live in Paris? *2.1 million*, *11 million* or *13.3 million*?"
+        voix_off: "How many people live in Paris? Two point one million, eleven million, or thirteen point three million?"
+      - type: exercice
+        texte: "2.1, 11 or 13.3 million: *which one* is right?"
+        etiquette: "CHALLENGE"
+        pause: 4
+        voix_off: "Pick your answer before we go on. Which of these three figures is the right one?"
+      - type: titre
+        numero: 1
+        texte: "A statistical question"
+        voix_off: "To answer, let's start with a simpler question: what is a statistical question?"
+      - type: etapes
+        texte: "Two questions, two kinds"
+        etapes:
+          - "\"How old is my neighbour?\": *a single answer*"
+          - "\"How old are the people on my street?\": answers that *vary*"
+        voix_off: "Let's compare two questions. How old is my neighbour? There is a single answer: you just ask her. How old are the people on my street? This time, the answers vary from one person to the next."
+      - type: texte
+        texte: "A statistical question expects answers that *vary*"
+        voix_off: "That's the key difference. A statistical question is about a group, and it expects answers that vary. Statistics are there to describe and understand that variability."
+      - type: titre
+        numero: 2
+        texte: "Data are measurements"
+        voix_off: "Second idea: data don't fall from the sky."
+      - type: etapes
+        texte: "Behind every data point"
+        disposition: cartes
+        etapes:
+          - "A precise *question*"
+          - "A *definition* of what is counted"
+          - "Someone who *measures*, at a given date"
+        voix_off: "Behind every data point, there are three things. A precise question. A definition of what is being counted. And someone who measures, at a given date, with a method."
+      - type: titre
+        numero: 3
+        texte: "How many people live in Paris?"
+        voix_off: "Let's go back to Paris, with the census figures from Insee, the French statistics office."
+      - type: etapes
+        texte: "Three definitions of \"Paris\""
+        etapes:
+          - "The *city* of Paris: *2.1 million*"
+          - "The *built-up area*: *11.0 million*"
+          - "The *catchment area*, adding the towns where many of its workers live: *13.3 million*"
+        note: "Insee, 2023 census: 2,103,778; 11,013,774; 13,320,752 people."
+        voix_off: "Insee publishes three figures, for three definitions of Paris. The city of Paris, within its official boundaries: two point one million people. The built-up area, meaning Paris and the surrounding towns that form one continuous urban area with it: eleven million. The catchment area, which adds the towns where a large share of residents commute to work in that urban area: thirteen point three million."
+        verifier:
+          - {expression: "2103778 / 1e6", attendu: 2.1, libelle: "City of Paris, millions"}
+          - {expression: "11013774 / 1e6", attendu: 11.0, libelle: "Paris urban unit, millions"}
+          - {expression: "13320752 / 1e6", attendu: 13.3, libelle: "Paris catchment area, millions"}
+      - type: chiffre
+        valeur: 6.3
+        prefixe: "×"
+        texte: "more people, from the city to the catchment area"
+        voix_off: "The answer to the challenge: all three figures are right. Depending on the definition, the number of people is multiplied by more than six."
+        note: "13,320,752 ÷ 2,103,778 ≈ 6.3. Insee, 2023 census."
+        verifier:
+          - {expression: "13320752 / 2103778", attendu: 6.3, libelle: "Catchment area / city ratio"}
+      - type: texte
+        texte: "A number isn't neutral: it depends on *the question asked*"
+        voix_off: "So a figure isn't neutral or objective just because it's a number. It depends on the question asked and on the definition chosen. Before comparing two figures, check that they answer the same question."
+      - type: exercice
+        texte: "Which one is a *statistical* question? A: \"How tall is the Eiffel Tower?\" B: \"How long do Parisians take to get to work?\""
+        pause: 5
+        voix_off: "Your turn. Which of these two questions is a statistical question? A: how tall is the Eiffel Tower? B: how long do Parisians take to get to work?"
+      - type: correction
+        etapes:
+          - "A: *a single* value, measured once"
+          - "B: times that *vary* from person to person"
+        reponse: "B is a statistical question"
+        voix_off: "Question A has only one answer: you measure it once. Question B is about thousands of people, and the times vary from one to the next. So B is the statistical question."
+      - type: etapes
+        texte: "Three questions to ask any number"
+        etapes:
+          - "Which *question*?"
+          - "Which *definition*?"
+          - "Who *measured* it, and *when*?"
+        voix_off: "Remember three questions to ask any number. Which question does it answer? Under which definition? And who measured it, and when?"
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

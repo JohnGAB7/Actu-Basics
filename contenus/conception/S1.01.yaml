@@ -1,0 +1,59 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S1.01
+statut: revue_claude   # 2026-11-03 : à relire par ChatGPT, puis validation de JG
+fiche_production: contenus/fiches/2026-11-n1-s1-01-qu-est-ce-qu-une-donnee.yaml
+
+titres: {fr: "Combien d'habitants à Paris ? Qu'est-ce qu'une donnée", en: "How many people live in Paris? What counts as data"}
+question_centrale:
+  fr: "Pourquoi « combien de personnes vivent à Paris ? » n'a-t-elle pas une seule réponse ?"
+  en: "Why doesn't \"how many people live in Paris?\" have a single answer?"
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 1}
+public: {prerequis: [], niveau_maths: M0, rappel_conseille: []}
+
+intuition: "Une donnée est une réponse enregistrée à une question précise, posée selon une définition."
+exemple_fil_rouge: "Trois chiffres pour « Paris » : commune, unité urbaine, aire d'attraction."
+exemple_reel:
+  description: "Population de Paris selon trois définitions de l'Insee (recensement 2023)"
+  source:
+    organisme: "Insee"
+    titre: "Comparateur de territoires : commune 75056, unité urbaine 00851, aire d'attraction 001, « Population en 2023 »"
+    url: "https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001"
+    date_publication: "2026-08-27"
+    periode_donnees: "2023 (RP2023, géographie au 01/01/2026)"
+    consulte_le: "2026-11-03"
+
+provenance:
+  - {chiffre: "2 103 778 ; 11 013 774 ; 13 320 752 habitants (arrondis 2,1 ; 11,0 ; 13,3 millions)", support: ecran_et_voix, nature: donnee_publiee, calcul: {entrees: "Populations 2023", formule: "÷ 1 000 000 ; rapport 13 320 752 ÷ 2 103 778 ≈ 6,3", transformations: "arrondi au dixième"}, definition: "Population municipale au recensement", unite: "habitants", population: "Commune, unité urbaine et aire d'attraction de Paris", periode: "2023", couverture: "France", revisions: "Nouveau millésime chaque année", source_primaire: {organisme: "Insee", url: "https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001", consulte_le: "2026-11-03"}, incertitude: "Recensement : pas de marge d'erreur annoncée", comparabilite: "Même source, même année, trois zonages"}
+
+affirmations_qualitatives:
+  - {affirmation: "Unité urbaine : communes formant une zone de bâti continu ; aire d'attraction : pôle et communes dont une part des actifs y travaille", statut: hypothese, source: "Définitions Insee à relire (pages « définitions » non lues le 2026-11-03)", verification: "Formulation volontairement générale dans la voix ; à confirmer par ChatGPT ou JG"}
+
+deroule:
+  - {etape: question, contenu: "Défi : 2,1, 11 ou 13,3 millions ?"}
+  - {etape: raisonnement, contenu: "Question à réponse unique ou question statistique"}
+  - {etape: formalisation, contenu: "Question, définition, mesure"}
+  - {etape: application, contenu: "Trois définitions de Paris ; réponse au défi (×6,3)"}
+  - {etape: exercice, contenu: "Tour Eiffel ou temps de trajet"}
+  - {etape: rappel, contenu: "Trois questions à poser à un chiffre"}
+
+calculs_a_verifier:
+  - {expression: "13320752 / 2103778", attendu: 6.3, libelle: "Rapport aire / commune"}
+
+idees_fausses:
+  - {idee: "Un chiffre est neutre parce qu'il est un nombre", desamorcee_a_l_etape: "Un nombre n'est pas neutre"}
+
+exercice: {question: "Laquelle est une question statistique ? A : hauteur de la tour Eiffel ; B : temps de trajet des Parisiens", correction: "B : les réponses varient d'une personne à l'autre", pause_secondes: 5}
+
+preuve_apprentissage:
+  tache: "Répondre à la question de transfert sans aide"
+  question_de_transfert: "« Combien d'élèves dans un collège de 600 élèves vont au collège à pied ? » et « À quelle heure ouvre ce collège ? » : laquelle est statistique, et pourquoi ?"
+  diagnostic_d_erreur: "« Lyon a 520 000 habitants, donc moins que Marseille » : quelle question faut-il poser avant de comparer ?"
+  limite_a_enoncer: "Une même définition peut changer dans le temps (zonages de l'Insee révisés)"
+
+duree_estimee_min: [3, 5]
+format: educational
+declinaisons: [vertical_9_16, youtube_16_9]   # demande de JG, 2026-11-03 : une version par plateforme
+derives_short: ["Combien d'habitants à Paris ? Trois réponses justes (40 s)"]
+adaptation_en: "Mêmes nombres ; décimales et séparateurs anglais ; noms d'organismes expliqués (Insee, France Travail)."
+licences: "Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+controle: {test_du_debutant: "À mesurer", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu (inspection)"}
