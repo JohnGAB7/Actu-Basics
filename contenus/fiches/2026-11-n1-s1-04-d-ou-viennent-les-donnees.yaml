@@ -61,10 +61,10 @@ editions:
         texte: "Les quatre grandes sources"
         disposition: cartes
         etapes:
-          - "*Recensement* : on interroge tout le monde"
-          - "*Sondage* : on interroge un échantillon"
-          - "*Fichier administratif* : on enregistre pour gérer"
-          - "*Capteurs et plateformes* : on garde des traces"
+          - "*Recensement* : tout le monde"
+          - "*Sondage* : un échantillon"
+          - "*Fichiers* : enregistrer pour gérer"
+          - "*Capteurs* : garder des traces"
         voix_off: "Le recensement interroge toute la population. L'enquête par sondage interroge seulement un échantillon, choisi pour la représenter. Le fichier administratif enregistre des personnes pour gérer un service : les impôts, l'état civil, les inscriptions. Enfin, les capteurs et les plateformes gardent des traces : passages de voitures, achats, connexions."
       - type: etapes
         texte: "Une force, une limite"
