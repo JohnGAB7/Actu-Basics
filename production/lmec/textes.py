@@ -138,7 +138,7 @@ def ecrire_metadonnees(fiche: Fiche, edition: Edition, durees: list[float], doss
     (dossier / "legende.txt").write_text(legende + "\n", encoding="utf-8")
     meta = {
         "id": fiche.id, "langue": edition.langue, "theme": fiche.theme,
-        "type_fiche": fiche.type_fiche, "famille": fiche.famille, "format": fiche.format,
+        "type_fiche": fiche.type_fiche, "famille": fiche.famille, "format": fiche.format, "image": fiche.format_image,
         "titre": edition.titre, "legende": legende, "hashtags": edition.hashtags,
         "sources": fiche.sources, "periode": fiche.contexte("periode", edition.langue),
         "perimetre": fiche.contexte("perimetre", edition.langue),

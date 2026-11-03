@@ -511,7 +511,8 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         return  # signalé avant le rendu par controler_marque
     r.verifier(logos.langue == langue, f"[{langue}] Logo de la bonne langue",
                f"[{langue}] Logo de la langue « {logos.langue} » utilisé pour la version {langue.upper()}", BLOQUANT)
-    noms = {"video": "vidéo", "carrousel": "carrousel", "couverture": "couverture"}
+    noms = {"video": "vidéo", "lecon": "vidéo 16:9", "carrousel": "carrousel", "couverture": "couverture"}
+    horizontal = getattr(rendu, "format", "") == "lecon"   # cours 16:9 : pas d'interface d'application par-dessus
     zone_c = charte["marges_carrousel"]
     for support, index, type_ in attendus:
         pose = rendu.poses.get((support, index))
@@ -533,7 +534,7 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         if pose.largeur > pose.largeur_native:
             r.avertir(f"Logo agrandi au-delà de sa résolution ({pose.largeur} px pour un fichier de "
                       f"{pose.largeur_native} px, {lieu}) : risque de flou, fournir un fichier plus grand", langue)
-        ecran_tel = 844 if support == "lecon" else 390   # téléphone tenu à l'horizontale pour un cours 16:9
+        ecran_tel = 844 if horizontal else 390   # téléphone tenu à l'horizontale pour un cours 16:9
         if pose.largeur * ecran_tel / w < _logo.LARGEUR_MOBILE_MIN:
             r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * ecran_tel / w)} px à l'écran, {lieu})", langue)
         lis = (charte.get("logo") or {}).get("lisibilite") or {}
@@ -551,7 +552,7 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
                     or y1 > h - zone_c["bas"])
             if hors:
                 r.avertir(f"Logo hors des marges du carrousel ({lieu})", langue)
-        elif support != "lecon":
+        elif not horizontal:
             for cle in plateformes["cibles"]:
                 p = plateformes["plateformes"][cle]
                 z = p["zone_ui"]

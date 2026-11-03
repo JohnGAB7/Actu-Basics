@@ -1639,3 +1639,34 @@ def test_inventaire_signale_une_video_manquante(tmp_path):
     texte, erreurs = inventaire.inventorier(tmp_path)
     assert "fiche/en/video.mp4 manquant" in erreurs
     assert "| `fr/video.mp4` |" in texte and "## Contrôle" in texte
+
+
+# ---------------------------------------------------------------- déclinaison 16:9 (YouTube)
+
+PILOTE_S108 = RACINE / "contenus/fiches/2026-11-pilote-s1-08-pourcentages-et-points.yaml"
+
+
+def test_horizontal_ignore_un_short(tmp_path):
+    r = lancer(EXEMPLE, "--horizontal", "--voix", "test", "--sans-video", "--sortie", tmp_path)
+    assert r.returncode == 0
+    assert "pas de déclinaison 16:9" in r.stdout
+    assert not (tmp_path / "exemple-fictif-16x9").exists()
+
+
+def test_horizontal_decline_une_lecon_verticale_en_16_9(tmp_path):
+    assert charger_fiche(PILOTE_S108).format_image == "video"
+    r = lancer(PILOTE_S108, "--horizontal", "--voix", "test", "--sans-video", "--langues", "fr", "--sortie", tmp_path)
+    assert r.returncode == 0, r.stdout + r.stderr
+    meta = json.loads((tmp_path / "2026-11-pilote-s1-08-pourcentages-et-points-16x9/fr/metadonnees.json").read_text())
+    assert meta["image"] == "lecon" and meta["format"] == "educational"
+    assert not (tmp_path / "2026-11-pilote-s1-08-pourcentages-et-points").exists()
+
+
+def test_logo_de_fin_controle_en_16_9_sans_interface_d_application():
+    r, _, ed = _rendu_fin(CHARTE, fmt="lecon")
+    n = len(ed.scenes)
+    assert ("lecon", n - 1) in r.poses
+    rap = Rapport()
+    controler_logo("fr", r, [("lecon", n - 1, "fin")], CHARTE, PLATEFORMES, rap)
+    assert not rap.bloquants
+    assert not [a for a in rap.avertissements if "interface" in str(a)]

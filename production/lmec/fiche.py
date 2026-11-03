@@ -74,6 +74,7 @@ class Fiche:
     format: str = "short"
     pedagogie: dict = field(default_factory=dict)   # niveau, objectifs, prérequis (fiches pédagogiques)
     habillage_sonore: bool = False
+    format_image_impose: str = ""   # « lecon » : déclinaison 16:9 YouTube d'une fiche verticale (--horizontal)
 
     @property
     def pedagogique(self) -> bool:
@@ -82,7 +83,7 @@ class Fiche:
     @property
     def format_image(self) -> str:
         """Format d'image de la charte : « video » (vertical) ou « lecon » (16:9)."""
-        return FORMATS.get(self.format, "video")
+        return self.format_image_impose or FORMATS.get(self.format, "video")
 
     def contexte(self, cle: str, langue: str) -> str:
         """periode / perimetre / definition : chaîne commune ou {fr: ..., en: ...}."""

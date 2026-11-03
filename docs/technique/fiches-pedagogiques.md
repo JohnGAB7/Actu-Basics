@@ -14,6 +14,8 @@ L'architecture est inchangée : même commande (`python production/produire.py <
 | `habillage_sonore` | `true`, `false` (défaut) | Signature sonore et nappe sous la voix (`lmec/son.py`, réglages `charte.yaml` → `son`) |
 | `pedagogie` | `niveau`, `objectifs` (FR, EN), `prerequis`, `hypotheses` | Obligatoire pour une fiche pédagogique |
 
+**Déclinaisons par plateforme** (demande de JG, 2026-11-03) : une même fiche `educational` donne la version verticale 9:16 (TikTok, Instagram Reels, YouTube Shorts) et, avec `--horizontal`, la version 16:9 1920 × 1080 pour YouTube, rangée dans `sortie/<id>-16x9/`. La voix, les sous-titres et les durées sont les mêmes ; seule la mise en page change (deux colonnes, comme `youtube_lesson`). Un SHORT reste vertical. Le workflow « Validation finale » produit les deux versions.
+
 Une fiche pédagogique n'a pas besoin de `chiffre_cle`, de `contexte` ni de `sources`, sauf si elle cite un fait extérieur.
 
 ## Scènes
