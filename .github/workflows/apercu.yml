@@ -53,19 +53,54 @@ jobs:
   # Liste des fiches à rendre : une tâche de rendu par fiche, en parallèle. Rendre toutes les
   # fiches à la suite dépassait la limite de 60 minutes dès qu'il y avait plusieurs leçons longues
   # (PR #15, cinq vidéos pilotes de 4 à 5 minutes en FR et EN).
+  # Ne rendre que les fiches de production réellement modifiées.
+  # Un changement du moteur/charte déclenche un rendu témoin, pas le catalogue entier.
   liste:
     runs-on: ubuntu-latest
     outputs:
       fiches: ${{ steps.fiches.outputs.fiches }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - id: fiches
         env:
-          FICHE_DEMANDEE: ${{ github.event.inputs.fiche }}
+          EVENT_NAME: ${{ github.event_name }}
+          FICHE_DEMANDEE: ${{ inputs.fiche }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_SHA: ${{ github.sha }}
+        shell: bash
         run: |
-          if [ -n "$FICHE_DEMANDEE" ]; then FICHES="$FICHE_DEMANDEE"; else FICHES=$(ls contenus/fiches/*.yaml 2>/dev/null); fi
-          [ -z "$FICHES" ] && FICHES="contenus/exemples/exemple-fictif.yaml"
-          echo "fiches=$(printf '%s\n' $FICHES | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            if [[ -n "$FICHE_DEMANDEE" ]]; then
+              FICHES=("$FICHE_DEMANDEE")
+            else
+              mapfile -t FICHES < <(find contenus/fiches -maxdepth 1 -type f -name '*.yaml' -print | sort)
+            fi
+          elif [[ "$EVENT_NAME" == "pull_request" ]]; then
+            mapfile -t FICHES < <(git diff --name-only --diff-filter=ACMRT "$PR_BASE_SHA" "$PR_HEAD_SHA" -- 'contenus/fiches/*.yaml' | sort)
+          elif [[ "$EVENT_NAME" == "push" ]]; then
+            if [[ "$PUSH_BEFORE" =~ ^0+$ ]]; then
+              mapfile -t FICHES < <(find contenus/fiches -maxdepth 1 -type f -name '*.yaml' -print | sort)
+            else
+              mapfile -t FICHES < <(git diff --name-only --diff-filter=ACMRT "$PUSH_BEFORE" "$PUSH_SHA" -- 'contenus/fiches/*.yaml' | sort)
+            fi
+          else
+            FICHES=()
+          fi
+
+          # Une modification du moteur, de la charte ou du workflow doit tout de même
+          # produire un rendu de fumée, sans lancer des centaines de rendus inutiles.
+          if (( ${#FICHES[@]} == 0 )); then
+            FICHES=("contenus/exemples/exemple-fictif.yaml")
+          fi
+
+          FICHES_JSON="$(printf '%s\0' "${FICHES[@]}" | python3 -c 'import json,sys; print(json.dumps([p for p in sys.stdin.buffer.read().decode().split("\0") if p]))')"
+          echo "Fiches à rendre : $FICHES_JSON"
+          echo "fiches=$FICHES_JSON" >> "$GITHUB_OUTPUT"
 
   apercu:
     needs: liste
@@ -76,6 +111,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         fiche: ${{ fromJSON(needs.liste.outputs.fiches) }}
     steps:
