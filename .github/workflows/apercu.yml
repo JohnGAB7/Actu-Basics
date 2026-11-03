@@ -98,7 +98,7 @@ jobs:
             FICHES=("contenus/exemples/exemple-fictif.yaml")
           fi
 
-          FICHES_JSON="$(printf '%s\0' "${FICHES[@]}" | python3 -c 'import json,sys; print(json.dumps([p for p in sys.stdin.buffer.read().decode().split("\\0") if p]))')"
+          FICHES_JSON="$(printf '%s\0' "${FICHES[@]}" | python3 -c 'import json,sys; print(json.dumps([p for p in sys.stdin.buffer.read().decode().split("\0") if p]))')"
           echo "Fiches à rendre : $FICHES_JSON"
           echo "fiches=$FICHES_JSON" >> "$GITHUB_OUTPUT"
 
