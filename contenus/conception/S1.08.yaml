@@ -42,7 +42,9 @@ cycle_enquete:
   reproductibilite: "Calculs à l'écran, recalculés par le moteur"
 
 donnees_ou_simulation: {type: calcul_pur, raison_du_choix: "Nombres ronds pour isoler le raisonnement", source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}, parametres_simulation: ""}
-hypotheses_et_limites: []
+hypotheses_et_limites:
+  - {hypothese: "Les deux villes comptent les cas sur la même période et avec la même définition", intuition: "Sinon les taux ne mesurent pas la même chose", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Comparaison impossible en l'état ; dit à l'écran (note) et dans la voix (revue PR #15)"}
+  - {hypothese: "Taux brut : structures de population comparables", intuition: "Une ville plus âgée peut avoir plus de cas sans risque plus élevé à âge égal", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Taux standardisés (Q7.02) ; limite énoncée dans la voix"}
 reproductibilite: "Blocs verifier de la fiche de production"
 
 deroule:

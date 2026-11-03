@@ -109,8 +109,8 @@ editions:
           - {expression: "(5 ** 2 + 15 ** 2) / 2 / (2 * 10)", attendu: 6.25, libelle: "Attente moyenne par la formule générale, en min"}
       - type: texte
         texte: "Plus les bus sont *irréguliers*, plus on attend"
-        note: "Bus entièrement au hasard, 10 min en moyenne : 10 min d'attente moyenne."
-        voix_off: "Et plus les bus sont irréguliers, plus l'attente moyenne s'allonge. Si les bus passaient entièrement au hasard, toujours dix minutes en moyenne, vous attendriez en moyenne dix minutes. C'est l'objet d'une autre vidéo, sur la loi exponentielle."
+        note: "Processus de Poisson (intervalles exponentiels de moyenne 10 min) : 10 min d'attente moyenne."
+        voix_off: "Et plus les bus sont irréguliers, plus l'attente moyenne s'allonge. Si les passages suivaient un processus de Poisson, c'est-à-dire des intervalles exponentiels de dix minutes en moyenne, vous attendriez en moyenne dix minutes. C'est l'objet d'une autre vidéo, sur la loi exponentielle."
       - type: exercice
         texte: "Les intervalles valent maintenant *2* et *18 minutes*. Quelle est l'attente moyenne ?"
         pause: 8
@@ -134,10 +134,10 @@ editions:
       - type: etapes
         texte: "Le *paradoxe de l'inspection*, partout"
         etapes:
-          - "Les élèves vivent des classes *plus chargées* que la moyenne des classes"
+          - "Un élève pris au hasard est plus souvent dans une classe *chargée*"
           - "Au hasard d'une visite, on croise surtout les *habitués*"
           - "Interrogés à un instant donné, les malades ont surtout des maladies *longues*"
-        voix_off: "On retrouve le même mécanisme dans bien d'autres situations. Les élèves vivent en moyenne dans des classes plus chargées que la moyenne des classes, car une grande classe contient plus d'élèves pour la ressentir. Dans une salle de sport, au hasard d'une visite, on croise surtout ceux qui y vont souvent. Et si l'on interroge les malades présents un jour donné dans un hôpital, on trouve surtout des maladies longues, qui restent plus longtemps."
+        voix_off: "On retrouve le même mécanisme dans bien d'autres situations. Un élève choisi au hasard se trouve plus souvent dans une grande classe : vue par les élèves, la taille moyenne des classes dépasse donc la moyenne calculée classe par classe. Dans une salle de sport, au hasard d'une visite, on croise surtout ceux qui y vont souvent. Et si l'on interroge les malades présents un jour donné dans un hôpital, on trouve surtout des maladies longues, qui restent plus longtemps."
       - type: etapes
         texte: "Ce qu'il faut retenir"
         etapes:
@@ -224,8 +224,8 @@ editions:
           - {expression: "(5 ** 2 + 15 ** 2) / 2 / (2 * 10)", attendu: 6.25, libelle: "Average wait from the general formula, min"}
       - type: texte
         texte: "The more *irregular* the buses, the longer you wait"
-        note: "Buses at completely random times, 10 min on average: a 10-minute average wait."
-        voix_off: "And the more irregular the buses, the longer the average wait. If buses came at completely random times, still ten minutes apart on average, you'd wait ten minutes on average. That's the subject of another video, on the exponential distribution."
+        note: "Poisson process (exponential gaps averaging 10 min): a 10-minute average wait."
+        voix_off: "And the more irregular the buses, the longer the average wait. If arrivals followed a Poisson process, meaning exponential gaps that average ten minutes, you'd wait ten minutes on average. That's the subject of another video, on the exponential distribution."
       - type: exercice
         texte: "Now the gaps are *2* and *18 minutes*. What's the average wait?"
         pause: 8
@@ -249,10 +249,10 @@ editions:
       - type: etapes
         texte: "The *inspection paradox* is everywhere"
         etapes:
-          - "Students sit in classes *bigger* than the average class"
+          - "A student picked at random is more often in a *big* class"
           - "Drop by a gym at random: you mostly meet the *regulars*"
           - "Survey patients on a given day: you mostly find *long* illnesses"
-        voix_off: "The same mechanism turns up in many other places. On average, students sit in classes that are bigger than the average class, because a big class has more students to experience it. Drop by a gym at a random moment, and you'll mostly meet the people who go often. And if you survey the patients in a hospital on a given day, you'll mostly find long illnesses, because those patients stay longer."
+        voix_off: "The same mechanism turns up in many other places. A student picked at random is more likely to be in a big class: seen from the students' side, the average class size is larger than the average worked out class by class. Drop by a gym at a random moment, and you'll mostly meet the people who go often. And if you survey the patients in a hospital on a given day, you'll mostly find long illnesses, because those patients stay longer."
       - type: etapes
         texte: "Key takeaways"
         etapes:

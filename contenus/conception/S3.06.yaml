@@ -28,7 +28,7 @@ provenance: []
 
 affirmations_qualitatives:
   - {affirmation: "Ventes de glaces et noyades augmentent ensemble quand il fait chaud", statut: hypothese, source: "", verification: "Exemple classique d'enseignement, présenté comme raisonnement, sans chiffre ; à sourcer si un chiffre est ajouté"}
-  - {affirmation: "L'expérience avec tirage au sort répartit les facteurs cachés entre les groupes", statut: sourcee, source: "Principe de la randomisation (S1.06, E7.01)", verification: "En moyenne, et d'autant mieux que les groupes sont grands : nuance à préciser à l'oral si ChatGPT le demande"}
+  - {affirmation: "Le tirage au sort tend à équilibrer les facteurs connus et inconnus entre les groupes ; un déséquilibre peut subsister dans une expérience particulière", statut: sourcee, source: "Principe de la randomisation (S1.06, E7.01)", verification: "Équilibre en espérance sur les tirages, pas dans chaque expérience : nuance ajoutée à l'écran et dans la voix après la revue de la PR #15"}
 
 cycle_enquete:
   question: "Montrée : une corrélation prouve-t-elle une cause ?"

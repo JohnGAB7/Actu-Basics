@@ -124,6 +124,18 @@ editions:
         voix_off: "Comparons. Une seule valeur extrême fait passer la moyenne de deux mille deux cents à près de vingt-deux mille euros. La médiane, elle, ne gagne que cinquante euros."
         verifier:
           - {expression: "2250 - 2200", attendu: 50, libelle: "Hausse de la médiane, en euros"}
+      - type: courbe
+        texte: "Les dix salaires, *du plus bas au plus haut*"
+        courbe:
+          points: [[1, 1600], [2, 1800], [3, 1900], [4, 2000], [5, 2200], [6, 2300], [7, 2500], [8, 2700], [9, 2800], [10, 200000]]
+          seuil: 21980
+          axe_x: "Rang du client"
+          reperes:
+            - {x: 10, label: "200 000 €"}
+        note: "Pointillés : moyenne, 21 980 €. Médiane : 2 250 €, au ras de l'axe."
+        voix_off: "Rangeons les dix salaires, du plus bas au plus haut : la médiane, au milieu, reste au ras de l'axe, à deux mille deux cent cinquante euros. Le dixième salaire, deux cent mille euros, tire à lui seul la moyenne, en pointillés, au-dessus de neuf salaires sur dix."
+        verifier:
+          - {expression: "(1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10", attendu: 21980, libelle: "Moyenne des dix salaires du graphique"}
       - type: etapes
         texte: "Moyenne et médiane selon la *forme* de la distribution"
         etapes:
@@ -132,8 +144,8 @@ editions:
           - "Longue traîne vers le bas : moyenne *en dessous* de la médiane"
         voix_off: "C'est une règle générale, qui dépend de la forme de la distribution. Quand quelques valeurs très grandes forment une longue traîne vers le haut, comme souvent les salaires ou les patrimoines, la moyenne passe au-dessus de la médiane. Quand la distribution est symétrique, les deux sont proches. Et quand la traîne part vers le bas, la moyenne passe en dessous."
       - type: texte
-        texte: "Moyenne au-dessus de la médiane : *au moins la moitié* des gens gagnent moins que la moyenne"
-        voix_off: "Voilà la réponse au défi. Par définition, la moitié des gens gagnent moins que la médiane. Si la moyenne est au-dessus de la médiane, au moins la moitié des gens gagnent donc moins que la moyenne. Souvent bien plus."
+        texte: "Moyenne au-dessus de la médiane : *au moins la moitié* des valeurs sont inférieures à la moyenne"
+        voix_off: "Voilà la réponse au défi. Par définition, au moins la moitié des valeurs sont inférieures ou égales à la médiane. Si la moyenne est au-dessus de la médiane, au moins la moitié des valeurs sont donc inférieures à la moyenne. Pour des salaires, cela fait au moins la moitié des salariés, et souvent bien plus."
       # ---------------------------------------------------------------- Exercice
       - type: exercice
         texte: "Sept salaires : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000, 2 100 €. Moyenne et médiane, avant puis après l'arrivée d'un salaire de *20 000 €* ?"
@@ -266,6 +278,18 @@ editions:
         voix_off: "Compare the two. One extreme value pushes the mean from two thousand two hundred to almost twenty-two thousand euros. The median goes up by just fifty euros."
         verifier:
           - {expression: "2250 - 2200", attendu: 50, libelle: "Rise in the median, euros"}
+      - type: courbe
+        texte: "The ten salaries, *lowest to highest*"
+        courbe:
+          points: [[1, 1600], [2, 1800], [3, 1900], [4, 2000], [5, 2200], [6, 2300], [7, 2500], [8, 2700], [9, 2800], [10, 200000]]
+          seuil: 21980
+          axe_x: "Customer rank"
+          reperes:
+            - {x: 10, label: "€200,000"}
+        note: "Dotted line: mean, €21,980. Median: €2,250, right along the axis."
+        voix_off: "Let's line up the ten salaries, from lowest to highest: the median, in the middle, stays right along the axis, at two thousand two hundred fifty euros. The tenth salary, two hundred thousand euros, single-handedly drags the mean, the dotted line, above nine salaries out of ten."
+        verifier:
+          - {expression: "(1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10", attendu: 21980, libelle: "Mean of the ten salaries in the chart"}
       - type: etapes
         texte: "Mean and median depend on the *shape* of the distribution"
         etapes:
@@ -274,8 +298,8 @@ editions:
           - "Long tail toward low values: mean *below* the median"
         voix_off: "This is a general rule, and it depends on the shape of the distribution. When a few very large values form a long tail toward the top, as salaries and wealth often do, the mean ends up above the median. When the distribution is symmetric, the two are close. And when the tail points toward low values, the mean falls below the median."
       - type: texte
-        texte: "Mean above the median: *at least half* of people earn less than the mean"
-        voix_off: "That answers the challenge. By definition, half of people earn less than the median. So if the mean is above the median, at least half of people earn less than the mean. Often many more."
+        texte: "Mean above the median: *at least half* of the values are below the mean"
+        voix_off: "That answers the challenge. By definition, at least half of the values are less than or equal to the median. So if the mean is above the median, at least half of the values are below the mean. For salaries, that means at least half of workers, and often many more."
       - type: exercice
         texte: "Seven salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000, 2,100. Mean and median, before and after a *€20,000* salary joins?"
         pause: 8

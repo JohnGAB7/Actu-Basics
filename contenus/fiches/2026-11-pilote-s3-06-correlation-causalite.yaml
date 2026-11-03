@@ -101,9 +101,9 @@ editions:
       - type: etapes
         texte: "Comment établir une *cause* ?"
         etapes:
-          - "Comparer des groupes *tirés au sort* : le hasard répartit les facteurs cachés"
+          - "Comparer des groupes *tirés au sort* : le tirage *tend à équilibrer* les facteurs cachés"
           - "Sans expérience : *nommer* les facteurs de confusion et les mesurer"
-        voix_off: "Alors, comment établir une cause ? La méthode la plus sûre est l'expérience : on tire au sort qui reçoit le traitement, et le hasard répartit les facteurs cachés entre les groupes. Quand une expérience est impossible, il faut au moins nommer les facteurs de confusion possibles, et les prendre en compte. L'économétrie consacre tout un pilier à cette question."
+        voix_off: "Alors, comment établir une cause ? La méthode la plus sûre est l'expérience : on tire au sort qui reçoit le traitement, ce qui tend à équilibrer les facteurs connus et inconnus entre les groupes ; un déséquilibre peut néanmoins subsister dans une expérience particulière. Quand une expérience est impossible, il faut au moins nommer les facteurs de confusion possibles, et les prendre en compte. L'économétrie consacre tout un pilier à cette question."
       - type: exercice
         texte: "Une explication *non causale* pour chacune : 1. Les enfants aux grands pieds lisent mieux. 2. Les élèves qui prennent des cours particuliers ont de moins bonnes notes. 3. Les ventes de smartphones et le prix des loyers ont monté ensemble pendant dix ans."
         pause: 10
@@ -194,9 +194,9 @@ editions:
       - type: etapes
         texte: "How do you establish a *cause*?"
         etapes:
-          - "Compare *randomly assigned* groups: chance spreads hidden factors evenly"
+          - "Compare *randomly assigned* groups: random assignment *tends to balance* hidden factors"
           - "No experiment? *Name* the confounders, and measure them"
-        voix_off: "So how do you establish a cause? The most reliable way is an experiment: you randomly decide who gets the treatment, and chance spreads the hidden factors evenly across the groups. When an experiment isn't possible, you at least need to name the possible confounders and account for them. Econometrics devotes a whole pillar to this question."
+        voix_off: "So how do you establish a cause? The most reliable way is an experiment: you randomly decide who gets the treatment, which tends to balance known and unknown factors across the groups; some imbalance can still remain in any particular experiment. When an experiment isn't possible, you at least need to name the possible confounders and account for them. Econometrics devotes a whole pillar to this question."
       - type: exercice
         texte: "Find a *non-causal* explanation for each: 1. Kids with bigger feet read better. 2. Students who get private tutoring have lower grades. 3. Smartphone sales and rents rose together for ten years."
         pause: 10

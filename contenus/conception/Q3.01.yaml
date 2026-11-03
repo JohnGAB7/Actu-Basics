@@ -46,6 +46,7 @@ cycle_enquete:
 donnees_ou_simulation: {type: calcul_pur, raison_du_choix: "Deux intervalles suffisent à montrer le mécanisme ; la simulation prévue au programme peut s'ajouter en version longue", source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}, parametres_simulation: ""}
 hypotheses_et_limites:
   - {hypothese: "Le voyageur arrive au hasard", intuition: "Il ne consulte pas l'horaire", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Un voyageur qui consulte l'horaire attend moins ; le paradoxe ne s'applique plus"}
+  - {hypothese: "Cas des 10 minutes d'attente : passages suivant un processus de Poisson (intervalles exponentiels de moyenne 10 min)", intuition: "C'est cette hypothèse précise, et non « des bus au hasard » en général, qui donne 10 minutes", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Formulation précisée après la revue de la PR #15"}
 
 reproductibilite: "Blocs verifier"
 
