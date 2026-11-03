@@ -332,7 +332,10 @@ class ScenesPedagogiques(Animations):
         lib = LIBELLES_PEDAGOGIE[self.langue]
         a = 1.0 if t is None else _ease(t / 0.4)
         zt, zc = self._zones(g, haut, dr, bas)
-        anneau = 240 if not self.colonnes else 420
+        anneau = 240 if not self.colonnes else 340
+        if self.colonnes:   # 16:9 : la question prend les deux tiers de la largeur, le compte à rebours le reste
+            l = dr - g
+            zt, zc = (g, haut, g + int(l * 0.64), bas), (g + int(l * 0.70), haut, dr, bas)
         pq, lq, pas_q, hq = self.ajuster_riche(scene.texte, "gras", zt[2] - zt[0],
                                                (bas - haut - 140 - (anneau + 120 if not self.colonnes else 0)),
                                                92 if not self.colonnes else 84, 44, 1.2, ctx, equilibre=True)
