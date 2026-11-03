@@ -1,0 +1,120 @@
+# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: Q2.04
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-pilote-q2-04-biais-du-survivant.yaml
+
+titres:
+  fr: "Où blinder les avions ?"
+  en: "Where should you armour the planes?"
+question_centrale:
+  fr: "Pourquoi les vieux bâtiments semblent-ils mieux construits que les neufs ?"
+  en: "Why do old buildings seem better built than new ones?"
+
+position: {pilier: quotidien, niveau: 1, module: Q2, rang_dans_module: 4}
+
+public:
+  prerequis: []
+  niveau_maths: M0
+  rappel_conseille: []
+  renvoi: [S1.05]
+
+objectifs:
+  fr:
+    - "Reconnaître le biais du survivant dans trois situations"
+    - "Expliquer le raisonnement d'Abraham Wald sur les avions revenus de mission"
+  en:
+    - "Spot survivorship bias in three situations"
+    - "Explain Abraham Wald's reasoning about the planes that came back"
+
+intuition: "On ne voit que ce qui a survécu ; les échecs ont disparu des données."
+exemple_fil_rouge: "Les avions revenus de mission : les zones peu touchées sur les survivants sont celles où un impact empêchait le retour."
+exemple_reel:
+  description: "Travail d'Abraham Wald sur la vulnérabilité des avions, présenté par Mangel et Samaniego (1984)."
+  source:
+    organisme: "Journal of the American Statistical Association (Taylor & Francis)"
+    titre: "Abraham Wald's Work on Aircraft Survivability, M. Mangel et F. J. Samaniego, vol. 79, n° 386, p. 259-267"
+    url: "https://doi.org/10.1080/01621459.1984.10478038"
+    date_publication: "1984-06"
+    periode_donnees: "Seconde Guerre mondiale"
+    consulte_le: "2026-11-03 (notice Crossref ; résumé et texte intégral non lus)"
+
+provenance: []   # Aucun chiffre à l'écran ni dans la voix, hormis l'année de la source.
+
+affirmations_qualitatives:
+  - affirmation: "Abraham Wald a travaillé sur la vulnérabilité des avions à partir des dégâts observés sur les avions revenus"
+    statut: sourcee
+    source: "Mangel et Samaniego (1984) ; la référence de l'article cite le rapport de Wald « A Method of Estimating Plane Vulnerability Based on Damage of Survivors » (réédité CNA, CRC 432, 1980)"
+    verification: "Titre et notice vérifiés sur Crossref le 2026-11-03. Texte intégral non lu : ChatGPT ou JG peuvent le confirmer via JSTOR (10.2307/2288257)"
+  - affirmation: "Les zones peu touchées sur les survivants signalent les zones où un impact empêchait le retour"
+    statut: sourcee
+    source: "Raisonnement découlant du titre même du rapport de Wald (estimer la vulnérabilité d'après les dégâts des survivants)"
+    verification: "Formulation volontairement générale : aucune zone précise (moteurs, cockpit, fuselage) n'est nommée, car la source lue ne le confirme pas"
+  - affirmation: "On envisageait d'abord de renforcer les zones les plus touchées"
+    statut: hypothese
+    source: ""
+    verification: "Présentée comme « l'idée qui vient d'abord », non comme un fait historique attribué à quelqu'un. À confirmer dans le texte de Mangel et Samaniego ou à garder sous cette forme"
+  - affirmation: "Les vieux bâtiments semblent mieux construits parce que les plus fragiles ont disparu"
+    statut: hypothese
+    source: ""
+    verification: "Illustration de raisonnement, pas une affirmation sur la qualité réelle du bâti ancien. Le texte dit « semblent »"
+  - affirmation: "Les entreprises qui ont fermé faisaient peut-être pareil"
+    statut: hypothese
+    source: ""
+    verification: "Formulé au conditionnel (« peut-être ») : illustration, pas un fait"
+
+cycle_enquete:
+  question: "Montrée : où renforcer les avions ?"
+  population_et_mesure: "Montrée : seulement les avions revenus"
+  origine_des_donnees: "Montrée : c'est le cœur du biais"
+  exploration: "Non traitée (format court)"
+  methode_et_raison: "Montrée en mots : raisonner sur les absents"
+  hypotheses: "Récit simplifié, signalé dans les hypothèses de la fiche"
+  resultat_et_incertitude: "Non traitée (format court)"
+  interpretation_permise_et_interdite: "Montrée : ne pas tirer de leçon des seuls survivants"
+  reproductibilite: "Source citée à l'écran et dans la légende"
+
+donnees_ou_simulation:
+  type: recit_source
+  raison_du_choix: "Une capsule de paradoxe d'une seule idée, sans calcul ; l'exemple historique est le plus parlant"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Récit simplifié", intuition: "Le travail de Wald était une méthode statistique, pas une seule remarque", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "La leçon S1.05 traite le biais de sélection en détail"}
+
+reproductibilite: "Pas de calcul ; référence DOI dans la fiche de production"
+
+deroule:
+  - {etape: question, contenu: "Avions criblés d'impacts : où les blinder ?"}
+  - {etape: raisonnement, contenu: "L'idée évidente : renforcer les zones les plus touchées"}
+  - {etape: raisonnement, contenu: "La question de Wald : et les avions qui ne sont pas revenus ?"}
+  - {etape: formalisation, contenu: "Nom du biais"}
+  - {etape: application, contenu: "Vieux bâtiments ; conseils des entreprises qui ont réussi"}
+  - {etape: rappel, contenu: "Qui manque dans les données ?"}
+
+formules: []
+calculs_a_verifier: []
+
+idees_fausses:
+  - {idee: "Tirer des leçons des seuls gagnants", desamorcee_a_l_etape: "Le même piège, partout"}
+
+exercice: {question: "", correction: "", pause_secondes: 0}   # Capsule sans exercice (programme, section 2.4)
+
+preuve_apprentissage:
+  tache: "Nommer le biais dans une situation nouvelle"
+  question_de_transfert: "Une étude montre que les musiciens célèbres ont commencé tôt la musique. Faut-il en conclure que commencer tôt rend célèbre ? Qui manque dans les données ?"
+  diagnostic_d_erreur: "« Les chats qui tombent du dixième étage s'en sortent mieux que ceux du cinquième, d'après les cliniques vétérinaires » : quel animal manque dans ces données ?"
+  limite_a_enoncer: "Savoir qu'il manque des données ne dit pas ce qu'elles contiennent : il faut les chercher ou les modéliser"
+
+duree_estimee_min: [1, 1.5]
+format: short
+raison_du_format: "Capsule de paradoxe d'une seule idée, sans exercice, qui renvoie vers S1.05 (programme, section 2.4)"
+derives_short: []
+
+adaptation_en: "Même récit. Orthographe britannique (armour). Année de la source lue en toutes lettres dans la voix."
+licences: "Aucune image extérieure. Voix Kokoro (licence Apache 2.0, voir docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
+controle:
+  test_du_debutant: "À mesurer au pilote : le testeur répond à la question de transfert"
+  relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire. Point d'attention pour ChatGPT : confirmer dans le texte de l'article que la formulation reste fidèle"
+  controle_mobile: "Voir sortie/<id>/fr/inspection après rendu"

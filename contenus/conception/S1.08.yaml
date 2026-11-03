@@ -1,0 +1,86 @@
+# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S1.08
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-pilote-s1-08-pourcentages-et-points.yaml
+
+titres: {fr: "1 % ou 50 % ? Pourcentages et points", en: "1% or 50%? Percentages and points"}
+question_centrale:
+  fr: "Un taux qui passe de 2 % à 3 % a-t-il augmenté de 1 % ou de 50 % ?"
+  en: "A rate goes from 2% to 3%: did it rise by 1% or by 50%?"
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 8}
+public: {prerequis: [S1.02], niveau_maths: M0, rappel_conseille: [M0.01]}
+
+objectifs:
+  fr:
+    - "Calculer une évolution en pourcentage et en points de pourcentage"
+    - "Expliquer pourquoi une hausse puis une baisse de même pourcentage ne s'annulent pas"
+    - "Distinguer un effectif, une proportion et un taux pour 100 000"
+  en:
+    - "Work out a change both in percent and in percentage points"
+    - "Explain why a rise and a fall of the same percentage don't cancel out"
+    - "Tell apart a count, a proportion and a rate per 100,000"
+
+intuition: "Un pourcentage dépend toujours d'une base : « pour cent de quoi ? »."
+exemple_fil_rouge: "Un taux de 2 % à 3 % ; un prix +50 % puis −50 % ; deux villes de tailles différentes."
+exemple_reel: {description: "Aucun : exemples fictifs.", source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}}
+
+provenance:
+  - {chiffre: "Tous les nombres", support: ecran, nature: parametre_simulation, calcul: {entrees: "Valeurs fictives", formule: "partie / base × 100 ; (arrivée − départ) / départ × 100 ; cas / population × 100 000", transformations: ""}, definition: "", unite: "", population: "Fictive", periode: "", couverture: "", revisions: "", source_primaire: {organisme: "", url: "", consulte_le: ""}, incertitude: "Aucune", comparabilite: ""}
+
+affirmations_qualitatives:
+  - {affirmation: "Dire « +1 % » pour « +1 point » est l'erreur la plus courante", statut: hypothese, source: "", verification: "Formulation à adoucir (« une erreur très courante ») si aucune source ; à tester au pilote"}
+
+cycle_enquete:
+  question: "Montrée : comment décrire l'évolution d'un taux ?"
+  population_et_mesure: "Montrée : base de chaque pourcentage"
+  origine_des_donnees: "Montrée : exemples fictifs"
+  exploration: ""
+  methode_et_raison: "Montrée : points, évolution, coefficients, taux"
+  hypotheses: ""
+  resultat_et_incertitude: "Sans objet"
+  interpretation_permise_et_interdite: "Montrée : « +1 % » pour « +1 point » est faux"
+  reproductibilite: "Calculs à l'écran, recalculés par le moteur"
+
+donnees_ou_simulation: {type: calcul_pur, raison_du_choix: "Nombres ronds pour isoler le raisonnement", source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}, parametres_simulation: ""}
+hypotheses_et_limites: []
+reproductibilite: "Blocs verifier de la fiche de production"
+
+deroule:
+  - {etape: question, contenu: "Défi : 1 % ou 50 % ?"}
+  - {etape: formalisation, contenu: "Pourcentage = partie / base × 100"}
+  - {etape: raisonnement, contenu: "Écart en points, évolution en % ; réponse au défi ; erreur « +1 % »"}
+  - {etape: raisonnement, contenu: "+50 % puis −50 % : coefficients multipliés"}
+  - {etape: exercice, contenu: "+20 % puis −20 %"}
+  - {etape: correction, contenu: "0,96 : −4 %"}
+  - {etape: application, contenu: "Taux pour 100 000 : deux villes"}
+  - {etape: rappel, contenu: "Quatre points"}
+
+formules:
+  - {formule: "partie / base × 100", explication_symboles: "", conditions: "base non nulle"}
+  - {formule: "(arrivée − départ) / départ × 100", explication_symboles: "", conditions: "départ non nul"}
+
+calculs_a_verifier:
+  - {expression: "(3 - 2) / 2 * 100", attendu: 50, libelle: "Évolution de 2 % à 3 %"}
+  - {expression: "1.2 * 0.8", attendu: 0.96, libelle: "Exercice"}
+  - {expression: "50 / 20000 * 100000", attendu: 250, libelle: "Taux de la ville A"}
+
+idees_fausses:
+  - {idee: "Additionner des pourcentages", desamorcee_a_l_etape: "+50 % puis −50 %"}
+  - {idee: "Confondre points et pourcentage", desamorcee_a_l_etape: "Points ou pourcentage ?"}
+  - {idee: "Comparer des effectifs entre groupes de tailles différentes", desamorcee_a_l_etape: "Deux villes"}
+
+exercice: {question: "Un prix augmente de 20 % puis baisse de 20 %. Effet total ?", correction: "1,2 × 0,8 = 0,96 : 4 % plus bas.", pause_secondes: 6}
+
+preuve_apprentissage:
+  tache: "Calculer l'évolution d'un taux de 4 % à 5 %, en points et en pourcentage"
+  question_de_transfert: "Une action perd 30 % puis gagne 30 %. A-t-on retrouvé la valeur de départ ? (0,7 × 1,3 = 0,91 : non, −9 %)"
+  diagnostic_d_erreur: "« Le chômage a augmenté de 1 % » quand il passe de 7 % à 8 % : qu'est-ce qui ne va pas ?"
+  limite_a_enoncer: "Une évolution en pourcentage sur une petite base peut sembler énorme"
+
+duree_estimee_min: [5, 7]
+format: educational
+raison_du_format: "Quatre outils liés, un exercice : leçon courte du niveau 1"
+derives_short: ["1 % ou 50 % ? (30 s)", "+50 % puis −50 % (30 s)"]
+adaptation_en: "Mêmes nombres ; euros conservés ; décimales anglaises ; vocabulaire « percentage points » et « percent change »."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."
+controle: {test_du_debutant: "À mesurer au pilote", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu"}

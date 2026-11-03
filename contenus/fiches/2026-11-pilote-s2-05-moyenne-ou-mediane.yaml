@@ -1,0 +1,319 @@
+# Phase pilote ACTU-BASICS, vidéo 2 sur 5 : S2.05 « Moyenne ou médiane ? »
+# Fiche de conception : contenus/conception/S2.05.yaml
+# Calcul pur, nombres fictifs choisis pour être suivis de tête. Aucun fait extérieur chiffré.
+# Statut : brouillon. Relecture de ChatGPT, puis validation de JG. Rien n'est publié.
+id: 2026-11-pilote-s2-05-moyenne-ou-mediane
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.05 · Moyenne ou médiane ?"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer une médiane avec un nombre impair, puis pair, de valeurs"
+      - "Prévoir dans quel sens la moyenne s'écarte de la médiane quand la distribution est asymétrique"
+      - "Choisir l'indicateur qui répond à une question donnée"
+    en:
+      - "Find the median of an odd and of an even number of values"
+      - "Predict which way the mean moves away from the median in a skewed distribution"
+      - "Choose the summary that answers a given question"
+  prerequis:
+    fr: ["S2.04 : calculer une moyenne", "S2.03 : la forme d'une distribution"]
+    en: ["S2.04: computing a mean", "S2.03: the shape of a distribution"]
+  hypotheses:
+    fr: "Salaires mensuels fictifs, choisis pour que les calculs se suivent de tête"
+    en: "Made-up monthly salaries, chosen so the arithmetic is easy to follow"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+editions:
+  fr:
+    titre: "Moyenne ou médiane ?"
+    legende: |
+      Pourquoi le « salaire moyen » est-il plus élevé que ce que gagnent la plupart des gens ? Neuf clients dans un café, puis un dixième, très riche, entre : la moyenne s'envole, la médiane bouge à peine. On apprend à calculer une médiane, à prévoir l'écart entre les deux indicateurs, et à choisir le bon selon la question. Exemple fictif, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, moyenne, mediane]
+    scenes:
+      # ---------------------------------------------------------------- Question
+      - type: accroche
+        texte: "Pourquoi la plupart des gens gagnent-ils *moins que le salaire moyen* ?"
+        voix_off: "Pourquoi la plupart des gens gagnent-ils moins que le salaire moyen ? Ça paraît impossible. Et pourtant, c'est très courant."
+      - type: exercice
+        texte: "Dans un groupe, quelle part des gens gagne *moins que la moyenne* ?"
+        etiquette: "DÉFI"
+        pause: 4
+        voix_off: "Une question pour commencer. Dans un groupe de salariés, quelle part gagne moins que le salaire moyen ? Moins de la moitié, la moitié, ou plus de la moitié ? Gardez votre réponse en tête."
+      # ---------------------------------------------------------------- 1. La moyenne
+      - type: titre
+        numero: 1
+        texte: "La moyenne"
+        voix_off: "Commençons par la moyenne."
+      - type: texte
+        texte: "Neuf clients dans un café gagnent de *1 600 €* à *2 800 €* par mois"
+        note: "1 600 · 1 800 · 1 900 · 2 000 · 2 200 · 2 300 · 2 500 · 2 700 · 2 800 €"
+        voix_off: "Neuf clients sont assis dans un café. Ils gagnent entre mille six cents et deux mille huit cents euros par mois."
+      - type: formule
+        texte: "Leur salaire *moyen*"
+        formule:
+          - '\mathrm{moyenne}=\dfrac{\mathrm{somme}}{\mathrm{nombre}}'
+          - '=\dfrac{19\,800}{9}=2\,200'
+        voix_off: "La moyenne, c'est la somme divisée par le nombre de personnes. Leurs salaires font au total dix-neuf mille huit cents euros. Divisé par neuf : deux mille deux cents euros."
+        note: "En euros par mois."
+        verifier:
+          - {expression: "1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800", attendu: 19800, libelle: "Somme des 9 salaires"}
+          - {expression: "19800 / 9", attendu: 2200, libelle: "Moyenne des 9 salaires"}
+      - type: texte
+        texte: "Un dixième client entre. Il gagne *200 000 €* par mois."
+        voix_off: "La porte s'ouvre. Un dixième client entre : il gagne deux cent mille euros par mois."
+      - type: formule
+        texte: "La moyenne *s'envole*"
+        formule:
+          - '\dfrac{19\,800+200\,000}{10}'
+          - '=21\,980'
+        voix_off: "Recalculons. Dix-neuf mille huit cents plus deux cent mille, divisé par dix. Le salaire moyen du café passe à vingt et un mille neuf cent quatre-vingts euros."
+        verifier:
+          - {expression: "(19800 + 200000) / 10", attendu: 21980, libelle: "Moyenne des 10 salaires"}
+      - type: chiffre
+        valeur: 90
+        suffixe: {fr: " %", en: "%"}
+        texte: "des clients gagnent désormais *moins que la moyenne*"
+        note: "9 clients sur 10."
+        voix_off: "Neuf clients sur dix gagnent maintenant moins que la moyenne. Personne n'a changé de salaire : une seule valeur extrême a tiré la moyenne vers le haut."
+        verifier:
+          - {expression: "100 * 9 / 10", attendu: 90, libelle: "Part des clients sous la moyenne, en %"}
+      # ---------------------------------------------------------------- 2. La médiane
+      - type: titre
+        numero: 2
+        texte: "La médiane"
+        voix_off: "Il existe un autre indicateur, qui résiste beaucoup mieux : la médiane."
+      - type: etapes
+        texte: "Calculer une médiane"
+        etapes:
+          - "Ranger les valeurs *dans l'ordre*"
+          - "Nombre impair : la valeur *du milieu*"
+          - "Nombre pair : la moyenne des *deux du milieu*"
+        voix_off: "La médiane se calcule en trois temps. D'abord, on range les valeurs de la plus petite à la plus grande. Avec un nombre impair de valeurs, la médiane est celle du milieu. Avec un nombre pair, on prend la moyenne des deux valeurs du milieu."
+      - type: formule
+        texte: "Où se trouve le milieu ?"
+        formule:
+          - '\mathrm{position}=\dfrac{n+1}{2}'
+          - 'n=9\ :\ 5^{e}\ \mathrm{valeur}'
+          - 'n=10\ :\ \mathrm{entre\ la\ }5^{e}\mathrm{\ et\ la\ }6^{e}'
+        voix_off: "Pour trouver le milieu, on calcule n plus un, divisé par deux, où n est le nombre de valeurs. Avec neuf valeurs, c'est la cinquième. Avec dix valeurs, on tombe sur cinq et demi : la médiane est à mi-chemin entre la cinquième et la sixième valeur."
+        verifier:
+          - {expression: "(9 + 1) / 2", attendu: 5, libelle: "Position du milieu, 9 valeurs"}
+          - {expression: "(10 + 1) / 2", attendu: 5.5, libelle: "Position du milieu, 10 valeurs"}
+      - type: etapes
+        texte: "La médiane du café"
+        etapes:
+          - "Avant : la 5e valeur, *2 200 €*"
+          - "Après : (2 200 + 2 300) ÷ 2 = *2 250 €*"
+        voix_off: "Revenons au café. Avant l'arrivée du client riche, la cinquième valeur est deux mille deux cents euros : c'est la médiane. Après, on fait la moyenne de la cinquième et de la sixième valeur, deux mille deux cents et deux mille trois cents : deux mille deux cent cinquante euros."
+        verifier:
+          - {expression: "(2200 + 2300) / 2", attendu: 2250, libelle: "Médiane des 10 salaires"}
+      - type: etapes
+        texte: "Une valeur extrême"
+        etapes:
+          - "Moyenne : de 2 200 € à *21 980 €*"
+          - "Médiane : de 2 200 € à *2 250 €*"
+        voix_off: "Comparons. Une seule valeur extrême fait passer la moyenne de deux mille deux cents à près de vingt-deux mille euros. La médiane, elle, ne gagne que cinquante euros."
+        verifier:
+          - {expression: "2250 - 2200", attendu: 50, libelle: "Hausse de la médiane, en euros"}
+      - type: etapes
+        texte: "Moyenne et médiane selon la *forme* de la distribution"
+        etapes:
+          - "Longue traîne vers le haut : moyenne *au-dessus* de la médiane"
+          - "Distribution symétrique : moyenne *proche* de la médiane"
+          - "Longue traîne vers le bas : moyenne *en dessous* de la médiane"
+        voix_off: "C'est une règle générale, qui dépend de la forme de la distribution. Quand quelques valeurs très grandes forment une longue traîne vers le haut, comme souvent les salaires ou les patrimoines, la moyenne passe au-dessus de la médiane. Quand la distribution est symétrique, les deux sont proches. Et quand la traîne part vers le bas, la moyenne passe en dessous."
+      - type: texte
+        texte: "Moyenne au-dessus de la médiane : *au moins la moitié* des gens gagnent moins que la moyenne"
+        voix_off: "Voilà la réponse au défi. Par définition, la moitié des gens gagnent moins que la médiane. Si la moyenne est au-dessus de la médiane, au moins la moitié des gens gagnent donc moins que la moyenne. Souvent bien plus."
+      # ---------------------------------------------------------------- Exercice
+      - type: exercice
+        texte: "Sept salaires : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000, 2 100 €. Moyenne et médiane, avant puis après l'arrivée d'un salaire de *20 000 €* ?"
+        pause: 8
+        voix_off: "À vous. Sept salaires mensuels : mille cinq cents, mille six cents, mille sept cents, mille huit cents, mille neuf cents, deux mille et deux mille cent euros. Calculez la moyenne et la médiane. Puis recommencez après l'arrivée d'un salaire de vingt mille euros."
+      - type: correction
+        etapes:
+          - "Avant : 12 600 ÷ 7 = *1 800 €* ; médiane *1 800 €*"
+          - "Après : 32 600 ÷ 8 = *4 075 €*"
+          - "Médiane : (1 800 + 1 900) ÷ 2 = *1 850 €*"
+        reponse: "La moyenne fait plus que doubler, la médiane gagne 50 €"
+        voix_off: "Voici la correction. Avant, la somme vaut douze mille six cents euros : divisée par sept, la moyenne est de mille huit cents euros, comme la médiane, la quatrième valeur. Après, la somme passe à trente-deux mille six cents euros, divisée par huit : quatre mille soixante-quinze euros. Avec huit valeurs, la médiane est la moyenne de la quatrième et de la cinquième : mille huit cent cinquante euros. La moyenne a plus que doublé, la médiane n'a gagné que cinquante euros."
+        verifier:
+          - {expression: "1500 + 1600 + 1700 + 1800 + 1900 + 2000 + 2100", attendu: 12600, libelle: "Somme des 7 salaires"}
+          - {expression: "12600 / 7", attendu: 1800, libelle: "Moyenne des 7 salaires"}
+          - {expression: "(12600 + 20000) / 8", attendu: 4075, libelle: "Moyenne des 8 salaires"}
+          - {expression: "(1800 + 1900) / 2", attendu: 1850, libelle: "Médiane des 8 salaires"}
+      # ---------------------------------------------------------------- 3. Choisir
+      - type: titre
+        numero: 3
+        texte: "Laquelle choisir ?"
+        voix_off: "Alors, faut-il toujours préférer la médiane ? Non : tout dépend de la question."
+      - type: etapes
+        texte: "Chaque indicateur répond à *sa* question"
+        etapes:
+          - "« Que gagne un salarié typique ? » → la *médiane*"
+          - "« Combien coûtent tous les salaires ? » → la *moyenne*, × l'effectif"
+          - "Le plus honnête : donner *les deux*"
+        voix_off: "Chaque indicateur répond à sa propre question. Pour savoir ce que gagne un salarié typique, la médiane est la bonne réponse. Pour savoir combien coûtent tous les salaires ensemble, il faut la moyenne, multipliée par le nombre de salariés : la médiane ne le permet pas. Le plus honnête est souvent de donner les deux, car l'écart entre elles dit à lui seul si la distribution est asymétrique."
+      - type: texte
+        texte: "La médiane a sa limite : elle ignore *l'ampleur* des écarts"
+        note: "Avec un client à 2 millions € par mois, la médiane du café resterait 2 250 €."
+        voix_off: "La médiane a aussi sa limite : elle ignore l'ampleur des écarts. Que le client riche gagne deux cent mille euros ou deux millions, la médiane du café reste la même. Elle ne voit pas l'inégalité."
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Médiane : *ranger*, puis prendre le *milieu*"
+          - "Une valeur extrême tire la *moyenne*, presque pas la *médiane*"
+          - "Choisir selon la *question*, et donner les deux"
+        voix_off: "Récapitulons. Un : pour la médiane, on range les valeurs, puis on prend le milieu. Deux : une valeur extrême tire la moyenne, et presque pas la médiane. Trois : on choisit l'indicateur selon la question, et le plus souvent on donne les deux."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Mean or median?"
+    legende: |
+      Why do most people earn less than the "average salary"? Nine customers sit in a café, then a tenth, very rich one walks in: the mean shoots up, the median barely moves. Learn how to find a median, predict the gap between the two, and pick the right one for your question. Made-up example, all numbers checked. Series "Reading numbers without being fooled".
+    hashtags: [statistics, mean, median]
+    scenes:
+      - type: accroche
+        texte: "Why do most people earn *less than the average salary*?"
+        voix_off: "Why do most people earn less than the average salary? It sounds impossible. And yet it happens all the time."
+      - type: exercice
+        texte: "In a group, what share of people earn *less than the mean*?"
+        etiquette: "CHALLENGE"
+        pause: 4
+        voix_off: "Here's a question to start. In a group of workers, what share earn less than the average salary? Less than half, exactly half, or more than half? Hold on to your answer."
+      - type: titre
+        numero: 1
+        texte: "The mean"
+        voix_off: "Let's start with the mean."
+      - type: texte
+        texte: "Nine customers in a café earn between *€1,600* and *€2,800* a month"
+        note: "€1,600 · 1,800 · 1,900 · 2,000 · 2,200 · 2,300 · 2,500 · 2,700 · 2,800"
+        voix_off: "Nine customers are sitting in a café. They earn between one thousand six hundred and two thousand eight hundred euros a month."
+      - type: formule
+        texte: "Their *mean* salary"
+        formule:
+          - '\mathrm{mean}=\dfrac{\mathrm{total}}{\mathrm{count}}'
+          - '=\dfrac{19{,}800}{9}=2{,}200'
+        voix_off: "The mean is the total divided by the number of people. Together they earn nineteen thousand eight hundred euros. Divide by nine, and you get two thousand two hundred euros."
+        note: "In euros per month."
+        verifier:
+          - {expression: "1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800", attendu: 19800, libelle: "Total of the 9 salaries"}
+          - {expression: "19800 / 9", attendu: 2200, libelle: "Mean of the 9 salaries"}
+      - type: texte
+        texte: "A tenth customer walks in. He earns *€200,000* a month."
+        voix_off: "The door opens. A tenth customer walks in, and he earns two hundred thousand euros a month."
+      - type: formule
+        texte: "The mean *shoots up*"
+        formule:
+          - '\dfrac{19{,}800+200{,}000}{10}'
+          - '=21{,}980'
+        voix_off: "Let's do the sum again. Nineteen thousand eight hundred plus two hundred thousand, divided by ten. The café's mean salary jumps to twenty-one thousand nine hundred eighty euros."
+        verifier:
+          - {expression: "(19800 + 200000) / 10", attendu: 21980, libelle: "Mean of the 10 salaries"}
+      - type: chiffre
+        valeur: 90
+        suffixe: {fr: " %", en: "%"}
+        texte: "of the customers now earn *less than the mean*"
+        note: "9 customers out of 10."
+        voix_off: "Nine customers out of ten now earn less than the mean. Nobody's pay has changed. One extreme value has dragged the mean upward."
+        verifier:
+          - {expression: "100 * 9 / 10", attendu: 90, libelle: "Share of customers below the mean, %"}
+      - type: titre
+        numero: 2
+        texte: "The median"
+        voix_off: "There's another summary that holds up much better: the median."
+      - type: etapes
+        texte: "Finding the median"
+        etapes:
+          - "Put the values *in order*"
+          - "Odd number of values: take *the middle one*"
+          - "Even number: average *the two in the middle*"
+        voix_off: "Finding the median takes three steps. First, put the values in order, from smallest to largest. With an odd number of values, the median is the one in the middle. With an even number, you take the average of the two middle values."
+      - type: formule
+        texte: "Where is the middle?"
+        formule:
+          - '\mathrm{position}=\dfrac{n+1}{2}'
+          - 'n=9\ :\ 5^{th}\ \mathrm{value}'
+          - 'n=10\ :\ \mathrm{between\ the\ }5^{th}\mathrm{\ and\ }6^{th}'
+        voix_off: "To find the middle, take n plus one, divided by two, where n is the number of values. With nine values, that's the fifth one. With ten values, you land on five and a half: the median sits halfway between the fifth and sixth values."
+        verifier:
+          - {expression: "(9 + 1) / 2", attendu: 5, libelle: "Middle position, 9 values"}
+          - {expression: "(10 + 1) / 2", attendu: 5.5, libelle: "Middle position, 10 values"}
+      - type: etapes
+        texte: "The café's median"
+        etapes:
+          - "Before: the 5th value, *€2,200*"
+          - "After: (2,200 + 2,300) ÷ 2 = *€2,250*"
+        voix_off: "Back to the café. Before the rich customer arrives, the fifth value is two thousand two hundred euros, and that's the median. Afterwards, we average the fifth and sixth values, two thousand two hundred and two thousand three hundred: two thousand two hundred fifty euros."
+        verifier:
+          - {expression: "(2200 + 2300) / 2", attendu: 2250, libelle: "Median of the 10 salaries"}
+      - type: etapes
+        texte: "One extreme value"
+        etapes:
+          - "Mean: from €2,200 to *€21,980*"
+          - "Median: from €2,200 to *€2,250*"
+        voix_off: "Compare the two. One extreme value pushes the mean from two thousand two hundred to almost twenty-two thousand euros. The median goes up by just fifty euros."
+        verifier:
+          - {expression: "2250 - 2200", attendu: 50, libelle: "Rise in the median, euros"}
+      - type: etapes
+        texte: "Mean and median depend on the *shape* of the distribution"
+        etapes:
+          - "Long tail toward high values: mean *above* the median"
+          - "Symmetric distribution: mean *close to* the median"
+          - "Long tail toward low values: mean *below* the median"
+        voix_off: "This is a general rule, and it depends on the shape of the distribution. When a few very large values form a long tail toward the top, as salaries and wealth often do, the mean ends up above the median. When the distribution is symmetric, the two are close. And when the tail points toward low values, the mean falls below the median."
+      - type: texte
+        texte: "Mean above the median: *at least half* of people earn less than the mean"
+        voix_off: "That answers the challenge. By definition, half of people earn less than the median. So if the mean is above the median, at least half of people earn less than the mean. Often many more."
+      - type: exercice
+        texte: "Seven salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000, 2,100. Mean and median, before and after a *€20,000* salary joins?"
+        pause: 8
+        voix_off: "Your turn. Seven monthly salaries: one thousand five hundred, one thousand six hundred, one thousand seven hundred, one thousand eight hundred, one thousand nine hundred, two thousand, and two thousand one hundred euros. Work out the mean and the median. Then do it again after a salary of twenty thousand euros joins the group."
+      - type: correction
+        etapes:
+          - "Before: 12,600 ÷ 7 = *€1,800*; median *€1,800*"
+          - "After: 32,600 ÷ 8 = *€4,075*"
+          - "Median: (1,800 + 1,900) ÷ 2 = *€1,850*"
+        reponse: "The mean more than doubles, the median gains €50"
+        voix_off: "Here's the solution. Before, the total is twelve thousand six hundred euros. Divided by seven, the mean is one thousand eight hundred euros, the same as the median, the fourth value. Afterwards, the total is thirty-two thousand six hundred euros, divided by eight: four thousand seventy-five euros. With eight values, the median is the average of the fourth and fifth: one thousand eight hundred fifty euros. The mean has more than doubled, while the median gained only fifty euros."
+        verifier:
+          - {expression: "1500 + 1600 + 1700 + 1800 + 1900 + 2000 + 2100", attendu: 12600, libelle: "Total of the 7 salaries"}
+          - {expression: "12600 / 7", attendu: 1800, libelle: "Mean of the 7 salaries"}
+          - {expression: "(12600 + 20000) / 8", attendu: 4075, libelle: "Mean of the 8 salaries"}
+          - {expression: "(1800 + 1900) / 2", attendu: 1850, libelle: "Median of the 8 salaries"}
+      - type: titre
+        numero: 3
+        texte: "Which one should you use?"
+        voix_off: "So should you always prefer the median? No. It depends on the question."
+      - type: etapes
+        texte: "Each summary answers *its own* question"
+        etapes:
+          - "\"What does a typical worker earn?\" → the *median*"
+          - "\"What do all the salaries cost?\" → the *mean*, × headcount"
+          - "The most honest choice: report *both*"
+        voix_off: "Each summary answers its own question. To know what a typical worker earns, the median is the right answer. To know what all the salaries cost together, you need the mean, multiplied by the number of workers. The median can't tell you that. The most honest choice is often to report both, because the gap between them tells you on its own whether the distribution is skewed."
+      - type: texte
+        texte: "The median has a blind spot: it ignores *how big* the gaps are"
+        note: "If the customer earned €2 million a month, the café's median would still be €2,250."
+        voix_off: "The median has a blind spot too: it ignores how big the gaps are. Whether the rich customer earns two hundred thousand euros or two million, the café's median stays the same. It doesn't see inequality."
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Median: *sort*, then take the *middle*"
+          - "One extreme value pulls the *mean*, barely the *median*"
+          - "Choose by *question*, and report both"
+        voix_off: "Let's recap. One: for the median, sort the values, then take the middle. Two: an extreme value pulls the mean, and barely moves the median. Three: choose the summary that fits your question, and usually report both."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -1,0 +1,82 @@
+# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S3.06
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-pilote-s3-06-correlation-causalite.yaml
+
+titres: {fr: "Les glaces font-elles se noyer ?", en: "Does ice cream make people drown?"}
+question_centrale:
+  fr: "Les ventes de glaces font-elles augmenter les noyades ?"
+  en: "Do ice cream sales make drownings go up?"
+position: {pilier: statistiques, niveau: 1, module: S3, rang_dans_module: 6}
+public: {prerequis: [S3.05, S1.06], niveau_maths: M0, rappel_conseille: []}
+
+objectifs:
+  fr:
+    - "Proposer une variable de confusion pour une corrélation donnée"
+    - "Distinguer confusion, causalité inverse et coïncidence"
+    - "Expliquer pourquoi une corrélation forte n'est pas plus « causale » qu'une faible"
+  en:
+    - "Suggest a confounding variable for a given correlation"
+    - "Tell apart confounding, reverse causation and coincidence"
+    - "Explain why a strong correlation is no more \"causal\" than a weak one"
+
+intuition: "Quand deux choses bougent ensemble, une troisième tire souvent les ficelles."
+exemple_fil_rouge: "Glaces et noyades, expliquées par la chaleur."
+exemple_reel: {description: "Aucun chiffre réel : les exemples sont des raisonnements (glaces et noyades, pompiers, médecin, pointure et lecture). Aucune étude n'est citée.", source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}}
+
+provenance: []
+
+affirmations_qualitatives:
+  - {affirmation: "Ventes de glaces et noyades augmentent ensemble quand il fait chaud", statut: hypothese, source: "", verification: "Exemple classique d'enseignement, présenté comme raisonnement, sans chiffre ; à sourcer si un chiffre est ajouté"}
+  - {affirmation: "L'expérience avec tirage au sort répartit les facteurs cachés entre les groupes", statut: sourcee, source: "Principe de la randomisation (S1.06, E7.01)", verification: "En moyenne, et d'autant mieux que les groupes sont grands : nuance à préciser à l'oral si ChatGPT le demande"}
+
+cycle_enquete:
+  question: "Montrée : une corrélation prouve-t-elle une cause ?"
+  population_et_mesure: "Supposée"
+  origine_des_donnees: "Données observationnelles (supposées)"
+  exploration: ""
+  methode_et_raison: "Montrée : chercher confusion, causalité inverse, coïncidence"
+  hypotheses: "Montrée"
+  resultat_et_incertitude: ""
+  interpretation_permise_et_interdite: "Montrée : association oui, cause non sans plan d'étude"
+  reproductibilite: "Sans objet"
+
+donnees_ou_simulation: {type: calcul_pur, raison_du_choix: "Leçon de raisonnement : des données réelles détourneraient l'attention vers les chiffres", source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}, parametres_simulation: ""}
+hypotheses_et_limites: []
+reproductibilite: ""
+
+deroule:
+  - {etape: question, contenu: "Glaces et noyades ; défi"}
+  - {etape: intuition, contenu: "La chaleur tire les deux ficelles ; réponse au défi"}
+  - {etape: formalisation, contenu: "Corrélation et causalité définies"}
+  - {etape: raisonnement, contenu: "Confusion (pompiers), causalité inverse (médecin), coïncidence (séries temporelles, comparaisons multiples)"}
+  - {etape: limites, contenu: "Forte ne veut pas dire causale ; comment établir une cause"}
+  - {etape: exercice, contenu: "Trois corrélations à expliquer"}
+  - {etape: correction, contenu: "Âge ; mauvaises notes ; tendance commune"}
+  - {etape: rappel, contenu: "Trois points"}
+
+formules: []
+calculs_a_verifier: []
+
+idees_fausses:
+  - {idee: "Une corrélation forte est plus causale qu'une faible", desamorcee_a_l_etape: "Forte ne veut pas dire causale"}
+  - {idee: "Si deux choses bougent ensemble, l'une cause l'autre", desamorcee_a_l_etape: "Le troisième facteur"}
+
+exercice:
+  question: "Une explication non causale pour : grands pieds et lecture ; cours particuliers et notes ; smartphones et loyers."
+  correction: "Âge (confusion) ; mauvaises notes qui mènent aux cours (causalité inverse) ; tendance commune dans le temps (coïncidence). D'autres réponses sont acceptables si elles sont argumentées."
+  pause_secondes: 10
+
+preuve_apprentissage:
+  tache: "Nommer une variable de confusion pour une corrélation nouvelle"
+  question_de_transfert: "Les villes qui ont plus d'églises ont plus de bars. Pourquoi ? (taille de la ville)"
+  diagnostic_d_erreur: "« La corrélation vaut 0,95, c'est donc forcément causal » : pourquoi est-ce faux ?"
+  limite_a_enoncer: "Une corrélation peut aussi cacher une vraie cause : elle ne prouve ni la présence ni l'absence d'effet"
+
+duree_estimee_min: [5, 6]
+format: educational
+raison_du_format: "Trois mécanismes à distinguer, un exercice"
+derives_short: ["Les glaces font-elles se noyer ? (30 s)"]
+adaptation_en: "Mêmes exemples, naturels en anglais ; « hot weather » au lieu de « la chaleur »."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."
+controle: {test_du_debutant: "À mesurer au pilote", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu ; l'énoncé de l'exercice est long, à vérifier sur mobile"}
