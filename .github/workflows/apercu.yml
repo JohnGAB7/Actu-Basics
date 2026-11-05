@@ -1,4 +1,4 @@
-# APERÇU — à chaque modification d'une fiche ou du code.
+# APERÇU — tests à chaque modification d'une fiche ou du code ; rendus vidéo sur lancement manuel.
 # Accepte les brouillons. Pas de filigrane (décision de JG, 2026-11-03) : l'état de chaque
 # rendu se lit dans le rapport QC. Rien ne se publie sans l'accord explicite de JG.
 # Voix : Kokoro (gratuite, locale, exécutée sur le runner), Piper en secours. Aucune clé d'API,
@@ -60,7 +60,12 @@ jobs:
   # - moteur, charte, marque ou workflow modifiés : rendu témoin AJOUTÉ aux fiches modifiées (une fiche
   #   d'actualité et la fiche pédagogique de lancement, qui couvre les scènes pédagogiques).
   # Lancement manuel : la fiche demandée, ou tout le catalogue si le champ est vide.
+  # Économie de minutes GitHub Actions (décision de JG, 2026-11-05) : les rendus vidéo ne partent
+  # plus automatiquement. Ils sont faits hors de GitHub (session Claude) et livrés dans le dossier
+  # partagé ; sur GitHub, un rendu se lance à la main (Actions → « Aperçu des contenus » → Run workflow).
+  # Les tests, rapides, restent automatiques sur chaque PR.
   liste:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       fiches: ${{ steps.fiches.outputs.fiches }}

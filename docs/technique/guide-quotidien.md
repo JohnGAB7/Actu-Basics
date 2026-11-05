@@ -7,7 +7,7 @@ Tout se fait depuis le site GitHub. Aucune installation n'est nécessaire.
 | Étape | Où | Action |
 |---|---|---|
 | 1. Déposer la fiche | `contenus/fiches/` → *Add file* → *Create new file* | Nom `AAAA-MM-JJ-sujet.yaml`, coller la fiche de ChatGPT, *Commit* |
-| 2. Regarder l'aperçu | Onglet *Actions* → « Aperçu des contenus » → dernière exécution | Le résumé s'affiche directement. Les fichiers sont en bas, dans *Artifacts* (`apercu-…`) |
+| 2. Regarder l'aperçu | Dossier partagé du projet (rendu par Claude), ou *Actions* → « Aperçu des contenus » → *Run workflow* | Depuis le 2026-11-05, GitHub ne rend plus automatiquement (économie de minutes) : seuls les tests tournent sur chaque PR. Un rendu lancé à la main dépose ses fichiers dans *Artifacts* (`apercu-…`) |
 | 3. Vérifier les faits | Hors machine | Section 1 du rapport : chaque chiffre retrouvé dans la source |
 | 4. Valider la fiche | Éditer la fiche (icône crayon) | `statut: valide`, `valide_par: "JG"`, `date: AAAA-MM-JJ` (date du jour), *Commit* |
 | 5. Rendu final | *Actions* → « Validation finale » → *Run workflow* | Chemin de la fiche + fournisseur de voix → *Run* |
