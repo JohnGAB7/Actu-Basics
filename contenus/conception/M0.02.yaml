@@ -1,0 +1,47 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-07, à valider avant tout rendu (JG). Exemples fictifs : pas d'exemple réel sourcé.
+id_programme: M0.02
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-m0-02-ordres-de-grandeur-notation-scientifique.yaml
+question_centrale:
+  fr: Un milliard, c'est combien de millions, et comment l'écrire simplement ?
+  en: How many millions in a billion, and how do you write it simply?
+position:
+  pilier: boite_a_outils
+  niveau: 1
+  module: M0
+  rang_dans_module: 2
+public:
+  prerequis:
+  - M0.01
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Chaque palier (mille, million, milliard) multiplie par mille.
+exemple_fil_rouge: Un million de secondes ≈ 11,6 jours, un milliard ≈ 31,7 ans ; deux budgets fictifs.
+exemple_reel: null
+idees_fausses:
+- idee: Confondre million et milliard
+  desamorcee_a_l_etape: Un milliard = mille millions
+- idee: Traduire billion par billion
+  desamorcee_a_l_etape: 'Faux ami : billion'
+exercice:
+  question: 52 millions en notation scientifique
+  correction: 5,2 × 10⁷
+  pause_secondes: 6
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Une ville de 250 000 habitants et un pays de 60 millions : combien d''ordres de grandeur les séparent
+    ?'
+  diagnostic_d_erreur: '« 0,0004 = 4 × 10⁴ » : où est l''erreur ?'
+duree_estimee_min:
+- 3
+- 5
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 7/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)

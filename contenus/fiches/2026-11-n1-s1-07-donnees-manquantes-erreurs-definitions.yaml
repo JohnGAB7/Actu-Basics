@@ -1,0 +1,219 @@
+# Niveau 1, vague 1, lot 1 : S1.07 « Données manquantes, erreurs et définitions qui changent » (EDUCATIONAL, étude de cas)
+# Fiche de conception : contenus/conception/S1.07.yaml
+# Ville, plaintes et revenus fictifs (annoncés comme tels) : le mécanisme est réel, les nombres non.
+# Statut : brouillon, script à valider avant tout rendu (décision de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-07-donnees-manquantes-erreurs-definitions
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.07 · Données manquantes, erreurs et définitions qui changent"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Repérer une rupture de série : un changement de définition ou de méthode"
+      - "Expliquer pourquoi des données manquantes ne manquent pas toujours au hasard"
+      - "Reconnaître les erreurs de saisie les plus courantes"
+    en:
+      - "Spot a break in a series: a change of definition or method"
+      - "Explain why missing data are not always missing at random"
+      - "Recognise the most common data-entry errors"
+  prerequis:
+    fr: ["S1.04 : d'où viennent les données"]
+    en: ["S1.04: where data come from"]
+  hypotheses:
+    fr: "Ville, plaintes et revenus fictifs ; les mécanismes décrits sont réels"
+    en: "Town, complaints and incomes are fictional; the mechanisms described are real"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "+51 % de vols de vélos ? Quand c'est la mesure qui change"
+    legende: |
+      Dans une ville fictive, les plaintes pour vol de vélo bondissent de 51 % en un an. Les vols ont-ils augmenté, ou est-ce la façon de les compter ? L'année du bond, la plainte en ligne a été ouverte. On apprend à repérer une rupture de série, à se méfier des réponses qui manquent (ce ne sont pas toujours les mêmes qui ne répondent pas) et à reconnaître les erreurs de saisie. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, donnees, methodologie]
+    scenes:
+      - type: accroche
+        texte: "Vols de vélos : *+51 %* en un an ?"
+        voix_off: "Dans une ville, les plaintes pour vol de vélo bondissent de cinquante et un pour cent en un an. Les vols ont-ils vraiment augmenté ? Avant de répondre, demandons-nous ce qui a pu changer."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Quand la mesure change"
+        voix_off: "Regardons la série de plus près. La ville est fictive, mais le mécanisme est bien réel."
+      - type: courbe
+        texte: "Plaintes pour vol de vélo, *ville fictive*"
+        courbe:
+          points: [[2019, 390], [2020, 405], [2021, 400], [2022, 410], [2023, 620]]
+          style: points
+          axe_x: "Année"
+          reperes:
+            - {x: 2023, label: "Plainte en ligne"}
+        note: "Données fictives. 2022 : 410 plaintes ; 2023 : 620."
+        voix_off: "Pendant quatre ans, autour de quatre cents plaintes par an. Puis six cent vingt en deux mille vingt-trois. Or, cette année-là, la ville a ouvert le dépôt de plainte en ligne. Plus besoin de passer au commissariat."
+        verifier:
+          - {expression: "(620 - 410) / 410 * 100", attendu: 51, libelle: "Évolution des plaintes 2022-2023, en %"}
+      - type: etapes
+        texte: "Ce que dit *l'enquête* auprès des habitants"
+        etapes:
+          - "Les *victimes* déclarées : stables d'une année sur l'autre"
+          - "Ce qui a changé : la part des victimes *qui portent plainte*"
+        voix_off: "Une enquête auprès des habitants, menée chaque année de la même façon, ne montre aucune hausse du nombre de victimes. Ce qui a changé, c'est la part des victimes qui portent plainte. Avant, beaucoup renonçaient. Les vols n'ont pas augmenté : c'est l'enregistrement qui a changé."
+      - type: texte
+        texte: "Une *rupture de série* : avant et après ne se comparent pas"
+        note: "Indices à chercher : une note « changement de méthode », un saut brutal l'année d'une réforme."
+        voix_off: "C'est ce qu'on appelle une rupture de série. Quand la définition ou la méthode de comptage change, les chiffres d'avant et d'après ne mesurent plus exactement la même chose. Les instituts statistiques le signalent dans leurs notes de méthode. Un saut brutal, l'année d'une réforme, doit toujours éveiller les soupçons."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Les données manquantes"
+        voix_off: "Deuxième piège : les données qui manquent."
+      - type: etapes
+        texte: "Une enquête *fictive* sur les revenus"
+        etapes:
+          - "100 ménages interrogés, *80* répondent : revenu moyen *2 500 €*"
+          - "Les *20* qui ne répondent pas sont surtout les plus aisés : *5 000 €*"
+        voix_off: "Une enquête fictive interroge cent ménages sur leurs revenus. Quatre-vingts répondent, avec un revenu moyen de deux mille cinq cents euros. Mais les vingt qui n'ont pas répondu ne sont pas n'importe qui : ce sont surtout les ménages les plus aisés, avec en moyenne cinq mille euros."
+      - type: formule
+        texte: "La vraie moyenne des *100 ménages*"
+        formule:
+          - '\dfrac{80\times 2\,500+20\times 5\,000}{100}=3\,000\ \mathrm{€}'
+        voix_off: "La vraie moyenne des cent ménages est de quatre-vingts fois deux mille cinq cents, plus vingt fois cinq mille, divisé par cent : trois mille euros. En ne gardant que les répondants, on la sous-estime de cinq cents euros, soit environ dix-sept pour cent."
+        verifier:
+          - {expression: "(80 * 2500 + 20 * 5000) / 100", attendu: 3000, libelle: "Moyenne des 100 ménages, en €"}
+          - {expression: "(3000 - 2500) / 3000 * 100", attendu: 17, libelle: "Sous-estimation, en %"}
+      - type: texte
+        texte: "Un trou dans les données *raconte une histoire*"
+        voix_off: "Une donnée manquante n'est pas toujours un accident. Si ceux qui ne répondent pas diffèrent de ceux qui répondent, le résultat est biaisé, même avec un grand échantillon. Avant d'utiliser un chiffre, demandez-vous : qui n'a pas répondu, et pourquoi ?"
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Les erreurs de saisie"
+        voix_off: "Dernier piège, plus banal : les erreurs."
+      - type: etapes
+        texte: "Trois erreurs *fréquentes*"
+        disposition: cartes
+        etapes:
+          - "Valeur *impossible* : un âge de 230 ans"
+          - "Unité *mélangée* : euros et milliers d'euros"
+          - "*Doublon* : la même personne comptée deux fois"
+        voix_off: "Trois erreurs reviennent souvent. Une valeur impossible, comme un âge de deux cent trente ans. Des unités mélangées, des euros d'un côté, des milliers d'euros de l'autre. Et des doublons, la même personne comptée deux fois. Une seule valeur aberrante peut suffire à fausser une moyenne."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Un taux de chômage passe de *7,1 %* à *8,4 %* l'année où le *questionnaire change*. Que vérifier ?"
+        pause: 7
+        voix_off: "À vous. Un taux de chômage fictif passe de sept virgule un à huit virgule quatre pour cent, l'année même où l'institut change de questionnaire. Que faut-il vérifier avant de conclure que le chômage augmente ?"
+      - type: correction
+        etapes:
+          - "Lire la *note de méthode* : la définition a-t-elle changé ?"
+          - "Chercher une série *recalculée* avec la nouvelle méthode"
+        reponse: "Comparer seulement des chiffres mesurés de la même façon"
+        voix_off: "Il faut d'abord lire la note de méthode : la définition ou la façon de poser les questions a-t-elle changé ? Puis chercher une série recalculée, où les années passées sont estimées avec la nouvelle méthode. On ne compare que des chiffres mesurés de la même façon."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Un saut brutal ? Cherchez un *changement de méthode*"
+          - "Des réponses manquantes ? Demandez *qui* ne répond pas"
+          - "Une valeur étrange ? Vérifiez la *saisie*"
+        voix_off: "À retenir. Devant un saut brutal, cherchez un changement de définition ou de méthode. Devant des réponses manquantes, demandez qui ne répond pas, et pourquoi. Et devant une valeur étrange, vérifiez la saisie avant de l'interpréter."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Bike thefts up 51%? When it's the measurement that changes"
+    legende: |
+      In a fictional town, reported bike thefts jump 51% in one year. Did thefts go up, or did the way of counting them change? The year of the jump, online reporting opened. We learn to spot a break in a series, to be wary of missing answers (the people who don't reply are not always a random few) and to recognise data-entry errors. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, data, methodology]
+    scenes:
+      - type: accroche
+        texte: "Bike thefts: *+51%* in one year?"
+        voix_off: "In one town, reported bike thefts jump by fifty-one percent in a single year. Did thefts really go up? Before answering, let's ask what else might have changed."
+      - type: titre
+        numero: 1
+        texte: "When the measurement changes"
+        voix_off: "Let's look at the series more closely. The town is fictional, but the mechanism is very real."
+      - type: courbe
+        texte: "Reported bike thefts, *fictional town*"
+        courbe:
+          points: [[2019, 390], [2020, 405], [2021, 400], [2022, 410], [2023, 620]]
+          style: points
+          axe_x: "Year"
+          reperes:
+            - {x: 2023, label: "Online reporting"}
+        note: "Fictional data. 2022: 410 reports; 2023: 620."
+        voix_off: "For four years, around four hundred reports a year. Then six hundred and twenty in twenty twenty-three. That year, the town opened online crime reporting. No more trip to the police station."
+        verifier:
+          - {expression: "(620 - 410) / 410 * 100", attendu: 51, libelle: "Change in reports 2022-2023, %"}
+      - type: etapes
+        texte: "What the *residents' survey* says"
+        etapes:
+          - "Reported *victims*: stable from year to year"
+          - "What changed: the share of victims *who report it*"
+        voix_off: "A survey of residents, run the same way every year, shows no rise in the number of victims. What changed is the share of victims who report the theft. Before, many didn't bother. Thefts didn't rise: the recording did."
+      - type: texte
+        texte: "A *break in the series*: before and after don't compare"
+        note: "Clues to look for: a \"change of method\" note, a sudden jump in the year of a reform."
+        voix_off: "This is called a break in the series. When the definition or the counting method changes, the figures before and after no longer measure exactly the same thing. Statistics offices flag this in their methodology notes. A sudden jump in the year of a reform should always raise suspicion."
+      - type: titre
+        numero: 2
+        texte: "Missing data"
+        voix_off: "Second trap: the data that are missing."
+      - type: etapes
+        texte: "A *fictional* income survey"
+        etapes:
+          - "100 households asked, *80* reply: average income *€2,500*"
+          - "The *20* who don't reply are mostly the better-off: *€5,000*"
+        voix_off: "A fictional survey asks one hundred households about their income. Eighty reply, with an average income of two thousand five hundred euros. But the twenty who didn't reply aren't just anyone: they're mostly the better-off households, with five thousand euros on average."
+      - type: formule
+        texte: "The true average of the *100 households*"
+        formule:
+          - '\dfrac{80\times 2{,}500+20\times 5{,}000}{100}=3{,}000\ \mathrm{€}'
+        voix_off: "The true average of the hundred households is eighty times two thousand five hundred, plus twenty times five thousand, divided by one hundred: three thousand euros. Keeping only those who replied underestimates it by five hundred euros, about seventeen percent."
+        verifier:
+          - {expression: "(80 * 2500 + 20 * 5000) / 100", attendu: 3000, libelle: "Average of the 100 households, €"}
+          - {expression: "(3000 - 2500) / 3000 * 100", attendu: 17, libelle: "Underestimate, %"}
+      - type: texte
+        texte: "A gap in the data *tells a story*"
+        voix_off: "Missing data aren't always an accident. If the people who don't reply differ from those who do, the result is biased, even with a large sample. Before using a figure, ask: who didn't reply, and why?"
+      - type: titre
+        numero: 3
+        texte: "Data-entry errors"
+        voix_off: "Last trap, and a more mundane one: errors."
+      - type: etapes
+        texte: "Three *common* errors"
+        disposition: cartes
+        etapes:
+          - "*Impossible* value: an age of 230"
+          - "*Mixed* units: euros and thousands of euros"
+          - "*Duplicate*: the same person counted twice"
+        voix_off: "Three errors come up often. An impossible value, like an age of two hundred and thirty. Mixed units, euros on one side, thousands of euros on the other. And duplicates, the same person counted twice. A single outlandish value can be enough to skew an average."
+      - type: exercice
+        texte: "An unemployment rate goes from *7.1%* to *8.4%* the year the *questionnaire changes*. What should you check?"
+        pause: 7
+        voix_off: "Your turn. A fictional unemployment rate rises from seven point one to eight point four percent, in the very year the statistics office changes its questionnaire. What should you check before concluding that unemployment is rising?"
+      - type: correction
+        etapes:
+          - "Read the *methodology note*: did the definition change?"
+          - "Look for a series *recalculated* with the new method"
+        reponse: "Only compare figures measured the same way"
+        voix_off: "First, read the methodology note: did the definition, or the way the questions are asked, change? Then look for a recalculated series, where past years are estimated with the new method. Only compare figures measured the same way."
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "A sudden jump? Look for a *change of method*"
+          - "Missing answers? Ask *who* didn't reply"
+          - "A strange value? Check the *data entry*"
+        voix_off: "Key takeaways. Faced with a sudden jump, look for a change of definition or method. Faced with missing answers, ask who didn't reply, and why. And faced with a strange value, check the data entry before interpreting it."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

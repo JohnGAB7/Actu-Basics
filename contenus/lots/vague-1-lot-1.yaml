@@ -1,0 +1,21 @@
+# Vague 1, lot 1 : scripts à valider avant toute production vidéo (règle de JG, 2026-11-07 :
+# scripts et PDF d'abord, par lots de 10, documents sur le Drive de JG et lisibles par Claude).
+# Relecture : commentaires dans les Google Docs ; Claude les lit avec l'outil Drive.
+lot: 1
+episodes: [M0.01, M0.02, M0.03, S1.01, S1.02, S1.03, S1.04, S1.05, S1.06, S1.07]
+drive:
+  dossier: "https://drive.google.com/drive/folders/134fZZWKS9GTUWp8FFw9rjPKSyZ28cWsI"
+  sommaire: 1BOvQrr9wUChs8jsm1Sq3g0n5m-rFJKE8Ln4NcovWQ6o
+  documents:
+    M0.01: 1idRHRixqCvLWncKOiDdSqB5rke4F6b6cACEJOMGp7JM
+    M0.02: 1MeoQxDxWl6-Wcb9RHnisFxuBClsl3rfhhIx52oKp9gU
+    M0.03: 1wAdbwGyWdMoAz140PTqWxTkz3vWbL_l4PLGw3lIbclk
+    S1.01: 1e-YeM4k8LogDvfXqXTtovTt7FBw36YgjP1LmLKd7B0Q
+    S1.02: 17QYgheBtb38Kht461W968zhoF_DGU4RTlhGSgcCMY_Q
+    S1.03: 1tNfBQ9SMVDTNLoBReG64BkRANaDWczseSeqSpZHnP54
+    S1.04: 1B4ad8-wen1RAUSEAugPuJ_wADWTOEIt5noPXKiu7Js0
+    S1.05: 1GIrV59OKP5F7nqdIZItVB87J__2RSb-C3dfMHv4c_NM
+    S1.06: 1tuDQBuknmzEVjs5ehB5ZDAkohItFUEAlA8fbONnna-E
+    S1.07: 1x_elYr5D5yXH5Q-EL_gz_YBAqQ5xJpn8cEKIJ679E6E
+pdf: "dossier partagé du projet : actu-basics/scripts-vague-1/lot-1/ (FR et EN)"
+statut: en_relecture   # 2026-11-07

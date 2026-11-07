@@ -1,0 +1,197 @@
+# Niveau 1, vague 1, lot 1 : M0.03 « Lire un graphique et un repère » (EDUCATIONAL, rappel)
+# Fiche de conception : contenus/conception/M0.03.yaml
+# Exemple fictif (hauteur d'une plante semaine après semaine), aucun chiffre extérieur.
+# Statut : brouillon, script à valider avant tout rendu (décision de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-m0-03-lire-un-graphique-et-un-repere
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "M0.03 · Lire un graphique et un repère"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Identifier ce que mesure chaque axe, et dans quelle unité"
+      - "Lire les coordonnées d'un point"
+      - "Calculer le pas d'une échelle graduée régulière"
+    en:
+      - "Identify what each axis measures, and in which unit"
+      - "Read the coordinates of a point"
+      - "Work out the step of a regular graduated scale"
+  prerequis:
+    fr: ["M0.01 : fractions et règle de trois"]
+    en: ["M0.01: fractions and proportions"]
+  hypotheses:
+    fr: "Données fictives : hauteur d'une plante mesurée chaque semaine"
+    en: "Fictional data: height of a plant measured every week"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "Que dit vraiment un point sur un graphique ?"
+    legende: |
+      Un point sur un graphique, ce sont deux informations à la fois : une sur l'axe horizontal, une sur l'axe vertical. On apprend à repérer ce que mesure chaque axe et dans quelle unité, à lire les coordonnées d'un point et à trouver le pas d'une graduation. Données fictives. Série « Lire un chiffre sans se faire avoir », boîte à outils.
+    hashtags: [maths, graphiques, chiffres]
+    scenes:
+      - type: accroche
+        texte: "Un point sur un graphique : *que dit-il*, exactement ?"
+        voix_off: "Un point sur un graphique. Que dit-il, exactement ? Avant de lire une tendance, il faut savoir lire un point."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Deux axes, deux questions"
+        voix_off: "Tout commence par les deux axes."
+      - type: etapes
+        texte: "Avant de regarder les points"
+        etapes:
+          - "Axe *horizontal* : que mesure-t-il ? Ici, *les semaines*"
+          - "Axe *vertical* : que mesure-t-il ? Ici, *la hauteur*"
+          - "Dans quelle *unité* ? Ici, *des centimètres*"
+        voix_off: "Avant de regarder les points, posez-vous trois questions. Que mesure l'axe horizontal ? Ici, le temps, en semaines. Que mesure l'axe vertical ? Ici, la hauteur d'une plante. Et dans quelle unité ? En centimètres."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Lire un point"
+        voix_off: "Maintenant, lisons un point."
+      - type: courbe
+        texte: "Hauteur d'une plante, *semaine par semaine*"
+        courbe:
+          points: [[0, 2], [1, 4], [2, 7], [3, 9], [4, 12], [5, 14]]
+          style: points
+          axe_x: "Semaine"
+          reperes:
+            - {x: 3, label: "(3 ; 9)"}
+        note: "Données fictives. Hauteur en centimètres."
+        voix_off: "Chaque point est une mesure. Prenons celui-ci. On descend tout droit vers l'axe horizontal : semaine trois. On part vers la gauche jusqu'à l'axe vertical : neuf centimètres. Ce point dit donc : à la semaine trois, la plante mesurait neuf centimètres."
+      - type: formule
+        texte: "Un point = *deux nombres*, dans l'ordre"
+        formule:
+          - '(x\ ;\ y)=(3\ ;\ 9)'
+        voix_off: "On écrit ces deux nombres entre parenthèses, toujours dans le même ordre : d'abord l'axe horizontal, ensuite l'axe vertical. Trois, neuf. Inverser l'ordre, ce serait parler de la semaine neuf, qui n'existe pas sur ce graphique."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Lire une graduation"
+        voix_off: "Dernière compétence : lire une échelle quand toutes les graduations ne sont pas écrites."
+      - type: formule
+        texte: "Le *pas* d'une graduation régulière"
+        formule:
+          - '\mathrm{pas}=\dfrac{\mathrm{valeur\ haute}-\mathrm{valeur\ basse}}{\mathrm{intervalles}}'
+          - '\dfrac{20-0}{4}=5\ \mathrm{cm}'
+        voix_off: "Sur un axe, seuls zéro et vingt sont écrits, avec quatre intervalles réguliers entre eux. Chaque graduation vaut vingt moins zéro, divisé par quatre : cinq centimètres. Comptez bien les intervalles, les espaces, et non les traits."
+        verifier:
+          - {expression: "(20 - 0) / 4", attendu: 5, libelle: "Pas de la graduation, en cm"}
+      - type: texte
+        texte: "Regardez aussi *où commence* l'axe"
+        note: "Un axe qui part de 8 au lieu de 0 fait paraître un écart de 9 à 10 énorme. On y reviendra dans la leçon sur les graphiques."
+        voix_off: "Un dernier réflexe : regardez où commence l'axe vertical. S'il ne part pas de zéro, de petits écarts peuvent paraître énormes. Nous y reviendrons dans la leçon sur les graphiques trompeurs."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Un axe va de *0* à *50*, avec *10* intervalles. Que vaut *une graduation* ?"
+        pause: 6
+        voix_off: "À vous. Un axe va de zéro à cinquante, avec dix intervalles réguliers. Combien vaut une graduation ?"
+      - type: correction
+        etapes:
+          - "Écart total : 50 − 0 = 50"
+          - "Divisé par 10 intervalles"
+        reponse: "5 par graduation"
+        voix_off: "L'écart total vaut cinquante moins zéro, cinquante. On le divise par dix intervalles : chaque graduation vaut cinq."
+        verifier:
+          - {expression: "(50 - 0) / 10", attendu: 5, libelle: "Pas de la graduation de l'exercice"}
+      - type: etapes
+        texte: "Trois questions *avant de lire* un graphique"
+        etapes:
+          - "Que mesure *chaque axe* ?"
+          - "Dans quelle *unité* ?"
+          - "Quel est le *pas*, et où commence l'axe ?"
+        voix_off: "Avant de lire un graphique, trois questions. Que mesure chaque axe ? Dans quelle unité ? Et quel est le pas de la graduation, et où commence l'axe ?"
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What does a point on a chart really tell you?"
+    legende: |
+      A point on a chart carries two pieces of information at once: one on the horizontal axis, one on the vertical axis. We learn to check what each axis measures and in which unit, to read a point's coordinates and to work out the step of a scale. Fictional data. Series "Reading numbers without being fooled", toolbox.
+    hashtags: [maths, charts, numbers]
+    scenes:
+      - type: accroche
+        texte: "A point on a chart: *what does it say*, exactly?"
+        voix_off: "A point on a chart. What does it say, exactly? Before reading a trend, you need to be able to read a single point."
+      - type: titre
+        numero: 1
+        texte: "Two axes, two questions"
+        voix_off: "It all starts with the two axes."
+      - type: etapes
+        texte: "Before looking at the points"
+        etapes:
+          - "*Horizontal* axis: what does it measure? Here, *weeks*"
+          - "*Vertical* axis: what does it measure? Here, *height*"
+          - "In which *unit*? Here, *centimetres*"
+        voix_off: "Before looking at the points, ask three questions. What does the horizontal axis measure? Here, time, in weeks. What does the vertical axis measure? Here, the height of a plant. And in which unit? Centimetres."
+      - type: titre
+        numero: 2
+        texte: "Reading a point"
+        voix_off: "Now let's read a point."
+      - type: courbe
+        texte: "Height of a plant, *week by week*"
+        courbe:
+          points: [[0, 2], [1, 4], [2, 7], [3, 9], [4, 12], [5, 14]]
+          style: points
+          axe_x: "Week"
+          reperes:
+            - {x: 3, label: "(3, 9)"}
+        note: "Fictional data. Height in centimetres."
+        voix_off: "Each point is one measurement. Take this one. Go straight down to the horizontal axis: week three. Go left to the vertical axis: nine centimetres. So this point says: in week three, the plant was nine centimetres tall."
+      - type: formule
+        texte: "A point = *two numbers*, in order"
+        formule:
+          - '(x,\ y)=(3,\ 9)'
+        voix_off: "We write these two numbers in brackets, always in the same order: horizontal axis first, then vertical axis. Three, nine. Swap them, and you'd be talking about week nine, which isn't on this chart."
+      - type: titre
+        numero: 3
+        texte: "Reading a scale"
+        voix_off: "One last skill: reading a scale when not every mark is labelled."
+      - type: formule
+        texte: "The *step* of a regular scale"
+        formule:
+          - '\mathrm{step}=\dfrac{\mathrm{top\ value}-\mathrm{bottom\ value}}{\mathrm{number\ of\ intervals}}'
+          - '\dfrac{20-0}{4}=5\ \mathrm{cm}'
+        voix_off: "On an axis, only zero and twenty are labelled, with four equal intervals between them. Each mark is worth twenty minus zero, divided by four: five centimetres. Count the intervals, the gaps, not the tick marks."
+        verifier:
+          - {expression: "(20 - 0) / 4", attendu: 5, libelle: "Step of the scale, cm"}
+      - type: texte
+        texte: "Also check *where the axis starts*"
+        note: "An axis starting at 8 instead of 0 makes a rise from 9 to 10 look huge. More on this in the lesson on charts."
+        voix_off: "One last habit: check where the vertical axis starts. If it doesn't start at zero, small gaps can look huge. We'll come back to this in the lesson on misleading charts."
+      - type: exercice
+        texte: "An axis runs from *0* to *50*, with *10* intervals. What is *one mark* worth?"
+        pause: 6
+        voix_off: "Your turn. An axis runs from zero to fifty, with ten equal intervals. What is one mark worth?"
+      - type: correction
+        etapes:
+          - "Total gap: 50 − 0 = 50"
+          - "Divided by 10 intervals"
+        reponse: "5 per mark"
+        voix_off: "The total gap is fifty minus zero, fifty. Divide it by ten intervals: each mark is worth five."
+        verifier:
+          - {expression: "(50 - 0) / 10", attendu: 5, libelle: "Step of the exercise scale"}
+      - type: etapes
+        texte: "Three questions *before reading* a chart"
+        etapes:
+          - "What does *each axis* measure?"
+          - "In which *unit*?"
+          - "What is the *step*, and where does the axis start?"
+        voix_off: "Before reading a chart, three questions. What does each axis measure? In which unit? And what is the step of the scale, and where does the axis start?"
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

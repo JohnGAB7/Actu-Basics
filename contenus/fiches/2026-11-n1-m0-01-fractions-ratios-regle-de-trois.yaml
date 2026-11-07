@@ -1,0 +1,268 @@
+# Niveau 1, vague 1, lot 1 : M0.01 « Fractions, ratios et règle de trois » (EDUCATIONAL, rappel)
+# Fiche de conception : contenus/conception/M0.01.yaml
+# Exemples fictifs, aucun chiffre extérieur. Tous les calculs sont recalculés (verifier).
+# Statut : brouillon, script à valider avant tout rendu (décision de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-m0-01-fractions-ratios-regle-de-trois
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "M0.01 · Fractions, ratios et règle de trois"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Simplifier une fraction"
+      - "Convertir une fraction en nombre décimal puis en pourcentage"
+      - "Distinguer un ratio (partie contre partie) d'une fraction (partie sur total)"
+      - "Appliquer la règle de trois"
+    en:
+      - "Simplify a fraction"
+      - "Convert a fraction to a decimal, then to a percentage"
+      - "Tell a ratio (part to part) from a fraction (part of the whole)"
+      - "Use proportional reasoning (the rule of three)"
+  prerequis:
+    fr: ["Aucun : rappel de calcul de base"]
+    en: ["None: basic arithmetic refresher"]
+  hypotheses:
+    fr: "Exemples fictifs (une équipe de 12 personnes, une recette pour 4)"
+    en: "Fictional examples (a team of 12 people, a recipe for 4)"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "3 sur 12, c'est combien de pour cent ? Fractions et règle de trois"
+    legende: |
+      3 personnes sur 12 viennent au travail à vélo : combien de pour cent ? Sans calculatrice, on simplifie la fraction, on passe au décimal, puis au pourcentage. On apprend aussi à ne pas confondre un ratio « 1 pour 3 » avec une fraction « 1 sur 4 », et à appliquer la règle de trois. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir », boîte à outils.
+    hashtags: [maths, pourcentages, regledetrois]
+    scenes:
+      - type: accroche
+        texte: "*3 sur 12* : combien de *pour cent* ?"
+        voix_off: "Dans une équipe de douze personnes, trois viennent au travail à vélo. Ça fait combien de pour cent ? Sans calculatrice."
+      - type: exercice
+        texte: "3 sur 12 : *20 %*, *25 %* ou *30 %* ?"
+        etiquette: "DÉFI"
+        pause: 4
+        voix_off: "Choisissez avant la suite : vingt, vingt-cinq ou trente pour cent ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Simplifier une fraction"
+        voix_off: "Première étape : simplifier la fraction."
+      - type: formule
+        texte: "On divise *en haut et en bas* par le même nombre"
+        formule:
+          - '\dfrac{3}{12}=\dfrac{3\div 3}{12\div 3}=\dfrac{1}{4}'
+        voix_off: "Trois sur douze. On cherche un nombre qui divise à la fois trois et douze : trois. Trois divisé par trois, un. Douze divisé par trois, quatre. Trois sur douze, c'est un sur quatre : une personne sur quatre."
+        verifier:
+          - {expression: "3 / 12", attendu: 0.25, libelle: "3 sur 12 = 1 sur 4"}
+      - type: texte
+        texte: "La fraction change d'écriture, *pas de valeur*"
+        voix_off: "Simplifier ne change pas la quantité. Trois sur douze et un sur quatre désignent exactement la même part du groupe, simplement écrite avec des nombres plus petits."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Fraction, décimal, pourcentage"
+        voix_off: "Deuxième étape : passer de la fraction au pourcentage."
+      - type: formule
+        texte: "Trois écritures de *la même part*"
+        formule:
+          - '\dfrac{1}{4}=0{,}25=\dfrac{25}{100}=25\ \%'
+        voix_off: "Un sur quatre, c'est un divisé par quatre : zéro virgule vingt-cinq. Et zéro virgule vingt-cinq, c'est vingt-cinq centièmes, donc vingt-cinq pour cent."
+      - type: chiffre
+        valeur: 25
+        suffixe: {fr: " %", en: "%"}
+        texte: "des membres de l'équipe viennent *à vélo*"
+        voix_off: "Réponse au défi : trois sur douze, c'est vingt-cinq pour cent."
+        verifier:
+          - {expression: "3 / 12 * 100", attendu: 25, libelle: "3 sur 12, en %"}
+      - type: etapes
+        texte: "Repères à connaître *par cœur*"
+        etapes:
+          - "1 sur 2 = 0,5 = *50 %*"
+          - "1 sur 4 = 0,25 = *25 %*"
+          - "1 sur 5 = 0,2 = *20 %*"
+          - "1 sur 10 = 0,1 = *10 %*"
+        voix_off: "Quelques repères évitent bien des calculs. Un sur deux, cinquante pour cent. Un sur quatre, vingt-cinq pour cent. Un sur cinq, vingt pour cent. Un sur dix, dix pour cent."
+        verifier:
+          - {expression: "1 / 5 * 100", attendu: 20, libelle: "1 sur 5 en %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Ratio ou fraction ?"
+        voix_off: "Attention à un piège fréquent : le ratio."
+      - type: etapes
+        texte: "Dans l'équipe : *3* à vélo, *9* autrement"
+        etapes:
+          - "Ratio : 3 *pour* 9, soit *1 pour 3*"
+          - "Fraction : 3 *sur* 12, soit *1 sur 4*"
+        voix_off: "Dans l'équipe, trois personnes viennent à vélo et neuf autrement. Le ratio compare une partie à une autre partie : trois pour neuf, c'est un cycliste pour trois non-cyclistes. La fraction compare une partie au total : trois sur douze, un sur quatre."
+      - type: texte
+        texte: "« 1 pour 3 » ne veut pas dire *un tiers*"
+        note: "Ici, la part de cyclistes est 1 sur 4, soit 25 %, et non 33 %."
+        voix_off: "Lire un pour trois comme un tiers serait une erreur : la part de cyclistes est un sur quatre, vingt-cinq pour cent, pas trente-trois. Avant de calculer, demandez-vous toujours : est-ce une partie comparée à une autre partie, ou une partie comparée au total ?"
+        verifier:
+          - {expression: "3 / (3 + 9) * 100", attendu: 25, libelle: "Part de cyclistes, en %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "La règle de trois"
+        voix_off: "Dernier outil : la règle de trois, pour les situations proportionnelles."
+      - type: formule
+        texte: "Une recette pour 4, adaptée *pour 6*"
+        formule:
+          - '4\ \mathrm{pers.}\ \rightarrow\ 300\ \mathrm{g}'
+          - '1\ \mathrm{pers.}\ \rightarrow\ 300\div 4=75\ \mathrm{g}'
+          - '6\ \mathrm{pers.}\ \rightarrow\ 75\times 6=450\ \mathrm{g}'
+        voix_off: "Une recette demande trois cents grammes de farine pour quatre personnes. Combien pour six ? On revient d'abord à une personne : trois cents divisé par quatre, soixante-quinze grammes. Puis on multiplie par six : quatre cent cinquante grammes."
+        verifier:
+          - {expression: "300 / 4", attendu: 75, libelle: "Farine pour 1 personne, en g"}
+          - {expression: "300 / 4 * 6", attendu: 450, libelle: "Farine pour 6 personnes, en g"}
+      - type: texte
+        texte: "Seulement si c'est *proportionnel*"
+        note: "Contre-exemple : un four préchauffé 10 minutes pour 4 personnes ne demande pas 15 minutes pour 6."
+        voix_off: "La règle de trois ne marche que si les deux quantités sont proportionnelles : deux fois plus de personnes, deux fois plus de farine. Le temps de préchauffage du four, lui, ne change pas avec le nombre de convives."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Sur *40* élèves, *6* ont un abonnement de bus. Quel *pourcentage* ?"
+        pause: 6
+        voix_off: "À vous. Dans un groupe de quarante élèves, six ont un abonnement de bus. Quel pourcentage, sans calculatrice ?"
+      - type: correction
+        etapes:
+          - "6 sur 40 = 3 sur 20 (on divise par 2)"
+          - "3 sur 20 = 15 sur 100 (on multiplie par 5)"
+        reponse: "15 %"
+        voix_off: "Six sur quarante : on divise en haut et en bas par deux, trois sur vingt. Pour arriver à cent en bas, on multiplie par cinq : quinze sur cent. Quinze pour cent."
+        verifier:
+          - {expression: "6 / 40 * 100", attendu: 15, libelle: "6 sur 40, en %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Simplifier : diviser *en haut et en bas*"
+          - "Fraction → décimal → *pourcentage*"
+          - "Ratio = partie / partie ; fraction = partie / *total*"
+          - "Règle de trois : *seulement* si c'est proportionnel"
+        voix_off: "À retenir. Pour simplifier, on divise en haut et en bas par le même nombre. On passe de la fraction au décimal, puis au pourcentage. Un ratio compare deux parties, une fraction compare une partie au total. Et la règle de trois ne s'applique qu'aux situations proportionnelles."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "3 out of 12 is what percent? Fractions and proportions"
+    legende: |
+      3 people out of 12 cycle to work: what percentage is that? Without a calculator, you simplify the fraction, switch to a decimal, then to a percentage. We also learn not to confuse a "1 to 3" ratio with a "1 in 4" fraction, and how to scale a quantity in proportion. Fictional examples, checked calculations. Series "Reading numbers without being fooled", toolbox.
+    hashtags: [maths, percentages, fractions]
+    scenes:
+      - type: accroche
+        texte: "*3 out of 12*: what *percent*?"
+        voix_off: "In a team of twelve people, three cycle to work. What percentage is that? No calculator."
+      - type: exercice
+        texte: "3 out of 12: *20%*, *25%* or *30%*?"
+        etiquette: "CHALLENGE"
+        pause: 4
+        voix_off: "Pick one before we go on: twenty, twenty-five or thirty percent?"
+      - type: titre
+        numero: 1
+        texte: "Simplifying a fraction"
+        voix_off: "Step one: simplify the fraction."
+      - type: formule
+        texte: "Divide *top and bottom* by the same number"
+        formule:
+          - '\dfrac{3}{12}=\dfrac{3\div 3}{12\div 3}=\dfrac{1}{4}'
+        voix_off: "Three out of twelve. Look for a number that divides both three and twelve: three. Three divided by three is one. Twelve divided by three is four. Three out of twelve is one out of four: one person in four."
+        verifier:
+          - {expression: "3 / 12", attendu: 0.25, libelle: "3 out of 12 = 1 out of 4"}
+      - type: texte
+        texte: "The fraction changes its form, *not its value*"
+        voix_off: "Simplifying doesn't change the amount. Three out of twelve and one out of four describe exactly the same share of the group, just written with smaller numbers."
+      - type: titre
+        numero: 2
+        texte: "Fraction, decimal, percentage"
+        voix_off: "Step two: from the fraction to a percentage."
+      - type: formule
+        texte: "Three ways to write *the same share*"
+        formule:
+          - '\dfrac{1}{4}=0.25=\dfrac{25}{100}=25\%'
+        voix_off: "One out of four is one divided by four: zero point two five. And zero point two five is twenty-five hundredths, so twenty-five percent."
+      - type: chiffre
+        valeur: 25
+        suffixe: {fr: " %", en: "%"}
+        texte: "of the team *cycle* to work"
+        voix_off: "The answer to the challenge: three out of twelve is twenty-five percent."
+        verifier:
+          - {expression: "3 / 12 * 100", attendu: 25, libelle: "3 out of 12, %"}
+      - type: etapes
+        texte: "Benchmarks worth *knowing by heart*"
+        etapes:
+          - "1 in 2 = 0.5 = *50%*"
+          - "1 in 4 = 0.25 = *25%*"
+          - "1 in 5 = 0.2 = *20%*"
+          - "1 in 10 = 0.1 = *10%*"
+        voix_off: "A few benchmarks save a lot of work. One in two, fifty percent. One in four, twenty-five percent. One in five, twenty percent. One in ten, ten percent."
+        verifier:
+          - {expression: "1 / 5 * 100", attendu: 20, libelle: "1 in 5 as %"}
+      - type: titre
+        numero: 3
+        texte: "Ratio or fraction?"
+        voix_off: "Watch out for a common trap: the ratio."
+      - type: etapes
+        texte: "In the team: *3* cycle, *9* don't"
+        etapes:
+          - "Ratio: 3 *to* 9, so *1 to 3*"
+          - "Fraction: 3 *out of* 12, so *1 in 4*"
+        voix_off: "In the team, three people cycle and nine get to work some other way. A ratio compares one part with another part: three to nine, one cyclist for every three non-cyclists. A fraction compares a part with the whole: three out of twelve, one in four."
+      - type: texte
+        texte: "\"1 to 3\" does not mean *one third*"
+        note: "Here the share of cyclists is 1 in 4, or 25%, not 33%."
+        voix_off: "Reading one to three as one third would be a mistake: the share of cyclists is one in four, twenty-five percent, not thirty-three. Before you calculate, always ask: is this one part compared with another part, or a part compared with the whole?"
+        verifier:
+          - {expression: "3 / (3 + 9) * 100", attendu: 25, libelle: "Share of cyclists, %"}
+      - type: titre
+        numero: 4
+        texte: "Scaling in proportion"
+        voix_off: "One last tool: scaling a quantity when things are proportional, sometimes called the rule of three."
+      - type: formule
+        texte: "A recipe for 4, scaled *for 6*"
+        formule:
+          - '4\ \mathrm{people}\ \rightarrow\ 300\ \mathrm{g}'
+          - '1\ \mathrm{person}\ \rightarrow\ 300\div 4=75\ \mathrm{g}'
+          - '6\ \mathrm{people}\ \rightarrow\ 75\times 6=450\ \mathrm{g}'
+        voix_off: "A recipe calls for three hundred grams of flour for four people. How much for six? First, go back to one person: three hundred divided by four, seventy-five grams. Then multiply by six: four hundred fifty grams."
+        verifier:
+          - {expression: "300 / 4", attendu: 75, libelle: "Flour for 1 person, g"}
+          - {expression: "300 / 4 * 6", attendu: 450, libelle: "Flour for 6 people, g"}
+      - type: texte
+        texte: "Only if it's *proportional*"
+        note: "Counter-example: preheating the oven for 10 minutes for 4 people doesn't mean 15 minutes for 6."
+        voix_off: "This only works if the two quantities are proportional: twice as many people, twice as much flour. The time it takes to preheat the oven doesn't change with the number of guests."
+      - type: exercice
+        texte: "Out of *40* students, *6* have a bus pass. What *percentage*?"
+        pause: 6
+        voix_off: "Your turn. In a group of forty students, six have a bus pass. What percentage is that, without a calculator?"
+      - type: correction
+        etapes:
+          - "6 out of 40 = 3 out of 20 (divide by 2)"
+          - "3 out of 20 = 15 out of 100 (multiply by 5)"
+        reponse: "15%"
+        voix_off: "Six out of forty: divide top and bottom by two, three out of twenty. To get one hundred at the bottom, multiply by five: fifteen out of one hundred. Fifteen percent."
+        verifier:
+          - {expression: "6 / 40 * 100", attendu: 15, libelle: "6 out of 40, %"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Simplify: divide *top and bottom*"
+          - "Fraction → decimal → *percentage*"
+          - "Ratio = part / part; fraction = part / *whole*"
+          - "Scaling: *only* when it's proportional"
+        voix_off: "Key takeaways. To simplify, divide top and bottom by the same number. Go from the fraction to a decimal, then to a percentage. A ratio compares two parts; a fraction compares a part with the whole. And scaling only works when things are proportional."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

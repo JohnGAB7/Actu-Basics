@@ -1,0 +1,223 @@
+# Niveau 1, vague 1, lot 1 : S1.06 « Observer ou expérimenter » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S1.06.yaml
+# Étude sur le café présentée comme hypothétique (« supposons ») : aucune étude réelle citée tant
+# qu'elle n'a pas été lue. Tirage au sort simulé : probabilités hypergéométriques recalculées
+# (20 personnes dont 7 fumeurs, deux groupes de 10).
+# Statut : brouillon, script à valider avant tout rendu (décision de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-06-observer-ou-experimenter
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.06 · Observer ou expérimenter"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer une étude observationnelle d'une expérience"
+      - "Expliquer le rôle du tirage au sort et du groupe témoin"
+      - "Expliquer pourquoi un déséquilibre fortuit reste possible dans un essai donné, et pourquoi on compare quand même les groupes au départ"
+    en:
+      - "Tell an observational study from an experiment"
+      - "Explain the role of random assignment and of the control group"
+      - "Explain why a chance imbalance is still possible in any given trial, and why the groups are still compared at the start"
+  prerequis:
+    fr: ["S1.05 : échantillon et biais de sélection"]
+    en: ["S1.05: samples and selection bias"]
+  hypotheses:
+    fr: "Étude sur le café hypothétique ; tirage au sort de 20 personnes simulé, dont 7 fumeurs, en deux groupes de 10"
+    en: "Coffee study hypothetical; simulated random assignment of 20 people, 7 of them smokers, into two groups of 10"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "Pourquoi tire-t-on au sort dans les essais de médicaments ?"
+    legende: |
+      Les buveurs de café vivent-ils plus longtemps, et si oui, est-ce grâce au café ? Une étude qui observe des gens qui ont choisi eux-mêmes ne peut pas trancher. Une expérience, si : le chercheur décide qui reçoit le traitement, et le tirage au sort équilibre les groupes en moyenne. Mais pas à chaque fois : avec 20 personnes dont 7 fumeurs, un partage 6 contre 1 arrive dans près de 6 % des tirages. Exemple hypothétique, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, essaiclinique, causalite]
+    scenes:
+      - type: accroche
+        texte: "Pourquoi les essais de médicaments *tirent-ils au sort* ?"
+        voix_off: "Dans un essai de médicament, ce n'est ni le médecin ni le patient qui choisit qui reçoit le traitement. C'est le hasard. Pourquoi ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Observer"
+        voix_off: "Commençons par une autre question. Le café fait-il vivre plus longtemps ?"
+      - type: etapes
+        texte: "Une étude *observationnelle* (hypothétique)"
+        etapes:
+          - "On suit des milliers d'adultes pendant des années"
+          - "Chacun a *choisi lui-même* de boire du café ou non"
+          - "Les buveurs de café meurent *moins vite*"
+        voix_off: "Supposons une étude qui suit des milliers d'adultes pendant des années. Chacun a choisi lui-même de boire du café, ou non. À la fin, les buveurs de café sont morts moins vite que les autres."
+      - type: etapes
+        texte: "Mais les deux groupes diffèrent *déjà*"
+        disposition: cartes
+        etapes:
+          - "*Revenus*, métier"
+          - "*Tabac*, alimentation"
+          - "*Santé* au départ"
+        voix_off: "Peut-on conclure que le café protège ? Non. Les deux groupes ne se sont pas formés au hasard. Ils peuvent différer par leurs revenus, leur métier, le tabac, l'alimentation, ou leur santé au départ : quelqu'un de malade boit parfois moins de café. Chacune de ces différences peut expliquer l'écart."
+      - type: texte
+        texte: "Observer montre un *lien*, pas une *cause*"
+        voix_off: "Une étude observationnelle peut montrer un lien. Elle peut tenir compte des différences qu'elle a mesurées. Mais jamais de celles qu'elle n'a pas mesurées. C'est la confusion, que nous retrouverons dans la leçon sur corrélation et causalité."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Expérimenter"
+        voix_off: "Dans une expérience, on ne se contente pas d'observer : on intervient."
+      - type: etapes
+        texte: "Un essai *randomisé*"
+        etapes:
+          - "Le chercheur *décide* qui reçoit le traitement"
+          - "Un *groupe témoin* reçoit un placebo, ou rien"
+          - "Le *tirage au sort* répartit les participants"
+        voix_off: "Dans un essai randomisé, c'est le chercheur qui décide qui reçoit le traitement. Un groupe témoin reçoit un placebo, ou le traitement habituel, pour servir de comparaison. Et c'est un tirage au sort qui répartit les participants entre les deux groupes."
+      - type: texte
+        texte: "Le hasard ne *favorise personne*"
+        voix_off: "Pourquoi le hasard ? Parce que rien, ni l'âge, ni le tabac, ni un facteur auquel personne n'a pensé, ne peut pousser systématiquement les uns vers le traitement. En moyenne, sur tous les tirages possibles, les deux groupes s'équilibrent. Si une différence apparaît ensuite, le traitement devient l'explication la plus plausible."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Le hasard n'est pas une garantie"
+        voix_off: "Attention : en moyenne ne veut pas dire à chaque fois."
+      - type: etapes
+        texte: "Un tirage au sort *simulé*"
+        etapes:
+          - "*20* volontaires, dont *7* fumeurs"
+          - "Tirage au sort : deux groupes de *10*"
+          - "Le plus souvent : *4 contre 3*"
+        voix_off: "Simulons un petit essai. Vingt volontaires, dont sept fumeurs. On les répartit au hasard en deux groupes de dix. Le plus souvent, les fumeurs se partagent à peu près également : quatre d'un côté, trois de l'autre."
+        verifier:
+          - {expression: "100 * 2 * comb(7, 4) * comb(13, 6) / comb(20, 10)", attendu: 65, libelle: "Partage 4-3 ou 3-4, en % des tirages"}
+      - type: chiffre
+        valeur: 5.7
+        suffixe: {fr: " %", en: "%"}
+        texte: "des tirages donnent *6 contre 1*, ou pire"
+        voix_off: "Mais dans près de six pour cent des tirages, environ un sur dix-sept, on obtient six fumeurs contre un, ou même sept contre zéro. Par pur hasard."
+        note: "Loi hypergéométrique : P(6 ou 7 fumeurs dans un groupe) ≈ 5,7 %. Calcul vérifié."
+        verifier:
+          - {expression: "100 * (comb(7, 0) * comb(13, 10) + comb(7, 1) * comb(13, 9) + comb(7, 6) * comb(13, 4) + comb(7, 7) * comb(13, 3)) / comb(20, 10)", attendu: 5.7, libelle: "Partage 6-1 ou pire, en % des tirages"}
+      - type: texte
+        texte: "D'où le tableau des *caractéristiques initiales*"
+        voix_off: "C'est pour cela que tout essai publie un tableau qui compare les groupes au départ : âge, sexe, tabac, maladies. On vérifie que le hasard n'a pas créé un déséquilibre gênant. Et plus l'essai compte de participants, plus ces écarts fortuits deviennent rares."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Quelles études sont des *expériences* ?"
+        pause: 8
+        voix_off: "À vous. Quatre études. A : on compare la santé des enfants qui font du sport et de ceux qui n'en font pas. B : on tire au sort deux cents volontaires, la moitié reçoit un vaccin, l'autre un placebo. C : on interroge des retraités sur leur alimentation passée. D : une école tire au sort les classes qui testent une nouvelle méthode de lecture. Lesquelles sont des expériences ?"
+      - type: correction
+        etapes:
+          - "A et C : on *observe* des choix déjà faits"
+          - "B et D : le chercheur *répartit au hasard*"
+        reponse: "B et D, les seules à permettre une conclusion causale"
+        voix_off: "Dans A et C, on observe des situations que les gens ont choisies ou vécues : ce sont des études observationnelles. Dans B et D, la répartition est décidée par tirage au sort : ce sont des expériences. Ce sont les seules qui permettent, si elles sont bien menées, de conclure à un effet."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Observer : un *lien*, pas une preuve de cause"
+          - "Expérimenter : le *tirage au sort* équilibre en moyenne"
+          - "Toujours *comparer les groupes* au départ"
+        voix_off: "À retenir. Une étude observationnelle montre un lien, pas une cause. Une expérience randomisée équilibre les groupes en moyenne, ce qui permet de conclure à un effet. Et même tirés au sort, les groupes doivent être comparés au départ. Dernière limite : on ne peut pas tout tirer au sort. Personne n'obligera des volontaires à fumer pendant vingt ans. Pour ces questions, il faut d'autres méthodes, que nous verrons plus tard."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Why do drug trials assign treatment at random?"
+    legende: |
+      Do coffee drinkers live longer, and if so, is it thanks to the coffee? A study that observes people who chose for themselves can't settle it. An experiment can: the researcher decides who gets the treatment, and random assignment balances the groups on average. But not every time: with 20 people including 7 smokers, a 6-to-1 split happens in almost 6% of draws. Hypothetical example, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, clinicaltrials, causation]
+    scenes:
+      - type: accroche
+        texte: "Why do drug trials *assign treatment at random*?"
+        voix_off: "In a drug trial, neither the doctor nor the patient chooses who gets the treatment. Chance does. Why?"
+      - type: titre
+        numero: 1
+        texte: "Observing"
+        voix_off: "Let's start with another question. Does coffee help you live longer?"
+      - type: etapes
+        texte: "An *observational* study (hypothetical)"
+        etapes:
+          - "Thousands of adults are followed for years"
+          - "Each one *chose* whether to drink coffee"
+          - "Coffee drinkers die *at a slower rate*"
+        voix_off: "Imagine a study that follows thousands of adults for years. Each of them chose whether or not to drink coffee. At the end, coffee drinkers have died at a slower rate than the others."
+      - type: etapes
+        texte: "But the two groups *already* differ"
+        disposition: cartes
+        etapes:
+          - "*Income*, job"
+          - "*Smoking*, diet"
+          - "*Health* at the start"
+        voix_off: "Can we conclude that coffee protects you? No. The two groups didn't form at random. They may differ in income, job, smoking, diet, or health at the start: someone who is ill sometimes drinks less coffee. Any of these differences could explain the gap."
+      - type: texte
+        texte: "Observing shows a *link*, not a *cause*"
+        voix_off: "An observational study can show a link. It can adjust for the differences it measured. But never for the ones it didn't measure. That's confounding, which we'll meet again in the lesson on correlation and causation."
+      - type: titre
+        numero: 2
+        texte: "Experimenting"
+        voix_off: "In an experiment, we don't just observe: we intervene."
+      - type: etapes
+        texte: "A *randomised* trial"
+        etapes:
+          - "The researcher *decides* who gets the treatment"
+          - "A *control group* gets a placebo, or nothing"
+          - "*Random assignment* splits the participants"
+        voix_off: "In a randomised trial, the researcher decides who gets the treatment. A control group gets a placebo, or the usual treatment, as a comparison. And a random draw splits the participants between the two groups."
+      - type: texte
+        texte: "Chance *favours no one*"
+        voix_off: "Why chance? Because nothing, not age, not smoking, not a factor nobody thought of, can systematically push some people towards the treatment. On average, across all possible draws, the two groups balance out. If a difference shows up afterwards, the treatment becomes the most plausible explanation."
+      - type: titre
+        numero: 3
+        texte: "Chance is no guarantee"
+        voix_off: "Careful: on average doesn't mean every time."
+      - type: etapes
+        texte: "A *simulated* random draw"
+        etapes:
+          - "*20* volunteers, *7* of them smokers"
+          - "Random draw: two groups of *10*"
+          - "Most often: *4 to 3*"
+        voix_off: "Let's simulate a small trial. Twenty volunteers, seven of them smokers. We split them at random into two groups of ten. Most often, the smokers are shared roughly evenly: four on one side, three on the other."
+        verifier:
+          - {expression: "100 * 2 * comb(7, 4) * comb(13, 6) / comb(20, 10)", attendu: 65, libelle: "4-3 or 3-4 split, % of draws"}
+      - type: chiffre
+        valeur: 5.7
+        suffixe: {fr: " %", en: "%"}
+        texte: "of draws give *6 to 1*, or worse"
+        voix_off: "But in almost six percent of draws, about one in seventeen, you get six smokers to one, or even seven to none. Purely by chance."
+        note: "Hypergeometric distribution: P(6 or 7 smokers in one group) ≈ 5.7%. Checked calculation."
+        verifier:
+          - {expression: "100 * (comb(7, 0) * comb(13, 10) + comb(7, 1) * comb(13, 9) + comb(7, 6) * comb(13, 4) + comb(7, 7) * comb(13, 3)) / comb(20, 10)", attendu: 5.7, libelle: "6-1 split or worse, % of draws"}
+      - type: texte
+        texte: "Hence the table of *baseline characteristics*"
+        voix_off: "That's why every trial publishes a table comparing the groups at the start: age, sex, smoking, illnesses. It checks that chance hasn't created a troublesome imbalance. And the more participants a trial has, the rarer these chance gaps become."
+      - type: exercice
+        texte: "Which studies are *experiments*?"
+        pause: 8
+        voix_off: "Your turn. Four studies. A: comparing the health of children who play sport with those who don't. B: two hundred volunteers are drawn at random, half get a vaccine, half a placebo. C: retired people are asked about their past diet. D: a school draws lots to pick the classes that will test a new reading method. Which ones are experiments?"
+      - type: correction
+        etapes:
+          - "A and C: we *observe* choices already made"
+          - "B and D: the researcher *assigns at random*"
+        reponse: "B and D, the only ones that support a causal conclusion"
+        voix_off: "In A and C, we observe situations people chose or lived through: these are observational studies. In B and D, the split is decided by a random draw: these are experiments. They're the only ones that, if well run, let you conclude there's an effect."
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Observing: a *link*, not proof of a cause"
+          - "Experimenting: *random assignment* balances on average"
+          - "Always *compare the groups* at the start"
+        voix_off: "Key takeaways. An observational study shows a link, not a cause. A randomised experiment balances the groups on average, which lets you conclude there's an effect. And even when drawn at random, the groups must be compared at the start. One last limit: not everything can be randomised. Nobody will make volunteers smoke for twenty years. Those questions need other methods, which we'll see later."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

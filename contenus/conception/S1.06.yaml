@@ -1,0 +1,48 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-07, à valider avant tout rendu (JG). Exemples fictifs : pas d'exemple réel sourcé.
+id_programme: S1.06
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-s1-06-observer-ou-experimenter.yaml
+question_centrale:
+  fr: Pourquoi les essais de médicaments tirent-ils au sort qui reçoit le traitement ?
+  en: Why do drug trials assign treatment at random?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S1
+  rang_dans_module: 6
+public:
+  prerequis:
+  - S1.05
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Si le hasard décide, aucun facteur, visible ou non, ne pousse systématiquement les uns vers le traitement ; mais
+  un écart fortuit reste possible.
+exemple_fil_rouge: Café et longévité (étude hypothétique) ; tirage simulé de 20 personnes dont 7 fumeurs.
+exemple_reel: null
+idees_fausses:
+- idee: Conclure à une cause à partir de groupes qui se sont choisis eux-mêmes
+  desamorcee_a_l_etape: Observer montre un lien, pas une cause
+- idee: Croire que le tirage au sort garantit des groupes identiques à chaque essai
+  desamorcee_a_l_etape: Le hasard n'est pas une garantie
+exercice:
+  question: Classer quatre études (observationnelle ou expérience)
+  correction: B et D sont des expériences
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Une étude montre que les élèves qui prennent un petit-déjeuner ont de meilleures notes. Comment concevoir
+    une expérience pour tester l'effet du petit-déjeuner ?
+  diagnostic_d_erreur: '« L''essai était randomisé, donc les groupes étaient identiques » : qu''est-ce qui manque ?'
+duree_estimee_min:
+- 5
+- 8
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 7/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)
