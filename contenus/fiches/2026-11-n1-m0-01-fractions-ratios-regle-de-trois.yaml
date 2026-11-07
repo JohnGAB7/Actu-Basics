@@ -61,7 +61,7 @@ editions:
         texte: "On divise *en haut et en bas* par le même nombre"
         formule:
           - '\dfrac{3}{12}=\dfrac{3\div 3}{12\div 3}=\dfrac{1}{4}'
-        voix_off: "Trois sur douze. On cherche un nombre qui divise à la fois trois et douze : trois. Trois divisé par trois, un. Douze divisé par trois, quatre. Trois sur douze, c'est un sur quatre : une personne sur quatre."
+        voix_off: "Trois sur douze. On cherche un nombre qui divise trois et douze sans reste : trois. Trois divisé par trois, un. Douze divisé par trois, quatre. Trois sur douze, c'est un sur quatre : une personne sur quatre."
         verifier:
           - {expression: "3 / 12", attendu: 0.25, libelle: "3 sur 12 = 1 sur 4"}
       - type: texte
@@ -85,7 +85,7 @@ editions:
         verifier:
           - {expression: "3 / 12 * 100", attendu: 25, libelle: "3 sur 12, en %"}
       - type: etapes
-        texte: "Repères à connaître *par cœur*"
+        texte: "Quelques fractions *faciles à reconnaître*"
         etapes:
           - "1 sur 2 = 0,5 = *50 %*"
           - "1 sur 4 = 0,25 = *25 %*"
@@ -108,7 +108,7 @@ editions:
       - type: texte
         texte: "« 1 pour 3 » ne veut pas dire *un tiers*"
         note: "Ici, la part de cyclistes est 1 sur 4, soit 25 %, et non 33 %."
-        voix_off: "Lire un pour trois comme un tiers serait une erreur : la part de cyclistes est un sur quatre, vingt-cinq pour cent, pas trente-trois. Avant de calculer, demandez-vous toujours : est-ce une partie comparée à une autre partie, ou une partie comparée au total ?"
+        voix_off: "Pour passer du ratio au total, on additionne les deux parts : un plus trois, quatre. Lire un pour trois comme un tiers serait donc une erreur : la part de cyclistes est un sur quatre, vingt-cinq pour cent, pas trente-trois. Avant de calculer, demandez-vous toujours : est-ce une partie comparée à une autre partie, ou une partie comparée au total ?"
         verifier:
           - {expression: "3 / (3 + 9) * 100", attendu: 25, libelle: "Part de cyclistes, en %"}
       # ---------------------------------------------------------------- 4
@@ -128,7 +128,7 @@ editions:
           - {expression: "300 / 4 * 6", attendu: 450, libelle: "Farine pour 6 personnes, en g"}
       - type: texte
         texte: "Seulement si c'est *proportionnel*"
-        note: "Contre-exemple : un four préchauffé 10 minutes pour 4 personnes ne demande pas 15 minutes pour 6."
+        note: "Contre-exemple : un four demande 10 minutes de préchauffage, que la recette soit prévue pour 4 ou pour 6 personnes."
         voix_off: "La règle de trois ne marche que si les deux quantités sont proportionnelles : deux fois plus de personnes, deux fois plus de farine. Le temps de préchauffage du four, lui, ne change pas avec le nombre de convives."
       # ---------------------------------------------------------------- exercice
       - type: exercice
@@ -177,7 +177,7 @@ editions:
         texte: "Divide *top and bottom* by the same number"
         formule:
           - '\dfrac{3}{12}=\dfrac{3\div 3}{12\div 3}=\dfrac{1}{4}'
-        voix_off: "Three out of twelve. Look for a number that divides both three and twelve: three. Three divided by three is one. Twelve divided by three is four. Three out of twelve is one out of four: one person in four."
+        voix_off: "Three out of twelve. Look for a number that divides both three and twelve exactly: three. Three divided by three is one. Twelve divided by three is four. Three out of twelve is one out of four: one person in four."
         verifier:
           - {expression: "3 / 12", attendu: 0.25, libelle: "3 out of 12 = 1 out of 4"}
       - type: texte
@@ -200,7 +200,7 @@ editions:
         verifier:
           - {expression: "3 / 12 * 100", attendu: 25, libelle: "3 out of 12, %"}
       - type: etapes
-        texte: "Benchmarks worth *knowing by heart*"
+        texte: "A few useful fractions *to remember*"
         etapes:
           - "1 in 2 = 0.5 = *50%*"
           - "1 in 4 = 0.25 = *25%*"
@@ -214,7 +214,7 @@ editions:
         texte: "Ratio or fraction?"
         voix_off: "Watch out for a common trap: the ratio."
       - type: etapes
-        texte: "In the team: *3* cycle, *9* don't"
+        texte: "In the team: *3* cycle to work, *9* don't"
         etapes:
           - "Ratio: 3 *to* 9, so *1 to 3*"
           - "Fraction: 3 *out of* 12, so *1 in 4*"
@@ -222,7 +222,7 @@ editions:
       - type: texte
         texte: "\"1 to 3\" does not mean *one third*"
         note: "Here the share of cyclists is 1 in 4, or 25%, not 33%."
-        voix_off: "Reading one to three as one third would be a mistake: the share of cyclists is one in four, twenty-five percent, not thirty-three. Before you calculate, always ask: is this one part compared with another part, or a part compared with the whole?"
+        voix_off: "To go from the ratio to the whole, add the two parts: one plus three, four. So reading one to three as one third would be a mistake: the share of cyclists is one in four, twenty-five percent, not thirty-three. Before you calculate, always ask: is this one part compared with another part, or a part compared with the whole?"
         verifier:
           - {expression: "3 / (3 + 9) * 100", attendu: 25, libelle: "Share of cyclists, %"}
       - type: titre
@@ -241,7 +241,7 @@ editions:
           - {expression: "300 / 4 * 6", attendu: 450, libelle: "Flour for 6 people, g"}
       - type: texte
         texte: "Only if it's *proportional*"
-        note: "Counter-example: preheating the oven for 10 minutes for 4 people doesn't mean 15 minutes for 6."
+        note: "Counter-example: an oven takes 10 minutes to preheat, whether the recipe is for 4 or 6 people."
         voix_off: "This only works if the two quantities are proportional: twice as many people, twice as much flour. The time it takes to preheat the oven doesn't change with the number of guests."
       - type: exercice
         texte: "Out of *40* students, *6* have a bus pass. What *percentage*?"

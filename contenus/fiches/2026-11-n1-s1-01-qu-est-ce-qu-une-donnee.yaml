@@ -46,6 +46,7 @@ editions:
     titre: "Combien d'habitants à Paris ? Qu'est-ce qu'une donnée"
     legende: |
       Combien d'habitants à Paris : 2,1 millions, 11 millions ou 13,3 millions ? Les trois chiffres sont exacts, parce que chacun répond à une définition différente de « Paris ». Première leçon du parcours : ce qui fait une question statistique, et pourquoi une donnée est toujours une mesure, faite par quelqu'un, selon une définition. Source : Insee, recensement de la population 2023 (commune, unité urbaine et aire d'attraction de Paris). Série « Lire un chiffre sans se faire avoir ».
+      Pour aller plus loin, notre ancienne leçon « La donnée » : https://youtu.be/mxeIQ4Q0Tac
     hashtags: [statistiques, donnees, chiffres]
     scenes:
       - type: accroche
@@ -137,6 +138,7 @@ editions:
     titre: "How many people live in Paris? What counts as data"
     legende: |
       How many people live in Paris: 2.1 million, 11 million or 13.3 million? All three figures are correct, because each answers a different definition of "Paris". First lesson of the course: what makes a question statistical, and why a data point is always a measurement, made by someone, under a definition. Source: Insee, 2023 population census (commune, urban unit and functional area of Paris). Series "Reading numbers without being fooled".
+      Going further, our earlier lesson on data (in French): https://youtu.be/mxeIQ4Q0Tac
     hashtags: [statistics, data, numbers]
     scenes:
       - type: accroche

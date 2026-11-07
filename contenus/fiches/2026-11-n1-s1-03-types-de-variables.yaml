@@ -35,6 +35,7 @@ editions:
     titre: "Peut-on faire la moyenne de codes postaux ?"
     legende: |
       La moyenne de deux codes postaux, cela a-t-il un sens ? Et 20 °C, est-ce deux fois plus chaud que 10 °C ? Un nombre n'est pas toujours une quantité : parfois c'est une étiquette, parfois un rang. On apprend à classer une variable et à savoir quelles opérations ont un sens sur chaque échelle de mesure. Série « Lire un chiffre sans se faire avoir ».
+      Pour aller plus loin, notre ancienne leçon sur les échelles de mesure : https://youtu.be/3tskGadKrn4
     hashtags: [statistiques, variables, chiffres]
     scenes:
       - type: accroche
@@ -125,6 +126,7 @@ editions:
     titre: "Can you average postcodes? Types of variables"
     legende: |
       Does the average of two postcodes mean anything? And is 20 °C twice as hot as 10 °C? A number isn't always a quantity: sometimes it's a label, sometimes a rank. We learn to classify a variable and to know which operations make sense on each measurement scale. Series "Reading numbers without being fooled".
+      Going further, our earlier lesson on measurement scales (in French): https://youtu.be/3tskGadKrn4
     hashtags: [statistics, variables, numbers]
     scenes:
       - type: accroche

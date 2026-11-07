@@ -113,6 +113,16 @@ editions:
         note: "3 × 10⁹ ÷ (2 × 10⁶) = 1 500."
         verifier:
           - {expression: "3e9 / 2e6", attendu: 1500, libelle: "Rapport des deux budgets"}
+      - type: etapes
+        texte: "Le *coefficient* ou la *puissance* ?"
+        etapes:
+          - "2 millions = 2 × *10⁶*"
+          - "3 millions = 3 × *10⁶* : même ordre de grandeur"
+          - "3 milliards = 3 × *10⁹* : trois ordres de grandeur au-dessus"
+        voix_off: "Comparez. Deux millions et trois millions ont la même puissance, dix puissance six : ils sont du même ordre de grandeur, seul le coefficient change. Trois milliards, c'est dix puissance neuf : trois crans plus haut. Le coefficient ajuste, la puissance fait le vrai saut."
+        verifier:
+          - {expression: "3e6 / 2e6", attendu: 1.5, libelle: "3 millions / 2 millions"}
+          - {expression: "3e9 / 3e6", attendu: 1000, libelle: "3 milliards / 3 millions"}
       - type: texte
         texte: "Faux ami : *billion* en anglais = *milliard*"
         note: "En français, un billion vaut 10¹², mille milliards."
@@ -217,6 +227,16 @@ editions:
         note: "3 × 10⁹ ÷ (2 × 10⁶) = 1,500."
         verifier:
           - {expression: "3e9 / 2e6", attendu: 1500, libelle: "Ratio of the two budgets"}
+      - type: etapes
+        texte: "The *coefficient* or the *power*?"
+        etapes:
+          - "2 million = 2 × *10⁶*"
+          - "3 million = 3 × *10⁶*: same order of magnitude"
+          - "3 billion = 3 × *10⁹*: three orders of magnitude higher"
+        voix_off: "Compare. Two million and three million have the same power, ten to the six: they're the same order of magnitude, only the coefficient changes. Three billion is ten to the nine: three steps higher. The coefficient fine-tunes, the power makes the real jump."
+        verifier:
+          - {expression: "3e6 / 2e6", attendu: 1.5, libelle: "3 million / 2 million"}
+          - {expression: "3e9 / 3e6", attendu: 1000, libelle: "3 billion / 3 million"}
       - type: texte
         texte: "False friend: in French, *billion* = *10¹²*"
         note: "In English, a billion is 10⁹; in French, a « billion » is a thousand times more."
