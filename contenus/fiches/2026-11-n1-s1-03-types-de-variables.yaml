@@ -41,7 +41,7 @@ editions:
         texte: "Peut-on calculer la *moyenne* de codes postaux ?"
         voix_off: "Peut-on calculer la moyenne de deux codes postaux ? Et vingt degrés, est-ce deux fois plus chaud que dix degrés ?"
       - type: exercice
-        texte: "(75 001 + 13 001) ÷ 2 = *44 001*. Ce résultat a-t-il *un sens* ?"
+        texte: "(75001 + 13001) ÷ 2 = *44001*. Ce résultat a-t-il *un sens* ?"
         etiquette: "DÉFI"
         pause: 4
         note: "75001 : Paris ; 13001 : Marseille."
@@ -77,21 +77,21 @@ editions:
         texte: "Quelles opérations ont un sens ?"
         voix_off: "Chaque type de variable autorise certaines opérations, et pas d'autres. On parle d'échelles de mesure."
       - type: etapes
-        texte: "Quatre échelles, de la plus pauvre à la plus riche"
+        texte: "Quatre échelles, de la moins à la plus informative"
         etapes:
           - "*Nominale* : égal ou différent"
           - "*Ordinale* : en plus, classer"
           - "*Intervalle* : en plus, mesurer des écarts"
           - "*Rapport* : en plus, dire « deux fois plus »"
-        voix_off: "Il y a quatre échelles. Sur une échelle nominale, on peut seulement dire si deux valeurs sont égales ou différentes, et compter. Sur une échelle ordinale, on peut en plus les classer. Sur une échelle d'intervalle, on peut en plus mesurer des écarts : la température en degrés Celsius. Sur une échelle de rapport, on peut en plus dire deux fois plus : les kilos, les euros, les durées."
+        voix_off: "Il y a quatre échelles. Sur une échelle nominale, on peut seulement dire si deux valeurs sont égales ou différentes, et compter. Sur une échelle ordinale, on peut en plus les classer. Sur une échelle d'intervalle, on peut en plus mesurer des écarts : la température en degrés Celsius. Sur une échelle de rapport, on peut en plus dire deux fois plus : les kilogrammes, les euros, les durées."
       - type: etapes
         texte: "20 °C, deux fois plus chaud que 10 °C ?"
         etapes:
           - "20 kg = *2 ×* 10 kg : le zéro veut dire « rien »"
-          - "0 °C n'est *pas* une absence de chaleur"
+          - "0 °C n'est *pas* un vrai zéro de température"
           - "En kelvins : 293,15 ÷ 283,15 ≈ *1,035*"
         note: "0 °C = 273,15 K ; le zéro des kelvins est le zéro absolu."
-        voix_off: "Comparons. Vingt kilos, c'est bien deux fois dix kilos, parce que zéro kilo veut dire aucun poids. Mais zéro degré Celsius n'est pas une absence de chaleur : c'est la température où l'eau gèle, un repère choisi par convention. Avec une échelle dont le zéro est vraiment nul, les kelvins, passer de dix à vingt degrés, c'est passer de deux cent quatre-vingt-trois à deux cent quatre-vingt-treize kelvins : environ trois virgule cinq pour cent de plus, pas le double."
+        voix_off: "Comparons. Vingt kilogrammes, c'est bien deux fois dix kilogrammes, parce que zéro kilogramme veut dire une masse nulle. Mais zéro degré Celsius n'est pas le zéro de la température : c'est la température où l'eau gèle, un repère choisi par convention. Avec une échelle dont le zéro est vraiment nul, les kelvins, passer de dix à vingt degrés, c'est passer de deux cent quatre-vingt-trois à deux cent quatre-vingt-treize kelvins : environ trois virgule cinq pour cent de plus, pas le double. Ce rapport ne décrit pas ce que l'on ressent : il montre seulement que vingt degrés n'est pas le double de dix."
         verifier:
           - {expression: "20 / 10", attendu: 2, libelle: "20 kg ÷ 10 kg"}
           - {expression: "(20 + 273.15) / (10 + 273.15)", attendu: 1.035, libelle: "20 °C ÷ 10 °C en kelvins"}
@@ -131,7 +131,7 @@ editions:
         texte: "Can you take the *average* of postcodes?"
         voix_off: "Can you take the average of two postcodes? And is twenty degrees twice as hot as ten degrees?"
       - type: exercice
-        texte: "(75,001 + 13,001) ÷ 2 = *44,001*. Does this result *mean anything*?"
+        texte: "(75001 + 13001) ÷ 2 = *44001*. Does this result *mean anything*?"
         etiquette: "CHALLENGE"
         pause: 4
         note: "75001 and 13001: French postcodes in Paris and Marseille."
@@ -165,21 +165,21 @@ editions:
         texte: "Which operations make sense?"
         voix_off: "Each type of variable allows some operations and not others. These are called measurement scales."
       - type: etapes
-        texte: "Four scales, from poorest to richest"
+        texte: "Four scales, from least to most informative"
         etapes:
           - "*Nominal*: equal or different"
           - "*Ordinal*: also, rank"
           - "*Interval*: also, measure differences"
           - "*Ratio*: also, say \"twice as much\""
-        voix_off: "There are four scales. On a nominal scale, you can only say whether two values are equal or different, and count them. On an ordinal scale, you can also rank them. On an interval scale, you can also measure differences: temperature in degrees Celsius. On a ratio scale, you can also say twice as much: kilos, euros, durations."
+        voix_off: "There are four scales. On a nominal scale, you can only say whether two values are equal or different, and count them. On an ordinal scale, you can also rank them. On an interval scale, you can also measure differences: temperature in degrees Celsius. On a ratio scale, you can also say twice as much: kilograms, euros, durations."
       - type: etapes
         texte: "Is 20 °C twice as hot as 10 °C?"
         etapes:
           - "20 kg = *2 ×* 10 kg: zero means \"nothing\""
-          - "0 °C is *not* an absence of heat"
+          - "0 °C is *not* a true zero of temperature"
           - "In kelvins: 293.15 ÷ 283.15 ≈ *1.035*"
         note: "0 °C = 273.15 K; zero kelvin is absolute zero."
-        voix_off: "Let's compare. Twenty kilos really is twice ten kilos, because zero kilos means no weight at all. But zero degrees Celsius isn't an absence of heat: it's the temperature at which water freezes, a reference point chosen by convention. On a scale whose zero truly means nothing, kelvins, going from ten to twenty degrees means going from two hundred and eighty-three to two hundred and ninety-three kelvins: about three and a half percent more, not double."
+        voix_off: "Let's compare. Twenty kilograms really is twice ten kilograms, because zero kilograms means zero mass. But zero degrees Celsius isn't the zero of temperature: it's the temperature at which water freezes, a reference point chosen by convention. On a scale whose zero truly means nothing, kelvins, going from ten to twenty degrees means going from two hundred and eighty-three to two hundred and ninety-three kelvins: about three and a half percent more, not double. That ratio doesn't describe how warm it feels: it only shows that twenty degrees isn't double ten."
         verifier:
           - {expression: "20 / 10", attendu: 2, libelle: "20 kg ÷ 10 kg"}
           - {expression: "(20 + 273.15) / (10 + 273.15)", attendu: 1.035, libelle: "20 °C ÷ 10 °C in kelvins"}
@@ -205,5 +205,5 @@ editions:
           - "\"Twice as much\" needs a *true zero*"
         voix_off: "Let's recap. A number can be a label, a rank or a quantity. The measurement scale tells you which operations make sense. And to say twice as much, you need a scale with a true zero."
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

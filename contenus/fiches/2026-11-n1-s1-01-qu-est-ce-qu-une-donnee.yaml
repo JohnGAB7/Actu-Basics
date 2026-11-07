@@ -66,7 +66,7 @@ editions:
         etapes:
           - "« Quel âge a ma voisine ? » : *une seule réponse*"
           - "« Quel âge ont les habitants de ma rue ? » : des réponses qui *varient*"
-        voix_off: "Comparons deux questions. Quel âge a ma voisine ? Il y a une seule réponse, il suffit de la lui demander. Quel âge ont les habitants de ma rue ? Là, les réponses varient d'une personne à l'autre."
+        voix_off: "Comparons deux questions. Quel âge a ma voisine aujourd'hui ? Il y a une seule réponse, il suffit de la lui demander. Quel âge ont les habitants de ma rue ? Là, les réponses varient d'une personne à l'autre."
       - type: texte
         texte: "Une question statistique attend des réponses qui *varient*"
         voix_off: "C'est la différence essentielle. Une question statistique porte sur un groupe, et elle attend des réponses qui varient. Les statistiques servent à décrire et à comprendre cette variabilité."
@@ -93,9 +93,9 @@ editions:
         etapes:
           - "La *commune* de Paris : *2,1 millions*"
           - "L'*agglomération*, bâti continu : *11,0 millions*"
-          - "L'*aire d'attraction*, avec les communes où vivent ceux qui y travaillent : *13,3 millions*"
+          - "L'*aire d'attraction*, avec les communes dont au moins 15 % des actifs travaillent dans le pôle : *13,3 millions*"
         note: "Insee, recensement 2023 : 2 103 778, 11 013 774 et 13 320 752 habitants."
-        voix_off: "L'Insee publie trois chiffres, pour trois définitions de Paris. La commune de Paris, dans ses limites administratives : deux virgule un millions d'habitants. L'agglomération, c'est-à-dire Paris et les communes qui forment avec elle une zone de bâti continu : onze millions. L'aire d'attraction, qui ajoute les communes dont une bonne partie des habitants vient travailler dans l'agglomération : treize virgule trois millions."
+        voix_off: "L'Insee publie trois chiffres, pour trois définitions de Paris. La commune de Paris, dans ses limites administratives : deux virgule un millions d'habitants. L'agglomération, c'est-à-dire Paris et les communes qui forment avec elle une zone de bâti continu : onze millions. L'aire d'attraction, qui ajoute les communes alentour dont au moins quinze pour cent des actifs viennent travailler dans le pôle parisien : treize virgule trois millions."
         verifier:
           - {expression: "2103778 / 1e6", attendu: 2.1, libelle: "Commune de Paris, en millions"}
           - {expression: "11013774 / 1e6", attendu: 11.0, libelle: "Unité urbaine de Paris, en millions"}
@@ -109,8 +109,8 @@ editions:
         verifier:
           - {expression: "13320752 / 2103778", attendu: 6.3, libelle: "Rapport aire d'attraction / commune"}
       - type: texte
-        texte: "Un nombre n'est pas neutre : il dépend de *la question posée*"
-        voix_off: "Un chiffre n'est donc pas neutre ou objectif simplement parce que c'est un nombre. Il dépend de la question posée et de la définition choisie. Avant de comparer deux chiffres, vérifiez qu'ils répondent à la même question."
+        texte: "Un chiffre ne se suffit pas : il dépend de *la question posée*"
+        voix_off: "Un chiffre ne se suffit donc pas à lui-même. Il dépend de la question posée et de la définition choisie. Avant de comparer deux chiffres, vérifiez qu'ils répondent à la même question."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "A : la hauteur de la tour Eiffel. B : le temps de trajet des Parisiens. Laquelle est une question *statistique* ?"
@@ -136,7 +136,7 @@ editions:
   en:
     titre: "How many people live in Paris? What counts as data"
     legende: |
-      How many people live in Paris: 2.1 million, 11 million or 13.3 million? All three figures are correct, because each answers a different definition of "Paris". First lesson of the course: what makes a question statistical, and why a data point is always a measurement, made by someone, under a definition. Source: Insee, 2023 population census (commune, urban unit and catchment area of Paris). Series "Reading numbers without being fooled".
+      How many people live in Paris: 2.1 million, 11 million or 13.3 million? All three figures are correct, because each answers a different definition of "Paris". First lesson of the course: what makes a question statistical, and why a data point is always a measurement, made by someone, under a definition. Source: Insee, 2023 population census (commune, urban unit and functional area of Paris). Series "Reading numbers without being fooled".
     hashtags: [statistics, data, numbers]
     scenes:
       - type: accroche
@@ -156,7 +156,7 @@ editions:
         etapes:
           - "\"How old is my neighbour?\": *a single answer*"
           - "\"How old are the people on my street?\": answers that *vary*"
-        voix_off: "Let's compare two questions. How old is my neighbour? There is a single answer: you just ask her. How old are the people on my street? This time, the answers vary from one person to the next."
+        voix_off: "Let's compare two questions. How old is my neighbour today? There is a single answer: you just ask her. How old are the people on my street? This time, the answers vary from one person to the next."
       - type: texte
         texte: "A statistical question expects answers that *vary*"
         voix_off: "That's the key difference. A statistical question is about a group, and it expects answers that vary. Statistics are there to describe and understand that variability."
@@ -181,9 +181,9 @@ editions:
         etapes:
           - "The *city* of Paris: *2.1 million*"
           - "The *built-up area*: *11.0 million*"
-          - "The *catchment area*, adding the towns where many of its workers live: *13.3 million*"
+          - "The *functional area*, adding towns where at least 15% of workers commute to the core: *13.3 million*"
         note: "Insee, 2023 census: 2,103,778, 11,013,774 and 13,320,752 people."
-        voix_off: "Insee publishes three figures, for three definitions of Paris. The city of Paris, within its official boundaries: two point one million people. The built-up area, meaning Paris and the surrounding towns that form one continuous urban area with it: eleven million. The catchment area, which adds the towns where a large share of residents commute to work in that urban area: thirteen point three million."
+        voix_off: "Insee publishes three figures, for three definitions of Paris. The city of Paris, within its official boundaries: two point one million people. The built-up area, meaning Paris and the surrounding towns that form one continuous urban area with it: eleven million. The functional area, which adds the surrounding towns where at least fifteen percent of workers commute to the Paris core: thirteen point three million."
         verifier:
           - {expression: "2103778 / 1e6", attendu: 2.1, libelle: "City of Paris, millions"}
           - {expression: "11013774 / 1e6", attendu: 11.0, libelle: "Paris urban unit, millions"}
@@ -191,14 +191,14 @@ editions:
       - type: chiffre
         valeur: 6.3
         prefixe: "×"
-        texte: "more people, from the city to the catchment area"
+        texte: "more people, from the city to the functional area"
         voix_off: "The answer to the challenge: all three figures are right. Depending on the definition, the number of people is multiplied by more than six."
         note: "13,320,752 ÷ 2,103,778 ≈ 6.3. Insee, 2023 census."
         verifier:
           - {expression: "13320752 / 2103778", attendu: 6.3, libelle: "Catchment area / city ratio"}
       - type: texte
-        texte: "A number isn't neutral: it depends on *the question asked*"
-        voix_off: "So a figure isn't neutral or objective just because it's a number. It depends on the question asked and on the definition chosen. Before comparing two figures, check that they answer the same question."
+        texte: "A number isn't enough on its own: it depends on *the question asked*"
+        voix_off: "So a figure isn't enough on its own. It depends on the question asked and on the definition chosen. Before comparing two figures, check that they answer the same question."
       - type: exercice
         texte: "A: the height of the Eiffel Tower. B: how long Parisians take to get to work. Which one is a *statistical* question?"
         pause: 5
@@ -217,5 +217,5 @@ editions:
           - "Who *measured* it, and *when*?"
         voix_off: "Remember three questions to ask any number. Which question does it answer? Under which definition? And who measured it, and when?"
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

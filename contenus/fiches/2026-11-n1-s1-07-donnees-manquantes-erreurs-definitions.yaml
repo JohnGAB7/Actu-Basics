@@ -37,13 +37,13 @@ sources: []
 
 editions:
   fr:
-    titre: "+51 % de vols de vélos ? Quand c'est la mesure qui change"
+    titre: "+51 % de plaintes pour vol de vélo : les vols ont-ils augmenté ?"
     legende: |
       Dans une ville fictive, les plaintes pour vol de vélo bondissent de 51 % en un an. Les vols ont-ils augmenté, ou est-ce la façon de les compter ? L'année du bond, la plainte en ligne a été ouverte. On apprend à repérer une rupture de série, à se méfier des réponses qui manquent (ce ne sont pas toujours les mêmes qui ne répondent pas) et à reconnaître les erreurs de saisie. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, donnees, methodologie]
     scenes:
       - type: accroche
-        texte: "Vols de vélos : *+51 %* en un an ?"
+        texte: "Plaintes pour vol de vélo : *+51 %* en un an"
         voix_off: "Dans une ville, les plaintes pour vol de vélo bondissent de cinquante et un pour cent en un an. Les vols ont-ils vraiment augmenté ? Avant de répondre, demandons-nous ce qui a pu changer."
       # ---------------------------------------------------------------- 1
       - type: titre
@@ -67,9 +67,9 @@ editions:
         etapes:
           - "Les *victimes* déclarées : stables d'une année sur l'autre"
           - "Ce qui a changé : la part des victimes *qui portent plainte*"
-        voix_off: "Une enquête auprès des habitants, menée chaque année de la même façon, ne montre aucune hausse du nombre de victimes. Ce qui a changé, c'est la part des victimes qui portent plainte. Avant, beaucoup renonçaient. Les vols n'ont pas augmenté : c'est l'enregistrement qui a changé."
+        voix_off: "Une enquête auprès des habitants, menée chaque année de la même façon, ne montre aucune hausse du nombre de victimes. Ce qui a augmenté, c'est surtout la part des victimes qui portent plainte. Avant, beaucoup renonçaient. Dans notre exemple, tout indique que c'est l'enregistrement qui a changé, plus que les vols."
       - type: texte
-        texte: "Une *rupture de série* : avant et après ne se comparent pas"
+        texte: "Une *rupture de série* : avant et après ne sont pas directement comparables"
         note: "Indices à chercher : une note « changement de méthode », un saut brutal l'année d'une réforme."
         voix_off: "C'est ce qu'on appelle une rupture de série. Quand la définition ou la méthode de comptage change, les chiffres d'avant et d'après ne mesurent plus exactement la même chose. Les instituts statistiques le signalent dans leurs notes de méthode. Un saut brutal, l'année d'une réforme, doit toujours éveiller les soupçons."
       # ---------------------------------------------------------------- 2
@@ -104,9 +104,9 @@ editions:
         disposition: cartes
         etapes:
           - "Valeur *impossible* : un âge de 230 ans"
-          - "Unité *mélangée* : euros et milliers d'euros"
+          - "Unité *mélangée* : 2 500 € saisi « 2,5 »"
           - "*Doublon* : la même personne comptée deux fois"
-        voix_off: "Trois erreurs reviennent souvent. Une valeur impossible, comme un âge de deux cent trente ans. Des unités mélangées, des euros d'un côté, des milliers d'euros de l'autre. Et des doublons, la même personne comptée deux fois. Une seule valeur aberrante peut suffire à fausser une moyenne."
+        voix_off: "Trois erreurs reviennent souvent. Une valeur impossible, comme un âge de deux cent trente ans. Des unités mélangées : un salaire de deux mille cinq cents euros saisi deux virgule cinq, en milliers d'euros, dans une colonne en euros. Et des doublons, la même personne comptée deux fois. Une seule valeur aberrante peut suffire à fausser une moyenne."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "Un taux de chômage passe de *7,1 %* à *8,4 %* l'année où le *questionnaire change*. Que vérifier ?"
@@ -116,8 +116,8 @@ editions:
         etapes:
           - "Lire la *note de méthode* : la définition a-t-elle changé ?"
           - "Chercher une série *recalculée* avec la nouvelle méthode"
-        reponse: "Comparer seulement des chiffres mesurés de la même façon"
-        voix_off: "Il faut d'abord lire la note de méthode : la définition ou la façon de poser les questions a-t-elle changé ? Puis chercher une série recalculée, où les années passées sont estimées avec la nouvelle méthode. On ne compare que des chiffres mesurés de la même façon."
+        reponse: "Comparer des chiffres définis et mesurés de la même façon"
+        voix_off: "Il faut d'abord lire la note de méthode : la définition ou la façon de poser les questions a-t-elle changé ? Puis chercher une série recalculée, où les années passées sont estimées avec la nouvelle méthode. On ne compare que des chiffres définis et mesurés de la même façon."
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -130,13 +130,13 @@ editions:
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
 
   en:
-    titre: "Bike thefts up 51%? When it's the measurement that changes"
+    titre: "Bike theft reports up 51%: did thefts really increase?"
     legende: |
       In a fictional town, reported bike thefts jump 51% in one year. Did thefts go up, or did the way of counting them change? The year of the jump, online reporting opened. We learn to spot a break in a series, to be wary of missing answers (the people who don't reply are not always a random few) and to recognise data-entry errors. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
     hashtags: [statistics, data, methodology]
     scenes:
       - type: accroche
-        texte: "Bike thefts: *+51%* in one year?"
+        texte: "Bike theft reports: *+51%* in one year"
         voix_off: "In one town, reported bike thefts jump by fifty-one percent in a single year. Did thefts really go up? Before answering, let's ask what else might have changed."
       - type: titre
         numero: 1
@@ -159,9 +159,9 @@ editions:
         etapes:
           - "Reported *victims*: stable from year to year"
           - "What changed: the share of victims *who report it*"
-        voix_off: "A survey of residents, run the same way every year, shows no rise in the number of victims. What changed is the share of victims who report the theft. Before, many didn't bother. Thefts didn't rise: the recording did."
+        voix_off: "A survey of residents, run the same way every year, shows no rise in the number of victims. What rose is mainly the share of victims who report the theft. Before, many didn't bother. In our example, everything points to a change in recording, more than in thefts."
       - type: texte
-        texte: "A *break in the series*: before and after don't compare"
+        texte: "A *break in the series*: before and after aren't directly comparable"
         note: "Clues to look for: a \"change of method\" note, a sudden jump in the year of a reform."
         voix_off: "This is called a break in the series. When the definition or the counting method changes, the figures before and after no longer measure exactly the same thing. Statistics offices flag this in their methodology notes. A sudden jump in the year of a reform should always raise suspicion."
       - type: titre
@@ -194,9 +194,9 @@ editions:
         disposition: cartes
         etapes:
           - "*Impossible* value: an age of 230"
-          - "*Mixed* units: euros and thousands of euros"
+          - "*Mixed* units: €2,500 entered as \"2.5\""
           - "*Duplicate*: the same person counted twice"
-        voix_off: "Three errors come up often. An impossible value, like an age of two hundred and thirty. Mixed units, euros on one side, thousands of euros on the other. And duplicates, the same person counted twice. A single outlandish value can be enough to skew an average."
+        voix_off: "Three errors come up often. An impossible value, like an age of two hundred and thirty. Mixed units: a salary of two thousand five hundred euros entered as two point five, in thousands, in a column in euros. And duplicates, the same person counted twice. A single outlandish value can be enough to skew an average."
       - type: exercice
         texte: "An unemployment rate goes from *7.1%* to *8.4%* the year the *questionnaire changes*. What should you check?"
         pause: 7
@@ -205,8 +205,8 @@ editions:
         etapes:
           - "Read the *methodology note*: did the definition change?"
           - "Look for a series *recalculated* with the new method"
-        reponse: "Only compare figures measured the same way"
-        voix_off: "First, read the methodology note: did the definition, or the way the questions are asked, change? Then look for a recalculated series, where past years are estimated with the new method. Only compare figures measured the same way."
+        reponse: "Compare figures defined and measured the same way"
+        voix_off: "First, read the methodology note: did the definition, or the way the questions are asked, change? Then look for a recalculated series, where past years are estimated with the new method. Only compare figures defined and measured the same way."
       - type: etapes
         texte: "Key takeaways"
         etapes:
@@ -215,5 +215,5 @@ editions:
           - "A strange value? Check the *data entry*"
         voix_off: "Key takeaways. Faced with a sudden jump, look for a change of definition or method. Faced with missing answers, ask who didn't reply, and why. And faced with a strange value, check the data entry before interpreting it."
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

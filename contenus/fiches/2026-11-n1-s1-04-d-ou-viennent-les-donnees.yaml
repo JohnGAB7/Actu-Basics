@@ -3,8 +3,10 @@
 # Source lue le 2026-11-03 : Insee, Informations Rapides n° 192, « Au deuxième trimestre 2026, le taux
 # de chômage augmente de 0,2 point et atteint 8,3 % », paru le 07/08/2026,
 # https://www.insee.fr/fr/statistiques/9032359 : 2 677 milliers de chômeurs au sens du BIT (CVS, France).
-# Le nombre d'inscrits à France Travail n'est PAS cité : la publication de la Dares n'a pas pu être lue
-# (page de vérification anti-robot). Seule la différence de définition est énoncée.
+# Source lue le 2026-11-07 : Insee, « L'essentiel sur... le chômage », paru le 07/08/2026,
+# https://www.insee.fr/fr/statistiques/4805248 : « au deuxième trimestre 2026, 2,7 millions de personnes
+# sont au chômage au sens du BIT en France et 3,3 millions sont inscrites à France Travail en catégorie A
+# en France hors Mayotte » (ajout proposé par la relecture ChatGPT du 2026-11-07).
 # Prochaine publication de l'Insee le 10/11/2026 (3e trimestre) : chiffre à mettre à jour avant validation.
 # Statut : brouillon. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s1-04-d-ou-viennent-les-donnees
@@ -41,12 +43,17 @@ sources:
       en: "Insee, Informations Rapides no. 192, unemployment in Q2 2026"
     url: "https://www.insee.fr/fr/statistiques/9032359"
     date_consultation: "2026-11-03"
+  - nom:
+      fr: "Insee, L'essentiel sur... le chômage (août 2026)"
+      en: "Insee, Key facts on unemployment (August 2026)"
+    url: "https://www.insee.fr/fr/statistiques/4805248"
+    date_consultation: "2026-11-07"
 
 editions:
   fr:
     titre: "Combien de chômeurs ? D'où viennent les données"
     legende: |
-      Combien y a-t-il de chômeurs en France ? La réponse dépend de la façon dont on les compte : une enquête auprès des ménages ou un fichier d'inscrits ne mesurent pas la même chose. On découvre les quatre grandes sources de données, recensement, sondage, fichiers administratifs, capteurs et plateformes, avec une force et une limite pour chacune. Source : Insee, Informations Rapides n° 192 (chômage au sens du BIT, 2e trimestre 2026). Série « Lire un chiffre sans se faire avoir ».
+      Combien y a-t-il de chômeurs en France ? La réponse dépend de la façon dont on les compte : une enquête auprès des ménages ou un fichier d'inscrits ne mesurent pas la même chose. On découvre les quatre grandes sources de données, recensement, sondage, fichiers administratifs, capteurs et plateformes, avec une force et une limite pour chacune. Sources : Insee, Informations Rapides n° 192 (chômage au sens du BIT, 2e trimestre 2026) et « L'essentiel sur... le chômage » (inscrits à France Travail). Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, donnees, chomage]
     scenes:
       - type: accroche
@@ -73,10 +80,10 @@ editions:
           - "Sondage : *rapide*, mais marge d'erreur et non-réponses"
           - "Fichier : *énorme*, mais défini par des règles de gestion"
           - "Capteurs : *en continu*, mais seulement ce qui est équipé"
-        voix_off: "Chaque source a une force et une limite. Le recensement est complet, mais lourd et coûteux à organiser. Le sondage est rapide, mais il a une marge d'erreur, et certaines personnes ne répondent pas. Le fichier administratif est énorme et déjà disponible, mais il ne compte que ce que ses règles de gestion lui demandent de compter. Les capteurs mesurent en continu, mais seulement là où ils sont installés, et seulement les personnes qui utilisent la plateforme."
+        voix_off: "Chaque source a une force et une limite. Le recensement est complet, mais lourd et coûteux à organiser. Le sondage est rapide, mais il a une marge d'erreur, et certaines personnes ne répondent pas. Le fichier administratif est énorme et déjà disponible, mais il ne compte que ce que ses règles de gestion lui demandent de compter. Les capteurs mesurent en continu, mais seulement là où ils sont installés. Les plateformes, elles, ne voient que leurs utilisateurs."
       - type: texte
-        texte: "Ce qui n'est *pas collecté* n'existe pas dans les données"
-        voix_off: "Retenez l'idée générale : chaque façon de collecter laisse sa trace dans le chiffre. Ce qui n'est pas collecté n'existe tout simplement pas dans les données."
+        texte: "Ce qui n'est *pas collecté* n'apparaît pas dans les données"
+        voix_off: "Retenez l'idée générale : chaque façon de collecter laisse sa trace dans le chiffre. Ce qui n'est pas collecté n'apparaît tout simplement pas dans les données."
       # ---------------------------------------------------------------- 2
       - type: titre
         numero: 2
@@ -88,7 +95,7 @@ editions:
           - "Insee : une *enquête*, définition du BIT"
           - "Sans emploi, *disponible*, en recherche *active*"
           - "France Travail : un *fichier* de personnes inscrites"
-        voix_off: "D'un côté, l'Insee mène une enquête auprès d'un échantillon de ménages, et applique la définition du Bureau international du travail. Est chômeur, au sens du BIT, une personne sans emploi, disponible pour travailler, et qui cherche activement un emploi. De l'autre côté, France Travail tient un fichier : il compte les personnes inscrites, selon ses propres règles d'inscription."
+        voix_off: "D'un côté, l'Insee mène une enquête auprès d'un échantillon de ménages, et applique la définition du Bureau international du travail. Est chômeur, au sens du BIT, une personne de quinze ans ou plus qui n'a pas travaillé, même une heure, pendant une semaine donnée, qui est disponible pour travailler, et qui cherche activement un emploi. De l'autre côté, France Travail tient un fichier : il compte les personnes inscrites, selon ses propres règles d'inscription."
       - type: chiffre
         valeur: 2.7
         suffixe: {fr: " millions", en: " million"}
@@ -99,7 +106,8 @@ editions:
           - {expression: "2677 / 1000", attendu: 2.7, libelle: "Chômeurs au sens du BIT, en millions"}
       - type: texte
         texte: "Un inscrit n'est pas forcément *chômeur au sens du BIT*, et inversement"
-        voix_off: "Le nombre d'inscrits à France Travail est différent. Ce n'est pas une erreur : les deux chiffres ne mesurent pas la même chose. Une personne qui a travaillé quelques heures dans le mois peut rester inscrite, sans être chômeuse au sens du BIT. À l'inverse, une personne qui cherche un emploi sans être inscrite est comptée par l'enquête, mais pas par le fichier."
+        note: "Insee : 3,3 millions d'inscrits à France Travail en catégorie A au 2e trimestre 2026 (France hors Mayotte)."
+        voix_off: "Le nombre d'inscrits à France Travail est différent : trois virgule trois millions en catégorie A, au même trimestre. Ce n'est pas une erreur : les deux chiffres ne mesurent pas la même chose. Une personne qui a travaillé ne serait-ce qu'une heure dans la semaine de référence n'est pas chômeuse au sens du BIT, même si elle reste inscrite. À l'inverse, une personne qui cherche activement un emploi sans être inscrite peut être comptée par l'enquête, mais pas par le fichier."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "D'où viennent ces chiffres ? *Les naissances* de l'année. *La confiance* dans les scientifiques. *Le trafic* du périphérique à 8 h."
@@ -126,7 +134,7 @@ editions:
   en:
     titre: "How many unemployed? Where numbers come from"
     legende: |
-      How many people are unemployed in France? The answer depends on how they're counted: a household survey and a register of jobseekers don't measure the same thing. We look at the four main sources of data, censuses, surveys, administrative records, sensors and platforms, with one strength and one limitation for each. Source: Insee, Informations Rapides no. 192 (ILO unemployment, Q2 2026). Series "Reading numbers without being fooled".
+      How many people are unemployed in France? The answer depends on how they're counted: a household survey and a register of jobseekers don't measure the same thing. We look at the four main sources of data, censuses, surveys, administrative records, sensors and platforms, with one strength and one limitation for each. Sources: Insee, Informations Rapides no. 192 (ILO unemployment, Q2 2026) and Key facts on unemployment (France Travail registrations). Series "Reading numbers without being fooled".
     hashtags: [statistics, data, unemployment]
     scenes:
       - type: accroche
@@ -152,10 +160,10 @@ editions:
           - "Survey: *fast*, but margin of error and non-response"
           - "Records: *huge*, but defined by administrative rules"
           - "Sensors: *continuous*, but only where installed"
-        voix_off: "Each source has a strength and a limitation. A census is complete, but heavy and costly to run. A survey is fast, but it has a margin of error, and some people don't answer. Administrative records are huge and already available, but they only count what their rules ask them to count. Sensors measure continuously, but only where they're installed, and only the people who use the platform."
+        voix_off: "Each source has a strength and a limitation. A census is complete, but heavy and costly to run. A survey is fast, but it has a margin of error, and some people don't answer. Administrative records are huge and already available, but they only count what their rules ask them to count. Sensors measure continuously, but only where they're installed. Platforms, for their part, only see their own users."
       - type: texte
-        texte: "What *isn't collected* doesn't exist in the data"
-        voix_off: "Remember the general idea: every way of collecting data leaves its mark on the number. What isn't collected simply doesn't exist in the data."
+        texte: "What *isn't collected* doesn't show up in the data"
+        voix_off: "Remember the general idea: every way of collecting data leaves its mark on the number. What isn't collected simply doesn't show up in the data."
       - type: titre
         numero: 2
         texte: "Unemployment: survey or register?"
@@ -177,7 +185,8 @@ editions:
           - {expression: "2677 / 1000", attendu: 2.7, libelle: "ILO unemployed, millions"}
       - type: texte
         texte: "A registered jobseeker isn't always *ILO-unemployed*, and vice versa"
-        voix_off: "The number of people registered with France Travail is different. That's not a mistake: the two figures don't measure the same thing. Someone who worked a few hours in the month can stay registered without being unemployed under the ILO definition. And someone looking for work without registering is counted by the survey, but not by the register."
+        note: "Insee: 3.3 million people registered with France Travail in category A, Q2 2026 (France excluding Mayotte)."
+        voix_off: "The number of people registered with France Travail is different: three point three million in category A, in the same quarter. That's not a mistake: the two figures don't measure the same thing. Someone who worked even one hour in the reference week isn't unemployed under the ILO definition, even if they stay registered. And someone actively looking for work without registering can be counted by the survey, but not by the register."
       - type: exercice
         texte: "Where do these numbers come from? *Births* this year. *Trust* in scientists. *Traffic* on the ring road at 8 a.m."
         pause: 6
@@ -197,5 +206,5 @@ editions:
           - "Two sources, two definitions: *two numbers*"
         voix_off: "Let's recap. When you see a number, ask who collected it, and how. Each source has a strength and a limitation. And two sources that count with two different definitions give two different numbers, without either of them being wrong."
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

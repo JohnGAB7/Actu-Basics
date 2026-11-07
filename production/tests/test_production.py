@@ -1671,3 +1671,22 @@ def test_logo_de_fin_controle_en_16_9_sans_interface_d_application():
     controler_logo("fr", r, [("lecon", n - 1, "fin")], CHARTE, PLATEFORMES, rap)
     assert not rap.bloquants
     assert not [a for a in rap.avertissements if "interface" in str(a)]
+
+
+def test_courbe_titre_d_axe_vertical_et_guide_horizontal():
+    """« axe_y » écrit l'unité sur l'axe vertical ; « guide_y » d'un repère trace le pointillé vers cet axe
+    (M0.03, relecture du 2026-11-07 : lire les deux coordonnées d'un point sur le graphique lui-même)."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-m0-03-lire-un-graphique-et-un-repere.yaml")
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        s = next(x for x in ed.scenes if x.type == "courbe")
+        c = s.extra["courbe"]
+        assert c["axe_y"] and c["reperes"][0]["guide_y"] is True
+        i = ed.scenes.index(s)
+        complet = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+        s.extra["courbe"] = dict(c, axe_y=None)
+        sans_titre = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+        s.extra["courbe"] = dict(c, reperes=[dict(c["reperes"][0], guide_y=False)])
+        sans_guide = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+        s.extra["courbe"] = c
+        assert len({complet, sans_titre, sans_guide}) == 3

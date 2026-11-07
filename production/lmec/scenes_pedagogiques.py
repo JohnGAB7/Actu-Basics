@@ -484,6 +484,11 @@ class ScenesPedagogiques(Animations):
             lbl = typographie(c["axe_x"], self.langue)
             d.text((droite - p_axe.getlength(lbl), bas_g + 64), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
+        # Titre de l'axe vertical (« Hauteur (cm) ») au-dessus des graduations : l'unité se lit sur l'axe.
+        if c.get("axe_y"):
+            lbl = typographie(c["axe_y"], self.langue)
+            d.text((g, haut_g - p_axe.size * 1.6 - 22), lbl, font=p_axe,
+                   fill=_melange(fond, self.c["secondaire"], a_axes))
         # Seuils horizontaux en pointillés : « seuil » (ex. 0.9, étiqueté par sa valeur) et/ou « seuils »,
         # liste de {valeur, label} (ex. moyenne et médiane affichées ensemble). Couleurs : accent, puis texte.
         seuils = ([{"valeur": c["seuil"]}] if c.get("seuil") is not None else []) + list(c.get("seuils") or [])
@@ -530,6 +535,10 @@ class ScenesPedagogiques(Animations):
             px, py = X(xr), Y(yr)
             for yy in range(int(py), int(bas_g), 22):
                 d.line((px, yy, px, min(yy + 11, bas_g)), fill=_melange(fond, self.c["texte"], a), width=3)
+            # « guide_y: true » : second pointillé vers l'axe vertical, pour lire les deux coordonnées.
+            if rep.get("guide_y"):
+                for xx in range(int(px), int(gauche), -22):
+                    d.line((max(xx - 11, gauche), py, xx, py), fill=_melange(fond, self.c["texte"], a), width=3)
             r = 15 * (0.6 + 0.4 * a)
             d.ellipse((px - r, py - r, px + r, py + r), fill=self.c["texte"], outline=self.c["accent"], width=6)
             places.append((typographie(rep.get("label") or fmt_y(yr), self.langue), px, py, a))

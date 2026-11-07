@@ -69,7 +69,7 @@ editions:
         etapes:
           - "Environ *10 millions* de bulletins envoyés"
           - "Près de *2,4 millions* reviennent"
-          - "Prévision : Landon *54 %*, Roosevelt *41 %*"
+          - "Prévision publiée : Landon *54 %*, Roosevelt *41 %*"
           - "Résultat : Roosevelt réélu avec *61 %* des voix"
         note: "Chiffres rapportés par D. Lusinchi, Social Science History, 2012."
         voix_off: "Le magazine Literary Digest veut prédire l'élection présidentielle. Il envoie environ dix millions de bulletins par la poste. Près de deux virgule quatre millions lui reviennent. Le magazine annonce que le républicain Alfred Landon l'emportera avec cinquante-quatre pour cent des voix, contre quarante et un pour cent au président Franklin Roosevelt. Le jour du vote, Roosevelt est réélu, avec soixante et un pour cent des voix."
@@ -102,7 +102,7 @@ editions:
           - "*La liste* : adresses tirées notamment d'annuaires téléphoniques et de listes de propriétaires de voitures"
           - "*Les réponses* : ceux qui renvoient le bulletin ne votent pas comme les autres"
         note: "Selon Squire (1988), cité par Lohr et Brick (2017), les deux biais ont joué."
-        voix_off: "Entre les électeurs et les bulletins reçus, il y a eu deux filtres. Le premier, c'est la liste d'envoi : les adresses venaient notamment d'annuaires téléphoniques et de listes de propriétaires de voitures, qui ne représentaient pas tous les électeurs. Le second, ce sont les réponses : les personnes qui ont pris la peine de renvoyer leur bulletin penchaient davantage pour Landon. Les chercheurs discutent encore de la part de chaque filtre, mais tous deux ont faussé l'échantillon."
+        voix_off: "Entre les électeurs et les bulletins reçus, il y a eu deux filtres. Le premier, c'est la liste d'envoi : les adresses venaient notamment d'annuaires téléphoniques et de listes de propriétaires de voitures, qui ne représentaient pas tous les électeurs. Le second, ce sont les réponses : les personnes qui ont pris la peine de renvoyer leur bulletin penchaient davantage pour Landon. Les chercheurs discutent encore de la part de chaque filtre, mais tous deux ont contribué à rendre l'échantillon non représentatif."
       - type: texte
         texte: "C'est un *biais de sélection* : l'échantillon ne ressemble plus à la population"
         voix_off: "C'est ce qu'on appelle un biais de sélection : la façon de choisir ou de recueillir l'échantillon le rend différent de la population, de façon systématique."
@@ -116,7 +116,7 @@ editions:
         etapes:
           - "Plus de réponses réduit *le hasard*"
           - "Mais pas *le biais* : on mesure très bien la mauvaise population"
-        voix_off: "Interroger plus de monde réduit les erreurs dues au hasard. Mais cela ne corrige pas un biais. Avec deux virgule quatre millions de réponses, le Literary Digest mesurait très précisément l'opinion de ceux qui lui répondaient, pas celle de tous les électeurs."
+        voix_off: "Dans un échantillon tiré au hasard, interroger plus de monde réduit l'incertitude due au hasard. Mais cela ne corrige pas un biais de sélection. Avec deux virgule quatre millions de réponses, le Literary Digest mesurait très précisément l'opinion de ceux qui lui répondaient, pas celle de tous les électeurs."
       - type: texte
         texte: "Un grand échantillon *mal choisi* reste *mal choisi*"
         voix_off: "Retenez-le : un grand échantillon mal choisi reste mal choisi. Ce qui compte d'abord, c'est la façon dont on le choisit, pas sa taille."
@@ -127,11 +127,11 @@ editions:
         voix_off: "À vous. Dans chacune de ces trois enquêtes, qui risque de manquer ? Des avis laissés en ligne sur un restaurant. Un sondage réalisé uniquement par téléphone fixe. Un questionnaire sur l'activité physique, distribué à la sortie d'une salle de sport."
       - type: correction
         etapes:
-          - "En ligne : surtout les *très contents* et les *très déçus*"
+          - "En ligne : les *très contents* et les *très déçus* écrivent plus"
           - "Téléphone fixe : il manque ceux qui *n'en ont pas*"
           - "Salle de sport : il manque ceux qui *n'y vont pas*"
         reponse: "Trois échantillons qui se sélectionnent eux-mêmes"
-        voix_off: "En ligne, ce sont surtout les clients très contents ou très déçus qui prennent la peine d'écrire. Par téléphone fixe, il manque toutes les personnes qui n'en ont pas, souvent les plus jeunes. À la sortie d'une salle de sport, il manque précisément ceux qui n'y vont pas. Dans les trois cas, l'échantillon ne ressemble pas à la population."
+        voix_off: "En ligne, ceux qui laissent un avis ne ressemblent pas forcément à tous les clients : les expériences très bonnes ou très mauvaises sont souvent surreprésentées. Par téléphone fixe, il manque toutes les personnes qui n'en ont pas, souvent les plus jeunes. À la sortie d'une salle de sport, il manque précisément ceux qui n'y vont pas. Dans les trois cas, l'échantillon ne ressemble pas à la population."
       - type: etapes
         texte: "Ce qu'il faut retenir"
         etapes:
@@ -161,7 +161,7 @@ editions:
         etapes:
           - "About *10 million* ballots mailed out"
           - "Nearly *2.4 million* come back"
-          - "Forecast: Landon *54%*, Roosevelt *41%*"
+          - "Published forecast: Landon *54%*, Roosevelt *41%*"
           - "Result: Roosevelt re-elected with *61%* of the vote"
         note: "Figures as reported by D. Lusinchi, Social Science History, 2012."
         voix_off: "The Literary Digest magazine wants to predict the presidential election. It mails out about ten million ballots. Nearly two point four million come back. The magazine announces that the Republican, Alf Landon, will win with fifty-four percent of the vote, against forty-one percent for President Franklin Roosevelt. On election day, Roosevelt is re-elected, with sixty-one percent of the vote."
@@ -193,7 +193,7 @@ editions:
           - "*The list*: addresses taken notably from telephone directories and car owner lists"
           - "*The answers*: those who mail back the ballot don't vote like the others"
         note: "According to Squire (1988), cited by Lohr and Brick (2017), both biases played a part."
-        voix_off: "Between the voters and the ballots received, there were two filters. The first was the mailing list: the addresses came notably from telephone directories and lists of car owners, which didn't represent all voters. The second was who answered: the people who bothered to mail back their ballot leaned more towards Landon. Researchers still debate how much each filter mattered, but both skewed the sample."
+        voix_off: "Between the voters and the ballots received, there were two filters. The first was the mailing list: the addresses came notably from telephone directories and lists of car owners, which didn't represent all voters. The second was who answered: the people who bothered to mail back their ballot leaned more towards Landon. Researchers still debate how much each filter mattered, but both helped make the sample unrepresentative."
       - type: texte
         texte: "That's *selection bias*: the sample no longer looks like the population"
         voix_off: "This is called selection bias: the way the sample is chosen or collected makes it systematically different from the population."
@@ -206,7 +206,7 @@ editions:
         etapes:
           - "More answers reduce *chance error*"
           - "But not *bias*: you measure the wrong population very precisely"
-        voix_off: "Asking more people reduces errors due to chance. But it doesn't fix bias. With two point four million answers, the Literary Digest measured very precisely the opinion of the people who answered it, not that of all voters."
+        voix_off: "In a randomly drawn sample, asking more people reduces the uncertainty due to chance. But it doesn't fix selection bias. With two point four million answers, the Literary Digest measured very precisely the opinion of the people who answered it, not that of all voters."
       - type: texte
         texte: "A big sample *badly chosen* is still *badly chosen*"
         voix_off: "Remember this: a big sample that's badly chosen is still badly chosen. What matters first is how you choose it, not how big it is."
@@ -216,11 +216,11 @@ editions:
         voix_off: "Your turn. In each of these three surveys, who is likely to be missing? Reviews of a restaurant left online. A poll carried out by landline only. A survey on physical activity, handed out outside a gym."
       - type: correction
         etapes:
-          - "Online: mostly the *very happy* and the *very disappointed*"
+          - "Online: the *very happy* and the *very disappointed* write more"
           - "Landline: missing those who *don't have one*"
           - "Gym: missing those who *don't go*"
         reponse: "Three samples that select themselves"
-        voix_off: "Online, it's mostly very happy or very disappointed customers who bother to write. By landline, you miss everyone who doesn't have one, often younger people. Outside a gym, you miss precisely the people who don't go. In all three cases, the sample doesn't look like the population."
+        voix_off: "Online, the people who leave a review aren't necessarily like all customers: very good or very bad experiences are often over-represented. By landline, you miss everyone who doesn't have one, often younger people. Outside a gym, you miss precisely the people who don't go. In all three cases, the sample doesn't look like the population."
       - type: etapes
         texte: "What to remember"
         etapes:
@@ -229,5 +229,5 @@ editions:
           - "*Size* is no substitute for *representativeness*"
         voix_off: "Let's recap. When you see a poll, ask how the sample was chosen. Ask who didn't answer. And remember that size is never a substitute for representativeness."
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

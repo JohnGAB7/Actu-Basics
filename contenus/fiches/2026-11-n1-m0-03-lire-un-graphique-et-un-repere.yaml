@@ -67,9 +67,11 @@ editions:
         courbe:
           points: [[0, 2], [1, 4], [2, 7], [3, 9], [4, 12], [5, 14]]
           style: points
-          axe_x: "Semaine"
+          y_max: 16
+          axe_x: "Semaines"
+          axe_y: "Hauteur (cm)"
           reperes:
-            - {x: 3, label: "(3 ; 9)"}
+            - {x: 3, label: "(3 ; 9)", guide_y: true}
         note: "Données fictives. Hauteur en centimètres."
         voix_off: "Chaque point est une mesure. Prenons celui-ci. On descend tout droit vers l'axe horizontal : semaine trois. On part vers la gauche jusqu'à l'axe vertical : neuf centimètres. Ce point dit donc : à la semaine trois, la plante mesurait neuf centimètres."
       - type: formule
@@ -87,7 +89,7 @@ editions:
         formule:
           - '\mathrm{pas}=\dfrac{\mathrm{valeur\ haute}-\mathrm{valeur\ basse}}{\mathrm{intervalles}}'
           - '\dfrac{20-0}{4}=5\ \mathrm{cm}'
-        voix_off: "Sur un axe, seuls zéro et vingt sont écrits, avec quatre intervalles réguliers entre eux. Chaque graduation vaut vingt moins zéro, divisé par quatre : cinq centimètres. Comptez bien les intervalles, les espaces, et non les traits."
+        voix_off: "Sur un axe, seuls zéro et vingt sont écrits, avec quatre intervalles réguliers entre eux. Chaque graduation vaut vingt moins zéro, divisé par quatre : cinq centimètres. Comptez les intervalles entre les graduations, pas le nombre de traits."
         verifier:
           - {expression: "(20 - 0) / 4", attendu: 5, libelle: "Pas de la graduation, en cm"}
       - type: texte
@@ -147,9 +149,11 @@ editions:
         courbe:
           points: [[0, 2], [1, 4], [2, 7], [3, 9], [4, 12], [5, 14]]
           style: points
-          axe_x: "Week"
+          y_max: 16
+          axe_x: "Weeks"
+          axe_y: "Height (cm)"
           reperes:
-            - {x: 3, label: "(3, 9)"}
+            - {x: 3, label: "(3, 9)", guide_y: true}
         note: "Fictional data. Height in centimetres."
         voix_off: "Each point is one measurement. Take this one. Go straight down to the horizontal axis: week three. Go left to the vertical axis: nine centimetres. So this point says: in week three, the plant was nine centimetres tall."
       - type: formule
@@ -166,7 +170,7 @@ editions:
         formule:
           - '\mathrm{step}=\dfrac{\mathrm{top\ value}-\mathrm{bottom\ value}}{\mathrm{number\ of\ intervals}}'
           - '\dfrac{20-0}{4}=5\ \mathrm{cm}'
-        voix_off: "On an axis, only zero and twenty are labelled, with four equal intervals between them. Each mark is worth twenty minus zero, divided by four: five centimetres. Count the intervals, the gaps, not the tick marks."
+        voix_off: "On an axis, only zero and twenty are labelled, with four equal intervals between them. Each mark is worth twenty minus zero, divided by four: five centimetres. Count the intervals between the marks, not the number of tick marks."
         verifier:
           - {expression: "(20 - 0) / 4", attendu: 5, libelle: "Step of the scale, cm"}
       - type: texte
@@ -181,7 +185,7 @@ editions:
         etapes:
           - "Total gap: 50 − 0 = 50"
           - "Divided by 10 intervals"
-        reponse: "5 per mark"
+        reponse: "5 per interval"
         voix_off: "The total gap is fifty minus zero, fifty. Divide it by ten intervals: each mark is worth five."
         verifier:
           - {expression: "(50 - 0) / 10", attendu: 5, libelle: "Step of the exercise scale"}
@@ -193,5 +197,5 @@ editions:
           - "What is the *step*, and where does the axis start?"
         voix_off: "Before reading a chart, three questions. What does each axis measure? In which unit? And what is the step of the scale, and where does the axis start?"
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

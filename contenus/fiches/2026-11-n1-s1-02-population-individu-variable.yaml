@@ -34,7 +34,7 @@ editions:
   fr:
     titre: "De qui parle ce chiffre ? Population, individu, variable"
     legende: |
-      « Les Français dorment 7 heures par nuit » : de qui parle-t-on, et qu'a-t-on mesuré ? Toute statistique répond à trois questions : sur qui, sur quoi, et comment. On apprend à repérer la population, l'individu et la variable, et l'on voit sur un petit village fictif qu'un revenu « par ménage » et un revenu « par personne » ne donnent pas du tout le même chiffre. Titres et nombres fictifs. Série « Lire un chiffre sans se faire avoir ».
+      « Les Français dorment 7 heures par nuit » : de qui parle-t-on, et qu'a-t-on mesuré ? Pour comprendre une statistique, trois questions : quelle population, quelle unité, quelle variable. On apprend à repérer la population, l'individu et la variable, et l'on voit sur un petit village fictif qu'un revenu « par ménage » et un revenu « par personne » ne donnent pas du tout le même chiffre. Titres et nombres fictifs. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, donnees, chiffres]
     scenes:
       - type: accroche
@@ -44,8 +44,8 @@ editions:
       # ---------------------------------------------------------------- 1
       - type: titre
         numero: 1
-        texte: "Sur qui, sur quoi, comment"
-        voix_off: "Toute statistique répond à trois questions : sur qui, sur quoi, et comment."
+        texte: "Qui, quelle unité, quelle mesure"
+        voix_off: "Pour comprendre une statistique, posez trois questions : quelle population étudie-t-on, quelle unité observe-t-on, et quelle variable mesure-t-on ?"
       - type: etapes
         texte: "Les trois briques d'une statistique"
         disposition: cartes
@@ -84,8 +84,8 @@ editions:
         texte: "Le revenu moyen du village"
         etapes:
           - "Par *ménage* : 9 000 ÷ 3 = *3 000 €*"
-          - "Par *personne* : 9 000 ÷ 7 ≈ *1 286 €*"
-        voix_off: "Quel est le revenu moyen du village ? Par ménage, neuf mille euros divisés par trois ménages : trois mille euros. Par personne, neuf mille euros divisés par sept habitants : environ mille deux cent quatre-vingt-six euros."
+          - "Par *habitant* : 9 000 ÷ 7 ≈ *1 286 €*"
+        voix_off: "Quel est le revenu moyen du village ? Par ménage, neuf mille euros divisés par trois ménages : trois mille euros. Par habitant, les mêmes neuf mille euros divisés par sept habitants : environ mille deux cent quatre-vingt-six euros."
         verifier:
           - {expression: "9000 / 3", attendu: 3000, libelle: "Revenu moyen par ménage"}
           - {expression: "9000 / 7", attendu: 1286, libelle: "Revenu moyen par personne"}
@@ -108,10 +108,10 @@ editions:
       - type: etapes
         texte: "Ce qu'il faut retenir"
         etapes:
-          - "Sur *qui* : la population"
-          - "Sur *quoi* : l'individu"
-          - "*Quoi* et *comment* : la variable et sa mesure"
-        voix_off: "Récapitulons. Sur qui porte le chiffre : c'est la population. Sur quoi : c'est l'individu, personne, ménage ou entreprise. Et qu'a-t-on mesuré, et comment : c'est la variable. Avant de comparer deux chiffres, vérifiez que ces trois briques sont les mêmes."
+          - "Qui étudie-t-on ? *La population*"
+          - "Quelle unité observe-t-on ? *L'individu*"
+          - "Que mesure-t-on, et comment ? *La variable*"
+        voix_off: "Récapitulons. Qui étudie-t-on : c'est la population. Quelle unité observe-t-on : c'est l'individu, personne, ménage ou entreprise. Et que mesure-t-on, et comment : c'est la variable. Avant de comparer deux chiffres, vérifiez que ces trois briques sont les mêmes."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -119,7 +119,7 @@ editions:
   en:
     titre: "Who is this number about? Population, unit, variable"
     legende: |
-      "People in France sleep 7 hours a night": who are we talking about, and what was measured? Every statistic answers three questions: about whom, about what, and how. We learn to spot the population, the unit and the variable, and we see on a small made-up village that income "per household" and income "per person" give very different figures. Made-up headlines and numbers. Series "Reading numbers without being fooled".
+      "People in France sleep 7 hours a night": who are we talking about, and what was measured? To understand a statistic, ask three questions: which population, which unit, which variable. We learn to spot the population, the unit and the variable, and we see on a small made-up village that income "per household" and income "per person" give very different figures. Made-up headlines and numbers. Series "Reading numbers without being fooled".
     hashtags: [statistics, data, numbers]
     scenes:
       - type: accroche
@@ -128,8 +128,8 @@ editions:
         voix_off: "Imagine this headline: people in France sleep seven hours a night. Who exactly are we talking about? And what was measured?"
       - type: titre
         numero: 1
-        texte: "About whom, about what, how"
-        voix_off: "Every statistic answers three questions: about whom, about what, and how."
+        texte: "Who, which unit, which measure"
+        voix_off: "To understand a statistic, ask three questions: which population is studied, which unit is observed, and which variable is measured?"
       - type: etapes
         texte: "The three building blocks of a statistic"
         disposition: cartes
@@ -167,8 +167,8 @@ editions:
         texte: "Average income in the village"
         etapes:
           - "Per *household*: 9,000 ÷ 3 = *€3,000*"
-          - "Per *person*: 9,000 ÷ 7 ≈ *€1,286*"
-        voix_off: "What is the average income in the village? Per household, nine thousand euros divided by three households: three thousand euros. Per person, nine thousand euros divided by seven residents: about one thousand two hundred and eighty-six euros."
+          - "Per *resident*: 9,000 ÷ 7 ≈ *€1,286*"
+        voix_off: "What is the average income in the village? Per household, nine thousand euros divided by three households: three thousand euros. Per resident, the same nine thousand euros divided by seven residents: about one thousand two hundred and eighty-six euros."
         verifier:
           - {expression: "9000 / 3", attendu: 3000, libelle: "Average income per household"}
           - {expression: "9000 / 7", attendu: 1286, libelle: "Average income per person"}
@@ -190,10 +190,10 @@ editions:
       - type: etapes
         texte: "What to remember"
         etapes:
-          - "About *whom*: the population"
-          - "About *what*: the unit"
-          - "*What* and *how*: the variable and its measurement"
-        voix_off: "Let's recap. Who the figure is about: that's the population. What it's counted on: that's the unit, a person, a household or a company. And what was measured, and how: that's the variable. Before comparing two figures, check that these three building blocks are the same."
+          - "Who is studied? *The population*"
+          - "Which unit is observed? *The unit*: person, household…"
+          - "What is measured, and how? *The variable*"
+        voix_off: "Let's recap. Who is studied: that's the population. Which unit is observed: a person, a household or a company. And what is measured, and how: that's the variable. Before comparing two figures, check that these three building blocks are the same."
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

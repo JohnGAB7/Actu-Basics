@@ -79,12 +79,12 @@ editions:
         texte: "Un essai *randomisé*"
         etapes:
           - "Le chercheur *décide* qui reçoit le traitement"
-          - "Un *groupe témoin* reçoit un placebo, ou rien"
+          - "Un *groupe témoin* reçoit un placebo ou le traitement habituel"
           - "Le *tirage au sort* répartit les participants"
         voix_off: "Dans un essai randomisé, c'est le chercheur qui décide qui reçoit le traitement. Un groupe témoin reçoit un placebo, ou le traitement habituel, pour servir de comparaison. Et c'est un tirage au sort qui répartit les participants entre les deux groupes."
       - type: texte
         texte: "Le hasard ne *favorise personne*"
-        voix_off: "Pourquoi le hasard ? Parce que rien, ni l'âge, ni le tabac, ni un facteur auquel personne n'a pensé, ne peut pousser systématiquement les uns vers le traitement. En moyenne, sur tous les tirages possibles, les deux groupes s'équilibrent. Si une différence apparaît ensuite, le traitement devient l'explication la plus plausible."
+        voix_off: "Pourquoi le hasard ? Parce que rien, ni l'âge, ni le tabac, ni un facteur auquel personne n'a pensé, ne peut pousser systématiquement les uns vers le traitement. En moyenne, sur tous les tirages possibles, les deux groupes s'équilibrent. Si une différence nette apparaît ensuite, dans un essai bien conduit, on peut l'attribuer au traitement avec plus de confiance, en tenant compte de la marge d'incertitude."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -109,7 +109,7 @@ editions:
           - {expression: "100 * (comb(7, 0) * comb(13, 10) + comb(7, 1) * comb(13, 9) + comb(7, 6) * comb(13, 4) + comb(7, 7) * comb(13, 3)) / comb(20, 10)", attendu: 5.7, libelle: "Partage 6-1 ou pire, en % des tirages"}
       - type: texte
         texte: "D'où le tableau des *caractéristiques initiales*"
-        voix_off: "C'est pour cela que tout essai publie un tableau qui compare les groupes au départ : âge, sexe, tabac, maladies. On vérifie que le hasard n'a pas créé un déséquilibre gênant. Et plus l'essai compte de participants, plus ces écarts fortuits deviennent rares."
+        voix_off: "C'est pour cela que les résultats d'un essai présentent en général un tableau qui compare les groupes au départ : âge, sexe, tabac, maladies. On vérifie que le hasard n'a pas créé un déséquilibre gênant. Et plus l'essai compte de participants, plus ces écarts fortuits deviennent rares."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "Quelles études sont des *expériences* ?"
@@ -119,8 +119,8 @@ editions:
         etapes:
           - "A et C : on *observe* des choix déjà faits"
           - "B et D : le chercheur *répartit au hasard*"
-        reponse: "B et D, les seules à permettre une conclusion causale"
-        voix_off: "Dans A et C, on observe des situations que les gens ont choisies ou vécues : ce sont des études observationnelles. Dans B et D, la répartition est décidée par tirage au sort : ce sont des expériences. Ce sont les seules qui permettent, si elles sont bien menées, de conclure à un effet."
+        reponse: "B et D : des expériences, qui permettent d'évaluer un effet si elles sont bien menées"
+        voix_off: "Dans A et C, on observe des situations que les gens ont choisies ou vécues : ce sont des études observationnelles. Dans B et D, la répartition est décidée par tirage au sort : ce sont des expériences. Si elles sont bien conçues et bien analysées, elles permettent d'estimer un effet. D'autres méthodes existent, mais le tirage au sort reste la plus directe."
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -171,12 +171,12 @@ editions:
         texte: "A *randomised* trial"
         etapes:
           - "The researcher *decides* who gets the treatment"
-          - "A *control group* gets a placebo, or nothing"
+          - "A *control group* gets a placebo or the usual treatment"
           - "*Random assignment* splits the participants"
         voix_off: "In a randomised trial, the researcher decides who gets the treatment. A control group gets a placebo, or the usual treatment, as a comparison. And a random draw splits the participants between the two groups."
       - type: texte
         texte: "Chance *favours no one*"
-        voix_off: "Why chance? Because nothing, not age, not smoking, not a factor nobody thought of, can systematically push some people towards the treatment. On average, across all possible draws, the two groups balance out. If a difference shows up afterwards, the treatment becomes the most plausible explanation."
+        voix_off: "Why chance? Because nothing, not age, not smoking, not a factor nobody thought of, can systematically push some people towards the treatment. On average, across all possible draws, the two groups balance out. If a clear difference shows up afterwards, in a well-run trial, it can be put down to the treatment with more confidence, allowing for the margin of uncertainty."
       - type: titre
         numero: 3
         texte: "Chance is no guarantee"
@@ -200,7 +200,7 @@ editions:
           - {expression: "100 * (comb(7, 0) * comb(13, 10) + comb(7, 1) * comb(13, 9) + comb(7, 6) * comb(13, 4) + comb(7, 7) * comb(13, 3)) / comb(20, 10)", attendu: 5.7, libelle: "6-1 split or worse, % of draws"}
       - type: texte
         texte: "Hence the table of *baseline characteristics*"
-        voix_off: "That's why every trial publishes a table comparing the groups at the start: age, sex, smoking, illnesses. It checks that chance hasn't created a troublesome imbalance. And the more participants a trial has, the rarer these chance gaps become."
+        voix_off: "That's why trial results usually include a table comparing the groups at the start: age, sex, smoking, illnesses. It checks that chance hasn't created a troublesome imbalance. And the more participants a trial has, the rarer these chance gaps become."
       - type: exercice
         texte: "Which studies are *experiments*?"
         pause: 8
@@ -209,8 +209,8 @@ editions:
         etapes:
           - "A and C: we *observe* choices already made"
           - "B and D: the researcher *assigns at random*"
-        reponse: "B and D, the only ones that support a causal conclusion"
-        voix_off: "In A and C, we observe situations people chose or lived through: these are observational studies. In B and D, the split is decided by a random draw: these are experiments. They're the only ones that, if well run, let you conclude there's an effect."
+        reponse: "B and D: experiments, which can measure an effect if well run"
+        voix_off: "In A and C, we observe situations people chose or lived through: these are observational studies. In B and D, the split is decided by a random draw: these are experiments. If well designed and well analysed, they let you estimate an effect. Other methods exist, but random assignment is the most direct."
       - type: etapes
         texte: "Key takeaways"
         etapes:
@@ -219,5 +219,5 @@ editions:
           - "Always *compare the groups* at the start"
         voix_off: "Key takeaways. An observational study shows a link, not a cause. A randomised experiment balances the groups on average, which lets you conclude there's an effect. And even when drawn at random, the groups must be compared at the start. One last limit: not everything can be randomised. Nobody will make volunteers smoke for twenty years. Those questions need other methods, which we'll see later."
       - type: fin
-        texte: "Follow to learn to read the numbers."
+        texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."
