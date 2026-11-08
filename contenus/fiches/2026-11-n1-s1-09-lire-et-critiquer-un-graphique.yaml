@@ -1,0 +1,227 @@
+# Niveau 1, vague 1, lot 2 : S1.09 « Lire et critiquer un graphique » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S1.09.yaml
+# Aucun chiffre extérieur : indice de prix et taux de chômage fictifs, annoncés comme tels.
+# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07 : scripts d'abord, par lots de 10).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-09-lire-et-critiquer-un-graphique
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.09 · Lire et critiquer un graphique"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Repérer un axe tronqué, une double échelle et une surface trompeuse"
+      - "Vérifier le titre, l'unité, la période et la source avant d'interpréter un graphique"
+    en:
+      - "Spot a truncated axis, a dual scale and a misleading area"
+      - "Check the title, unit, period and source before interpreting a chart"
+  prerequis:
+    fr: ["S1.08 : pourcentages et points", "M0.03 : lire un graphique"]
+    en: ["S1.08: percentages and points", "M0.03: reading a chart"]
+  hypotheses:
+    fr: "Indice de prix et taux de chômage fictifs, choisis pour l'exemple"
+    en: "Price index and unemployment rate are fictional, chosen for the example"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "Le même chiffre, catastrophe ou détail ? Lire un graphique"
+    legende: |
+      Le même indice de prix peut sembler s'envoler ou rester plat : tout dépend de l'axe. On apprend à repérer un axe qui ne part pas de zéro, une double échelle et une surface trompeuse, et à vérifier titre, unité, période et source avant de conclure. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, graphiques, desinformation]
+    scenes:
+      - type: accroche
+        texte: "Le même chiffre : *catastrophe* ou *détail* ?"
+        voix_off: "Le même chiffre peut avoir l'air d'une catastrophe, ou d'un détail. Il suffit de changer le graphique."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "L'axe qui ne part pas de zéro"
+        voix_off: "Premier piège, le plus courant : l'axe vertical."
+      - type: courbe
+        texte: "Prix d'un panier, *axe de 97 à 101*"
+        courbe:
+          points: [[2021, 98], [2022, 99], [2023, 100], [2024, 101]]
+          y_min: 97
+          y_max: 101
+          axe_x: "Année"
+          axe_y: "Indice (fictif)"
+        note: "Indice fictif : 98 en 2021, 101 en 2024."
+        voix_off: "Voici l'indice fictif du prix d'un panier de courses. L'axe va de quatre-vingt-dix-sept à cent un. La courbe grimpe en flèche : on croirait à une flambée des prix."
+      - type: courbe
+        texte: "Les mêmes chiffres, *axe à partir de 0*"
+        courbe:
+          points: [[2021, 98], [2022, 99], [2023, 100], [2024, 101]]
+          y_min: 0
+          y_max: 120
+          axe_x: "Année"
+          axe_y: "Indice (fictif)"
+        voix_off: "Ce sont exactement les mêmes chiffres. Mais cette fois, l'axe part de zéro. La courbe est presque plate."
+      - type: formule
+        texte: "Ce qui a vraiment changé"
+        formule:
+          - '\dfrac{101-98}{98}\approx 3{,}1\ \%'
+        voix_off: "Quelle est la hausse réelle ? Cent un moins quatre-vingt-dix-huit, divisé par quatre-vingt-dix-huit : environ trois virgule un pour cent en trois ans. Ni une flambée, ni rien du tout."
+        verifier:
+          - {expression: "(101 - 98) / 98 * 100", attendu: 3.1, libelle: "Hausse de l'indice 2021-2024, en %"}
+      - type: texte
+        texte: "La *pente* dépend de l'échelle : lisez d'abord *les axes*"
+        voix_off: "Retenez-le : la pente d'une courbe dépend de l'échelle choisie. Un axe qui ne part pas de zéro n'est pas interdit, il permet de voir de petites variations. Mais il faut le remarquer avant de juger."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Deux autres pièges"
+        voix_off: "Deux autres pièges reviennent souvent."
+      - type: etapes
+        texte: "À repérer"
+        disposition: cartes
+        etapes:
+          - "*Double échelle* : deux axes verticaux, deux unités"
+          - "*Surface* : doubler le côté, c'est quadrupler l'aire"
+        voix_off: "Regardons-les. La double échelle : deux courbes, chacune avec son propre axe vertical. En réglant les deux axes, on peut faire croiser les courbes où l'on veut. La surface trompeuse : on dessine une pièce deux fois plus haute pour un chiffre deux fois plus grand, mais elle est aussi deux fois plus large."
+      - type: formule
+        texte: "Deux fois plus haut *et* deux fois plus large"
+        formule:
+          - '2\times 2=4'
+        voix_off: "Résultat : sa surface est multipliée par deux fois deux, quatre. L'œil voit quatre fois plus, alors que le chiffre n'a fait que doubler."
+        verifier:
+          - {expression: "2 * 2", attendu: 4, libelle: "Aire d'un dessin dont les côtés doublent"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Lire un graphique comme un texte"
+        voix_off: "Un graphique est un argument. On le lit comme un texte, avant de le croire."
+      - type: etapes
+        texte: "Quatre vérifications *avant d'interpréter*"
+        etapes:
+          - "*Titre* : que mesure-t-on exactement ?"
+          - "*Unité* : des euros, des %, un indice ?"
+          - "*Période* : pourquoi commencer là ?"
+          - "*Source* : qui a produit les chiffres ?"
+        voix_off: "Quatre vérifications, avant toute interprétation. Le titre : que mesure-t-on exactement ? L'unité : des euros, des pourcentages, un indice ? La période : pourquoi le graphique commence-t-il à cette date, et pas plus tôt ? La source : qui a produit les chiffres ?"
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Un taux de chômage *fictif* : axe de *7,0 à 7,4 %*, *deux mois* affichés, *aucune source*. Trois défauts ?"
+        pause: 8
+        voix_off: "À vous. Un graphique montre un taux de chômage fictif. L'axe va de sept à sept virgule quatre pour cent. On ne voit que deux mois. Et aucune source n'est indiquée. Quels sont les trois défauts ?"
+      - type: correction
+        etapes:
+          - "Axe de 7,0 à 7,4 % : la moindre hausse paraît énorme"
+          - "Deux mois : trop court pour parler de tendance"
+          - "Aucune source : impossible de vérifier"
+        reponse: "Axe tronqué, période trop courte, source absente"
+        voix_off: "Voici les trois défauts. L'axe va de sept à sept virgule quatre : la moindre hausse paraît énorme. Deux mois, c'est trop court pour parler de tendance. Et sans source, impossible de vérifier quoi que ce soit. Trois défauts : axe tronqué, période trop courte, source absente."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Lire *les axes* avant la pente"
+          - "Se méfier des *surfaces* et des *doubles échelles*"
+          - "Vérifier *titre, unité, période, source*"
+        voix_off: "À retenir. Lisez les axes avant de regarder la pente. Méfiez-vous des surfaces et des doubles échelles. Et vérifiez toujours le titre, l'unité, la période et la source."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Same number, disaster or detail? Reading a chart"
+    legende: |
+      The same price index can look like it is soaring or flat: it all depends on the axis. We learn to spot an axis that doesn't start at zero, a dual scale and a misleading area, and to check the title, unit, period and source before drawing conclusions. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, charts, misinformation]
+    scenes:
+      - type: accroche
+        texte: "The same number: *disaster* or *detail*?"
+        voix_off: "The same number can look like a disaster, or like a detail. All it takes is a different chart."
+      - type: titre
+        numero: 1
+        texte: "The axis that doesn't start at zero"
+        voix_off: "The first trap, and the most common: the vertical axis."
+      - type: courbe
+        texte: "Price of a basket, *axis from 97 to 101*"
+        courbe:
+          points: [[2021, 98], [2022, 99], [2023, 100], [2024, 101]]
+          y_min: 97
+          y_max: 101
+          axe_x: "Year"
+          axe_y: "Index (fictional)"
+        note: "Fictional index: 98 in 2021, 101 in 2024."
+        voix_off: "Here is a fictional index of the price of a shopping basket. The axis runs from ninety-seven to one hundred and one. The line shoots up: it looks like prices are exploding."
+      - type: courbe
+        texte: "The same numbers, *axis from 0*"
+        courbe:
+          points: [[2021, 98], [2022, 99], [2023, 100], [2024, 101]]
+          y_min: 0
+          y_max: 120
+          axe_x: "Year"
+          axe_y: "Index (fictional)"
+        voix_off: "These are exactly the same numbers. But this time, the axis starts at zero. The line is almost flat."
+      - type: formule
+        texte: "What really changed"
+        formule:
+          - '\dfrac{101-98}{98}\approx 3.1\%'
+        voix_off: "What is the real rise? One hundred and one minus ninety-eight, divided by ninety-eight: about three point one percent over three years. Neither an explosion, nor nothing at all."
+        verifier:
+          - {expression: "(101 - 98) / 98 * 100", attendu: 3.1, libelle: "Index rise 2021-2024, %"}
+      - type: texte
+        texte: "The *slope* depends on the scale: read *the axes* first"
+        voix_off: "Remember this: the slope of a line depends on the scale. An axis that doesn't start at zero isn't forbidden, it shows small changes. But you have to notice it before you judge."
+      - type: titre
+        numero: 2
+        texte: "Two more traps"
+        voix_off: "Two more traps come up often."
+      - type: etapes
+        texte: "Look out for"
+        disposition: cartes
+        etapes:
+          - "*Dual scale*: two vertical axes, two units"
+          - "*Area*: double the side, quadruple the area"
+        voix_off: "Let's look at them. The dual scale: two lines, each with its own vertical axis. By adjusting the two axes, you can make the lines cross wherever you like. The misleading area: a coin drawn twice as tall for a number twice as big, but it is also twice as wide."
+      - type: formule
+        texte: "Twice as tall *and* twice as wide"
+        formule:
+          - '2\times 2=4'
+        voix_off: "The result: its area is multiplied by two times two, four. The eye sees four times more, while the number only doubled."
+        verifier:
+          - {expression: "2 * 2", attendu: 4, libelle: "Area of a drawing whose sides double"}
+      - type: titre
+        numero: 3
+        texte: "Read a chart like a text"
+        voix_off: "A chart is an argument. You read it like a text, before you believe it."
+      - type: etapes
+        texte: "Four checks *before interpreting*"
+        etapes:
+          - "*Title*: what exactly is measured?"
+          - "*Unit*: euros, %, an index?"
+          - "*Period*: why start there?"
+          - "*Source*: who produced the numbers?"
+        voix_off: "Four checks, before any interpretation. The title: what exactly is being measured? The unit: euros, percentages, an index? The period: why does the chart start at that date, and not earlier? The source: who produced the numbers?"
+      - type: exercice
+        texte: "A *fictional* unemployment rate: axis from *7.0 to 7.4%*, *two months* shown, *no source*. Three flaws?"
+        pause: 8
+        voix_off: "Your turn. A chart shows a fictional unemployment rate. The axis runs from seven to seven point four percent. Only two months are shown. And no source is given. What are the three flaws?"
+      - type: correction
+        etapes:
+          - "Axis from 7.0 to 7.4%: the smallest rise looks huge"
+          - "Two months: too short to talk about a trend"
+          - "No source: impossible to check"
+        reponse: "Truncated axis, period too short, no source"
+        voix_off: "Here are the three flaws. The axis runs from seven to seven point four: the smallest rise looks huge. Two months is too short to talk about a trend. And without a source, nothing can be checked. Three flaws: a truncated axis, a period that's too short, and no source."
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Read *the axes* before the slope"
+          - "Beware of *areas* and *dual scales*"
+          - "Check *title, unit, period, source*"
+        voix_off: "Key takeaways. Read the axes before looking at the slope. Beware of areas and dual scales. And always check the title, the unit, the period and the source."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

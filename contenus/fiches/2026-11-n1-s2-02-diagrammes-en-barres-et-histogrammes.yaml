@@ -1,0 +1,310 @@
+# Niveau 1, vague 1, lot 2 : S2.02 « Diagrammes en barres et histogrammes » (EDUCATIONAL, démonstration)
+# Fiche de conception : contenus/conception/S2.02.yaml
+# Aucun chiffre extérieur : temps de trajet fictifs de 20 salariés, âges fictifs de 40 visiteurs (exercice).
+# Adaptation du catalogue : deux largeurs de classes (10 et 20 minutes) au lieu de trois, pour le rythme.
+# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.02 · Diagrammes en barres et histogrammes"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Choisir entre diagramme en barres et histogramme selon le type de variable"
+      - "Montrer que le choix des classes change l'allure d'un histogramme"
+      - "Corriger les hauteurs quand les classes ont des largeurs inégales"
+    en:
+      - "Choose between a bar chart and a histogram according to the type of variable"
+      - "Show that the choice of classes changes how a histogram looks"
+      - "Correct the heights when classes have unequal widths"
+  prerequis:
+    fr: ["S2.01 : fréquences et tableaux", "M0.03 : lire un graphique"]
+    en: ["S2.01: frequencies and tables", "M0.03: reading a graph"]
+  hypotheses:
+    fr: "Temps de trajet fictifs de 20 salariés, en minutes ; âges fictifs de 40 visiteurs"
+    en: "Fictional commuting times of 20 employees, in minutes; fictional ages of 40 visitors"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "Pourquoi un histogramme n'est pas un diagramme en barres"
+    legende: |
+      Des barres séparées pour des catégories, des barres collées pour des nombres rangés en classes. On voit avec des temps de trajet fictifs comment le choix des classes change la silhouette d'un histogramme, et pourquoi, quand les classes sont inégales, c'est la surface qui compte, pas la hauteur. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, histogramme, graphiques]
+    scenes:
+      - type: accroche
+        texte: "Des barres qui se touchent, ou non : *ça change tout*"
+        voix_off: "Deux graphiques faits de barres. Sur l'un, elles se touchent ; sur l'autre, non. Ce détail change toute la façon de les lire."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le diagramme en barres : des catégories"
+        voix_off: "Commençons par le diagramme en barres."
+      - type: courbe
+        texte: "Mode de transport de *20 salariés*"
+        courbe:
+          style: barres
+          points: [[0, 8], [1, 6], [2, 4], [3, 2]]
+          etiquettes: ["Voiture", "Transports", "Vélo", "Marche"]
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_y: "Salariés"
+        note: "Entreprise fictive de 20 salariés (exercice de l'épisode précédent)."
+        voix_off: "Voici les vingt salariés de l'épisode précédent. Une barre par mode de transport : voiture, transports en commun, vélo, marche. Les barres sont séparées, parce que ce sont des catégories distinctes. On pourrait les ranger dans un autre ordre sans rien changer au sens."
+        verifier:
+          - {expression: "8 + 6 + 4 + 2", attendu: 20, libelle: "Total des salariés"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "L'histogramme : des nombres en classes"
+        voix_off: "Passons maintenant à une variable numérique : le temps de trajet, en minutes."
+      - type: courbe
+        texte: "Temps de trajet, *classes de 10 minutes*"
+        courbe:
+          style: histogramme
+          points: [[0, 3], [10, 7], [20, 6], [30, 3], [40, 1]]
+          largeur_classe: 10
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Minutes"
+          axe_y: "Salariés"
+        note: "Temps de trajet fictifs des 20 mêmes salariés."
+        voix_off: "On range les temps de trajet en classes de dix minutes. Trois salariés mettent moins de dix minutes, sept entre dix et vingt, six entre vingt et trente, trois entre trente et quarante, un seul entre quarante et cinquante. Cette fois, les barres se touchent : les minutes forment une suite continue, sans trou entre les classes."
+        verifier:
+          - {expression: "3 + 7 + 6 + 3 + 1", attendu: 20, libelle: "Total, classes de 10 minutes"}
+      - type: courbe
+        texte: "Les mêmes temps, *classes de 20 minutes*"
+        courbe:
+          style: histogramme
+          points: [[0, 10], [20, 9], [40, 1]]
+          largeur_classe: 20
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Minutes"
+          axe_y: "Salariés"
+        voix_off: "Ce sont exactement les mêmes données, regroupées en classes de vingt minutes. Dix salariés mettent moins de vingt minutes, neuf entre vingt et quarante, un seul plus de quarante. Le sommet, entre dix et vingt minutes, a disparu."
+        verifier:
+          - {expression: "3 + 7", attendu: 10, libelle: "Classe 0 à 20 minutes"}
+          - {expression: "6 + 3", attendu: 9, libelle: "Classe 20 à 40 minutes"}
+      - type: texte
+        texte: "Le choix des classes *change la silhouette*"
+        voix_off: "Le choix des classes change la silhouette. Trop larges, elles cachent les détails. Trop étroites, elles font apparaître des bosses dues au hasard. Devant un histogramme, regardez toujours la largeur des classes."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Classes inégales : la surface compte"
+        voix_off: "Dernier piège : les classes de largeurs différentes."
+      - type: courbe
+        texte: "Classes inégales, *hauteur = effectif* : trompeur"
+        courbe:
+          style: histogramme
+          points: [[0, 3], [10, 7], [20, 10]]
+          largeur_classe: 30
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Minutes"
+          axe_y: "Salariés"
+        voix_off: "Regroupons maintenant tout ce qui dépasse vingt minutes dans une seule classe, de vingt à cinquante. Elle contient dix salariés. Si l'on prend l'effectif comme hauteur, cette grande barre écrase tout : on croirait que les trajets longs dominent."
+        verifier:
+          - {expression: "6 + 3 + 1", attendu: 10, libelle: "Classe 20 à 50 minutes"}
+      - type: formule
+        texte: "La bonne hauteur : la *densité*"
+        formule:
+          - '\text{densité}=\dfrac{\text{effectif}}{\text{largeur de la classe}}'
+          - '\dfrac{10}{30}\approx 0{,}33\ \text{salarié par minute}'
+        voix_off: "Dans un histogramme, c'est la surface qui représente l'effectif. La hauteur doit donc être une densité : l'effectif divisé par la largeur de la classe. Pour la classe de vingt à cinquante minutes : dix divisé par trente, environ zéro virgule trente-trois salarié par minute."
+        verifier:
+          - {expression: "10 / 30", attendu: 0.33, libelle: "Densité de la classe 20 à 50 minutes"}
+          - {expression: "3 / 10", attendu: 0.3, libelle: "Densité de la classe 0 à 10 minutes"}
+          - {expression: "7 / 10", attendu: 0.7, libelle: "Densité de la classe 10 à 20 minutes"}
+      - type: courbe
+        texte: "Hauteur = *densité* : l'image redevient juste"
+        courbe:
+          style: histogramme
+          points: [[0, 0.3], [10, 0.7], [20, 0.3333]]
+          largeur_classe: 30
+          y_min: 0
+          y_max: 0.8
+          decimales_y: 1
+          axe_x: "Minutes"
+          axe_y: "Salariés par minute"
+        note: "Surface de chaque barre = effectif : 0,3 × 10 = 3 ; 0,7 × 10 = 7 ; 0,33 × 30 = 10."
+        voix_off: "Avec la densité, l'image redevient juste. La classe de dix à vingt minutes est la plus dense, comme sur le premier histogramme. Et la surface de chaque barre redonne bien son effectif."
+        verifier:
+          - {expression: "0.7 * 10", attendu: 7, libelle: "Surface de la classe 10 à 20 minutes"}
+          - {expression: "10 / 30 * 30", attendu: 10, libelle: "Surface de la classe 20 à 50 minutes"}
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "40 visiteurs : *0–20 ans : 8*, *20–30 ans : 12*, *30–60 ans : 20*. Quelle classe est la plus dense ?"
+        pause: 8
+        voix_off: "À vous. Quarante visiteurs d'un musée fictif : huit ont entre zéro et vingt ans, douze entre vingt et trente ans, vingt entre trente et soixante ans. Un histogramme qui prend l'effectif comme hauteur met en avant les trente à soixante ans. A-t-il raison ? Quelle classe est la plus dense ?"
+      - type: correction
+        etapes:
+          - "0–20 ans : 8 ÷ 20 = *0,4* par an"
+          - "20–30 ans : 12 ÷ 10 = *1,2* par an"
+          - "30–60 ans : 20 ÷ 30 ≈ *0,67* par an"
+        reponse: "Les 20–30 ans : la classe la plus dense"
+        voix_off: "Divisons chaque effectif par la largeur de sa classe. De zéro à vingt ans : huit divisé par vingt, zéro virgule quatre visiteur par année d'âge. De vingt à trente ans : douze divisé par dix, un virgule deux. De trente à soixante ans : vingt divisé par trente, environ zéro virgule soixante-sept. La classe la plus dense est celle des vingt à trente ans : l'histogramme en effectifs était trompeur."
+        verifier:
+          - {expression: "8 / 20", attendu: 0.4, libelle: "Densité 0 à 20 ans"}
+          - {expression: "12 / 10", attendu: 1.2, libelle: "Densité 20 à 30 ans"}
+          - {expression: "20 / 30", attendu: 0.67, libelle: "Densité 30 à 60 ans"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Catégories* : barres séparées"
+          - "*Nombres en classes* : histogramme, barres collées"
+          - "Classes inégales : hauteur = *densité*"
+        voix_off: "À retenir. Pour des catégories, un diagramme en barres, avec des barres séparées. Pour des nombres rangés en classes, un histogramme, avec des barres collées. Et si les classes sont inégales, la hauteur doit être une densité : c'est la surface qui compte."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Why a histogram is not a bar chart"
+    legende: |
+      Separate bars for categories, touching bars for numbers grouped into classes. Using fictional commuting times, we see how the choice of classes changes the shape of a histogram, and why, when classes are unequal, it is the area that counts, not the height. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, histogram, charts]
+    scenes:
+      - type: accroche
+        texte: "Bars that touch, or don't: *it changes everything*"
+        voix_off: "Two charts made of bars. On one, the bars touch; on the other, they don't. That detail changes how you read them."
+      - type: titre
+        numero: 1
+        texte: "The bar chart: categories"
+        voix_off: "Let's start with the bar chart."
+      - type: courbe
+        texte: "How *20 employees* get to work"
+        courbe:
+          style: barres
+          points: [[0, 8], [1, 6], [2, 4], [3, 2]]
+          etiquettes: ["Car", "Public transport", "Bike", "Walk"]
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_y: "Employees"
+        note: "Fictional company of 20 employees (exercise from the last episode)."
+        voix_off: "Here are the twenty employees from the last episode. One bar for each way of getting to work: car, public transport, bike, walking. The bars are separate, because these are distinct categories. You could put them in another order without changing the meaning."
+        verifier:
+          - {expression: "8 + 6 + 4 + 2", attendu: 20, libelle: "Total employees"}
+      - type: titre
+        numero: 2
+        texte: "The histogram: numbers in classes"
+        voix_off: "Now let's take a numerical variable: commuting time, in minutes."
+      - type: courbe
+        texte: "Commuting time, *10-minute classes*"
+        courbe:
+          style: histogramme
+          points: [[0, 3], [10, 7], [20, 6], [30, 3], [40, 1]]
+          largeur_classe: 10
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Minutes"
+          axe_y: "Employees"
+        note: "Fictional commuting times of the same 20 employees."
+        voix_off: "We group the commuting times into ten-minute classes. Three employees take under ten minutes, seven between ten and twenty, six between twenty and thirty, three between thirty and forty, and just one between forty and fifty. This time the bars touch: minutes run on continuously, with no gap between classes."
+        verifier:
+          - {expression: "3 + 7 + 6 + 3 + 1", attendu: 20, libelle: "Total, 10-minute classes"}
+      - type: courbe
+        texte: "The same times, *20-minute classes*"
+        courbe:
+          style: histogramme
+          points: [[0, 10], [20, 9], [40, 1]]
+          largeur_classe: 20
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Minutes"
+          axe_y: "Employees"
+        voix_off: "These are exactly the same data, grouped into twenty-minute classes. Ten employees take under twenty minutes, nine between twenty and forty, only one over forty. The peak between ten and twenty minutes has vanished."
+        verifier:
+          - {expression: "3 + 7", attendu: 10, libelle: "Class 0 to 20 minutes"}
+          - {expression: "6 + 3", attendu: 9, libelle: "Class 20 to 40 minutes"}
+      - type: texte
+        texte: "The choice of classes *changes the shape*"
+        voix_off: "The choice of classes changes the shape. Too wide, and they hide the details. Too narrow, and they show bumps that are just chance. When you see a histogram, always check the width of the classes."
+      - type: titre
+        numero: 3
+        texte: "Unequal classes: area counts"
+        voix_off: "One last trap: classes of different widths."
+      - type: courbe
+        texte: "Unequal classes, *height = count*: misleading"
+        courbe:
+          style: histogramme
+          points: [[0, 3], [10, 7], [20, 10]]
+          largeur_classe: 30
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Minutes"
+          axe_y: "Employees"
+        voix_off: "Now let's put everything over twenty minutes into a single class, from twenty to fifty. It holds ten employees. If we use the count as the height, this big bar dwarfs the rest: long commutes seem to dominate."
+        verifier:
+          - {expression: "6 + 3 + 1", attendu: 10, libelle: "Class 20 to 50 minutes"}
+      - type: formule
+        texte: "The right height: *density*"
+        formule:
+          - '\text{density}=\dfrac{\text{count}}{\text{class width}}'
+          - '\dfrac{10}{30}\approx 0.33\ \text{employee per minute}'
+        voix_off: "In a histogram, the area stands for the count. So the height must be a density: the count divided by the width of the class. For the class from twenty to fifty minutes: ten divided by thirty, about zero point three three employee per minute."
+        verifier:
+          - {expression: "10 / 30", attendu: 0.33, libelle: "Density of class 20 to 50 minutes"}
+          - {expression: "3 / 10", attendu: 0.3, libelle: "Density of class 0 to 10 minutes"}
+          - {expression: "7 / 10", attendu: 0.7, libelle: "Density of class 10 to 20 minutes"}
+      - type: courbe
+        texte: "Height = *density*: the picture is right again"
+        courbe:
+          style: histogramme
+          points: [[0, 0.3], [10, 0.7], [20, 0.3333]]
+          largeur_classe: 30
+          y_min: 0
+          y_max: 0.8
+          decimales_y: 1
+          axe_x: "Minutes"
+          axe_y: "Employees per minute"
+        note: "Area of each bar = count: 0.3 × 10 = 3; 0.7 × 10 = 7; 0.33 × 30 = 10."
+        voix_off: "With density, the picture is right again. The class from ten to twenty minutes is the densest, as in the first histogram. And the area of each bar gives back its count."
+        verifier:
+          - {expression: "0.7 * 10", attendu: 7, libelle: "Area of class 10 to 20 minutes"}
+          - {expression: "10 / 30 * 30", attendu: 10, libelle: "Area of class 20 to 50 minutes"}
+      - type: exercice
+        texte: "40 visitors: *aged 0–20: 8*, *20–30: 12*, *30–60: 20*. Which class is densest?"
+        pause: 8
+        voix_off: "Your turn. Forty visitors to a fictional museum: eight are aged zero to twenty, twelve are twenty to thirty, twenty are thirty to sixty. A histogram that uses the count as height highlights the thirty to sixty group. Is it right? Which class is the densest?"
+      - type: correction
+        etapes:
+          - "Aged 0–20: 8 ÷ 20 = *0.4* per year"
+          - "Aged 20–30: 12 ÷ 10 = *1.2* per year"
+          - "Aged 30–60: 20 ÷ 30 ≈ *0.67* per year"
+        reponse: "Ages 20–30: the densest class"
+        voix_off: "Divide each count by the width of its class. Zero to twenty: eight divided by twenty, zero point four visitor per year of age. Twenty to thirty: twelve divided by ten, one point two. Thirty to sixty: twenty divided by thirty, about zero point six seven. The densest class is twenty to thirty: the histogram based on counts was misleading."
+        verifier:
+          - {expression: "8 / 20", attendu: 0.4, libelle: "Density aged 0 to 20"}
+          - {expression: "12 / 10", attendu: 1.2, libelle: "Density aged 20 to 30"}
+          - {expression: "20 / 30", attendu: 0.67, libelle: "Density aged 30 to 60"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Categories*: separate bars"
+          - "*Numbers in classes*: histogram, touching bars"
+          - "Unequal classes: height = *density*"
+        voix_off: "Key points. For categories, a bar chart with separate bars. For numbers grouped into classes, a histogram with touching bars. And if the classes are unequal, the height must be a density: it is the area that counts."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

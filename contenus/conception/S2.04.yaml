@@ -1,0 +1,45 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur. Notation Σ présentée pas à pas (M1).
+id_programme: S2.04
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-s2-04-ce-que-dit-vraiment-la-moyenne.yaml
+question_centrale:
+  fr: Que veut dire « en moyenne » ?
+  en: What does “on average” mean?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 4
+public:
+  prerequis:
+  - S2.01
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: La moyenne, c'est ce que chacun aurait si l'on mettait tout en commun et qu'on partageait à parts égales.
+exemple_fil_rouge: Cagnotte de quatre amis (5, 10, 15, 30 €) ; note pondérée par les coefficients.
+exemple_reel: null
+idees_fausses:
+- idee: Moyenne de moyennes de groupes de tailles différentes
+  desamorcee_a_l_etape: 'Exercice : deux classes'
+exercice:
+  question: 'Classes de 10 et 30 élèves, moyennes 12 et 8 : moyenne générale ?'
+  correction: 9, et non 10
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Deux magasins vendent 100 et 900 articles avec une satisfaction de 90 % et 70 %. Satisfaction globale
+    ?
+  diagnostic_d_erreur: '« La moyenne des deux classes est (12 + 8) / 2 = 10 » : qu''est-ce qui manque ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)

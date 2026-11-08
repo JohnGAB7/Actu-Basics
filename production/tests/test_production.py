@@ -1191,7 +1191,7 @@ def test_courbe_en_points_avec_plusieurs_seuils(tmp_path):
     assert points.tobytes() != ligne.tobytes()
     brut = valider(brut_lancement())
     scene = next(x for x in brut["editions"]["fr"]["scenes"] if x["type"] == "courbe")
-    scene["courbe"] = dict(scene["courbe"], style="barres", seuils=[{"label": "sans valeur"}])
+    scene["courbe"] = dict(scene["courbe"], style="camembert", seuils=[{"label": "sans valeur"}])
     with pytest.raises(FicheInvalide) as exc:
         charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
     assert "courbe.style" in str(exc.value) and "courbe.seuils" in str(exc.value)
@@ -1705,3 +1705,33 @@ def test_courbe_annees_sans_separateur_de_milliers():
     autres = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
     s.extra["courbe"] = c
     assert annees != autres
+
+
+def test_courbe_barres_et_histogramme():
+    """S2.01 à S2.03 : « style: barres » (catégories étiquetées, barres séparées) et « style: histogramme »
+    (classes contiguës, éventuellement inégales : la dernière a la largeur « largeur_classe »)."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes.yaml")
+    ed = fiche.editions["fr"]
+    courbes = [s for s in ed.scenes if s.type == "courbe"]
+    assert [s.extra["courbe"]["style"] for s in courbes][:2] == ["barres", "histogramme"]
+    images = []
+    for s in courbes[:3]:
+        i = ed.scenes.index(s)
+        images.append(Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes())
+    # Les mêmes points en ligne ne donnent pas la même image : le style est bien pris en compte.
+    s = courbes[1]
+    c = s.extra["courbe"]
+    s.extra["courbe"] = dict(c, style="ligne")
+    ligne = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, ed.scenes.index(s), len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert len(set(images + [ligne])) == 4
+    # Une étiquette par barre, sinon la fiche est refusée.
+    brute = yaml.safe_load((RACINE / "contenus/fiches/2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes.yaml")
+                           .read_text(encoding="utf-8"))
+    sc = next(x for x in brute["editions"]["fr"]["scenes"] if x["type"] == "courbe")
+    sc["courbe"]["etiquettes"] = sc["courbe"]["etiquettes"][:2]
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / "f.yaml"
+        p.write_text(yaml.safe_dump(brute, allow_unicode=True), encoding="utf-8")
+        with pytest.raises(FicheInvalide, match="étiquette par barre"):
+            charger_fiche(p)

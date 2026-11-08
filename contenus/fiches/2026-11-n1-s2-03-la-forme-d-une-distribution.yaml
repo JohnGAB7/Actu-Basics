@@ -1,0 +1,247 @@
+# Niveau 1, vague 1, lot 2 : S2.03 « La forme d'une distribution » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S2.03.yaml
+# Aucun chiffre extérieur : notes, revenus et tailles fictifs, choisis pour montrer chaque forme nettement.
+# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-03-la-forme-d-une-distribution
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.03 · La forme d'une distribution"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Décrire une distribution : symétrie, asymétrie, une ou deux bosses, queue"
+      - "Relier une forme à une explication plausible"
+      - "Repérer quand un seul chiffre ne suffit pas à résumer des données"
+    en:
+      - "Describe a distribution: symmetry, skew, one or two peaks, tail"
+      - "Link a shape to a plausible explanation"
+      - "Spot when a single number is not enough to sum up data"
+  prerequis:
+    fr: ["S2.02 : diagrammes en barres et histogrammes"]
+    en: ["S2.02: bar charts and histograms"]
+  hypotheses:
+    fr: "Notes de 20 élèves, revenus de 25 personnes et tailles de 44 adultes, tous fictifs"
+    en: "Marks of 20 pupils, incomes of 25 people and heights of 44 adults, all fictional"
+
+validation:
+  statut: brouillon
+  valide_par: ""
+  date: ""
+
+sources: []
+
+editions:
+  fr:
+    titre: "Ce que la silhouette d'un histogramme dit avant tout calcul"
+    legende: |
+      Une bosse au milieu, une longue queue d'un côté, deux bosses : la forme d'un histogramme raconte déjà une histoire. Avec trois exemples fictifs, des notes, des revenus et des tailles, on apprend à décrire une distribution et à se méfier d'un chiffre unique quand il y a deux bosses. Exercice corrigé à la fin. Exemples fictifs. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, distribution, histogramme]
+    scenes:
+      - type: accroche
+        texte: "Avant tout calcul, *regardez la silhouette*"
+        voix_off: "Avant de calculer quoi que ce soit, regardez la silhouette d'un histogramme. Elle en dit déjà beaucoup."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Symétrique : une bosse au milieu"
+        voix_off: "Première forme, la plus simple."
+      - type: courbe
+        texte: "Notes de *20 élèves*, sur 20"
+        courbe:
+          style: histogramme
+          points: [[0, 1], [4, 4], [8, 10], [12, 4], [16, 1]]
+          largeur_classe: 4
+          y_min: 0
+          y_max: 12
+          axe_x: "Note sur 20"
+          axe_y: "Élèves"
+        note: "Notes fictives de 20 élèves."
+        voix_off: "Voici les notes fictives de vingt élèves. Une bosse au milieu, entre huit et douze, et deux côtés qui se ressemblent comme dans un miroir. On dit que la distribution est symétrique. Ici, le milieu résume bien le groupe."
+        verifier:
+          - {expression: "1 + 4 + 10 + 4 + 1", attendu: 20, libelle: "Total des élèves"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Asymétrique : une longue queue"
+        voix_off: "Deuxième forme : la distribution asymétrique."
+      - type: courbe
+        texte: "Revenus mensuels de *25 personnes*"
+        courbe:
+          style: histogramme
+          points: [[0, 2], [1000, 9], [2000, 6], [3000, 3], [4000, 2], [5000, 1], [6000, 1], [7000, 1]]
+          largeur_classe: 1000
+          y_min: 0
+          y_max: 12
+          axe_x: "Revenu (€)"
+          axe_y: "Personnes"
+        note: "Revenus fictifs de 25 personnes, classes de 1 000 €."
+        voix_off: "Voici des revenus mensuels fictifs. La plupart des gens sont à gauche, entre mille et trois mille euros. Puis une longue queue s'étire vers la droite : quelques revenus très élevés. On parle d'asymétrie à droite."
+        verifier:
+          - {expression: "2 + 9 + 6 + 3 + 2 + 1 + 1 + 1", attendu: 25, libelle: "Total des personnes"}
+      - type: etapes
+        texte: "Une queue, *d'un côté ou de l'autre*"
+        etapes:
+          - "Queue *à droite* : quelques valeurs très grandes"
+          - "Queue *à gauche* : quelques valeurs très petites"
+        voix_off: "Une queue peut aller d'un côté ou de l'autre. À droite, elle signale quelques valeurs très grandes, comme les hauts revenus. À gauche, quelques valeurs très petites. Et la queue tire la moyenne vers elle : on le verra dans l'épisode sur la médiane."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Deux bosses : deux groupes ?"
+        voix_off: "Troisième forme, la plus surprenante."
+      - type: courbe
+        texte: "Tailles de *44 adultes*"
+        courbe:
+          style: histogramme
+          points: [[150, 2], [155, 6], [160, 9], [165, 5], [170, 6], [175, 9], [180, 5], [185, 2]]
+          largeur_classe: 5
+          y_min: 0
+          y_max: 12
+          axe_x: "Taille (cm)"
+          axe_y: "Adultes"
+        note: "Tailles fictives de 44 adultes, femmes et hommes mélangés."
+        voix_off: "Voici les tailles fictives de quarante-quatre adultes. Deux bosses : l'une autour de cent soixante centimètres, l'autre autour de cent soixante-quinze. On dit que la distribution est bimodale. Ici, l'explication est simple : on a mélangé des femmes et des hommes."
+        verifier:
+          - {expression: "2 + 6 + 9 + 5 + 6 + 9 + 5 + 2", attendu: 44, libelle: "Total des adultes"}
+      - type: chiffre
+        valeur: 170
+        suffixe: {fr: " cm", en: " cm"}
+        texte: "la moyenne tombe *dans le creux*, entre les deux bosses"
+        note: "Moyenne calculée sur les centres de classes : environ 169,8 cm."
+        voix_off: "Calculons la taille moyenne : environ cent soixante-dix centimètres. Elle tombe dans le creux, entre les deux bosses, là où il y a peu de monde. Un seul chiffre ne décrit ni les femmes, ni les hommes de ce groupe."
+        verifier:
+          - {expression: "(152.5*2 + 157.5*6 + 162.5*9 + 167.5*5 + 172.5*6 + 177.5*9 + 182.5*5 + 187.5*2) / 44", attendu: 170, libelle: "Moyenne approchée, en cm"}
+      - type: texte
+        texte: "Deux bosses ? Cherchez *deux groupes mélangés*"
+        voix_off: "Retenez ce réflexe : deux bosses signalent souvent deux groupes mélangés. Avant de résumer, séparez-les."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "*Symétrique*, *queue à droite*, *queue à gauche*, *deux bosses* : âge au décès, revenus, notes, tailles ?"
+        pause: 8
+        voix_off: "À vous. Quatre formes : symétrique, queue à droite, queue à gauche, deux bosses. Et quatre variables : l'âge au décès, les revenus, les notes à un examen, les tailles d'adultes. Associez chaque variable à sa forme."
+      - type: correction
+        etapes:
+          - "Notes : *symétrique*"
+          - "Revenus : *queue à droite*"
+          - "Âge au décès : *queue à gauche*"
+          - "Tailles d'adultes : *deux bosses*"
+        reponse: "Chaque forme a une explication"
+        voix_off: "Voici la correction. Les notes : souvent une bosse au milieu, symétrique. Les revenus : une queue à droite, à cause de quelques revenus très élevés. L'âge au décès : une queue à gauche, car la plupart des gens meurent âgés et quelques-uns jeunes. Les tailles d'adultes : deux bosses, femmes et hommes. Derrière chaque forme, il y a une explication."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Une bosse* au milieu : symétrique"
+          - "*Une queue* : quelques valeurs extrêmes"
+          - "*Deux bosses* : souvent deux groupes"
+        voix_off: "À retenir. Une bosse au milieu : la distribution est symétrique. Une longue queue : quelques valeurs extrêmes, d'un côté. Deux bosses : souvent deux groupes mélangés, qu'un seul chiffre ne résume pas."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What a histogram's shape tells you before any calculation"
+    legende: |
+      One peak in the middle, a long tail on one side, two peaks: the shape of a histogram already tells a story. With three fictional examples, marks, incomes and heights, we learn to describe a distribution and to be wary of a single number when there are two peaks. Worked exercise at the end. Fictional examples. Series "Reading numbers without being fooled".
+    hashtags: [statistics, distribution, histogram]
+    scenes:
+      - type: accroche
+        texte: "Before any calculation, *look at the shape*"
+        voix_off: "Before you calculate anything, look at the shape of a histogram. It already tells you a lot."
+      - type: titre
+        numero: 1
+        texte: "Symmetric: one peak in the middle"
+        voix_off: "First shape, the simplest one."
+      - type: courbe
+        texte: "Marks of *20 pupils*, out of 20"
+        courbe:
+          style: histogramme
+          points: [[0, 1], [4, 4], [8, 10], [12, 4], [16, 1]]
+          largeur_classe: 4
+          y_min: 0
+          y_max: 12
+          axe_x: "Mark out of 20"
+          axe_y: "Pupils"
+        note: "Fictional marks of 20 pupils."
+        voix_off: "Here are the fictional marks of twenty pupils. One peak in the middle, between eight and twelve, and two sides that mirror each other. We call this distribution symmetric. Here, the middle sums up the group well."
+        verifier:
+          - {expression: "1 + 4 + 10 + 4 + 1", attendu: 20, libelle: "Total pupils"}
+      - type: titre
+        numero: 2
+        texte: "Skewed: a long tail"
+        voix_off: "Second shape: the skewed distribution."
+      - type: courbe
+        texte: "Monthly incomes of *25 people*"
+        courbe:
+          style: histogramme
+          points: [[0, 2], [1000, 9], [2000, 6], [3000, 3], [4000, 2], [5000, 1], [6000, 1], [7000, 1]]
+          largeur_classe: 1000
+          y_min: 0
+          y_max: 12
+          axe_x: "Income (€)"
+          axe_y: "People"
+        note: "Fictional incomes of 25 people, classes of €1,000."
+        voix_off: "Here are fictional monthly incomes. Most people are on the left, between one thousand and three thousand euros. Then a long tail stretches to the right: a few very high incomes. This is called right skew."
+        verifier:
+          - {expression: "2 + 9 + 6 + 3 + 2 + 1 + 1 + 1", attendu: 25, libelle: "Total people"}
+      - type: etapes
+        texte: "A tail, *on one side or the other*"
+        etapes:
+          - "Tail *on the right*: a few very large values"
+          - "Tail *on the left*: a few very small values"
+        voix_off: "A tail can go either way. On the right, it points to a few very large values, like high incomes. On the left, a few very small values. And the tail pulls the mean towards it: we'll see that in the episode on the median."
+      - type: titre
+        numero: 3
+        texte: "Two peaks: two groups?"
+        voix_off: "Third shape, the most surprising one."
+      - type: courbe
+        texte: "Heights of *44 adults*"
+        courbe:
+          style: histogramme
+          points: [[150, 2], [155, 6], [160, 9], [165, 5], [170, 6], [175, 9], [180, 5], [185, 2]]
+          largeur_classe: 5
+          y_min: 0
+          y_max: 12
+          axe_x: "Height (cm)"
+          axe_y: "Adults"
+        note: "Fictional heights of 44 adults, women and men mixed."
+        voix_off: "Here are the fictional heights of forty-four adults. Two peaks: one around one hundred and sixty centimetres, the other around one hundred and seventy-five. We call this distribution bimodal. Here the explanation is simple: women and men have been mixed together."
+        verifier:
+          - {expression: "2 + 6 + 9 + 5 + 6 + 9 + 5 + 2", attendu: 44, libelle: "Total adults"}
+      - type: chiffre
+        valeur: 170
+        suffixe: {fr: " cm", en: " cm"}
+        texte: "the mean falls *in the dip*, between the two peaks"
+        note: "Mean computed from class midpoints: about 169.8 cm."
+        voix_off: "Let's work out the mean height: about one hundred and seventy centimetres. It falls in the dip between the two peaks, where there are few people. A single number describes neither the women nor the men in this group."
+        verifier:
+          - {expression: "(152.5*2 + 157.5*6 + 162.5*9 + 167.5*5 + 172.5*6 + 177.5*9 + 182.5*5 + 187.5*2) / 44", attendu: 170, libelle: "Approximate mean, in cm"}
+      - type: texte
+        texte: "Two peaks? Look for *two groups mixed together*"
+        voix_off: "Keep this habit: two peaks often point to two groups mixed together. Before summing up, separate them."
+      - type: exercice
+        texte: "*Symmetric*, *right tail*, *left tail*, *two peaks*: age at death, income, exam marks, heights?"
+        pause: 8
+        voix_off: "Your turn. Four shapes: symmetric, right tail, left tail, two peaks. And four variables: age at death, income, exam marks, adult heights. Match each variable to its shape."
+      - type: correction
+        etapes:
+          - "Exam marks: *symmetric*"
+          - "Income: *right tail*"
+          - "Age at death: *left tail*"
+          - "Adult heights: *two peaks*"
+        reponse: "Every shape has an explanation"
+        voix_off: "Here's the answer. Exam marks: often one peak in the middle, symmetric. Income: a right tail, because of a few very high incomes. Age at death: a left tail, because most people die old and a few die young. Adult heights: two peaks, women and men. Behind every shape there is an explanation."
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*One peak* in the middle: symmetric"
+          - "*A tail*: a few extreme values"
+          - "*Two peaks*: often two groups"
+        voix_off: "Key points. One peak in the middle: the distribution is symmetric. A long tail: a few extreme values, on one side. Two peaks: often two groups mixed together, which a single number cannot sum up."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

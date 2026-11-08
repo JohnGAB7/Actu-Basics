@@ -1,0 +1,45 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Sweeney 2000, chiffre de 87 % vérifié sur l'article.
+id_programme: S1.10
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-s1-10-donnees-ethique-et-vie-privee.yaml
+question_centrale:
+  fr: Peut-on retrouver une personne dans des données « anonymes » ?
+  en: Can you find a person in “anonymous” data?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S1
+  rang_dans_module: 10
+public:
+  prerequis:
+  - S1.04
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Plus on croise de colonnes, plus chaque ligne devient unique.
+exemple_fil_rouge: Date de naissance × sexe × code postal ; commune fictive de 2 000 habitants ; entreprise fictive de 500 salariés.
+exemple_reel: 'L. Sweeney (2000), « Simple Demographics Often Identify People Uniquely » : 87 % des Américains identifiables
+  par date de naissance, sexe et code postal (recensement de 1990).'
+idees_fausses:
+- idee: Croire qu'enlever le nom suffit à anonymiser
+  desamorcee_a_l_etape: Pseudonymiser n'est pas anonymiser
+exercice:
+  question: 'Fichier « anonyme » de 500 salariés : mois de naissance × sexe × service (10 services). Risqué ?'
+  correction: 240 cases, environ 2,1 personnes par case
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Un fichier « anonyme » contient âge exact, profession et village. Est-il anonyme ?
+  diagnostic_d_erreur: '« Il n''y a pas de nom, donc personne n''est reconnaissable » : qu''est-ce qui manque ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)
