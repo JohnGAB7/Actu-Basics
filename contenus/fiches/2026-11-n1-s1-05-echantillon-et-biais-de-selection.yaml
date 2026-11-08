@@ -32,10 +32,10 @@ pedagogie:
     fr: "Chiffres de 1936 tels que rapportés par Lusinchi (2012) et Lohr et Brick (2017) ; récit simplifié"
     en: "1936 figures as reported by Lusinchi (2012) and Lohr and Brick (2017); simplified account"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources:
   - nom:

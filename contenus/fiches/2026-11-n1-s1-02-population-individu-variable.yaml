@@ -25,10 +25,10 @@ pedagogie:
     fr: "Titres de presse et village fictifs, choisis pour que les calculs se suivent de tête"
     en: "Made-up headlines and village, chosen so the arithmetic is easy to follow"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 editions:
   fr:

@@ -30,10 +30,10 @@ pedagogie:
     fr: "Exemples fictifs (une équipe de 12 personnes, une recette pour 4)"
     en: "Fictional examples (a team of 12 people, a recipe for 4)"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

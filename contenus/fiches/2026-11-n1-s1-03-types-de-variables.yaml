@@ -25,10 +25,10 @@ pedagogie:
     fr: "Exemples choisis pour l'illustration ; conversion 0 °C = 273,15 K"
     en: "Examples chosen for illustration; conversion 0 °C = 273.15 K"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 editions:
   fr:

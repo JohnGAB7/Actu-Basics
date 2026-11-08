@@ -28,10 +28,10 @@ pedagogie:
     fr: "Ville, plaintes et revenus fictifs ; les mécanismes décrits sont réels"
     en: "Town, complaints and incomes are fictional; the mechanisms described are real"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

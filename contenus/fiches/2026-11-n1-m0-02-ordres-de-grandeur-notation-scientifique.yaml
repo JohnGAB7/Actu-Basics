@@ -28,10 +28,10 @@ pedagogie:
     fr: "Une année compte 365,25 jours en moyenne ; budgets de l'exemple fictifs"
     en: "A year has 365.25 days on average; the budgets in the example are fictional"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

@@ -28,10 +28,10 @@ pedagogie:
     fr: "Données fictives : hauteur d'une plante mesurée chaque semaine"
     en: "Fictional data: height of a plant measured every week"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

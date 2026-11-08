@@ -30,10 +30,10 @@ pedagogie:
     fr: "Étude sur le café hypothétique ; tirage au sort de 20 personnes simulé, dont 7 fumeurs, en deux groupes de 10"
     en: "Coffee study hypothetical; simulated random assignment of 20 people, 7 of them smokers, into two groups of 10"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

@@ -32,10 +32,10 @@ pedagogie:
     fr: "Chômage au sens du BIT : dernier chiffre publié par l'Insee à la date de préparation (2e trimestre 2026)"
     en: "ILO unemployment: latest figure published by Insee when the video was prepared (Q2 2026)"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources:
   - nom:

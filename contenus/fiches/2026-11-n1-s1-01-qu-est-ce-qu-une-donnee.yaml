@@ -29,10 +29,10 @@ pedagogie:
     fr: "Populations de l'Insee arrondies au dixième de million à l'écran ; nombres exacts dans la note"
     en: "Insee populations rounded to a tenth of a million on screen; exact figures in the note"
 
-validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources:
   - nom:
