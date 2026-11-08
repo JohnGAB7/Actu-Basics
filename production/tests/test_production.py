@@ -1690,3 +1690,18 @@ def test_courbe_titre_d_axe_vertical_et_guide_horizontal():
         sans_guide = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
         s.extra["courbe"] = c
         assert len({complet, sans_titre, sans_guide}) == 3
+
+
+def test_courbe_annees_sans_separateur_de_milliers():
+    """Abscisses en années (S1.07 : 2019 à 2023) : « 2019 », jamais « 2 019 ». L'image change si l'on
+    remplace les années par des nombres ordinaires du même ordre."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s1-07-donnees-manquantes-erreurs-definitions.yaml")
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe")
+    i = ed.scenes.index(s)
+    c = s.extra["courbe"]
+    annees = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = dict(c, _points=[(x + 0.5, y) for x, y in c["_points"]])
+    autres = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert annees != autres

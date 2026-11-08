@@ -119,7 +119,7 @@ editions:
         etapes:
           - "A et C : on *observe* des choix déjà faits"
           - "B et D : le chercheur *répartit au hasard*"
-        reponse: "B et D : des expériences, qui permettent d'évaluer un effet si elles sont bien menées"
+        reponse: "B et D : des expériences"
         voix_off: "Dans A et C, on observe des situations que les gens ont choisies ou vécues : ce sont des études observationnelles. Dans B et D, la répartition est décidée par tirage au sort : ce sont des expériences. Si elles sont bien conçues et bien analysées, elles permettent d'estimer un effet. D'autres méthodes existent, mais le tirage au sort reste la plus directe."
       - type: etapes
         texte: "À retenir"
@@ -209,7 +209,7 @@ editions:
         etapes:
           - "A and C: we *observe* choices already made"
           - "B and D: the researcher *assigns at random*"
-        reponse: "B and D: experiments, which can measure an effect if well run"
+        reponse: "B and D: experiments"
         voix_off: "In A and C, we observe situations people chose or lived through: these are observational studies. In B and D, the split is decided by a random draw: these are experiments. If well designed and well analysed, they let you estimate an effect. Other methods exist, but random assignment is the most direct."
       - type: etapes
         texte: "Key takeaways"

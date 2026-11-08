@@ -216,7 +216,7 @@ editions:
         voix_off: "Your turn. In each of these three surveys, who is likely to be missing? Reviews of a restaurant left online. A poll carried out by landline only. A survey on physical activity, handed out outside a gym."
       - type: correction
         etapes:
-          - "Online: the *very happy* and the *very disappointed* write more"
+          - "Online: the *very happy* and *very unhappy* write more"
           - "Landline: missing those who *don't have one*"
           - "Gym: missing those who *don't go*"
         reponse: "Three samples that select themselves"

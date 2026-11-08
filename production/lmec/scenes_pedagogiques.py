@@ -475,8 +475,10 @@ class ScenesPedagogiques(Animations):
         pas_x = next(p for p in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 10 ** 9)
                      if (xmax - xmin) / p <= 6)
         v = math.ceil(xmin / pas_x) * pas_x
+        # Des années (2019, 2023) s'écrivent sans séparateur de milliers : « 2 019 » se lirait comme un nombre.
+        annees = all(float(x).is_integer() and 1000 <= x <= 2999 for x, _ in pts)
         while v <= xmax + 1e-9:
-            lbl = formater_nombre(v, self.langue, 0)
+            lbl = str(int(round(v))) if annees else formater_nombre(v, self.langue, 0)
             d.text((X(v) - p_axe.getlength(lbl) / 2, bas_g + 16), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
             v += pas_x

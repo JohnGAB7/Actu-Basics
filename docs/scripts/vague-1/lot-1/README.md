@@ -1,6 +1,6 @@
-# ACTU-BASICS · Vague 1, lot 1 · Scripts à valider
+# ACTU-BASICS · Vague 1, lot 1 · Scripts validés
 
-Dix scripts FR et EN, à relire avant toute production vidéo. La relecture ChatGPT du 2026-11-07 (commentaires de la PR #17) est intégrée pour M0.02, M0.03, S1.01 à S1.07 et M0.01 (relu ensuite). Décisions de JG du 2026-11-07 : liens vers les anciennes leçons dans les descriptions, mini-comparaison ajoutée à M0.02. Aucune vidéo n'est produite tant que JG n'a pas validé.
+Dix scripts FR et EN, source des vidéos du lot 1. La relecture ChatGPT du 2026-11-07 (commentaires de la PR #17) est intégrée pour M0.02, M0.03, S1.01 à S1.07 et M0.01 (relu ensuite). Décisions de JG du 2026-11-07 : liens vers les anciennes leçons dans les descriptions, mini-comparaison ajoutée à M0.02. Lot validé par JG le 2026-11-08 ; vidéos rendues en local (S1.04 après le chiffre Insee du 10 novembre).
 
 Chaque script contient : fiche d'identité, points à trancher, script FR scène par scène (à l'écran, voix off), script EN, description, sources et calculs recalculés par la machine.
 

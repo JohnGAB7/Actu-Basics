@@ -55,7 +55,9 @@ editions:
         courbe:
           points: [[2019, 390], [2020, 405], [2021, 400], [2022, 410], [2023, 620]]
           style: points
+          y_max: 800
           axe_x: "Année"
+          axe_y: "Plaintes"
           reperes:
             - {x: 2023, label: "Plainte en ligne"}
         note: "Données fictives. 2022 : 410 plaintes ; 2023 : 620."
@@ -116,7 +118,7 @@ editions:
         etapes:
           - "Lire la *note de méthode* : la définition a-t-elle changé ?"
           - "Chercher une série *recalculée* avec la nouvelle méthode"
-        reponse: "Comparer des chiffres définis et mesurés de la même façon"
+        reponse: "Même définition, même méthode"
         voix_off: "Il faut d'abord lire la note de méthode : la définition ou la façon de poser les questions a-t-elle changé ? Puis chercher une série recalculée, où les années passées sont estimées avec la nouvelle méthode. On ne compare que des chiffres définis et mesurés de la même façon."
       - type: etapes
         texte: "À retenir"
@@ -147,7 +149,9 @@ editions:
         courbe:
           points: [[2019, 390], [2020, 405], [2021, 400], [2022, 410], [2023, 620]]
           style: points
+          y_max: 800
           axe_x: "Year"
+          axe_y: "Reports"
           reperes:
             - {x: 2023, label: "Online reporting"}
         note: "Fictional data. 2022: 410 reports; 2023: 620."
@@ -205,7 +209,7 @@ editions:
         etapes:
           - "Read the *methodology note*: did the definition change?"
           - "Look for a series *recalculated* with the new method"
-        reponse: "Compare figures defined and measured the same way"
+        reponse: "Same definition, same method"
         voix_off: "First, read the methodology note: did the definition, or the way the questions are asked, change? Then look for a recalculated series, where past years are estimated with the new method. Only compare figures defined and measured the same way."
       - type: etapes
         texte: "Key takeaways"
