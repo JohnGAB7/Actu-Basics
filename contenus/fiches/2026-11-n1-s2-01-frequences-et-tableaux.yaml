@@ -44,7 +44,7 @@ editions:
     scenes:
       - type: accroche
         texte: "Mille réponses : *comment les résumer* ?"
-        voix_off: "Mille réponses à un questionnaire. Personne ne va les lire une par une. Alors, comment les résumer ?"
+        voix_off: "Mille réponses à un questionnaire : personne ne va les lire une par une. Pour comprendre la méthode, partons d'une petite classe de vingt-cinq élèves. Comment résumer leurs réponses ?"
       # ---------------------------------------------------------------- 1
       - type: titre
         numero: 1
@@ -59,8 +59,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Frères et sœurs"
-          axe_y: "Élèves"
+          axe_x: "Nombre de frères et sœurs"
+          axe_y: "Effectif (élèves)"
         note: "Classe fictive de 25 élèves."
         voix_off: "On demande à vingt-cinq élèves combien ils ont de frères et sœurs. Cinq n'en ont aucun, dix en ont un, six en ont deux et quatre en ont trois. Ces nombres s'appellent des effectifs."
         verifier:
@@ -76,7 +76,7 @@ editions:
       - type: formule
         texte: "Fréquence = effectif ÷ total"
         formule:
-          - '\text{fréquence}=\dfrac{\text{effectif}}{\text{total}}'
+          - '\text{fréquence}=\dfrac{\text{effectif}}{\text{effectif total}}'
           - '\dfrac{10}{25}=0{,}40=40\ \%'
         voix_off: "La fréquence, c'est l'effectif divisé par le total. Pour les élèves qui ont un frère ou une sœur : dix divisé par vingt-cinq, cela fait zéro virgule quarante, soit quarante pour cent."
         verifier:
@@ -144,7 +144,7 @@ editions:
         etapes:
           - "Voiture 8 ÷ 20 = *40 %*, transports 6 ÷ 20 = *30 %*"
           - "Vélo 4 ÷ 20 = *20 %*, marche 2 ÷ 20 = *10 %*"
-          - "Cumul : 40, 70, 90, 100 %"
+          - "Cumul, de la voiture à la marche : 40, 70, 90, 100 %"
         reponse: "Total 100 %, cumul dans l'ordre choisi"
         voix_off: "Correction. Voiture : huit divisé par vingt, quarante pour cent ; transports en commun : trente pour cent. Vélo : vingt pour cent ; marche : dix pour cent. En cumulant dans cet ordre : quarante, soixante-dix, quatre-vingt-dix, puis cent pour cent. Attention : les modes de transport n'ont pas d'ordre naturel. Le cumul dépend de l'ordre choisi, ici du plus fréquent au moins fréquent."
         verifier:
@@ -172,7 +172,7 @@ editions:
     scenes:
       - type: accroche
         texte: "A thousand answers: *how do you sum them up*?"
-        voix_off: "A thousand answers to a survey. Nobody is going to read them one by one. So how do you sum them up?"
+        voix_off: "A thousand answers to a survey: nobody is going to read them one by one. To learn the method, let's start with a small class of twenty-five pupils. How do you sum up their answers?"
       - type: titre
         numero: 1
         texte: "Counting: the counts"
@@ -186,8 +186,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Brothers and sisters"
-          axe_y: "Pupils"
+          axe_x: "Number of brothers and sisters"
+          axe_y: "Count (pupils)"
         note: "Fictional class of 25 pupils."
         voix_off: "We ask twenty-five pupils how many brothers and sisters they have. Five have none, ten have one, six have two and four have three. These numbers are called counts."
         verifier:
@@ -202,7 +202,7 @@ editions:
       - type: formule
         texte: "Frequency = count ÷ total"
         formule:
-          - '\text{frequency}=\dfrac{\text{count}}{\text{total}}'
+          - '\text{frequency}=\dfrac{\text{count}}{\text{total count}}'
           - '\dfrac{10}{25}=0.40=40\%'
         voix_off: "The frequency is the count divided by the total. For the pupils with one brother or sister: ten divided by twenty-five is zero point four zero, or forty percent."
         verifier:
@@ -267,7 +267,7 @@ editions:
         etapes:
           - "Car 8 ÷ 20 = *40%*, public transport 6 ÷ 20 = *30%*"
           - "Bike 4 ÷ 20 = *20%*, walk 2 ÷ 20 = *10%*"
-          - "Cumulative: 40, 70, 90, 100%"
+          - "Cumulative, from car to walking: 40, 70, 90, 100%"
         reponse: "Total 100%, cumulative in the chosen order"
         voix_off: "Here's the answer. Car: eight divided by twenty, forty percent; public transport: thirty percent. Bike: twenty percent; walking: ten percent. Adding up in this order: forty, seventy, ninety, then one hundred percent. Careful: ways of getting to work have no natural order. The cumulative figures depend on the order chosen, here from most to least common."
         verifier:

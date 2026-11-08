@@ -77,8 +77,8 @@ editions:
         texte: "Σ veut dire *« additionner »*"
         formule:
           - '\bar{x}=\dfrac{x_1+x_2+x_3+x_4}{4}'
-          - '\bar{x}=\dfrac{1}{n};\sum_{i=1}^{n}x_i'
-        voix_off: "On appelle les valeurs x un, x deux, x trois, x quatre, et la moyenne x barre. La lettre grecque sigma veut simplement dire : additionner toutes les valeurs, de la première à la n-ième. Puis on divise par n, leur nombre. C'est exactement le calcul de la cagnotte."
+          - '\bar{x}=\dfrac{1}{n}\times\sum_{i=1}^{n}x_i'
+        voix_off: "On appelle les valeurs x un, x deux, x trois, x quatre, et la moyenne x barre. Le symbole sigma indique qu'on additionne toutes les valeurs, de la première à la n-ième. Puis on divise cette somme par n, le nombre de valeurs. C'est exactement le calcul de la cagnotte."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -94,8 +94,8 @@ editions:
         verifier:
           - {expression: "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)", attendu: 0, libelle: "Somme des écarts à la moyenne"}
       - type: texte
-        texte: "Les écarts se *compensent* toujours"
-        voix_off: "C'est toujours le cas. Comme sur une balançoire, les écarts d'un côté compensent ceux de l'autre : la moyenne est le point d'équilibre. Une seule grande valeur, très loin, suffit donc à la déplacer."
+        texte: "Les écarts à la moyenne se *compensent* : leur somme vaut 0"
+        voix_off: "Pour la moyenne arithmétique, c'est toujours le cas : la somme des écarts à la moyenne vaut zéro. Comme sur une balançoire, les écarts d'un côté compensent ceux de l'autre : la moyenne est le point d'équilibre. Une seule grande valeur, très loin, suffit donc à la déplacer."
       # ---------------------------------------------------------------- 4
       - type: titre
         numero: 4
@@ -153,14 +153,14 @@ editions:
         texte: "The mean, an equal share"
         voix_off: "Let's start with a simple picture: sharing."
       - type: etapes
-        texte: "Four friends, *one kitty*"
+        texte: "Four friends, *one shared pot*"
         etapes:
           - "They have €5, €10, €15 and €30"
-          - "All in the kitty: *€60*"
+          - "All in the pot: *€60*"
           - "Split four ways: *€15 each*"
-        voix_off: "Four friends pool their money. They have five, ten, fifteen and thirty euros. In the kitty, that makes sixty euros. Shared equally between the four, that is fifteen euros each: that's the mean."
+        voix_off: "Four friends pool their money. They have five, ten, fifteen and thirty euros. In the pot, that makes sixty euros. Shared equally between the four, that is fifteen euros each: that's the mean."
         verifier:
-          - {expression: "5 + 10 + 15 + 30", attendu: 60, libelle: "Total in the kitty"}
+          - {expression: "5 + 10 + 15 + 30", attendu: 60, libelle: "Total in the pot"}
           - {expression: "60 / 4", attendu: 15, libelle: "Each person's share"}
       - type: formule
         texte: "Mean = *sum ÷ count*"
@@ -169,7 +169,7 @@ editions:
           - '\dfrac{5+10+15+30}{4}=\dfrac{60}{4}=15'
         voix_off: "Hence the formula: the mean is the sum of the values divided by how many there are. Here, sixty divided by four: fifteen."
         verifier:
-          - {expression: "(5 + 10 + 15 + 30) / 4", attendu: 15, libelle: "Mean of the kitty"}
+          - {expression: "(5 + 10 + 15 + 30) / 4", attendu: 15, libelle: "Mean of the pot"}
       - type: titre
         numero: 2
         texte: "The Σ notation, step by step"
@@ -178,8 +178,8 @@ editions:
         texte: "Σ means *“add up”*"
         formule:
           - '\bar{x}=\dfrac{x_1+x_2+x_3+x_4}{4}'
-          - '\bar{x}=\dfrac{1}{n};\sum_{i=1}^{n}x_i'
-        voix_off: "We call the values x one, x two, x three, x four, and the mean x bar. The Greek letter sigma simply means: add up all the values, from the first to the n-th. Then divide by n, how many there are. It is exactly the kitty calculation."
+          - '\bar{x}=\dfrac{1}{n}\times\sum_{i=1}^{n}x_i'
+        voix_off: "We call the values x one, x two, x three, x four, and the mean x bar. The sigma symbol tells you to add up all the values, from the first to the n-th. Then divide that sum by n, the number of values. It is exactly the shared pot calculation."
       - type: titre
         numero: 3
         texte: "The balance point"
@@ -194,8 +194,8 @@ editions:
         verifier:
           - {expression: "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)", attendu: 0, libelle: "Sum of deviations from the mean"}
       - type: texte
-        texte: "Deviations always *balance out*"
-        voix_off: "That is always true. As on a seesaw, the deviations on one side balance those on the other: the mean is the balance point. So a single large value, far away, is enough to move it."
+        texte: "Deviations from the mean *balance out*: they sum to 0"
+        voix_off: "For the arithmetic mean, this is always true: the deviations from the mean add up to zero. As on a seesaw, the deviations on one side balance those on the other: the mean is the balance point. So a single large value, far away, is enough to move it."
       - type: titre
         numero: 4
         texte: "The weighted mean"

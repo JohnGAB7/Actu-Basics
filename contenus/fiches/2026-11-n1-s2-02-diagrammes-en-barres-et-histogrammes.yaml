@@ -60,7 +60,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_y: "Salariés"
+          axe_x: "Mode de transport"
+          axe_y: "Effectif (salariés)"
         note: "Entreprise fictive de 20 salariés (exercice de l'épisode précédent)."
         voix_off: "Voici les vingt salariés de l'épisode précédent. Une barre par mode de transport : voiture, transports en commun, vélo, marche. Les barres sont séparées, parce que ce sont des catégories distinctes. On pourrait les ranger dans un autre ordre sans rien changer au sens."
         verifier:
@@ -79,8 +80,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Minutes"
-          axe_y: "Salariés"
+          axe_x: "Temps de trajet (minutes)"
+          axe_y: "Effectif (salariés)"
         note: "Temps de trajet fictifs des 20 mêmes salariés."
         voix_off: "On range les temps de trajet en classes de dix minutes. Trois salariés mettent moins de dix minutes, sept entre dix et vingt, six entre vingt et trente, trois entre trente et quarante, un seul entre quarante et cinquante. Cette fois, les barres se touchent : les minutes forment une suite continue, sans trou entre les classes."
         verifier:
@@ -94,8 +95,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Minutes"
-          axe_y: "Salariés"
+          axe_x: "Temps de trajet (minutes)"
+          axe_y: "Effectif (salariés)"
         voix_off: "Ce sont exactement les mêmes données, regroupées en classes de vingt minutes. Dix salariés mettent moins de vingt minutes, neuf entre vingt et quarante, un seul plus de quarante. Le sommet, entre dix et vingt minutes, a disparu."
         verifier:
           - {expression: "3 + 7", attendu: 10, libelle: "Classe 0 à 20 minutes"}
@@ -109,7 +110,7 @@ editions:
         texte: "Classes inégales : la surface compte"
         voix_off: "Dernier piège : les classes de largeurs différentes."
       - type: courbe
-        texte: "Classes inégales, *hauteur = effectif* : trompeur"
+        texte: "*Construction trompeuse* : hauteur = effectif, classes inégales"
         courbe:
           style: histogramme
           points: [[0, 3], [10, 7], [20, 10]]
@@ -117,8 +118,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Minutes"
-          axe_y: "Salariés"
+          axe_x: "Temps de trajet (minutes)"
+          axe_y: "Effectif (salariés)"
         voix_off: "Regroupons maintenant tout ce qui dépasse vingt minutes dans une seule classe, de vingt à cinquante. Elle contient dix salariés. Si l'on prend l'effectif comme hauteur, cette grande barre écrase tout : on croirait que les trajets longs dominent."
         verifier:
           - {expression: "6 + 3 + 1", attendu: 10, libelle: "Classe 20 à 50 minutes"}
@@ -141,9 +142,9 @@ editions:
           y_min: 0
           y_max: 0.8
           decimales_y: 1
-          axe_x: "Minutes"
-          axe_y: "Salariés par minute"
-        note: "Surface de chaque barre = effectif : 0,3 × 10 = 3 ; 0,7 × 10 = 7 ; 0,33 × 30 = 10."
+          axe_x: "Temps de trajet (minutes)"
+          axe_y: "Densité (salariés par minute)"
+        note: "Surface de chaque barre = effectif : 0,3 × 10 = 3 ; 0,7 × 10 = 7 ; ⅓ × 30 = 10 (hauteur 0,33 arrondie)."
         voix_off: "Avec la densité, l'image redevient juste. La classe de dix à vingt minutes est la plus dense, comme sur le premier histogramme. Et la surface de chaque barre redonne bien son effectif."
         verifier:
           - {expression: "0.7 * 10", attendu: 7, libelle: "Surface de la classe 10 à 20 minutes"}
@@ -155,9 +156,9 @@ editions:
         voix_off: "À vous. Quarante visiteurs d'un musée fictif : huit ont entre zéro et vingt ans, douze entre vingt et trente ans, vingt entre trente et soixante ans. Un histogramme qui prend l'effectif comme hauteur met en avant les trente à soixante ans. A-t-il raison ? Quelle classe est la plus dense ?"
       - type: correction
         etapes:
-          - "0–20 ans : 8 ÷ 20 = *0,4* par an"
-          - "20–30 ans : 12 ÷ 10 = *1,2* par an"
-          - "30–60 ans : 20 ÷ 30 ≈ *0,67* par an"
+          - "0–20 ans : 8 ÷ 20 = *0,4* visiteur par année d'âge"
+          - "20–30 ans : 12 ÷ 10 = *1,2* visiteur par année d'âge"
+          - "30–60 ans : 20 ÷ 30 ≈ *0,67* visiteur par année d'âge"
         reponse: "Les 20–30 ans : la classe la plus dense"
         voix_off: "Divisons chaque effectif par la largeur de sa classe. De zéro à vingt ans : huit divisé par vingt, zéro virgule quatre visiteur par année d'âge. De vingt à trente ans : douze divisé par dix, un virgule deux. De trente à soixante ans : vingt divisé par trente, environ zéro virgule soixante-sept. La classe la plus dense est celle des vingt à trente ans : l'histogramme en effectifs était trompeur."
         verifier:
@@ -197,7 +198,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_y: "Employees"
+          axe_x: "Way of getting to work"
+          axe_y: "Count (employees)"
         note: "Fictional company of 20 employees (exercise from the last episode)."
         voix_off: "Here are the twenty employees from the last episode. One bar for each way of getting to work: car, public transport, bike, walking. The bars are separate, because these are distinct categories. You could put them in another order without changing the meaning."
         verifier:
@@ -215,8 +217,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Minutes"
-          axe_y: "Employees"
+          axe_x: "Commuting time (minutes)"
+          axe_y: "Count (employees)"
         note: "Fictional commuting times of the same 20 employees."
         voix_off: "We group the commuting times into ten-minute classes. Three employees take under ten minutes, seven between ten and twenty, six between twenty and thirty, three between thirty and forty, and just one between forty and fifty. This time the bars touch: minutes run on continuously, with no gap between classes."
         verifier:
@@ -230,8 +232,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Minutes"
-          axe_y: "Employees"
+          axe_x: "Commuting time (minutes)"
+          axe_y: "Count (employees)"
         voix_off: "These are exactly the same data, grouped into twenty-minute classes. Ten employees take under twenty minutes, nine between twenty and forty, only one over forty. The peak between ten and twenty minutes has vanished."
         verifier:
           - {expression: "3 + 7", attendu: 10, libelle: "Class 0 to 20 minutes"}
@@ -241,10 +243,10 @@ editions:
         voix_off: "The choice of classes changes the shape. Too wide, and they hide the details. Too narrow, and they show bumps that are just chance. When you see a histogram, always check the width of the classes."
       - type: titre
         numero: 3
-        texte: "Unequal classes: area counts"
+        texte: "Unequal widths: area = count"
         voix_off: "One last trap: classes of different widths."
       - type: courbe
-        texte: "Unequal classes, *height = count*: misleading"
+        texte: "*Misleading build*: height = count, unequal classes"
         courbe:
           style: histogramme
           points: [[0, 3], [10, 7], [20, 10]]
@@ -252,8 +254,8 @@ editions:
           valeurs: true
           y_min: 0
           y_max: 12
-          axe_x: "Minutes"
-          axe_y: "Employees"
+          axe_x: "Commuting time (minutes)"
+          axe_y: "Count (employees)"
         voix_off: "Now let's put everything over twenty minutes into a single class, from twenty to fifty. It holds ten employees. If we use the count as the height, this big bar dwarfs the rest: long commutes seem to dominate."
         verifier:
           - {expression: "6 + 3 + 1", attendu: 10, libelle: "Class 20 to 50 minutes"}
@@ -276,9 +278,9 @@ editions:
           y_min: 0
           y_max: 0.8
           decimales_y: 1
-          axe_x: "Minutes"
-          axe_y: "Employees per minute"
-        note: "Area of each bar = count: 0.3 × 10 = 3; 0.7 × 10 = 7; 0.33 × 30 = 10."
+          axe_x: "Commuting time (minutes)"
+          axe_y: "Density (employees per minute)"
+        note: "Area of each bar = count: 0.3 × 10 = 3; 0.7 × 10 = 7; ⅓ × 30 = 10 (height 0.33 rounded)."
         voix_off: "With density, the picture is right again. The class from ten to twenty minutes is the densest, as in the first histogram. And the area of each bar gives back its count."
         verifier:
           - {expression: "0.7 * 10", attendu: 7, libelle: "Area of class 10 to 20 minutes"}
@@ -289,9 +291,9 @@ editions:
         voix_off: "Your turn. Forty visitors to a fictional museum: eight are aged zero to twenty, twelve are twenty to thirty, twenty are thirty to sixty. A histogram that uses the count as height highlights the thirty to sixty group. Is it right? Which class is the densest?"
       - type: correction
         etapes:
-          - "Aged 0–20: 8 ÷ 20 = *0.4* per year"
-          - "Aged 20–30: 12 ÷ 10 = *1.2* per year"
-          - "Aged 30–60: 20 ÷ 30 ≈ *0.67* per year"
+          - "Aged 0–20: 8 ÷ 20 = *0.4* visitor per year of age"
+          - "Aged 20–30: 12 ÷ 10 = *1.2* visitors per year of age"
+          - "Aged 30–60: 20 ÷ 30 ≈ *0.67* visitor per year of age"
         reponse: "Ages 20–30: the densest class"
         voix_off: "Divide each count by the width of its class. Zero to twenty: eight divided by twenty, zero point four visitor per year of age. Twenty to thirty: twelve divided by ten, one point two. Thirty to sixty: twenty divided by thirty, about zero point six seven. The densest class is twenty to thirty: the histogram based on counts was misleading."
         verifier:

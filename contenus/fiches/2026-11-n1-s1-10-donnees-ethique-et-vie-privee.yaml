@@ -62,8 +62,8 @@ editions:
         texte: "Deux opérations *différentes*"
         etapes:
           - "*Pseudonymiser* : remplacer le nom par un code"
-          - "*Anonymiser* : rendre impossible de retrouver la personne"
-        voix_off: "Il y a deux opérations différentes. Pseudonymiser, c'est remplacer le nom par un code : Marie Dupont devient le numéro quatre mille douze, mais le reste de la ligne ne change pas. Anonymiser, c'est rendre impossible de retrouver la personne, même en croisant le fichier avec d'autres informations."
+          - "*Anonymiser* : qu'on ne puisse plus *raisonnablement* retrouver la personne"
+        voix_off: "Il y a deux opérations différentes. Pseudonymiser, c'est remplacer le nom par un code : Marie Dupont devient le numéro quatre mille douze, mais le reste de la ligne ne change pas. Anonymiser, c'est transformer les données de façon qu'on ne puisse plus raisonnablement retrouver la personne, même en les croisant avec d'autres informations disponibles."
       - type: texte
         texte: "Enlever le nom *ne suffit pas*"
         voix_off: "Enlever le nom ne suffit donc pas. Tout dépend de ce qui reste dans les autres colonnes."
@@ -77,7 +77,7 @@ editions:
         formule:
           - '365\times 2=730\ \mathrm{combinaisons}'
           - '2\,000\div 730\approx 2{,}7'
-        voix_off: "Prenons le jour de naissance et le sexe. Trois cent soixante-cinq jours, fois deux : sept cent trente combinaisons possibles. Pour deux mille habitants, cela fait environ deux virgule sept personnes par combinaison, en moyenne. Beaucoup de gens partagent leur case avec une ou deux autres personnes, et certains y sont seuls."
+        voix_off: "Prenons le jour de naissance et le sexe. Trois cent soixante-cinq jours, fois deux : sept cent trente combinaisons possibles. Pour deux mille habitants, cela fait environ deux virgule sept personnes par combinaison, en moyenne. Moins de trois personnes par case en moyenne : certaines cases risquent de ne contenir qu'une ou deux personnes."
         verifier:
           - {expression: "365 * 2", attendu: 730, libelle: "Combinaisons jour × sexe"}
           - {expression: "2000 / 730", attendu: 2.7, libelle: "Habitants par combinaison"}
@@ -85,13 +85,13 @@ editions:
         texte: "Ajoutons *l'année* de naissance"
         formule:
           - '365\times 2\times 80=58\,400'
-        voix_off: "Ajoutons l'année de naissance, avec quatre-vingts années possibles. On passe à cinquante-huit mille quatre cents combinaisons, pour seulement deux mille habitants. Presque chacun se retrouve seul dans sa case : il devient identifiable."
+        voix_off: "Ajoutons l'année de naissance, avec quatre-vingts années possibles. On passe à cinquante-huit mille quatre cents combinaisons, pour seulement deux mille habitants. Avec autant de combinaisons pour si peu d'habitants, beaucoup de personnes peuvent se retrouver dans une case très peu peuplée, souvent seules : elles deviennent identifiables."
         verifier:
           - {expression: "365 * 2 * 80", attendu: 58400, libelle: "Combinaisons date complète × sexe"}
       - type: chiffre
         valeur: 87
         suffixe: {fr: " %", en: "%"}
-        texte: "des Américains probablement uniques avec *code postal*, *sexe* et *date de naissance*"
+        texte: "des Américains probablement uniques avec *code postal*, *sexe* et *date de naissance* (estimation de 2000)"
         note: "L. Sweeney, 2000, d'après le recensement américain de 1990 : 216 millions de personnes sur 248 millions."
         voix_off: "Ce n'est pas qu'une hypothèse. En deux mille, la chercheuse Latanya Sweeney a estimé, à partir du recensement américain de mille neuf cent quatre-vingt-dix, que quatre-vingt-sept pour cent des habitants des États-Unis étaient probablement uniques avec seulement trois informations : leur code postal, leur sexe et leur date de naissance."
         verifier:
@@ -120,8 +120,8 @@ editions:
         etapes:
           - "12 mois × 2 sexes × 10 services = 240 combinaisons"
           - "500 ÷ 240 ≈ 2,1 personnes par case en moyenne"
-        reponse: "Risqué : beaucoup de cases à une ou deux personnes"
-        voix_off: "Voici le calcul. Douze mois, fois deux sexes, fois dix services : deux cent quarante combinaisons. Cinq cents divisé par deux cent quarante, environ deux virgule une personnes par case, en moyenne. C'est risqué : de nombreuses cases contiennent une ou deux personnes seulement, faciles à reconnaître pour un collègue."
+        reponse: "Risque : certaines cases très peu peuplées"
+        voix_off: "Voici le calcul. Douze mois, fois deux sexes, fois dix services : deux cent quarante combinaisons. Cinq cents divisé par deux cent quarante, environ deux virgule une personnes par case, en moyenne. C'est un signal de risque : certaines combinaisons peuvent ne concerner qu'une ou deux personnes, faciles à reconnaître pour un collègue."
         verifier:
           - {expression: "12 * 2 * 10", attendu: 240, libelle: "Combinaisons mois × sexe × service"}
           - {expression: "500 / 240", attendu: 2.1, libelle: "Salariés par combinaison"}
@@ -153,8 +153,8 @@ editions:
         texte: "Two *different* operations"
         etapes:
           - "*Pseudonymise*: replace the name with a code"
-          - "*Anonymise*: make it impossible to find the person"
-        voix_off: "There are two different operations. Pseudonymising means replacing the name with a code: Mary Smith becomes number four thousand and twelve, but the rest of the row stays the same. Anonymising means making it impossible to find the person, even by combining the file with other information."
+          - "*Anonymise*: so the person can no longer *reasonably* be found"
+        voix_off: "There are two different operations. Pseudonymising means replacing the name with a code: Mary Smith becomes number four thousand and twelve, but the rest of the row stays the same. Anonymising means transforming the data so the person can no longer reasonably be found, even by combining it with other available information."
       - type: texte
         texte: "Removing the name *isn't enough*"
         voix_off: "So removing the name isn't enough. It all depends on what is left in the other columns."
@@ -167,7 +167,7 @@ editions:
         formule:
           - '365\times 2=730\ \mathrm{combinations}'
           - '2{,}000\div 730\approx 2.7'
-        voix_off: "Take the day of birth and sex. Three hundred and sixty-five days, times two: seven hundred and thirty possible combinations. For two thousand residents, that's about two point seven people per combination, on average. Many people share their box with one or two others, and some are alone in it."
+        voix_off: "Take the day of birth and sex. Three hundred and sixty-five days, times two: seven hundred and thirty possible combinations. For two thousand residents, that's about two point seven people per combination, on average. Fewer than three people per box on average: some boxes may hold only one or two people."
         verifier:
           - {expression: "365 * 2", attendu: 730, libelle: "Day × sex combinations"}
           - {expression: "2000 / 730", attendu: 2.7, libelle: "Residents per combination"}
@@ -175,13 +175,13 @@ editions:
         texte: "Now add the *year* of birth"
         formule:
           - '365\times 2\times 80=58{,}400'
-        voix_off: "Now add the year of birth, with eighty possible years. That makes fifty-eight thousand four hundred combinations, for only two thousand residents. Almost everyone is alone in their box: they become identifiable."
+        voix_off: "Now add the year of birth, with eighty possible years. That makes fifty-eight thousand four hundred combinations, for only two thousand residents. With so many combinations for so few residents, many people can end up in a box with very few others, often alone: they become identifiable."
         verifier:
           - {expression: "365 * 2 * 80", attendu: 58400, libelle: "Full date × sex combinations"}
       - type: chiffre
         valeur: 87
         suffixe: {fr: " %", en: "%"}
-        texte: "of Americans likely unique with *ZIP code*, *sex* and *date of birth*"
+        texte: "of Americans likely unique with *ZIP code*, *sex* and *date of birth* (2000 estimate)"
         note: "L. Sweeney, 2000, based on the 1990 US census: 216 million people out of 248 million."
         voix_off: "This isn't just a hypothesis. In two thousand, the researcher Latanya Sweeney estimated, from the nineteen ninety US census, that eighty-seven percent of people in the United States were likely unique with just three pieces of information: their ZIP code, their sex and their date of birth."
         verifier:
@@ -208,8 +208,8 @@ editions:
         etapes:
           - "12 months × 2 sexes × 10 departments = 240 combinations"
           - "500 ÷ 240 ≈ 2.1 people per box on average"
-        reponse: "Risky: many boxes hold one or two people"
-        voix_off: "Here's the calculation. Twelve months, times two sexes, times ten departments: two hundred and forty combinations. Five hundred divided by two hundred and forty, about two point one people per box, on average. It's risky: many boxes hold only one or two people, easy for a colleague to recognise."
+        reponse: "Risk: some boxes may hold very few people"
+        voix_off: "Here's the calculation. Twelve months, times two sexes, times ten departments: two hundred and forty combinations. Five hundred divided by two hundred and forty, about two point one people per box, on average. That's a warning sign: some combinations may cover only one or two people, easy for a colleague to recognise."
         verifier:
           - {expression: "12 * 2 * 10", attendu: 240, libelle: "Month × sex × department combinations"}
           - {expression: "500 / 240", attendu: 2.1, libelle: "Employees per combination"}

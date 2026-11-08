@@ -12,4 +12,4 @@ drive:
   dossier: "https://drive.google.com/drive/folders/1roBsIStE3fMT9Y3AwalT747zN70NlE0q"
   sommaire: 1M4r-s3dZLbuO1WowlXNJ7FG4ETtyE_ILNecV6CaYEFk   # renvoie vers GitHub, où se fait la relecture
 pdf: "dossier partagé du projet : actu-basics/scripts-vague-1/lot-2/ (FR et EN)"
-statut: en_relecture   # 2026-11-08
+statut: relu_chatgpt   # 2026-11-08 : relecture ChatGPT intégrée, validation de JG attendue

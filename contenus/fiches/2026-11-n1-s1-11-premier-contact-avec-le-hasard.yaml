@@ -70,9 +70,9 @@ editions:
       - type: chiffre
         valeur: 65
         suffixe: {fr: " %", en: "%"}
-        texte: "de chances de l'obtenir *au moins une fois* en 10 essais"
+        texte: "de chances de l'obtenir *au moins une fois* en 10 essais indépendants"
         note: "1 − 0,9¹⁰ ≈ 0,65 : 35 % de chances de ne jamais l'obtenir en 10 essais."
-        voix_off: "En dix essais, on a environ soixante-cinq pour cent de chances de l'obtenir au moins une fois. Il reste donc trente-cinq pour cent de chances de ne jamais l'obtenir. Le hasard n'a pas de mémoire."
+        voix_off: "En dix essais indépendants, on a environ soixante-cinq pour cent de chances de l'obtenir au moins une fois. Il reste donc trente-cinq pour cent de chances de ne jamais l'obtenir. Si les essais sont indépendants, les échecs précédents ne changent pas la chance du prochain essai."
         verifier:
           - {expression: "100 * (1 - 0.9 ** 10)", attendu: 65, libelle: "Au moins une fois en 10 essais, en %"}
           - {expression: "100 * 0.9 ** 10", attendu: 35, libelle: "Jamais en 10 essais, en %"}
@@ -82,21 +82,36 @@ editions:
         texte: "Le hasard dans les données"
         voix_off: "Le hasard n'est pas seulement dans les jeux. Il est aussi dans chaque chiffre tiré d'un échantillon."
       - type: etapes
-        texte: "Lancer un dé *60 fois*"
+        texte: "Lancer un dé équilibré *60 fois*"
         etapes:
           - "On attend *10 six* en moyenne"
           - "Mais on en obtient 8, 11, 13…"
-        voix_off: "Lançons un dé soixante fois. En moyenne, on attend dix six, puisque soixante divisé par six fait dix. Mais en pratique, on en obtient huit, onze, treize : rarement dix tout pile."
+        voix_off: "Lançons un dé équilibré soixante fois. À chaque lancer, le six a une chance sur six. En moyenne, on attend dix six, puisque soixante divisé par six fait dix. Mais en pratique, on en obtient huit, onze, treize : rarement dix tout pile."
         verifier:
           - {expression: "60 / 6", attendu: 10, libelle: "Nombre moyen de six en 60 lancers"}
+      - type: courbe
+        texte: "*10 séries* de 60 lancers : combien de six ? (attendu : 10)"
+        courbe:
+          style: barres
+          points: [[0, 9], [1, 7], [2, 11], [3, 11], [4, 16], [5, 4], [6, 5], [7, 15], [8, 10], [9, 11]]
+          etiquettes: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+          valeurs: true
+          y_min: 0
+          y_max: 20
+          axe_x: "Série"
+          axe_y: "Nombre de six"
+          mis_en_avant: [8]
+        note: "Simulation : 10 séries de 60 lancers d'un dé équilibré."
+        voix_off: "Voici une simulation : dix séries de soixante lancers. Dans une série, on obtient neuf six ; dans une autre, seize ; dans une autre, quatre. Une seule série, en couleur, tombe exactement sur dix. Toutes viennent pourtant du même dé équilibré."
       - type: chiffre
         valeur: 13.7
         suffixe: {fr: " %", en: "%"}
         texte: "de chances d'obtenir *exactement 10 six*"
         note: "Loi binomiale : C(60, 10) × (1/6)¹⁰ × (5/6)⁵⁰ ≈ 13,7 %."
-        voix_off: "La probabilité d'obtenir exactement dix six est d'environ treize virgule sept pour cent seulement. Dans près de neuf cas sur dix, on obtient un autre nombre."
+        voix_off: "La probabilité d'obtenir exactement dix six est d'environ treize virgule sept pour cent seulement. Dans environ quatre-vingt-six pour cent des séries de soixante lancers, on obtient un autre nombre de six."
         verifier:
           - {expression: "100 * comb(60, 10) * (1/6)**10 * (5/6)**50", attendu: 13.7, libelle: "Exactement 10 six en 60 lancers, en %"}
+          - {expression: "100 - 100 * comb(60, 10) * (1/6)**10 * (5/6)**50", attendu: 86, libelle: "Autre nombre de six, en %"}
       - type: texte
         texte: "Deux sondages le même jour : *deux résultats différents*"
         voix_off: "C'est la même chose pour un sondage. Deux instituts interrogent chacun mille personnes le même jour, dans la même population : ils obtiennent des résultats un peu différents. Ce n'est pas forcément une erreur : c'est le hasard de l'échantillon."
@@ -109,7 +124,7 @@ editions:
         texte: "Un risque d'*un sur un million*, dans un pays de 60 millions"
         formule:
           - '60\,000\,000\times\dfrac{1}{1\,000\,000}=60'
-        voix_off: "Prenons un événement qui touche une personne sur un million par an, dans un pays fictif de soixante millions d'habitants. Soixante millions fois un millionième : on attend environ soixante cas par an. Rare pour chacun, mais presque certain pour quelqu'un."
+        voix_off: "Prenons un événement qui touche une personne sur un million par an, dans un pays fictif de soixante millions d'habitants. Soixante millions fois un millionième : on attend environ soixante cas par an. Le risque est très faible pour chacun, mais à l'échelle du pays, on s'attend à des cas chaque année."
         verifier:
           - {expression: "60e6 / 1e6", attendu: 60, libelle: "Cas attendus par an"}
       # ---------------------------------------------------------------- exercice
@@ -170,9 +185,9 @@ editions:
       - type: chiffre
         valeur: 65
         suffixe: {fr: " %", en: "%"}
-        texte: "chance of getting it *at least once* in 10 tries"
+        texte: "chance of getting it *at least once* in 10 independent tries"
         note: "1 − 0.9¹⁰ ≈ 0.65: a 35% chance of never getting it in 10 tries."
-        voix_off: "In ten tries, you have about a sixty-five percent chance of getting it at least once. That leaves a thirty-five percent chance of never getting it. Chance has no memory."
+        voix_off: "In ten independent tries, you have about a sixty-five percent chance of getting it at least once. That leaves a thirty-five percent chance of never getting it. If the tries are independent, earlier failures don't change the chance of the next one."
         verifier:
           - {expression: "100 * (1 - 0.9 ** 10)", attendu: 65, libelle: "At least once in 10 tries, %"}
           - {expression: "100 * 0.9 ** 10", attendu: 35, libelle: "Never in 10 tries, %"}
@@ -181,24 +196,39 @@ editions:
         texte: "Chance in the data"
         voix_off: "Chance isn't only in games. It's also in every number taken from a sample."
       - type: etapes
-        texte: "Throwing a die *60 times*"
+        texte: "Throwing a fair die *60 times*"
         etapes:
           - "We expect *10 sixes* on average"
           - "But we get 8, 11, 13…"
-        voix_off: "Let's throw a die sixty times. On average, we expect ten sixes, since sixty divided by six is ten. But in practice, we get eight, eleven, thirteen: rarely exactly ten."
+        voix_off: "Let's throw a fair die sixty times. On each throw, a six has a one-in-six chance. On average, we expect ten sixes, since sixty divided by six is ten. But in practice, we get eight, eleven, thirteen: rarely exactly ten."
         verifier:
           - {expression: "60 / 6", attendu: 10, libelle: "Average number of sixes in 60 throws"}
+      - type: courbe
+        texte: "*10 series* of 60 throws: how many sixes? (expected: 10)"
+        courbe:
+          style: barres
+          points: [[0, 9], [1, 7], [2, 11], [3, 11], [4, 16], [5, 4], [6, 5], [7, 15], [8, 10], [9, 11]]
+          etiquettes: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+          valeurs: true
+          y_min: 0
+          y_max: 20
+          axe_x: "Series"
+          axe_y: "Number of sixes"
+          mis_en_avant: [8]
+        note: "Simulation: 10 series of 60 throws of a fair die."
+        voix_off: "Here is a simulation: ten series of sixty throws. One series gives nine sixes; another, sixteen; another, four. Only one series, highlighted, lands exactly on ten. Yet they all come from the same fair die."
       - type: chiffre
         valeur: 13.7
         suffixe: {fr: " %", en: "%"}
         texte: "chance of getting *exactly 10 sixes*"
         note: "Binomial distribution: C(60, 10) × (1/6)¹⁰ × (5/6)⁵⁰ ≈ 13.7%."
-        voix_off: "The probability of getting exactly ten sixes is only about thirteen point seven percent. In almost nine cases out of ten, you get a different number."
+        voix_off: "The probability of getting exactly ten sixes is only about thirteen point seven percent. In about eighty-six percent of series of sixty throws, you get a different number of sixes."
         verifier:
           - {expression: "100 * comb(60, 10) * (1/6)**10 * (5/6)**50", attendu: 13.7, libelle: "Exactly 10 sixes in 60 throws, %"}
+          - {expression: "100 - 100 * comb(60, 10) * (1/6)**10 * (5/6)**50", attendu: 86, libelle: "Another number of sixes, %"}
       - type: texte
         texte: "Two polls on the same day: *two different results*"
-        voix_off: "It's the same with a poll. Two polling firms each ask a thousand people on the same day, in the same population: they get slightly different results. That's not necessarily a mistake: it's the chance of the sample."
+        voix_off: "It's the same with a poll. Two polling firms each ask a thousand people on the same day, in the same population: they get slightly different results. That's not necessarily a mistake: it's sampling variation."
       - type: titre
         numero: 3
         texte: "Rare isn't impossible"
@@ -207,7 +237,7 @@ editions:
         texte: "A *one-in-a-million* risk, in a country of 60 million"
         formule:
           - '60{,}000{,}000\times\dfrac{1}{1{,}000{,}000}=60'
-        voix_off: "Take an event that affects one person in a million each year, in a fictional country of sixty million people. Sixty million times one millionth: we expect about sixty cases a year. Rare for each person, but almost certain for someone."
+        voix_off: "Take an event that affects one person in a million each year, in a fictional country of sixty million people. Sixty million times one millionth: we expect about sixty cases a year. The risk is tiny for each person, but across the country we expect cases every year."
         verifier:
           - {expression: "60e6 / 1e6", attendu: 60, libelle: "Expected cases per year"}
       - type: exercice

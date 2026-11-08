@@ -21,11 +21,11 @@ pedagogie:
     fr:
       - "Distinguer erreur aléatoire (bruit) et erreur systématique (biais)"
       - "Distinguer fiabilité (mesurer pareil deux fois) et validité (mesurer la bonne chose)"
-      - "Expliquer pourquoi plus de données réduit le bruit mais jamais le biais"
+      - "Expliquer pourquoi plus de données réduit le bruit mais ne corrige pas le biais"
     en:
       - "Tell random error (noise) from systematic error (bias)"
       - "Tell reliability (measuring the same way twice) from validity (measuring the right thing)"
-      - "Explain why more data reduces noise but never bias"
+      - "Explain why more data reduces noise but doesn't fix bias"
   prerequis:
     fr: ["S1.07 : données manquantes, erreurs et définitions", "S1.05 : échantillon et biais de sélection"]
     en: ["S1.07: missing data, errors and definitions", "S1.05: samples and selection bias"]
@@ -49,7 +49,7 @@ editions:
   fr:
     titre: "Un million de mesures, et toujours faux ? Bruit et biais"
     legende: |
-      Une balance qui ajoute toujours deux kilos est très régulière, et toujours fausse. Peser un million de personnes avec elle n'y change rien. On apprend à distinguer le bruit du biais, la fiabilité de la validité, et pourquoi plus de données réduit l'un mais jamais l'autre, avec le cas réel de Google Flu Trends en 2013. Source : D. Lazer et coll., Science, 2014. Série « Lire un chiffre sans se faire avoir ».
+      Une balance qui ajoute toujours deux kilos est très régulière, et toujours fausse. Peser un million de personnes avec elle n'y change rien. On apprend à distinguer le bruit du biais, la fiabilité de la validité, et pourquoi plus de données réduit l'un mais ne corrige pas l'autre, avec le cas réel de Google Flu Trends en 2013. Source : D. Lazer et coll., Science, 2014. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, biais, bigdata]
     scenes:
       - type: accroche
@@ -63,7 +63,7 @@ editions:
       - type: etapes
         texte: "Deux sortes d'*erreurs*"
         etapes:
-          - "*Bruit* : tantôt trop, tantôt pas assez"
+          - "*Bruit* : erreurs au hasard, tantôt trop, tantôt pas assez"
           - "*Biais* : toujours dans le même sens"
         voix_off: "Il y a deux sortes d'erreurs. Le bruit, ou erreur aléatoire : la mesure est tantôt un peu trop haute, tantôt un peu trop basse, au hasard. Le biais, ou erreur systématique : la mesure se trompe toujours dans le même sens."
       - type: formule
@@ -88,12 +88,23 @@ editions:
       - type: etapes
         texte: "Peser *un million* de personnes"
         etapes:
-          - "Le *bruit* se compense : il diminue"
+          - "Le *bruit* tend à se compenser dans la moyenne"
           - "Le *biais* reste : +2 kg pour tout le monde"
-        voix_off: "Pesons un million de personnes. Le bruit se compense : les erreurs vers le haut et vers le bas s'annulent en moyenne. Mais le biais reste entier : la moyenne sera toujours trop élevée de deux kilos, très précisément."
+        voix_off: "Pesons un million de personnes. Si les erreurs sont aléatoires, sans direction privilégiée, celles vers le haut et celles vers le bas tendent à se compenser dans la moyenne. Mais le biais reste entier : la moyenne sera toujours trop élevée de deux kilos, très précisément."
+      - type: courbe
+        texte: "La moyenne se *stabilise*… sur *72 kg*"
+        courbe:
+          points: [[1, 75.0], [2, 73.9], [3, 73.7], [4, 73.7], [5, 73.0], [6, 72.3], [7, 72.0], [8, 72.1], [9, 72.3], [10, 72.3], [11, 72.0], [12, 72.2], [13, 72.0], [14, 71.9], [15, 71.8], [16, 71.9], [17, 72.0], [18, 71.9], [19, 71.8], [20, 71.9], [21, 71.8], [22, 71.8], [23, 71.8], [24, 71.7], [25, 71.6], [26, 71.6], [27, 71.6], [28, 71.6], [29, 71.8], [30, 71.9]]
+          y_min: 68
+          y_max: 76
+          axe_x: "Nombre de pesées"
+          axe_y: "Moyenne (kg)"
+          seuils: [{valeur: 70, label: "Vrai poids : 70 kg"}, {valeur: 72, label: "72 kg"}]
+        note: "Simulation : 30 pesées d'une personne de 70 kg, bruit aléatoire d'écart-type 2 kg, biais de +2 kg."
+        voix_off: "Voici une simulation : trente pesées de la même personne de soixante-dix kilos, sur notre balance, avec un peu de bruit en plus. Au début, la moyenne saute. Puis elle se stabilise. Mais elle se stabilise autour de soixante-douze kilos, pas de soixante-dix : le bruit a diminué, le biais est resté."
       - type: texte
-        texte: "Plus de données réduit *le bruit*, jamais *le biais*"
-        voix_off: "Retenez-le : plus de données réduit le bruit, jamais le biais. Un résultat peut être très précis, et faux."
+        texte: "Plus de données réduit *le bruit*, mais ne corrige pas *le biais*"
+        voix_off: "Retenez-le : plus de données réduit le bruit, mais ne corrige pas le biais. Un résultat peut être très précis, et faux."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -103,12 +114,12 @@ editions:
         texte: "Google Flu Trends"
         etapes:
           - "Estimer la grippe à partir des *recherches* sur Google"
-          - "Février 2013 : *plus du double* des consultations mesurées"
+          - "Février 2013 : *plus du double* de la part mesurée des consultations pour grippe"
         voix_off: "Google Flu Trends voulait estimer la grippe à partir des recherches faites sur Google. En février deux mille treize, l'outil prévoyait plus du double de la part des consultations pour syndrome grippal mesurée par les autorités sanitaires américaines."
         note: "D. Lazer et coll., « The Parable of Google Flu », Science, 2014."
       - type: texte
         texte: "Des données *énormes*, mais une mesure *indirecte*"
-        voix_off: "Les données étaient énormes. Mais les recherches ne mesurent pas la grippe : elles mesurent ce que les gens cherchent. On peut chercher « grippe » parce qu'on en entend parler, sans être malade. Beaucoup de données, une mesure indirecte : un biais que la quantité ne corrige pas."
+        voix_off: "Les données étaient énormes. Mais les recherches ne mesurent pas la grippe : elles mesurent ce que les gens cherchent. Ces recherches varient aussi avec l'actualité, les habitudes des internautes et les changements du moteur de recherche. On peut chercher « grippe » parce qu'on en entend parler, sans être malade. Beaucoup de données ne suffisent donc pas à garantir une mesure valide."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "Enquête en ligne *fictive* : *2 millions* de réponses, marge d'erreur de *0,1 point*. Pourquoi est-ce trompeur ?"
@@ -116,10 +127,10 @@ editions:
         voix_off: "À vous. Une enquête en ligne fictive reçoit deux millions de réponses. Elle annonce une marge d'erreur de zéro virgule un point. Pourquoi ce chiffre peut-il être trompeur ?"
       - type: correction
         etapes:
-          - "La marge d'erreur mesure *le bruit* d'un tirage au hasard"
+          - "La marge d'erreur classique suppose un *tirage au hasard*"
           - "Les répondants en ligne ne sont pas tirés au hasard"
         reponse: "Le biais reste entier, quelle que soit la taille"
-        voix_off: "Voici la réponse. La marge d'erreur ne mesure que le bruit d'un échantillon tiré au hasard. Or les répondants en ligne ne sont pas tirés au hasard : ils ont choisi de répondre. S'ils diffèrent de la population, le biais reste entier, quelle que soit la taille de l'enquête."
+        voix_off: "Voici la réponse. La marge d'erreur classique mesure seulement l'incertitude d'un échantillon tiré au hasard. Or les répondants en ligne ne sont pas tirés au hasard : ils ont choisi de répondre. S'ils diffèrent de la population, le biais reste entier, quelle que soit la taille de l'enquête."
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -134,7 +145,7 @@ editions:
   en:
     titre: "A million measurements, and still wrong? Noise and bias"
     legende: |
-      A scale that always adds two kilos is very consistent, and always wrong. Weighing a million people with it changes nothing. We learn to tell noise from bias and reliability from validity, and why more data reduces one but never the other, with the real case of Google Flu Trends in 2013. Source: D. Lazer et al., Science, 2014. Series "Reading numbers without being fooled".
+      A scale that always adds two kilos is very consistent, and always wrong. Weighing a million people with it changes nothing. We learn to tell noise from bias and reliability from validity, and why more data reduces one but doesn't fix the other, with the real case of Google Flu Trends in 2013. Source: D. Lazer et al., Science, 2014. Series "Reading numbers without being fooled".
     hashtags: [statistics, bias, bigdata]
     scenes:
       - type: accroche
@@ -147,7 +158,7 @@ editions:
       - type: etapes
         texte: "Two kinds of *error*"
         etapes:
-          - "*Noise*: sometimes too high, sometimes too low"
+          - "*Noise*: random errors, sometimes too high, sometimes too low"
           - "*Bias*: always in the same direction"
         voix_off: "There are two kinds of error. Noise, or random error: the measurement is sometimes a bit too high, sometimes a bit too low, at random. Bias, or systematic error: the measurement is always wrong in the same direction."
       - type: formule
@@ -171,12 +182,23 @@ editions:
       - type: etapes
         texte: "Weighing *a million* people"
         etapes:
-          - "The *noise* cancels out: it shrinks"
+          - "The *noise* tends to cancel out in the average"
           - "The *bias* stays: +2 kg for everyone"
-        voix_off: "Let's weigh a million people. The noise cancels out: errors up and down balance out on average. But the bias stays intact: the average will always be two kilos too high, very precisely."
+        voix_off: "Let's weigh a million people. If the errors are random, with no preferred direction, those up and those down tend to cancel out in the average. But the bias stays intact: the average will always be two kilos too high, very precisely."
+      - type: courbe
+        texte: "The average *settles*… on *72 kg*"
+        courbe:
+          points: [[1, 75.0], [2, 73.9], [3, 73.7], [4, 73.7], [5, 73.0], [6, 72.3], [7, 72.0], [8, 72.1], [9, 72.3], [10, 72.3], [11, 72.0], [12, 72.2], [13, 72.0], [14, 71.9], [15, 71.8], [16, 71.9], [17, 72.0], [18, 71.9], [19, 71.8], [20, 71.9], [21, 71.8], [22, 71.8], [23, 71.8], [24, 71.7], [25, 71.6], [26, 71.6], [27, 71.6], [28, 71.6], [29, 71.8], [30, 71.9]]
+          y_min: 68
+          y_max: 76
+          axe_x: "Number of weighings"
+          axe_y: "Average (kg)"
+          seuils: [{valeur: 70, label: "True weight: 70 kg"}, {valeur: 72, label: "72 kg"}]
+        note: "Simulation: 30 weighings of a 70 kg person, random noise with a standard deviation of 2 kg, bias of +2 kg."
+        voix_off: "Here is a simulation: thirty weighings of the same seventy-kilo person on our scale, with a little noise added. At first, the average jumps around. Then it settles. But it settles around seventy-two kilos, not seventy: the noise has shrunk, the bias has stayed."
       - type: texte
-        texte: "More data reduces *noise*, never *bias*"
-        voix_off: "Remember this: more data reduces noise, never bias. A result can be very precise, and wrong."
+        texte: "More data reduces *noise*, but doesn't fix *bias*"
+        voix_off: "Remember this: more data reduces noise, but doesn't fix bias. A result can be very precise, and wrong."
       - type: titre
         numero: 3
         texte: "A real case: flu and online searches"
@@ -185,22 +207,22 @@ editions:
         texte: "Google Flu Trends"
         etapes:
           - "Estimating flu from Google *searches*"
-          - "February 2013: *more than double* the measured doctor visits"
+          - "February 2013: *more than double* the measured share of flu doctor visits"
         voix_off: "Google Flu Trends set out to estimate flu from searches made on Google. In February twenty thirteen, the tool was predicting more than double the proportion of doctor visits for flu-like illness measured by the US health authorities."
         note: "D. Lazer et al., “The Parable of Google Flu”, Science, 2014."
       - type: texte
         texte: "*Huge* data, but an *indirect* measure"
-        voix_off: "The data were huge. But searches don't measure flu: they measure what people look for. You can search for “flu” because you hear about it, without being ill. Lots of data, an indirect measure: a bias that quantity doesn't fix."
+        voix_off: "The data were huge. But searches don't measure flu: they measure what people look for. These searches also shift with the news, people's habits and changes to the search engine. You can search for “flu” because you hear about it, without being ill. So lots of data is not enough to guarantee a valid measure."
       - type: exercice
         texte: "A *fictional* online survey: *2 million* answers, margin of error of *0.1 point*. Why is that misleading?"
         pause: 8
         voix_off: "Your turn. A fictional online survey gets two million answers. It announces a margin of error of zero point one point. Why can this figure be misleading?"
       - type: correction
         etapes:
-          - "The margin of error measures the *noise* of a random draw"
+          - "The usual margin of error assumes a *random draw*"
           - "Online respondents aren't drawn at random"
         reponse: "The bias stays intact, whatever the size"
-        voix_off: "Here's the answer. The margin of error only measures the noise of a randomly drawn sample. But online respondents aren't drawn at random: they chose to answer. If they differ from the population, the bias stays intact, whatever the size of the survey."
+        voix_off: "Here's the answer. The usual margin of error only measures the uncertainty of a randomly drawn sample. But online respondents aren't drawn at random: they chose to answer. If they differ from the population, the bias stays intact, whatever the size of the survey."
       - type: etapes
         texte: "Key takeaways"
         etapes:

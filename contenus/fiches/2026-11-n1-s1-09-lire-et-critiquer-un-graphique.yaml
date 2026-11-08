@@ -57,7 +57,7 @@ editions:
           axe_x: "Année"
           axe_y: "Indice (fictif)"
         note: "Indice fictif : 98 en 2021, 101 en 2024."
-        voix_off: "Voici l'indice fictif du prix d'un panier de courses. L'axe va de quatre-vingt-dix-sept à cent un. La courbe grimpe en flèche : on croirait à une flambée des prix."
+        voix_off: "Voici l'indice fictif du prix d'un panier de courses. L'axe va de quatre-vingt-dix-sept à cent un. La courbe semble grimper en flèche : on pourrait croire à une flambée des prix."
       - type: courbe
         texte: "Les mêmes chiffres, *axe à partir de 0*"
         courbe:
@@ -71,7 +71,7 @@ editions:
         texte: "Ce qui a vraiment changé"
         formule:
           - '\dfrac{101-98}{98}\approx 3{,}1\ \%'
-        voix_off: "Quelle est la hausse réelle ? Cent un moins quatre-vingt-dix-huit, divisé par quatre-vingt-dix-huit : environ trois virgule un pour cent en trois ans. Ni une flambée, ni rien du tout."
+        voix_off: "Quelle est la hausse réelle ? Cent un moins quatre-vingt-dix-huit, divisé par quatre-vingt-dix-huit : environ trois virgule un pour cent en trois ans. La hausse est réelle, mais bien moins spectaculaire que ne le suggère le premier graphique."
         verifier:
           - {expression: "(101 - 98) / 98 * 100", attendu: 3.1, libelle: "Hausse de l'indice 2021-2024, en %"}
       - type: texte
@@ -87,8 +87,8 @@ editions:
         disposition: cartes
         etapes:
           - "*Double échelle* : deux axes verticaux, deux unités"
-          - "*Surface* : doubler le côté, c'est quadrupler l'aire"
-        voix_off: "Regardons-les. La double échelle : deux courbes, chacune avec son propre axe vertical. En réglant les deux axes, on peut faire croiser les courbes où l'on veut. La surface trompeuse : on dessine une pièce deux fois plus haute pour un chiffre deux fois plus grand, mais elle est aussi deux fois plus large."
+          - "*Surface* : doubler hauteur et largeur, c'est multiplier l'aire par 4"
+        voix_off: "Regardons-les. La double échelle : deux courbes, chacune avec son propre axe vertical. En réglant les deux axes, on peut faire croiser les courbes où l'on veut. La surface trompeuse : on dessine un carré deux fois plus haut et deux fois plus large pour représenter un chiffre deux fois plus grand. Son aire est multipliée par quatre."
       - type: formule
         texte: "Deux fois plus haut *et* deux fois plus large"
         formule:
@@ -111,16 +111,16 @@ editions:
         voix_off: "Quatre vérifications, avant toute interprétation. Le titre : que mesure-t-on exactement ? L'unité : des euros, des pourcentages, un indice ? La période : pourquoi le graphique commence-t-il à cette date, et pas plus tôt ? La source : qui a produit les chiffres ?"
       # ---------------------------------------------------------------- exercice
       - type: exercice
-        texte: "Un taux de chômage *fictif* : axe de *7,0 à 7,4 %*, *deux mois* affichés, *aucune source*. Trois défauts ?"
+        texte: "Un graphique prétend montrer le *chômage* : axe de *7,0 à 7,4 %*, *deux mois*, *aucune source*. Trois défauts ?"
         pause: 8
-        voix_off: "À vous. Un graphique montre un taux de chômage fictif. L'axe va de sept à sept virgule quatre pour cent. On ne voit que deux mois. Et aucune source n'est indiquée. Quels sont les trois défauts ?"
+        voix_off: "À vous. Un graphique prétend montrer l'évolution du taux de chômage. L'axe va de sept à sept virgule quatre pour cent. On ne voit que deux mois. Et aucune source n'est indiquée. Quels sont les trois défauts ?"
       - type: correction
         etapes:
           - "Axe de 7,0 à 7,4 % : la moindre hausse paraît énorme"
-          - "Deux mois : trop court pour parler de tendance"
+          - "Deux mois : trop peu pour une tendance fiable"
           - "Aucune source : impossible de vérifier"
         reponse: "Axe tronqué, période trop courte, source absente"
-        voix_off: "Voici les trois défauts. L'axe va de sept à sept virgule quatre : la moindre hausse paraît énorme. Deux mois, c'est trop court pour parler de tendance. Et sans source, impossible de vérifier quoi que ce soit. Trois défauts : axe tronqué, période trop courte, source absente."
+        voix_off: "Voici les trois défauts. L'axe va de sept à sept virgule quatre : la moindre hausse paraît énorme. Deux mois, c'est trop peu pour dégager une tendance fiable. Et sans source, impossible de vérifier quoi que ce soit. Trois défauts : axe tronqué, période trop courte, source absente."
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -154,7 +154,7 @@ editions:
           axe_x: "Year"
           axe_y: "Index (fictional)"
         note: "Fictional index: 98 in 2021, 101 in 2024."
-        voix_off: "Here is a fictional index of the price of a shopping basket. The axis runs from ninety-seven to one hundred and one. The line shoots up: it looks like prices are exploding."
+        voix_off: "Here is a fictional index of the price of a shopping basket. The axis runs from ninety-seven to one hundred and one. The line seems to shoot up: you might think prices are exploding."
       - type: courbe
         texte: "The same numbers, *axis from 0*"
         courbe:
@@ -168,7 +168,7 @@ editions:
         texte: "What really changed"
         formule:
           - '\dfrac{101-98}{98}\approx 3.1\%'
-        voix_off: "What is the real rise? One hundred and one minus ninety-eight, divided by ninety-eight: about three point one percent over three years. Neither an explosion, nor nothing at all."
+        voix_off: "What is the real rise? One hundred and one minus ninety-eight, divided by ninety-eight: about three point one percent over three years. The rise is real, but far less dramatic than the first chart suggests."
         verifier:
           - {expression: "(101 - 98) / 98 * 100", attendu: 3.1, libelle: "Index rise 2021-2024, %"}
       - type: texte
@@ -182,9 +182,9 @@ editions:
         texte: "Look out for"
         disposition: cartes
         etapes:
-          - "*Dual scale*: two vertical axes, two units"
-          - "*Area*: double the side, quadruple the area"
-        voix_off: "Let's look at them. The dual scale: two lines, each with its own vertical axis. By adjusting the two axes, you can make the lines cross wherever you like. The misleading area: a coin drawn twice as tall for a number twice as big, but it is also twice as wide."
+          - "*Dual y-axes*: two vertical axes, often different units"
+          - "*Area*: double height and width, and the area is multiplied by 4"
+        voix_off: "Let's look at them. Dual y-axes: two lines, each with its own vertical axis. By adjusting the two axes, you can make the lines cross wherever you like. The misleading area: a square drawn twice as tall and twice as wide to show a number twice as big. Its area is multiplied by four."
       - type: formule
         texte: "Twice as tall *and* twice as wide"
         formule:
@@ -205,16 +205,16 @@ editions:
           - "*Source*: who produced the numbers?"
         voix_off: "Four checks, before any interpretation. The title: what exactly is being measured? The unit: euros, percentages, an index? The period: why does the chart start at that date, and not earlier? The source: who produced the numbers?"
       - type: exercice
-        texte: "A *fictional* unemployment rate: axis from *7.0 to 7.4%*, *two months* shown, *no source*. Three flaws?"
+        texte: "A chart claims to show *unemployment*: axis from *7.0 to 7.4%*, *two months*, *no source*. Three flaws?"
         pause: 8
-        voix_off: "Your turn. A chart shows a fictional unemployment rate. The axis runs from seven to seven point four percent. Only two months are shown. And no source is given. What are the three flaws?"
+        voix_off: "Your turn. A chart claims to show how the unemployment rate has changed. The axis runs from seven to seven point four percent. Only two months are shown. And no source is given. What are the three flaws?"
       - type: correction
         etapes:
           - "Axis from 7.0 to 7.4%: the smallest rise looks huge"
-          - "Two months: too short to talk about a trend"
+          - "Two months: too little for a reliable trend"
           - "No source: impossible to check"
         reponse: "Truncated axis, period too short, no source"
-        voix_off: "Here are the three flaws. The axis runs from seven to seven point four: the smallest rise looks huge. Two months is too short to talk about a trend. And without a source, nothing can be checked. Three flaws: a truncated axis, a period that's too short, and no source."
+        voix_off: "Here are the three flaws. The axis runs from seven to seven point four: the smallest rise looks huge. Two months is too little to establish a reliable trend. And without a source, nothing can be checked. Three flaws: a truncated axis, a period that's too short, and no source."
       - type: etapes
         texte: "Key takeaways"
         etapes:
