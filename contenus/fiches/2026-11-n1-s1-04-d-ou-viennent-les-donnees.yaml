@@ -7,8 +7,9 @@
 # https://www.insee.fr/fr/statistiques/4805248 : « au deuxième trimestre 2026, 2,7 millions de personnes
 # sont au chômage au sens du BIT en France et 3,3 millions sont inscrites à France Travail en catégorie A
 # en France hors Mayotte » (ajout proposé par la relecture ChatGPT du 2026-11-07).
-# Prochaine publication de l'Insee le 10/11/2026 (3e trimestre) : chiffre à mettre à jour avant validation.
-# Statut : brouillon. Claude structure, ChatGPT relit, JG valide.
+# Décision de JG (2026-11-08) : garder le chiffre du 2e trimestre 2026 ; celui du 3e trimestre (Insee,
+# 10/11/2026) pourra servir dans une vidéo ultérieure.
+# Statut : validé par JG (2026-11-08). Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s1-04-d-ou-viennent-les-donnees
 type_fiche: pedagogique
 famille: apprendre_les_statistiques
@@ -77,9 +78,9 @@ editions:
         texte: "Une force, une limite"
         etapes:
           - "Recensement : *complet*, mais lourd et coûteux"
-          - "Sondage : *rapide*, mais marge d'erreur et non-réponses"
-          - "Fichier : *énorme*, mais défini par des règles de gestion"
-          - "Capteurs : *en continu*, mais seulement ce qui est équipé"
+          - "Sondage : *rapide*, mais marge d'erreur"
+          - "Fichier : *énorme*, mais selon des règles de gestion"
+          - "Capteurs : *en continu*, mais pas partout"
         voix_off: "Chaque source a une force et une limite. Le recensement est complet, mais lourd et coûteux à organiser. Le sondage est rapide, mais il a une marge d'erreur, et certaines personnes ne répondent pas. Le fichier administratif est énorme et déjà disponible, mais il ne compte que ce que ses règles de gestion lui demandent de compter. Les capteurs mesurent en continu, mais seulement là où ils sont installés. Les plateformes, elles, ne voient que leurs utilisateurs."
       - type: texte
         texte: "Ce qui n'est *pas collecté* n'apparaît pas dans les données"
@@ -157,7 +158,7 @@ editions:
         texte: "One strength, one limitation"
         etapes:
           - "Census: *complete*, but heavy and costly"
-          - "Survey: *fast*, but margin of error and non-response"
+          - "Survey: *fast*, but a margin of error"
           - "Records: *huge*, but defined by administrative rules"
           - "Sensors: *continuous*, but only where installed"
         voix_off: "Each source has a strength and a limitation. A census is complete, but heavy and costly to run. A survey is fast, but it has a margin of error, and some people don't answer. Administrative records are huge and already available, but they only count what their rules ask them to count. Sensors measure continuously, but only where they're installed. Platforms, for their part, only see their own users."
