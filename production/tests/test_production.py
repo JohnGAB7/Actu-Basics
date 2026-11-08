@@ -1781,3 +1781,14 @@ def test_serie_2_et_graine_validees(tmp_path):
     extra = valider_scene("animation", {"texte": "x", "voix_off": "x.", "animation": {
         "modele": "grille", "n": 10, "personnes": 5, "graine": 0}}, "s", erreurs)
     assert not erreurs and extra["animation"]["graine"] == 0
+
+
+def test_legende_sans_periode_sans_parentheses_vides():
+    from lmec.textes import legende_complete
+    fiche = charger_fiche(EXEMPLE)
+    for langue in ("fr", "en"):
+        edition = fiche.editions[langue]
+        fiche.periode = ""
+        assert "()" not in legende_complete(fiche, edition)
+        fiche.periode = "2024"
+        assert "(2024)" in legende_complete(fiche, edition)

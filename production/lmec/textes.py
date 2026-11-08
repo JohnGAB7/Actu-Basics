@@ -124,8 +124,9 @@ def ecrire_script_voix(fiche: Fiche, edition: Edition, durees: list[float], dest
 def legende_complete(fiche: Fiche, edition: Edition) -> str:
     langue = edition.langue
     noms = ", ".join(_texte_langue(s["nom"], langue) for s in fiche.sources)
-    source = (f"Source : {noms} ({fiche.contexte('periode', langue)})" if langue == "fr"
-              else f"Source: {noms} ({fiche.contexte('periode', langue)})")
+    periode = (fiche.contexte('periode', langue) or "").strip()
+    suite = f" ({periode})" if periode else ""
+    source = (f"Source : {noms}{suite}" if langue == "fr" else f"Source: {noms}{suite}")
     morceaux = [edition.legende.strip()] + ([typographie(source, langue)] if noms else [])
     if edition.hashtags:
         morceaux.append(" ".join(edition.hashtags))
