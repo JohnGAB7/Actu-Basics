@@ -1763,3 +1763,21 @@ def test_double_echelle_surface_et_grille():
         g = next(x for x in e10.scenes if x.type == "animation")
         assert g.extra["animation"]["modele"] == "grille"
         Rendu(f10, langue, CHARTE, "video", False).dessiner(g, e10.scenes.index(g), len(e10.scenes), None)
+
+
+def test_serie_2_et_graine_validees(tmp_path):
+    """Relecture du 2026-11-08 : la seconde série partage les abscisses de la première et a des bornes
+    valides ; une graine 0 explicite n'est pas remplacée par 1."""
+    from lmec.pedagogie import valider_scene
+    base = {"texte": "x", "voix_off": "x.", "courbe": {"points": [[1, 1], [2, 2]], "y_min": 0, "y_max": 3}}
+    erreurs = []
+    valider_scene("courbe", dict(base, courbe=dict(base["courbe"], serie_2={"points": [[1, 5], [3, 6]]})), "s", erreurs)
+    assert any("mêmes abscisses" in e for e in erreurs)
+    erreurs = []
+    valider_scene("courbe", dict(base, courbe=dict(base["courbe"], serie_2={"points": [[1, 5], [2, 6]], "y_min": 9,
+                                                                             "y_max": 4})), "s", erreurs)
+    assert any("y_min doit être inférieur" in e for e in erreurs)
+    erreurs = []
+    extra = valider_scene("animation", {"texte": "x", "voix_off": "x.", "animation": {
+        "modele": "grille", "n": 10, "personnes": 5, "graine": 0}}, "s", erreurs)
+    assert not erreurs and extra["animation"]["graine"] == 0

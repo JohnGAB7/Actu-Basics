@@ -77,7 +77,7 @@ editions:
         formule:
           - '365\times 2=730\ \mathrm{combinaisons}'
           - '2\,000\div 730\approx 2{,}7'
-        voix_off: "Prenons le jour de naissance et le sexe. Trois cent soixante-cinq jours, fois deux : sept cent trente combinaisons possibles. Pour deux mille habitants, cela fait environ deux virgule sept personnes par combinaison, en moyenne. Moins de trois personnes par case en moyenne : certaines cases risquent de ne contenir qu'une ou deux personnes."
+        voix_off: "Prenons le jour de naissance et le sexe. Trois cent soixante-cinq jours, fois deux : sept cent trente combinaisons possibles. Pour deux mille habitants, cela fait environ deux virgule sept personnes par combinaison, en moyenne. Une moyenne aussi faible signale un risque, mais elle ne dit pas, à elle seule, comment les personnes se répartissent."
         verifier:
           - {expression: "365 * 2", attendu: 730, libelle: "Combinaisons jour × sexe"}
           - {expression: "2000 / 730", attendu: 2.7, libelle: "Habitants par combinaison"}
@@ -85,7 +85,7 @@ editions:
         texte: "Ajoutons *l'année* de naissance"
         formule:
           - '365\times 2\times 80=58\,400'
-        voix_off: "Ajoutons l'année de naissance, avec quatre-vingts années possibles. On passe à cinquante-huit mille quatre cents combinaisons, pour seulement deux mille habitants. Avec autant de combinaisons pour si peu d'habitants, beaucoup de personnes peuvent se retrouver dans une case très peu peuplée, souvent seules : elles deviennent identifiables."
+        voix_off: "Ajoutons l'année de naissance, avec quatre-vingts années possibles. On passe à cinquante-huit mille quatre cents combinaisons, pour seulement deux mille habitants. Cela augmente fortement le risque de combinaisons rares, parfois uniques. Mais le nombre de combinaisons ne suffit pas, à lui seul, à connaître leur répartition réelle."
         verifier:
           - {expression: "365 * 2 * 80", attendu: 58400, libelle: "Combinaisons date complète × sexe"}
       - type: chiffre
@@ -137,8 +137,8 @@ editions:
           - "12 mois × 2 sexes × 10 services"
           - "Chaque salarié tombe dans une case"
           - "*61 cases* à une seule personne, *27* vides"
-        note: "Simulation : 500 salariés répartis au hasard, uniformément, dans les 240 cases."
-        voix_off: "Pour le voir, simulons la répartition. Voici les deux cent quarante combinaisons : douze mois, fois deux sexes, fois dix services. On place les cinq cents salariés au hasard, chacun dans sa case. Résultat : soixante et une cases ne contiennent qu'une seule personne, et vingt-sept sont vides."
+        note: "Simulation illustrative, répartition uniforme : pas une estimation de la répartition réelle des salariés."
+        voix_off: "Pour visualiser le mécanisme, simulons une répartition uniforme, au hasard. Voici les deux cent quarante combinaisons : douze mois, fois deux sexes, fois dix services. On place les cinq cents salariés au hasard, chacun dans sa case. Résultat : soixante et une cases ne contiennent qu'une seule personne, et vingt-sept sont vides."
         verifier:
           - {expression: "12 * 2 * 10", attendu: 240, libelle: "Cases de la grille"}
       - type: etapes
@@ -183,7 +183,7 @@ editions:
         formule:
           - '365\times 2=730\ \mathrm{combinations}'
           - '2{,}000\div 730\approx 2.7'
-        voix_off: "Take the day of birth and sex. Three hundred and sixty-five days, times two: seven hundred and thirty possible combinations. For two thousand residents, that's about two point seven people per combination, on average. Fewer than three people per box on average: some boxes may hold only one or two people."
+        voix_off: "Take the day of birth and sex. Three hundred and sixty-five days, times two: seven hundred and thirty possible combinations. For two thousand residents, that's about two point seven people per combination, on average. Such a low average signals a risk, but on its own it doesn't tell us how people are spread out."
         verifier:
           - {expression: "365 * 2", attendu: 730, libelle: "Day × sex combinations"}
           - {expression: "2000 / 730", attendu: 2.7, libelle: "Residents per combination"}
@@ -191,7 +191,7 @@ editions:
         texte: "Now add the *year* of birth"
         formule:
           - '365\times 2\times 80=58{,}400'
-        voix_off: "Now add the year of birth, with eighty possible years. That makes fifty-eight thousand four hundred combinations, for only two thousand residents. With so many combinations for so few residents, many people can end up in a box with very few others, often alone: they become identifiable."
+        voix_off: "Now add the year of birth, with eighty possible years. That makes fifty-eight thousand four hundred combinations, for only two thousand residents. That sharply increases the risk of rare, sometimes unique, combinations. But the number of combinations alone doesn't tell us how people are really spread out."
         verifier:
           - {expression: "365 * 2 * 80", attendu: 58400, libelle: "Full date × sex combinations"}
       - type: chiffre
@@ -241,8 +241,8 @@ editions:
           - "12 months × 2 sexes × 10 departments"
           - "Each employee lands in a box"
           - "*61 boxes* with one person, *27* empty"
-        note: "Simulation: 500 staff placed at random, uniformly, in the 240 boxes."
-        voix_off: "To see it, let's simulate how they spread out. Here are the two hundred and forty combinations: twelve months, times two sexes, times ten departments. We place the five hundred employees at random, each in a box. The result: sixty-one boxes hold just one person, and twenty-seven are empty."
+        note: "Illustrative simulation, uniform spread: not an estimate of how real staff are distributed."
+        voix_off: "To picture the mechanism, let's simulate a uniform, random spread. Here are the two hundred and forty combinations: twelve months, times two sexes, times ten departments. We place the five hundred employees at random, each in a box. The result: sixty-one boxes hold just one person, and twenty-seven are empty."
         verifier:
           - {expression: "12 * 2 * 10", attendu: 240, libelle: "Boxes in the grid"}
       - type: etapes

@@ -214,7 +214,8 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
         conf["personnes"] = entier("personnes", 1, 5000)
         if a.get("colonnes") is not None:
             conf["colonnes"] = entier("colonnes", 2, 40)
-        conf["graine"] = entier("graine", 0, 10 ** 6, requis=False) or 1
+        graine = entier("graine", 0, 10 ** 6, requis=False)
+        conf["graine"] = 1 if graine is None else graine   # une graine 0 explicite est gardée
     if modele == "complement":
         v = a.get("valeur")
         if not _nombre(v) or not 0 < v < 1:
@@ -313,6 +314,13 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
                         isinstance(q, (list, tuple)) and len(q) == 2 and all(_nombre(z) for z in q)
                         for q in s2["points"])):
                 erreurs.append(f"{ctx}.courbe.serie_2 : {{points: [[x, y], …], y_min, y_max, axe_y}}")
+            elif s2 is not None:
+                pts1 = extra.get("courbe", {}).get("_points")
+                if pts1 is not None and [float(q[0]) for q in s2["points"]] != [float(x) for x, _ in pts1]:
+                    erreurs.append(f"{ctx}.courbe.serie_2.points : mêmes abscisses que la courbe principale")
+                b2 = (s2.get("y_min", 0), s2.get("y_max"))
+                if b2[1] is not None and not (_nombre(b2[0]) and _nombre(b2[1]) and b2[0] < b2[1]):
+                    erreurs.append(f"{ctx}.courbe.serie_2 : y_min doit être inférieur à y_max")
             seuils = c.get("seuils")
             if seuils is not None and not (isinstance(seuils, list) and all(
                     isinstance(x, dict) and _nombre(x.get("valeur")) for x in seuils)):

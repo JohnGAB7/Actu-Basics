@@ -92,7 +92,7 @@ editions:
           axe_y: "Vélos (milliers)"
           serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 16, y_max: 48, axe_y: "Trottinettes (milliers)"}
         note: "Locations fictives de vélos (axe de gauche) et de trottinettes (axe de droite)."
-        voix_off: "Premier piège, la double échelle : deux courbes, chacune avec son propre axe vertical. À gauche, des locations fictives de vélos ; à droite, de trottinettes. Les courbes se croisent en deux mille vingt-deux : on croirait qu'il s'est passé quelque chose cette année-là. Ce croisement ne veut rien dire : il dépend seulement des deux axes choisis."
+        voix_off: "Premier piège, la double échelle : deux courbes, chacune avec son propre axe vertical. À gauche, des locations fictives de vélos ; à droite, de trottinettes. Les courbes se croisent en deux mille vingt-deux : on croirait qu'il s'est passé quelque chose cette année-là. Ce croisement visuel ne signifie pas que les deux quantités sont égales, ni qu'elles évoluent de la même façon : il dépend des échelles choisies."
       - type: courbe
         texte: "Mêmes chiffres, *axe de droite changé*"
         courbe:
@@ -102,7 +102,7 @@ editions:
           axe_x: "Année"
           axe_y: "Vélos (milliers)"
           serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 0, y_max: 200, axe_y: "Trottinettes (milliers)"}
-        voix_off: "Ce sont les mêmes chiffres. On a seulement changé l'axe de droite : les trottinettes semblent maintenant stagner tout en bas. En réglant les deux axes, on place les courbes où l'on veut. En réalité, les vélos ont gagné quarante pour cent, et les trottinettes cent vingt pour cent."
+        voix_off: "Ce sont les mêmes chiffres. On a seulement changé l'axe de droite : les trottinettes semblent maintenant stagner tout en bas. En réglant les deux axes, on peut modifier fortement la position apparente des courbes. En réalité, les vélos ont gagné quarante pour cent, et les trottinettes cent vingt pour cent."
         verifier:
           - {expression: "(140 - 100) / 100 * 100", attendu: 40, libelle: "Hausse des vélos, en %"}
           - {expression: "(44 - 20) / 20 * 100", attendu: 120, libelle: "Hausse des trottinettes, en %"}
@@ -114,7 +114,7 @@ editions:
           - "Un chiffre : un carré de côté 1"
           - "Le double : un carré de côté 2"
           - "L'aire est multipliée par *4*"
-        voix_off: "Deuxième piège, la surface. On représente un chiffre par un carré de côté un. Pour un chiffre deux fois plus grand, on dessine un carré deux fois plus haut et deux fois plus large. Résultat : il contient quatre petits carrés, et l'œil voit quatre fois plus, alors que le chiffre n'a fait que doubler."
+        voix_off: "Deuxième piège, la surface. On représente un chiffre par un carré de côté un. Si l'on double la valeur, mais qu'on double à la fois la hauteur et la largeur du carré, il contient quatre petits carrés. C'est trompeur : quand l'aire représente la valeur, elle devrait seulement doubler, pas être multipliée par quatre."
         verifier:
           - {expression: "2 * 2", attendu: 4, libelle: "Aire d'un dessin dont les côtés doublent"}
       # ---------------------------------------------------------------- 3
@@ -209,7 +209,7 @@ editions:
           axe_y: "Bikes (thousands)"
           serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 16, y_max: 48, axe_y: "Scooters (thousands)"}
         note: "Fictional bike rentals (left axis) and scooter rentals (right axis)."
-        voix_off: "First trap, dual y-axes: two lines, each with its own vertical axis. On the left, fictional bike rentals; on the right, scooter rentals. The lines cross in twenty twenty-two: you would think something happened that year. The crossing means nothing: it depends only on the two axes chosen."
+        voix_off: "First trap, dual y-axes: two lines, each with its own vertical axis. On the left, fictional bike rentals; on the right, scooter rentals. The lines cross in twenty twenty-two: you would think something happened that year. This visual crossing doesn't mean the two quantities are equal, or that they move the same way: it depends on the scales chosen."
       - type: courbe
         texte: "Same numbers, *right axis changed*"
         courbe:
@@ -219,7 +219,7 @@ editions:
           axe_x: "Year"
           axe_y: "Bikes (thousands)"
           serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 0, y_max: 200, axe_y: "Scooters (thousands)"}
-        voix_off: "These are the same numbers. We only changed the right axis: scooters now seem to stall at the bottom. By adjusting the two axes, you can put the lines wherever you like. In fact, bikes grew by forty percent, and scooters by one hundred and twenty percent."
+        voix_off: "These are the same numbers. We only changed the right axis: scooters now seem to stall at the bottom. By adjusting the two axes, you can greatly change where the lines appear. In fact, bikes grew by forty percent, and scooters by one hundred and twenty percent."
         verifier:
           - {expression: "(140 - 100) / 100 * 100", attendu: 40, libelle: "Rise in bikes, %"}
           - {expression: "(44 - 20) / 20 * 100", attendu: 120, libelle: "Rise in scooters, %"}
@@ -231,7 +231,7 @@ editions:
           - "One number: a square of side 1"
           - "Double the number: a square of side 2"
           - "The area is multiplied by *4*"
-        voix_off: "Second trap, area. We show a number as a square of side one. For a number twice as big, we draw a square twice as tall and twice as wide. The result: it holds four small squares, and the eye sees four times more, while the number only doubled."
+        voix_off: "Second trap, area. We show a number as a square of side one. If we double the value, but double both the height and the width of the square, it holds four small squares. That's misleading: when area stands for the value, it should only double, not be multiplied by four."
         verifier:
           - {expression: "2 * 2", attendu: 4, libelle: "Area of a drawing whose sides double"}
       - type: titre
