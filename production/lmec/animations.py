@@ -13,6 +13,10 @@ Modèles :
 - calendrier  : 365 cases ; chaque personne prend un jour, la fraction de jours encore libres
                 et la probabilité « tous différents » se mettent à jour ;
 - complement  : une barre de 100 % partagée entre un événement et son contraire ;
+- surface     : un carré de côté 1, puis un carré de côté 2 ; « decoupe » montre qu'il contient
+                quatre petits carrés (doubler hauteur et largeur multiplie l'aire par 4) ;
+- grille      : n cases (combinaisons) ; « personnes » réparties au hasard (graine fixe) ;
+                « isoles » met en couleur les cases qui ne contiennent qu'une seule personne ;
 - selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
                 celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
                 des données observées, « filtre » trace la flèche « sélection par la survie ».
@@ -24,7 +28,7 @@ import random
 
 from .formatage import formater_nombre
 
-MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection")
+MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
@@ -32,6 +36,8 @@ PHASES = {
     "calendrier": ("personne", "reste"),
     "complement": ("gauche", "droite", "total"),
     "selection": ("depart", "selection", "echantillon", "filtre"),
+    "surface": ("petit", "grand", "decoupe"),
+    "grille": ("cases", "remplissage", "isoles"),
 }
 PHASES_DEFAUT = {
     "foule": ["apparition"],
@@ -40,10 +46,14 @@ PHASES_DEFAUT = {
     "calendrier": ["personne", "personne", "personne", "reste"],
     "complement": ["gauche", "droite"],
     "selection": ["depart", "selection", "echantillon", "filtre"],
+    "surface": ["petit", "grand", "decoupe"],
+    "grille": ["cases", "remplissage", "isoles"],
 }
 LIBELLES = {
-    "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents"},
-    "en": {"paires": "pairs", "paire": "pair", "jours": "days still free", "tous": "All different"},
+    "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents",
+           "aire": "aire", "cote": "côté"},
+    "en": {"paires": "pairs", "paire": "pair", "jours": "days still free", "tous": "All different",
+           "aire": "area", "cote": "side"},
 }
 # Modèle « selection » : libellés selon l'icône et la langue.
 LIBELLES_SELECTION = {
@@ -112,7 +122,9 @@ class Animations:
         else:
             durees = {"apparition": 1.8, "aller": 1.0, "retour": 1.0, "fusion": 1.0, "legende": 0.6,
                       "gauche": 1.2, "droite": 1.2, "total": 0.8,
-                      "depart": 1.6, "selection": 1.4, "echantillon": 1.4, "filtre": 1.0}
+                      "depart": 1.6, "selection": 1.4, "echantillon": 1.4, "filtre": 1.0,
+                      "petit": 1.0, "grand": 1.4, "decoupe": 1.4, "cases": 1.2, "remplissage": 2.4,
+                      "isoles": 1.2}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -567,3 +579,88 @@ class Animations:
             lbl = lib["filtre"]
             d.text((xa + 24, (ya + yb) / 2 - p_lbl.size / 2), lbl, font=p_lbl, fill=couleur)
 
+
+
+def repartition_grille(n: int, personnes: int, graine: int) -> list[int]:
+    """Effectif de chaque case quand « personnes » tombent au hasard, uniformément, dans n cases."""
+    r = random.Random(graine)
+    comptes = [0] * n
+    for _ in range(personnes):
+        comptes[r.randrange(n)] += 1
+    return comptes
+
+
+class _AnimationsAires:
+    # ------------------------------------------------------------------ surface
+    def _anim_surface(self, d, scene, plan, zone, t, ctx):
+        from .rendu import _melange
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        lib = LIBELLES[self.langue]
+        p_lbl = self.police("noir", 46 if not self.colonnes else 40)
+        p_txt = self.police("regulier", 36 if not self.colonnes else 32)
+        ecart = 70
+        cote = min((dr - g - ecart) / 3, (bas - haut - 160) / 2)
+        x1 = (g + dr) / 2 - (3 * cote + ecart) / 2
+        y_bas = (haut + bas) / 2 + cote
+        fond = self._fond.getpixel((int(g), int(y_bas)))
+        carres = (("petit", x1, cote, "1"), ("grand", x1 + cote + ecart, 2 * cote, "2"))
+        for nom, x, c_, lbl in carres:
+            p = par.get(nom)
+            if not p:
+                continue
+            k = _ease(self._avancee(p, t))
+            if k <= 0:
+                continue
+            c_k = c_ * (0.6 + 0.4 * k)
+            d.rectangle((x, y_bas - c_k, x + c_k, y_bas), fill=_melange(fond, self.c["accent"], 0.9 * k),
+                        outline=_melange(fond, self.c["texte"], k), width=4)
+            txt = f"{lib['cote']} {lbl}"
+            d.text((x + c_k / 2 - p_txt.getlength(txt) / 2, y_bas + 18), txt, font=p_txt,
+                   fill=_melange(fond, self.c["texte"], k))
+        p = par.get("decoupe")
+        if p and par.get("grand") and self._avancee(p, t) > 0:
+            k = _ease(self._avancee(p, t))
+            x, c_ = x1 + cote + ecart, 2 * cote
+            ligne = _melange(self.c["accent"], self.c["fond"], k)
+            d.line((x + cote, y_bas - c_, x + cote, y_bas), fill=ligne, width=6)
+            d.line((x, y_bas - cote, x + c_, y_bas - cote), fill=ligne, width=6)
+            for nom, xx, cc, aire in (("petit", x1, cote, "1"), ("grand", x, c_, "4")):
+                txt = f"{lib['aire']} {aire}"
+                d.text((xx + cc / 2 - p_lbl.getlength(txt) / 2, y_bas - c_ - p_lbl.size - 40), txt, font=p_lbl,
+                       fill=_melange(fond, self.c["texte"], k))
+
+    # ------------------------------------------------------------------ grille de combinaisons
+    def _anim_grille(self, d, scene, plan, zone, t, ctx):
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        n = conf["n"]
+        comptes = repartition_grille(n, conf["personnes"], conf.get("graine", 1))
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        reserve = 20   # le décompte des cases est dans la légende de phase
+        cols = conf.get("colonnes") or max(1, round(math.sqrt(n * (dr - g) / max(bas - haut - reserve, 1))))
+        rangs = math.ceil(n / cols)
+        pas = min((dr - g) / cols, (bas - haut - reserve) / rangs)
+        x0 = (g + dr) / 2 - pas * cols / 2
+        y0 = (haut + bas - reserve) / 2 - pas * rangs / 2
+        fond = self._fond.getpixel((int(g), int(y0)))
+        a_c = _ease(self._avancee(par["cases"], t)) if "cases" in par else 1.0
+        k_r = _ease(self._avancee(par["remplissage"], t)) if "remplissage" in par else 1.0
+        k_i = _ease(self._avancee(par["isoles"], t)) if "isoles" in par else 0.0
+        for i, nb in enumerate(comptes):
+            c_, l_ = i % cols, i // cols
+            x, y = x0 + c_ * pas, y0 + l_ * pas
+            boite = (x + 2, y + 2, x + pas - 2, y + pas - 2)
+            d.rectangle(boite, outline=_melange(fond, self.c["secondaire"], 0.5 * a_c), width=2)
+            if nb == 0 or i >= n * k_r:
+                continue
+            base = min(1.0, 0.25 + 0.2 * nb)
+            couleur = _melange(fond, self.c["texte"], base * (1 - 0.6 * k_i))
+            if nb == 1:
+                couleur = _melange(couleur, self.c["accent"], k_i)
+            d.rectangle((x + 4, y + 4, x + pas - 4, y + pas - 4), fill=couleur)
+
+
+Animations._anim_surface = _AnimationsAires._anim_surface
+Animations._anim_grille = _AnimationsAires._anim_grille

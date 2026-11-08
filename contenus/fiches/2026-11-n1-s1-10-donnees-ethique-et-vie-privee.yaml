@@ -125,6 +125,22 @@ editions:
         verifier:
           - {expression: "12 * 2 * 10", attendu: 240, libelle: "Combinaisons mois × sexe × service"}
           - {expression: "500 / 240", attendu: 2.1, libelle: "Salariés par combinaison"}
+      - type: animation
+        texte: "*240 cases*, *500 salariés* répartis au hasard"
+        animation:
+          modele: grille
+          n: 240
+          personnes: 500
+          colonnes: 20
+          graine: 3
+        etapes:
+          - "12 mois × 2 sexes × 10 services"
+          - "Chaque salarié tombe dans une case"
+          - "*61 cases* à une seule personne, *27* vides"
+        note: "Simulation : 500 salariés répartis au hasard, uniformément, dans les 240 cases."
+        voix_off: "Pour le voir, simulons la répartition. Voici les deux cent quarante combinaisons : douze mois, fois deux sexes, fois dix services. On place les cinq cents salariés au hasard, chacun dans sa case. Résultat : soixante et une cases ne contiennent qu'une seule personne, et vingt-sept sont vides."
+        verifier:
+          - {expression: "12 * 2 * 10", attendu: 240, libelle: "Cases de la grille"}
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -213,6 +229,22 @@ editions:
         verifier:
           - {expression: "12 * 2 * 10", attendu: 240, libelle: "Month × sex × department combinations"}
           - {expression: "500 / 240", attendu: 2.1, libelle: "Employees per combination"}
+      - type: animation
+        texte: "*240 boxes*, *500 staff* placed at random"
+        animation:
+          modele: grille
+          n: 240
+          personnes: 500
+          colonnes: 20
+          graine: 3
+        etapes:
+          - "12 months × 2 sexes × 10 departments"
+          - "Each employee lands in a box"
+          - "*61 boxes* with one person, *27* empty"
+        note: "Simulation: 500 staff placed at random, uniformly, in the 240 boxes."
+        voix_off: "To see it, let's simulate how they spread out. Here are the two hundred and forty combinations: twelve months, times two sexes, times ten departments. We place the five hundred employees at random, each in a box. The result: sixty-one boxes hold just one person, and twenty-seven are empty."
+        verifier:
+          - {expression: "12 * 2 * 10", attendu: 240, libelle: "Boxes in the grid"}
       - type: etapes
         texte: "Key takeaways"
         etapes:

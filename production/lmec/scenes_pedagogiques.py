@@ -460,6 +460,16 @@ class ScenesPedagogiques(Animations):
             xmin, xmax = pts[0][0], pts[-1][0]
         gauche = g + int(max(p_axe.getlength(fmt_y(ymax)), p_axe.getlength(fmt_y(ymin)))) + 24
         droite = dr - 20
+        # « serie_2 » : seconde courbe avec son propre axe vertical, à droite (double échelle, S1.09).
+        s2 = c.get("serie_2")
+        if s2:
+            pts2 = [(float(x), float(v)) for x, v in s2["points"]]
+            y2min = float(s2.get("y_min", 0.0))
+            y2max = float(s2.get("y_max", max(v for _, v in pts2) or 1.0))
+
+            def fmt_y2(v):
+                return formater_nombre(v, self.langue, s2.get("decimales_y"))
+            droite = dr - 20 - int(max(p_axe.getlength(fmt_y2(y2max)), p_axe.getlength(fmt_y2(y2min)))) - 24
         haut_g = haut_c + 80
         bas_g = bas - 120
         if not self.colonnes:   # graphique carré et centré : plus lisible qu'un graphique étiré
@@ -484,6 +494,10 @@ class ScenesPedagogiques(Animations):
             lbl = fmt_y(v)
             d.text((gauche - 18 - p_axe.getlength(lbl), yy - p_axe.size * 0.6), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
+            if s2:
+                lbl2 = fmt_y2(y2min + (y2max - y2min) * k / 4)
+                d.text((droite + 18, yy - p_axe.size * 0.6), lbl2, font=p_axe,
+                       fill=_melange(fond, self.c["texte"], a_axes))
         pas_x = next(p for p in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 10 ** 9)
                      if (xmax - xmin) / p <= 6)
         if style == "barres":   # étiquette de catégorie sous chaque barre, sur deux lignes au plus
@@ -520,7 +534,11 @@ class ScenesPedagogiques(Animations):
         if c.get("axe_y"):
             lbl = typographie(c["axe_y"], self.langue)
             d.text((g, haut_g - p_axe.size * 1.6 - 22), lbl, font=p_axe,
-                   fill=_melange(fond, self.c["secondaire"], a_axes))
+                   fill=_melange(fond, self.c["accent"] if s2 else self.c["secondaire"], a_axes))
+        if s2 and s2.get("axe_y"):   # titre de l'axe de droite, dans la couleur de sa courbe
+            lbl = typographie(s2["axe_y"], self.langue)
+            d.text((dr - p_axe.getlength(lbl), haut_g - p_axe.size * 1.6 - 22), lbl, font=p_axe,
+                   fill=_melange(fond, self.c["texte"], a_axes))
         # Seuils horizontaux en pointillés : « seuil » (ex. 0.9, étiqueté par sa valeur) et/ou « seuils »,
         # liste de {valeur, label} (ex. moyenne et médiane affichées ensemble). Couleurs : accent, puis texte.
         seuils = ([{"valeur": c["seuil"]}] if c.get("seuil") is not None else []) + list(c.get("seuils") or [])
@@ -566,6 +584,12 @@ class ScenesPedagogiques(Animations):
                 d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=self.c["accent"])
         elif len(trace) >= 2:
             d.line(trace, fill=self.c["accent"], width=10, joint="curve")
+        if s2:
+            def Y2(v):
+                return bas_g - (v - y2min) / ((y2max - y2min) or 1) * (bas_g - haut_g)
+            trace2 = [(X(x), Y2(v)) for x, v in pts2 if x <= x_lim + 1e-9]
+            if len(trace2) >= 2:
+                d.line(trace2, fill=self.c["texte"], width=10, joint="curve")
         # Repères : point, pointillés, étiquette. Ils apparaissent quand la courbe les atteint et, si la
         # voix est connue, sur la phrase qui les annonce (une phrase d'introduction, puis une par repère).
         reperes = c.get("reperes", [])

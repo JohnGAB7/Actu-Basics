@@ -209,6 +209,12 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             conf["icone"] = None
         else:
             conf["icone"] = icone
+    if modele == "grille":
+        conf["n"] = entier("n", 4, 400)
+        conf["personnes"] = entier("personnes", 1, 5000)
+        if a.get("colonnes") is not None:
+            conf["colonnes"] = entier("colonnes", 2, 40)
+        conf["graine"] = entier("graine", 0, 10 ** 6, requis=False) or 1
     if modele == "complement":
         v = a.get("valeur")
         if not _nombre(v) or not 0 < v < 1:
@@ -301,6 +307,12 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
             if c.get("etiquettes") is not None and not (isinstance(c["etiquettes"], list) and "_points" in extra.get(
                     "courbe", {}) and len(c["etiquettes"]) == len(extra["courbe"]["_points"])):
                 erreurs.append(f"{ctx}.courbe.etiquettes : une étiquette par barre")
+            s2 = c.get("serie_2")
+            if s2 is not None and not (isinstance(s2, dict) and isinstance(s2.get("points"), list)
+                                       and len(s2["points"]) >= 2 and all(
+                        isinstance(q, (list, tuple)) and len(q) == 2 and all(_nombre(z) for z in q)
+                        for q in s2["points"])):
+                erreurs.append(f"{ctx}.courbe.serie_2 : {{points: [[x, y], …], y_min, y_max, axe_y}}")
             seuils = c.get("seuils")
             if seuils is not None and not (isinstance(seuils, list) and all(
                     isinstance(x, dict) and _nombre(x.get("valeur")) for x in seuils)):

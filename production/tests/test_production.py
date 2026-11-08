@@ -1735,3 +1735,31 @@ def test_courbe_barres_et_histogramme():
         p.write_text(yaml.safe_dump(brute, allow_unicode=True), encoding="utf-8")
         with pytest.raises(FicheInvalide, match="étiquette par barre"):
             charger_fiche(p)
+
+
+def test_double_echelle_surface_et_grille():
+    """S1.09 : « serie_2 » trace une seconde courbe sur un axe de droite ; modèle « surface » (carrés de
+    côté 1 et 2). S1.10 : modèle « grille », répartition au hasard reproductible (graine fixe)."""
+    from lmec.animations import repartition_grille
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s1-09-lire-et-critiquer-un-graphique.yaml")
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe" and x.extra["courbe"].get("serie_2"))
+    i = ed.scenes.index(s)
+    c = s.extra["courbe"]
+    avec = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = {k: v for k, v in c.items() if k != "serie_2"}
+    sans = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert avec != sans
+    surf = next(x for x in ed.scenes if x.type == "animation")
+    assert surf.extra["animation"]["modele"] == "surface"
+    Rendu(fiche, "fr", CHARTE, "video", False).dessiner(surf, ed.scenes.index(surf), len(ed.scenes), None)
+    comptes = repartition_grille(240, 500, 3)
+    assert sum(comptes) == 500 and comptes == repartition_grille(240, 500, 3)
+    assert (comptes.count(1), comptes.count(0)) == (61, 27)   # chiffres annoncés dans S1.10
+    f10 = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s1-10-donnees-ethique-et-vie-privee.yaml")
+    for langue in ("fr", "en"):
+        e10 = f10.editions[langue]
+        g = next(x for x in e10.scenes if x.type == "animation")
+        assert g.extra["animation"]["modele"] == "grille"
+        Rendu(f10, langue, CHARTE, "video", False).dessiner(g, e10.scenes.index(g), len(e10.scenes), None)

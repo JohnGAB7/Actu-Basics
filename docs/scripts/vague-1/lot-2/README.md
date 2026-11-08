@@ -13,8 +13,8 @@ Relecture ChatGPT du 2026-11-08 (commentaires de la PR #17) intégrée dans les 
 | Épisode | Durée estimée | Fichiers | Lien brut (pour une IA) |
 |---|---|---|---|
 | S1.08 · 1 % ou 50 % ? Pourcentages et points | 4 min 28 | [lire](S1.08.md) · [PDF](S1.08.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.08.md |
-| S1.09 · Le même chiffre, catastrophe ou détail ? Lire un graphique | 2 min 47 | [lire](S1.09.md) · [PDF](S1.09.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.09.md |
-| S1.10 · Des données « anonymes » peuvent-elles vous trahir ? | 3 min 10 | [lire](S1.10.md) · [PDF](S1.10.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.10.md |
+| S1.09 · Le même chiffre, catastrophe ou détail ? Lire un graphique | 3 min 19 | [lire](S1.09.md) · [PDF](S1.09.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.09.md |
+| S1.10 · Des données « anonymes » peuvent-elles vous trahir ? | 3 min 29 | [lire](S1.10.md) · [PDF](S1.10.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.10.md |
 | S1.11 · « Une chance sur dix », ça veut dire quoi ? | 3 min 19 | [lire](S1.11.md) · [PDF](S1.11.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.11.md |
 | S1.12 · Un million de mesures, et toujours faux ? Bruit et biais | 3 min 20 | [lire](S1.12.md) · [PDF](S1.12.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S1.12.md |
 | S2.01 · Résumer 1 000 réponses sans les lire une par une | 3 min 24 | [lire](S2.01.md) · [PDF](S2.01.pdf) | https://raw.githubusercontent.com/johngab7/le-monde-en-chiffres/claude/project-thread-1jvp67/docs/scripts/vague-1/lot-2/S2.01.md |

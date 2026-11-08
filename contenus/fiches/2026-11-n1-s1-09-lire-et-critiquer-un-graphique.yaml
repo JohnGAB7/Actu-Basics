@@ -82,18 +82,39 @@ editions:
         numero: 2
         texte: "Deux autres pièges"
         voix_off: "Deux autres pièges reviennent souvent."
-      - type: etapes
-        texte: "À repérer"
-        disposition: cartes
+      - type: courbe
+        texte: "*Double échelle* : les deux courbes *se croisent*"
+        courbe:
+          points: [[2020, 100], [2021, 110], [2022, 120], [2023, 130], [2024, 140]]
+          y_min: 100
+          y_max: 140
+          axe_x: "Année"
+          axe_y: "Vélos (milliers)"
+          serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 16, y_max: 48, axe_y: "Trottinettes (milliers)"}
+        note: "Locations fictives de vélos (axe de gauche) et de trottinettes (axe de droite)."
+        voix_off: "Premier piège, la double échelle : deux courbes, chacune avec son propre axe vertical. À gauche, des locations fictives de vélos ; à droite, de trottinettes. Les courbes se croisent en deux mille vingt-deux : on croirait qu'il s'est passé quelque chose cette année-là. Ce croisement ne veut rien dire : il dépend seulement des deux axes choisis."
+      - type: courbe
+        texte: "Mêmes chiffres, *axe de droite changé*"
+        courbe:
+          points: [[2020, 100], [2021, 110], [2022, 120], [2023, 130], [2024, 140]]
+          y_min: 100
+          y_max: 140
+          axe_x: "Année"
+          axe_y: "Vélos (milliers)"
+          serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 0, y_max: 200, axe_y: "Trottinettes (milliers)"}
+        voix_off: "Ce sont les mêmes chiffres. On a seulement changé l'axe de droite : les trottinettes semblent maintenant stagner tout en bas. En réglant les deux axes, on place les courbes où l'on veut. En réalité, les vélos ont gagné quarante pour cent, et les trottinettes cent vingt pour cent."
+        verifier:
+          - {expression: "(140 - 100) / 100 * 100", attendu: 40, libelle: "Hausse des vélos, en %"}
+          - {expression: "(44 - 20) / 20 * 100", attendu: 120, libelle: "Hausse des trottinettes, en %"}
+      - type: animation
+        texte: "*Surface* : deux fois plus haut *et* deux fois plus large"
+        animation:
+          modele: surface
         etapes:
-          - "*Double échelle* : deux axes verticaux, deux unités"
-          - "*Surface* : doubler hauteur et largeur, c'est multiplier l'aire par 4"
-        voix_off: "Regardons-les. La double échelle : deux courbes, chacune avec son propre axe vertical. En réglant les deux axes, on peut faire croiser les courbes où l'on veut. La surface trompeuse : on dessine un carré deux fois plus haut et deux fois plus large pour représenter un chiffre deux fois plus grand. Son aire est multipliée par quatre."
-      - type: formule
-        texte: "Deux fois plus haut *et* deux fois plus large"
-        formule:
-          - '2\times 2=4'
-        voix_off: "Résultat : sa surface est multipliée par deux fois deux, quatre. L'œil voit quatre fois plus, alors que le chiffre n'a fait que doubler."
+          - "Un chiffre : un carré de côté 1"
+          - "Le double : un carré de côté 2"
+          - "L'aire est multipliée par *4*"
+        voix_off: "Deuxième piège, la surface. On représente un chiffre par un carré de côté un. Pour un chiffre deux fois plus grand, on dessine un carré deux fois plus haut et deux fois plus large. Résultat : il contient quatre petits carrés, et l'œil voit quatre fois plus, alors que le chiffre n'a fait que doubler."
         verifier:
           - {expression: "2 * 2", attendu: 4, libelle: "Aire d'un dessin dont les côtés doublent"}
       # ---------------------------------------------------------------- 3
@@ -178,18 +199,39 @@ editions:
         numero: 2
         texte: "Two more traps"
         voix_off: "Two more traps come up often."
-      - type: etapes
-        texte: "Look out for"
-        disposition: cartes
+      - type: courbe
+        texte: "*Dual y-axes*: the two lines *cross*"
+        courbe:
+          points: [[2020, 100], [2021, 110], [2022, 120], [2023, 130], [2024, 140]]
+          y_min: 100
+          y_max: 140
+          axe_x: "Year"
+          axe_y: "Bikes (thousands)"
+          serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 16, y_max: 48, axe_y: "Scooters (thousands)"}
+        note: "Fictional bike rentals (left axis) and scooter rentals (right axis)."
+        voix_off: "First trap, dual y-axes: two lines, each with its own vertical axis. On the left, fictional bike rentals; on the right, scooter rentals. The lines cross in twenty twenty-two: you would think something happened that year. The crossing means nothing: it depends only on the two axes chosen."
+      - type: courbe
+        texte: "Same numbers, *right axis changed*"
+        courbe:
+          points: [[2020, 100], [2021, 110], [2022, 120], [2023, 130], [2024, 140]]
+          y_min: 100
+          y_max: 140
+          axe_x: "Year"
+          axe_y: "Bikes (thousands)"
+          serie_2: {points: [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]], y_min: 0, y_max: 200, axe_y: "Scooters (thousands)"}
+        voix_off: "These are the same numbers. We only changed the right axis: scooters now seem to stall at the bottom. By adjusting the two axes, you can put the lines wherever you like. In fact, bikes grew by forty percent, and scooters by one hundred and twenty percent."
+        verifier:
+          - {expression: "(140 - 100) / 100 * 100", attendu: 40, libelle: "Rise in bikes, %"}
+          - {expression: "(44 - 20) / 20 * 100", attendu: 120, libelle: "Rise in scooters, %"}
+      - type: animation
+        texte: "*Area*: twice as tall *and* twice as wide"
+        animation:
+          modele: surface
         etapes:
-          - "*Dual y-axes*: two vertical axes, often different units"
-          - "*Area*: double height and width, and the area is multiplied by 4"
-        voix_off: "Let's look at them. Dual y-axes: two lines, each with its own vertical axis. By adjusting the two axes, you can make the lines cross wherever you like. The misleading area: a square drawn twice as tall and twice as wide to show a number twice as big. Its area is multiplied by four."
-      - type: formule
-        texte: "Twice as tall *and* twice as wide"
-        formule:
-          - '2\times 2=4'
-        voix_off: "The result: its area is multiplied by two times two, four. The eye sees four times more, while the number only doubled."
+          - "One number: a square of side 1"
+          - "Double the number: a square of side 2"
+          - "The area is multiplied by *4*"
+        voix_off: "Second trap, area. We show a number as a square of side one. For a number twice as big, we draw a square twice as tall and twice as wide. The result: it holds four small squares, and the eye sees four times more, while the number only doubled."
         verifier:
           - {expression: "2 * 2", attendu: 4, libelle: "Area of a drawing whose sides double"}
       - type: titre
