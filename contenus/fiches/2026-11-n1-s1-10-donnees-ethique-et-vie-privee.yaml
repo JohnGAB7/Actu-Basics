@@ -6,7 +6,7 @@
 # 248 million) of the population in the United States » probablement uniques d'après {code postal à
 # 5 chiffres, sexe, date de naissance}, données du recensement américain de 1990.
 # Le reste (commune fictive, fichier de salariés) est fictif. Aucune règle juridique n'est citée.
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s1-10-donnees-ethique-et-vie-privee
 type_fiche: pedagogique
@@ -32,9 +32,9 @@ pedagogie:
     en: "Town of 2,000 people and staff file are fictional; 365 days, 2 sexes, 80 possible birth years"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources:
   - nom:

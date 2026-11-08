@@ -2,7 +2,7 @@
 # Fiche de conception : contenus/conception/S1.11.yaml
 # Aucun chiffre extérieur : dé équilibré, pays fictif de 60 millions d'habitants. Probabilités recalculées
 # (loi binomiale pour les 60 lancers, complément pour « au moins une fois en 10 essais »).
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s1-11-premier-contact-avec-le-hasard
 type_fiche: pedagogique
@@ -30,9 +30,9 @@ pedagogie:
     en: "Fair die, independent throws; independent tries with a one-in-ten chance; fictional country of 60 million people"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

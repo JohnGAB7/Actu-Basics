@@ -1,7 +1,7 @@
 # Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
 id_programme: S1.11
-statut: revue_claude
+statut: valide
 fiche_production: contenus/fiches/2026-11-n1-s1-11-premier-contact-avec-le-hasard.yaml
 question_centrale:
   fr: Que veut dire « une chance sur dix », et pourquoi le hasard est-il partout dans les données ?
@@ -42,5 +42,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 8/11/2026 ; ChatGPT puis JG à faire
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
   controle_mobile: Après rendu (inspection)

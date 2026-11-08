@@ -1,7 +1,7 @@
 # Niveau 1, vague 1, lot 2 : S2.01 « Fréquences et tableaux » (EDUCATIONAL, démonstration)
 # Fiche de conception : contenus/conception/S2.01.yaml
 # Aucun chiffre extérieur : classe fictive de 25 élèves, entreprise fictive de 20 salariés (exercice du catalogue).
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-01-frequences-et-tableaux
 type_fiche: pedagogique
@@ -29,9 +29,9 @@ pedagogie:
     en: "Fictional class of 25 pupils; second fictional class of 40 pupils; fictional company of 20 employees"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

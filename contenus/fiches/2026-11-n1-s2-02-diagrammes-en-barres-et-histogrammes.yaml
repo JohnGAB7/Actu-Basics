@@ -2,7 +2,7 @@
 # Fiche de conception : contenus/conception/S2.02.yaml
 # Aucun chiffre extérieur : temps de trajet fictifs de 20 salariés, âges fictifs de 40 visiteurs (exercice).
 # Adaptation du catalogue : deux largeurs de classes (10 et 20 minutes) au lieu de trois, pour le rythme.
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes
 type_fiche: pedagogique
@@ -30,9 +30,9 @@ pedagogie:
     en: "Fictional commuting times of 20 employees, in minutes; fictional ages of 40 visitors"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

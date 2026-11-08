@@ -1,7 +1,7 @@
 # Niveau 1, vague 1, lot 2 : S2.04 « Ce que dit vraiment la moyenne » (EDUCATIONAL)
 # Fiche de conception : contenus/conception/S2.04.yaml
 # Calcul pur, nombres fictifs : cagnotte de quatre amis, notes avec coefficients, deux classes (exercice du catalogue).
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-04-ce-que-dit-vraiment-la-moyenne
 type_fiche: pedagogique
@@ -29,9 +29,9 @@ pedagogie:
     en: "Made-up amounts, marks and classes, chosen so the arithmetic is easy to follow"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

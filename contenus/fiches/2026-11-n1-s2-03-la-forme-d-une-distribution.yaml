@@ -1,7 +1,7 @@
 # Niveau 1, vague 1, lot 2 : S2.03 « La forme d'une distribution » (EDUCATIONAL)
 # Fiche de conception : contenus/conception/S2.03.yaml
 # Aucun chiffre extérieur : notes, revenus et tailles fictifs, choisis pour montrer chaque forme nettement.
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-03-la-forme-d-une-distribution
 type_fiche: pedagogique
@@ -29,9 +29,9 @@ pedagogie:
     en: "Marks of 20 pupils, incomes of 25 people and heights of 44 adults, all fictional"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 

@@ -6,7 +6,7 @@
 # Google Flu Trends (GFT) made headlines » ; « GFT was predicting more than double the proportion of doctor
 # visits for influenza-like illness (ILI) » que les CDC. Le texte complet n'a pas pu être lu : aucun autre
 # chiffre de l'article n'est cité. Balance et enquête de l'exercice : fictives.
-# Statut : brouillon, script à valider avant tout rendu (règle de JG, 2026-11-07).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s1-12-mesurer-juste
 type_fiche: pedagogique
@@ -34,9 +34,9 @@ pedagogie:
     en: "The scale and the 70 kg person are fictional; the online survey in the exercise is fictional"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources:
   - nom:

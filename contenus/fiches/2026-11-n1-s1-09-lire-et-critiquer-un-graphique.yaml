@@ -27,9 +27,9 @@ pedagogie:
     en: "Price index and unemployment rate are fictional, chosen for the example"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
 
 sources: []
 
