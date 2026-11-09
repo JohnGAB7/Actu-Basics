@@ -3,7 +3,7 @@
 # Calcul pur, nombres fictifs : temps d'attente de deux lignes de bus de même moyenne (5 min) ; exercice
 # du catalogue (2, 4, 4, 6, division par n puis par n − 1). Le débat n / n − 1 est seulement annoncé :
 # il est expliqué en S7.01.
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-08-variance-et-ecart-type
 type_fiche: pedagogique
@@ -31,7 +31,9 @@ pedagogie:
     en: "Made-up waiting times; we first divide by n (variance of the observed data)"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

@@ -3,7 +3,7 @@
 # Calcul pur, nombres fictifs : 100 000 conducteurs imaginaires (98 000 sobres, 2 000 ayant bu), 500
 # accidents. Les « 80 % » de l'accroche sont fabriqués par cet exemple, ce n'est pas une statistique
 # routière réelle. Exercice : fumeurs et toux, fictif.
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s3-02-tableaux-croises-et-pourcentages-conditionnels
 type_fiche: pedagogique
@@ -31,7 +31,9 @@ pedagogie:
     en: "An imaginary population of 100,000 drivers; numbers chosen for the example, not real statistics"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

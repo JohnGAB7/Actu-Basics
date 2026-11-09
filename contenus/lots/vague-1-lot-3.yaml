@@ -9,4 +9,4 @@ moteur: "Nouveau graphique « boites » (boîtes à moustaches, atypiques compri
 exemples_remplaces: "Exemples réels non sourcés du catalogue remplacés par des exemples fictifs annoncés comme tels : D9/D1 (S2.06), Brest et Strasbourg (S2.07), PIB et espérance de vie (S3.04)"
 a_confirmer: "S3.03 : totaux de Charig et coll. confirmés par ChatGPT sur l'article (relecture du 2026-11-09) ; étude présentée comme observationnelle"
 pdf: "dossier partagé du projet : actu-basics/scripts-vague-1/lot-3/ (FR et EN)"
-statut: en_relecture   # 2026-11-09
+statut: valide   # 2026-11-09, carte de décision de JG ; vidéos rendues en local

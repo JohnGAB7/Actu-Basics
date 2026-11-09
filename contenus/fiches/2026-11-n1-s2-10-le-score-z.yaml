@@ -2,7 +2,7 @@
 # Fiche de conception : contenus/conception/S2.10.yaml
 # Calcul pur, nombres fictifs : deux contrôles de classe (exemple d'ouverture), puis l'exercice du catalogue
 # (15 en maths, moyenne 12, écart-type 2 ; 14 en philosophie, moyenne 10, écart-type 3).
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-10-le-score-z
 type_fiche: pedagogique
@@ -30,7 +30,9 @@ pedagogie:
     en: "Made-up marks, means and standard deviations"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

@@ -3,7 +3,7 @@
 # Calcul pur, nombres fictifs : onze tailles dont une saisie « 17 » au lieu de 1,70 ; dix revenus dont un
 # de 10 millions d'euros (exemples du catalogue). Règle des 1,5 × écart interquartile (J. W. Tukey) ;
 # quartiles par la méthode des demi-séries.
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-09-valeurs-atypiques-erreur-ou-information
 type_fiche: pedagogique
@@ -31,7 +31,9 @@ pedagogie:
     en: "Made-up files; quartiles by the half-series method"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

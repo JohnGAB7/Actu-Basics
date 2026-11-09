@@ -3,7 +3,7 @@
 # Calcul pur, nombres fictifs : retards de deux lignes de train sur dix jours (même moyenne, 5 min), puis
 # boîtes de quatre jours de la semaine pour l'exercice. Quartiles par la méthode des demi-séries ;
 # moustaches jusqu'à la plus grande valeur non atypique (règle des 1,5 × écart interquartile, vue en S2.09).
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s3-01-comparer-des-groupes
 type_fiche: pedagogique
@@ -31,7 +31,9 @@ pedagogie:
     en: "Made-up delays; quartiles by the half-series method"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

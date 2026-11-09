@@ -6,7 +6,7 @@
 # forme générale (forte hausse puis plafonnement) est celle que montrent les données réelles, à sourcer
 # si l'on veut l'affirmer. Échelle logarithmique en intuition : l'axe indique la puissance de 10.
 # Exercice : heures de révision et notes, fictif.
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s3-04-le-nuage-de-points
 type_fiche: pedagogique
@@ -34,7 +34,9 @@ pedagogie:
     en: "Imaginary countries and fictional pupils; no real data"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

@@ -9,7 +9,7 @@
 # l'article. Étude d'observation (patients traités successivement, sans tirage au sort), présentée comme telle.
 # « Succès » au sens de l'article.
 # Exercice : deux hôpitaux fictifs.
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s3-03-le-paradoxe-de-simpson
 type_fiche: pedagogique
@@ -37,7 +37,9 @@ pedagogie:
     en: "Data from the kidney stone study (1986); the hospitals in the exercise are fictional"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources:
   - nom:

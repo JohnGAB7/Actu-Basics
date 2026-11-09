@@ -4,7 +4,7 @@
 # océanique et climat continental), choisies pour avoir la même moyenne annuelle, 12 °C. Le catalogue
 # proposait Brest et Strasbourg « chiffres à vérifier » : remplacés par des villes fictives, pour ne
 # citer aucun chiffre météorologique non sourcé. Quartiles par la méthode des demi-séries (12 valeurs).
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-07-mesurer-la-dispersion-simplement
 type_fiche: pedagogique
@@ -32,7 +32,9 @@ pedagogie:
     en: "Two imaginary towns, made-up but plausible monthly temperatures; quartiles by the half-series method"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

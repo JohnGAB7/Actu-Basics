@@ -3,7 +3,7 @@
 # Calcul pur, nombres fictifs : onze temps de trajet, revenus d'un pays imaginaire pour D9/D1.
 # Quartiles par la méthode des demi-séries ; sur cet exemple, la définition de l'Insee (plus petite valeur
 # laissant au moins 25 % des observations en dessous) donne les mêmes valeurs (rangs 3 et 9 sur 11).
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s2-06-quantiles-quartiles-et-boite-a-moustaches
 type_fiche: pedagogique
@@ -31,7 +31,9 @@ pedagogie:
     en: "Made-up commuting times and incomes; quartiles found with the half-series method (software may give slightly different values)"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources: []
 

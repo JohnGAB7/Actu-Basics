@@ -1,7 +1,7 @@
 # Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Chiffres fictifs.
 id_programme: S3.02
-statut: revue_chatgpt
+statut: valide
 fiche_production: contenus/fiches/2026-11-n1-s3-02-tableaux-croises-et-pourcentages-conditionnels.yaml
 question_centrale:
   fr: '« 80 % des accidents impliquent un conducteur qui n''a pas bu » : faut-il alors boire avant de conduire ?'
@@ -42,5 +42,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validation JG à faire
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
   controle_mobile: Après rendu (inspection)

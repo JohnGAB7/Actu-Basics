@@ -4,7 +4,7 @@
 # Quartet d'Anscombe : données publiées par F. J. Anscombe, « Graphs in Statistical Analysis »,
 # The American Statistician 27(1), 1973, p. 17-21 (doi 10.1080/00031305.1973.10478966) ; r recalculé
 # pour chaque série par une expression « verifier ». Parabole fictive (r = 0). Exercice : cinq nuages décrits.
-# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
 # Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-n1-s3-05-la-correlation
 type_fiche: pedagogique
@@ -32,7 +32,9 @@ pedagogie:
     en: "Made-up four points and parabola; Anscombe's quartet published in 1973"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
 
 sources:
   - nom:
