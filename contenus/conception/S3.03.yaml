@@ -1,7 +1,7 @@
 # Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Chiffres de l'étude repris du catalogue du programme : à confirmer sur l'article lors de la relecture.
 id_programme: S3.03
-statut: revue_claude
+statut: revue_chatgpt
 fiche_production: contenus/fiches/2026-11-n1-s3-03-le-paradoxe-de-simpson.yaml
 question_centrale:
   fr: Comment un traitement peut-il être meilleur dans chaque groupe mais pire au total ?
@@ -41,5 +41,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validation JG à faire
   controle_mobile: Après rendu (inspection)

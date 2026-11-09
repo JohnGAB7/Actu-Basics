@@ -71,7 +71,7 @@ editions:
           - {expression: "(1 - 5) + (3 - 5) + (7 - 5) + (9 - 5)", attendu: 0, libelle: "Somme des écarts, ligne 2"}
       - type: texte
         texte: "Les écarts *s'annulent* : leur somme ne mesure rien"
-        voix_off: "Les écarts positifs et négatifs s'annulent. Leur somme vaut zéro pour n'importe quelle série : elle ne peut donc pas mesurer la dispersion. Il faut se débarrasser des signes."
+        voix_off: "Les écarts positifs et négatifs s'annulent. La somme des écarts à la moyenne vaut toujours zéro : elle ne peut donc pas mesurer la dispersion. Il faut se débarrasser des signes."
       # ---------------------------------------------------------------- 2
       - type: titre
         numero: 2
@@ -101,7 +101,7 @@ editions:
         formule:
           - '\sigma=\sqrt{10}\approx 3{,}16\ \text{min}'
           - '\text{ligne 1 :}\ \sigma=\sqrt{0{,}5}\approx 0{,}71\ \text{min}'
-        voix_off: "La variance s'exprime en minutes au carré, ce qui ne parle à personne. On prend donc sa racine carrée : c'est l'écart-type. Pour la ligne deux, racine de dix, environ trois virgule un six minutes. Pour la ligne un, dont la variance vaut zéro virgule cinq, environ zéro virgule sept un minute."
+        voix_off: "La variance s'exprime en minutes au carré, une unité peu intuitive à interpréter. On prend donc sa racine carrée : c'est l'écart-type. Pour la ligne deux, racine de dix, environ trois virgule un six minutes. Pour la ligne un, dont la variance vaut zéro virgule cinq, environ zéro virgule sept un minute."
         verifier:
           - {expression: "sqrt(10)", attendu: 3.16, libelle: "Écart-type, ligne 2"}
           - {expression: "((4 - 5)**2 + (5 - 5)**2 + (5 - 5)**2 + (6 - 5)**2) / 4", attendu: 0.5, libelle: "Variance, ligne 1"}
@@ -111,7 +111,7 @@ editions:
         voix_off: "L'écart-type se lit dans l'unité des données. Sur la ligne deux, l'attente s'écarte typiquement d'environ trois minutes de la moyenne ; sur la ligne un, de moins d'une minute. Ce n'est pas exactement l'écart moyen, mais c'en est l'ordre de grandeur."
       - type: texte
         texte: "Diviser par *n*, ou par *n − 1* ?"
-        voix_off: "Vous verrez parfois la somme des carrés divisée par n moins un au lieu de n. On le fait quand on veut estimer la dispersion d'une population à partir d'un échantillon. Nous verrons pourquoi dans une prochaine leçon."
+        voix_off: "Vous verrez parfois la somme des carrés divisée par n moins un au lieu de n. Pour estimer la variance d'une population à partir d'un échantillon, on utilise souvent n moins un. Nous verrons pourquoi dans une prochaine leçon."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "Écart-type de *2, 4, 4, 6* : en divisant par *n*, puis par *n − 1* ?"
@@ -175,7 +175,7 @@ editions:
           - {expression: "(1 - 5) + (3 - 5) + (7 - 5) + (9 - 5)", attendu: 0, libelle: "Sum of deviations, line 2"}
       - type: texte
         texte: "The deviations *cancel out*: their sum measures nothing"
-        voix_off: "Positive and negative deviations cancel out. Their sum is zero for any data set: so it cannot measure spread. We need to get rid of the signs."
+        voix_off: "Positive and negative deviations cancel out. The deviations from the mean always add up to zero: so their sum cannot measure spread. We need to get rid of the signs."
       - type: titre
         numero: 2
         texte: "The variance"
@@ -203,7 +203,7 @@ editions:
         formule:
           - '\sigma=\sqrt{10}\approx 3.16\ \text{min}'
           - '\text{line 1:}\ \sigma=\sqrt{0.5}\approx 0.71\ \text{min}'
-        voix_off: "The variance is in minutes squared, which means nothing to anyone. So we take its square root: that is the standard deviation. For line two, the square root of ten, about three point one six minutes. For line one, whose variance is zero point five, about zero point seven one minutes."
+        voix_off: "The variance is in minutes squared, a unit that is hard to interpret directly. So we take its square root: that is the standard deviation. For line two, the square root of ten, about three point one six minutes. For line one, whose variance is zero point five, about zero point seven one minutes."
         verifier:
           - {expression: "sqrt(10)", attendu: 3.16, libelle: "Standard deviation, line 2"}
           - {expression: "((4 - 5)**2 + (5 - 5)**2 + (5 - 5)**2 + (6 - 5)**2) / 4", attendu: 0.5, libelle: "Variance, line 1"}
@@ -213,7 +213,7 @@ editions:
         voix_off: "The standard deviation is read in the units of the data. On line two, a wait typically differs from the mean by about three minutes; on line one, by less than a minute. It isn't exactly the average deviation, but it gives its order of magnitude."
       - type: texte
         texte: "Divide by *n*, or by *n − 1*?"
-        voix_off: "You will sometimes see the sum of squares divided by n minus one instead of n. We do that when estimating the spread of a population from a sample. We'll see why in a later lesson."
+        voix_off: "You will sometimes see the sum of squares divided by n minus one instead of n. To estimate the variance of a population from a sample, n minus one is often used. We'll see why in a later lesson."
       - type: exercice
         texte: "Standard deviation of *2, 4, 4, 6*: dividing by *n*, then by *n − 1*?"
         pause: 9

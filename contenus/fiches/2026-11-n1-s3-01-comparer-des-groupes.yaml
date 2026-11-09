@@ -89,7 +89,7 @@ editions:
         voix_off: "Voici les points à regarder. D'abord le centre : les médianes sont-elles au même niveau ? Ensuite la dispersion : les boîtes et les moustaches ont-elles la même hauteur ? Enfin les extrêmes : un groupe a-t-il des valeurs atypiques ?"
       - type: texte
         texte: "Deux moyennes proches *ne prouvent pas* que deux groupes se ressemblent"
-        voix_off: "Retenez le piège : deux moyennes très proches ne prouvent pas que deux groupes se ressemblent. Et une petite différence de moyennes, sur peu de jours, peut n'être qu'un hasard."
+        voix_off: "Retenez le piège : deux moyennes très proches ne prouvent pas que deux groupes se ressemblent. Et une petite différence de moyennes, sur peu de jours, peut aussi refléter la simple variabilité des observations."
       # ---------------------------------------------------------------- exercice
       - type: courbe
         texte: "Retards selon *le jour de la semaine*"
@@ -183,7 +183,7 @@ editions:
         voix_off: "Here is what to look at. First the centre: are the medians at the same level? Then the spread: are the boxes and whiskers the same height? Finally the extremes: does one group have outliers?"
       - type: texte
         texte: "Two close means *don't prove* two groups are alike"
-        voix_off: "Remember the trap: two very close means don't prove that two groups are alike. And a small difference in means, over a few days, may be nothing more than chance."
+        voix_off: "Remember the trap: two very close means don't prove that two groups are alike. And a small difference in means, over a few days, may simply reflect the natural variability of the observations."
       - type: courbe
         texte: "Delays by *day of the week*"
         courbe:

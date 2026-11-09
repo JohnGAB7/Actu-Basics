@@ -62,15 +62,18 @@ editions:
         verifier:
           - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v < 18)", attendu: 5, libelle: "Valeurs sous 18, puis au-dessus (1)"}
           - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v > 18)", attendu: 5, libelle: "Valeurs sous 18, puis au-dessus (2)"}
-          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v < 10) - sum(1 for v in [5, 8, 10, 12, 15] if v > 10)", attendu: 0, libelle: "Valeurs sous 10 dans la moitié basse"}
-          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v < 25) - sum(1 for v in [20, 22, 25, 30, 45] if v > 25)", attendu: 0, libelle: "Valeurs au-dessus de 25 dans la moitié haute"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v < 10)", attendu: 2, libelle: "Moitié basse (5, 8, 10, 12, 15) : valeurs sous 10, Q1 est la 3e"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v > 10)", attendu: 2, libelle: "Moitié basse : valeurs au-dessus de 10"}
+          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v < 25)", attendu: 2, libelle: "Moitié haute (20, 22, 25, 30, 45) : valeurs sous 25, Q3 est la 3e"}
+          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v > 25)", attendu: 2, libelle: "Moitié haute : valeurs au-dessus de 25"}
+          - {expression: "100 * sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v <= 10) / 11", attendu: 27, libelle: "Part des trajets de 10 min ou moins, en % (environ un quart)"}
       - type: etapes
         texte: "Quatre tranches *d'un quart* chacune"
         etapes:
-          - "Un quart des trajets durent *10 min ou moins*"
+          - "Environ un quart des trajets : *10 min ou moins*"
           - "La moitié du milieu : *entre 10 et 25 min*"
           - "Écart interquartile : 25 − 10 = *15 min*"
-        voix_off: "Les quartiles découpent la série en quatre tranches d'environ un quart chacune. Un quart des trajets durent dix minutes ou moins. La moitié du milieu dure entre dix et vingt-cinq minutes. La largeur de cette moitié, vingt-cinq moins dix, s'appelle l'écart interquartile : quinze minutes."
+        voix_off: "Les quartiles découpent la série en quatre tranches d'environ un quart chacune. Environ un quart des trajets durent dix minutes ou moins : ici, trois sur onze. La moitié du milieu dure entre dix et vingt-cinq minutes. La largeur de cette moitié, vingt-cinq moins dix, s'appelle l'écart interquartile : quinze minutes."
         verifier:
           - {expression: "25 - 10", attendu: 15, libelle: "Écart interquartile"}
       # ---------------------------------------------------------------- 2
@@ -133,7 +136,7 @@ editions:
         texte: "À retenir"
         etapes:
           - "Quartiles : la série rangée *coupée en quatre*"
-          - "La boîte : *la moitié du milieu*, médiane au centre"
+          - "La boîte : *la moitié centrale*, médiane à l'intérieur"
           - "D9 est *une frontière*, pas un groupe"
         voix_off: "À retenir. Les quartiles coupent la série rangée en quatre. La boîte à moustaches montre la moitié du milieu, avec la médiane. Et un décile est une frontière, pas un groupe."
       - type: fin
@@ -165,15 +168,18 @@ editions:
         verifier:
           - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v < 18)", attendu: 5, libelle: "Values below 18, then above (1)"}
           - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v > 18)", attendu: 5, libelle: "Values below 18, then above (2)"}
-          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v < 10) - sum(1 for v in [5, 8, 10, 12, 15] if v > 10)", attendu: 0, libelle: "Values below 10 in the lower half"}
-          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v < 25) - sum(1 for v in [20, 22, 25, 30, 45] if v > 25)", attendu: 0, libelle: "Values above 25 in the upper half"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v < 10)", attendu: 2, libelle: "Lower half (5, 8, 10, 12, 15): values below 10, Q1 is the 3rd"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v > 10)", attendu: 2, libelle: "Lower half: values above 10"}
+          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v < 25)", attendu: 2, libelle: "Upper half (20, 22, 25, 30, 45): values below 25, Q3 is the 3rd"}
+          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v > 25)", attendu: 2, libelle: "Upper half: values above 25"}
+          - {expression: "100 * sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v <= 10) / 11", attendu: 27, libelle: "Share of journeys of 10 min or less, in % (about a quarter)"}
       - type: etapes
         texte: "Four slices of *a quarter* each"
         etapes:
-          - "A quarter of journeys take *10 min or less*"
+          - "About a quarter of journeys: *10 min or less*"
           - "The middle half: *between 10 and 25 min*"
           - "Interquartile range: 25 − 10 = *15 min*"
-        voix_off: "The quartiles cut the data into four slices of roughly a quarter each. A quarter of the journeys take ten minutes or less. The middle half takes between ten and twenty-five minutes. The width of that middle half, twenty-five minus ten, is called the interquartile range: fifteen minutes."
+        voix_off: "The quartiles cut the data into four slices of roughly a quarter each. About a quarter of the journeys take ten minutes or less: here, three out of eleven. The middle half takes between ten and twenty-five minutes. The width of that middle half, twenty-five minus ten, is called the interquartile range: fifteen minutes."
         verifier:
           - {expression: "25 - 10", attendu: 15, libelle: "Interquartile range"}
       - type: titre

@@ -61,9 +61,9 @@ editions:
         etapes:
           - "r = *1* : points alignés sur une droite *qui monte*"
           - "r = *−1* : alignés sur une droite *qui descend*"
-          - "r = *0* : *aucune tendance en ligne droite*"
+          - "r = *0* : *pas d'association linéaire* dans ces données"
           - "r = *0,8* : tendance nette, points *dispersés autour*"
-        voix_off: "Il est toujours compris entre moins un et un. Un r de un : tous les points sont exactement sur une droite qui monte. Un r de moins un : ils sont exactement sur une droite qui descend. Un r de zéro : aucune tendance en ligne droite. Et zéro virgule huit : une tendance nette qui monte, avec des points dispersés autour de la droite."
+        voix_off: "Il est toujours compris entre moins un et un. Un r de un : tous les points sont exactement sur une droite qui monte. Un r de moins un : ils sont exactement sur une droite qui descend. Un r de zéro : pas d'association linéaire dans ces données. Et zéro virgule huit : une tendance nette qui monte, avec des points dispersés autour de la droite."
       # ---------------------------------------------------------------- 2
       - type: titre
         numero: 2
@@ -142,7 +142,7 @@ editions:
           axe_x: "x"
           axe_y: "y"
         note: "Quartet d'Anscombe, The American Statistician, 1973. r recalculé."
-        voix_off: "Deuxième série : les points dessinent une courbe parfaite, qui monte puis redescend. Ce n'est pas du tout une droite. Pourtant, r vaut encore environ zéro virgule quatre-vingt-deux."
+        voix_off: "Deuxième série : les points suivent une courbe très régulière, qui monte puis redescend. Ce n'est pas du tout une droite. Pourtant, r vaut encore environ zéro virgule quatre-vingt-deux."
         verifier:
           - {expression: "(11*(10*9.14+8*8.14+13*8.74+9*8.77+11*9.26+14*8.1+6*6.13+4*3.1+12*9.13+7*7.26+5*4.74) - (10+8+13+9+11+14+6+4+12+7+5)*(9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(9.14**2+8.14**2+8.74**2+8.77**2+9.26**2+8.1**2+6.13**2+3.1**2+9.13**2+7.26**2+4.74**2) - (9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)**2))", attendu: 0.82, libelle: "r de la série 2"}
       - type: courbe
@@ -181,10 +181,10 @@ editions:
         texte: "Un même r, *quatre histoires*"
         etapes:
           - "Une droite *avec du bruit*"
-          - "Une *courbe* parfaite"
+          - "Une *courbe* régulière"
           - "Une droite et *un atypique*"
           - "*Un seul point* qui fait tout"
-        voix_off: "Quatre nuages, une même corrélation, et quatre histoires différentes. Une droite avec du bruit. Une courbe parfaite. Une droite et un atypique. Un seul point qui fait tout. La leçon d'Anscombe : avant de lire r, il faut toujours regarder le nuage."
+        voix_off: "Quatre nuages, une même corrélation, et quatre histoires différentes. Une droite avec du bruit. Une courbe régulière. Une droite et un atypique. Un seul point qui fait tout. La leçon d'Anscombe : avant de lire r, il faut toujours regarder le nuage."
       # ---------------------------------------------------------------- 4
       - type: titre
         numero: 4
@@ -213,15 +213,81 @@ editions:
           - "La pente dit *de combien* y change"
         voix_off: "Second piège : lire r comme une pente. Si y vaut x, ou si y vaut dix fois x, les points sont parfaitement alignés et r vaut un dans les deux cas. r dit seulement à quel point les points sont alignés. C'est la pente de la droite, et non r, qui dit de combien y change quand x augmente."
       # ---------------------------------------------------------------- exercice
-      - type: etapes
-        texte: "Cinq nuages"
-        etapes:
-          - "A : points *serrés* sur une droite *qui monte*"
-          - "B : tendance *qui monte*, points *très dispersés*"
-          - "C : points en forme de *U*"
-          - "D : points *serrés* sur une droite *qui descend*"
-          - "E : tendance *qui descend*, points *dispersés*"
-        voix_off: "Voici cinq nuages. A : des points serrés sur une droite qui monte. B : une tendance qui monte, mais des points très dispersés. C : des points en forme de U. D : des points serrés sur une droite qui descend. E : une tendance qui descend, avec des points dispersés."
+      - type: courbe
+        texte: "Nuage *A*"
+        courbe:
+          style: points
+          points: [[1, 2], [2, 4], [3, 6], [4, 8], [5, 6], [6, 8], [7, 8], [8, 11], [9, 12], [10, 16], [11, 15], [12, 14]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Points fictifs. r recalculé pour l'exercice."
+        voix_off: "Voici cinq nuages, à associer chacun à une valeur de r. Le nuage A : regardez dans quel sens vont les points, et à quel point ils sont alignés."
+        verifier:
+          - {expression: "(12*(1*2+2*4+3*6+4*8+5*6+6*8+7*8+8*11+9*12+10*16+11*15+12*14) - (1+2+3+4+5+6+7+8+9+10+11+12)*(2+4+6+8+6+8+8+11+12+16+15+14)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(2**2+4**2+6**2+8**2+6**2+8**2+8**2+11**2+12**2+16**2+15**2+14**2) - (2+4+6+8+6+8+8+11+12+16+15+14)**2))", attendu: 0.95, libelle: "r du nuage A"}
+      - type: courbe
+        texte: "Nuage *B*"
+        courbe:
+          style: points
+          points: [[1, 3], [2, 12], [3, 5], [4, 5], [5, 2], [6, 12], [7, 20], [8, 9], [9, 20], [10, 13], [11, 6], [12, 16]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Points fictifs. r recalculé pour l'exercice."
+        voix_off: "Le nuage B : même question, quel sens et quel alignement ?"
+        verifier:
+          - {expression: "(12*(1*3+2*12+3*5+4*5+5*2+6*12+7*20+8*9+9*20+10*13+11*6+12*16) - (1+2+3+4+5+6+7+8+9+10+11+12)*(3+12+5+5+2+12+20+9+20+13+6+16)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(3**2+12**2+5**2+5**2+2**2+12**2+20**2+9**2+20**2+13**2+6**2+16**2) - (3+12+5+5+2+12+20+9+20+13+6+16)**2))", attendu: 0.5, libelle: "r du nuage B"}
+      - type: courbe
+        texte: "Nuage *C*"
+        courbe:
+          style: points
+          points: [[1, 15], [2, 11], [3, 6], [4, 4], [5, 1], [6, 1], [7, 1], [8, 1], [9, 4], [10, 6], [11, 11], [12, 15]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Points fictifs. r recalculé pour l'exercice."
+        voix_off: "Le nuage C : regardez bien sa forme."
+        verifier:
+          - {expression: "(12*(1*15+2*11+3*6+4*4+5*1+6*1+7*1+8*1+9*4+10*6+11*11+12*15) - (1+2+3+4+5+6+7+8+9+10+11+12)*(15+11+6+4+1+1+1+1+4+6+11+15)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(15**2+11**2+6**2+4**2+1**2+1**2+1**2+1**2+4**2+6**2+11**2+15**2) - (15+11+6+4+1+1+1+1+4+6+11+15)**2))", attendu: 0, tolerance: 0.001, libelle: "r du nuage C"}
+      - type: courbe
+        texte: "Nuage *D*"
+        courbe:
+          style: points
+          points: [[1, 18], [2, 17], [3, 9], [4, 13], [5, 13], [6, 7], [7, 9], [8, 7], [9, 9], [10, 5], [11, 4], [12, 3]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Points fictifs. r recalculé pour l'exercice."
+        voix_off: "Le nuage D : dans quel sens va-t-il, et à quel point est-il serré ?"
+        verifier:
+          - {expression: "(12*(1*18+2*17+3*9+4*13+5*13+6*7+7*9+8*7+9*9+10*5+11*4+12*3) - (1+2+3+4+5+6+7+8+9+10+11+12)*(18+17+9+13+13+7+9+7+9+5+4+3)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(18**2+17**2+9**2+13**2+13**2+7**2+9**2+7**2+9**2+5**2+4**2+3**2) - (18+17+9+13+13+7+9+7+9+5+4+3)**2))", attendu: -0.9, libelle: "r du nuage D"}
+      - type: courbe
+        texte: "Nuage *E*"
+        courbe:
+          style: points
+          points: [[1, 11], [2, 17], [3, 8], [4, 10], [5, 6], [6, 14], [7, 8], [8, 20], [9, 0], [10, 15], [11, 0], [12, 3]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Points fictifs. r recalculé pour l'exercice."
+        voix_off: "Et le nuage E : notez son sens et sa dispersion."
+        verifier:
+          - {expression: "(12*(1*11+2*17+3*8+4*10+5*6+6*14+7*8+8*20+9*0+10*15+11*0+12*3) - (1+2+3+4+5+6+7+8+9+10+11+12)*(11+17+8+10+6+14+8+20+0+15+0+3)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(11**2+17**2+8**2+10**2+6**2+14**2+8**2+20**2+0**2+15**2+0**2+3**2) - (11+17+8+10+6+14+8+20+0+15+0+3)**2))", attendu: -0.4, libelle: "r du nuage E"}
       - type: exercice
         texte: "Associez A, B, C, D, E à : *−0,9* ; *−0,4* ; *0* ; *0,5* ; *0,95*"
         pause: 10
@@ -230,19 +296,19 @@ editions:
         etapes:
           - "A : *0,95*, serré et croissant"
           - "B : *0,5*, croissant mais dispersé"
-          - "C : *0*, une relation, mais pas linéaire"
+          - "C : *0*, un U symétrique, relation non linéaire"
           - "D : *−0,9*, serré et décroissant"
           - "E : *−0,4*, décroissant et dispersé"
         reponse: "A 0,95 ; B 0,5 ; C 0 ; D −0,9 ; E −0,4"
-        voix_off: "Voici la correction. A, serré et croissant : zéro virgule quatre-vingt-quinze. B, croissant mais dispersé : zéro virgule cinq. C, en forme de U : zéro, car la relation existe mais n'est pas linéaire. D, serré et décroissant : moins zéro virgule neuf. E, décroissant et dispersé : moins zéro virgule quatre. Le signe donne le sens, la valeur absolue donne l'alignement."
+        voix_off: "Voici la correction. A, serré et croissant : zéro virgule quatre-vingt-quinze. B, croissant mais dispersé : zéro virgule cinq. C, un U symétrique : zéro, car la relation existe mais n'est pas linéaire. D, serré et décroissant : moins zéro virgule neuf. E, décroissant et dispersé : moins zéro virgule quatre. Le signe donne le sens, la valeur absolue donne l'alignement."
       - type: etapes
         texte: "À retenir"
         etapes:
           - "r va de *−1 à 1* : sens et alignement"
           - "r = *moyenne des produits* des scores z"
-          - "r ne voit que *les droites* : regardez le nuage"
+          - "r mesure une association *linéaire* : regardez le nuage"
           - "r n'est *pas une pente*"
-        voix_off: "À retenir. r va de moins un à un : son signe donne le sens, sa valeur l'alignement. C'est la moyenne des produits des scores z. Il ne voit que les relations en ligne droite : regardez toujours le nuage. Et ce n'est pas une pente."
+        voix_off: "À retenir. r va de moins un à un : son signe donne le sens, sa valeur l'alignement. C'est la moyenne des produits des scores z. Il mesure la force et le sens d'une association linéaire : regardez toujours le nuage. Et ce n'est pas une pente."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -265,9 +331,9 @@ editions:
         etapes:
           - "r = *1*: points on a line *going up*"
           - "r = *−1*: on a line *going down*"
-          - "r = *0*: *no straight-line trend*"
+          - "r = *0*: *no linear association* in this data"
           - "r = *0.8*: clear trend, points *scattered around it*"
-        voix_off: "It always lies between minus one and one. An r of one: every point sits exactly on a line going up. An r of minus one: they sit exactly on a line going down. An r of zero: no straight-line trend. And zero point eight: a clear upward trend, with points scattered around the line."
+        voix_off: "It always lies between minus one and one. An r of one: every point sits exactly on a line going up. An r of minus one: they sit exactly on a line going down. An r of zero: no linear association in this data. And zero point eight: a clear upward trend, with points scattered around the line."
       - type: titre
         numero: 2
         texte: "The calculation on four points"
@@ -344,7 +410,7 @@ editions:
           axe_x: "x"
           axe_y: "y"
         note: "Anscombe's quartet, The American Statistician, 1973. r recomputed."
-        voix_off: "Series two: the points trace a perfect curve that rises and then falls. It isn't a line at all. Yet r is still about zero point eight two."
+        voix_off: "Series two: the points follow a very regular curve that rises and then falls. It isn't a line at all. Yet r is still about zero point eight two."
         verifier:
           - {expression: "(11*(10*9.14+8*8.14+13*8.74+9*8.77+11*9.26+14*8.1+6*6.13+4*3.1+12*9.13+7*7.26+5*4.74) - (10+8+13+9+11+14+6+4+12+7+5)*(9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(9.14**2+8.14**2+8.74**2+8.77**2+9.26**2+8.1**2+6.13**2+3.1**2+9.13**2+7.26**2+4.74**2) - (9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)**2))", attendu: 0.82, libelle: "r of series 2"}
       - type: courbe
@@ -383,10 +449,10 @@ editions:
         texte: "One r, *four stories*"
         etapes:
           - "A line *with noise*"
-          - "A perfect *curve*"
+          - "A regular *curve*"
           - "A line and *one outlier*"
           - "*One point* doing all the work"
-        voix_off: "Four clouds, one correlation, and four different stories. A line with noise. A perfect curve. A line and one outlier. One point doing all the work. Anscombe's lesson: before you read r, always look at the cloud."
+        voix_off: "Four clouds, one correlation, and four different stories. A line with noise. A regular curve. A line and one outlier. One point doing all the work. Anscombe's lesson: before you read r, always look at the cloud."
       - type: titre
         numero: 4
         texte: "Two classic mistakes"
@@ -413,15 +479,81 @@ editions:
           - "r says whether the points are *lined up*"
           - "The slope says *by how much* y changes"
         voix_off: "Trap two: reading r as a slope. If y equals x, or y equals ten times x, the points are perfectly lined up and r is one in both cases. r only says how well the points line up. It's the slope of the line, not r, that says by how much y changes when x goes up."
-      - type: etapes
-        texte: "Five clouds"
-        etapes:
-          - "A: points *tight* on a line *going up*"
-          - "B: trend *going up*, points *very scattered*"
-          - "C: points in a *U shape*"
-          - "D: points *tight* on a line *going down*"
-          - "E: trend *going down*, points *scattered*"
-        voix_off: "Here are five clouds. A: points tight on a line going up. B: a trend going up, but very scattered points. C: points in a U shape. D: points tight on a line going down. E: a trend going down, with scattered points."
+      - type: courbe
+        texte: "Cloud *A*"
+        courbe:
+          style: points
+          points: [[1, 2], [2, 4], [3, 6], [4, 8], [5, 6], [6, 8], [7, 8], [8, 11], [9, 12], [10, 16], [11, 15], [12, 14]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Made-up points. r recomputed for the exercise."
+        voix_off: "Here are five clouds, each to be matched with a value of r. Cloud A: look at which way the points go, and how well they line up."
+        verifier:
+          - {expression: "(12*(1*2+2*4+3*6+4*8+5*6+6*8+7*8+8*11+9*12+10*16+11*15+12*14) - (1+2+3+4+5+6+7+8+9+10+11+12)*(2+4+6+8+6+8+8+11+12+16+15+14)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(2**2+4**2+6**2+8**2+6**2+8**2+8**2+11**2+12**2+16**2+15**2+14**2) - (2+4+6+8+6+8+8+11+12+16+15+14)**2))", attendu: 0.95, libelle: "r of cloud A"}
+      - type: courbe
+        texte: "Cloud *B*"
+        courbe:
+          style: points
+          points: [[1, 3], [2, 12], [3, 5], [4, 5], [5, 2], [6, 12], [7, 20], [8, 9], [9, 20], [10, 13], [11, 6], [12, 16]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Made-up points. r recomputed for the exercise."
+        voix_off: "Cloud B: same question, which direction and how lined up?"
+        verifier:
+          - {expression: "(12*(1*3+2*12+3*5+4*5+5*2+6*12+7*20+8*9+9*20+10*13+11*6+12*16) - (1+2+3+4+5+6+7+8+9+10+11+12)*(3+12+5+5+2+12+20+9+20+13+6+16)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(3**2+12**2+5**2+5**2+2**2+12**2+20**2+9**2+20**2+13**2+6**2+16**2) - (3+12+5+5+2+12+20+9+20+13+6+16)**2))", attendu: 0.5, libelle: "r of cloud B"}
+      - type: courbe
+        texte: "Cloud *C*"
+        courbe:
+          style: points
+          points: [[1, 15], [2, 11], [3, 6], [4, 4], [5, 1], [6, 1], [7, 1], [8, 1], [9, 4], [10, 6], [11, 11], [12, 15]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Made-up points. r recomputed for the exercise."
+        voix_off: "Cloud C: look carefully at its shape."
+        verifier:
+          - {expression: "(12*(1*15+2*11+3*6+4*4+5*1+6*1+7*1+8*1+9*4+10*6+11*11+12*15) - (1+2+3+4+5+6+7+8+9+10+11+12)*(15+11+6+4+1+1+1+1+4+6+11+15)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(15**2+11**2+6**2+4**2+1**2+1**2+1**2+1**2+4**2+6**2+11**2+15**2) - (15+11+6+4+1+1+1+1+4+6+11+15)**2))", attendu: 0, tolerance: 0.001, libelle: "r of cloud C"}
+      - type: courbe
+        texte: "Cloud *D*"
+        courbe:
+          style: points
+          points: [[1, 18], [2, 17], [3, 9], [4, 13], [5, 13], [6, 7], [7, 9], [8, 7], [9, 9], [10, 5], [11, 4], [12, 3]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Made-up points. r recomputed for the exercise."
+        voix_off: "Cloud D: which way does it go, and how tight is it?"
+        verifier:
+          - {expression: "(12*(1*18+2*17+3*9+4*13+5*13+6*7+7*9+8*7+9*9+10*5+11*4+12*3) - (1+2+3+4+5+6+7+8+9+10+11+12)*(18+17+9+13+13+7+9+7+9+5+4+3)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(18**2+17**2+9**2+13**2+13**2+7**2+9**2+7**2+9**2+5**2+4**2+3**2) - (18+17+9+13+13+7+9+7+9+5+4+3)**2))", attendu: -0.9, libelle: "r of cloud D"}
+      - type: courbe
+        texte: "Cloud *E*"
+        courbe:
+          style: points
+          points: [[1, 11], [2, 17], [3, 8], [4, 10], [5, 6], [6, 14], [7, 8], [8, 20], [9, 0], [10, 15], [11, 0], [12, 3]]
+          x_min: 0
+          x_max: 13
+          y_min: 0
+          y_max: 20
+          axe_x: "x"
+          axe_y: "y"
+        note: "Made-up points. r recomputed for the exercise."
+        voix_off: "And cloud E: note its direction and its spread."
+        verifier:
+          - {expression: "(12*(1*11+2*17+3*8+4*10+5*6+6*14+7*8+8*20+9*0+10*15+11*0+12*3) - (1+2+3+4+5+6+7+8+9+10+11+12)*(11+17+8+10+6+14+8+20+0+15+0+3)) / sqrt((12*(1**2+2**2+3**2+4**2+5**2+6**2+7**2+8**2+9**2+10**2+11**2+12**2) - (1+2+3+4+5+6+7+8+9+10+11+12)**2) * (12*(11**2+17**2+8**2+10**2+6**2+14**2+8**2+20**2+0**2+15**2+0**2+3**2) - (11+17+8+10+6+14+8+20+0+15+0+3)**2))", attendu: -0.4, libelle: "r of cloud E"}
       - type: exercice
         texte: "Match A, B, C, D, E to: *−0.9*; *−0.4*; *0*; *0.5*; *0.95*"
         pause: 10
@@ -430,19 +562,19 @@ editions:
         etapes:
           - "A: *0.95*, tight and rising"
           - "B: *0.5*, rising but scattered"
-          - "C: *0*, a relationship, but not linear"
+          - "C: *0*, a symmetric U, non-linear relationship"
           - "D: *−0.9*, tight and falling"
           - "E: *−0.4*, falling and scattered"
         reponse: "A 0.95; B 0.5; C 0; D −0.9; E −0.4"
-        voix_off: "Here's the answer. A, tight and rising: zero point nine five. B, rising but scattered: zero point five. C, the U shape: zero, because there is a relationship but it isn't linear. D, tight and falling: minus zero point nine. E, falling and scattered: minus zero point four. The sign gives the direction, the size gives how lined up the points are."
+        voix_off: "Here's the answer. A, tight and rising: zero point nine five. B, rising but scattered: zero point five. C, a symmetric U: zero, because there is a relationship but it isn't linear. D, tight and falling: minus zero point nine. E, falling and scattered: minus zero point four. The sign gives the direction, the size gives how lined up the points are."
       - type: etapes
         texte: "Key points"
         etapes:
           - "r runs from *−1 to 1*: direction and alignment"
           - "r = *mean of the products* of z-scores"
-          - "r only sees *straight lines*: look at the cloud"
+          - "r measures a *linear* association: look at the cloud"
           - "r is *not a slope*"
-        voix_off: "Key points. r runs from minus one to one: its sign gives the direction, its size the alignment. It's the mean of the products of the z-scores. It only sees straight-line relationships: always look at the cloud. And it isn't a slope."
+        voix_off: "Key points. r runs from minus one to one: its sign gives the direction, its size the alignment. It's the mean of the products of the z-scores. It measures the strength and direction of a linear association: always look at the cloud. And it isn't a slope."
       - type: fin
         texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

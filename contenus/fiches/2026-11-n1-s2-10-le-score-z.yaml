@@ -74,7 +74,7 @@ editions:
         formule:
           - 'z_{\text{Léa}}=\dfrac{16-12}{4}=1'
           - 'z_{\text{Tom}}=\dfrac{14-10}{2}=2'
-        voix_off: "Pour Léa : seize moins douze, quatre, divisé par quatre : un. Pour Tom : quatorze moins dix, quatre, divisé par deux : deux. Tom est à deux écarts-types au-dessus de sa moyenne, Léa à un seul : relativement à sa classe, la performance de Tom est plus remarquable."
+        voix_off: "Pour Léa : seize moins douze, quatre, divisé par quatre : un. Pour Tom : quatorze moins dix, quatre, divisé par deux : deux. Tom est à deux écarts-types au-dessus de sa moyenne, Léa à un seul : relativement à sa classe, le résultat de Tom est plus éloigné de la moyenne."
         verifier:
           - {expression: "(16 - 12) / 4", attendu: 1, libelle: "Score z de Léa"}
           - {expression: "(14 - 10) / 2", attendu: 2, libelle: "Score z de Tom"}
@@ -92,7 +92,7 @@ editions:
           - "Moyenne des scores z : *0* ; écart-type : *1*"
           - "Une distribution asymétrique *reste asymétrique*"
           - "Ce n'est pas une *courbe en cloche* automatique"
-        voix_off: "Quand on remplace chaque valeur par son score z, voici ce qui change. La moyenne devient zéro et l'écart-type devient un. Mais la forme de la distribution ne change pas : une distribution asymétrique reste asymétrique. Standardiser ne la transforme pas en courbe en cloche."
+        voix_off: "Quand on remplace chaque valeur par son score z, voici ce qui change. La moyenne devient zéro et l'écart-type devient un. Mais, pour une même série, la forme de la distribution ne change pas : une distribution asymétrique reste asymétrique. Standardiser ne la transforme pas en courbe en cloche."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "*15* en maths (moyenne 12, écart-type 2) ou *14* en philo (moyenne 10, écart-type 3) : quelle note est la plus remarquable ?"
@@ -111,9 +111,9 @@ editions:
         texte: "À retenir"
         etapes:
           - "z = *(valeur − moyenne) ÷ écart-type*"
-          - "Il compte *les écarts-types* au-dessus de la moyenne"
+          - "Distance à la moyenne *en écarts-types* (négatif au-dessous)"
           - "Il change l'échelle, *pas la forme*"
-        voix_off: "À retenir. Le score z, c'est la valeur moins la moyenne, divisée par l'écart-type. Il compte les écarts-types au-dessus de la moyenne, ce qui permet de comparer des échelles différentes. Et il change l'échelle, pas la forme de la distribution."
+        voix_off: "À retenir. Le score z, c'est la valeur moins la moyenne, divisée par l'écart-type. Il mesure la distance à la moyenne en nombre d'écarts-types, positif au-dessus et négatif au-dessous, ce qui permet de comparer des échelles différentes. Et il change l'échelle, pas la forme de la distribution."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -155,7 +155,7 @@ editions:
         formule:
           - 'z_{\text{Lea}}=\dfrac{16-12}{4}=1'
           - 'z_{\text{Tom}}=\dfrac{14-10}{2}=2'
-        voix_off: "For Lea: sixteen minus twelve, four, divided by four: one. For Tom: fourteen minus ten, four, divided by two: two. Tom is two standard deviations above his class mean, Lea only one: relative to their classes, Tom's result is more remarkable."
+        voix_off: "For Lea: sixteen minus twelve, four, divided by four: one. For Tom: fourteen minus ten, four, divided by two: two. Tom is two standard deviations above his class mean, Lea only one: relative to his own class, Tom's result is further from the mean."
         verifier:
           - {expression: "(16 - 12) / 4", attendu: 1, libelle: "Lea's z-score"}
           - {expression: "(14 - 10) / 2", attendu: 2, libelle: "Tom's z-score"}
@@ -172,7 +172,7 @@ editions:
           - "Mean of the z-scores: *0*; standard deviation: *1*"
           - "A skewed distribution *stays skewed*"
           - "It isn't an automatic *bell curve*"
-        voix_off: "When you replace every value by its z-score, here is what changes. The mean becomes zero and the standard deviation becomes one. But the shape of the distribution doesn't change: a skewed distribution stays skewed. Standardising doesn't turn it into a bell curve."
+        voix_off: "When you replace every value by its z-score, here is what changes. The mean becomes zero and the standard deviation becomes one. But, for the same data, the shape of the distribution doesn't change: a skewed distribution stays skewed. Standardising doesn't turn it into a bell curve."
       - type: exercice
         texte: "*15* in maths (mean 12, SD 2) or *14* in philosophy (mean 10, SD 3): which mark stands out more?"
         pause: 9
@@ -190,9 +190,9 @@ editions:
         texte: "Key points"
         etapes:
           - "z = *(value − mean) ÷ standard deviation*"
-          - "It counts *standard deviations* above the mean"
+          - "Distance from the mean *in standard deviations* (negative below)"
           - "It changes the scale, *not the shape*"
-        voix_off: "Key points. The z-score is the value minus the mean, divided by the standard deviation. It counts standard deviations above the mean, which lets you compare different scales. And it changes the scale, not the shape of the distribution."
+        voix_off: "Key points. The z-score is the value minus the mean, divided by the standard deviation. It measures the distance from the mean in standard deviations, positive above and negative below, which lets you compare different scales. And it changes the scale, not the shape of the distribution."
       - type: fin
         texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

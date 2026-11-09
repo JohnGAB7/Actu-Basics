@@ -1,7 +1,7 @@
 # Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
 id_programme: S2.10
-statut: revue_claude
+statut: revue_chatgpt
 fiche_production: contenus/fiches/2026-11-n1-s2-10-le-score-z.yaml
 question_centrale:
   fr: Un 15 en maths vaut-il mieux qu'un 14 en philosophie ?
@@ -41,5 +41,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validation JG à faire
   controle_mobile: Après rendu (inspection)

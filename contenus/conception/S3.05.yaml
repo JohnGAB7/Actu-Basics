@@ -1,7 +1,7 @@
 # Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Données d'Anscombe recalculées par le moteur (r ≈ 0,82 pour les quatre séries).
 id_programme: S3.05
-statut: revue_claude
+statut: revue_chatgpt
 fiche_production: contenus/fiches/2026-11-n1-s3-05-la-correlation.yaml
 question_centrale:
   fr: Que mesure exactement un coefficient de corrélation de 0,8 ?
@@ -26,7 +26,7 @@ idees_fausses:
 - idee: Lire r comme une pente
   desamorcee_a_l_etape: 'Partie 4 : y = x et y = 10 × x'
 exercice:
-  question: Associer cinq nuages décrits (A à E) à r = −0,9 ; −0,4 ; 0 ; 0,5 ; 0,95
+  question: Associer cinq nuages dessinés (A à E) à r = −0,9 ; −0,4 ; 0 ; 0,5 ; 0,95
   correction: A 0,95 ; B 0,5 ; C 0 ; D −0,9 ; E −0,4
   pause_secondes: 10
 preuve_apprentissage:
@@ -43,5 +43,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validation JG à faire
   controle_mobile: Après rendu (inspection)

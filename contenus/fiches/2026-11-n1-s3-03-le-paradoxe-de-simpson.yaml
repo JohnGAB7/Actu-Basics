@@ -5,7 +5,9 @@
 # British Medical Journal 292 (6524), 29 mars 1986, p. 879-882, doi:10.1136/bmj.292.6524.879 ; notice PubMed
 # 3083922. Chiffres repris du catalogue du programme (vérifiés sur Crossref lors de la version 1.8 du
 # programme) : A = chirurgie ouverte, B = néphrolithotomie percutanée ; petits calculs < 2 cm. Le texte
-# complet n'a pas été relu pour ce lot : chiffres à confirmer à la relecture. « Succès » au sens de l'article.
+# complet n'a pas été relu par Claude ; relecture ChatGPT du 2026-11-09 : sous-groupes et totaux conformes à
+# l'article. Étude d'observation (patients traités successivement, sans tirage au sort), présentée comme telle.
+# « Succès » au sens de l'article.
 # Exercice : deux hôpitaux fictifs.
 # Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
 # Claude structure, ChatGPT relit, JG valide.
@@ -22,11 +24,11 @@ pedagogie:
     fr:
       - "Reproduire un paradoxe de Simpson à partir d'un tableau"
       - "Expliquer le rôle d'une variable de confusion quand on additionne des groupes"
-      - "Savoir que ni le chiffre total ni le chiffre détaillé n'ont toujours raison"
+      - "Savoir que ni le total ni le détail ne suffisent sans comprendre comment les groupes ont été constitués"
     en:
       - "Reproduce a Simpson's paradox from a table"
       - "Explain the role of a confounding variable when groups are pooled"
-      - "Know that neither the overall nor the detailed figure is always right"
+      - "Know that neither the total nor the detail is enough without understanding how the groups were formed"
   prerequis:
     fr: ["S3.02 : tableaux croisés et pourcentages conditionnels"]
     en: ["S3.02: cross-tabs and conditional percentages"]
@@ -48,7 +50,7 @@ editions:
   fr:
     titre: "Meilleur dans chaque groupe, pire au total : le paradoxe de Simpson"
     legende: |
-      Un traitement réussit mieux que l'autre chez les patients à petits calculs rénaux, et mieux aussi chez ceux à gros calculs. Pourtant, au total, c'est l'autre qui semble gagner. Comment est-ce possible ? Avec les chiffres d'une étude médicale de 1986, on reproduit le paradoxe de Simpson et on comprend le rôle d'une variable de confusion. Source : C. R. Charig et coll., British Medical Journal, 1986. Exercice corrigé (hôpitaux fictifs). Série « Lire un chiffre sans se faire avoir ».
+      Un traitement réussit mieux que l'autre chez les patients à petits calculs rénaux, et mieux aussi chez ceux à gros calculs. Pourtant, au total, c'est l'autre qui semble gagner. Comment est-ce possible ? Avec les chiffres d'une étude médicale d'observation de 1986, on reproduit le paradoxe de Simpson et on comprend le rôle d'une variable de confusion. Source : C. R. Charig et coll., British Medical Journal, 1986. Exercice corrigé (hôpitaux fictifs). Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, paradoxe, simpson]
     scenes:
       - type: accroche
@@ -58,7 +60,7 @@ editions:
       - type: titre
         numero: 1
         texte: "Deux traitements des calculs rénaux"
-        voix_off: "En mille neuf cent quatre-vingt-six, une équipe britannique compare des traitements des calculs rénaux."
+        voix_off: "En mille neuf cent quatre-vingt-six, une équipe britannique compare, après coup, des patients traités de différentes façons pour des calculs rénaux."
       - type: etapes
         texte: "Au total, *B semble meilleur*"
         etapes:
@@ -68,6 +70,7 @@ editions:
         verifier:
           - {expression: "100 * 273 / 350", attendu: 78, libelle: "Taux de succès total, A (%)"}
           - {expression: "100 * 289 / 350", attendu: 83, libelle: "Taux de succès total, B (%)"}
+        note: "Étude d'observation : les patients n'ont pas été répartis au hasard entre les traitements."
       - type: etapes
         texte: "Par taille de calcul, *A gagne deux fois*"
         etapes:
@@ -98,22 +101,22 @@ editions:
           - {expression: "270 + 80", attendu: 350, libelle: "Patients du traitement B"}
       - type: texte
         texte: "La taille du calcul est une *variable de confusion*"
-        voix_off: "La taille du calcul joue sur les deux à la fois : elle a influencé le choix du traitement, et elle influence les chances de succès. C'est une variable de confusion. Quand on l'oublie, elle peut renverser la conclusion : c'est le paradoxe de Simpson."
+        voix_off: "La taille du calcul est liée aux deux à la fois : au traitement reçu, et aux chances de succès. C'est une variable de confusion, qui contribue ici au renversement observé. Quand on l'oublie, elle peut renverser la conclusion : c'est le paradoxe de Simpson. Et comme les patients n'ont pas été tirés au sort, d'autres différences entre les groupes restent possibles."
       - type: texte
-        texte: "Ni le total, ni le détail *n'ont toujours raison*"
-        voix_off: "Faut-il toujours croire le chiffre détaillé ? Pas forcément. Ici, oui, parce que la taille du calcul existait avant le traitement. Mais si l'on découpait selon une conséquence du traitement, le détail pourrait tromper à son tour. Il faut comprendre pourquoi les groupes diffèrent."
+        texte: "Ni le total, ni le détail *ne suffisent seuls*"
+        voix_off: "Faut-il toujours croire le chiffre détaillé ? Pas forcément. Ici, il est plus parlant, parce que la taille du calcul existait avant le traitement. Mais si l'on découpait selon une conséquence du traitement, le détail pourrait tromper à son tour. Ni le total ni le détail ne suffisent sans comprendre comment les groupes ont été constitués."
       # ---------------------------------------------------------------- exercice
       - type: exercice
-        texte: "Hôpital 1 : légers *90/100* survivent, graves *300/400*. Hôpital 2 : légers *340/400*, graves *70/100*. Lequel est meilleur ?"
+        texte: "Hôpital 1 : légers *90/100* survivent, graves *300/400*. Hôpital 2 : légers *340/400*, graves *70/100*. Lequel fait mieux, à gravité égale ?"
         pause: 10
-        voix_off: "À vous, avec deux hôpitaux imaginaires. À l'hôpital un, quatre-vingt-dix patients légers sur cent survivent, et trois cents patients graves sur quatre cents. À l'hôpital deux, trois cent quarante légers sur quatre cents, et soixante-dix graves sur cent. Calculez les taux par groupe et au total. Quel hôpital soigne le mieux ?"
+        voix_off: "À vous, avec deux hôpitaux imaginaires. À l'hôpital un, quatre-vingt-dix patients légers sur cent survivent, et trois cents patients graves sur quatre cents. À l'hôpital deux, trois cent quarante légers sur quatre cents, et soixante-dix graves sur cent. Calculez les taux par groupe et au total. Quel hôpital a les meilleurs taux de survie, à gravité égale ?"
       - type: correction
         etapes:
           - "Légers : H1 *90 %*, H2 *85 %*. Graves : H1 *75 %*, H2 *70 %*"
           - "Total : H1, 390/500 = *78 %* ; H2, 410/500 = *82 %*"
           - "H1 reçoit surtout *des cas graves*"
         reponse: "L'hôpital 1, dans chaque groupe"
-        voix_off: "Voyons. Chez les patients légers, l'hôpital un fait mieux, quatre-vingt-dix pour cent contre quatre-vingt-cinq ; chez les graves aussi, soixante-quinze contre soixante-dix. Au total, pourtant, l'hôpital un affiche soixante-dix-huit pour cent, et l'hôpital deux quatre-vingt-deux. La raison : l'hôpital un reçoit surtout des cas graves. À gravité égale, c'est l'hôpital un qui soigne le mieux."
+        voix_off: "Voyons. Chez les patients légers, l'hôpital un fait mieux, quatre-vingt-dix pour cent contre quatre-vingt-cinq ; chez les graves aussi, soixante-quinze contre soixante-dix. Au total, pourtant, l'hôpital un affiche soixante-dix-huit pour cent, et l'hôpital deux quatre-vingt-deux. La raison : l'hôpital un reçoit surtout des cas graves. Dans cet exemple, l'hôpital un a les meilleurs taux de survie dans chacun des deux groupes, sans que cela prouve à lui seul qu'il soigne mieux."
         verifier:
           - {expression: "100 * 90 / 100", attendu: 90, libelle: "H1, légers (%)"}
           - {expression: "100 * 340 / 400", attendu: 85, libelle: "H2, légers (%)"}
@@ -135,7 +138,7 @@ editions:
   en:
     titre: "Better in every group, worse overall: Simpson's paradox"
     legende: |
-      One treatment works better than another for patients with small kidney stones, and better for those with large ones too. Yet overall, the other treatment seems to win. How is that possible? Using the figures from a 1986 medical study, we reproduce Simpson's paradox and see the role of a confounding variable. Source: C. R. Charig et al., British Medical Journal, 1986. Worked exercise (fictional hospitals). Series "Reading numbers without being fooled".
+      One treatment works better than another for patients with small kidney stones, and better for those with large ones too. Yet overall, the other treatment seems to win. How is that possible? Using the figures from a 1986 observational medical study, we reproduce Simpson's paradox and see the role of a confounding variable. Source: C. R. Charig et al., British Medical Journal, 1986. Worked exercise (fictional hospitals). Series "Reading numbers without being fooled".
     hashtags: [statistics, paradox, simpson]
     scenes:
       - type: accroche
@@ -144,7 +147,7 @@ editions:
       - type: titre
         numero: 1
         texte: "Two treatments for kidney stones"
-        voix_off: "In nineteen eighty-six, a British team compared treatments for kidney stones."
+        voix_off: "In nineteen eighty-six, a British team looked back at patients treated in different ways for kidney stones."
       - type: etapes
         texte: "Overall, *B looks better*"
         etapes:
@@ -154,6 +157,7 @@ editions:
         verifier:
           - {expression: "100 * 273 / 350", attendu: 78, libelle: "Overall success rate, A (%)"}
           - {expression: "100 * 289 / 350", attendu: 83, libelle: "Overall success rate, B (%)"}
+        note: "Observational study: patients were not randomly assigned to the treatments."
       - type: etapes
         texte: "By stone size, *A wins twice*"
         etapes:
@@ -183,21 +187,21 @@ editions:
           - {expression: "270 + 80", attendu: 350, libelle: "Patients on treatment B"}
       - type: texte
         texte: "Stone size is a *confounding variable*"
-        voix_off: "Stone size acts on both at once: it influenced the choice of treatment, and it influences the chance of success. It's a confounding variable. Forget it, and it can reverse the conclusion: that's Simpson's paradox."
+        voix_off: "Stone size is linked to both at once: to the treatment received, and to the chance of success. It's a confounding variable, which contributes here to the reversal. Forget it, and it can reverse the conclusion: that's Simpson's paradox. And since patients weren't randomly assigned, other differences between the groups remain possible."
       - type: texte
-        texte: "Neither the total nor the detail *is always right*"
-        voix_off: "Should you always trust the detailed figure? Not necessarily. Here, yes, because stone size existed before the treatment. But if you split by a consequence of the treatment, the detail could mislead in turn. You have to understand why the groups differ."
+        texte: "Neither the total nor the detail *is enough alone*"
+        voix_off: "Should you always trust the detailed figure? Not necessarily. Here it is more telling, because stone size existed before the treatment. But if you split by a consequence of the treatment, the detail could mislead in turn. Neither the total nor the detail is enough without understanding how the groups were formed."
       - type: exercice
-        texte: "Hospital 1: mild *90/100* survive, severe *300/400*. Hospital 2: mild *340/400*, severe *70/100*. Which is better?"
+        texte: "Hospital 1: mild *90/100* survive, severe *300/400*. Hospital 2: mild *340/400*, severe *70/100*. Which does better, at equal severity?"
         pause: 10
-        voix_off: "Your turn, with two imaginary hospitals. At hospital one, ninety mild patients out of a hundred survive, and three hundred severe patients out of four hundred. At hospital two, three hundred and forty mild patients out of four hundred, and seventy severe out of a hundred. Work out the rates by group and overall. Which hospital gives better care?"
+        voix_off: "Your turn, with two imaginary hospitals. At hospital one, ninety mild patients out of a hundred survive, and three hundred severe patients out of four hundred. At hospital two, three hundred and forty mild patients out of four hundred, and seventy severe out of a hundred. Work out the rates by group and overall. Which hospital has the better survival rates, at equal severity?"
       - type: correction
         etapes:
           - "Mild: H1 *90%*, H2 *85%*. Severe: H1 *75%*, H2 *70%*"
           - "Overall: H1 390/500 = *78%*, H2 410/500 = *82%*"
           - "H1 mostly gets *severe cases*"
         reponse: "Hospital 1, in every group"
-        voix_off: "Let's see. Among mild patients, hospital one does better, ninety percent against eighty-five; among severe patients too, seventy-five against seventy. Overall, though, hospital one shows seventy-eight percent, and hospital two eighty-two. The reason: hospital one mostly gets severe cases. For patients of the same severity, hospital one gives better care."
+        voix_off: "Let's see. Among mild patients, hospital one does better, ninety percent against eighty-five; among severe patients too, seventy-five against seventy. Overall, though, hospital one shows seventy-eight percent, and hospital two eighty-two. The reason: hospital one mostly gets severe cases. In this example, hospital one has the higher survival rate in both groups, though that alone doesn't prove it gives better care."
         verifier:
           - {expression: "100 * 90 / 100", attendu: 90, libelle: "H1, mild (%)"}
           - {expression: "100 * 340 / 400", attendu: 85, libelle: "H2, mild (%)"}

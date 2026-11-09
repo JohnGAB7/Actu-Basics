@@ -89,14 +89,14 @@ editions:
           - "Impossible pour un être humain"
           - "Sans doute une *virgule oubliée* : 1,70"
           - "Action : *vérifier et corriger*, en le notant"
-        voix_off: "Premier cas : une taille de dix-sept mètres. C'est impossible pour un être humain. C'est sans doute une erreur de saisie, une virgule oubliée : un mètre soixante-dix. On vérifie à la source, on corrige, et on note la correction."
+        voix_off: "Premier cas : une taille de dix-sept mètres. Une taille humaine de dix-sept mètres est biologiquement impossible. C'est très probablement une erreur de saisie, une virgule oubliée : un mètre soixante-dix. On vérifie à la source, on corrige, et on note la correction."
       - type: etapes
         texte: "Cas 2 : un revenu de *10 millions d'euros*"
         etapes:
           - "Neuf revenus entre 18 000 et 35 000 €, et *un de 10 millions*"
-          - "Rare, mais *réel* : une dirigeante d'entreprise"
+          - "Rare, mais *possible* : une dirigeante d'entreprise"
           - "Action : *conserver*, et choisir des indicateurs robustes"
-        voix_off: "Deuxième cas : dix revenus annuels. Neuf sont entre dix-huit mille et trente-cinq mille euros, et le dixième atteint dix millions. C'est rare, mais réel : c'est celui d'une dirigeante d'entreprise. On le garde, et on choisit des indicateurs qui résistent aux extrêmes, comme la médiane."
+        voix_off: "Deuxième cas : dix revenus annuels. Neuf sont entre dix-huit mille et trente-cinq mille euros, et le dixième atteint dix millions. C'est rare, mais possible : dans cet exemple fictif, c'est celui d'une dirigeante d'entreprise. On le garde, et on choisit des indicateurs qui résistent aux extrêmes, comme la médiane."
       - type: texte
         texte: "Supprimer une valeur *pour améliorer un résultat* : jamais"
         voix_off: "Le piège, c'est de supprimer une valeur parce qu'elle gêne le résultat. Si l'on retire les revenus élevés, on fabrique une population plus égalitaire qu'elle ne l'est. Une valeur étrange est d'abord une question à poser."
@@ -108,11 +108,11 @@ editions:
         voix_off: "À vous. Pour chaque valeur atypique, choisissez : corriger, conserver, ou analyser à part. A : un patient de deux cent cinquante ans dans un fichier d'hôpital. B : quarante-deux degrés un jour de canicule, dans une série de températures d'été. C : une commande de trois mille euros passée par une entreprise, au milieu des achats de particuliers."
       - type: correction
         etapes:
-          - "A : impossible, *vérifier et corriger* (ou retirer si l'on ne peut pas)"
+          - "A : impossible, *vérifier la source* ; sinon, valeur manquante, notée"
           - "B : réel, c'est l'information : *conserver*"
           - "C : réel, mais une autre population : *analyser à part*"
         reponse: "A corriger, B conserver, C à part"
-        voix_off: "Voyons. A est impossible : on vérifie et on corrige, ou on retire la valeur si l'on ne peut pas la vérifier, en le signalant. B est réel, et c'est justement ce qu'on veut savoir : on conserve. C est réel, mais ce n'est pas un particulier : on l'analyse à part. Donc : A corriger, B conserver, C à part."
+        voix_off: "Voyons. A est impossible : on vérifie la source et on corrige si l'erreur est confirmée ; sinon, on la traite comme une valeur manquante, et on le note. B est réel, et c'est justement ce qu'on veut savoir : on conserve. C est réel, mais ce n'est pas un particulier : on l'analyse à part. Donc : A corriger, B conserver, C à part."
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -175,14 +175,14 @@ editions:
           - "Impossible for a human being"
           - "Probably a *missing decimal point*: 1.70"
           - "Action: *check and correct*, and record it"
-        voix_off: "First case: a height of seventeen metres. That's impossible for a human being. It is most likely a typing error, a missing decimal point: one point seven zero metres. We check the source, correct it, and record the correction."
+        voix_off: "First case: a height of seventeen metres. A human height of seventeen metres is biologically impossible. It is most likely a typing error, a missing decimal point: one point seven zero metres. We check the source, correct it, and record the correction."
       - type: etapes
         texte: "Case 2: an income of *10 million euros*"
         etapes:
           - "Nine incomes between €18,000 and €35,000, and *one of 10 million*"
-          - "Rare, but *real*: a company boss"
+          - "Rare, but *possible*: a company boss"
           - "Action: *keep it*, and choose robust measures"
-        voix_off: "Second case: ten yearly incomes. Nine are between eighteen thousand and thirty-five thousand euros, and the tenth reaches ten million. It's rare, but real: it belongs to the head of a company. We keep it, and choose measures that cope with extremes, such as the median."
+        voix_off: "Second case: ten yearly incomes. Nine are between eighteen thousand and thirty-five thousand euros, and the tenth reaches ten million. It's rare, but possible: in this fictional example, it belongs to the head of a company. We keep it, and choose measures that cope with extremes, such as the median."
       - type: texte
         texte: "Deleting a value *to improve a result*: never"
         voix_off: "The trap is to delete a value because it spoils the result. Remove the high incomes, and you invent a population that is more equal than it really is. A strange value is first of all a question to ask."
@@ -193,11 +193,11 @@ editions:
         voix_off: "Your turn. For each outlier, choose: correct, keep, or analyse separately. A: a two-hundred-and-fifty-year-old patient in a hospital file. B: forty-two degrees on a heatwave day, in a series of summer temperatures. C: a three-thousand-euro order placed by a company, among purchases by individual shoppers."
       - type: correction
         etapes:
-          - "A: impossible, *check and correct* (or remove it if you can't)"
+          - "A: impossible, *check the source*; otherwise, missing value, recorded"
           - "B: real, it is the message: *keep it*"
           - "C: real, but a different population: *analyse separately*"
         reponse: "A correct, B keep, C separate"
-        voix_off: "Let's see. A is impossible: check and correct it, or remove the value if it can't be checked, and say so. B is real, and it's exactly what we want to know: keep it. C is real, but it isn't an individual shopper: analyse it separately. So: A correct, B keep, C separate."
+        voix_off: "Let's see. A is impossible: check the source and correct it if the error is confirmed; otherwise, treat it as a missing value, and record that. B is real, and it's exactly what we want to know: keep it. C is real, but it isn't an individual shopper: analyse it separately. So: A correct, B keep, C separate."
       - type: etapes
         texte: "Key points"
         etapes:

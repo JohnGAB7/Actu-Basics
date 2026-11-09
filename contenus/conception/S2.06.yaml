@@ -1,7 +1,7 @@
 # Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Pays imaginaire pour D9/D1 (le catalogue proposait des chiffres réels non sourcés).
 id_programme: S2.06
-statut: revue_claude
+statut: revue_chatgpt
 fiche_production: contenus/fiches/2026-11-n1-s2-06-quantiles-quartiles-et-boite-a-moustaches.yaml
 question_centrale:
   fr: Comment décrire « le haut », « le bas » et « le milieu » d'une distribution ?
@@ -41,5 +41,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validation JG à faire
   controle_mobile: Après rendu (inspection)

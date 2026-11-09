@@ -1,11 +1,11 @@
 # Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
 # Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Villes fictives (le catalogue citait Brest et Strasbourg sans données sourcées).
 id_programme: S2.07
-statut: revue_claude
+statut: revue_chatgpt
 fiche_production: contenus/fiches/2026-11-n1-s2-07-mesurer-la-dispersion-simplement.yaml
 question_centrale:
-  fr: Deux villes ont la même moyenne annuelle. Ont-elles le même climat ?
-  en: Two towns have the same yearly average. Do they have the same climate?
+  fr: Deux villes ont la même moyenne annuelle. Ont-elles les mêmes températures au fil des mois ?
+  en: Two towns have the same yearly average. Do they have the same temperatures from month to month?
 position:
   pilier: statistiques
   niveau: 1
@@ -42,5 +42,5 @@ declinaisons:
 licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
 controle:
   test_du_debutant: À mesurer
-  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validation JG à faire
   controle_mobile: Après rendu (inspection)

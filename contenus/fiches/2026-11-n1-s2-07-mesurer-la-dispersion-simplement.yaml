@@ -38,14 +38,14 @@ sources: []
 
 editions:
   fr:
-    titre: "Même moyenne, climats opposés : mesurer la dispersion"
+    titre: "Même moyenne, températures opposées : mesurer la dispersion"
     legende: |
-      Deux villes ont la même température moyenne sur l'année : 12 °C. Pourtant, l'une a des hivers doux et des étés frais, l'autre gèle en janvier et cuit en juillet. On apprend à mesurer cet écart avec deux outils simples, l'étendue et l'écart interquartile, et à savoir lequel choisir. Exercice corrigé à la fin. Villes et températures fictives, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+      Deux villes ont la même température moyenne sur l'année : 12 °C. Pourtant, l'une a des hivers doux et des étés frais, l'autre a un hiver plus froid et un été plus chaud. On apprend à mesurer cet écart avec deux outils simples, l'étendue et l'écart interquartile, et à savoir lequel choisir. Exercice corrigé à la fin. Villes et températures fictives, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, dispersion, climat]
     scenes:
       - type: accroche
-        texte: "Deux villes, *12 °C de moyenne* : même climat ?"
-        voix_off: "Deux villes ont exactement la même température moyenne sur l'année : douze degrés. Ont-elles le même climat ?"
+        texte: "Deux villes, *12 °C de moyenne* : mêmes températures ?"
+        voix_off: "Deux villes ont exactement la même température moyenne sur l'année : douze degrés. Ont-elles pour autant les mêmes températures au fil des mois ?"
       # ---------------------------------------------------------------- 1
       - type: titre
         numero: 1
@@ -81,7 +81,7 @@ editions:
           - {expression: "23 - 1", attendu: 22, libelle: "Étendue, ville B"}
       - type: texte
         texte: "Une seule valeur extrême *suffit à la changer*"
-        voix_off: "Son défaut : elle ne dépend que de deux valeurs, les deux extrêmes. Un seul mois exceptionnel, une vague de froid, et l'étendue change complètement."
+        voix_off: "Son défaut : elle ne dépend que de deux valeurs, les deux extrêmes. Une seule valeur extrême, par exemple un mois exceptionnellement froid, peut fortement modifier l'étendue."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -143,14 +143,14 @@ editions:
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
 
   en:
-    titre: "Same average, opposite climates: measuring spread"
+    titre: "Same average, opposite temperatures: measuring spread"
     legende: |
-      Two towns have the same average temperature over the year: 12 °C. Yet one has mild winters and cool summers, while the other freezes in January and bakes in July. We learn to measure that difference with two simple tools, the range and the interquartile range, and when to use each. Worked exercise at the end. Fictional towns and temperatures, checked calculations. Series "Reading numbers without being fooled".
+      Two towns have the same average temperature over the year: 12 °C. Yet one has mild winters and cool summers, while the other has a colder winter and a warmer summer. We learn to measure that difference with two simple tools, the range and the interquartile range, and when to use each. Worked exercise at the end. Fictional towns and temperatures, checked calculations. Series "Reading numbers without being fooled".
     hashtags: [statistics, spread, climate]
     scenes:
       - type: accroche
-        texte: "Two towns, *12 °C on average*: same climate?"
-        voix_off: "Two towns have exactly the same average temperature over the year: twelve degrees. Do they have the same climate?"
+        texte: "Two towns, *12 °C on average*: same temperatures?"
+        voix_off: "Two towns have exactly the same average temperature over the year: twelve degrees. Do they really have the same temperatures from month to month?"
       - type: titre
         numero: 1
         texte: "Same centre, two stories"
@@ -184,7 +184,7 @@ editions:
           - {expression: "23 - 1", attendu: 22, libelle: "Range, town B"}
       - type: texte
         texte: "One extreme value *is enough to change it*"
-        voix_off: "Its weakness: it depends on only two values, the two extremes. One exceptional month, a cold snap, and the range changes completely."
+        voix_off: "Its weakness: it depends on only two values, the two extremes. A single extreme value, such as an exceptionally cold month, can change the range a lot."
       - type: titre
         numero: 3
         texte: "The interquartile range"

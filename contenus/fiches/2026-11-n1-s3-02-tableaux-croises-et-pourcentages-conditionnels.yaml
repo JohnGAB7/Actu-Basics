@@ -37,14 +37,14 @@ sources: []
 
 editions:
   fr:
-    titre: "« 80 % des accidents sans alcool » : faut-il boire avant de conduire ?"
+    titre: "« 80 % des accidents sans alcool » : que dit vraiment ce chiffre ?"
     legende: |
       « 80 % des accidents impliquent un conducteur qui n'a pas bu. » Faut-il en conclure que boire protège ? Évidemment non : presque tous les conducteurs sont sobres. Avec un tableau croisé fictif de 100 000 conducteurs, on apprend à calculer des pourcentages en ligne et en colonne, et à choisir le bon dénominateur. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, pourcentages, tableaucroise]
     scenes:
       - type: accroche
-        texte: "*80 %* des accidents : conducteur *sobre*. Faut-il boire ?"
-        voix_off: "Imaginons ce titre : quatre-vingts pour cent des accidents impliquent un conducteur qui n'a pas bu. Faut-il en conclure qu'il vaut mieux boire avant de conduire ?"
+        texte: "*80 %* des accidents : conducteur *sobre*. Que dit ce chiffre ?"
+        voix_off: "Imaginons ce titre : quatre-vingts pour cent des accidents impliquent un conducteur qui n'a pas bu. Faut-il en conclure qu'il vaut mieux boire avant de conduire ? Évidemment non : voyons ce que ce chiffre dit vraiment."
       # ---------------------------------------------------------------- 1
       - type: titre
         numero: 1
@@ -53,8 +53,8 @@ editions:
       - type: etapes
         texte: "100 000 conducteurs *imaginaires*"
         etapes:
-          - "Sobres : *98 000*, dont *400* accidents"
-          - "Ayant bu : *2 000*, dont *100* accidents"
+          - "Sobres : *98 000*, dont *400* ont un accident"
+          - "Ayant bu : *2 000*, dont *100* ont un accident"
           - "Accidents : *500*, dont 400 sobres, soit *80 %*"
         voix_off: "Prenons cent mille conducteurs imaginaires sur une année. Quatre-vingt-dix-huit mille sont sobres, et quatre cents d'entre eux ont un accident. Deux mille ont bu, et cent d'entre eux ont un accident. Sur les cinq cents accidents, quatre cents impliquent un conducteur sobre : quatre-vingts pour cent. Le titre est exact."
         note: "Chiffres inventés pour l'exemple : ce n'est pas une statistique de sécurité routière."
@@ -87,10 +87,10 @@ editions:
           - {expression: "100 * 400 / 98000", attendu: 0.41, libelle: "Risque d'accident des sobres, en %"}
           - {expression: "100 * 100 / 2000", attendu: 5, libelle: "Risque d'accident après avoir bu, en %"}
       - type: formule
-        texte: "Le risque est *environ 12 fois* plus élevé"
+        texte: "Part d'accidentés : *environ 12 fois* plus élevée"
         formule:
           - '\dfrac{5\ \%}{0{,}41\ \%}\approx 12'
-        voix_off: "La question qui compte pour un conducteur, c'est son risque d'accident. Il est d'environ cinq pour cent après avoir bu, contre zéro virgule quatre un pour cent sobre : environ douze fois plus élevé. Les sobres sont majoritaires dans les accidents simplement parce qu'ils sont presque tous les conducteurs."
+        voix_off: "La question qui compte pour un conducteur, c'est la part de conducteurs qui ont un accident dans son groupe. Dans cet exemple fictif, elle est d'environ cinq pour cent après avoir bu, contre zéro virgule quatre un pour cent sobre : environ douze fois plus élevée. Les sobres sont majoritaires dans les accidents simplement parce qu'ils sont presque tous les conducteurs. Ce tableau fictif illustre le choix du dénominateur : à lui seul, il ne démontre pas un lien de cause à effet."
         verifier:
           - {expression: "(100 / 2000) / (400 / 98000)", attendu: 12, tolerance: 0.5, libelle: "Rapport des risques"}
       - type: texte
@@ -124,14 +124,14 @@ editions:
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
 
   en:
-    titre: "“80% of crashes involve sober drivers”: should you drink before driving?"
+    titre: "“80% of crashes involve sober drivers”: what does that number really say?"
     legende: |
       "80% of crashes involve a driver who hadn't been drinking." Does that mean drinking protects you? Of course not: almost all drivers are sober. With a made-up cross-tab of 100,000 drivers, we learn to compute row and column percentages, and to pick the right denominator. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
     hashtags: [statistics, percentages, crosstab]
     scenes:
       - type: accroche
-        texte: "*80%* of crashes: a *sober* driver. Should you drink?"
-        voix_off: "Imagine this headline: eighty percent of crashes involve a driver who hadn't been drinking. Should we conclude that it's better to drink before driving?"
+        texte: "*80%* of crashes: a *sober* driver. What does it say?"
+        voix_off: "Imagine this headline: eighty percent of crashes involve a driver who hadn't been drinking. Should we conclude that it's better to drink before driving? Of course not: let's see what that number really says."
       - type: titre
         numero: 1
         texte: "The cross-tab"
@@ -139,8 +139,8 @@ editions:
       - type: etapes
         texte: "100,000 *imaginary* drivers"
         etapes:
-          - "Sober: *98,000*, with *400* crashes"
-          - "Had been drinking: *2,000*, with *100* crashes"
+          - "Sober: *98,000*, of whom *400* crash"
+          - "Had been drinking: *2,000*, of whom *100* crash"
           - "Crashes: *500*, of which 400 sober, so *80%*"
         voix_off: "Take a hundred thousand imaginary drivers over one year. Ninety-eight thousand are sober, and four hundred of them have a crash. Two thousand have been drinking, and one hundred of them have a crash. Of the five hundred crashes, four hundred involve a sober driver: eighty percent. The headline is accurate."
         note: "Numbers invented for the example: these are not road safety statistics."
@@ -172,10 +172,10 @@ editions:
           - {expression: "100 * 400 / 98000", attendu: 0.41, libelle: "Crash risk, sober, %"}
           - {expression: "100 * 100 / 2000", attendu: 5, libelle: "Crash risk, after drinking, %"}
       - type: formule
-        texte: "The risk is *about 12 times* higher"
+        texte: "Share who crash: *about 12 times* higher"
         formule:
           - '\dfrac{5\%}{0.41\%}\approx 12'
-        voix_off: "The question that matters for a driver is their own risk of a crash. It's about five percent after drinking, against zero point four one percent when sober: about twelve times higher. Sober drivers make up most crashes simply because they make up almost all drivers."
+        voix_off: "The question that matters for a driver is the share of drivers in their group who have a crash. In this fictional example, it's about five percent after drinking, against zero point four one percent when sober: about twelve times higher. Sober drivers make up most crashes simply because they make up almost all drivers. This fictional table illustrates the choice of denominator: on its own, it doesn't prove cause and effect."
         verifier:
           - {expression: "(100 / 2000) / (400 / 98000)", attendu: 12, tolerance: 0.5, libelle: "Risk ratio"}
       - type: texte

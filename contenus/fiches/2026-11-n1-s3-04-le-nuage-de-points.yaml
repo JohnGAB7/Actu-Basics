@@ -92,7 +92,7 @@ editions:
           axe_x: "PIB par habitant (milliers de $)"
           axe_y: "Espérance de vie (ans)"
           reperes: [{x: 40, y: 63.0, label: "40 000 $, 63 ans"}]
-        voix_off: "Appliquons-les à nos pays. La forme est une courbe, et non une droite. Le sens est croissant. L'intensité est forte : les points restent proches de la courbe. Et un pays s'écarte : riche, mais avec une espérance de vie de soixante-trois ans seulement. C'est lui qu'il faut aller comprendre."
+        voix_off: "Appliquons-les à nos pays. La forme est une courbe, et non une droite. Le sens est croissant. L'intensité est assez forte : la plupart des points restent proches de la courbe. Mais un pays s'écarte nettement : riche, et pourtant une espérance de vie de soixante-trois ans seulement. C'est lui qu'il faut aller comprendre. Et ce nuage montre une association : il ne prouve pas que la richesse, à elle seule, allonge la vie."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -108,7 +108,7 @@ editions:
           x_max: 5
           y_min: 50
           y_max: 80
-          axe_x: "PIB par habitant (3 = 1 000 $, 5 = 100 000 $)"
+          axe_x: "Puissance de 10 du PIB (3 = 1 000 $, 5 = 100 000 $)"
           axe_y: "Espérance de vie (ans)"
         note: "Échelle logarithmique : chaque graduation multiplie le PIB par 10. Mêmes pays imaginaires."
         voix_off: "Sur cet axe, chaque graduation ne s'ajoute pas : elle multiplie la richesse par dix. Mille dollars, dix mille, cent mille. Avec cette échelle logarithmique, les mêmes points s'alignent presque sur une droite. Le nuage n'a pas changé, seule l'échelle a changé : il faut toujours vérifier comment un axe est gradué."
@@ -203,7 +203,7 @@ editions:
           axe_x: "GDP per person (thousands of $)"
           axe_y: "Life expectancy (years)"
           reperes: [{x: 40, y: 63.0, label: "$40,000, 63 years"}]
-        voix_off: "Let's apply them to our countries. The form is a curve, not a straight line. The direction is upward. The strength is high: the points stay close to the curve. And one country stands apart: rich, but with a life expectancy of only sixty-three years. That's the one to go and understand."
+        voix_off: "Let's apply them to our countries. The form is a curve, not a straight line. The direction is upward. The strength is fairly high: most points stay close to the curve. But one country clearly stands apart: rich, and yet a life expectancy of only sixty-three years. That's the one to go and understand. And this cloud shows an association: it doesn't prove that wealth alone makes people live longer."
       - type: titre
         numero: 3
         texte: "Changing the scale"
@@ -218,7 +218,7 @@ editions:
           x_max: 5
           y_min: 50
           y_max: 80
-          axe_x: "GDP per person (3 = $1,000, 5 = $100,000)"
+          axe_x: "Power of 10 of GDP ($): 3 = $1,000, 5 = $100,000"
           axe_y: "Life expectancy (years)"
         note: "Logarithmic scale: each step multiplies GDP by 10. Same imaginary countries."
         voix_off: "On this axis, each step doesn't add: it multiplies wealth by ten. One thousand dollars, ten thousand, one hundred thousand. With this logarithmic scale, the same points line up almost along a straight line. The cloud hasn't changed, only the scale has: always check how an axis is marked."
