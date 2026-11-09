@@ -1,0 +1,241 @@
+# Niveau 1, vague 1, lot 3 : S2.06 « Quantiles, quartiles et boîte à moustaches » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S2.06.yaml
+# Calcul pur, nombres fictifs : onze temps de trajet, revenus d'un pays imaginaire pour D9/D1.
+# Quartiles par la méthode des demi-séries ; sur cet exemple, la définition de l'Insee (plus petite valeur
+# laissant au moins 25 % des observations en dessous) donne les mêmes valeurs (rangs 3 et 9 sur 11).
+# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-06-quantiles-quartiles-et-boite-a-moustaches
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.06 · Quantiles, quartiles et boîte à moustaches"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer la médiane et les quartiles d'une petite série"
+      - "Lire et construire une boîte à moustaches"
+      - "Interpréter un rapport interdécile D9/D1 sans confondre une valeur et un groupe"
+    en:
+      - "Find the median and quartiles of a small data set"
+      - "Read and build a box plot"
+      - "Interpret a D9/D1 interdecile ratio without mixing up a value and a group"
+  prerequis:
+    fr: ["S2.05 : moyenne ou médiane"]
+    en: ["S2.05: mean or median"]
+  hypotheses:
+    fr: "Temps de trajet et revenus fictifs ; quartiles calculés par la méthode des demi-séries (les logiciels peuvent donner des valeurs un peu différentes)"
+    en: "Made-up commuting times and incomes; quartiles found with the half-series method (software may give slightly different values)"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Le haut, le bas et le milieu : quartiles et boîte à moustaches"
+    legende: |
+      La médiane coupe une série en deux. Les quartiles la coupent en quatre, les déciles en dix. On calcule les quartiles de onze temps de trajet à la main, on construit une boîte à moustaches, et on apprend à lire un rapport D9/D1 sans confondre une valeur et un groupe. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, quartiles, boiteamoustaches]
+    scenes:
+      - type: accroche
+        texte: "Le haut, le bas, le milieu : *comment les décrire* ?"
+        voix_off: "La médiane dit où se trouve le milieu. Mais comment décrire le bas, le haut, et tout ce qu'il y a entre les deux ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Couper en quatre"
+        voix_off: "Rangeons les valeurs, puis coupons-les comme un gâteau."
+      - type: etapes
+        texte: "Onze trajets, *rangés* (en minutes)"
+        etapes:
+          - "5 · 8 · 10 · 12 · 15 · *18* · 20 · 22 · 25 · 30 · 45"
+          - "Médiane : la 6e valeur, *18 min*"
+          - "Q1 : milieu de la moitié basse, *10 min*"
+          - "Q3 : milieu de la moitié haute, *25 min*"
+        voix_off: "Voici onze temps de trajet, rangés du plus court au plus long. La médiane est la sixième valeur : dix-huit minutes. Le premier quartile, Q1, est le milieu des cinq valeurs du dessous : dix minutes. Le troisième quartile, Q3, est le milieu des cinq valeurs du dessus : vingt-cinq minutes."
+        note: "Méthode des demi-séries : la médiane n'entre dans aucune des deux moitiés quand le nombre de valeurs est impair."
+        verifier:
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v < 18)", attendu: 5, libelle: "Valeurs sous 18, puis au-dessus (1)"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v > 18)", attendu: 5, libelle: "Valeurs sous 18, puis au-dessus (2)"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v < 10) - sum(1 for v in [5, 8, 10, 12, 15] if v > 10)", attendu: 0, libelle: "Valeurs sous 10 dans la moitié basse"}
+          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v < 25) - sum(1 for v in [20, 22, 25, 30, 45] if v > 25)", attendu: 0, libelle: "Valeurs au-dessus de 25 dans la moitié haute"}
+      - type: etapes
+        texte: "Quatre tranches *d'un quart* chacune"
+        etapes:
+          - "Un quart des trajets durent *10 min ou moins*"
+          - "La moitié du milieu : *entre 10 et 25 min*"
+          - "Écart interquartile : 25 − 10 = *15 min*"
+        voix_off: "Les quartiles découpent la série en quatre tranches d'environ un quart chacune. Un quart des trajets durent dix minutes ou moins. La moitié du milieu dure entre dix et vingt-cinq minutes. La largeur de cette moitié, vingt-cinq moins dix, s'appelle l'écart interquartile : quinze minutes."
+        verifier:
+          - {expression: "25 - 10", attendu: 15, libelle: "Écart interquartile"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La boîte à moustaches"
+        voix_off: "Ces cinq nombres se dessinent en une seule image."
+      - type: courbe
+        texte: "Min, Q1, médiane, Q3, max : *une boîte*"
+        courbe:
+          style: boites
+          boites:
+            - {etiquette: "Onze trajets", valeurs: [5, 10, 18, 25, 45]}
+          y_min: 0
+          y_max: 60
+          axe_y: "Durée (min)"
+          valeurs: true
+        note: "Ici, les moustaches vont du minimum au maximum. Une variante isole les valeurs atypiques (leçon à venir)."
+        voix_off: "La boîte va du premier au troisième quartile : elle contient la moitié du milieu. Le trait au milieu de la boîte, c'est la médiane. Les moustaches s'étendent jusqu'à la plus petite et la plus grande valeur. La moustache du haut est longue : quelques trajets sont beaucoup plus longs que les autres."
+      - type: texte
+        texte: "La boîte montre *le centre*, *l'étalement* et *l'asymétrie*"
+        voix_off: "En un coup d'œil, la boîte montre le centre, l'étalement, et l'asymétrie : la médiane est plus près du bas de la boîte, et la moustache du haut est la plus longue."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Déciles et rapport D9/D1"
+        voix_off: "Et si l'on coupe en dix au lieu de quatre ?"
+      - type: etapes
+        texte: "Les déciles *coupent en dix*"
+        etapes:
+          - "D1 : 10 % des valeurs sont *en dessous*"
+          - "D9 : 10 % des valeurs sont *au-dessus*"
+          - "D9/D1 : combien de fois *le haut* dépasse *le bas*"
+        voix_off: "Les déciles coupent la série rangée en dix parts égales. Le premier décile, D1, laisse dix pour cent des valeurs en dessous de lui. Le neuvième décile, D9, laisse dix pour cent des valeurs au-dessus. Leur rapport, D9 sur D1, mesure l'écart entre le haut et le bas : les instituts statistiques le publient pour les niveaux de vie."
+      - type: formule
+        texte: "Un pays *imaginaire*"
+        formule:
+          - '\dfrac{D9}{D1}=\dfrac{3\,400}{1\,000}=3{,}4'
+        voix_off: "Dans un pays imaginaire, D1 vaut mille euros par mois et D9 trois mille quatre cents. Le rapport vaut trois virgule quatre : le seuil d'entrée des dix pour cent les plus aisés est trois virgule quatre fois plus élevé que le plafond des dix pour cent les plus modestes."
+        verifier:
+          - {expression: "3400 / 1000", attendu: 3.4, libelle: "Rapport D9/D1"}
+      - type: texte
+        texte: "D9 est *une valeur*, pas un *groupe*"
+        voix_off: "Attention au piège : D9 est une valeur, une frontière. Ce n'est pas le revenu des dix pour cent les plus riches, qui gagnent tous au moins D9, et souvent bien plus."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Boîte : min *2*, Q1 *6*, médiane *9*, Q3 *14*, max *20*. Médiane ? Écart interquartile ? Part des valeurs entre 6 et 14 ?"
+        pause: 8
+        voix_off: "À vous. Une boîte à moustaches indique : minimum deux, premier quartile six, médiane neuf, troisième quartile quatorze, maximum vingt. Quelle est la médiane ? L'écart interquartile ? Et quelle part des valeurs se trouve entre six et quatorze ?"
+      - type: correction
+        etapes:
+          - "Médiane : le trait de la boîte, *9*"
+          - "Écart interquartile : 14 − 6 = *8*"
+          - "Entre Q1 et Q3 : *la moitié* des valeurs"
+        reponse: "9 ; 8 ; environ 50 %"
+        voix_off: "Voyons. La médiane est le trait dans la boîte : neuf. L'écart interquartile vaut quatorze moins six : huit. Entre le premier et le troisième quartile, on trouve la moitié du milieu : environ cinquante pour cent des valeurs."
+        verifier:
+          - {expression: "14 - 6", attendu: 8, libelle: "Écart interquartile de l'exercice"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Quartiles : la série rangée *coupée en quatre*"
+          - "La boîte : *la moitié du milieu*, médiane au centre"
+          - "D9 est *une frontière*, pas un groupe"
+        voix_off: "À retenir. Les quartiles coupent la série rangée en quatre. La boîte à moustaches montre la moitié du milieu, avec la médiane. Et un décile est une frontière, pas un groupe."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "The top, the bottom and the middle: quartiles and box plots"
+    legende: |
+      The median cuts a data set in two. Quartiles cut it in four, deciles in ten. We work out the quartiles of eleven commuting times by hand, build a box plot, and learn to read a D9/D1 ratio without mixing up a value and a group. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, quartiles, boxplot]
+    scenes:
+      - type: accroche
+        texte: "The top, the bottom, the middle: *how do you describe them*?"
+        voix_off: "The median tells you where the middle is. But how do you describe the bottom, the top, and everything in between?"
+      - type: titre
+        numero: 1
+        texte: "Cutting in four"
+        voix_off: "Let's sort the values, then cut them like a cake."
+      - type: etapes
+        texte: "Eleven journeys, *sorted* (in minutes)"
+        etapes:
+          - "5 · 8 · 10 · 12 · 15 · *18* · 20 · 22 · 25 · 30 · 45"
+          - "Median: the 6th value, *18 min*"
+          - "Q1: middle of the lower half, *10 min*"
+          - "Q3: middle of the upper half, *25 min*"
+        voix_off: "Here are eleven commuting times, sorted from shortest to longest. The median is the sixth value: eighteen minutes. The first quartile, Q1, is the middle of the five values below it: ten minutes. The third quartile, Q3, is the middle of the five values above it: twenty-five minutes."
+        note: "Half-series method: with an odd number of values, the median belongs to neither half."
+        verifier:
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v < 18)", attendu: 5, libelle: "Values below 18, then above (1)"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15, 18, 20, 22, 25, 30, 45] if v > 18)", attendu: 5, libelle: "Values below 18, then above (2)"}
+          - {expression: "sum(1 for v in [5, 8, 10, 12, 15] if v < 10) - sum(1 for v in [5, 8, 10, 12, 15] if v > 10)", attendu: 0, libelle: "Values below 10 in the lower half"}
+          - {expression: "sum(1 for v in [20, 22, 25, 30, 45] if v < 25) - sum(1 for v in [20, 22, 25, 30, 45] if v > 25)", attendu: 0, libelle: "Values above 25 in the upper half"}
+      - type: etapes
+        texte: "Four slices of *a quarter* each"
+        etapes:
+          - "A quarter of journeys take *10 min or less*"
+          - "The middle half: *between 10 and 25 min*"
+          - "Interquartile range: 25 − 10 = *15 min*"
+        voix_off: "The quartiles cut the data into four slices of roughly a quarter each. A quarter of the journeys take ten minutes or less. The middle half takes between ten and twenty-five minutes. The width of that middle half, twenty-five minus ten, is called the interquartile range: fifteen minutes."
+        verifier:
+          - {expression: "25 - 10", attendu: 15, libelle: "Interquartile range"}
+      - type: titre
+        numero: 2
+        texte: "The box plot"
+        voix_off: "These five numbers can be drawn as a single picture."
+      - type: courbe
+        texte: "Min, Q1, median, Q3, max: *one box*"
+        courbe:
+          style: boites
+          boites:
+            - {etiquette: "Eleven journeys", valeurs: [5, 10, 18, 25, 45]}
+          y_min: 0
+          y_max: 60
+          axe_y: "Time (min)"
+          valeurs: true
+        note: "Here the whiskers run from minimum to maximum. A variant shows outliers separately (coming lesson)."
+        voix_off: "The box runs from the first to the third quartile: it holds the middle half. The line inside the box is the median. The whiskers stretch out to the smallest and the largest value. The top whisker is long: a few journeys take much longer than the rest."
+      - type: texte
+        texte: "The box shows *the centre*, *the spread* and *the skew*"
+        voix_off: "At a glance, the box shows the centre, the spread, and the skew: the median sits nearer the bottom of the box, and the top whisker is the longest."
+      - type: titre
+        numero: 3
+        texte: "Deciles and the D9/D1 ratio"
+        voix_off: "And what if we cut in ten instead of four?"
+      - type: etapes
+        texte: "Deciles *cut in ten*"
+        etapes:
+          - "D1: 10% of values lie *below it*"
+          - "D9: 10% of values lie *above it*"
+          - "D9/D1: how many times *the top* exceeds *the bottom*"
+        voix_off: "Deciles cut the sorted data into ten equal parts. The first decile, D1, has ten percent of the values below it. The ninth decile, D9, has ten percent of the values above it. Their ratio, D9 over D1, measures the gap between the top and the bottom: statistics offices publish it for living standards."
+      - type: formule
+        texte: "An *imaginary* country"
+        formule:
+          - '\dfrac{D9}{D1}=\dfrac{3{,}400}{1{,}000}=3.4'
+        voix_off: "In an imaginary country, D1 is one thousand euros a month and D9 is three thousand four hundred. The ratio is three point four: the entry point to the richest ten percent is three point four times the ceiling of the poorest ten percent."
+        verifier:
+          - {expression: "3400 / 1000", attendu: 3.4, libelle: "D9/D1 ratio"}
+      - type: texte
+        texte: "D9 is *a value*, not *a group*"
+        voix_off: "Watch out for the trap: D9 is a value, a boundary. It is not the income of the richest ten percent, who all earn at least D9, and often far more."
+      - type: exercice
+        texte: "Box: min *2*, Q1 *6*, median *9*, Q3 *14*, max *20*. Median? Interquartile range? Share of values between 6 and 14?"
+        pause: 8
+        voix_off: "Your turn. A box plot shows: minimum two, first quartile six, median nine, third quartile fourteen, maximum twenty. What is the median? The interquartile range? And what share of the values lies between six and fourteen?"
+      - type: correction
+        etapes:
+          - "Median: the line in the box, *9*"
+          - "Interquartile range: 14 − 6 = *8*"
+          - "Between Q1 and Q3: *half* the values"
+        reponse: "9; 8; about 50%"
+        voix_off: "Let's see. The median is the line in the box: nine. The interquartile range is fourteen minus six: eight. Between the first and third quartiles lies the middle half: about fifty percent of the values."
+        verifier:
+          - {expression: "14 - 6", attendu: 8, libelle: "Interquartile range in the exercise"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Quartiles: the sorted data *cut in four*"
+          - "The box: *the middle half*, median inside"
+          - "D9 is *a boundary*, not a group"
+        voix_off: "Key points. Quartiles cut the sorted data in four. The box plot shows the middle half, with the median. And a decile is a boundary, not a group."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

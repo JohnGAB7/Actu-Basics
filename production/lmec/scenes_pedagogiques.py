@@ -450,14 +450,14 @@ class ScenesPedagogiques(Animations):
         # Histogramme : chaque point est [début de classe, hauteur] ; une classe s'arrête au début de la
         # suivante, la dernière a la largeur « largeur_classe » (par défaut celle de l'avant-dernière).
         # Classes contiguës, éventuellement inégales : la surface compte, donc aucune espace entre les barres.
-        if style == "barres":
+        if style in ("barres", "boites"):
             xmin, xmax = -0.5, len(pts) - 0.5
         elif style == "histogramme":
             lc = float(c.get("largeur_classe") or ((pts[-1][0] - pts[-2][0]) if len(pts) > 1 else 1.0))
             bornes = [x for x, _ in pts] + [pts[-1][0] + lc]
             xmin, xmax = bornes[0], bornes[-1]
-        else:
-            xmin, xmax = pts[0][0], pts[-1][0]
+        else:   # « x_min » / « x_max » : cadrage d'un nuage de points qui ne commence pas à son premier point
+            xmin, xmax = float(c.get("x_min", pts[0][0])), float(c.get("x_max", pts[-1][0]))
         gauche = g + int(max(p_axe.getlength(fmt_y(ymax)), p_axe.getlength(fmt_y(ymin)))) + 24
         droite = dr - 20
         # « serie_2 » : seconde courbe avec son propre axe vertical, à droite (double échelle, S1.09).
@@ -500,7 +500,7 @@ class ScenesPedagogiques(Animations):
                        fill=_melange(fond, self.c["texte"], a_axes))
         pas_x = next(p for p in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 10 ** 9)
                      if (xmax - xmin) / p <= 6)
-        if style == "barres":   # étiquette de catégorie sous chaque barre, sur deux lignes au plus
+        if style in ("barres", "boites"):   # étiquette de catégorie sous chaque barre, sur deux lignes au plus
             etiq = c.get("etiquettes") or [formater_nombre(x, self.langue, None) for x, _ in pts]
             l_cat = (droite - gauche) / len(pts) - 8
             for n_b, lbl in enumerate(etiq):
@@ -579,9 +579,50 @@ class ScenesPedagogiques(Animations):
                     lbl = fmt_y(v_b)
                     d.text(((x0 + x1) / 2 - p_axe.getlength(lbl) / 2, y_haut - p_axe.size - 14), lbl, font=p_axe,
                            fill=self.c["texte"])
+        elif style == "boites":
+            # Boîtes à moustaches posées l'une après l'autre : moustaches (min et max hors atypiques), boîte de
+            # Q1 à Q3, trait épais à la médiane, valeurs atypiques en points creux.
+            avant = set(c.get("mis_en_avant") or [])
+            demi = 0.18 if len(pts) == 1 else 0.3
+            for n_b, b in enumerate(c["boites"]):
+                kb = min(1.0, max(0.0, k * len(pts) - n_b))
+                if kb <= 0:
+                    continue
+                mn, q1, me, q3, mx = (float(z) for z in b["valeurs"])
+                couleur = self.c["accent"] if (n_b in avant or not avant) else self.c["barre"]
+                trait = _melange(fond, couleur, kb)
+                xc, x0, x1 = X(n_b), X(n_b - demi), X(n_b + demi)
+                xm0, xm1 = X(n_b - demi / 2), X(n_b + demi / 2)
+                d.line((xc, Y(mn), xc, Y(q1)), fill=trait, width=6)
+                d.line((xc, Y(q3), xc, Y(mx)), fill=trait, width=6)
+                d.line((xm0, Y(mn), xm1, Y(mn)), fill=trait, width=6)
+                d.line((xm0, Y(mx), xm1, Y(mx)), fill=trait, width=6)
+                d.rectangle((x0, Y(q3), x1, Y(q1)), fill=_melange(fond, couleur, 0.35 * kb), outline=trait, width=6)
+                d.line((x0, Y(me), x1, Y(me)), fill=_melange(fond, self.c["texte"], kb), width=10)
+                for v_a in b.get("atypiques", []):
+                    ya = Y(float(v_a))
+                    d.ellipse((xc - 14, ya - 14, xc + 14, ya + 14), outline=trait, width=6)
+                # « valeurs: true » : les cinq nombres écrits à droite de la boîte (une seule boîte, ou peu).
+                if c.get("valeurs") and kb >= 1.0:
+                    noms = {"fr": ("min", "Q1", "médiane", "Q3", "max"), "en": ("min", "Q1", "median", "Q3", "max")}
+                    # Étiquettes écartées les unes des autres (Q1 et min proches), de haut en bas.
+                    lignes = sorted(((Y(v_b) - p_axe.size * 0.6, f"{nom} {fmt_y(v_b)}", nom in ("médiane", "median"))
+                                     for nom, v_b in zip(noms.get(self.langue, noms["en"]), (mn, q1, me, q3, mx))))
+                    pas_l = p_axe.size + 10
+                    ys_l = [lignes[0][0]]
+                    for y_l, _, _ in lignes[1:]:
+                        ys_l.append(max(y_l, ys_l[-1] + pas_l))
+                    depasse = ys_l[-1] - (bas_g - p_axe.size * 0.6)
+                    if depasse > 0:
+                        ys_l = [v - depasse for v in ys_l]
+                    for y_l, (_, lbl, med) in zip(ys_l, lignes):
+                        d.text((x1 + 22, y_l), lbl, font=p_axe, fill=self.c["texte"] if med else self.c["secondaire"])
         elif style == "points":
-            for px, py in trace:
-                d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=self.c["accent"])
+            avant = set(c.get("mis_en_avant") or [])
+            rangs = [n_p for n_p, (x, _) in enumerate(pts) if x <= x_lim + 1e-9]
+            for n_p, (px, py) in zip(rangs, trace):
+                couleur = self.c["accent"] if (n_p in avant or not avant) else self.c["barre"]
+                d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=couleur)
         elif len(trace) >= 2:
             d.line(trace, fill=self.c["accent"], width=10, joint="curve")
         if s2:

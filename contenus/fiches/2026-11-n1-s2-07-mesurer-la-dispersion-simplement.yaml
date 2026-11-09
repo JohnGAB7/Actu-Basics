@@ -1,0 +1,244 @@
+# Niveau 1, vague 1, lot 3 : S2.07 « Mesurer la dispersion simplement » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S2.07.yaml
+# Calcul pur, nombres fictifs : températures moyennes mensuelles de deux villes imaginaires (climat
+# océanique et climat continental), choisies pour avoir la même moyenne annuelle, 12 °C. Le catalogue
+# proposait Brest et Strasbourg « chiffres à vérifier » : remplacés par des villes fictives, pour ne
+# citer aucun chiffre météorologique non sourcé. Quartiles par la méthode des demi-séries (12 valeurs).
+# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-07-mesurer-la-dispersion-simplement
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.07 · Mesurer la dispersion simplement"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer l'étendue et l'écart interquartile"
+      - "Expliquer pourquoi un centre seul ne suffit pas à décrire une distribution"
+      - "Savoir pourquoi l'écart interquartile résiste mieux qu'une étendue aux valeurs extrêmes"
+    en:
+      - "Compute the range and the interquartile range"
+      - "Explain why a centre alone is not enough to describe a distribution"
+      - "Know why the interquartile range copes better with extreme values than the range"
+  prerequis:
+    fr: ["S2.06 : quantiles, quartiles et boîte à moustaches"]
+    en: ["S2.06: quantiles, quartiles and box plots"]
+  hypotheses:
+    fr: "Deux villes imaginaires, températures mensuelles fictives mais vraisemblables ; quartiles par la méthode des demi-séries"
+    en: "Two imaginary towns, made-up but plausible monthly temperatures; quartiles by the half-series method"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Même moyenne, climats opposés : mesurer la dispersion"
+    legende: |
+      Deux villes ont la même température moyenne sur l'année : 12 °C. Pourtant, l'une a des hivers doux et des étés frais, l'autre gèle en janvier et cuit en juillet. On apprend à mesurer cet écart avec deux outils simples, l'étendue et l'écart interquartile, et à savoir lequel choisir. Exercice corrigé à la fin. Villes et températures fictives, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, dispersion, climat]
+    scenes:
+      - type: accroche
+        texte: "Deux villes, *12 °C de moyenne* : même climat ?"
+        voix_off: "Deux villes ont exactement la même température moyenne sur l'année : douze degrés. Ont-elles le même climat ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Même centre, deux histoires"
+        voix_off: "Regardons les douze mois, et pas seulement la moyenne."
+      - type: etapes
+        texte: "Températures moyennes *de chaque mois* (°C)"
+        etapes:
+          - "Ville A : de *7 °C* en janvier à *17 °C* en été"
+          - "Ville B : de *1 °C* en janvier à *23 °C* en juillet"
+          - "Moyenne sur l'année : *12 °C* pour les deux"
+        voix_off: "Voici les températures moyennes de chaque mois, dans deux villes imaginaires. La ville A, au bord de la mer, va de sept degrés en janvier à dix-sept en été. La ville B, au cœur d'un continent, va d'un degré en janvier à vingt-trois en juillet. Et pourtant, sur l'année, les deux ont douze degrés de moyenne."
+        note: "A : 7, 8, 9, 11, 13, 15, 17, 17, 15, 13, 10, 9. B : 1, 3, 7, 12, 16, 20, 23, 22, 18, 13, 7, 2."
+        verifier:
+          - {expression: "(7 + 8 + 9 + 11 + 13 + 15 + 17 + 17 + 15 + 13 + 10 + 9) / 12", attendu: 12, libelle: "Moyenne annuelle, ville A"}
+          - {expression: "(1 + 3 + 7 + 12 + 16 + 20 + 23 + 22 + 18 + 13 + 7 + 2) / 12", attendu: 12, libelle: "Moyenne annuelle, ville B"}
+      - type: texte
+        texte: "Le centre dit *où l'on est*. La dispersion dit *à quel point on s'en éloigne*"
+        voix_off: "La moyenne dit où se trouve le centre. Elle ne dit pas à quel point on peut s'en éloigner. Pour cela, il faut mesurer la dispersion."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "L'étendue"
+        voix_off: "Premier outil, le plus simple : l'étendue."
+      - type: formule
+        texte: "Étendue = *maximum − minimum*"
+        formule:
+          - '\text{A} : 17-7=10\ \text{°C}'
+          - '\text{B} : 23-1=22\ \text{°C}'
+        voix_off: "L'étendue, c'est l'écart entre la plus grande et la plus petite valeur. Pour la ville A, dix-sept moins sept : dix degrés. Pour la ville B, vingt-trois moins un : vingt-deux degrés, plus du double."
+        verifier:
+          - {expression: "17 - 7", attendu: 10, libelle: "Étendue, ville A"}
+          - {expression: "23 - 1", attendu: 22, libelle: "Étendue, ville B"}
+      - type: texte
+        texte: "Une seule valeur extrême *suffit à la changer*"
+        voix_off: "Son défaut : elle ne dépend que de deux valeurs, les deux extrêmes. Un seul mois exceptionnel, une vague de froid, et l'étendue change complètement."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "L'écart interquartile"
+        voix_off: "Deuxième outil : on regarde seulement la moitié du milieu."
+      - type: courbe
+        texte: "La moitié du milieu : *6 °C* contre *14 °C*"
+        courbe:
+          style: boites
+          boites:
+            - {etiquette: "Ville A", valeurs: [7, 9, 12, 15, 17]}
+            - {etiquette: "Ville B", valeurs: [1, 5, 12.5, 19, 23]}
+          y_min: 0
+          y_max: 24
+          axe_y: "Température (°C)"
+        note: "Quartiles des 12 mois. A : Q1 = 9, Q3 = 15. B : Q1 = 5, Q3 = 19 (milieu entre la 3e et la 4e valeur de chaque moitié)."
+        voix_off: "Rangeons les douze mois de chaque ville et dessinons leurs boîtes. Pour la ville A, la moitié du milieu va de neuf à quinze degrés : un écart interquartile de six. Pour la ville B, elle va de cinq à dix-neuf : quatorze degrés. Les médianes sont presque les mêmes ; les boîtes, pas du tout."
+        verifier:
+          - {expression: "15 - 9", attendu: 6, libelle: "Écart interquartile, ville A"}
+          - {expression: "19 - 5", attendu: 14, libelle: "Écart interquartile, ville B"}
+          - {expression: "(9 + 9) / 2", attendu: 9, libelle: "Q1 de A : 3e et 4e valeurs rangées (9 et 9)"}
+          - {expression: "(18 + 20) / 2", attendu: 19, libelle: "Q3 de B : 3e et 4e valeurs de la moitié haute (18 et 20)"}
+      - type: etapes
+        texte: "Étendue ou écart interquartile ?"
+        etapes:
+          - "Étendue : *rapide*, mais sensible aux extrêmes"
+          - "Écart interquartile : *robuste*, il ignore le quart du haut et du bas"
+          - "Toujours : *un centre et une dispersion*"
+        voix_off: "Alors, lequel choisir ? L'étendue est rapide, mais un seul extrême la fait varier. L'écart interquartile est plus robuste : il ignore le quart du haut et le quart du bas. Dans tous les cas, on donne toujours un centre et une dispersion, jamais un centre seul."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "X : *10, 11, 11, 11, 12*. Y : *7, 9, 11, 13, 15*. Z : *1, 6, 11, 16, 21*. Classez de la moins à la plus dispersée, puis vérifiez avec l'étendue."
+        pause: 8
+        voix_off: "À vous. Trois séries ont toutes onze de moyenne. X : dix, onze, onze, onze, douze. Y : sept, neuf, onze, treize, quinze. Z : un, six, onze, seize, vingt et un. Classez-les de la moins à la plus dispersée, d'un coup d'œil, puis vérifiez avec l'étendue."
+        verifier:
+          - {expression: "(10 + 11 + 11 + 11 + 12) / 5", attendu: 11, libelle: "Moyenne de X"}
+          - {expression: "(7 + 9 + 11 + 13 + 15) / 5", attendu: 11, libelle: "Moyenne de Y"}
+          - {expression: "(1 + 6 + 11 + 16 + 21) / 5", attendu: 11, libelle: "Moyenne de Z"}
+      - type: correction
+        etapes:
+          - "X : 12 − 10 = *2*"
+          - "Y : 15 − 7 = *8*"
+          - "Z : 21 − 1 = *20*"
+        reponse: "X, puis Y, puis Z"
+        voix_off: "Vérifions. L'étendue de X vaut douze moins dix : deux. Celle de Y, quinze moins sept : huit. Celle de Z, vingt et un moins un : vingt. Même centre, et pourtant X est la plus resserrée, puis Y, puis Z."
+        verifier:
+          - {expression: "12 - 10", attendu: 2, libelle: "Étendue de X"}
+          - {expression: "15 - 7", attendu: 8, libelle: "Étendue de Y"}
+          - {expression: "21 - 1", attendu: 20, libelle: "Étendue de Z"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Même moyenne *ne veut pas dire* même distribution"
+          - "Étendue = *max − min*, sensible aux extrêmes"
+          - "Écart interquartile = *Q3 − Q1*, plus robuste"
+        voix_off: "À retenir. La même moyenne ne veut pas dire la même distribution. L'étendue, maximum moins minimum, est sensible aux extrêmes. L'écart interquartile, Q3 moins Q1, est plus robuste."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Same average, opposite climates: measuring spread"
+    legende: |
+      Two towns have the same average temperature over the year: 12 °C. Yet one has mild winters and cool summers, while the other freezes in January and bakes in July. We learn to measure that difference with two simple tools, the range and the interquartile range, and when to use each. Worked exercise at the end. Fictional towns and temperatures, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, spread, climate]
+    scenes:
+      - type: accroche
+        texte: "Two towns, *12 °C on average*: same climate?"
+        voix_off: "Two towns have exactly the same average temperature over the year: twelve degrees. Do they have the same climate?"
+      - type: titre
+        numero: 1
+        texte: "Same centre, two stories"
+        voix_off: "Let's look at all twelve months, not just the average."
+      - type: etapes
+        texte: "Average temperature *of each month* (°C)"
+        etapes:
+          - "Town A: from *7 °C* in January to *17 °C* in summer"
+          - "Town B: from *1 °C* in January to *23 °C* in July"
+          - "Average over the year: *12 °C* for both"
+        voix_off: "Here are the average temperatures of each month in two imaginary towns. Town A, by the sea, goes from seven degrees in January to seventeen in summer. Town B, deep inside a continent, goes from one degree in January to twenty-three in July. And yet, over the year, both average twelve degrees."
+        note: "A: 7, 8, 9, 11, 13, 15, 17, 17, 15, 13, 10, 9. B: 1, 3, 7, 12, 16, 20, 23, 22, 18, 13, 7, 2."
+        verifier:
+          - {expression: "(7 + 8 + 9 + 11 + 13 + 15 + 17 + 17 + 15 + 13 + 10 + 9) / 12", attendu: 12, libelle: "Yearly average, town A"}
+          - {expression: "(1 + 3 + 7 + 12 + 16 + 20 + 23 + 22 + 18 + 13 + 7 + 2) / 12", attendu: 12, libelle: "Yearly average, town B"}
+      - type: texte
+        texte: "The centre says *where you are*. The spread says *how far you can stray*"
+        voix_off: "The average tells you where the centre is. It doesn't tell you how far you can stray from it. For that, you need to measure the spread."
+      - type: titre
+        numero: 2
+        texte: "The range"
+        voix_off: "First tool, the simplest one: the range."
+      - type: formule
+        texte: "Range = *maximum − minimum*"
+        formule:
+          - '\text{A}: 17-7=10\ \text{°C}'
+          - '\text{B}: 23-1=22\ \text{°C}'
+        voix_off: "The range is the gap between the largest and the smallest value. For town A, seventeen minus seven: ten degrees. For town B, twenty-three minus one: twenty-two degrees, more than double."
+        verifier:
+          - {expression: "17 - 7", attendu: 10, libelle: "Range, town A"}
+          - {expression: "23 - 1", attendu: 22, libelle: "Range, town B"}
+      - type: texte
+        texte: "One extreme value *is enough to change it*"
+        voix_off: "Its weakness: it depends on only two values, the two extremes. One exceptional month, a cold snap, and the range changes completely."
+      - type: titre
+        numero: 3
+        texte: "The interquartile range"
+        voix_off: "Second tool: we look only at the middle half."
+      - type: courbe
+        texte: "The middle half: *6 °C* versus *14 °C*"
+        courbe:
+          style: boites
+          boites:
+            - {etiquette: "Town A", valeurs: [7, 9, 12, 15, 17]}
+            - {etiquette: "Town B", valeurs: [1, 5, 12.5, 19, 23]}
+          y_min: 0
+          y_max: 24
+          axe_y: "Temperature (°C)"
+        note: "Quartiles of the 12 months. A: Q1 = 9, Q3 = 15. B: Q1 = 5, Q3 = 19 (halfway between the 3rd and 4th values of each half)."
+        voix_off: "Let's sort the twelve months of each town and draw their boxes. For town A, the middle half runs from nine to fifteen degrees: an interquartile range of six. For town B, it runs from five to nineteen: fourteen degrees. The medians are almost the same; the boxes are not at all."
+        verifier:
+          - {expression: "15 - 9", attendu: 6, libelle: "Interquartile range, town A"}
+          - {expression: "19 - 5", attendu: 14, libelle: "Interquartile range, town B"}
+          - {expression: "(9 + 9) / 2", attendu: 9, libelle: "Q1 of A: 3rd and 4th sorted values (9 and 9)"}
+          - {expression: "(18 + 20) / 2", attendu: 19, libelle: "Q3 of B: 3rd and 4th values of the upper half (18 and 20)"}
+      - type: etapes
+        texte: "Range or interquartile range?"
+        etapes:
+          - "Range: *quick*, but sensitive to extremes"
+          - "Interquartile range: *robust*, it ignores the top and bottom quarters"
+          - "Always: *a centre and a spread*"
+        voix_off: "So which one should you use? The range is quick, but a single extreme moves it. The interquartile range is more robust: it ignores the top quarter and the bottom quarter. Either way, always give a centre and a spread, never a centre alone."
+      - type: exercice
+        texte: "X: *10, 11, 11, 11, 12*. Y: *7, 9, 11, 13, 15*. Z: *1, 6, 11, 16, 21*. Rank them from least to most spread out, then check with the range."
+        pause: 8
+        voix_off: "Your turn. Three data sets all have a mean of eleven. X: ten, eleven, eleven, eleven, twelve. Y: seven, nine, eleven, thirteen, fifteen. Z: one, six, eleven, sixteen, twenty-one. Rank them from least to most spread out at a glance, then check with the range."
+        verifier:
+          - {expression: "(10 + 11 + 11 + 11 + 12) / 5", attendu: 11, libelle: "Mean of X"}
+          - {expression: "(7 + 9 + 11 + 13 + 15) / 5", attendu: 11, libelle: "Mean of Y"}
+          - {expression: "(1 + 6 + 11 + 16 + 21) / 5", attendu: 11, libelle: "Mean of Z"}
+      - type: correction
+        etapes:
+          - "X: 12 − 10 = *2*"
+          - "Y: 15 − 7 = *8*"
+          - "Z: 21 − 1 = *20*"
+        reponse: "X, then Y, then Z"
+        voix_off: "Let's check. The range of X is twelve minus ten: two. For Y, fifteen minus seven: eight. For Z, twenty-one minus one: twenty. Same centre, and yet X is the tightest, then Y, then Z."
+        verifier:
+          - {expression: "12 - 10", attendu: 2, libelle: "Range of X"}
+          - {expression: "15 - 7", attendu: 8, libelle: "Range of Y"}
+          - {expression: "21 - 1", attendu: 20, libelle: "Range of Z"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Same mean *doesn't mean* same distribution"
+          - "Range = *max − min*, sensitive to extremes"
+          - "Interquartile range = *Q3 − Q1*, more robust"
+        voix_off: "Key points. The same mean doesn't mean the same distribution. The range, maximum minus minimum, is sensitive to extremes. The interquartile range, Q3 minus Q1, is more robust."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -1,0 +1,208 @@
+# Niveau 1, vague 1, lot 3 : S3.02 « Tableaux croisés et pourcentages conditionnels » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S3.02.yaml
+# Calcul pur, nombres fictifs : 100 000 conducteurs imaginaires (98 000 sobres, 2 000 ayant bu), 500
+# accidents. Les « 80 % » de l'accroche sont fabriqués par cet exemple, ce n'est pas une statistique
+# routière réelle. Exercice : fumeurs et toux, fictif.
+# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s3-02-tableaux-croises-et-pourcentages-conditionnels
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S3.02 · Tableaux croisés et pourcentages conditionnels"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Construire un tableau croisé de deux variables"
+      - "Calculer des pourcentages en ligne et en colonne"
+      - "Choisir le pourcentage qui répond à la question posée"
+    en:
+      - "Build a cross-tab of two variables"
+      - "Compute row and column percentages"
+      - "Choose the percentage that answers the question being asked"
+  prerequis:
+    fr: ["S1.08 : pourcentages et points", "S2.01 : fréquences et tableaux"]
+    en: ["S1.08: percentages and points", "S2.01: frequencies and tables"]
+  hypotheses:
+    fr: "Population de 100 000 conducteurs imaginaires ; chiffres choisis pour l'exemple, pas une statistique réelle"
+    en: "An imaginary population of 100,000 drivers; numbers chosen for the example, not real statistics"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "« 80 % des accidents sans alcool » : faut-il boire avant de conduire ?"
+    legende: |
+      « 80 % des accidents impliquent un conducteur qui n'a pas bu. » Faut-il en conclure que boire protège ? Évidemment non : presque tous les conducteurs sont sobres. Avec un tableau croisé fictif de 100 000 conducteurs, on apprend à calculer des pourcentages en ligne et en colonne, et à choisir le bon dénominateur. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, pourcentages, tableaucroise]
+    scenes:
+      - type: accroche
+        texte: "*80 %* des accidents : conducteur *sobre*. Faut-il boire ?"
+        voix_off: "Imaginons ce titre : quatre-vingts pour cent des accidents impliquent un conducteur qui n'a pas bu. Faut-il en conclure qu'il vaut mieux boire avant de conduire ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le tableau croisé"
+        voix_off: "Pour répondre, il faut croiser deux informations."
+      - type: etapes
+        texte: "100 000 conducteurs *imaginaires*"
+        etapes:
+          - "Sobres : *98 000*, dont *400* accidents"
+          - "Ayant bu : *2 000*, dont *100* accidents"
+          - "Accidents : *500*, dont 400 sobres, soit *80 %*"
+        voix_off: "Prenons cent mille conducteurs imaginaires sur une année. Quatre-vingt-dix-huit mille sont sobres, et quatre cents d'entre eux ont un accident. Deux mille ont bu, et cent d'entre eux ont un accident. Sur les cinq cents accidents, quatre cents impliquent un conducteur sobre : quatre-vingts pour cent. Le titre est exact."
+        note: "Chiffres inventés pour l'exemple : ce n'est pas une statistique de sécurité routière."
+        verifier:
+          - {expression: "98000 + 2000", attendu: 100000, libelle: "Conducteurs"}
+          - {expression: "400 + 100", attendu: 500, libelle: "Accidents"}
+          - {expression: "100 * 400 / 500", attendu: 80, libelle: "Part des sobres parmi les accidents, en %"}
+      - type: etapes
+        texte: "Deux variables, *quatre cases*"
+        etapes:
+          - "Sobre, accident : *400* · Sobre, sans accident : *97 600*"
+          - "A bu, accident : *100* · A bu, sans accident : *1 900*"
+        voix_off: "C'est un tableau croisé : on range chaque conducteur selon deux variables à la fois. En ligne, sobre ou non ; en colonne, accident ou non. Cela donne quatre cases."
+        verifier:
+          - {expression: "98000 - 400", attendu: 97600, libelle: "Sobres sans accident"}
+          - {expression: "2000 - 100", attendu: 1900, libelle: "Ayant bu, sans accident"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Parmi qui ?"
+        voix_off: "Tout dépend d'une question : parmi qui calcule-t-on le pourcentage ?"
+      - type: etapes
+        texte: "Deux pourcentages, *deux questions*"
+        etapes:
+          - "Parmi les accidents : *80 %* de sobres"
+          - "Parmi les sobres : 400 ÷ 98 000 ≈ *0,41 %* d'accidents"
+          - "Parmi ceux qui ont bu : 100 ÷ 2 000 = *5 %* d'accidents"
+        voix_off: "On peut diviser par deux totaux différents. Parmi les accidents, quatre-vingts pour cent concernent des sobres : c'est le chiffre du titre. Mais parmi les sobres, seuls quatre cents sur quatre-vingt-dix-huit mille ont un accident : environ zéro virgule quatre un pour cent. Et parmi ceux qui ont bu, cent sur deux mille : cinq pour cent."
+        verifier:
+          - {expression: "100 * 400 / 98000", attendu: 0.41, libelle: "Risque d'accident des sobres, en %"}
+          - {expression: "100 * 100 / 2000", attendu: 5, libelle: "Risque d'accident après avoir bu, en %"}
+      - type: formule
+        texte: "Le risque est *environ 12 fois* plus élevé"
+        formule:
+          - '\dfrac{5\ \%}{0{,}41\ \%}\approx 12'
+        voix_off: "La question qui compte pour un conducteur, c'est son risque d'accident. Il est d'environ cinq pour cent après avoir bu, contre zéro virgule quatre un pour cent sobre : environ douze fois plus élevé. Les sobres sont majoritaires dans les accidents simplement parce qu'ils sont presque tous les conducteurs."
+        verifier:
+          - {expression: "(100 / 2000) / (400 / 98000)", attendu: 12, tolerance: 0.5, libelle: "Rapport des risques"}
+      - type: texte
+        texte: "Pourcentage *en colonne* ou *en ligne* : choisir le bon dénominateur"
+        voix_off: "Le piège classique, c'est de lire un pourcentage calculé parmi les accidents comme s'il était calculé parmi les conducteurs. Avant de conclure, demandez-vous toujours : pour cent de qui ?"
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "*200 fumeurs*, dont *60* toussent. *800 non-fumeurs*, dont *80* toussent. Quelle part de chaque groupe tousse ?"
+        pause: 8
+        voix_off: "À vous. Dans une entreprise imaginaire, deux cents fumeurs, dont soixante toussent tous les matins. Huit cents non-fumeurs, dont quatre-vingts toussent. Quelle part de chaque groupe tousse ?"
+      - type: correction
+        etapes:
+          - "Fumeurs : 60 ÷ 200 = *30 %*"
+          - "Non-fumeurs : 80 ÷ 800 = *10 %*"
+          - "Parmi ceux qui toussent, 60 sur 140 fument : *≈ 43 %*"
+        reponse: "30 % contre 10 %"
+        voix_off: "Calculons. Chez les fumeurs, soixante sur deux cents : trente pour cent. Chez les non-fumeurs, quatre-vingts sur huit cents : dix pour cent. Et si l'on change de dénominateur, parmi les cent quarante personnes qui toussent, soixante fument : environ quarante-trois pour cent, une minorité. Pourtant, le risque de tousser est trois fois plus élevé chez les fumeurs : trente pour cent contre dix."
+        verifier:
+          - {expression: "100 * 60 / 200", attendu: 30, libelle: "Part des fumeurs qui toussent, en %"}
+          - {expression: "100 * 80 / 800", attendu: 10, libelle: "Part des non-fumeurs qui toussent, en %"}
+          - {expression: "100 * 60 / (60 + 80)", attendu: 43, libelle: "Part de fumeurs parmi ceux qui toussent, en %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Un tableau croisé range chacun selon *deux variables*"
+          - "Un pourcentage dépend de *son dénominateur*"
+          - "Toujours demander : *pour cent de qui* ?"
+        voix_off: "À retenir. Un tableau croisé range chacun selon deux variables. Un pourcentage dépend de son dénominateur, parmi qui on le calcule. Alors demandez toujours : pour cent de qui ?"
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "“80% of crashes involve sober drivers”: should you drink before driving?"
+    legende: |
+      "80% of crashes involve a driver who hadn't been drinking." Does that mean drinking protects you? Of course not: almost all drivers are sober. With a made-up cross-tab of 100,000 drivers, we learn to compute row and column percentages, and to pick the right denominator. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, percentages, crosstab]
+    scenes:
+      - type: accroche
+        texte: "*80%* of crashes: a *sober* driver. Should you drink?"
+        voix_off: "Imagine this headline: eighty percent of crashes involve a driver who hadn't been drinking. Should we conclude that it's better to drink before driving?"
+      - type: titre
+        numero: 1
+        texte: "The cross-tab"
+        voix_off: "To answer, we need to combine two pieces of information."
+      - type: etapes
+        texte: "100,000 *imaginary* drivers"
+        etapes:
+          - "Sober: *98,000*, with *400* crashes"
+          - "Had been drinking: *2,000*, with *100* crashes"
+          - "Crashes: *500*, of which 400 sober, so *80%*"
+        voix_off: "Take a hundred thousand imaginary drivers over one year. Ninety-eight thousand are sober, and four hundred of them have a crash. Two thousand have been drinking, and one hundred of them have a crash. Of the five hundred crashes, four hundred involve a sober driver: eighty percent. The headline is accurate."
+        note: "Numbers invented for the example: these are not road safety statistics."
+        verifier:
+          - {expression: "98000 + 2000", attendu: 100000, libelle: "Drivers"}
+          - {expression: "400 + 100", attendu: 500, libelle: "Crashes"}
+          - {expression: "100 * 400 / 500", attendu: 80, libelle: "Share of sober drivers among crashes, %"}
+      - type: etapes
+        texte: "Two variables, *four cells*"
+        etapes:
+          - "Sober, crash: *400* · Sober, no crash: *97,600*"
+          - "Drinking, crash: *100* · Drinking, no crash: *1,900*"
+        voix_off: "This is a cross-tab: each driver is sorted by two variables at once. In the rows, sober or not; in the columns, crash or not. That gives four cells."
+        verifier:
+          - {expression: "98000 - 400", attendu: 97600, libelle: "Sober, no crash"}
+          - {expression: "2000 - 100", attendu: 1900, libelle: "Drinking, no crash"}
+      - type: titre
+        numero: 2
+        texte: "Out of whom?"
+        voix_off: "Everything depends on one question: out of whom do we compute the percentage?"
+      - type: etapes
+        texte: "Two percentages, *two questions*"
+        etapes:
+          - "Among crashes: *80%* sober"
+          - "Among sober drivers: 400 ÷ 98,000 ≈ *0.41%* crash"
+          - "Among drinkers: 100 ÷ 2,000 = *5%* crash"
+        voix_off: "We can divide by two different totals. Among crashes, eighty percent involve sober drivers: that's the headline figure. But among sober drivers, only four hundred out of ninety-eight thousand have a crash: about zero point four one percent. And among those who have been drinking, one hundred out of two thousand: five percent."
+        verifier:
+          - {expression: "100 * 400 / 98000", attendu: 0.41, libelle: "Crash risk, sober, %"}
+          - {expression: "100 * 100 / 2000", attendu: 5, libelle: "Crash risk, after drinking, %"}
+      - type: formule
+        texte: "The risk is *about 12 times* higher"
+        formule:
+          - '\dfrac{5\%}{0.41\%}\approx 12'
+        voix_off: "The question that matters for a driver is their own risk of a crash. It's about five percent after drinking, against zero point four one percent when sober: about twelve times higher. Sober drivers make up most crashes simply because they make up almost all drivers."
+        verifier:
+          - {expression: "(100 / 2000) / (400 / 98000)", attendu: 12, tolerance: 0.5, libelle: "Risk ratio"}
+      - type: texte
+        texte: "*Column* or *row* percentage: pick the right denominator"
+        voix_off: "The classic trap is to read a percentage computed among crashes as if it were computed among drivers. Before you conclude anything, always ask: percent of whom?"
+      - type: exercice
+        texte: "*200 smokers*, of whom *60* cough. *800 non-smokers*, of whom *80* cough. What share of each group coughs?"
+        pause: 8
+        voix_off: "Your turn. In an imaginary company, two hundred smokers, sixty of whom cough every morning. Eight hundred non-smokers, eighty of whom cough. What share of each group coughs?"
+      - type: correction
+        etapes:
+          - "Smokers: 60 ÷ 200 = *30%*"
+          - "Non-smokers: 80 ÷ 800 = *10%*"
+          - "Among those who cough, 60 of 140 smoke: *≈ 43%*"
+        reponse: "30% versus 10%"
+        voix_off: "Let's compute. Among smokers, sixty out of two hundred: thirty percent. Among non-smokers, eighty out of eight hundred: ten percent. And if we switch denominators, of the hundred and forty people who cough, sixty smoke: about forty-three percent, a minority. Yet the risk of coughing is three times higher for smokers: thirty percent against ten."
+        verifier:
+          - {expression: "100 * 60 / 200", attendu: 30, libelle: "Share of smokers who cough, %"}
+          - {expression: "100 * 80 / 800", attendu: 10, libelle: "Share of non-smokers who cough, %"}
+          - {expression: "100 * 60 / (60 + 80)", attendu: 43, libelle: "Share of smokers among those who cough, %"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "A cross-tab sorts everyone by *two variables*"
+          - "A percentage depends on *its denominator*"
+          - "Always ask: *percent of whom*?"
+        voix_off: "Key points. A cross-tab sorts everyone by two variables. A percentage depends on its denominator, the group it is computed within. So always ask: percent of whom?"
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

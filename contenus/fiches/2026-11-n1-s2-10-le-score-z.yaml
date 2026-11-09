@@ -1,0 +1,198 @@
+# Niveau 1, vague 1, lot 3 : S2.10 « Le score z : comparer l'incomparable » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S2.10.yaml
+# Calcul pur, nombres fictifs : deux contrôles de classe (exemple d'ouverture), puis l'exercice du catalogue
+# (15 en maths, moyenne 12, écart-type 2 ; 14 en philosophie, moyenne 10, écart-type 3).
+# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-10-le-score-z
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.10 · Le score z : comparer l'incomparable"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer un score z"
+      - "Comparer deux valeurs venant de distributions différentes grâce à la standardisation"
+      - "Savoir que standardiser change l'échelle, pas la forme de la distribution"
+    en:
+      - "Compute a z-score"
+      - "Compare two values from different distributions by standardising"
+      - "Know that standardising changes the scale, not the shape of the distribution"
+  prerequis:
+    fr: ["S2.08 : variance et écart-type"]
+    en: ["S2.08: variance and standard deviation"]
+  hypotheses:
+    fr: "Notes, moyennes et écarts-types fictifs"
+    en: "Made-up marks, means and standard deviations"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Un 14 peut-il valoir mieux qu'un 16 ? Le score z"
+    legende: |
+      Léa a 16 sur 20 à un contrôle, Tom a 14 sur 20 à un autre. Qui a fait la meilleure performance ? Tout dépend de la moyenne et de la dispersion de chaque contrôle. On apprend à calculer un score z, le nombre d'écarts-types au-dessus de la moyenne, pour comparer des valeurs qui ne sont pas sur la même échelle. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, scorez, ecarttype]
+    scenes:
+      - type: accroche
+        texte: "Un *14* peut-il valoir mieux qu'un *16* ?"
+        voix_off: "Léa a seize sur vingt à un contrôle. Tom a quatorze sur vingt à un autre contrôle. Qui a fait la meilleure performance ? La réponse n'est pas forcément celle qu'on croit."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Une note seule ne suffit pas"
+        voix_off: "Pour juger une note, il faut la comparer à celles des autres."
+      - type: etapes
+        texte: "Deux contrôles, *deux échelles*"
+        etapes:
+          - "Contrôle de Léa : moyenne *12*, écart-type *4*"
+          - "Contrôle de Tom : moyenne *10*, écart-type *2*"
+          - "Léa : 4 points au-dessus. Tom : 4 points aussi"
+        voix_off: "Regardons chaque classe. Au contrôle de Léa, la moyenne est de douze, avec un écart-type de quatre : les notes sont très étalées. Au contrôle de Tom, la moyenne est de dix, avec un écart-type de deux : les notes sont serrées. Léa est quatre points au-dessus de la moyenne, et Tom aussi."
+      - type: texte
+        texte: "4 points, c'est *peu* dans une classe étalée, *beaucoup* dans une classe serrée"
+        voix_off: "Mais quatre points ne pèsent pas pareil. Dans une classe où les notes sont étalées, c'est un écart ordinaire. Dans une classe où elles sont serrées, c'est un écart remarquable."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Le score z"
+        voix_off: "L'idée : mesurer l'écart en nombre d'écarts-types."
+      - type: formule
+        texte: "Score z = *écart à la moyenne ÷ écart-type*"
+        formule:
+          - 'z=\dfrac{x-\bar{x}}{\sigma}'
+        voix_off: "Le score z, c'est l'écart à la moyenne divisé par l'écart-type. Il dit de combien d'écarts-types une valeur se trouve au-dessus de la moyenne, ou au-dessous s'il est négatif."
+      - type: formule
+        texte: "Léa : *z = 1*. Tom : *z = 2*"
+        formule:
+          - 'z_{\text{Léa}}=\dfrac{16-12}{4}=1'
+          - 'z_{\text{Tom}}=\dfrac{14-10}{2}=2'
+        voix_off: "Pour Léa : seize moins douze, quatre, divisé par quatre : un. Pour Tom : quatorze moins dix, quatre, divisé par deux : deux. Tom est à deux écarts-types au-dessus de sa moyenne, Léa à un seul : relativement à sa classe, la performance de Tom est plus remarquable."
+        verifier:
+          - {expression: "(16 - 12) / 4", attendu: 1, libelle: "Score z de Léa"}
+          - {expression: "(14 - 10) / 2", attendu: 2, libelle: "Score z de Tom"}
+      - type: texte
+        texte: "Un score z *n'a pas d'unité* : on peut comparer"
+        voix_off: "Le score z n'a pas d'unité : des points divisés par des points. C'est ce qui permet de comparer des notes, des temps de course, des tailles ou des salaires mesurés sur des échelles différentes."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Ce que le score z ne fait pas"
+        voix_off: "Un dernier point, souvent mal compris."
+      - type: etapes
+        texte: "Standardiser change *l'échelle*, pas *la forme*"
+        etapes:
+          - "Moyenne des scores z : *0* ; écart-type : *1*"
+          - "Une distribution asymétrique *reste asymétrique*"
+          - "Ce n'est pas une *courbe en cloche* automatique"
+        voix_off: "Quand on remplace chaque valeur par son score z, voici ce qui change. La moyenne devient zéro et l'écart-type devient un. Mais la forme de la distribution ne change pas : une distribution asymétrique reste asymétrique. Standardiser ne la transforme pas en courbe en cloche."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "*15* en maths (moyenne 12, écart-type 2) ou *14* en philo (moyenne 10, écart-type 3) : quelle note est la plus remarquable ?"
+        pause: 9
+        voix_off: "À vous. Un élève a quinze en mathématiques, où la moyenne est de douze et l'écart-type de deux. Il a quatorze en philosophie, où la moyenne est de dix et l'écart-type de trois. Quelle note est la plus remarquable ?"
+      - type: correction
+        etapes:
+          - "Maths : (15 − 12) ÷ 2 = *1,5*"
+          - "Philo : (14 − 10) ÷ 3 ≈ *1,33*"
+        reponse: "La note de maths"
+        voix_off: "Calculons les scores z. En maths : quinze moins douze, trois, divisé par deux : un virgule cinq. En philosophie : quatorze moins dix, quatre, divisé par trois : environ un virgule trois trois. La note de maths est la plus remarquable, alors que l'écart brut est plus petit : trois points contre quatre."
+        verifier:
+          - {expression: "(15 - 12) / 2", attendu: 1.5, libelle: "Score z en maths"}
+          - {expression: "(14 - 10) / 3", attendu: 1.33, libelle: "Score z en philosophie"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "z = *(valeur − moyenne) ÷ écart-type*"
+          - "Il compte *les écarts-types* au-dessus de la moyenne"
+          - "Il change l'échelle, *pas la forme*"
+        voix_off: "À retenir. Le score z, c'est la valeur moins la moyenne, divisée par l'écart-type. Il compte les écarts-types au-dessus de la moyenne, ce qui permet de comparer des échelles différentes. Et il change l'échelle, pas la forme de la distribution."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Can a 14 beat a 16? The z-score"
+    legende: |
+      Lea scores 16 out of 20 on one test, Tom scores 14 out of 20 on another. Who did better? It depends on the mean and the spread of each test. We learn to compute a z-score, the number of standard deviations above the mean, to compare values that aren't on the same scale. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, zscore, standarddeviation]
+    scenes:
+      - type: accroche
+        texte: "Can a *14* beat a *16*?"
+        voix_off: "Lea scores sixteen out of twenty on one test. Tom scores fourteen out of twenty on a different test. Who did better? The answer isn't necessarily the one you'd expect."
+      - type: titre
+        numero: 1
+        texte: "A mark alone isn't enough"
+        voix_off: "To judge a mark, you have to compare it with everyone else's."
+      - type: etapes
+        texte: "Two tests, *two scales*"
+        etapes:
+          - "Lea's test: mean *12*, standard deviation *4*"
+          - "Tom's test: mean *10*, standard deviation *2*"
+          - "Lea: 4 points above. Tom: 4 points as well"
+        voix_off: "Let's look at each class. On Lea's test, the mean is twelve, with a standard deviation of four: the marks are widely spread. On Tom's test, the mean is ten, with a standard deviation of two: the marks are bunched together. Lea is four points above the mean, and so is Tom."
+      - type: texte
+        texte: "4 points is *little* in a spread-out class, *a lot* in a tight one"
+        voix_off: "But four points don't carry the same weight. In a class where the marks are spread out, it's an ordinary gap. In a class where they are bunched together, it's a remarkable one."
+      - type: titre
+        numero: 2
+        texte: "The z-score"
+        voix_off: "The idea: measure the gap in standard deviations."
+      - type: formule
+        texte: "z-score = *gap from the mean ÷ standard deviation*"
+        formule:
+          - 'z=\dfrac{x-\bar{x}}{\sigma}'
+        voix_off: "The z-score is the gap from the mean divided by the standard deviation. It tells you how many standard deviations a value lies above the mean, or below it if it is negative."
+      - type: formule
+        texte: "Lea: *z = 1*. Tom: *z = 2*"
+        formule:
+          - 'z_{\text{Lea}}=\dfrac{16-12}{4}=1'
+          - 'z_{\text{Tom}}=\dfrac{14-10}{2}=2'
+        voix_off: "For Lea: sixteen minus twelve, four, divided by four: one. For Tom: fourteen minus ten, four, divided by two: two. Tom is two standard deviations above his class mean, Lea only one: relative to their classes, Tom's result is more remarkable."
+        verifier:
+          - {expression: "(16 - 12) / 4", attendu: 1, libelle: "Lea's z-score"}
+          - {expression: "(14 - 10) / 2", attendu: 2, libelle: "Tom's z-score"}
+      - type: texte
+        texte: "A z-score *has no unit*: you can compare"
+        voix_off: "A z-score has no unit: points divided by points. That's what lets you compare marks, race times, heights or salaries measured on different scales."
+      - type: titre
+        numero: 3
+        texte: "What the z-score doesn't do"
+        voix_off: "One last point, often misunderstood."
+      - type: etapes
+        texte: "Standardising changes *the scale*, not *the shape*"
+        etapes:
+          - "Mean of the z-scores: *0*; standard deviation: *1*"
+          - "A skewed distribution *stays skewed*"
+          - "It isn't an automatic *bell curve*"
+        voix_off: "When you replace every value by its z-score, here is what changes. The mean becomes zero and the standard deviation becomes one. But the shape of the distribution doesn't change: a skewed distribution stays skewed. Standardising doesn't turn it into a bell curve."
+      - type: exercice
+        texte: "*15* in maths (mean 12, SD 2) or *14* in philosophy (mean 10, SD 3): which mark stands out more?"
+        pause: 9
+        voix_off: "Your turn. A pupil gets fifteen in maths, where the mean is twelve and the standard deviation is two. They get fourteen in philosophy, where the mean is ten and the standard deviation is three. Which mark stands out more?"
+      - type: correction
+        etapes:
+          - "Maths: (15 − 12) ÷ 2 = *1.5*"
+          - "Philosophy: (14 − 10) ÷ 3 ≈ *1.33*"
+        reponse: "The maths mark"
+        voix_off: "Let's compute the z-scores. In maths: fifteen minus twelve, three, divided by two: one point five. In philosophy: fourteen minus ten, four, divided by three: about one point three three. The maths mark stands out more, even though the raw gap is smaller: three points against four."
+        verifier:
+          - {expression: "(15 - 12) / 2", attendu: 1.5, libelle: "z-score in maths"}
+          - {expression: "(14 - 10) / 3", attendu: 1.33, libelle: "z-score in philosophy"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "z = *(value − mean) ÷ standard deviation*"
+          - "It counts *standard deviations* above the mean"
+          - "It changes the scale, *not the shape*"
+        voix_off: "Key points. The z-score is the value minus the mean, divided by the standard deviation. It counts standard deviations above the mean, which lets you compare different scales. And it changes the scale, not the shape of the distribution."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

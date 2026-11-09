@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+id_programme: S2.09
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-s2-09-valeurs-atypiques-erreur-ou-information.yaml
+question_centrale:
+  fr: Faut-il supprimer une valeur qui « dépasse » ?
+  en: Should you delete a value that “sticks out”?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 9
+public:
+  prerequis:
+  - S2.06
+  - S2.08
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Une valeur atypique est une question à poser avant d'être une valeur à supprimer.
+exemple_fil_rouge: Tailles d'un groupe fictif avec une valeur de 17 m ; revenu de 10 M€ dans un quartier fictif.
+exemple_reel: null
+idees_fausses:
+- idee: Supprimer les atypiques pour « améliorer » un résultat
+  desamorcee_a_l_etape: 'Partie 3 et exercice : corriger, garder ou analyser à part'
+exercice:
+  question: 'Trois cas A, B, C : que faire de chaque valeur atypique ?'
+  correction: A corriger (erreur de saisie), B garder, C analyser à part
+  pause_secondes: 9
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Un temps de course de 2 min sur un 10 km : erreur ou information ?'
+  diagnostic_d_erreur: '« J''ai retiré les valeurs extrêmes pour que la moyenne soit plus belle » : qu''est-ce qui ne va pas
+    ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  controle_mobile: Après rendu (inspection)

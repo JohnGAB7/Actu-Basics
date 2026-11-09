@@ -1792,3 +1792,28 @@ def test_legende_sans_periode_sans_parentheses_vides():
         assert "()" not in legende_complete(fiche, edition)
         fiche.periode = "2024"
         assert "(2024)" in legende_complete(fiche, edition)
+
+
+def test_boites_a_moustaches_et_nuage(tmp_path):
+    """Boîtes à moustaches (S2.06, S3.01) et nuage de points cadré, avec points mis en avant (S3.04)."""
+    from lmec.pedagogie import valider_scene
+
+    def valider(scene, ctx):
+        err = []
+        return valider_scene(scene["type"], scene, ctx, err), err
+    bon = {"type": "courbe", "texte": "Boîtes", "voix_off": "Deux boîtes.",
+           "courbe": {"style": "boites", "boites": [
+               {"etiquette": "Lundi", "valeurs": [0, 2, 4, 7, 12], "atypiques": [25]},
+               {"etiquette": "Mardi", "valeurs": [0, 1, 3, 5, 9]}]}}
+    extra, err = valider(bon, "s")
+    assert not err and extra["courbe"]["_points"] == [(0.0, 25.0), (1.0, 9.0)]
+    assert extra["courbe"]["etiquettes"] == ["Lundi", "Mardi"]
+    mauvais = copy.deepcopy(bon)
+    mauvais["courbe"]["boites"][0]["valeurs"] = [0, 5, 4, 7, 12]
+    assert any("boites" in e for e in valider(mauvais, "s")[1])
+    nuage = {"type": "courbe", "texte": "Nuage", "voix_off": "Un nuage.",
+             "courbe": {"style": "points", "points": [[5, 3], [2, 1], [9, 8]], "x_min": 0, "x_max": 10,
+                        "mis_en_avant": [2]}}
+    assert not valider(nuage, "s")[1]
+    nuage["courbe"]["x_min"] = "zéro"
+    assert any("x_min" in e for e in valider(nuage, "s")[1])

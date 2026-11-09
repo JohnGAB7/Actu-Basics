@@ -1,0 +1,47 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Données d'Anscombe recalculées par le moteur (r ≈ 0,82 pour les quatre séries).
+id_programme: S3.05
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-s3-05-la-correlation.yaml
+question_centrale:
+  fr: Que mesure exactement un coefficient de corrélation de 0,8 ?
+  en: What exactly does a correlation coefficient of 0.8 measure?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S3
+  rang_dans_module: 5
+public:
+  prerequis:
+  - S3.04
+  - S2.10
+  niveau_maths: M1
+  rappel_conseille: []
+intuition: 'r est la moyenne des produits des scores z : les points en haut à droite et en bas à gauche le font monter.'
+exemple_fil_rouge: 'Quatre points (1 ; 2), (2 ; 3), (3 ; 5), (4 ; 6) : r ≈ 0,99. Puis le quartet d''Anscombe.'
+exemple_reel: F. J. Anscombe, The American Statistician 27(1), 1973, doi 10.1080/00031305.1973.10478966
+idees_fausses:
+- idee: Lire r = 0 comme « aucune relation »
+  desamorcee_a_l_etape: 'Partie 4 : la parabole'
+- idee: Lire r comme une pente
+  desamorcee_a_l_etape: 'Partie 4 : y = x et y = 10 × x'
+exercice:
+  question: Associer cinq nuages décrits (A à E) à r = −0,9 ; −0,4 ; 0 ; 0,5 ; 0,95
+  correction: A 0,95 ; B 0,5 ; C 0 ; D −0,9 ; E −0,4
+  pause_secondes: 10
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Deux variables ont r = 0,1. Peut-on dire qu'elles n'ont aucun lien ?
+  diagnostic_d_erreur: '« r = 0,9, donc quand x augmente de 1, y augmente de 0,9 » : où est l''erreur ?'
+duree_estimee_min:
+- 6
+- 8
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT à faire ; validation JG à faire
+  controle_mobile: Après rendu (inspection)

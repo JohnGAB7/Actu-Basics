@@ -1,0 +1,448 @@
+# Niveau 1, vague 1, lot 3 : S3.05 « La corrélation » (EDUCATIONAL, leçon)
+# Fiche de conception : contenus/conception/S3.05.yaml
+# Calcul de r sur 4 points fictifs à l'aide des scores z (écarts-types en divisant par n, comme en S2.08).
+# Quartet d'Anscombe : données publiées par F. J. Anscombe, « Graphs in Statistical Analysis »,
+# The American Statistician 27(1), 1973, p. 17-21 (doi 10.1080/00031305.1973.10478966) ; r recalculé
+# pour chaque série par une expression « verifier ». Parabole fictive (r = 0). Exercice : cinq nuages décrits.
+# Statut : à relire (ChatGPT), puis à valider par JG. Aucun rendu avant validation.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s3-05-la-correlation
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S3.05 · La corrélation"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Interpréter un coefficient de corrélation r entre −1 et 1"
+      - "Montrer que r ne mesure que la relation linéaire"
+      - "Calculer r sur 4 points à l'aide des scores z"
+    en:
+      - "Interpret a correlation coefficient r between −1 and 1"
+      - "Show that r only measures the linear relationship"
+      - "Compute r on 4 points using z-scores"
+  prerequis:
+    fr: ["S3.04 : le nuage de points", "S2.10 : le score z"]
+    en: ["S3.04: the scatter plot", "S2.10: the z-score"]
+  hypotheses:
+    fr: "Quatre points et parabole fictifs ; quartet d'Anscombe publié en 1973"
+    en: "Made-up four points and parabola; Anscombe's quartet published in 1973"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom:
+      fr: "F. J. Anscombe, The American Statistician, 1973"
+      en: "F. J. Anscombe, The American Statistician, 1973"
+    url: "https://doi.org/10.1080/00031305.1973.10478966"
+    date_consultation: "2026-11-09"
+
+editions:
+  fr:
+    titre: "Que mesure vraiment une corrélation de 0,8 ?"
+    legende: |
+      Le coefficient de corrélation r va de −1 à 1. Mais que mesure-t-il exactement ? On le calcule à la main sur quatre points avec les scores z, puis on découvre le quartet d'Anscombe : quatre nuages très différents, une seule et même corrélation. Et deux erreurs à éviter : lire r = 0 comme « aucune relation », et lire r comme une pente. Exercice corrigé à la fin. Source : F. J. Anscombe, The American Statistician, 1973. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, correlation, anscombe]
+    scenes:
+      - type: accroche
+        texte: "Que mesure vraiment *r = 0,8* ?"
+        voix_off: "Une étude annonce une corrélation de zéro virgule huit entre deux quantités. C'est beaucoup ? Et surtout, qu'est-ce que ce nombre mesure exactement ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Un nombre entre −1 et 1"
+        voix_off: "Le coefficient de corrélation se note r."
+      - type: etapes
+        texte: "r résume *l'alignement* d'un nuage"
+        etapes:
+          - "r = *1* : points alignés sur une droite *qui monte*"
+          - "r = *−1* : alignés sur une droite *qui descend*"
+          - "r = *0* : *aucune tendance en ligne droite*"
+          - "r = *0,8* : tendance nette, points *dispersés autour*"
+        voix_off: "Il est toujours compris entre moins un et un. Un r de un : tous les points sont exactement sur une droite qui monte. Un r de moins un : ils sont exactement sur une droite qui descend. Un r de zéro : aucune tendance en ligne droite. Et zéro virgule huit : une tendance nette qui monte, avec des points dispersés autour de la droite."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Le calcul en quatre points"
+        voix_off: "Calculons r à la main, sur un tout petit nuage."
+      - type: courbe
+        texte: "Quatre points, *moyennes 2,5 et 4*"
+        courbe:
+          style: points
+          points: [[1, 2], [2, 3], [3, 5], [4, 6]]
+          x_min: 0
+          x_max: 5
+          y_min: 0
+          y_max: 8
+          axe_x: "x"
+          axe_y: "y"
+        note: "Points fictifs. Écarts-types calculés en divisant par n, comme dans l'épisode sur l'écart-type."
+        voix_off: "Voici quatre points : un et deux, deux et trois, trois et cinq, quatre et six. La moyenne des x vaut deux virgule cinq, celle des y vaut quatre."
+        verifier:
+          - {expression: "(1 + 2 + 3 + 4) / 4", attendu: 2.5, libelle: "Moyenne des x"}
+          - {expression: "(2 + 3 + 5 + 6) / 4", attendu: 4, libelle: "Moyenne des y"}
+      - type: formule
+        texte: "On transforme chaque valeur en *score z*"
+        formule:
+          - 'z_x :\ -1{,}34\quad -0{,}45\quad 0{,}45\quad 1{,}34'
+          - 'z_y :\ -1{,}26\quad -0{,}63\quad 0{,}63\quad 1{,}26'
+        voix_off: "Première étape : on remplace chaque valeur par son score z, l'écart à la moyenne divisé par l'écart-type. L'écart-type des x vaut environ un virgule douze, celui des y environ un virgule cinquante-huit. Les petits x et les petits y ont des scores négatifs, les grands des scores positifs."
+        verifier:
+          - {expression: "sqrt((1.5**2 + 0.5**2 + 0.5**2 + 1.5**2) / 4)", attendu: 1.12, libelle: "Écart-type des x"}
+          - {expression: "sqrt((2**2 + 1**2 + 1**2 + 2**2) / 4)", attendu: 1.58, libelle: "Écart-type des y"}
+          - {expression: "1.5 / sqrt(1.25)", attendu: 1.34, libelle: "Score z du plus grand x"}
+          - {expression: "0.5 / sqrt(1.25)", attendu: 0.45, libelle: "Score z de x = 3"}
+          - {expression: "2 / sqrt(2.5)", attendu: 1.26, libelle: "Score z du plus grand y"}
+          - {expression: "1 / sqrt(2.5)", attendu: 0.63, libelle: "Score z de y = 5"}
+      - type: formule
+        texte: "r = *moyenne des produits* des scores z"
+        formule:
+          - 'r=\dfrac{1{,}70+0{,}28+0{,}28+1{,}70}{4}\approx 0{,}99'
+        voix_off: "Deuxième étape : pour chaque point, on multiplie son score z en x par son score z en y, puis on fait la moyenne. Un virgule sept, zéro virgule vingt-huit, zéro virgule vingt-huit, un virgule sept : la moyenne vaut environ zéro virgule quatre-vingt-dix-neuf. Les points sont presque alignés."
+        verifier:
+          - {expression: "1.5 / sqrt(1.25) * 2 / sqrt(2.5)", attendu: 1.70, libelle: "Produit pour le point (4 ; 6)"}
+          - {expression: "0.5 / sqrt(1.25) * 1 / sqrt(2.5)", attendu: 0.28, libelle: "Produit pour le point (3 ; 5)"}
+          - {expression: "(1.5*2 + 0.5*1 + 0.5*1 + 1.5*2) / 4 / (sqrt(1.25) * sqrt(2.5))", attendu: 0.99, libelle: "Coefficient r"}
+      - type: texte
+        texte: "En haut à droite, en bas à gauche : *r monte*"
+        voix_off: "Voilà l'intuition. Un point en haut à droite a deux scores positifs, un point en bas à gauche deux scores négatifs : dans les deux cas, le produit est positif et r monte. Les points en haut à gauche ou en bas à droite donnent des produits négatifs et le font baisser."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Le quartet d'Anscombe"
+        voix_off: "En mille neuf cent soixante-treize, le statisticien Francis Anscombe publie quatre petites séries de onze points."
+      - type: courbe
+        texte: "Série 1 : *r ≈ 0,82*"
+        courbe:
+          style: points
+          points: [[4, 4.26], [5, 5.68], [6, 7.24], [7, 4.82], [8, 6.95], [9, 8.81], [10, 8.04], [11, 8.33], [12, 10.84], [13, 7.58], [14, 9.96]]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Quartet d'Anscombe, The American Statistician, 1973. r recalculé."
+        voix_off: "Première série : un nuage qui monte, avec des points dispersés autour d'une droite. Son coefficient de corrélation vaut environ zéro virgule quatre-vingt-deux. Rien de surprenant."
+        verifier:
+          - {expression: "(11*(10*8.04+8*6.95+13*7.58+9*8.81+11*8.33+14*9.96+6*7.24+4*4.26+12*10.84+7*4.82+5*5.68) - (10+8+13+9+11+14+6+4+12+7+5)*(8.04+6.95+7.58+8.81+8.33+9.96+7.24+4.26+10.84+4.82+5.68)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(8.04**2+6.95**2+7.58**2+8.81**2+8.33**2+9.96**2+7.24**2+4.26**2+10.84**2+4.82**2+5.68**2) - (8.04+6.95+7.58+8.81+8.33+9.96+7.24+4.26+10.84+4.82+5.68)**2))", attendu: 0.82, libelle: "r de la série 1"}
+      - type: courbe
+        texte: "Série 2 : *r ≈ 0,82*"
+        courbe:
+          style: points
+          points: [[4, 3.1], [5, 4.74], [6, 6.13], [7, 7.26], [8, 8.14], [9, 8.77], [10, 9.14], [11, 9.26], [12, 9.13], [13, 8.74], [14, 8.1]]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Quartet d'Anscombe, The American Statistician, 1973. r recalculé."
+        voix_off: "Deuxième série : les points dessinent une courbe parfaite, qui monte puis redescend. Ce n'est pas du tout une droite. Pourtant, r vaut encore environ zéro virgule quatre-vingt-deux."
+        verifier:
+          - {expression: "(11*(10*9.14+8*8.14+13*8.74+9*8.77+11*9.26+14*8.1+6*6.13+4*3.1+12*9.13+7*7.26+5*4.74) - (10+8+13+9+11+14+6+4+12+7+5)*(9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(9.14**2+8.14**2+8.74**2+8.77**2+9.26**2+8.1**2+6.13**2+3.1**2+9.13**2+7.26**2+4.74**2) - (9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)**2))", attendu: 0.82, libelle: "r de la série 2"}
+      - type: courbe
+        texte: "Série 3 : *r ≈ 0,82*"
+        courbe:
+          style: points
+          points: [[4, 5.39], [5, 5.73], [6, 6.08], [7, 6.42], [8, 6.77], [9, 7.11], [10, 7.46], [11, 7.81], [12, 8.15], [13, 12.74], [14, 8.84]]
+          mis_en_avant: [9]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Quartet d'Anscombe, The American Statistician, 1973. r recalculé."
+        voix_off: "Troisième série : dix points parfaitement alignés, et un seul point atypique, bien plus haut. Résultat : encore zéro virgule quatre-vingt-deux environ."
+        verifier:
+          - {expression: "(11*(10*7.46+8*6.77+13*12.74+9*7.11+11*7.81+14*8.84+6*6.08+4*5.39+12*8.15+7*6.42+5*5.73) - (10+8+13+9+11+14+6+4+12+7+5)*(7.46+6.77+12.74+7.11+7.81+8.84+6.08+5.39+8.15+6.42+5.73)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(7.46**2+6.77**2+12.74**2+7.11**2+7.81**2+8.84**2+6.08**2+5.39**2+8.15**2+6.42**2+5.73**2) - (7.46+6.77+12.74+7.11+7.81+8.84+6.08+5.39+8.15+6.42+5.73)**2))", attendu: 0.82, libelle: "r de la série 3"}
+      - type: courbe
+        texte: "Série 4 : *r ≈ 0,82*"
+        courbe:
+          style: points
+          points: [[8, 5.25], [8, 5.56], [8, 5.76], [8, 6.58], [8, 6.89], [8, 7.04], [8, 7.71], [8, 7.91], [8, 8.47], [8, 8.84], [19, 12.5]]
+          mis_en_avant: [10]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Quartet d'Anscombe, The American Statistician, 1973. r recalculé."
+        voix_off: "Quatrième série : dix points empilés sur la même valeur de x, et un seul point isolé, très loin à droite. C'est lui seul qui crée la corrélation. Et r vaut toujours environ zéro virgule quatre-vingt-deux."
+        verifier:
+          - {expression: "(11*(8*6.58+8*5.76+8*7.71+8*8.84+8*8.47+8*7.04+8*5.25+19*12.5+8*5.56+8*7.91+8*6.89) - (8+8+8+8+8+8+8+19+8+8+8)*(6.58+5.76+7.71+8.84+8.47+7.04+5.25+12.5+5.56+7.91+6.89)) / sqrt((11*(8**2+8**2+8**2+8**2+8**2+8**2+8**2+19**2+8**2+8**2+8**2) - (8+8+8+8+8+8+8+19+8+8+8)**2) * (11*(6.58**2+5.76**2+7.71**2+8.84**2+8.47**2+7.04**2+5.25**2+12.5**2+5.56**2+7.91**2+6.89**2) - (6.58+5.76+7.71+8.84+8.47+7.04+5.25+12.5+5.56+7.91+6.89)**2))", attendu: 0.82, libelle: "r de la série 4"}
+      - type: etapes
+        texte: "Un même r, *quatre histoires*"
+        etapes:
+          - "Une droite *avec du bruit*"
+          - "Une *courbe* parfaite"
+          - "Une droite et *un atypique*"
+          - "*Un seul point* qui fait tout"
+        voix_off: "Quatre nuages, une même corrélation, et quatre histoires différentes. Une droite avec du bruit. Une courbe parfaite. Une droite et un atypique. Un seul point qui fait tout. La leçon d'Anscombe : avant de lire r, il faut toujours regarder le nuage."
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Deux erreurs classiques"
+        voix_off: "Restent deux pièges dans lesquels on tombe souvent."
+      - type: courbe
+        texte: "r = 0, et pourtant *une relation parfaite*"
+        courbe:
+          style: points
+          points: [[-2, 4], [-1, 1], [0, 0], [1, 1], [2, 4]]
+          x_min: -3
+          x_max: 3
+          y_min: 0
+          y_max: 4
+          axe_x: "x"
+          axe_y: "y = x²"
+        note: "Points fictifs : y est le carré de x."
+        voix_off: "Premier piège : croire que r égal zéro veut dire aucune relation. Ici, y est exactement le carré de x : la relation est parfaite. Mais elle n'est pas en ligne droite, et les produits des scores z s'annulent : r vaut zéro. Un r nul dit seulement qu'il n'y a pas de tendance linéaire."
+        verifier:
+          - {expression: "(-2)*(4 - 2) + (-1)*(1 - 2) + 0*(0 - 2) + 1*(1 - 2) + 2*(4 - 2)", attendu: 0, libelle: "Somme des produits des écarts (donc r = 0)"}
+      - type: etapes
+        texte: "r n'est *pas une pente*"
+        etapes:
+          - "y = x et y = 10 × x : *r = 1* dans les deux cas"
+          - "r dit si les points sont *alignés*"
+          - "La pente dit *de combien* y change"
+        voix_off: "Second piège : lire r comme une pente. Si y vaut x, ou si y vaut dix fois x, les points sont parfaitement alignés et r vaut un dans les deux cas. r dit seulement à quel point les points sont alignés. C'est la pente de la droite, et non r, qui dit de combien y change quand x augmente."
+      # ---------------------------------------------------------------- exercice
+      - type: etapes
+        texte: "Cinq nuages"
+        etapes:
+          - "A : points *serrés* sur une droite *qui monte*"
+          - "B : tendance *qui monte*, points *très dispersés*"
+          - "C : points en forme de *U*"
+          - "D : points *serrés* sur une droite *qui descend*"
+          - "E : tendance *qui descend*, points *dispersés*"
+        voix_off: "Voici cinq nuages. A : des points serrés sur une droite qui monte. B : une tendance qui monte, mais des points très dispersés. C : des points en forme de U. D : des points serrés sur une droite qui descend. E : une tendance qui descend, avec des points dispersés."
+      - type: exercice
+        texte: "Associez A, B, C, D, E à : *−0,9* ; *−0,4* ; *0* ; *0,5* ; *0,95*"
+        pause: 10
+        voix_off: "À vous. Associez chacun des cinq nuages à l'une de ces valeurs de r : moins zéro virgule neuf, moins zéro virgule quatre, zéro, zéro virgule cinq, et zéro virgule quatre-vingt-quinze."
+      - type: correction
+        etapes:
+          - "A : *0,95*, serré et croissant"
+          - "B : *0,5*, croissant mais dispersé"
+          - "C : *0*, une relation, mais pas linéaire"
+          - "D : *−0,9*, serré et décroissant"
+          - "E : *−0,4*, décroissant et dispersé"
+        reponse: "A 0,95 ; B 0,5 ; C 0 ; D −0,9 ; E −0,4"
+        voix_off: "Voici la correction. A, serré et croissant : zéro virgule quatre-vingt-quinze. B, croissant mais dispersé : zéro virgule cinq. C, en forme de U : zéro, car la relation existe mais n'est pas linéaire. D, serré et décroissant : moins zéro virgule neuf. E, décroissant et dispersé : moins zéro virgule quatre. Le signe donne le sens, la valeur absolue donne l'alignement."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "r va de *−1 à 1* : sens et alignement"
+          - "r = *moyenne des produits* des scores z"
+          - "r ne voit que *les droites* : regardez le nuage"
+          - "r n'est *pas une pente*"
+        voix_off: "À retenir. r va de moins un à un : son signe donne le sens, sa valeur l'alignement. C'est la moyenne des produits des scores z. Il ne voit que les relations en ligne droite : regardez toujours le nuage. Et ce n'est pas une pente."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What does a correlation of 0.8 really measure?"
+    legende: |
+      The correlation coefficient r runs from −1 to 1. But what exactly does it measure? We compute it by hand on four points using z-scores, then discover Anscombe's quartet: four very different clouds, one and the same correlation. Plus two mistakes to avoid: reading r = 0 as "no relationship", and reading r as a slope. Worked exercise at the end. Source: F. J. Anscombe, The American Statistician, 1973. Series "Reading numbers without being fooled".
+    hashtags: [statistics, correlation, anscombe]
+    scenes:
+      - type: accroche
+        texte: "What does *r = 0.8* really measure?"
+        voix_off: "A study reports a correlation of zero point eight between two quantities. Is that a lot? And above all, what exactly does this number measure?"
+      - type: titre
+        numero: 1
+        texte: "A number between −1 and 1"
+        voix_off: "The correlation coefficient is written r."
+      - type: etapes
+        texte: "r sums up how *lined up* a cloud is"
+        etapes:
+          - "r = *1*: points on a line *going up*"
+          - "r = *−1*: on a line *going down*"
+          - "r = *0*: *no straight-line trend*"
+          - "r = *0.8*: clear trend, points *scattered around it*"
+        voix_off: "It always lies between minus one and one. An r of one: every point sits exactly on a line going up. An r of minus one: they sit exactly on a line going down. An r of zero: no straight-line trend. And zero point eight: a clear upward trend, with points scattered around the line."
+      - type: titre
+        numero: 2
+        texte: "The calculation on four points"
+        voix_off: "Let's compute r by hand, on a tiny cloud."
+      - type: courbe
+        texte: "Four points, *means 2.5 and 4*"
+        courbe:
+          style: points
+          points: [[1, 2], [2, 3], [3, 5], [4, 6]]
+          x_min: 0
+          x_max: 5
+          y_min: 0
+          y_max: 8
+          axe_x: "x"
+          axe_y: "y"
+        note: "Made-up points. Standard deviations computed by dividing by n, as in the standard deviation episode."
+        voix_off: "Here are four points: one and two, two and three, three and five, four and six. The mean of the x values is two point five, the mean of the y values is four."
+        verifier:
+          - {expression: "(1 + 2 + 3 + 4) / 4", attendu: 2.5, libelle: "Mean of x"}
+          - {expression: "(2 + 3 + 5 + 6) / 4", attendu: 4, libelle: "Mean of y"}
+      - type: formule
+        texte: "Turn every value into a *z-score*"
+        formule:
+          - 'z_x:\ -1.34\quad -0.45\quad 0.45\quad 1.34'
+          - 'z_y:\ -1.26\quad -0.63\quad 0.63\quad 1.26'
+        voix_off: "Step one: replace every value by its z-score, the gap from the mean divided by the standard deviation. The standard deviation of x is about one point one two, that of y about one point five eight. Small x and y values get negative scores, large ones positive scores."
+        verifier:
+          - {expression: "sqrt((1.5**2 + 0.5**2 + 0.5**2 + 1.5**2) / 4)", attendu: 1.12, libelle: "Standard deviation of x"}
+          - {expression: "sqrt((2**2 + 1**2 + 1**2 + 2**2) / 4)", attendu: 1.58, libelle: "Standard deviation of y"}
+          - {expression: "1.5 / sqrt(1.25)", attendu: 1.34, libelle: "z-score of the largest x"}
+          - {expression: "0.5 / sqrt(1.25)", attendu: 0.45, libelle: "z-score of x = 3"}
+          - {expression: "2 / sqrt(2.5)", attendu: 1.26, libelle: "z-score of the largest y"}
+          - {expression: "1 / sqrt(2.5)", attendu: 0.63, libelle: "z-score of y = 5"}
+      - type: formule
+        texte: "r = *mean of the products* of z-scores"
+        formule:
+          - 'r=\dfrac{1.70+0.28+0.28+1.70}{4}\approx 0.99'
+        voix_off: "Step two: for each point, multiply its x z-score by its y z-score, then take the mean. One point seven, zero point two eight, zero point two eight, one point seven: the mean is about zero point nine nine. The points are almost lined up."
+        verifier:
+          - {expression: "1.5 / sqrt(1.25) * 2 / sqrt(2.5)", attendu: 1.70, libelle: "Product for point (4, 6)"}
+          - {expression: "0.5 / sqrt(1.25) * 1 / sqrt(2.5)", attendu: 0.28, libelle: "Product for point (3, 5)"}
+          - {expression: "(1.5*2 + 0.5*1 + 0.5*1 + 1.5*2) / 4 / (sqrt(1.25) * sqrt(2.5))", attendu: 0.99, libelle: "Coefficient r"}
+      - type: texte
+        texte: "Top right, bottom left: *r goes up*"
+        voix_off: "Here's the intuition. A point at the top right has two positive scores, a point at the bottom left two negative scores: either way the product is positive and r goes up. Points at the top left or bottom right give negative products and pull it down."
+      - type: titre
+        numero: 3
+        texte: "Anscombe's quartet"
+        voix_off: "In nineteen seventy-three, the statistician Francis Anscombe published four small series of eleven points."
+      - type: courbe
+        texte: "Series 1: *r ≈ 0.82*"
+        courbe:
+          style: points
+          points: [[4, 4.26], [5, 5.68], [6, 7.24], [7, 4.82], [8, 6.95], [9, 8.81], [10, 8.04], [11, 8.33], [12, 10.84], [13, 7.58], [14, 9.96]]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Anscombe's quartet, The American Statistician, 1973. r recomputed."
+        voix_off: "Series one: a cloud going up, with points scattered around a line. Its correlation coefficient is about zero point eight two. Nothing surprising."
+        verifier:
+          - {expression: "(11*(10*8.04+8*6.95+13*7.58+9*8.81+11*8.33+14*9.96+6*7.24+4*4.26+12*10.84+7*4.82+5*5.68) - (10+8+13+9+11+14+6+4+12+7+5)*(8.04+6.95+7.58+8.81+8.33+9.96+7.24+4.26+10.84+4.82+5.68)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(8.04**2+6.95**2+7.58**2+8.81**2+8.33**2+9.96**2+7.24**2+4.26**2+10.84**2+4.82**2+5.68**2) - (8.04+6.95+7.58+8.81+8.33+9.96+7.24+4.26+10.84+4.82+5.68)**2))", attendu: 0.82, libelle: "r of series 1"}
+      - type: courbe
+        texte: "Series 2: *r ≈ 0.82*"
+        courbe:
+          style: points
+          points: [[4, 3.1], [5, 4.74], [6, 6.13], [7, 7.26], [8, 8.14], [9, 8.77], [10, 9.14], [11, 9.26], [12, 9.13], [13, 8.74], [14, 8.1]]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Anscombe's quartet, The American Statistician, 1973. r recomputed."
+        voix_off: "Series two: the points trace a perfect curve that rises and then falls. It isn't a line at all. Yet r is still about zero point eight two."
+        verifier:
+          - {expression: "(11*(10*9.14+8*8.14+13*8.74+9*8.77+11*9.26+14*8.1+6*6.13+4*3.1+12*9.13+7*7.26+5*4.74) - (10+8+13+9+11+14+6+4+12+7+5)*(9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(9.14**2+8.14**2+8.74**2+8.77**2+9.26**2+8.1**2+6.13**2+3.1**2+9.13**2+7.26**2+4.74**2) - (9.14+8.14+8.74+8.77+9.26+8.1+6.13+3.1+9.13+7.26+4.74)**2))", attendu: 0.82, libelle: "r of series 2"}
+      - type: courbe
+        texte: "Series 3: *r ≈ 0.82*"
+        courbe:
+          style: points
+          points: [[4, 5.39], [5, 5.73], [6, 6.08], [7, 6.42], [8, 6.77], [9, 7.11], [10, 7.46], [11, 7.81], [12, 8.15], [13, 12.74], [14, 8.84]]
+          mis_en_avant: [9]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Anscombe's quartet, The American Statistician, 1973. r recomputed."
+        voix_off: "Series three: ten points perfectly lined up, and a single outlier, much higher. The result: about zero point eight two again."
+        verifier:
+          - {expression: "(11*(10*7.46+8*6.77+13*12.74+9*7.11+11*7.81+14*8.84+6*6.08+4*5.39+12*8.15+7*6.42+5*5.73) - (10+8+13+9+11+14+6+4+12+7+5)*(7.46+6.77+12.74+7.11+7.81+8.84+6.08+5.39+8.15+6.42+5.73)) / sqrt((11*(10**2+8**2+13**2+9**2+11**2+14**2+6**2+4**2+12**2+7**2+5**2) - (10+8+13+9+11+14+6+4+12+7+5)**2) * (11*(7.46**2+6.77**2+12.74**2+7.11**2+7.81**2+8.84**2+6.08**2+5.39**2+8.15**2+6.42**2+5.73**2) - (7.46+6.77+12.74+7.11+7.81+8.84+6.08+5.39+8.15+6.42+5.73)**2))", attendu: 0.82, libelle: "r of series 3"}
+      - type: courbe
+        texte: "Series 4: *r ≈ 0.82*"
+        courbe:
+          style: points
+          points: [[8, 5.25], [8, 5.56], [8, 5.76], [8, 6.58], [8, 6.89], [8, 7.04], [8, 7.71], [8, 7.91], [8, 8.47], [8, 8.84], [19, 12.5]]
+          mis_en_avant: [10]
+          x_min: 2
+          x_max: 20
+          y_min: 2
+          y_max: 14
+          axe_x: "x"
+          axe_y: "y"
+        note: "Anscombe's quartet, The American Statistician, 1973. r recomputed."
+        voix_off: "Series four: ten points stacked on the same x value, and a single isolated point far to the right. That one point alone creates the correlation. And r is still about zero point eight two."
+        verifier:
+          - {expression: "(11*(8*6.58+8*5.76+8*7.71+8*8.84+8*8.47+8*7.04+8*5.25+19*12.5+8*5.56+8*7.91+8*6.89) - (8+8+8+8+8+8+8+19+8+8+8)*(6.58+5.76+7.71+8.84+8.47+7.04+5.25+12.5+5.56+7.91+6.89)) / sqrt((11*(8**2+8**2+8**2+8**2+8**2+8**2+8**2+19**2+8**2+8**2+8**2) - (8+8+8+8+8+8+8+19+8+8+8)**2) * (11*(6.58**2+5.76**2+7.71**2+8.84**2+8.47**2+7.04**2+5.25**2+12.5**2+5.56**2+7.91**2+6.89**2) - (6.58+5.76+7.71+8.84+8.47+7.04+5.25+12.5+5.56+7.91+6.89)**2))", attendu: 0.82, libelle: "r of series 4"}
+      - type: etapes
+        texte: "One r, *four stories*"
+        etapes:
+          - "A line *with noise*"
+          - "A perfect *curve*"
+          - "A line and *one outlier*"
+          - "*One point* doing all the work"
+        voix_off: "Four clouds, one correlation, and four different stories. A line with noise. A perfect curve. A line and one outlier. One point doing all the work. Anscombe's lesson: before you read r, always look at the cloud."
+      - type: titre
+        numero: 4
+        texte: "Two classic mistakes"
+        voix_off: "Two traps remain that people often fall into."
+      - type: courbe
+        texte: "r = 0, and yet *a perfect relationship*"
+        courbe:
+          style: points
+          points: [[-2, 4], [-1, 1], [0, 0], [1, 1], [2, 4]]
+          x_min: -3
+          x_max: 3
+          y_min: 0
+          y_max: 4
+          axe_x: "x"
+          axe_y: "y = x²"
+        note: "Made-up points: y is the square of x."
+        voix_off: "Trap one: thinking that r equals zero means no relationship. Here, y is exactly the square of x: the relationship is perfect. But it isn't a straight line, and the products of the z-scores cancel out: r is zero. A zero r only says there is no linear trend."
+        verifier:
+          - {expression: "(-2)*(4 - 2) + (-1)*(1 - 2) + 0*(0 - 2) + 1*(1 - 2) + 2*(4 - 2)", attendu: 0, libelle: "Sum of products of deviations (so r = 0)"}
+      - type: etapes
+        texte: "r is *not a slope*"
+        etapes:
+          - "y = x and y = 10 × x: *r = 1* in both cases"
+          - "r says whether the points are *lined up*"
+          - "The slope says *by how much* y changes"
+        voix_off: "Trap two: reading r as a slope. If y equals x, or y equals ten times x, the points are perfectly lined up and r is one in both cases. r only says how well the points line up. It's the slope of the line, not r, that says by how much y changes when x goes up."
+      - type: etapes
+        texte: "Five clouds"
+        etapes:
+          - "A: points *tight* on a line *going up*"
+          - "B: trend *going up*, points *very scattered*"
+          - "C: points in a *U shape*"
+          - "D: points *tight* on a line *going down*"
+          - "E: trend *going down*, points *scattered*"
+        voix_off: "Here are five clouds. A: points tight on a line going up. B: a trend going up, but very scattered points. C: points in a U shape. D: points tight on a line going down. E: a trend going down, with scattered points."
+      - type: exercice
+        texte: "Match A, B, C, D, E to: *−0.9*; *−0.4*; *0*; *0.5*; *0.95*"
+        pause: 10
+        voix_off: "Your turn. Match each of the five clouds to one of these values of r: minus zero point nine, minus zero point four, zero, zero point five, and zero point nine five."
+      - type: correction
+        etapes:
+          - "A: *0.95*, tight and rising"
+          - "B: *0.5*, rising but scattered"
+          - "C: *0*, a relationship, but not linear"
+          - "D: *−0.9*, tight and falling"
+          - "E: *−0.4*, falling and scattered"
+        reponse: "A 0.95; B 0.5; C 0; D −0.9; E −0.4"
+        voix_off: "Here's the answer. A, tight and rising: zero point nine five. B, rising but scattered: zero point five. C, the U shape: zero, because there is a relationship but it isn't linear. D, tight and falling: minus zero point nine. E, falling and scattered: minus zero point four. The sign gives the direction, the size gives how lined up the points are."
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "r runs from *−1 to 1*: direction and alignment"
+          - "r = *mean of the products* of z-scores"
+          - "r only sees *straight lines*: look at the cloud"
+          - "r is *not a slope*"
+        voix_off: "Key points. r runs from minus one to one: its sign gives the direction, its size the alignment. It's the mean of the products of the z-scores. It only sees straight-line relationships: always look at the cloud. And it isn't a slope."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

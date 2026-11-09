@@ -298,13 +298,33 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
         if not isinstance(c, dict):
             erreurs.append(f"{ctx} : bloc « courbe » manquant (points, ou expression + de + a)")
         else:
+            boites = c.get("boites")
+            if c.get("style") == "boites":
+                # Boîtes à moustaches : [{etiquette, valeurs: [min, Q1, médiane, Q3, max], atypiques}], une par
+                # catégorie. Les « points » (rang, valeur la plus haute) servent seulement à caler les axes.
+                ok = isinstance(boites, list) and 1 <= len(boites) <= 6 and all(
+                    isinstance(b, dict) and isinstance(b.get("valeurs"), list) and len(b["valeurs"]) == 5
+                    and all(_nombre(z) for z in b["valeurs"])
+                    and all(float(u) <= float(w) for u, w in zip(b["valeurs"], b["valeurs"][1:]))
+                    and isinstance(b.get("atypiques", []), list) and all(_nombre(z) for z in b.get("atypiques", []))
+                    for b in boites)
+                if not ok:
+                    erreurs.append(f"{ctx}.courbe.boites : 1 à 6 boîtes {{etiquette, valeurs: [min, Q1, médiane, Q3, "
+                                   f"max] croissantes, atypiques: [...]}}")
+                    boites = None
+                else:
+                    c = dict(c, points=[[i, max([float(z) for z in b["valeurs"] + b.get("atypiques", [])])]
+                                        for i, b in enumerate(boites)])
+                    if c.get("etiquettes") is None:
+                        c["etiquettes"] = [str(b.get("etiquette", "")) for b in boites]
             try:
                 pts = points_courbe(c)
                 extra["courbe"] = dict(c, _points=pts)
             except (CalculInvalide, KeyError, TypeError, ValueError) as exc:
                 erreurs.append(f"{ctx}.courbe : {exc}")
-            if c.get("style", "ligne") not in ("ligne", "points", "barres", "histogramme"):
-                erreurs.append(f"{ctx}.courbe.style : « ligne » (défaut), « points », « barres » ou « histogramme »")
+            if c.get("style", "ligne") not in ("ligne", "points", "barres", "histogramme", "boites"):
+                erreurs.append(f"{ctx}.courbe.style : « ligne » (défaut), « points », « barres », « histogramme » "
+                               f"ou « boites »")
             if c.get("etiquettes") is not None and not (isinstance(c["etiquettes"], list) and "_points" in extra.get(
                     "courbe", {}) and len(c["etiquettes"]) == len(extra["courbe"]["_points"])):
                 erreurs.append(f"{ctx}.courbe.etiquettes : une étiquette par barre")
@@ -321,6 +341,9 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
                 b2 = (s2.get("y_min", 0), s2.get("y_max"))
                 if b2[1] is not None and not (_nombre(b2[0]) and _nombre(b2[1]) and b2[0] < b2[1]):
                     erreurs.append(f"{ctx}.courbe.serie_2 : y_min doit être inférieur à y_max")
+            for cle in ("x_min", "x_max"):
+                if c.get(cle) is not None and not _nombre(c[cle]):
+                    erreurs.append(f"{ctx}.courbe.{cle} doit être un nombre")
             seuils = c.get("seuils")
             if seuils is not None and not (isinstance(seuils, list) and all(
                     isinstance(x, dict) and _nombre(x.get("valeur")) for x in seuils)):
