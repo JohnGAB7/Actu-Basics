@@ -1,7 +1,7 @@
 # Parcours Actuariat, extrait vertical 2 de A1.01 (SHORT 9:16, TikTok et Shorts) : intérêts composés et règle de 72.
 # Unité autonome : 1 000 € à 5 % pendant 30 ans, intérêts simples contre composés, règle de 72 ; renvoi vers la leçon.
 # Taux fictif et constant ; nombres identiques à la leçon A1.01 et entre FR et EN.
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-x-a1-01b-la-regle-de-72
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -24,7 +24,9 @@ pedagogie:
     en: "Made-up effective annual rate of 5%, constant for 30 years, annual compounding; tax and inflation ignored"
 
 validation:
-  statut: brouillon
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 

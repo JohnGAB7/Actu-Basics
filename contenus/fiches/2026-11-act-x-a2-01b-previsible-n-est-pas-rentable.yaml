@@ -2,7 +2,7 @@
 # Unité autonome : prime de 11 €, probabilité que les vols coûtent plus que les primes (32 % pour 100 contrats,
 # 7,3 % pour 10 000, loi binomiale exacte) ; conditions de la mutualisation ; renvoi vers la leçon.
 # Assureur fictif JG's Holding, chiffres fictifs ; nombres identiques à la leçon A2.01 et entre FR et EN.
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-x-a2-01b-previsible-n-est-pas-rentable
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -25,7 +25,9 @@ pedagogie:
     en: "Fictional insurer and figures; independent thefts, 2% probability and $500 cost per phone, at most one theft per phone; $11 premium = $10 pure premium + $1 margin; expenses ignored; exact binomial probabilities"
 
 validation:
-  statut: brouillon
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 
@@ -52,10 +54,10 @@ editions:
       - type: etapes
         texte: "Probabilité que les sinistres coûtent *plus que les primes*"
         etapes:
-          - "100 téléphones : 3 vols ou plus, environ *32 %*"
-          - "10 000 téléphones : 221 vols ou plus, environ *7,3 %*"
+          - "100 téléphones : environ *32 %*"
+          - "10 000 téléphones : environ *7,3 %*"
           - "Bien plus faible, mais *jamais nulle*"
-        note: "Primes : 1 100 € (100 tél.), 110 000 € (10 000 tél.). 3 × 500 € > 1 100 € ; 221 × 500 € > 110 000 €. Binomiale exacte."
+        note: "Primes : 1 100 € et 110 000 €. Dépassées dès 3 vols (100 tél.) ou 221 vols (10 000 tél.). Binomiale exacte."
         voix_off: "Quelle est la probabilité que les sinistres coûtent plus que les primes ? Avec cent téléphones, il encaisse mille cent euros, et trois vols suffisent à dépasser : cela arrive dans environ trente-deux pour cent des cas. Avec dix mille téléphones, il encaisse cent dix mille euros, et il faut deux cent vingt et un vols ou plus : dans environ sept virgule trois pour cent des cas. La mutualisation rend la mauvaise année bien moins probable, mais jamais impossible."
         verifier:
           - {expression: "100 * 11", attendu: 1100, libelle: "Primes encaissées, 100 téléphones"}
@@ -102,10 +104,10 @@ editions:
       - type: etapes
         texte: "Probability that claims cost *more than the premiums*"
         etapes:
-          - "100 phones: 3 thefts or more, about *32%*"
-          - "10,000 phones: 221 thefts or more, about *7.3%*"
+          - "100 phones: about *32%*"
+          - "10,000 phones: about *7.3%*"
           - "Far lower, but *never zero*"
-        note: "Premiums: $1,100 (100 phones) and $110,000 (10,000 phones). 3 × $500 > $1,100; 221 × $500 > $110,000. Exact binomial."
+        note: "Premiums: $1,100 and $110,000. Exceeded from 3 thefts (100 phones) or 221 thefts (10,000 phones). Exact binomial."
         voix_off: "What is the probability that claims cost more than the premiums? With one hundred phones, it collects one thousand one hundred dollars, and three thefts are enough to exceed that: this happens in about thirty-two percent of cases. With ten thousand phones, it collects one hundred and ten thousand dollars, and it takes two hundred and twenty-one thefts or more: in about seven point three percent of cases. Pooling makes the bad year far less likely, but never impossible."
         verifier:
           - {expression: "100 * 11", attendu: 1100, libelle: "Premiums collected, 100 phones"}

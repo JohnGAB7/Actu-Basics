@@ -1,7 +1,7 @@
 # Parcours Actuariat, extrait vertical 1 de A2.01 (SHORT 9:16, TikTok et Shorts) : la mutualisation.
 # Unité autonome : un contrat = 0 € ou 500 €, écart-type 70 € ; σ ÷ √n ; 7 € pour 100 contrats, 0,70 € pour 10 000.
 # Assureur fictif JG's Holding, chiffres fictifs ; nombres identiques à la leçon A2.01 et entre FR et EN.
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-x-a2-01a-un-telephone-ou-10000
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -24,7 +24,9 @@ pedagogie:
     en: "Fictional insurer and figures; thefts independent from one phone to another; 2% probability and $500 cost for every phone; at most one theft per phone per year"
 
 validation:
-  statut: brouillon
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 

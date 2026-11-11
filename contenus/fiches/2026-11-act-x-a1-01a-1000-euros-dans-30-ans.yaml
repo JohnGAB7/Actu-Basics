@@ -1,7 +1,7 @@
 # Parcours Actuariat, extrait vertical 1 de A1.01 (SHORT 9:16, TikTok et Shorts) : la valeur actuelle.
 # Unité autonome : 1 000 € dans 30 ans valent 231,38 € aujourd'hui à 5 % ; sensibilité au taux ; renvoi vers la leçon.
 # Taux fictifs et constants ; nombres identiques à la leçon A1.01 et entre FR et EN.
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-x-a1-01a-1000-euros-dans-30-ans
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -24,7 +24,9 @@ pedagogie:
     en: "Made-up effective annual rates, constant for 30 years, annual compounding; tax, inflation and default risk ignored"
 
 validation:
-  statut: brouillon
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 
