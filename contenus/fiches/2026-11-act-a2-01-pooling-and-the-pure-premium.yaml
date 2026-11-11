@@ -34,14 +34,14 @@ sources: []
 
 editions:
   en:
-    titre: "Why do 10,000 policyholders make risk more predictable?"
+    titre: "Why is the average claim cost more predictable with 10,000 policies?"
     legende: |
       Insuring one phone is a gamble: the insurer pays either nothing or $500. Insuring 10,000 phones is almost predictable. Why? In this episode of our actuarial science series, we treat the cost of a policy as a random variable, compute its expected value and standard deviation, and see how pooling shrinks the uncertainty per policy: sigma divided by the square root of n. We also see what pooling cannot do: it makes losses more predictable, not automatically profitable. Worked exercise at the end. Fictional insurer and figures, checked calculations.
     hashtags: [actuarialscience, insurance, probability, lawoflargenumbers]
     scenes:
       - type: accroche
         texte: "One phone is a gamble. *10,000 phones* are almost predictable."
-        voix_off: "Insure one phone, and you have no idea what will happen. Insure ten thousand phones, and you can predict the cost per phone remarkably well. Why? That is the idea behind all insurance: pooling."
+        voix_off: "For one phone, the outcome is highly uncertain: the insurer pays either nothing or five hundred dollars. Insure ten thousand phones, and you can predict the cost per phone remarkably well. Why? That is the idea behind all insurance: pooling."
       - type: texte
         texte: "Back to *Mapleton Mutual* and its phones"
         note: "Mapleton Mutual is a fictional insurer. All figures are made up."
@@ -101,10 +101,11 @@ editions:
           - {expression: "100 * sqrt(10000 * 0.02 * 0.98) / (10000 * 0.02)", attendu: 7, libelle: "Relative spread, 10,000 phones, in %"}
       - type: formule
         texte: "Uncertainty of the *average cost per phone*"
+        note: "Valid for independent, identically distributed policy costs."
         formule:
           - '\sigma_{\bar{X}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{70}{\sqrt{n}}'
           - 'n=100:\ 7\ \mathrm{dollars}\qquad n=10\,000:\ 0.70\ \mathrm{dollars}'
-        voix_off: "Now look at the average cost per phone. When the phones are independent, its standard deviation is sigma divided by the square root of n, the number of phones. With one hundred phones, seventy divided by ten gives seven dollars. With ten thousand phones, seventy divided by one hundred gives just seventy cents."
+        voix_off: "Now look at the average cost per phone. When the policy costs are independent and identically distributed, as here with the same two percent and the same five hundred dollars, the standard deviation of their average is sigma divided by the square root of n, the number of phones. With one hundred phones, seventy divided by ten gives seven dollars. With ten thousand phones, seventy divided by one hundred gives just seventy cents."
         verifier:
           - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Std. dev. of average cost, 100 phones"}
           - {expression: "70 / sqrt(10000)", attendu: 0.70, libelle: "Std. dev. of average cost, 10,000 phones"}
@@ -122,8 +123,8 @@ editions:
         note: "Average cost per phone: $10 in all three cases. Independent thefts."
         voix_off: "Here is the same idea in a picture. The average cost per phone is ten dollars in all three cases. But the uncertainty around it falls from seventy dollars for one phone, to seven dollars for one hundred phones, to seventy cents for ten thousand. With many independent policies, the random ups and downs largely cancel out."
       - type: texte
-        texte: "The law of large numbers: the average cost gets *closer to $10*"
-        voix_off: "This is the law of large numbers at work. As the number of independent, similar policies grows, the average cost per policy gets closer and closer to its expected value, ten dollars. That is what pooling means: sharing risks among many people turns an unpredictable cost into a fairly predictable one."
+        texte: "The law of large numbers: the average cost *tends towards $10*"
+        voix_off: "This is the law of large numbers at work. As the number of independent, similar policies grows, the average cost per policy tends to converge towards its expected value, ten dollars. That is what pooling means: sharing risks among many people turns an unpredictable cost into a fairly predictable one."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -157,8 +158,8 @@ editions:
         etapes:
           - "Pure premium: the *expected claims* per policy"
           - "Commercial premium: pure premium *plus loadings*"
-          - "Technical result: premiums *minus* claims and expenses"
-        voix_off: "Finally, let's be precise about what pooling does not promise. The pure premium is only the expected cost of claims per policy. The commercial premium, the price actually charged, adds loadings for expenses, commissions, uncertainty and capital. And the technical result, premiums minus claims and expenses, can still be negative if the price is too low, the expenses too high, or a rare extreme event strikes."
+          - "Technical result (simplified): premiums earned *minus* claims incurred and expenses"
+        voix_off: "Finally, let's be precise about what pooling does not promise. The pure premium is only the expected cost of claims per policy. The commercial premium, the price actually charged, adds loadings for expenses, commissions, uncertainty and capital. And the technical result, which in this simplified example is premiums earned minus claims incurred and operating expenses, can still be negative if the price is too low, the expenses too high, or a rare extreme event strikes."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "Mapleton insures *2,500 phones*. Expected thefts? Standard deviation of the *average cost per phone*?"
@@ -179,10 +180,10 @@ editions:
         texte: "Key takeaways"
         etapes:
           - "One policy: a cost of *$0 or $500*, expected value *$10*"
-          - "Average of n independent policies: spread *σ ÷ √n*"
+          - "Average of n independent, identical policies: spread *σ ÷ √n*"
           - "Pooling needs independence, similar risks, enough policies"
           - "Predictable *is not* profitable"
-        voix_off: "Key takeaways. For one policy, the cost is either zero or five hundred dollars, with an expected value of ten. For the average of n independent policies, the spread shrinks to sigma divided by the square root of n. Pooling only works with independent, similar risks and enough policies. And a predictable cost is not automatically a profit."
+        voix_off: "Key takeaways. For one policy, the cost is either zero or five hundred dollars, with an expected value of ten. For the average of n independent, identically distributed policies, the spread shrinks to sigma divided by the square root of n. Pooling only works with independent, similar risks and enough policies. And a predictable cost is not automatically a profit."
       - type: texte
         texte: "Next: *the probability tools behind pooling*"
         voix_off: "In the next episodes of module A2, we build the probability tools behind today's results, step by step: events and conditional probability, random variables, and the sum of many claims."

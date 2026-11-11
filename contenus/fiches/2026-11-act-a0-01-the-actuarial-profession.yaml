@@ -74,14 +74,15 @@ editions:
         voix_off: "Throughout this series, we will follow an insurer called Mapleton Mutual. It is a fictional company, and all of its figures are made up. Its first product is simple: insurance against phone theft."
       - type: etapes
         texte: "Inside a *phone theft* contract"
+        note: "Examples from our fictional contract. Cover and exclusions depend on each contract's terms."
         etapes:
           - "Cover: theft of the phone"
-          - "Exclusions: loss, damage, theft left unreported"
+          - "Exclusions (examples): loss, damage, theft left unreported"
           - "Premium: what the policyholder pays"
           - "Benefit: what the insurer pays after a theft"
           - "Deductible: the part the policyholder keeps"
           - "Term: one year, then renewal"
-        voix_off: "Every insurance contract answers the same questions. The cover says which event is insured: here, the theft of the phone. The exclusions list what is not covered, such as a lost phone, accidental damage, or a theft that was never reported. The premium is the amount the policyholder pays. The benefit is what the insurer pays if the event happens. The deductible is the part of the loss the policyholder keeps. And the term is how long the contract lasts: here, one year, then it can be renewed."
+        voix_off: "Every insurance contract answers the same questions. The cover says which event is insured: here, the theft of the phone. The exclusions list what is not covered: in our fictional contract, for example, a lost phone, accidental damage, or a theft that was never reported. They depend on the terms of each contract. The premium is the amount the policyholder pays. The benefit is what the insurer pays if the event happens. The deductible is the part of the loss the policyholder keeps. And the term is how long the contract lasts: here, one year, then it can be renewed."
       - type: texte
         texte: "The price is set *before* the cost is known"
         voix_off: "Here is what makes insurance unusual. A baker knows the cost of flour before setting the price of bread. An insurer must set its price at the start of the year, before it knows how many phones will be stolen. That is exactly why it needs actuaries: to estimate a cost that is still in the future."
@@ -106,10 +107,11 @@ editions:
           - {expression: "1000 * 0.02 * 500 / 1000", attendu: 10, libelle: "Expected cost per phone"}
       - type: formule
         texte: "The *pure premium*"
+        note: "Simplified model: at most one theft per phone, fixed cost. In general: the expected claim cost per policy."
         formule:
           - '\mathrm{pure\ premium}=p\times C'
           - '=0.02\times 500=10\ \mathrm{dollars}'
-        voix_off: "This ten dollars is called the pure premium. It is the probability of the event, p, times its cost, C: zero point zero two times five hundred, which gives ten dollars. It is the expected cost of the risk, per policy, with nothing added."
+        voix_off: "This ten dollars is called the pure premium. In this simplified example, it is the probability of a theft, p, times what the insurer pays if it happens, C: zero point zero two times five hundred, which gives ten dollars. In general, the pure premium is the expected claim cost per policy, with nothing added."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium, in dollars"}
       - type: etapes
@@ -122,7 +124,7 @@ editions:
         voix_off: "But Mapleton Mutual cannot sell this cover for ten dollars. It has expenses: staff, computer systems and the cost of handling each claim. It may pay commissions to the shops or brokers that sell the contract. It needs a margin for uncertainty, because twenty thefts is only an average: one year there may be twelve, another year thirty. And it must hold capital, so that a bad year does not ruin it."
       - type: texte
         texte: "Pure premium + loadings = *commercial premium*"
-        voix_off: "The price the customer actually pays is called the commercial premium: the pure premium plus these loadings. Whether the insurer makes a profit or a loss depends on all of these pieces, not only on the probability of theft. We will come back to this in detail in module A2."
+        voix_off: "The price the customer actually pays is called the commercial premium. It starts from the pure premium and may include loadings for expenses, commissions, risk and the cost of capital. Whether the insurer makes a profit or a loss depends on all of these pieces, not only on the probability of theft. We will come back to this in detail in module A2."
       # ---------------------------------------------------------------- 4
       - type: titre
         numero: 4
@@ -134,10 +136,10 @@ editions:
         etapes:
           - "United States and Canada: SOA and CAS exams"
           - "United Kingdom and beyond: IFoA exams"
-          - "Many European countries: an accredited degree"
+          - "Some European countries: an accredited degree is one route"
           - "Everywhere: maths, statistics, finance, then experience"
         note: "Requirements change over time: always check the official website of each actuarial body."
-        voix_off: "The route to becoming a qualified actuary depends on where you work. In the United States and Canada, the Society of Actuaries and the Casualty Actuarial Society run series of professional exams. The Institute and Faculty of Actuaries, based in the United Kingdom, runs its own exams, taken in many countries. In many European countries, the path often goes through a university degree recognised by the national actuarial association. Everywhere, the foundations are the same: mathematics, statistics and finance, followed by years of practical experience."
+        voix_off: "The route to becoming a qualified actuary depends on where you work. In the United States and Canada, the Society of Actuaries and the Casualty Actuarial Society run series of professional exams. The Institute and Faculty of Actuaries, based in the United Kingdom, runs its own exams, taken in many countries. In some European countries, an accredited university programme is one route into the profession. Requirements vary by country, so always check the relevant national actuarial association. Everywhere, the foundations are the same: mathematics, statistics and finance, followed by years of practical experience."
       - type: etapes
         texte: "The skills you will build *in this series*"
         etapes:

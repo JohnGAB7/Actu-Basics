@@ -32,7 +32,7 @@ Précision de JG (2026-11-11) : « pour le parcours actuariat on commence unique
 
 **Vidéo longue (YouTube 16:9)**
 
-- **Durée** : 12 à 18 minutes en moyenne, avec une plage de 8 à 20 minutes selon la difficulté. Une notion simple n'est pas étirée ; un cas long est bien chapitré.
+- **Durée** : la durée suit la matière. La plage de 8 à 20 minutes est une cible pour les épisodes qui la demandent, pas un minimum : les trois leçons du pilote durent 6 à 7 minutes et restent telles quelles (relecture ChatGPT du 2026-11-11). Après le pilote, la rétention et les retours du public décident. Un ajout n'est fait que s'il apporte une vraie valeur : second exemple, graphique, courte démonstration.
 - **Ouverture** : la question, puis à l'écran les prérequis, les objectifs d'apprentissage et les chapitres.
 - **Structure** : accroche (30 s), problème posé sur l'assureur fictif, intuition et exemple numérique, puis notation générale (deux niveaux de lecture), exemple chiffré complet, exercice à faire en pause, correction, récapitulatif, épisode suivant.
 - **Fil rouge** : un assureur fictif, ses contrats, ses assurés et ses sinistres, qui reviennent d'un épisode à l'autre.
@@ -58,7 +58,7 @@ La viralité ne se promet pas : après le pilote, on mesure la rétention, les c
 | --- | --- | --- | --- |
 | A0 · The actuarial profession | Ce que fait un actuaire (vie, non-vie, santé, retraite, banque, conseil). **Qu'est-ce qu'un contrat d'assurance** : garanties, exclusions, primes, prestations, franchises, capitaux, bénéficiaires, durée. Parcours et certifications par juridiction (SOA, CAS, IFoA, associations européennes). Salaires seulement s'ils sont sourcés, datés et localisés. | 3 | « Actuaries: how maths helps make decisions under risk » |
 | A1 · Financial mathematics | Intérêts simples et composés, actualisation, valeur actuelle, annuités et rentes certaines, taux nominal et effectif, courbe des taux. Premiers calculs dans un tableur. | 5 | « $1,000 today or in 30 years: is it really the same money? » |
-| A2 · Probability for insurance | Événements, probabilités conditionnelles, indépendance ; variables aléatoires, lois usuelles, espérance, variance ; sommes de variables et loi des grands nombres ; **fréquence et sévérité, charge agrégée S = X₁ + … + X_N** ; mutualisation, diversification et ses limites ; **prime pure, prime commerciale et résultat technique**. | 6 | « Why do 10,000 policyholders make risk more predictable? » |
+| A2 · Probability for insurance | Événements, probabilités conditionnelles, indépendance ; variables aléatoires, lois usuelles, espérance, variance ; sommes de variables et loi des grands nombres ; **fréquence et sévérité, charge agrégée S = X₁ + … + X_N** ; mutualisation, diversification et ses limites ; **prime pure, prime commerciale et résultat technique**. | 6 | « Why is the average claim cost more predictable with 10,000 policies? » |
 
 A2 est un vrai module de fondamentaux. La mutualisation y est présentée comme ce qui rend les pertes d'un portefeuille plus prévisibles, sous des hypothèses précises (indépendance, taille, homogénéité), et non comme une garantie de bénéfice. La rentabilité dépend aussi du tarif, des frais, des commissions, des revenus financiers, de la réassurance et des risques extrêmes.
 
@@ -139,7 +139,7 @@ Le programme prévoit déjà un parcours « Actuariat et assurance » de vidéos
 | --- | --- | --- |
 | A0.01 | Actuaries: how maths helps make decisions under risk | Présente le métier, la série et ce qu'est un contrat |
 | A1.01 | $1,000 today or in 30 years: is it really the same money? | Premier calcul financier, très partageable |
-| A2.01 | Why do 10,000 policyholders make risk more predictable? | Le lien distinctif entre probabilités et assurance |
+| A2.01 | Why is the average claim cost more predictable with 10,000 policies? | Le lien distinctif entre probabilités et assurance |
 
 A3.01 (lire une table de mortalité) ouvre ensuite le bloc assurance vie.
 
