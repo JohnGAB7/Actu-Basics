@@ -49,7 +49,7 @@ editions:
         texte: "*1 000 €* aujourd'hui ou *1 000 €* dans 30 ans ?"
         voix_off: "Mille euros aujourd'hui, ou mille euros dans trente ans. Même nombre. Mais est-ce vraiment la même somme ? Pour un actuaire, certainement pas."
       - type: texte
-        texte: "Les assureurs *encaissent maintenant* et *paient plus tard*"
+        texte: "Les assureurs *encaissent des primes aujourd'hui* et *versent des prestations plus tard*"
         note: "Cet épisode traite de la valeur de l'argent dans le temps. Il ne modélise ni l'inflation ni le pouvoir d'achat."
         voix_off: "Un assureur encaisse des primes aujourd'hui et verse des prestations plus tard : le mois prochain pour un téléphone volé, des décennies plus tard pour une pension. Pour comparer des sommes payées à des dates différentes, les actuaires utilisent sans cesse un même outil : l'intérêt. Précisons d'emblée que cet épisode traite de la valeur de l'argent dans le temps, et non de l'inflation ou du pouvoir d'achat. Dans cet épisode, nous le construisons de zéro : intérêts simples, intérêts composés, puis l'idée clé, l'actualisation."
       # ---------------------------------------------------------------- 1
@@ -150,9 +150,9 @@ editions:
           - {expression: "1000 / 1.05**10", attendu: 614, libelle: "Valeur actuelle, 10 ans"}
           - {expression: "1000 / 1.05**20", attendu: 377, libelle: "Valeur actuelle, 20 ans"}
       - type: texte
-        texte: "À 5 %, les 231 € d'aujourd'hui *deviennent* les 1 000 € de demain"
+        texte: "Placés à 5 %, les 231 € d'aujourd'hui *atteindraient* les 1 000 € de demain"
         note: "Sous notre hypothèse de 5 % ; fiscalité, inflation et risque de défaut ignorés."
-        voix_off: "Cela ne veut pas dire que les mille euros ont perdu de la valeur par magie. Cela veut dire que, sous notre hypothèse d'un taux annuel de cinq pour cent, et en ignorant la fiscalité, l'inflation et le risque de défaut, deux cent trente et un euros et trente-huit centimes aujourd'hui deviennent mille euros dans trente ans. L'actualisation, ce sont simplement les intérêts composés lus à l'envers."
+        voix_off: "Cela ne veut pas dire que les mille euros ont perdu de la valeur par magie. Autrement dit, si l'on place deux cent trente et un euros et trente-huit centimes aujourd'hui à un taux annuel de cinq pour cent, en ignorant la fiscalité, l'inflation et le risque de défaut, ils atteindraient mille euros dans trente ans, selon nos hypothèses. L'actualisation, ce sont simplement les intérêts composés lus à l'envers."
       # ---------------------------------------------------------------- 3
       - type: titre
         numero: 3
@@ -173,7 +173,7 @@ editions:
       - type: texte
         texte: "Un taux plus bas donne une *valeur actuelle plus élevée* des paiements futurs"
         note: "Ce qu'un assureur doit mettre de côté dépend du cadre d'évaluation qui s'applique à lui."
-        voix_off: "Pour un assureur qui a des engagements à long terme, c'est un enjeu énorme. Toutes choses égales par ailleurs, un taux d'actualisation plus bas augmente la valeur actuelle de ses paiements futurs. Cela peut augmenter le montant qu'il doit reconnaître ou mettre de côté, selon le cadre d'évaluation qui s'applique à lui. Sur trente ans, passer de cinq pour cent à deux pour cent fait plus que doubler la valeur actuelle. C'est pourquoi le taux n'est jamais choisi librement : il est fixé par des règles, annoncé, justifié et contrôlé."
+        voix_off: "Pour un assureur qui a des engagements à long terme, c'est un enjeu énorme. Toutes choses égales par ailleurs, un taux d'actualisation plus bas augmente la valeur actuelle de ses paiements futurs. Cela peut augmenter le montant qu'il doit reconnaître ou mettre de côté, selon le cadre d'évaluation qui s'applique à lui. Sur trente ans, passer de cinq pour cent à deux pour cent fait plus que doubler la valeur actuelle. C'est pourquoi le taux ne se choisit pas arbitrairement : il doit respecter le cadre d'évaluation applicable, être justifié et contrôlé."
         verifier:
           - {expression: "(1000 / 1.02**30) / (1000 / 1.05**30)", attendu: 2.4, libelle: "Rapport des valeurs actuelles, 2 % contre 5 %"}
       # ---------------------------------------------------------------- 4
@@ -184,10 +184,10 @@ editions:
       - type: etapes
         texte: "Trois *formules de tableur*"
         etapes:
-          - "Valeur future : *=VC(5 % ; 30 ; 0 ; -1 000)*"
-          - "Valeur actuelle à la main : *=1 000/(1+5 %)^30*"
-          - "Valeur actuelle, fonction intégrée : *=VA(5 % ; 30 ; 0 ; -1 000)*"
-        note: "VC et VA sont les fonctions intégrées des tableurs en français (FV et PV en anglais). Le signe moins est une convention de flux."
+          - "Valeur future : *=VC(5% ; 30 ; 0 ; -1000)*"
+          - "Valeur actuelle à la main : *=1000/(1+5%)^30*"
+          - "Valeur actuelle, fonction intégrée : *=VA(5% ; 30 ; 0 ; -1000)*"
+        note: "VC et VA : noms français de FV et PV, selon la langue du tableur. Formules à copier telles quelles. Signe moins : convention de flux."
         voix_off: "Voici trois formules à essayer. Pour la valeur future, la fonction intégrée V-C, avec un taux de cinq pour cent, trente ans et mille euros, renvoie environ quatre mille trois cent vingt-deux euros. Pour la valeur actuelle, vous pouvez diviser à la main : mille divisé par un plus cinq pour cent, à la puissance trente. Ou utiliser la fonction intégrée de valeur actuelle, V-A, qui donne les mêmes deux cent trente et un euros et trente-huit centimes."
       # ---------------------------------------------------------------- exercice
       - type: exercice

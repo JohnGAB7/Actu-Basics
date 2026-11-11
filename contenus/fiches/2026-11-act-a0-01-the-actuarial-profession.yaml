@@ -41,14 +41,14 @@ sources: []
 
 editions:
   fr:
-    titre: "Actuaire : comment les maths aident à décider face au risque"
+    titre: "Actuaire : comment les maths aident à prendre des décisions face au risque"
     legende: |
       Personne ne sait si votre téléphone sera volé cette année. Pourtant, un assureur doit fixer un prix aujourd'hui. C'est le métier de l'actuaire : mettre des chiffres sur un avenir incertain. Dans ce premier épisode de notre série sur l'actuariat, on voit où travaillent les actuaires, ce que contient un contrat d'assurance, et on calcule ensemble une première prime pure, avec un assureur fictif, JG's Holding. Exercice corrigé à la fin. Chiffres fictifs, calculs vérifiés.
     hashtags: [actuariat, actuaire, assurance, probabilites]
     scenes:
       - type: accroche
         texte: "Les maths peuvent-elles *mettre un prix* sur le risque ?"
-        voix_off: "Votre téléphone sera-t-il volé cette année ? Personne ne le sait. Pourtant, un assureur peut vous dire aujourd'hui combien devrait coûter sa protection. Derrière ce chiffre, il y a un actuaire."
+        voix_off: "Votre téléphone sera-t-il volé cette année ? Personne ne le sait. Pourtant, un assureur doit fixer dès aujourd'hui le prix de sa protection. C'est notamment le travail d'un actuaire."
       - type: texte
         texte: "Cette série : *l'actuariat de A à Z*"
         voix_off: "Bienvenue dans le premier épisode de notre série sur l'actuariat. Pas à pas, nous allons construire les outils des actuaires, de la valeur de l'argent dans le temps jusqu'à la solvabilité d'un assureur. Dans cet épisode : ce que font les actuaires, ce qu'est un contrat d'assurance, et votre tout premier calcul actuariel."
@@ -89,7 +89,7 @@ editions:
           - "Exclusions (exemples) : perte, casse, vol non déclaré"
           - "Prime : ce que paie l'assuré"
           - "Prestation : ce que verse l'assureur après un vol"
-          - "Franchise : la part qui reste à l'assuré"
+          - "Franchise : la part qui reste à la charge de l'assuré"
           - "Durée : un an, puis renouvellement"
         voix_off: "Tout contrat d'assurance répond aux mêmes questions. La garantie dit quel événement est couvert : ici, le vol du téléphone. Les exclusions listent ce qui n'est pas couvert : dans notre contrat fictif, par exemple, un téléphone perdu, une casse accidentelle, ou un vol jamais déclaré. Elles dépendent des conditions de chaque contrat. La prime est le montant que paie l'assuré. La prestation est ce que verse l'assureur si l'événement se produit. La franchise est la part de la perte qui reste à la charge de l'assuré. Et la durée est la période couverte : ici, un an, puis le contrat peut être renouvelé."
       - type: texte
@@ -120,7 +120,7 @@ editions:
         formule:
           - '\mathrm{Prime\ pure}=p\times C'
           - '=0{,}02\times 500=10\ \text{€}'
-        voix_off: "Ces dix euros s'appellent la prime pure. Dans cet exemple simplifié, c'est la probabilité d'un vol, p, multipliée par ce que verse l'assureur s'il se produit, C : zéro virgule zéro deux fois cinq cents, soit dix euros. En général, la prime pure est le coût attendu des sinistres par contrat, sans rien ajouter."
+        voix_off: "Ces dix euros s'appellent la prime pure. Dans cet exemple simplifié, c'est la probabilité d'un vol, p, multipliée par ce que verse l'assureur s'il se produit, C : zéro virgule zéro deux fois cinq cents, soit dix euros. En général, la prime pure est le coût attendu des sinistres par contrat, avant frais, commissions et marge de risque."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure, en euros"}
       - type: etapes
@@ -145,10 +145,10 @@ editions:
         etapes:
           - "États-Unis et Canada : examens de la SOA et de la CAS"
           - "Royaume-Uni et au-delà : examens de l'IFoA"
-          - "Certains pays européens : un diplôme accrédité est une des voies"
+          - "Certains pays européens : diplôme ou parcours reconnu par l'association nationale"
           - "Partout : maths, statistiques, finance, puis expérience"
         note: "Les exigences évoluent : vérifiez toujours le site officiel de chaque association d'actuaires."
-        voix_off: "Le chemin pour devenir actuaire qualifié dépend de l'endroit où vous travaillez. Aux États-Unis et au Canada, la Society of Actuaries et la Casualty Actuarial Society organisent des séries d'examens professionnels. L'Institute and Faculty of Actuaries, basé au Royaume-Uni, organise ses propres examens, passés dans de nombreux pays. Dans certains pays européens, une formation universitaire accréditée est une des voies d'accès au métier. Les exigences varient selon le pays : vérifiez toujours auprès de l'association nationale d'actuaires. Partout, les fondations sont les mêmes : mathématiques, statistiques et finance, puis des années d'expérience pratique."
+        voix_off: "Le chemin pour devenir actuaire qualifié dépend de l'endroit où vous travaillez. Aux États-Unis et au Canada, la Society of Actuaries et la Casualty Actuarial Society organisent des séries d'examens professionnels. L'Institute and Faculty of Actuaries, basé au Royaume-Uni, organise ses propres examens, passés dans de nombreux pays. Dans certains pays européens, un diplôme ou un parcours reconnu par l'association actuarielle nationale peut permettre d'accéder à la qualification. Les règles varient selon les pays : vérifiez-les auprès de l'association concernée. Partout, les fondations sont les mêmes : mathématiques, statistiques et finance, puis des années d'expérience pratique."
       - type: etapes
         texte: "Les compétences que vous construirez *dans cette série*"
         etapes:
@@ -178,9 +178,9 @@ editions:
         etapes:
           - "L'actuaire met des chiffres sur des *coûts futurs incertains*"
           - "Un contrat définit garantie, exclusions, prime, prestation, franchise, durée"
-          - "Prime pure = *probabilité × coût*"
+          - "Prime pure : *coût attendu des sinistres* par contrat"
           - "Le prix payé ajoute des *chargements*"
-        voix_off: "À retenir. L'actuaire met des chiffres sur des coûts futurs encore incertains. Un contrat d'assurance définit la garantie, les exclusions, la prime, la prestation, la franchise et la durée. La prime pure est la probabilité de l'événement multipliée par son coût. Et le prix que paie le client ajoute des chargements par-dessus."
+        voix_off: "À retenir. L'actuaire met des chiffres sur des coûts futurs encore incertains. Un contrat d'assurance définit la garantie, les exclusions, la prime, la prestation, la franchise et la durée. La prime pure est le coût attendu des sinistres par contrat : ici, la probabilité du vol multipliée par l'indemnité. Et le prix que paie le client ajoute des chargements par-dessus."
       - type: texte
         texte: "La suite : *1 000 € aujourd'hui ou dans 30 ans*"
         voix_off: "Les assureurs paient souvent des années après avoir encaissé. Dans le prochain épisode, nous répondons donc à une question que tout actuaire doit maîtriser : mille euros aujourd'hui valent-ils vraiment la même chose que mille euros dans trente ans ?"

@@ -32,7 +32,7 @@ editions:
   fr:
     titre: "Combien coûte le risque de vol d'un téléphone ? Votre premier calcul actuariel"
     legende: |
-      Personne ne sait si votre téléphone sera volé cette année. Pourtant, un assureur doit fixer un prix aujourd'hui. Voici le calcul de base de l'actuaire : 1 000 téléphones, 2 % de chances de vol, 500 € par téléphone volé, et l'on obtient la prime pure. Extrait de la première leçon de notre série sur l'actuariat, « Actuaire : comment les maths aident à décider face au risque », à voir en entier sur la chaîne. Assureur et chiffres fictifs, calculs vérifiés.
+      Personne ne sait si votre téléphone sera volé cette année. Pourtant, un assureur doit fixer un prix aujourd'hui. Voici le calcul de base de l'actuaire : 1 000 téléphones, 2 % de chances de vol, 500 € par téléphone volé, et l'on obtient la prime pure. Extrait de la première leçon de notre série sur l'actuariat, « Actuaire : comment les maths aident à prendre des décisions face au risque », à voir en entier sur la chaîne. Assureur et chiffres fictifs, calculs vérifiés.
     hashtags: [actuariat, assurance, probabilites]
     scenes:
       - type: accroche

@@ -33,7 +33,7 @@ editions:
   fr:
     titre: "Assurer 10 000 téléphones : prévisible, oui. Rentable, pas forcément."
     legende: |
-      La mutualisation rend le coût moyen par contrat presque prévisible. Mais prévisible n'est pas rentable. Notre assureur fictif, JG's Holding, facture 11 € par téléphone pour un coût attendu de 10 €. Avec 100 téléphones, les vols coûtent plus que les primes environ 32 % du temps ; avec 10 000 téléphones, environ 7,3 % du temps : bien moins, mais jamais zéro. Et la mutualisation a des conditions. Extrait de la leçon « Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Chiffres fictifs, calculs vérifiés.
+      La mutualisation rend le coût moyen par contrat presque prévisible. Mais prévisible n'est pas rentable. Notre assureur fictif, JG's Holding, facture 11 € par téléphone pour un coût attendu de 10 €. Avec 100 téléphones, les sinistres coûtent plus que les primes dans environ 32 % des cas ; avec 10 000 téléphones, dans environ 7,3 % des cas : bien moins, mais jamais zéro. Et la mutualisation a des conditions. Extrait de la leçon « Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Chiffres fictifs, calculs vérifiés.
     hashtags: [actuariat, assurance, probabilites]
     scenes:
       - type: accroche
@@ -50,13 +50,13 @@ editions:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure"}
           - {expression: "10 + 1", attendu: 11, libelle: "Prime facturée"}
       - type: etapes
-        texte: "Probabilité que les vols coûtent *plus que les primes*"
+        texte: "Probabilité que les sinistres coûtent *plus que les primes*"
         etapes:
           - "100 téléphones : 3 vols ou plus, environ *32 %*"
           - "10 000 téléphones : 221 vols ou plus, environ *7,3 %*"
           - "Bien plus faible, mais *jamais nulle*"
         note: "Primes : 1 100 € (100 tél.), 110 000 € (10 000 tél.). 3 × 500 € > 1 100 € ; 221 × 500 € > 110 000 €. Binomiale exacte."
-        voix_off: "Quelle est la probabilité que les vols coûtent plus que les primes ? Avec cent téléphones, il encaisse mille cent euros, et trois vols suffisent à dépasser : cela arrive environ trente-deux pour cent du temps. Avec dix mille téléphones, il encaisse cent dix mille euros, et il faut deux cent vingt et un vols ou plus : environ sept virgule trois pour cent du temps. La mutualisation rend la mauvaise année bien moins probable, mais jamais impossible."
+        voix_off: "Quelle est la probabilité que les sinistres coûtent plus que les primes ? Avec cent téléphones, il encaisse mille cent euros, et trois vols suffisent à dépasser : cela arrive dans environ trente-deux pour cent des cas. Avec dix mille téléphones, il encaisse cent dix mille euros, et il faut deux cent vingt et un vols ou plus : dans environ sept virgule trois pour cent des cas. La mutualisation rend la mauvaise année bien moins probable, mais jamais impossible."
         verifier:
           - {expression: "100 * 11", attendu: 1100, libelle: "Primes encaissées, 100 téléphones"}
           - {expression: "10000 * 11", attendu: 110000, libelle: "Primes encaissées, 10 000 téléphones"}

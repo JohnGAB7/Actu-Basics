@@ -32,7 +32,7 @@ editions:
   fr:
     titre: "Un téléphone, c'est un pari. 10 000 téléphones, c'est presque prévisible."
     legende: |
-      Pour un seul téléphone assuré, l'assureur paie soit 0 €, soit 500 € : un pari. Pour 10 000 téléphones, le coût moyen par téléphone devient presque prévisible. Pourquoi ? L'écart-type de la moyenne diminue en sigma divisé par racine de n : 70 € pour un téléphone, 7 € pour 100, 0,70 € pour 10 000. C'est la mutualisation. Extrait de la leçon « Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Assureur et chiffres fictifs, calculs vérifiés.
+      Pour un seul téléphone assuré, l'assureur ne verse rien ou verse 500 € : un pari. Pour 10 000 téléphones, le coût moyen par téléphone devient presque prévisible. Pourquoi ? L'écart-type de la moyenne diminue en sigma divisé par racine de n : 70 € pour un téléphone, 7 € pour 100, 0,70 € pour 10 000. C'est la mutualisation. Extrait de la leçon « Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Assureur et chiffres fictifs, calculs vérifiés.
     hashtags: [actuariat, assurance, loidesgrandsnombres]
     scenes:
       - type: accroche
@@ -41,11 +41,11 @@ editions:
       - type: etapes
         texte: "Un téléphone, un an : *ce que paie JG's Holding*"
         etapes:
-          - "98 % du temps : *0 €*"
-          - "2 % du temps : *500 €*"
+          - "Dans 98 % des cas : *0 €*"
+          - "Dans 2 % des cas : *500 €*"
           - "Coût moyen : *10 €*, écart-type : *70 €*"
         note: "JG's Holding est un assureur fictif. Écart-type : √(0,02 × 500² − 10²) = 70 €."
-        voix_off: "Regardons un seul téléphone chez notre assureur fictif, JG's Holding. Quatre-vingt-dix-huit pour cent du temps, pas de vol, il ne paie rien. Deux pour cent du temps, le téléphone est volé, il paie cinq cents euros. Le coût moyen vaut dix euros, mais la dispersion autour, l'écart-type, vaut soixante-dix euros : sept fois la moyenne."
+        voix_off: "Regardons un seul téléphone chez notre assureur fictif, JG's Holding. Dans quatre-vingt-dix-huit pour cent des cas, pas de vol, il ne paie rien. Dans deux pour cent des cas, le téléphone est volé, il paie cinq cents euros. Le coût moyen vaut dix euros, mais la dispersion autour, l'écart-type, vaut soixante-dix euros : sept fois la moyenne."
         verifier:
           - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Coût attendu d'un téléphone"}
           - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Écart-type d'un téléphone"}
