@@ -1,0 +1,191 @@
+# Parcours Actuariat (pilier A), pilote : A2.01 « Pooling and the pure premium » (YOUTUBE_LESSON, anglais seul)
+# Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
+# Point bloquant de la relecture : la mutualisation rend les pertes plus PRÉVISIBLES sous hypothèses
+# (indépendance, risques semblables, nombre suffisant) ; elle ne garantit pas un bénéfice.
+# Modèle : vols indépendants, probabilité 2 % par téléphone et par an, coût fixe 500 $ (au plus un vol).
+# Le nombre de vols suit alors une loi binomiale ; les probabilités de perte sont calculées exactement.
+# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-a2-01-pooling-and-the-pure-premium
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+langues: [en]
+theme: "A2.01 · Pooling and the pure premium"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    en:
+      - "Describe the cost of one policy as a random variable, with its expected value and standard deviation"
+      - "Explain why the average cost per policy becomes more predictable as the number of policies grows"
+      - "Use the rule: standard deviation of the average = sigma divided by the square root of n"
+      - "State the conditions pooling relies on: independence, similar risks, enough policies"
+      - "Tell apart the pure premium, the commercial premium and the technical result"
+  prerequis:
+    en: ["A0.01: the actuarial profession (pure premium)", "Standard deviation, intuitively (statistics series: variance and standard deviation)"]
+  hypotheses:
+    en: "Fictional insurer and figures; thefts independent from one phone to another; 2% chance of theft per phone per year; at most one theft per phone; a theft costs exactly $500; expenses ignored"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  en:
+    titre: "Why do 10,000 policyholders make risk more predictable?"
+    legende: |
+      Insuring one phone is a gamble: the insurer pays either nothing or $500. Insuring 10,000 phones is almost predictable. Why? In this episode of our actuarial science series, we treat the cost of a policy as a random variable, compute its expected value and standard deviation, and see how pooling shrinks the uncertainty per policy: sigma divided by the square root of n. We also see what pooling cannot do: it makes losses more predictable, not automatically profitable. Worked exercise at the end. Fictional insurer and figures, checked calculations.
+    hashtags: [actuarialscience, insurance, probability, lawoflargenumbers]
+    scenes:
+      - type: accroche
+        texte: "One phone is a gamble. *10,000 phones* are almost predictable."
+        voix_off: "Insure one phone, and you have no idea what will happen. Insure ten thousand phones, and you can predict the cost per phone remarkably well. Why? That is the idea behind all insurance: pooling."
+      - type: texte
+        texte: "Back to *Mapleton Mutual* and its phones"
+        note: "Mapleton Mutual is a fictional insurer. All figures are made up."
+        voix_off: "In the first episode, our fictional insurer, Mapleton Mutual, insured phones against theft. Each phone had a two percent chance of being stolen in a year, and a theft cost five hundred dollars. We found a pure premium of ten dollars per phone. Today, we ask a deeper question: how reliable is that ten dollars?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "One policy: a gamble"
+        voix_off: "Let's look at a single phone first."
+      - type: etapes
+        texte: "One phone, one year: *what Mapleton pays*"
+        etapes:
+          - "98% of the time: *$0*"
+          - "2% of the time: *$500*"
+          - "Expected cost: 0.98 × $0 + 0.02 × $500 = *$10*"
+          - "But Mapleton never actually pays $10"
+        voix_off: "For a single phone, only two things can happen. Ninety-eight percent of the time, there is no theft, and Mapleton pays nothing. Two percent of the time, the phone is stolen, and Mapleton pays five hundred dollars. The expected cost weighs each outcome by its probability, which gives ten dollars. But notice: Mapleton never actually pays ten dollars for this phone; it pays either zero or five hundred."
+        verifier:
+          - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Expected cost of one phone"}
+      - type: texte
+        texte: "The expected value is a *long-run average*, not a forecast"
+        voix_off: "The cost of one policy is what statisticians call a random variable: a number whose value depends on chance. Its expected value, ten dollars here, is the average cost you would get over a very large number of identical phones. For any single phone, it is not a forecast of what will happen."
+      - type: formule
+        texte: "How uncertain is *one phone*?"
+        formule:
+          - '\mathrm{Var}(X)=0.02\times 500^2-10^2=4900'
+          - '\sigma=\sqrt{4900}=70\ \mathrm{dollars}'
+        voix_off: "To measure that uncertainty, we use the standard deviation, the typical distance from the average. First the variance: the expected square of the cost, zero point zero two times five hundred squared, minus the square of the mean, ten squared. That gives four thousand nine hundred. Its square root, the standard deviation, is seventy dollars."
+        verifier:
+          - {expression: "0.02 * 500**2 - 10**2", attendu: 4900, libelle: "Variance of the cost of one phone"}
+          - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Standard deviation of one phone"}
+          - {expression: "500 * sqrt(0.02 * 0.98)", attendu: 70, libelle: "Same result: 500 × √(p(1 − p))"}
+      - type: texte
+        texte: "A spread of *$70* around an average of *$10*"
+        voix_off: "So for one phone, the uncertainty is seven times larger than the average itself. Setting a price for a single phone, on its own, is close to a bet."
+        verifier:
+          - {expression: "70 / 10", attendu: 7, libelle: "Standard deviation divided by the mean"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Many policies: pooling"
+        voix_off: "Now let's insure many phones at once."
+      - type: etapes
+        texte: "How many thefts *in a year*?"
+        etapes:
+          - "100 phones: about *2* thefts, give or take *1.4*"
+          - "10,000 phones: about *200* thefts, give or take *14*"
+          - "Relative spread: 1.4 ÷ 2 = *70%*, but 14 ÷ 200 = *7%*"
+        note: "Independent thefts: the number of thefts follows a binomial distribution. Standard deviation: √(n × 0.02 × 0.98)."
+        voix_off: "Let's count the thefts. With one hundred phones, Mapleton expects about two thefts, give or take one point four. With ten thousand phones, it expects about two hundred, give or take fourteen. The spread grows, but much more slowly than the number of phones: it is seventy percent of the average with one hundred phones, and only seven percent with ten thousand."
+        verifier:
+          - {expression: "100 * 0.02", attendu: 2, libelle: "Expected thefts, 100 phones"}
+          - {expression: "sqrt(100 * 0.02 * 0.98)", attendu: 1.4, libelle: "Standard deviation of thefts, 100 phones"}
+          - {expression: "10000 * 0.02", attendu: 200, libelle: "Expected thefts, 10,000 phones"}
+          - {expression: "sqrt(10000 * 0.02 * 0.98)", attendu: 14, libelle: "Standard deviation of thefts, 10,000 phones"}
+          - {expression: "100 * sqrt(100 * 0.02 * 0.98) / (100 * 0.02)", attendu: 70, libelle: "Relative spread, 100 phones, in %"}
+          - {expression: "100 * sqrt(10000 * 0.02 * 0.98) / (10000 * 0.02)", attendu: 7, libelle: "Relative spread, 10,000 phones, in %"}
+      - type: formule
+        texte: "Uncertainty of the *average cost per phone*"
+        formule:
+          - '\sigma_{\bar{X}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{70}{\sqrt{n}}'
+          - 'n=100:\ 7\ \mathrm{dollars}\qquad n=10\,000:\ 0.70\ \mathrm{dollars}'
+        voix_off: "Now look at the average cost per phone. When the phones are independent, its standard deviation is sigma divided by the square root of n, the number of phones. With one hundred phones, seventy divided by ten gives seven dollars. With ten thousand phones, seventy divided by one hundred gives just seventy cents."
+        verifier:
+          - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Std. dev. of average cost, 100 phones"}
+          - {expression: "70 / sqrt(10000)", attendu: 0.70, libelle: "Std. dev. of average cost, 10,000 phones"}
+      - type: courbe
+        texte: "Standard deviation of the *cost per phone*"
+        courbe:
+          style: barres
+          points: [[0, 70], [1, 7], [2, 0.7]]
+          etiquettes: ["1 phone", "100 phones", "10,000 phones"]
+          valeurs: true
+          y_min: 0
+          y_max: 80
+          axe_x: "Number of phones insured"
+          axe_y: "Standard deviation ($)"
+        note: "Average cost per phone: $10 in all three cases. Independent thefts."
+        voix_off: "Here is the same idea in a picture. The average cost per phone is ten dollars in all three cases. But the uncertainty around it falls from seventy dollars for one phone, to seven dollars for one hundred phones, to seventy cents for ten thousand. With many independent policies, the random ups and downs largely cancel out."
+      - type: texte
+        texte: "The law of large numbers: the average cost gets *closer to $10*"
+        voix_off: "This is the law of large numbers at work. As the number of independent, similar policies grows, the average cost per policy gets closer and closer to its expected value, ten dollars. That is what pooling means: sharing risks among many people turns an unpredictable cost into a fairly predictable one."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "What pooling cannot do"
+        voix_off: "Pooling is powerful, but it has limits."
+      - type: etapes
+        texte: "Premium *$11* per phone: chance that thefts cost *more than the premiums*"
+        etapes:
+          - "100 phones: 3 thefts or more, about *32%*"
+          - "10,000 phones: 221 thefts or more, about *7.3%*"
+          - "Much smaller, but *never zero*"
+        note: "$11 = pure premium $10 + a $1 safety margin; expenses ignored. Exact binomial probabilities."
+        voix_off: "Suppose Mapleton charges eleven dollars per phone: the ten dollar pure premium plus a one dollar safety margin. With one hundred phones, it collects one thousand one hundred dollars, so three thefts are enough to cost more than that: this happens about thirty-two percent of the time. With ten thousand phones, it takes two hundred and twenty-one thefts or more, which happens about seven point three percent of the time. Pooling makes a bad year much less likely, but never impossible."
+        verifier:
+          - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 thefts or more out of 100), in %"}
+          - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 thefts or more out of 10,000), in %"}
+          - {expression: "100 * 11", attendu: 1100, libelle: "Premiums collected, 100 phones"}
+          - {expression: "floor(100 * 11 / 500) + 1", attendu: 3, libelle: "Fewest thefts costing more than the premiums, 100 phones"}
+          - {expression: "floor(10000 * 11 / 500) + 1", attendu: 221, libelle: "Fewest thefts costing more than the premiums, 10,000 phones"}
+      - type: etapes
+        texte: "Pooling works *only if*…"
+        disposition: cartes
+        etapes:
+          - "Risks are independent"
+          - "Risks are similar"
+          - "There are enough policies"
+          - "The probability stays stable"
+        voix_off: "Pooling relies on conditions that actuaries always check. The risks must be largely independent: a hailstorm that damages every car in a town at once does not cancel out. The risks must be similar enough to be grouped together. There must be enough policies for the averages to settle. And the probability must stay stable: if thefts suddenly become more common, last year's average no longer applies."
+      - type: etapes
+        texte: "Predictable is *not* the same as profitable"
+        etapes:
+          - "Pure premium: the *expected claims* per policy"
+          - "Commercial premium: pure premium *plus loadings*"
+          - "Technical result: premiums *minus* claims and expenses"
+        voix_off: "Finally, let's be precise about what pooling does not promise. The pure premium is only the expected cost of claims per policy. The commercial premium, the price actually charged, adds loadings for expenses, commissions, uncertainty and capital. And the technical result, premiums minus claims and expenses, can still be negative if the price is too low, the expenses too high, or a rare extreme event strikes."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Mapleton insures *2,500 phones*. Expected thefts? Standard deviation of the *average cost per phone*?"
+        pause: 15
+        voix_off: "Your turn. Mapleton Mutual now insures two thousand five hundred phones, with the same two percent chance of theft and the same five hundred dollar cost. How many thefts should it expect? And what is the standard deviation of the average cost per phone?"
+      - type: correction
+        etapes:
+          - "Expected thefts: 2,500 × 2% = *50*"
+          - "One phone: σ = *$70*"
+          - "Average of 2,500 phones: 70 ÷ √2,500 = 70 ÷ 50"
+        reponse: "50 thefts; standard deviation ≈ $1.40 per phone"
+        voix_off: "Let's work it out. The expected number of thefts is two thousand five hundred times two percent, that is fifty. For one phone, the standard deviation is still seventy dollars. For the average of two thousand five hundred phones, we divide seventy by the square root of two thousand five hundred, which is fifty. So Mapleton expects fifty thefts, and the standard deviation of the average cost per phone is about one dollar forty."
+        verifier:
+          - {expression: "2500 * 0.02", attendu: 50, libelle: "Expected thefts, 2,500 phones"}
+          - {expression: "sqrt(2500)", attendu: 50, libelle: "Square root of 2,500"}
+          - {expression: "70 / sqrt(2500)", attendu: 1.40, libelle: "Std. dev. of average cost, 2,500 phones"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "One policy: a cost of *$0 or $500*, expected value *$10*"
+          - "Average of n independent policies: spread *σ ÷ √n*"
+          - "Pooling needs independence, similar risks, enough policies"
+          - "Predictable *is not* profitable"
+        voix_off: "Key takeaways. For one policy, the cost is either zero or five hundred dollars, with an expected value of ten. For the average of n independent policies, the spread shrinks to sigma divided by the square root of n. Pooling only works with independent, similar risks and enough policies. And a predictable cost is not automatically a profit."
+      - type: texte
+        texte: "Next: *the probability tools behind pooling*"
+        voix_off: "In the next episodes of module A2, we build the probability tools behind today's results, step by step: events and conditional probability, random variables, and the sum of many claims."
+      - type: fin
+        texte: "Follow for the next episode."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

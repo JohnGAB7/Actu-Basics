@@ -154,10 +154,14 @@ def valider_entete(brut: dict, erreurs: list[str]) -> dict:
     niveau = p.get("niveau")
     if niveau not in NIVEAUX:
         erreurs.append(f"pedagogie.niveau « {niveau} » inconnu ({' | '.join(NIVEAUX)})")
+    langues = brut.get("langues")
+    langues = [l for l in ("fr", "en") if l in langues] if isinstance(langues, list) else ["fr", "en"]
+    langues = langues or ["fr", "en"]
     objectifs = p.get("objectifs")
     if not isinstance(objectifs, dict) or not all(isinstance(objectifs.get(l), list) and objectifs.get(l)
-                                                  for l in ("fr", "en")):
-        erreurs.append("pedagogie.objectifs : listes « fr » et « en » d'objectifs (« À la fin, vous saurez… »)")
+                                                  for l in langues):
+        erreurs.append("pedagogie.objectifs : listes " + " et ".join(f"« {l} »" for l in langues)
+                       + " d'objectifs (« À la fin, vous saurez… »)")
     prerequis = p.get("prerequis", {})
     if prerequis is not None and not isinstance(prerequis, dict):
         erreurs.append("pedagogie.prerequis doit être un bloc {fr: [...], en: [...]}")
@@ -363,13 +367,14 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
 
 
 # --------------------------------------------------------------------------- contrôles qualité
-def controler_pedagogie(fiche, r, langues=("fr", "en")) -> None:
+def controler_pedagogie(fiche, r, langues=None) -> None:
     """Contrôles propres aux fiches pédagogiques (s'ajoutent aux contrôles communs)."""
     from .qc import BLOQUANT
     p = fiche.pedagogie
     r.ok.append(f"Fiche pédagogique : famille {fiche.famille}, format {fiche.format}, niveau {p.get('niveau')}")
+    langues = langues or fiche.langues
     objectifs = p.get("objectifs") or {}
-    if len(objectifs.get("fr", [])) != len(objectifs.get("en", [])):
+    if len(langues) == 2 and len(objectifs.get("fr", [])) != len(objectifs.get("en", [])):
         r.avertir("Nombre d'objectifs différent entre FR et EN")
     for l in langues:
         ed = fiche.editions[l]
@@ -413,7 +418,7 @@ def controler_pedagogie(fiche, r, langues=("fr", "en")) -> None:
                     erreur = formule_valide(ligne)
                     if erreur:
                         r.bloquant(f"Scène {i} : formule illisible par le moteur « {ligne[:40]} » ({erreur})", l)
-    nb_verifs = sum(len(s.extra.get("verifier", [])) for s in fiche.editions["fr"].scenes)
+    nb_verifs = sum(len(s.extra.get("verifier", [])) for s in fiche.editions[fiche.langues[0]].scenes)
     if not nb_verifs:
         r.avertir("Aucun résultat numérique n'est recalculé par la machine (bloc « verifier »)")
     r.a_verifier.append("Exactitude pédagogique : définitions, notations et raisonnements relus par une "

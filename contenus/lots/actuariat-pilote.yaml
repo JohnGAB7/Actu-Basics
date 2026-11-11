@@ -1,0 +1,12 @@
+# Parcours Actuariat (pilier A), pilote : 3 leçons YouTube longues, en anglais seul.
+# Plan v2 validé par JG le 2026-11-11 (carte de décision) : docs/actuariat/PARCOURS-ACTUARIAT.md.
+# Anglais d'abord (demande de JG, 2026-11-11) ; la version française viendra après tout le parcours EN.
+# Relecture : ChatGPT dans les commentaires de la PR #17, Claude intègre, JG valide.
+lot: actuariat-pilote
+episodes: [A0.01, A1.01, A2.01]
+langues: [en]
+format: youtube_lesson
+moteur: "Fiches en une seule langue (champ « langues ») et chapitres YouTube tirés des cartes de chapitre (chapitres.txt)"
+extraits_verticaux: "2 ou 3 par leçon, écrits comme des fiches courtes autonomes après validation des leçons"
+pdf: "dossier partagé du projet : actu-basics/actuariat/pilote/"
+statut: brouillon

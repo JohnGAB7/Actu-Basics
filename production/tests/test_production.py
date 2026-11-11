@@ -1817,3 +1817,70 @@ def test_boites_a_moustaches_et_nuage(tmp_path):
     assert not valider(nuage, "s")[1]
     nuage["courbe"]["x_min"] = "zéro"
     assert any("x_min" in e for e in valider(nuage, "s")[1])
+
+
+# --------------------------------------------------------------------------- fiche en une seule langue
+def _brut_anglais_seul():
+    """Fiche de lancement réduite à l'anglais : parcours Actuariat, EN d'abord (demande de JG, 2026-11-11)."""
+    brut = valider(brut_lancement())
+    brut["langues"] = ["en"]
+    del brut["editions"]["fr"]
+    brut["pedagogie"]["objectifs"].pop("fr")
+    return brut
+
+
+def test_fiche_anglais_seul_acceptee(tmp_path):
+    fiche = charger_fiche(ecrire(tmp_path, _brut_anglais_seul(), "2026-11-lancement-actu-basics"))
+    assert fiche.langues == ("en",) and set(fiche.editions) == {"en"}
+    r = constats_pedago(tmp_path, _brut_anglais_seul())
+    assert not r.bloquants, [str(c) for c in r.bloquants]
+    assert any("une seule langue" in o for o in r.ok)
+    assert not any("FR et EN" in str(a) or "entre FR et EN" in str(a) for a in r.avertissements)
+
+
+def test_fiche_bilingue_par_defaut(tmp_path):
+    assert charger_fiche(LANCEMENT).langues == ("fr", "en")
+
+
+@pytest.mark.parametrize("modif, attendu", [
+    (lambda b: b.update(langues=["de"]), "langues doit être une liste"),
+    (lambda b: b.update(langues=[]), "langues doit être une liste"),
+    (lambda b: b["editions"].update(fr={"titre": "x"}), "editions.fr : langue absente"),
+    (lambda b: b.update(langues=["fr", "en"]), "editions.fr : édition manquante"),
+])
+def test_langues_mal_renseignees(tmp_path, modif, attendu):
+    brut = _brut_anglais_seul()
+    modif(brut)
+    with pytest.raises(FicheInvalide, match=attendu):
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+
+
+def test_objectifs_exiges_seulement_pour_les_langues_de_la_fiche(tmp_path):
+    brut = _brut_anglais_seul()
+    brut["pedagogie"]["objectifs"].pop("en")
+    with pytest.raises(FicheInvalide, match="« en » d'objectifs"):
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+
+
+def test_produire_anglais_seul_refuse_le_francais(tmp_path):
+    f = ecrire(tmp_path, _brut_anglais_seul(), "2026-11-lancement-actu-basics")
+    ok = lancer(f, "--verifier")
+    assert ok.returncode == 0, ok.stdout + ok.stderr
+    fr = lancer(f, "--verifier", "--langues", "fr")
+    assert fr.returncode != 0 and "absente(s) de la fiche : FR" in fr.stdout
+
+
+# --------------------------------------------------------------------------- chapitres YouTube
+def test_chapitres_youtube():
+    from lmec.fiche import Edition, Scene
+    from lmec.textes import chapitres
+    sc = [Scene(type="accroche", texte="x", voix_off="", duree=None, extra={})]
+    for n in (1, 2, 3):
+        sc.append(Scene(type="titre", texte=f"Part *{n}*", voix_off="", duree=None, extra={"numero": str(n)}))
+        sc.append(Scene(type="texte", texte="y", voix_off="", duree=None, extra={}))
+    ed = Edition(langue="en", titre="t", legende="l", hashtags=[], scenes=sc)
+    durees = [20, 3, 40, 3, 60, 3, 3600]
+    assert chapitres(ed, durees) == [("0:00", "Intro"), ("0:20", "1. Part 1"), ("1:03", "2. Part 2"),
+                                     ("2:06", "3. Part 3")]
+    assert chapitres(ed, [20, 3, 2, 3, 60, 3, 30]) == []            # un chapitre de moins de 10 s
+    assert chapitres(Edition(langue="en", titre="t", legende="l", hashtags=[], scenes=sc[:3]), [20, 3, 40]) == []

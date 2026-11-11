@@ -16,6 +16,10 @@ L'architecture est inchangée : même commande (`python production/produire.py <
 
 **Déclinaisons par plateforme** (demande de JG, 2026-11-03) : une même fiche `educational` donne la version verticale 9:16 (TikTok, Instagram Reels, YouTube Shorts) et, avec `--horizontal`, la version 16:9 1920 × 1080 pour YouTube, rangée dans `sortie/<id>-16x9/`. La voix, les sous-titres et les durées sont les mêmes ; seule la mise en page change (deux colonnes, comme `youtube_lesson`). Un SHORT reste vertical. Le workflow « Validation finale » produit les deux versions.
 
+**Fiche en une seule langue** (demande de JG, 2026-11-11, parcours Actuariat en anglais d'abord) : `langues: [en]` dans l'en-tête. Seule l'édition `en` est alors exigée, ainsi que les objectifs `en`. Les contrôles de cohérence FR/EN sont sautés, `--langues fr` est refusé, et le mode final produit les langues de la fiche. Sans ce champ, FR et EN restent obligatoires.
+
+**Chapitres YouTube** : en 16:9 (`youtube_lesson` ou `--horizontal`), chaque carte `titre` devient un chapitre. Le fichier `chapitres.txt` (« 0:00 Intro », « 1:12 1. … ») est écrit à côté de la vidéo, et repris dans `metadonnees.json`, à coller dans la description. YouTube exige au moins trois chapitres d'au moins 10 secondes : sinon, aucun fichier n'est écrit.
+
 Une fiche pédagogique n'a pas besoin de `chiffre_cle`, de `contexte` ni de `sources`, sauf si elle cite un fait extérieur.
 
 ## Scènes

@@ -1,0 +1,208 @@
+# Parcours Actuariat (pilier A), pilote : A1.01 « Compound interest and discounting » (YOUTUBE_LESSON, anglais seul)
+# Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
+# Taux d'intérêt fictifs et constants, choisis pour l'exemple ; aucun conseil de placement.
+# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-a1-01-compound-interest-and-discounting
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+langues: [en]
+theme: "A1.01 · Compound interest and discounting"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    en:
+      - "Tell simple interest from compound interest, and compute both"
+      - "Use the accumulation factor (1 + i)^n to find a future value"
+      - "Discount a future payment to its present value with (1 + i)^-n"
+      - "Explain why the choice of interest rate changes an insurer's figures so much"
+      - "Do these calculations in a spreadsheet"
+  prerequis:
+    en: ["A0.01: the actuarial profession", "Percentages and powers"]
+  hypotheses:
+    en: "Constant annual interest rates, chosen for the example; interest paid once a year; no tax, no inflation, no default risk"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  en:
+    titre: "$1,000 today or in 30 years: is it really the same money?"
+    legende: |
+      Would you rather have $1,000 today or $1,000 in 30 years? Same number, very different value. In this episode of our actuarial science series, we build the most basic tool of the actuary: compound interest and discounting. We see why $1,000 due in 30 years is worth about $231 today at 5% a year, why the interest rate matters so much to an insurer, and how to do it all in a spreadsheet. Worked exercise at the end. Fictional rates, checked calculations, no investment advice.
+    hashtags: [actuarialscience, compoundinterest, presentvalue, finance]
+    scenes:
+      - type: accroche
+        texte: "*$1,000* today or *$1,000* in 30 years?"
+        voix_off: "One thousand dollars today, or one thousand dollars in thirty years. Same number. But are they really the same money? For an actuary, certainly not."
+      - type: texte
+        texte: "Insurers *receive money now* and *pay it later*"
+        voix_off: "An insurer collects premiums today and pays benefits later: next month for a stolen phone, decades later for a pension. To compare money paid at different dates, actuaries use one tool again and again: interest. In this episode, we build it from scratch: simple interest, compound interest, and then the key idea, discounting."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Simple or compound interest"
+        voix_off: "Let's start with a deposit that earns interest."
+      - type: etapes
+        texte: "*$1,000* at *5%* a year, simple interest"
+        etapes:
+          - "Each year: 5% of $1,000 = *$50*"
+          - "After 30 years: 30 × $50 = *$1,500* of interest"
+          - "Total: *$2,500*"
+        note: "Fictional, constant rate. Simple interest: interest is always computed on the original $1,000."
+        voix_off: "Imagine you deposit one thousand dollars at five percent a year, with simple interest. Each year, you earn five percent of one thousand dollars, that is fifty dollars. After thirty years, that makes thirty times fifty, or one thousand five hundred dollars of interest. In total, you have two thousand five hundred dollars."
+        verifier:
+          - {expression: "0.05 * 1000", attendu: 50, libelle: "Simple interest per year"}
+          - {expression: "30 * 0.05 * 1000", attendu: 1500, libelle: "Simple interest over 30 years"}
+          - {expression: "1000 * (1 + 0.05 * 30)", attendu: 2500, libelle: "Total with simple interest"}
+      - type: etapes
+        texte: "Compound interest: *interest earns interest*"
+        etapes:
+          - "Year 1: $1,000 × 1.05 = *$1,050*"
+          - "Year 2: $1,050 × 1.05 = *$1,102.50*"
+          - "Each year, multiply by *1.05*"
+        voix_off: "With compound interest, the interest is added to the balance, and then earns interest itself. After one year, one thousand times one point zero five gives one thousand and fifty dollars. In the second year, you earn five percent on one thousand and fifty, which gives one thousand one hundred and two dollars fifty. In other words, each year, the balance is multiplied by one point zero five."
+        verifier:
+          - {expression: "1000 * 1.05", attendu: 1050, libelle: "Balance after 1 year"}
+          - {expression: "1000 * 1.05**2", attendu: 1102.50, libelle: "Balance after 2 years"}
+      - type: formule
+        texte: "The *accumulation factor*"
+        formule:
+          - 'FV=PV\times(1+i)^n'
+          - '1000\times 1.05^{30}\approx 4322'
+        voix_off: "After n years, the balance has been multiplied by one plus i, n times: one plus i to the power n. Here i is the annual interest rate, PV the amount you start with, and FV the future value. With one thousand dollars at five percent for thirty years, we get about four thousand three hundred and twenty-two dollars."
+        verifier:
+          - {expression: "1000 * 1.05**30", attendu: 4322, libelle: "Future value after 30 years at 5%"}
+      - type: courbe
+        texte: "*$1,000* at 5% a year, compound interest"
+        courbe:
+          variable: t
+          de: 0
+          a: 30
+          expression: "1000 * 1.05**t"
+          y_max: 5000
+          axe_x: "Years"
+          axe_y: "Balance ($)"
+          reperes:
+            - {x: 10, label: "10 years: $1,629"}
+            - {x: 20, label: "20 years: $2,653"}
+            - {x: 30, label: "30 years: $4,322"}
+        voix_off: "Here is how the balance grows. After ten years, about one thousand six hundred and twenty-nine dollars. After twenty years, about two thousand six hundred and fifty-three. After thirty years, about four thousand three hundred and twenty-two: far more than the two thousand five hundred of simple interest."
+        verifier:
+          - {expression: "1000 * 1.05**10", attendu: 1629, libelle: "Balance after 10 years"}
+          - {expression: "1000 * 1.05**20", attendu: 2653, libelle: "Balance after 20 years"}
+      - type: texte
+        texte: "Rule of thumb: money doubles in about *72 ÷ rate* years"
+        note: "72 ÷ 5 = 14.4 years. Exact doubling time at 5%: about 14.2 years."
+        voix_off: "A handy rule of thumb: at a rate of r percent, money roughly doubles in seventy-two divided by r years. At five percent, seventy-two divided by five gives fourteen point four years. The exact answer is about fourteen point two years: close enough for a quick check."
+        verifier:
+          - {expression: "72 / 5", attendu: 14.4, libelle: "Rule of 72 at 5%"}
+          - {expression: "log(2) / log(1.05)", attendu: 14.2, libelle: "Exact doubling time at 5%"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Discounting: going back in time"
+        voix_off: "Now let's turn the question around."
+      - type: texte
+        texte: "How much must I invest *today* to have *$1,000* in 30 years?"
+        voix_off: "Compound interest takes money forward in time. Actuaries often need the opposite. Mapleton Mutual, our fictional insurer, promises to pay one thousand dollars in thirty years. How much must it set aside today, at five percent a year, to be able to pay it?"
+      - type: formule
+        texte: "The *present value*"
+        formule:
+          - 'PV=\dfrac{FV}{(1+i)^n}=FV\times v^n'
+          - 'v=\dfrac{1}{1+i}'
+          - '\dfrac{1000}{1.05^{30}}\approx 231.38'
+        voix_off: "We simply divide instead of multiplying. The present value is the future value divided by one plus i to the power n. Actuaries write v for one divided by one plus i: it is called the discount factor. Here, one thousand divided by one point zero five to the power thirty gives about two hundred and thirty-one dollars and thirty-eight cents."
+        verifier:
+          - {expression: "1000 / 1.05**30", attendu: 231.38, libelle: "Present value of $1,000 in 30 years at 5%"}
+          - {expression: "231.38 * 1.05**30", attendu: 1000, tolerance: 0.1, libelle: "Check: $231.38 grows back to $1,000"}
+      - type: courbe
+        texte: "Today's value of *$1,000* paid later, at 5%"
+        courbe:
+          variable: t
+          de: 0
+          a: 30
+          expression: "1000 / 1.05**t"
+          y_max: 2000
+          axe_x: "Years until payment"
+          axe_y: "Present value ($)"
+          reperes:
+            - {x: 10, label: "10 years: $614"}
+            - {x: 20, label: "20 years: $377"}
+            - {x: 30, label: "30 years: $231"}
+        voix_off: "The further away the payment, the less it is worth today. One thousand dollars paid in ten years is worth about six hundred and fourteen dollars today. Paid in twenty years, about three hundred and seventy-seven. Paid in thirty years, only about two hundred and thirty-one."
+        verifier:
+          - {expression: "1000 / 1.05**10", attendu: 614, libelle: "Present value, 10 years"}
+          - {expression: "1000 / 1.05**20", attendu: 377, libelle: "Present value, 20 years"}
+      - type: texte
+        texte: "Today's $231 and tomorrow's $1,000 are *equivalent* at 5%"
+        voix_off: "This does not mean that the thousand dollars has lost value by magic. It means that, at five percent a year, two hundred and thirty-one dollars today and one thousand dollars in thirty years are equivalent: one grows into the other. Discounting is just compound interest read backwards."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Why the rate matters so much"
+        voix_off: "Here is why actuaries argue so much about interest rates."
+      - type: etapes
+        texte: "*$1,000* in 30 years: value today"
+        etapes:
+          - "At 2%: about *$552*"
+          - "At 5%: about *$231*"
+          - "At 8%: about *$99*"
+        note: "Fictional rates, kept constant for 30 years. Real rates change over time."
+        voix_off: "Let's change only the interest rate. At two percent a year, one thousand dollars in thirty years is worth about five hundred and fifty-two dollars today. At five percent, about two hundred and thirty-one. At eight percent, only about ninety-nine dollars."
+        verifier:
+          - {expression: "1000 / 1.02**30", attendu: 552, libelle: "Present value at 2%"}
+          - {expression: "1000 / 1.05**30", attendu: 231, libelle: "Present value at 5%"}
+          - {expression: "1000 / 1.08**30", attendu: 99, libelle: "Present value at 8%"}
+      - type: texte
+        texte: "A lower rate means *more money set aside today*"
+        voix_off: "For an insurer with long-term promises, this is a huge deal. If it assumes a lower interest rate, the present value of its future payments goes up, so it must set aside more money today. Over thirty years, moving from five percent to two percent more than doubles the amount needed. That is why the choice of rate is always stated, justified and checked."
+        verifier:
+          - {expression: "(1000 / 1.02**30) / (1000 / 1.05**30)", attendu: 2.4, libelle: "Ratio of present values, 2% vs 5%"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "In a spreadsheet"
+        voix_off: "You can do all of this in any spreadsheet."
+      - type: etapes
+        texte: "Three *spreadsheet formulas*"
+        etapes:
+          - "Future value: *=FV(5%, 30, 0, -1000)*"
+          - "Present value by hand: *=1000/(1+5%)^30*"
+          - "Present value, built in: *=PV(5%, 30, 0, -1000)*"
+        note: "FV and PV are built-in functions in most spreadsheets. The minus sign is a cash-flow convention."
+        voix_off: "Here are three formulas to try. For the future value, the built-in function F V, with a rate of five percent, thirty years and one thousand dollars, returns about four thousand three hundred and twenty-two dollars. For the present value, you can divide by hand: one thousand divided by one plus five percent, to the power thirty. Or you can use the built-in present value function, P V, which gives the same two hundred and thirty-one dollars and thirty-eight cents."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Mapleton must pay *$10,000 in 10 years*. At *4%* a year, how much must it set aside today?"
+        pause: 15
+        voix_off: "Your turn. Mapleton Mutual must pay ten thousand dollars in ten years. At four percent a year, how much must it set aside today?"
+      - type: correction
+        etapes:
+          - "Discount factor: 1.04^10 ≈ *1.4802*"
+          - "Present value: $10,000 ÷ 1.4802"
+          - "Check: $6,755.64 × 1.04^10 ≈ *$10,000*"
+        reponse: "About $6,755.64 today"
+        voix_off: "Let's work it out. One point zero four to the power ten is about one point four eight zero two. We divide ten thousand dollars by this factor. As a check, the amount we find, multiplied again by one point zero four to the power ten, gives back ten thousand dollars. Mapleton must set aside about six thousand seven hundred and fifty-five dollars and sixty-four cents today."
+        verifier:
+          - {expression: "1.04**10", attendu: 1.4802, libelle: "1.04 to the power 10"}
+          - {expression: "10000 / 1.04**10", attendu: 6755.64, libelle: "Present value of $10,000 in 10 years at 4%"}
+          - {expression: "6755.64 * 1.04**10", attendu: 10000, tolerance: 0.1, libelle: "Check"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Compound interest: multiply by *(1 + i)* each year"
+          - "Future value: *PV × (1 + i)^n*"
+          - "Present value: *FV ÷ (1 + i)^n*"
+          - "A lower rate means a *higher present value*"
+        voix_off: "Key takeaways. With compound interest, the balance is multiplied by one plus i each year. The future value is the present value times one plus i to the power n. The present value is the future value divided by one plus i to the power n. And the lower the interest rate, the higher the present value of a future payment."
+      - type: texte
+        texte: "Next: *why 10,000 policyholders make risk more predictable*"
+        voix_off: "We now know how to move money through time. In the next episode, we add the other ingredient of insurance, probability, and we see why insuring ten thousand people is far more predictable than insuring just one."
+      - type: fin
+        texte: "Follow for the next episode."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

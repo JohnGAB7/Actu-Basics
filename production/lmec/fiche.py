@@ -74,6 +74,7 @@ class Fiche:
     format: str = "short"
     pedagogie: dict = field(default_factory=dict)   # niveau, objectifs, prérequis (fiches pédagogiques)
     habillage_sonore: bool = False
+    langues: tuple = ("fr", "en")   # langues produites ; une fiche peut être EN seule (parcours Actuariat)
     format_image_impose: str = ""   # « lecon » : déclinaison 16:9 YouTube d'une fiche verticale (--horizontal)
 
     @property
@@ -272,13 +273,24 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
             if not isinstance(p.get("mis_en_avant", False), bool):
                 erreurs.append(f"donnees.points[{i}].mis_en_avant doit valoir true ou false")
 
+    langues_fiche = brut.get("langues", list(LANGUES))
+    if (not isinstance(langues_fiche, list) or not langues_fiche
+            or any(l not in LANGUES for l in langues_fiche) or len(set(langues_fiche)) != len(langues_fiche)):
+        erreurs.append(f"langues doit être une liste de langues distinctes parmi {list(LANGUES)}")
+        langues_fiche = list(LANGUES)
+    langues_fiche = tuple(l for l in LANGUES if l in langues_fiche)
+
     editions: dict[str, Edition] = {}
     brut_editions = _dict(brut.get("editions"), "editions", erreurs)
-    for langue in LANGUES:
+    for langue in sorted(set(brut_editions) - set(langues_fiche)):
+        erreurs.append(f"editions.{langue} : langue absente de « langues » {list(langues_fiche)}")
+    for langue in langues_fiche:
         ctx = f"editions.{langue}"
         ed = brut_editions.get(langue)
         if not ed:
-            erreurs.append(f"{ctx} : édition manquante (FR et EN sont obligatoires)")
+            erreurs.append(f"{ctx} : édition manquante"
+                           + (" (FR et EN sont obligatoires)" if langues_fiche == LANGUES
+                              else f" (langues : {', '.join(langues_fiche)})"))
             continue
         ed = _dict(ed, ctx, erreurs)
         if not ed:
@@ -344,4 +356,4 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
         perimetre=contexte["perimetre"], definition=contexte["definition"],
         sources=sources, donnees=donnees, editions=editions, brut=brut,
         type_fiche=type_fiche, famille=famille, format=format_, pedagogie=infos_pedago,
-        habillage_sonore=habillage is True)
+        habillage_sonore=habillage is True, langues=langues_fiche)

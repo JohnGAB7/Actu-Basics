@@ -1,0 +1,178 @@
+# Parcours Actuariat (pilier A), pilote : A0.01 « The actuarial profession » (YOUTUBE_LESSON, anglais seul)
+# Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
+# Anglais d'abord (demande de JG, 2026-11-11) : la version française viendra après tout le parcours EN.
+# Assureur fictif « Mapleton Mutual », toujours annoncé comme fictif. Aucun salaire cité (non sourcé).
+# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-a0-01-the-actuarial-profession
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+langues: [en]
+theme: "A0.01 · The actuarial profession"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    en:
+      - "Describe what actuaries do and the main fields they work in"
+      - "Name the parts of an insurance contract: cover, exclusions, premium, benefit, deductible, term"
+      - "Explain why an insurer sets its price before knowing its costs"
+      - "Compute a first pure premium: probability times cost, and the effect of a deductible"
+      - "Know that actuarial qualifications depend on the country, and where to check them"
+  prerequis:
+    en: ["None: percentages and multiplication"]
+  hypotheses:
+    en: "Mapleton Mutual and all its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  en:
+    titre: "Actuaries: how maths helps make decisions under risk"
+    legende: |
+      Nobody knows whether your phone will be stolen this year. Yet an insurer has to set a price today. That is the actuary's job: putting numbers on uncertain futures. In this first episode of our actuarial science series, we see where actuaries work, what is inside an insurance contract, and we compute a first pure premium together, with a fictional insurer, Mapleton Mutual. Worked exercise at the end. Fictional figures, checked calculations.
+    hashtags: [actuarialscience, actuary, insurance, probability]
+    scenes:
+      - type: accroche
+        texte: "Can maths *put a price* on risk?"
+        voix_off: "Will your phone be stolen this year? Nobody knows. Yet an insurer can tell you today what covering it should cost. The person behind that number is an actuary."
+      - type: texte
+        texte: "This series: *actuarial science from A to Z*"
+        voix_off: "Welcome to the first episode of our actuarial science series. Step by step, we will build the tools actuaries use, from the value of money over time to the solvency of an insurer. In this episode: what actuaries do, what an insurance contract is, and your very first actuarial calculation."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "What actuaries do"
+        voix_off: "Let's start with the job itself."
+      - type: texte
+        texte: "One job: *putting numbers on uncertain futures*"
+        voix_off: "An actuary uses probability, statistics and finance to measure risks that lie in the future. How many accidents will happen next year? How long will a pensioner live? How much money must be set aside today to pay those future costs? Actuaries do not predict the future for a single person: they work with groups, with averages and with the uncertainty around them."
+      - type: etapes
+        texte: "Where actuaries *work*"
+        disposition: cartes
+        etapes:
+          - "Life insurance and pensions"
+          - "Non-life insurance: car, home, business"
+          - "Health insurance"
+          - "Banks, consulting, risk management"
+        voix_off: "Actuaries work in several fields. In life insurance and pensions, they deal with how long people live, and with savings and retirement income. In non-life insurance, they price and reserve for cars, homes and businesses. In health insurance, they model medical costs. And in banks, consulting firms and risk teams, they measure and manage financial risks."
+      - type: texte
+        texte: "Their questions: *how likely, how much, and when?*"
+        voix_off: "Across all these fields, the same three questions come back. How likely is the event? How much will it cost if it happens? And when will the money have to be paid? The whole series is built around these three questions."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "What is an insurance contract?"
+        voix_off: "Before any formula, we need to know what is being priced."
+      - type: texte
+        texte: "Meet *Mapleton Mutual*, our insurer"
+        note: "Mapleton Mutual is a fictional insurer. All its figures in this series are made up."
+        voix_off: "Throughout this series, we will follow an insurer called Mapleton Mutual. It is a fictional company, and all of its figures are made up. Its first product is simple: insurance against phone theft."
+      - type: etapes
+        texte: "Inside a *phone theft* contract"
+        etapes:
+          - "Cover: theft of the phone"
+          - "Exclusions: loss, damage, theft left unreported"
+          - "Premium: what the policyholder pays"
+          - "Benefit: what the insurer pays after a theft"
+          - "Deductible: the part the policyholder keeps"
+          - "Term: one year, then renewal"
+        voix_off: "Every insurance contract answers the same questions. The cover says which event is insured: here, the theft of the phone. The exclusions list what is not covered, such as a lost phone, accidental damage, or a theft that was never reported. The premium is the amount the policyholder pays. The benefit is what the insurer pays if the event happens. The deductible is the part of the loss the policyholder keeps. And the term is how long the contract lasts: here, one year, then it can be renewed."
+      - type: texte
+        texte: "The price is set *before* the cost is known"
+        voix_off: "Here is what makes insurance unusual. A baker knows the cost of flour before setting the price of bread. An insurer must set its price at the start of the year, before it knows how many phones will be stolen. That is exactly why it needs actuaries: to estimate a cost that is still in the future."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Your first actuarial calculation"
+        voix_off: "Let's put a first number on this risk."
+      - type: etapes
+        texte: "Mapleton Mutual insures *1,000 phones* for a year"
+        etapes:
+          - "Probability of theft: *2%* per phone per year"
+          - "Cost of a stolen phone: *$500*"
+          - "Expected thefts: 1,000 × 2% = *20*"
+          - "Expected cost: 20 × $500 = *$10,000*"
+          - "Per phone: $10,000 ÷ 1,000 = *$10*"
+        note: "Fictional figures. Simplified model: at most one theft per phone per year."
+        voix_off: "Mapleton Mutual insures one thousand phones for one year. Suppose each phone has a two percent chance of being stolen during the year. A stolen phone costs five hundred dollars to replace. On average, we then expect one thousand times two percent, that is twenty thefts. Twenty thefts at five hundred dollars each is an expected cost of ten thousand dollars. Shared among one thousand policyholders, that is ten dollars per phone."
+        verifier:
+          - {expression: "1000 * 0.02", attendu: 20, libelle: "Expected number of thefts"}
+          - {expression: "1000 * 0.02 * 500", attendu: 10000, libelle: "Expected cost, in dollars"}
+          - {expression: "1000 * 0.02 * 500 / 1000", attendu: 10, libelle: "Expected cost per phone"}
+      - type: formule
+        texte: "The *pure premium*"
+        formule:
+          - '\mathrm{pure\ premium}=p\times C'
+          - '=0.02\times 500=10\ \mathrm{dollars}'
+        voix_off: "This ten dollars is called the pure premium. It is the probability of the event, p, times its cost, C: zero point zero two times five hundred, which gives ten dollars. It is the expected cost of the risk, per policy, with nothing added."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium, in dollars"}
+      - type: etapes
+        texte: "Why the price is *higher* than $10"
+        etapes:
+          - "Expenses: staff, systems, claims handling"
+          - "Commissions paid to sellers"
+          - "A margin for uncertainty: 20 is only an average"
+          - "Capital to survive a bad year"
+        voix_off: "But Mapleton Mutual cannot sell this cover for ten dollars. It has expenses: staff, computer systems and the cost of handling each claim. It may pay commissions to the shops or brokers that sell the contract. It needs a margin for uncertainty, because twenty thefts is only an average: one year there may be twelve, another year thirty. And it must hold capital, so that a bad year does not ruin it."
+      - type: texte
+        texte: "Pure premium + loadings = *commercial premium*"
+        voix_off: "The price the customer actually pays is called the commercial premium: the pure premium plus these loadings. Whether the insurer makes a profit or a loss depends on all of these pieces, not only on the probability of theft. We will come back to this in detail in module A2."
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "How to become an actuary"
+        voix_off: "So how do you become one?"
+      - type: etapes
+        texte: "Routes to qualification *depend on the country*"
+        disposition: cartes
+        etapes:
+          - "United States and Canada: SOA and CAS exams"
+          - "United Kingdom and beyond: IFoA exams"
+          - "Many European countries: an accredited degree"
+          - "Everywhere: maths, statistics, finance, then experience"
+        note: "Requirements change over time: always check the official website of each actuarial body."
+        voix_off: "The route to becoming a qualified actuary depends on where you work. In the United States and Canada, the Society of Actuaries and the Casualty Actuarial Society run series of professional exams. The Institute and Faculty of Actuaries, based in the United Kingdom, runs its own exams, taken in many countries. In many European countries, the path often goes through a university degree recognised by the national actuarial association. Everywhere, the foundations are the same: mathematics, statistics and finance, followed by years of practical experience."
+      - type: etapes
+        texte: "The skills you will build *in this series*"
+        etapes:
+          - "Probability and statistics"
+          - "Financial mathematics"
+          - "Spreadsheets, then R or Python"
+          - "Explaining numbers to people who decide"
+        voix_off: "Here are the skills this series will help you build. Probability and statistics, to describe uncertain events. Financial mathematics, to compare money paid at different dates. Spreadsheets first, then R or Python, to do the calculations at scale. And one skill that is often forgotten: explaining your numbers clearly to the people who have to make decisions."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Mapleton adds a *$100 deductible*. What is the new pure premium per phone?"
+        pause: 12
+        voix_off: "Your turn. Mapleton Mutual adds a one hundred dollar deductible: after a theft, the policyholder pays the first hundred dollars. Same thousand phones, same two percent chance of theft. What is the new pure premium per phone?"
+      - type: correction
+        etapes:
+          - "After a theft, Mapleton pays $500 − $100 = *$400*"
+          - "Expected thefts: still *20*"
+          - "Expected cost: 20 × $400 = *$8,000*"
+        reponse: "Pure premium: $8,000 ÷ 1,000 = $8 per phone"
+        voix_off: "Let's work it out. After a theft, Mapleton now pays five hundred minus one hundred, that is four hundred dollars. The expected number of thefts does not change: still twenty. The expected cost becomes twenty times four hundred, that is eight thousand dollars. Shared among one thousand phones, the pure premium drops to eight dollars per phone."
+        verifier:
+          - {expression: "500 - 100", attendu: 400, libelle: "Benefit after the deductible"}
+          - {expression: "1000 * 0.02 * (500 - 100)", attendu: 8000, libelle: "Expected cost with the deductible"}
+          - {expression: "1000 * 0.02 * (500 - 100) / 1000", attendu: 8, libelle: "Pure premium with the deductible"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Actuaries put numbers on *uncertain future costs*"
+          - "A contract defines cover, exclusions, premium, benefit, deductible, term"
+          - "Pure premium = *probability × cost*"
+          - "The price paid adds *loadings* on top"
+        voix_off: "Key takeaways. Actuaries put numbers on future costs that are still uncertain. An insurance contract defines the cover, the exclusions, the premium, the benefit, the deductible and the term. The pure premium is the probability of the event times its cost. And the price the customer pays adds loadings on top of it."
+      - type: texte
+        texte: "Next: *$1,000 today or in 30 years*"
+        voix_off: "Insurers often pay money years after they receive it. So in the next episode, we answer a question every actuary must master: is one thousand dollars today really worth the same as one thousand dollars in thirty years?"
+      - type: fin
+        texte: "Follow for the next episode."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
