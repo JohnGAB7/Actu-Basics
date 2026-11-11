@@ -4,7 +4,7 @@
 # (indépendance, risques semblables, nombre suffisant) ; elle ne garantit pas un bénéfice.
 # Modèle : vols indépendants, probabilité 2 % par téléphone et par an, coût fixe 500 $ (au plus un vol).
 # Le nombre de vols suit alors une loi binomiale ; les probabilités de perte sont calculées exactement.
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après la relecture ChatGPT du 2026-11-11. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-a2-01-pooling-and-the-pure-premium
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -28,7 +28,9 @@ pedagogie:
     en: "Fictional insurer and figures; thefts independent from one phone to another; 2% chance of theft per phone per year; at most one theft per phone; a theft costs exactly $500; expenses ignored"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 

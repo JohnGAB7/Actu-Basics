@@ -1,7 +1,7 @@
 # Parcours Actuariat (pilier A), pilote : A1.01 « Compound interest and discounting » (YOUTUBE_LESSON, anglais seul)
 # Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
 # Taux d'intérêt fictifs et constants, choisis pour l'exemple ; aucun conseil de placement.
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après la relecture ChatGPT du 2026-11-11. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-a1-01-compound-interest-and-discounting
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -25,7 +25,9 @@ pedagogie:
     en: "Constant annual interest rates, chosen for the example; interest paid once a year; no tax, no inflation, no default risk"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 

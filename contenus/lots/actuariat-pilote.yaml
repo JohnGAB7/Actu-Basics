@@ -9,4 +9,4 @@ format: youtube_lesson
 moteur: "Fiches en une seule langue (champ « langues ») et chapitres YouTube tirés des cartes de chapitre (chapitres.txt)"
 extraits_verticaux: "2 ou 3 par leçon, écrits comme des fiches courtes autonomes après validation des leçons"
 pdf: "dossier partagé du projet : actu-basics/actuariat/pilote/"
-statut: brouillon
+statut: valide   # 2026-11-11, carte de décision de JG ; rendu final en local

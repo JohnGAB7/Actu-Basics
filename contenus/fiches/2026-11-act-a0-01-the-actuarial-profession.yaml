@@ -2,7 +2,7 @@
 # Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
 # Anglais d'abord (demande de JG, 2026-11-11) : la version française viendra après tout le parcours EN.
 # Assureur fictif « Mapleton Mutual », toujours annoncé comme fictif. Aucun salaire cité (non sourcé).
-# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après la relecture ChatGPT du 2026-11-11. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-a0-01-the-actuarial-profession
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -26,7 +26,9 @@ pedagogie:
     en: "Mapleton Mutual and all its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 
