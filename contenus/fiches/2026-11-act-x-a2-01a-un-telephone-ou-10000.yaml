@@ -62,11 +62,12 @@ editions:
           - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Écart-type du coût moyen, 100 téléphones"}
           - {expression: "70 / sqrt(10000)", attendu: 0.7, libelle: "Écart-type du coût moyen, 10 000 téléphones"}
       - type: courbe
-        texte: "Écart-type du *coût par téléphone*"
+        texte: "Écart-type du *coût moyen par téléphone*"
         courbe:
           style: barres
           points: [[0, 70], [1, 7], [2, 0.7]]
           etiquettes: ["1", "100", "10 000"]
+          etiquettes_valeurs: ["70 €", "7 €", "0,70 €"]
           valeurs: true
           y_min: 0
           y_max: 80
@@ -115,7 +116,7 @@ editions:
           - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Standard deviation of the average cost, 100 phones"}
           - {expression: "70 / sqrt(10000)", attendu: 0.7, libelle: "Standard deviation of the average cost, 10,000 phones"}
       - type: courbe
-        texte: "Standard deviation of the *cost per phone*"
+        texte: "Standard deviation of the *average cost per phone*"
         courbe:
           style: barres
           points: [[0, 70], [1, 7], [2, 0.7]]

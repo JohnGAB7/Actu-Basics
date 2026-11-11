@@ -1737,6 +1737,31 @@ def test_courbe_barres_et_histogramme():
             charger_fiche(p)
 
 
+def test_etiquettes_valeurs_des_barres():
+    """« etiquettes_valeurs » : le texte au-dessus de chaque barre est écrit tel quel dans la fiche (« 0,70 € »),
+    au lieu de la valeur formatée par le moteur ; une par barre, sinon la fiche est refusée."""
+    chemin = RACINE / "contenus/fiches/2026-11-act-a2-01-pooling-and-the-pure-premium.yaml"
+    fiche = charger_fiche(chemin)
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe")
+    c = s.extra["courbe"]
+    assert c["etiquettes_valeurs"] == ["70 €", "7 €", "0,70 €"]
+    i = ed.scenes.index(s)
+    avec = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = {k: v for k, v in c.items() if k != "etiquettes_valeurs"}
+    sans = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert avec != sans
+    brute = yaml.safe_load(chemin.read_text(encoding="utf-8"))
+    sc = next(x for x in brute["editions"]["fr"]["scenes"] if x["type"] == "courbe")
+    sc["courbe"]["etiquettes_valeurs"] = ["70 €", "7 €"]
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / "f.yaml"
+        p.write_text(yaml.safe_dump(brute, allow_unicode=True), encoding="utf-8")
+        with pytest.raises(FicheInvalide, match="un texte par barre"):
+            charger_fiche(p)
+
+
 def test_double_echelle_surface_et_grille():
     """S1.09 : « serie_2 » trace une seconde courbe sur un axe de droite ; modèle « surface » (carrés de
     côté 1 et 2). S1.10 : modèle « grille », répartition au hasard reproductible (graine fixe)."""

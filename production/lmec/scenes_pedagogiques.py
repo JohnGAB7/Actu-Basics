@@ -576,7 +576,9 @@ class ScenesPedagogiques(Animations):
                 d.rectangle((x0, y_haut, x1, bas_g), fill=couleur,
                             outline=fond if style == "histogramme" else None, width=3 if style == "histogramme" else 0)
                 if c.get("valeurs") and kb >= 1.0:
-                    lbl = fmt_y(v_b)
+                    # « etiquettes_valeurs » : texte écrit tel quel au-dessus de chaque barre (unité, décimales
+                    # imposées : « 0,70 € »), sinon la valeur formatée selon la langue.
+                    lbl = str(c["etiquettes_valeurs"][n_b]) if c.get("etiquettes_valeurs") else fmt_y(v_b)
                     d.text(((x0 + x1) / 2 - p_axe.getlength(lbl) / 2, y_haut - p_axe.size - 14), lbl, font=p_axe,
                            fill=self.c["texte"])
         elif style == "boites":

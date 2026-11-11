@@ -76,8 +76,8 @@ editions:
       - type: formule
         texte: "Quelle incertitude pour *un téléphone* ?"
         formule:
-          - '\mathrm{Var}(X)=0{,}02\times 500^2-10^2=4900\ \text{€}^2'
-          - '\sigma=\sqrt{4900}=70\ \text{€}'
+          - '\mathrm{Var}(X)=0{,}02\times 500^2-10^2=4\,900\ \text{€}^2'
+          - '\sigma=\sqrt{4\,900}=70\ \text{€}'
         voix_off: "Pour mesurer cette incertitude, on utilise l'écart-type, la distance typique à la moyenne. D'abord la variance : l'espérance du carré du coût, zéro virgule zéro deux fois cinq cents au carré, moins le carré de la moyenne, dix au carré. Cela donne quatre mille neuf cents. Sa racine carrée, l'écart-type, vaut soixante-dix euros."
         verifier:
           - {expression: "0.02 * 500**2 - 10**2", attendu: 4900, libelle: "Variance du coût d'un téléphone"}
@@ -125,6 +125,7 @@ editions:
           style: barres
           points: [[0, 70], [1, 7], [2, 0.7]]
           etiquettes: ["1 téléphone", "100 téléphones", "10 000 téléphones"]
+          etiquettes_valeurs: ["70 €", "7 €", "0,70 €"]
           valeurs: true
           y_min: 0
           y_max: 80

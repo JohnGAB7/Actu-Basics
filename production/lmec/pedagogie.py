@@ -332,6 +332,11 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
             if c.get("etiquettes") is not None and not (isinstance(c["etiquettes"], list) and "_points" in extra.get(
                     "courbe", {}) and len(c["etiquettes"]) == len(extra["courbe"]["_points"])):
                 erreurs.append(f"{ctx}.courbe.etiquettes : une étiquette par barre")
+            ev = c.get("etiquettes_valeurs")
+            if ev is not None and not (isinstance(ev, list) and all(isinstance(z, str) and z.strip() for z in ev)
+                                       and "_points" in extra.get("courbe", {})
+                                       and len(ev) == len(extra["courbe"]["_points"])):
+                erreurs.append(f"{ctx}.courbe.etiquettes_valeurs : un texte par barre (ex. « 0,70 € »)")
             s2 = c.get("serie_2")
             if s2 is not None and not (isinstance(s2, dict) and isinstance(s2.get("points"), list)
                                        and len(s2["points"]) >= 2 and all(
