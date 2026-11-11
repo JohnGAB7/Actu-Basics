@@ -37,7 +37,7 @@ editions:
     scenes:
       - type: accroche
         texte: "Un téléphone, c'est *un pari*. 10 000 téléphones, c'est *presque prévisible*."
-        voix_off: "Assurer un téléphone, c'est un pari. Assurer dix mille téléphones, c'est presque prévisible. Pourquoi ? Voici l'idée derrière toute assurance."
+        voix_off: "Assurer un téléphone, c'est un pari. Assurer dix mille téléphones, c'est presque prévisible. Pourquoi ? C'est l'une des idées fondamentales de l'assurance : la mutualisation."
       - type: etapes
         texte: "Un téléphone, un an : *ce que paie JG's Holding*"
         etapes:
@@ -57,7 +57,7 @@ editions:
           - 'n=100:\ 7\ \text{€}'
           - 'n=10\,000:\ 0{,}70\ \text{€}'
         note: "Valable pour des coûts indépendants et de même loi."
-        voix_off: "Quand les vols sont indépendants, l'écart-type du coût moyen par téléphone vaut soixante-dix divisé par racine de n. Avec cent téléphones, sept euros. Avec dix mille téléphones, soixante-dix centimes seulement."
+        voix_off: "Quand les coûts des contrats sont indépendants et suivent la même loi, l'écart-type du coût moyen par téléphone vaut soixante-dix divisé par racine de n. Avec cent téléphones, sept euros. Avec dix mille téléphones, soixante-dix centimes seulement."
         verifier:
           - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Écart-type du coût moyen, 100 téléphones"}
           - {expression: "70 / sqrt(10000)", attendu: 0.7, libelle: "Écart-type du coût moyen, 10 000 téléphones"}
@@ -91,15 +91,15 @@ editions:
     scenes:
       - type: accroche
         texte: "One phone is *a gamble*. 10,000 phones are *almost predictable*."
-        voix_off: "Insuring one phone is a gamble. Insuring ten thousand phones is almost predictable. Why? Here is the idea behind all insurance."
+        voix_off: "Insuring one phone is a gamble. Insuring ten thousand phones is almost predictable. Why? This is one of the key ideas behind insurance: pooling."
       - type: etapes
         texte: "One phone, one year: *what JG's Holding pays*"
         etapes:
-          - "98% of the time: *$0*"
-          - "2% of the time: *$500*"
+          - "In 98% of cases: *$0*"
+          - "In 2% of cases: *$500*"
           - "Average cost: *$10*, standard deviation: *$70*"
         note: "JG's Holding is a fictional insurer. Standard deviation: √(0.02 × 500² − 10²) = $70."
-        voix_off: "Look at a single phone at our fictional insurer, JG's Holding. Ninety-eight percent of the time, no theft, it pays nothing. Two percent of the time, the phone is stolen, it pays five hundred dollars. The average cost is ten dollars, but the spread around it, the standard deviation, is seventy dollars: seven times the average."
+        voix_off: "Look at a single phone at our fictional insurer, JG's Holding. In ninety-eight percent of cases, no theft, it pays nothing. In two percent of cases, the phone is stolen, it pays five hundred dollars. The average cost is ten dollars, but the spread around it, the standard deviation, is seventy dollars: seven times the average."
         verifier:
           - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Expected cost of one phone"}
           - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Standard deviation of one phone"}
@@ -111,7 +111,7 @@ editions:
           - 'n=100:\ 7\ \text{dollars}'
           - 'n=10\,000:\ 0.70\ \text{dollars}'
         note: "Valid for independent, identically distributed costs."
-        voix_off: "When thefts are independent, the standard deviation of the average cost per phone is seventy divided by the square root of n. With one hundred phones, seven dollars. With ten thousand phones, only seventy cents."
+        voix_off: "When policy costs are independent and identically distributed, the standard deviation of the average cost per phone is seventy divided by the square root of n. With one hundred phones, seven dollars. With ten thousand phones, only seventy cents."
         verifier:
           - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Standard deviation of the average cost, 100 phones"}
           - {expression: "70 / sqrt(10000)", attendu: 0.7, libelle: "Standard deviation of the average cost, 10,000 phones"}
@@ -121,6 +121,7 @@ editions:
           style: barres
           points: [[0, 70], [1, 7], [2, 0.7]]
           etiquettes: ["1", "100", "10,000"]
+          etiquettes_valeurs: ["$70", "$7", "$0.70"]
           valeurs: true
           y_min: 0
           y_max: 80

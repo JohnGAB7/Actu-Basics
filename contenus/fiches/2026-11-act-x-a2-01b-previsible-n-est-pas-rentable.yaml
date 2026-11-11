@@ -45,7 +45,7 @@ editions:
           - "Coût attendu d'un vol par téléphone : 2 % × 500 € = *10 €*"
           - "Prime : 10 € + 1 € de marge = *11 €*"
         note: "JG's Holding est un assureur fictif. Frais ignorés. Au plus un vol par téléphone et par an."
-        voix_off: "Notre assureur fictif, JG's Holding, assure des téléphones contre le vol. Chaque téléphone a deux pour cent de chances d'être volé, et un vol coûte cinq cents euros : dix euros de coût attendu par téléphone. Il facture onze euros, soit un euro de marge."
+        voix_off: "Notre assureur fictif, JG's Holding, assure des téléphones contre le vol. Avec deux pour cent de chances de vol et un coût de cinq cents euros, le coût attendu est de dix euros par téléphone. Il facture onze euros : un euro de marge."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure"}
           - {expression: "10 + 1", attendu: 11, libelle: "Prime facturée"}
@@ -65,17 +65,17 @@ editions:
           - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 vols ou plus sur 100), en %"}
           - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 vols ou plus sur 10 000), en %"}
       - type: etapes
-        texte: "La mutualisation marche *seulement si*…"
+        texte: "La mutualisation repose sur *plusieurs conditions*…"
         etapes:
           - "Les risques sont *indépendants*"
-          - "Les risques sont *semblables*"
+          - "Les risques ont des *distributions comparables*"
           - "Il y a *assez* de contrats"
-          - "La probabilité reste *stable*"
-        voix_off: "Et la mutualisation a des conditions. Les risques doivent être indépendants : une tempête qui touche toute une ville ne se compense pas. Ils doivent être semblables. Il en faut assez pour que la moyenne se stabilise. Et la probabilité doit rester stable d'une année à l'autre."
+          - "Les probabilités restent *stables* ou sont réévaluées"
+        voix_off: "Et la mutualisation repose sur plusieurs conditions. Les risques doivent être indépendants : une tempête qui touche toute une ville ne se compense pas. Ils doivent être suffisamment semblables : ici, chaque téléphone a la même probabilité de vol et le même coût. Il en faut assez pour que la moyenne se stabilise. Et pour prévoir les coûts futurs, les probabilités doivent rester suffisamment stables, ou être réévaluées quand le risque évolue."
       - type: texte
         texte: "Prime pure, chargements, capital : *la suite dans la leçon complète*"
         note: "Leçon complète sur la chaîne : espérance, écart-type, σ ÷ √n, et ce que la mutualisation ne fait pas."
-        voix_off: "Prime pure, chargements, capital pour absorber une mauvaise année : tout cela est construit pas à pas dans la leçon complète sur la chaîne."
+        voix_off: "Prime pure, chargements et capital : tout est dans la leçon complète sur la chaîne."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -83,7 +83,7 @@ editions:
   en:
     titre: "Insuring 10,000 phones: predictable, yes. Profitable, not necessarily."
     legende: |
-      Pooling makes the average cost per policy almost predictable. But predictable is not profitable. Our fictional insurer, JG's Holding, charges $11 per phone for an expected cost of $10. With 100 phones, thefts cost more than the premiums about 32% of the time; with 10,000 phones, about 7.3% of the time: far less, but never zero. And pooling has conditions. An extract from the lesson "Why is the average claim cost more predictable with 10,000 policies?" of our actuarial science series, watch the full lesson on the channel. Made-up figures, checked calculations.
+      Pooling makes the average cost per policy almost predictable. But predictable is not profitable. Our fictional insurer, JG's Holding, charges $11 per phone for an expected cost of $10. With 100 phones, claims cost more than the premiums in about 32% of cases; with 10,000 phones, in about 7.3% of cases: far less, but never zero. And pooling has conditions. An extract from the lesson "Why is the average claim cost more predictable with 10,000 policies?" of our actuarial science series, watch the full lesson on the channel. Made-up figures, checked calculations.
     hashtags: [actuarialscience, insurance, probability]
     scenes:
       - type: accroche
@@ -95,18 +95,18 @@ editions:
           - "Expected theft cost per phone: 2% × $500 = *$10*"
           - "Premium: $10 + $1 margin = *$11*"
         note: "JG's Holding is a fictional insurer. Expenses ignored. At most one theft per phone per year."
-        voix_off: "Our fictional insurer, JG's Holding, covers phones against theft. Each phone has a two percent chance of being stolen, and a theft costs five hundred dollars: ten dollars of expected cost per phone. It charges eleven dollars, that is a one dollar margin."
+        voix_off: "Our fictional insurer, JG's Holding, covers phones against theft. With a two percent chance of theft and a five-hundred-dollar cost, the expected cost is ten dollars per phone. It charges eleven dollars: a one-dollar margin."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium"}
           - {expression: "10 + 1", attendu: 11, libelle: "Premium charged"}
       - type: etapes
-        texte: "Probability that thefts cost *more than the premiums*"
+        texte: "Probability that claims cost *more than the premiums*"
         etapes:
           - "100 phones: 3 thefts or more, about *32%*"
           - "10,000 phones: 221 thefts or more, about *7.3%*"
           - "Far lower, but *never zero*"
         note: "Premiums: $1,100 (100 phones) and $110,000 (10,000 phones). 3 × $500 > $1,100; 221 × $500 > $110,000. Exact binomial."
-        voix_off: "What is the probability that thefts cost more than the premiums? With one hundred phones, it collects one thousand one hundred dollars, and three thefts are enough to exceed that: this happens about thirty-two percent of the time. With ten thousand phones, it collects one hundred and ten thousand dollars, and it takes two hundred and twenty-one thefts or more: about seven point three percent of the time. Pooling makes the bad year far less likely, but never impossible."
+        voix_off: "What is the probability that claims cost more than the premiums? With one hundred phones, it collects one thousand one hundred dollars, and three thefts are enough to exceed that: this happens in about thirty-two percent of cases. With ten thousand phones, it collects one hundred and ten thousand dollars, and it takes two hundred and twenty-one thefts or more: in about seven point three percent of cases. Pooling makes the bad year far less likely, but never impossible."
         verifier:
           - {expression: "100 * 11", attendu: 1100, libelle: "Premiums collected, 100 phones"}
           - {expression: "10000 * 11", attendu: 110000, libelle: "Premiums collected, 10,000 phones"}
@@ -115,17 +115,17 @@ editions:
           - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 thefts or more out of 100), in %"}
           - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 thefts or more out of 10,000), in %"}
       - type: etapes
-        texte: "Pooling works *only if*…"
+        texte: "Pooling rests on *several conditions*…"
         etapes:
           - "Risks are *independent*"
-          - "Risks are *similar*"
+          - "Risks have *comparable distributions*"
           - "There are *enough* policies"
-          - "The probability stays *stable*"
-        voix_off: "And pooling has conditions. Risks must be independent: a storm that hits a whole town does not average out. They must be similar. There must be enough of them for the average to settle. And the probability must stay stable from one year to the next."
+          - "Probabilities stay *stable* or are reassessed"
+        voix_off: "And pooling rests on several conditions. Risks must be independent: a storm that hits a whole town does not average out. They must be sufficiently similar: here, every phone has the same probability of theft and the same claim cost. There must be enough of them for the average to settle. And to forecast future costs, probabilities must remain sufficiently stable, or be reassessed when the risk changes."
       - type: texte
         texte: "Pure premium, loadings, capital: *more in the full lesson*"
         note: "Full lesson on the channel: expectation, standard deviation, σ ÷ √n, and what pooling does not do."
-        voix_off: "Pure premium, loadings, capital to absorb a bad year: all of this is built step by step in the full lesson on the channel."
+        voix_off: "Pure premium, loadings and capital: it is all in the full lesson on the channel."
       - type: fin
         texte: "Follow to learn to read the numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

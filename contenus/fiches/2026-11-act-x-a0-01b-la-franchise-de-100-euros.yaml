@@ -30,14 +30,14 @@ sources: []
 
 editions:
   fr:
-    titre: "Une franchise de 100 € : de combien baisse la prime ?"
+    titre: "Une franchise de 100 € : de combien baisse la prime pure ?"
     legende: |
       Un assureur fictif, JG's Holding, assure 1 000 téléphones : 2 % de chances de vol, 500 € par téléphone volé, prime pure de 10 €. Il ajoute une franchise de 100 €. Quelle est la nouvelle prime pure ? À vous, puis la correction. Extrait de la première leçon de notre série sur l'actuariat, « Actuaire : comment les maths aident à prendre des décisions face au risque », à voir en entier sur la chaîne. Chiffres fictifs, calculs vérifiés.
     hashtags: [actuariat, assurance, franchise]
     scenes:
       - type: accroche
-        texte: "Une *franchise de 100 €* : de combien baisse la prime ?"
-        voix_off: "Un assureur ajoute une franchise de cent euros à son contrat. De combien la prime baisse-t-elle ? Faites le calcul avec moi."
+        texte: "Une *franchise de 100 €* : de combien baisse la prime pure ?"
+        voix_off: "Un assureur ajoute une franchise de cent euros à son contrat. De combien la prime pure baisse-t-elle ? Faites le calcul avec moi."
       - type: etapes
         texte: "Le contrat de *JG's Holding*, assureur fictif"
         etapes:
@@ -54,7 +54,7 @@ editions:
         voix_off: "À vous. Avec une franchise de cent euros, l'assuré paie les cent premiers euros de chaque vol. Quelle est la nouvelle prime pure ?"
       - type: correction
         etapes:
-          - "Après un vol, l'assureur verse 500 € − 100 € = *400 €*"
+          - "Après un vol : l'assuré paie *100 €*, l'assureur 500 € − 100 € = *400 €*"
           - "Prime pure : 2 % × 400 € = *8 €*"
         reponse: "8 € par téléphone, au lieu de 10 €"
         voix_off: "Faisons le calcul. Après un vol, l'assureur ne verse plus que cinq cents moins cent, soit quatre cents euros. La prime pure devient deux pour cent de quatre cents, soit huit euros. La franchise fait passer la prime pure de dix à huit euros par téléphone."
@@ -70,14 +70,14 @@ editions:
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
 
   en:
-    titre: "A $100 deductible: how much does the premium drop?"
+    titre: "A $100 deductible: how much does the pure premium drop?"
     legende: |
       A fictional insurer, JG's Holding, insures 1,000 phones: a 2% chance of theft, $500 per stolen phone, a pure premium of $10. It adds a $100 deductible. What is the new pure premium? Your turn, then the answer. An extract from the first lesson of our actuarial science series, "Actuaries: how maths helps make decisions under risk", watch the full lesson on the channel. Made-up figures, checked calculations.
     hashtags: [actuarialscience, insurance, deductible]
     scenes:
       - type: accroche
-        texte: "A *$100 deductible*: how much does the premium drop?"
-        voix_off: "An insurer adds a one hundred dollar deductible to its contract. How much does the premium drop? Work it out with me."
+        texte: "A *$100 deductible*: how much does the pure premium drop?"
+        voix_off: "An insurer adds a one-hundred-dollar deductible to its policy. How much does the pure premium fall? Work it out with me."
       - type: etapes
         texte: "The contract of *JG's Holding*, a fictional insurer"
         etapes:
@@ -94,7 +94,7 @@ editions:
         voix_off: "Your turn. With a one hundred dollar deductible, the policyholder pays the first one hundred dollars of each theft. What is the new pure premium?"
       - type: correction
         etapes:
-          - "After a theft, the insurer pays $500 − $100 = *$400*"
+          - "After a theft: the policyholder pays *$100*, the insurer $500 − $100 = *$400*"
           - "Pure premium: 2% × $400 = *$8*"
         reponse: "$8 per phone, instead of $10"
         voix_off: "Let us work it out. After a theft, the insurer now pays five hundred minus one hundred, that is four hundred dollars. The pure premium becomes two percent of four hundred, that is eight dollars. The deductible takes the pure premium from ten to eight dollars per phone."

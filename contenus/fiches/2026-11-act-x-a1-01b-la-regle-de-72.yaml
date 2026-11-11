@@ -37,7 +37,7 @@ editions:
     scenes:
       - type: accroche
         texte: "1 000 € à 5 % pendant 30 ans : *2 500 €* ou *4 322 €* ?"
-        voix_off: "Mille euros placés à cinq pour cent par an pendant trente ans. Deux mille cinq cents euros, ou quatre mille trois cent vingt-deux ? Les deux réponses existent."
+        voix_off: "Mille euros placés à cinq pour cent par an pendant trente ans. Deux mille cinq cents euros, ou quatre mille trois cent vingt-deux ? Les deux peuvent être justes : tout dépend de la façon de calculer les intérêts."
       - type: etapes
         texte: "*Intérêts simples* : toujours sur les 1 000 € de départ"
         etapes:
@@ -64,7 +64,7 @@ editions:
         etapes:
           - "À 5 % : 72 ÷ 5 = *14,4 ans*"
           - "Durée exacte : environ *14,2 ans*"
-        note: "Durée exacte : log(2) ÷ log(1,05) ≈ 14,2 ans."
+        note: "Approximation pour un taux annuel constant de 5 %. Durée exacte : log(2) ÷ log(1,05) ≈ 14,2 ans."
         voix_off: "Un repère pour calculer de tête : l'argent double à peu près en soixante-douze divisé par le taux en pour cent. À cinq pour cent, soixante-douze divisé par cinq donne quatorze virgule quatre ans. La durée exacte est d'environ quatorze virgule deux ans : assez proche pour une vérification rapide."
         verifier:
           - {expression: "72 / 5", attendu: 14.4, libelle: "Règle de 72 à 5 %"}
@@ -85,7 +85,7 @@ editions:
     scenes:
       - type: accroche
         texte: "$1,000 at 5% for 30 years: *$2,500* or *$4,322*?"
-        voix_off: "One thousand dollars invested at five percent a year for thirty years. Two thousand five hundred dollars, or four thousand three hundred and twenty-two? Both answers exist."
+        voix_off: "One thousand dollars invested at five percent a year for thirty years. Two thousand five hundred dollars, or four thousand three hundred and twenty-two? Both can be correct. It depends on how interest is calculated."
       - type: etapes
         texte: "*Simple interest*: always on the original $1,000"
         etapes:
@@ -112,7 +112,7 @@ editions:
         etapes:
           - "At 5%: 72 ÷ 5 = *14.4 years*"
           - "Exact time: about *14.2 years*"
-        note: "Exact time: log(2) ÷ log(1.05) ≈ 14.2 years."
+        note: "Approximation at a constant annual rate of 5%. Exact time: log(2) ÷ log(1.05) ≈ 14.2 years."
         voix_off: "A rule of thumb for mental arithmetic: money doubles in roughly seventy-two divided by the rate in percent. At five percent, seventy-two divided by five gives fourteen point four years. The exact time is about fourteen point two years: close enough for a quick check."
         verifier:
           - {expression: "72 / 5", attendu: 14.4, libelle: "Rule of 72 at 5%"}

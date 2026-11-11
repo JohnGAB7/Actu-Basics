@@ -37,7 +37,7 @@ editions:
     scenes:
       - type: accroche
         texte: "Combien coûte *le risque* de vol d'un téléphone ?"
-        voix_off: "Votre téléphone sera-t-il volé cette année ? Personne ne le sait. Pourtant, un assureur doit fixer un prix aujourd'hui. Voici comment un actuaire s'y prend."
+        voix_off: "Votre téléphone sera-t-il volé cette année ? Personne ne le sait. Pourtant, un assureur doit fixer un prix aujourd'hui. Voici un premier calcul qu'un actuaire utilise pour estimer le coût d'un risque."
       - type: etapes
         texte: "JG's Holding assure *1 000 téléphones* pendant un an"
         etapes:
@@ -56,7 +56,7 @@ editions:
           - '\mathrm{Prime\ pure}=p\times C'
           - '=0{,}02\times 500=10\ \text{€}'
         note: "10 000 € ÷ 1 000 téléphones = 10 € par téléphone."
-        voix_off: "Réparti entre les mille téléphones, cela fait dix euros par téléphone. C'est la prime pure : la probabilité d'un vol, multipliée par ce que verse l'assureur s'il se produit."
+        voix_off: "Réparti entre les mille téléphones, cela fait dix euros par téléphone. C'est la prime pure : le coût moyen attendu des sinistres par téléphone, avant les frais et les autres chargements."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure, en euros"}
       - type: texte
@@ -75,7 +75,7 @@ editions:
     scenes:
       - type: accroche
         texte: "How much does *the risk* of a stolen phone cost?"
-        voix_off: "Will your phone be stolen this year? Nobody knows. Yet an insurer has to set a price today. Here is how an actuary does it."
+        voix_off: "Will your phone be stolen this year? Nobody knows. Yet an insurer has to set a price today. Here is one of the basic calculations an actuary uses to estimate the cost of a risk."
       - type: etapes
         texte: "JG's Holding insures *1,000 phones* for one year"
         etapes:
@@ -94,7 +94,7 @@ editions:
           - '\mathrm{Pure\ premium}=p\times C'
           - '=0.02\times 500=10\ \text{dollars}'
         note: "$10,000 ÷ 1,000 phones = $10 per phone."
-        voix_off: "Spread over the one thousand phones, that is ten dollars per phone. This is the pure premium: the probability of a theft, multiplied by what the insurer pays if it happens."
+        voix_off: "Spread over the one thousand phones, that is ten dollars per phone. This is the pure premium: the expected average claim cost per phone, before expenses and other loadings."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium, in dollars"}
       - type: texte
