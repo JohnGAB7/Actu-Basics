@@ -113,7 +113,7 @@ editions:
         voix_off: "Now let's turn the question around."
       - type: texte
         texte: "How much must I invest *today* to have *$1,000* in 30 years?"
-        voix_off: "Compound interest takes money forward in time. Actuaries often need the opposite. Mapleton Mutual, our fictional insurer, promises to pay one thousand dollars in thirty years. How much must it set aside today, at five percent a year, to be able to pay it?"
+        voix_off: "Compound interest takes money forward in time. Actuaries often need the opposite. JG's Holding, our fictional insurer, promises to pay one thousand dollars in thirty years. How much must it set aside today, at five percent a year, to be able to pay it?"
       - type: formule
         texte: "The *present value*"
         formule:
@@ -184,16 +184,16 @@ editions:
         voix_off: "Here are three formulas to try. For the future value, the built-in function F V, with a rate of five percent, thirty years and one thousand dollars, returns about four thousand three hundred and twenty-two dollars. For the present value, you can divide by hand: one thousand divided by one plus five percent, to the power thirty. Or you can use the built-in present value function, P V, which gives the same two hundred and thirty-one dollars and thirty-eight cents."
       # ---------------------------------------------------------------- exercice
       - type: exercice
-        texte: "Mapleton must pay *$10,000 in 10 years*. At *4%* a year, how much must it set aside today?"
+        texte: "JG's Holding must pay *$10,000 in 10 years*. At *4%* a year, how much must it set aside today?"
         pause: 15
-        voix_off: "Your turn. Mapleton Mutual must pay ten thousand dollars in ten years. At four percent a year, how much must it set aside today?"
+        voix_off: "Your turn. JG's Holding must pay ten thousand dollars in ten years. At four percent a year, how much must it set aside today?"
       - type: correction
         etapes:
           - "Discount factor: 1.04^10 ≈ *1.4802*"
           - "Present value: $10,000 ÷ 1.4802"
           - "Check: $6,755.64 × 1.04^10 ≈ *$10,000*"
         reponse: "About $6,755.64 today"
-        voix_off: "Let's work it out. One point zero four to the power ten is about one point four eight zero two. We divide ten thousand dollars by this factor. As a check, the amount we find, multiplied again by one point zero four to the power ten, gives back ten thousand dollars. Mapleton must set aside about six thousand seven hundred and fifty-five dollars and sixty-four cents today."
+        voix_off: "Let's work it out. One point zero four to the power ten is about one point four eight zero two. We divide ten thousand dollars by this factor. As a check, the amount we find, multiplied again by one point zero four to the power ten, gives back ten thousand dollars. JG's Holding must set aside about six thousand seven hundred and fifty-five dollars and sixty-four cents today."
         verifier:
           - {expression: "1.04**10", attendu: 1.4802, libelle: "1.04 to the power 10"}
           - {expression: "10000 / 1.04**10", attendu: 6755.64, libelle: "Present value of $10,000 in 10 years at 4%"}

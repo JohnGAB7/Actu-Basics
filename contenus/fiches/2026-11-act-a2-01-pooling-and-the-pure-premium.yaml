@@ -45,22 +45,22 @@ editions:
         texte: "One phone is a gamble. *10,000 phones* are almost predictable."
         voix_off: "For one phone, the outcome is highly uncertain: the insurer pays either nothing or five hundred dollars. Insure ten thousand phones, and you can predict the cost per phone remarkably well. Why? That is the idea behind all insurance: pooling."
       - type: texte
-        texte: "Back to *Mapleton Mutual* and its phones"
-        note: "Mapleton Mutual is a fictional insurer. All figures are made up."
-        voix_off: "In the first episode, our fictional insurer, Mapleton Mutual, insured phones against theft. Each phone had a two percent chance of being stolen in a year, and a theft cost five hundred dollars. We found a pure premium of ten dollars per phone. Today, we ask a deeper question: how reliable is that ten dollars?"
+        texte: "Back to *JG's Holding* and its phones"
+        note: "JG's Holding is a fictional insurer. All figures are made up."
+        voix_off: "In the first episode, our fictional insurer, JG's Holding, insured phones against theft. Each phone had a two percent chance of being stolen in a year, and a theft cost five hundred dollars. We found a pure premium of ten dollars per phone. Today, we ask a deeper question: how reliable is that ten dollars?"
       # ---------------------------------------------------------------- 1
       - type: titre
         numero: 1
         texte: "One policy: a gamble"
         voix_off: "Let's look at a single phone first."
       - type: etapes
-        texte: "One phone, one year: *what Mapleton pays*"
+        texte: "One phone, one year: *what JG's Holding pays*"
         etapes:
           - "98% of the time: *$0*"
           - "2% of the time: *$500*"
           - "Expected cost: 0.98 × $0 + 0.02 × $500 = *$10*"
-          - "But Mapleton never actually pays $10"
-        voix_off: "For a single phone, only two things can happen. Ninety-eight percent of the time, there is no theft, and Mapleton pays nothing. Two percent of the time, the phone is stolen, and Mapleton pays five hundred dollars. The expected cost weighs each outcome by its probability, which gives ten dollars. But notice: Mapleton never actually pays ten dollars for this phone; it pays either zero or five hundred."
+          - "But JG's Holding never actually pays $10"
+        voix_off: "For a single phone, only two things can happen. Ninety-eight percent of the time, there is no theft, and JG's Holding pays nothing. Two percent of the time, the phone is stolen, and JG's Holding pays five hundred dollars. The expected cost weighs each outcome by its probability, which gives ten dollars. But notice: JG's Holding never actually pays ten dollars for this phone; it pays either zero or five hundred."
         verifier:
           - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Expected cost of one phone"}
       - type: texte
@@ -93,7 +93,7 @@ editions:
           - "10,000 phones: about *200* thefts, give or take *14*"
           - "Relative spread: 1.4 ÷ 2 = *70%*, but 14 ÷ 200 = *7%*"
         note: "Independent thefts: the number of thefts follows a binomial distribution. Standard deviation: √(n × 0.02 × 0.98)."
-        voix_off: "Let's count the thefts. With one hundred phones, Mapleton expects about two thefts, give or take one point four. With ten thousand phones, it expects about two hundred, give or take fourteen. The spread grows, but much more slowly than the number of phones: it is seventy percent of the average with one hundred phones, and only seven percent with ten thousand."
+        voix_off: "Let's count the thefts. With one hundred phones, JG's Holding expects about two thefts, give or take one point four. With ten thousand phones, it expects about two hundred, give or take fourteen. The spread grows, but much more slowly than the number of phones: it is seventy percent of the average with one hundred phones, and only seven percent with ten thousand."
         verifier:
           - {expression: "100 * 0.02", attendu: 2, libelle: "Expected thefts, 100 phones"}
           - {expression: "sqrt(100 * 0.02 * 0.98)", attendu: 1.4, libelle: "Standard deviation of thefts, 100 phones"}
@@ -139,7 +139,7 @@ editions:
           - "10,000 phones: 221 thefts or more, about *7.3%*"
           - "Much smaller, but *never zero*"
         note: "$11 = pure premium $10 + a $1 safety margin; expenses ignored. Exact binomial probabilities."
-        voix_off: "Suppose Mapleton charges eleven dollars per phone: the ten dollar pure premium plus a one dollar safety margin. With one hundred phones, it collects one thousand one hundred dollars, so three thefts are enough to cost more than that: this happens about thirty-two percent of the time. With ten thousand phones, it takes two hundred and twenty-one thefts or more, which happens about seven point three percent of the time. Pooling makes a bad year much less likely, but never impossible."
+        voix_off: "Suppose JG's Holding charges eleven dollars per phone: the ten dollar pure premium plus a one dollar safety margin. With one hundred phones, it collects one thousand one hundred dollars, so three thefts are enough to cost more than that: this happens about thirty-two percent of the time. With ten thousand phones, it takes two hundred and twenty-one thefts or more, which happens about seven point three percent of the time. Pooling makes a bad year much less likely, but never impossible."
         verifier:
           - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 thefts or more out of 100), in %"}
           - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 thefts or more out of 10,000), in %"}
@@ -164,16 +164,16 @@ editions:
         voix_off: "Finally, let's be precise about what pooling does not promise. The pure premium is only the expected cost of claims per policy. The commercial premium, the price actually charged, adds loadings for expenses, commissions, uncertainty and capital. And the technical result, which in this simplified example is premiums earned minus claims incurred and operating expenses, can still be negative if the price is too low, the expenses too high, or a rare extreme event strikes."
       # ---------------------------------------------------------------- exercice
       - type: exercice
-        texte: "Mapleton insures *2,500 phones*. Expected thefts? Standard deviation of the *average cost per phone*?"
+        texte: "JG's Holding insures *2,500 phones*. Expected thefts? Standard deviation of the *average cost per phone*?"
         pause: 15
-        voix_off: "Your turn. Mapleton Mutual now insures two thousand five hundred phones, with the same two percent chance of theft and the same five hundred dollar cost. How many thefts should it expect? And what is the standard deviation of the average cost per phone?"
+        voix_off: "Your turn. JG's Holding now insures two thousand five hundred phones, with the same two percent chance of theft and the same five hundred dollar cost. How many thefts should it expect? And what is the standard deviation of the average cost per phone?"
       - type: correction
         etapes:
           - "Expected thefts: 2,500 × 2% = *50*"
           - "One phone: σ = *$70*"
           - "Average of 2,500 phones: 70 ÷ √2,500 = 70 ÷ 50"
         reponse: "50 thefts; standard deviation ≈ $1.40 per phone"
-        voix_off: "Let's work it out. The expected number of thefts is two thousand five hundred times two percent, that is fifty. For one phone, the standard deviation is still seventy dollars. For the average of two thousand five hundred phones, we divide seventy by the square root of two thousand five hundred, which is fifty. So Mapleton expects fifty thefts, and the standard deviation of the average cost per phone is about one dollar forty."
+        voix_off: "Let's work it out. The expected number of thefts is two thousand five hundred times two percent, that is fifty. For one phone, the standard deviation is still seventy dollars. For the average of two thousand five hundred phones, we divide seventy by the square root of two thousand five hundred, which is fifty. So JG's Holding expects fifty thefts, and the standard deviation of the average cost per phone is about one dollar forty."
         verifier:
           - {expression: "2500 * 0.02", attendu: 50, libelle: "Expected thefts, 2,500 phones"}
           - {expression: "sqrt(2500)", attendu: 50, libelle: "Square root of 2,500"}

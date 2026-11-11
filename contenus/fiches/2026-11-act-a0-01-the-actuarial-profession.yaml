@@ -1,7 +1,7 @@
 # Parcours Actuariat (pilier A), pilote : A0.01 « The actuarial profession » (YOUTUBE_LESSON, anglais seul)
 # Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
 # Anglais d'abord (demande de JG, 2026-11-11) : la version française viendra après tout le parcours EN.
-# Assureur fictif « Mapleton Mutual », toujours annoncé comme fictif. Aucun salaire cité (non sourcé).
+# Assureur fictif « JG's Holding », toujours annoncé comme fictif. Aucun salaire cité (non sourcé).
 # Statut : validé par JG le 2026-11-11 (carte de décision), après la relecture ChatGPT du 2026-11-11. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-a0-01-the-actuarial-profession
 type_fiche: pedagogique
@@ -23,7 +23,7 @@ pedagogie:
   prerequis:
     en: ["None: percentages and multiplication"]
   hypotheses:
-    en: "Mapleton Mutual and all its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
+    en: "JG's Holding and all its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
 
 validation:
   statut: valide
@@ -36,7 +36,7 @@ editions:
   en:
     titre: "Actuaries: how maths helps make decisions under risk"
     legende: |
-      Nobody knows whether your phone will be stolen this year. Yet an insurer has to set a price today. That is the actuary's job: putting numbers on uncertain futures. In this first episode of our actuarial science series, we see where actuaries work, what is inside an insurance contract, and we compute a first pure premium together, with a fictional insurer, Mapleton Mutual. Worked exercise at the end. Fictional figures, checked calculations.
+      Nobody knows whether your phone will be stolen this year. Yet an insurer has to set a price today. That is the actuary's job: putting numbers on uncertain futures. In this first episode of our actuarial science series, we see where actuaries work, what is inside an insurance contract, and we compute a first pure premium together, with a fictional insurer, JG's Holding. Worked exercise at the end. Fictional figures, checked calculations.
     hashtags: [actuarialscience, actuary, insurance, probability]
     scenes:
       - type: accroche
@@ -71,9 +71,9 @@ editions:
         texte: "What is an insurance contract?"
         voix_off: "Before any formula, we need to know what is being priced."
       - type: texte
-        texte: "Meet *Mapleton Mutual*, our insurer"
-        note: "Mapleton Mutual is a fictional insurer. All its figures in this series are made up."
-        voix_off: "Throughout this series, we will follow an insurer called Mapleton Mutual. It is a fictional company, and all of its figures are made up. Its first product is simple: insurance against phone theft."
+        texte: "Meet *JG's Holding*, our insurer"
+        note: "JG's Holding is a fictional insurer. All its figures in this series are made up."
+        voix_off: "Throughout this series, we will follow an insurer called JG's Holding. It is a fictional company, and all of its figures are made up. Its first product is simple: insurance against phone theft."
       - type: etapes
         texte: "Inside a *phone theft* contract"
         note: "Examples from our fictional contract. Cover and exclusions depend on each contract's terms."
@@ -94,7 +94,7 @@ editions:
         texte: "Your first actuarial calculation"
         voix_off: "Let's put a first number on this risk."
       - type: etapes
-        texte: "Mapleton Mutual insures *1,000 phones* for a year"
+        texte: "JG's Holding insures *1,000 phones* for a year"
         etapes:
           - "Probability of theft: *2%* per phone per year"
           - "Cost of a stolen phone: *$500*"
@@ -102,7 +102,7 @@ editions:
           - "Expected cost: 20 × $500 = *$10,000*"
           - "Per phone: $10,000 ÷ 1,000 = *$10*"
         note: "Fictional figures. Simplified model: at most one theft per phone per year."
-        voix_off: "Mapleton Mutual insures one thousand phones for one year. Suppose each phone has a two percent chance of being stolen during the year. A stolen phone costs five hundred dollars to replace. On average, we then expect one thousand times two percent, that is twenty thefts. Twenty thefts at five hundred dollars each is an expected cost of ten thousand dollars. Shared among one thousand policyholders, that is ten dollars per phone."
+        voix_off: "JG's Holding insures one thousand phones for one year. Suppose each phone has a two percent chance of being stolen during the year. A stolen phone costs five hundred dollars to replace. On average, we then expect one thousand times two percent, that is twenty thefts. Twenty thefts at five hundred dollars each is an expected cost of ten thousand dollars. Shared among one thousand policyholders, that is ten dollars per phone."
         verifier:
           - {expression: "1000 * 0.02", attendu: 20, libelle: "Expected number of thefts"}
           - {expression: "1000 * 0.02 * 500", attendu: 10000, libelle: "Expected cost, in dollars"}
@@ -123,7 +123,7 @@ editions:
           - "Commissions paid to sellers"
           - "A margin for uncertainty: 20 is only an average"
           - "Capital to survive a bad year"
-        voix_off: "But Mapleton Mutual cannot sell this cover for ten dollars. It has expenses: staff, computer systems and the cost of handling each claim. It may pay commissions to the shops or brokers that sell the contract. It needs a margin for uncertainty, because twenty thefts is only an average: one year there may be twelve, another year thirty. And it must hold capital, so that a bad year does not ruin it."
+        voix_off: "But JG's Holding cannot sell this cover for ten dollars. It has expenses: staff, computer systems and the cost of handling each claim. It may pay commissions to the shops or brokers that sell the contract. It needs a margin for uncertainty, because twenty thefts is only an average: one year there may be twelve, another year thirty. And it must hold capital, so that a bad year does not ruin it."
       - type: texte
         texte: "Pure premium + loadings = *commercial premium*"
         voix_off: "The price the customer actually pays is called the commercial premium. It starts from the pure premium and may include loadings for expenses, commissions, risk and the cost of capital. Whether the insurer makes a profit or a loss depends on all of these pieces, not only on the probability of theft. We will come back to this in detail in module A2."
@@ -152,16 +152,16 @@ editions:
         voix_off: "Here are the skills this series will help you build. Probability and statistics, to describe uncertain events. Financial mathematics, to compare money paid at different dates. Spreadsheets first, then R or Python, to do the calculations at scale. And one skill that is often forgotten: explaining your numbers clearly to the people who have to make decisions."
       # ---------------------------------------------------------------- exercice
       - type: exercice
-        texte: "Mapleton adds a *$100 deductible*. What is the new pure premium per phone?"
+        texte: "JG's Holding adds a *$100 deductible*. What is the new pure premium per phone?"
         pause: 12
-        voix_off: "Your turn. Mapleton Mutual adds a one hundred dollar deductible: after a theft, the policyholder pays the first hundred dollars. Same thousand phones, same two percent chance of theft. What is the new pure premium per phone?"
+        voix_off: "Your turn. JG's Holding adds a one hundred dollar deductible: after a theft, the policyholder pays the first hundred dollars. Same thousand phones, same two percent chance of theft. What is the new pure premium per phone?"
       - type: correction
         etapes:
-          - "After a theft, Mapleton pays $500 − $100 = *$400*"
+          - "After a theft, JG's Holding pays $500 − $100 = *$400*"
           - "Expected thefts: still *20*"
           - "Expected cost: 20 × $400 = *$8,000*"
         reponse: "Pure premium: $8,000 ÷ 1,000 = $8 per phone"
-        voix_off: "Let's work it out. After a theft, Mapleton now pays five hundred minus one hundred, that is four hundred dollars. The expected number of thefts does not change: still twenty. The expected cost becomes twenty times four hundred, that is eight thousand dollars. Shared among one thousand phones, the pure premium drops to eight dollars per phone."
+        voix_off: "Let's work it out. After a theft, JG's Holding now pays five hundred minus one hundred, that is four hundred dollars. The expected number of thefts does not change: still twenty. The expected cost becomes twenty times four hundred, that is eight thousand dollars. Shared among one thousand phones, the pure premium drops to eight dollars per phone."
         verifier:
           - {expression: "500 - 100", attendu: 400, libelle: "Benefit after the deductible"}
           - {expression: "1000 * 0.02 * (500 - 100)", attendu: 8000, libelle: "Expected cost with the deductible"}

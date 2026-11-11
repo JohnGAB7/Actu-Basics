@@ -12,3 +12,5 @@ Avant toute modification du moteur de rendu ou production de contenu :
 Ne jamais générer une approximation du logo, le déformer ou modifier ses couleurs. Utiliser la variante claire sur fond clair et la variante sombre sur fond sombre. Prévoir une intégration configurable dans les vidéos, carrousels et couvertures, avec vérification des zones de sécurité et de la lisibilité mobile.
 
 Ne pas fusionner automatiquement ces changements. Toute modification du moteur de rendu doit passer par une branche et une pull request.
+
+Parcours Actuariat (pilier A) : l'entreprise fictive des exemples s'appelle « JG's Holding » (demande de JG, 2026-11-11), toujours annoncée comme fictive. Les vidéos sortent d'abord en anglais seul ; la version française viendra après tout le parcours EN.

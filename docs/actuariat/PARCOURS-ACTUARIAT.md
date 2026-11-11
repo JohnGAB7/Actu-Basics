@@ -18,7 +18,7 @@ Précision de JG (2026-11-11) : « pour le parcours actuariat on commence unique
 
 1. Un nouveau pilier **« A · Actuarial Science »** sur les chaînes ACTU-BASICS en anglais.
 2. **Dix modules, de A0 à A9**, en trois blocs, soit environ **47 vidéos longues**.
-3. Chaque vidéo part d'une **question concrète** et suit le fil rouge d'un **assureur fictif**, toujours annoncé comme tel.
+3. Chaque vidéo part d'une **question concrète** et suit le fil rouge d'un **assureur fictif, « JG's Holding »** (nom choisi par JG le 2026-11-11), toujours annoncé comme tel.
 4. Chaque vidéo donne **deux ou trois extraits verticaux autonomes** pour TikTok et les Shorts.
 5. Un **pilote de trois vidéos** en anglais, relu par ChatGPT et validé par JG avant tout rendu.
 
