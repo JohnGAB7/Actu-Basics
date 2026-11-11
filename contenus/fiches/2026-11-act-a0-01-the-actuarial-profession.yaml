@@ -62,11 +62,11 @@ editions:
         texte: "Où *travaillent* les actuaires"
         disposition: cartes
         etapes:
-          - "Assurance vie et retraite"
+          - "Assurance-vie et retraite"
           - "Assurance non-vie : auto, habitation, entreprises"
           - "Assurance santé"
           - "Banques, conseil, gestion des risques"
-        voix_off: "Les actuaires travaillent dans plusieurs domaines. En assurance vie et en retraite, ils s'occupent de la durée de vie, de l'épargne et des pensions. En assurance non-vie, ils tarifent et provisionnent les contrats auto, habitation et entreprises. En assurance santé, ils modélisent les dépenses de soins. Et dans les banques, les cabinets de conseil et les équipes de gestion des risques, ils mesurent et pilotent des risques financiers."
+        voix_off: "Les actuaires travaillent dans plusieurs domaines. En assurance-vie et en retraite, ils s'occupent de la durée de vie, de l'épargne et des pensions. En assurance non-vie, ils tarifent et provisionnent les contrats auto, habitation et entreprises. En assurance santé, ils modélisent les dépenses de soins. Et dans les banques, les cabinets de conseil et les équipes de gestion des risques, ils mesurent et pilotent des risques financiers."
       - type: texte
         texte: "Leurs questions : *quelle probabilité, quel montant, et quand ?*"
         voix_off: "Dans tous ces domaines, les trois mêmes questions reviennent. Quelle est la probabilité de l'événement ? Combien coûtera-t-il s'il se produit ? Et quand faudra-t-il payer ? Toute la série est construite autour de ces trois questions."
@@ -80,7 +80,7 @@ editions:
         note: "JG's Holding est un assureur fictif. Tous ses chiffres dans cette série sont inventés."
         voix_off: "Tout au long de cette série, nous suivrons un assureur appelé JG's Holding. C'est une entreprise fictive, et tous ses chiffres sont inventés. Son premier produit est simple : une assurance contre le vol de téléphone."
       - type: etapes
-        texte: "Dans un contrat *vol de téléphone*"
+        texte: "Dans un contrat d'assurance *contre le vol d'un téléphone*"
         note: "Exemples tirés de notre contrat fictif. Garanties et exclusions dépendent des conditions de chaque contrat."
         etapes:
           - "Garantie : le vol du téléphone"
@@ -107,7 +107,7 @@ editions:
           - "Coût attendu : 20 × 500 € = *10 000 €*"
           - "Par téléphone : 10 000 € ÷ 1 000 = *10 €*"
         note: "Chiffres fictifs. Modèle simplifié : au plus un vol par téléphone et par an."
-        voix_off: "JG's Holding assure mille téléphones pendant un an. Supposons que chaque téléphone ait deux pour cent de chances d'être volé dans l'année. Un téléphone volé coûte cinq cents euros à remplacer. En moyenne, on attend donc mille fois deux pour cent, soit vingt vols. Vingt vols à cinq cents euros chacun, c'est un coût attendu de dix mille euros. Réparti entre mille assurés, cela fait dix euros par téléphone."
+        voix_off: "JG's Holding assure mille téléphones pendant un an. Supposons que chaque téléphone ait deux pour cent de chances d'être volé dans l'année. Un téléphone volé coûte cinq cents euros à remplacer. En moyenne, on attend donc mille fois deux pour cent, soit vingt vols. Vingt vols à cinq cents euros chacun, c'est un coût attendu de dix mille euros. Réparti entre les mille téléphones assurés, cela représente dix euros par téléphone."
         verifier:
           - {expression: "1000 * 0.02", attendu: 20, libelle: "Nombre de vols attendu"}
           - {expression: "1000 * 0.02 * 500", attendu: 10000, libelle: "Coût attendu, en euros"}
@@ -116,8 +116,8 @@ editions:
         texte: "La *prime pure*"
         note: "Modèle simplifié : au plus un vol par téléphone, coût fixe. En général : le coût attendu des sinistres par contrat."
         formule:
-          - '\mathrm{prime\ pure}=p\times C'
-          - '=0{,}02\times 500=10\ \mathrm{euros}'
+          - '\mathrm{Prime\ pure}=p\times C'
+          - '=0{,}02\times 500=10\ \text{€}'
         voix_off: "Ces dix euros s'appellent la prime pure. Dans cet exemple simplifié, c'est la probabilité d'un vol, p, multipliée par ce que verse l'assureur s'il se produit, C : zéro virgule zéro deux fois cinq cents, soit dix euros. En général, la prime pure est le coût attendu des sinistres par contrat, sans rien ajouter."
         verifier:
           - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure, en euros"}
@@ -128,7 +128,7 @@ editions:
           - "Commissions versées aux vendeurs"
           - "Une marge pour l'incertitude : 20 n'est qu'une moyenne"
           - "Du capital pour survivre à une mauvaise année"
-        voix_off: "Mais JG's Holding ne peut pas vendre cette garantie dix euros. Il a des frais : du personnel, des systèmes informatiques et le coût de gestion de chaque sinistre. Il peut verser des commissions aux boutiques ou aux courtiers qui vendent le contrat. Il lui faut une marge pour l'incertitude, car vingt vols n'est qu'une moyenne : une année il y en aura douze, une autre trente. Et il doit détenir du capital, pour qu'une mauvaise année ne le ruine pas."
+        voix_off: "Mais JG's Holding ne peut pas vendre cette garantie au prix de dix euros. L'assureur doit couvrir ses frais : du personnel, des systèmes informatiques et le coût de gestion de chaque sinistre. Il peut verser des commissions aux boutiques ou aux courtiers qui vendent le contrat. Il lui faut une marge pour l'incertitude, car vingt vols n'est qu'une moyenne : une année il y en aura douze, une autre trente. Il doit aussi détenir suffisamment de capital pour pouvoir absorber une mauvaise année."
       - type: texte
         texte: "Prime pure + chargements = *prime commerciale*"
         voix_off: "Le prix que paie réellement le client s'appelle la prime commerciale. Elle part de la prime pure et peut inclure des chargements pour les frais, les commissions, le risque et le coût du capital. Que l'assureur gagne ou perde de l'argent dépend de toutes ces pièces, pas seulement de la probabilité de vol. Nous y reviendrons en détail dans le module A2."

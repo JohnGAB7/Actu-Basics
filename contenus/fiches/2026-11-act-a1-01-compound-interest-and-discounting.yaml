@@ -49,7 +49,7 @@ editions:
       - type: texte
         texte: "Les assureurs *encaissent maintenant* et *paient plus tard*"
         note: "Cet épisode traite de la valeur de l'argent dans le temps. Il ne modélise ni l'inflation ni le pouvoir d'achat."
-        voix_off: "Un assureur encaisse des primes aujourd'hui et verse des prestations plus tard : le mois prochain pour un téléphone volé, des décennies plus tard pour une pension. Pour comparer des sommes payées à des dates différentes, les actuaires utilisent sans cesse un même outil : l'intérêt. Un avertissement avant de commencer : cet épisode parle de la valeur de l'argent dans le temps, pas de l'inflation ni de ce que l'argent permet d'acheter. Dans cet épisode, nous le construisons de zéro : intérêts simples, intérêts composés, puis l'idée clé, l'actualisation."
+        voix_off: "Un assureur encaisse des primes aujourd'hui et verse des prestations plus tard : le mois prochain pour un téléphone volé, des décennies plus tard pour une pension. Pour comparer des sommes payées à des dates différentes, les actuaires utilisent sans cesse un même outil : l'intérêt. Précisons d'emblée que cet épisode traite de la valeur de l'argent dans le temps, et non de l'inflation ou du pouvoir d'achat. Dans cet épisode, nous le construisons de zéro : intérêts simples, intérêts composés, puis l'idée clé, l'actualisation."
       # ---------------------------------------------------------------- 1
       - type: titre
         numero: 1
@@ -82,7 +82,7 @@ editions:
         note: "i : taux annuel effectif constant, capitalisation annuelle."
         formule:
           - 'VF=VA\times(1+i)^n'
-          - '1000\times 1{,}05^{30}\approx 4322'
+          - 'VF=1000\times 1{,}05^{30}\approx 4322\ \text{€}'
         voix_off: "Après n années, le capital a été multiplié par un plus i, n fois : un plus i à la puissance n. Ici, i est le taux d'intérêt annuel effectif, constant, avec des intérêts ajoutés une fois par an ; VA est la somme de départ, la valeur actuelle, et VF la valeur future. Avec mille euros à cinq pour cent pendant trente ans, on obtient environ quatre mille trois cent vingt-deux euros."
         verifier:
           - {expression: "1000 * 1.05**30", attendu: 4322, libelle: "Valeur future après 30 ans à 5 %"}
@@ -105,7 +105,7 @@ editions:
           - {expression: "1000 * 1.05**10", attendu: 1629, libelle: "Capital après 10 ans"}
           - {expression: "1000 * 1.05**20", attendu: 2653, libelle: "Capital après 20 ans"}
       - type: texte
-        texte: "Repère : l'argent double en environ *72 ÷ taux* années"
+        texte: "Repère : durée approximative de doublement = *72 ÷ taux (en %)*"
         note: "72 ÷ 5 = 14,4 ans. Durée exacte de doublement à 5 % : environ 14,2 ans."
         voix_off: "Un repère pratique : à un taux de r pour cent, l'argent double à peu près en soixante-douze divisé par r années. À cinq pour cent, soixante-douze divisé par cinq donne quatorze virgule quatre ans. La réponse exacte est d'environ quatorze virgule deux ans : assez proche pour une vérification rapide."
         verifier:
@@ -124,7 +124,7 @@ editions:
         formule:
           - 'VA=\dfrac{VF}{(1+i)^n}=VF\times v^n'
           - 'v=\dfrac{1}{1+i}'
-          - '\dfrac{1000}{1{,}05^{30}}\approx 231{,}38'
+          - 'VA=\dfrac{1000}{1{,}05^{30}}\approx 231{,}38\ \text{€}'
         voix_off: "On divise simplement au lieu de multiplier. La valeur actuelle est la valeur future divisée par un plus i à la puissance n. Les actuaires notent v le quotient un divisé par un plus i : c'est le facteur d'actualisation. Ici, mille divisé par un virgule zéro cinq à la puissance trente donne environ deux cent trente et un euros et trente-huit centimes."
         verifier:
           - {expression: "1000 / 1.05**30", attendu: 231.38, libelle: "Valeur actuelle de 1 000 € dans 30 ans à 5 %"}
@@ -178,15 +178,15 @@ editions:
       - type: titre
         numero: 4
         texte: "Dans un tableur"
-        voix_off: "Tout cela se fait dans n'importe quel tableur."
+        voix_off: "Tous ces calculs peuvent être réalisés dans un tableur."
       - type: etapes
         texte: "Trois *formules de tableur*"
         etapes:
-          - "Valeur future : *=VC(5% ; 30 ; 0 ; -1000)*"
-          - "Valeur actuelle à la main : *=1000/(1+5%)^30*"
-          - "Valeur actuelle, fonction intégrée : *=VA(5% ; 30 ; 0 ; -1000)*"
+          - "Valeur future : *=VC(5 % ; 30 ; 0 ; -1 000)*"
+          - "Valeur actuelle à la main : *=1 000/(1+5 %)^30*"
+          - "Valeur actuelle, fonction intégrée : *=VA(5 % ; 30 ; 0 ; -1 000)*"
         note: "VC et VA sont les fonctions intégrées des tableurs en français (FV et PV en anglais). Le signe moins est une convention de flux."
-        voix_off: "Voici trois formules à essayer. Pour la valeur future, la fonction intégrée V C, avec un taux de cinq pour cent, trente ans et mille euros, renvoie environ quatre mille trois cent vingt-deux euros. Pour la valeur actuelle, vous pouvez diviser à la main : mille divisé par un plus cinq pour cent, à la puissance trente. Ou utiliser la fonction intégrée de valeur actuelle, V A, qui donne les mêmes deux cent trente et un euros et trente-huit centimes."
+        voix_off: "Voici trois formules à essayer. Pour la valeur future, la fonction intégrée V-C, avec un taux de cinq pour cent, trente ans et mille euros, renvoie environ quatre mille trois cent vingt-deux euros. Pour la valeur actuelle, vous pouvez diviser à la main : mille divisé par un plus cinq pour cent, à la puissance trente. Ou utiliser la fonction intégrée de valeur actuelle, V-A, qui donne les mêmes deux cent trente et un euros et trente-huit centimes."
       # ---------------------------------------------------------------- exercice
       - type: exercice
         texte: "JG's Holding doit payer *10 000 € dans 10 ans*. À *4 %* par an, combien mettre de côté aujourd'hui ?"
