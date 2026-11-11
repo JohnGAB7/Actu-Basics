@@ -32,7 +32,9 @@ pedagogie:
     en: "Constant annual interest rates, chosen for the example; interest paid once a year; no tax, no inflation, no default risk"
 
 validation:
-  statut: brouillon   # EN validée par JG le 2026-11-11 ; FR ajoutée, à relire puis valider
+  statut: valide   # EN validée par JG le 2026-11-11 ; FR relue par ChatGPT et validée par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 

@@ -33,7 +33,9 @@ pedagogie:
     en: "JG's Holding and all its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
 
 validation:
-  statut: brouillon   # EN validée par JG le 2026-11-11 ; FR ajoutée, à relire puis valider
+  statut: valide   # EN validée par JG le 2026-11-11 ; FR relue par ChatGPT et validée par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 

@@ -10,4 +10,4 @@ moteur: "Fiches en une seule langue (champ « langues ») et chapitres YouTube t
 extraits_verticaux: "2 ou 3 par leçon, écrits comme des fiches courtes autonomes après validation des leçons"
 pdf: "dossier partagé du projet : actu-basics/actuariat/pilote/"
 entreprise_fictive: "JG's Holding"   # demande de JG, 2026-11-11 ; remplace Mapleton Mutual avant toute publication
-statut: brouillon   # EN validée et rendue le 2026-11-11 ; FR ajoutée, à relire par ChatGPT puis à valider par JG
+statut: valide   # EN et FR validées par JG le 2026-11-11 ; rendu final FR + EN le 2026-11-11

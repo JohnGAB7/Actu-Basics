@@ -35,7 +35,9 @@ pedagogie:
     en: "Fictional insurer and figures; thefts independent from one phone to another; 2% chance of theft per phone per year; at most one theft per phone; a theft costs exactly $500; expenses ignored"
 
 validation:
-  statut: brouillon   # EN validée par JG le 2026-11-11 ; FR ajoutée, à relire puis valider
+  statut: valide   # EN validée par JG le 2026-11-11 ; FR relue par ChatGPT et validée par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
 
 sources: []
 
