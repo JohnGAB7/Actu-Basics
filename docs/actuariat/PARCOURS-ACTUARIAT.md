@@ -4,11 +4,11 @@ Statut : **proposition v2, relecture ChatGPT intégrée, à valider par JG.** Au
 
 Demande de JG (2026-11-11) : « ajouter une partie Actuariat pour laquelle on fera des vidéos plutôt longues mais virales et très utiles aux étudiants débutants en actuariat, et qui leur permettent d'évoluer de A à Z […] Toujours dans les chaînes ACTU-BASICS ».
 
-Précision de JG (2026-11-11) : « pour le parcours actuariat on commence uniquement par la chaîne en anglais donc uniquement des vidéos en anglais ; après avoir tout produit en anglais on pourra si possible faire les équivalents en français ».
+Décision de JG (2026-11-11, après le pilote) : les vidéos sortent **en français et en anglais en même temps**. La consigne précédente « anglais d'abord » est annulée.
 
 ## Ce qui change dans la v2
 
-- **Anglais d'abord** : tout le parcours est produit en anglais pour YouTube EN (@actu-basics_en) et TikTok EN (@actu_basics_en). La version française viendra après, comme une adaptation et non une traduction mot pour mot.
+- **FR et EN en même temps** : chaque leçon existe en français (YouTube FR @actubasics, TikTok FR) et en anglais (YouTube EN @actu-basics_en, TikTok EN). La version française est une adaptation (euros, fonctions de tableur en français), pas une traduction mot pour mot ; les nombres sont identiques.
 - **Périmètre international** : socle mathématique commun, exemples localisés seulement quand les règles diffèrent (cadre européen, Royaume-Uni, États-Unis). Les références purement françaises sont gardées pour la future version FR.
 - **A2 devient un vrai module de probabilités** et n'affirme plus que l'assureur « gagne en moyenne ».
 - **Pilote** : A0.01, A1.01 et **A2.01** (mutualisation et prime pure) au lieu de A3.01.
@@ -16,11 +16,11 @@ Précision de JG (2026-11-11) : « pour le parcours actuariat on commence unique
 
 ## Résumé
 
-1. Un nouveau pilier **« A · Actuarial Science »** sur les chaînes ACTU-BASICS en anglais.
+1. Un nouveau pilier **« A · Actuariat / Actuarial Science »** sur les chaînes ACTU-BASICS, en français et en anglais.
 2. **Dix modules, de A0 à A9**, en trois blocs, soit environ **47 vidéos longues**.
 3. Chaque vidéo part d'une **question concrète** et suit le fil rouge d'un **assureur fictif, « JG's Holding »** (nom choisi par JG le 2026-11-11), toujours annoncé comme tel.
 4. Chaque vidéo donne **deux ou trois extraits verticaux autonomes** pour TikTok et les Shorts.
-5. Un **pilote de trois vidéos** en anglais, relu par ChatGPT et validé par JG avant tout rendu.
+5. Un **pilote de trois vidéos**, FR et EN, relu par ChatGPT et validé par JG avant tout rendu.
 
 **Décisions à prendre par JG**
 
@@ -133,7 +133,7 @@ Le programme prévoit déjà un parcours « Actuariat et assurance » de vidéos
 
 ## Plan de démarrage
 
-**Pilote (anglais uniquement)**
+**Pilote (FR et EN)**
 
 | Code | Titre de travail (EN) | Rôle |
 | --- | --- | --- |
@@ -147,13 +147,13 @@ A3.01 (lire une table de mortalité) ouvre ensuite le bloc assurance vie.
 
 1. Validation de la v2 par JG.
 2. Adaptation du moteur pour les vidéos longues (chapitres, scènes plus nombreuses, extraits verticaux) sur une branche et une pull request, conformément aux règles du dépôt.
-3. Écriture des trois fiches en anglais, avec vérification des calculs.
+3. Écriture des trois fiches, FR et EN, avec vérification des calculs.
 4. Relecture ChatGPT sur la PR #17, puis validation par JG.
-5. Rendu local en anglais (16:9 et extraits 9:16), livré dans le dossier partagé.
+5. Rendu local FR et EN (16:9 et extraits 9:16), livré dans le dossier partagé.
 6. Publication par JG, puis bilan après deux à trois semaines.
 
 **Calendrier**
 
 - Pendant le pilote, JG continue de publier le stock des 33 vidéos déjà rendues.
 - Le lot 4 reprend après le pilote.
-- Ensuite : une vidéo longue par semaine en anglais. La version FR commence quand le parcours EN est terminé, si JG le décide.
+- Ensuite : une vidéo longue par semaine, en FR et en EN.

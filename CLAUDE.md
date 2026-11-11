@@ -13,4 +13,4 @@ Ne jamais générer une approximation du logo, le déformer ou modifier ses coul
 
 Ne pas fusionner automatiquement ces changements. Toute modification du moteur de rendu doit passer par une branche et une pull request.
 
-Parcours Actuariat (pilier A) : l'entreprise fictive des exemples s'appelle « JG's Holding » (demande de JG, 2026-11-11), toujours annoncée comme fictive. Les vidéos sortent d'abord en anglais seul ; la version française viendra après tout le parcours EN.
+Parcours Actuariat (pilier A) : l'entreprise fictive des exemples s'appelle « JG's Holding » (demande de JG, 2026-11-11), toujours annoncée comme fictive. Les vidéos sortent en français et en anglais en même temps (décision de JG, 2026-11-11, qui remplace « anglais d'abord »).
