@@ -1,0 +1,106 @@
+# Parcours Actuariat, extrait vertical 1 de A0.01 (SHORT 9:16, TikTok et Shorts) : le premier calcul actuariel.
+# Unité autonome : contexte, prime pure de 10 € calculée et vérifiée, renvoi vers la leçon complète.
+# Assureur fictif JG's Holding, chiffres fictifs ; nombres identiques à la leçon A0.01 et entre FR et EN.
+# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-x-a0-01a-votre-premier-calcul-actuariel
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: short
+habillage_sonore: true
+theme: "A0.01 · extrait 1 · Votre premier calcul actuariel"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer une prime pure : probabilité × coût, à partir d'un exemple à 1 000 téléphones"
+    en:
+      - "Compute a pure premium: probability × cost, from a 1,000-phone example"
+  prerequis:
+    fr: ["Aucun. Leçon complète : le métier d'actuaire (A0, épisode 1)"]
+    en: ["None. Full lesson: the actuarial profession (A0, episode 1)"]
+  hypotheses:
+    fr: "JG's Holding et ses chiffres sont fictifs ; au plus un vol par téléphone et par an ; un téléphone volé coûte exactement 500 €"
+    en: "JG's Holding and its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Combien coûte le risque de vol d'un téléphone ? Votre premier calcul actuariel"
+    legende: |
+      Personne ne sait si votre téléphone sera volé cette année. Pourtant, un assureur doit fixer un prix aujourd'hui. Voici le calcul de base de l'actuaire : 1 000 téléphones, 2 % de chances de vol, 500 € par téléphone volé, et l'on obtient la prime pure. Extrait de la première leçon de notre série sur l'actuariat, « Actuaire : comment les maths aident à décider face au risque », à voir en entier sur la chaîne. Assureur et chiffres fictifs, calculs vérifiés.
+    hashtags: [actuariat, assurance, probabilites]
+    scenes:
+      - type: accroche
+        texte: "Combien coûte *le risque* de vol d'un téléphone ?"
+        voix_off: "Votre téléphone sera-t-il volé cette année ? Personne ne le sait. Pourtant, un assureur doit fixer un prix aujourd'hui. Voici comment un actuaire s'y prend."
+      - type: etapes
+        texte: "JG's Holding assure *1 000 téléphones* pendant un an"
+        etapes:
+          - "Probabilité de vol : *2 %* par téléphone"
+          - "Coût d'un vol : *500 €*"
+          - "Vols attendus : 1 000 × 2 % = *20*"
+          - "Coût attendu : 20 × 500 € = *10 000 €*"
+        note: "JG's Holding est un assureur fictif. Chiffres fictifs ; au plus un vol par téléphone et par an."
+        voix_off: "Prenons un assureur fictif, JG's Holding, qui assure mille téléphones pendant un an. Chaque téléphone a deux pour cent de chances d'être volé. Un téléphone volé coûte cinq cents euros. On attend donc mille fois deux pour cent, soit vingt vols. Vingt vols à cinq cents euros, c'est un coût attendu de dix mille euros."
+        verifier:
+          - {expression: "1000 * 0.02", attendu: 20, libelle: "Nombre de vols attendu"}
+          - {expression: "1000 * 0.02 * 500", attendu: 10000, libelle: "Coût attendu, en euros"}
+      - type: formule
+        texte: "La *prime pure*"
+        formule:
+          - '\mathrm{Prime\ pure}=p\times C'
+          - '=0{,}02\times 500=10\ \text{€}'
+        note: "10 000 € ÷ 1 000 téléphones = 10 € par téléphone."
+        voix_off: "Réparti entre les mille téléphones, cela fait dix euros par téléphone. C'est la prime pure : la probabilité d'un vol, multipliée par ce que verse l'assureur s'il se produit."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure, en euros"}
+      - type: texte
+        texte: "Le client paiera *plus* que 10 €"
+        note: "Frais, commissions, marge pour l'incertitude, capital : la leçon complète explique chaque chargement."
+        voix_off: "Le client paiera plus que dix euros : il faut encore couvrir les frais, les commissions et une marge pour les mauvaises années. Tout est expliqué dans la leçon complète sur la chaîne."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "How much does the risk of a stolen phone cost? Your first actuarial calculation"
+    legende: |
+      Nobody knows whether your phone will be stolen this year. Yet an insurer has to set a price today. Here is the actuary's basic calculation: 1,000 phones, a 2% chance of theft, $500 per stolen phone, and out comes the pure premium. An extract from the first lesson of our actuarial science series, "Actuaries: how maths helps make decisions under risk", watch the full lesson on the channel. Fictional insurer and figures, checked calculations.
+    hashtags: [actuarialscience, insurance, probability]
+    scenes:
+      - type: accroche
+        texte: "How much does *the risk* of a stolen phone cost?"
+        voix_off: "Will your phone be stolen this year? Nobody knows. Yet an insurer has to set a price today. Here is how an actuary does it."
+      - type: etapes
+        texte: "JG's Holding insures *1,000 phones* for one year"
+        etapes:
+          - "Probability of theft: *2%* per phone"
+          - "Cost of a theft: *$500*"
+          - "Expected thefts: 1,000 × 2% = *20*"
+          - "Expected cost: 20 × $500 = *$10,000*"
+        note: "JG's Holding is a fictional insurer. Made-up figures; at most one theft per phone per year."
+        voix_off: "Take a fictional insurer, JG's Holding, which insures one thousand phones for one year. Each phone has a two percent chance of being stolen. A stolen phone costs five hundred dollars. So we expect one thousand times two percent, that is twenty thefts. Twenty thefts at five hundred dollars each is an expected cost of ten thousand dollars."
+        verifier:
+          - {expression: "1000 * 0.02", attendu: 20, libelle: "Expected number of thefts"}
+          - {expression: "1000 * 0.02 * 500", attendu: 10000, libelle: "Expected cost, in dollars"}
+      - type: formule
+        texte: "The *pure premium*"
+        formule:
+          - '\mathrm{Pure\ premium}=p\times C'
+          - '=0.02\times 500=10\ \text{dollars}'
+        note: "$10,000 ÷ 1,000 phones = $10 per phone."
+        voix_off: "Spread over the one thousand phones, that is ten dollars per phone. This is the pure premium: the probability of a theft, multiplied by what the insurer pays if it happens."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium, in dollars"}
+      - type: texte
+        texte: "The customer will pay *more* than $10"
+        note: "Expenses, commissions, a margin for uncertainty, capital: the full lesson explains each loading."
+        voix_off: "The customer will pay more than ten dollars: the insurer still has to cover expenses, commissions and a margin for bad years. It is all explained in the full lesson on the channel."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

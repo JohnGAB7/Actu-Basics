@@ -1,0 +1,126 @@
+# Parcours Actuariat, extrait vertical 2 de A1.01 (SHORT 9:16, TikTok et Shorts) : intérêts composés et règle de 72.
+# Unité autonome : 1 000 € à 5 % pendant 30 ans, intérêts simples contre composés, règle de 72 ; renvoi vers la leçon.
+# Taux fictif et constant ; nombres identiques à la leçon A1.01 et entre FR et EN.
+# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-x-a1-01b-la-regle-de-72
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: short
+habillage_sonore: true
+theme: "A1.01 · extrait 2 · Intérêts composés et règle de 72"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer intérêts simples et composés sur 30 ans, et estimer une durée de doublement avec la règle de 72"
+    en:
+      - "Tell simple from compound interest over 30 years, and estimate a doubling time with the rule of 72"
+  prerequis:
+    fr: ["Les pourcentages. Leçon complète : intérêts composés et actualisation (A1, épisode 1)"]
+    en: ["Percentages. Full lesson: compound interest and discounting (A1, episode 1)"]
+  hypotheses:
+    fr: "Taux annuel effectif fictif de 5 %, constant pendant 30 ans, capitalisation annuelle ; fiscalité et inflation ignorées"
+    en: "Made-up effective annual rate of 5%, constant for 30 years, annual compounding; tax and inflation ignored"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "1 000 € à 5 % pendant 30 ans : 2 500 € ou 4 322 € ?"
+    legende: |
+      1 000 € placés à 5 % par an pendant 30 ans : avec des intérêts simples, 2 500 € ; avec des intérêts composés, environ 4 322 €. D'où vient la différence, et comment estimer de tête en combien d'années l'argent double ? La règle de 72. Extrait de la leçon « 1 000 € aujourd'hui ou dans 30 ans : est-ce vraiment la même somme ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Taux fictif, calculs vérifiés, aucun conseil de placement.
+    hashtags: [actuariat, interetscomposes, reglede72]
+    scenes:
+      - type: accroche
+        texte: "1 000 € à 5 % pendant 30 ans : *2 500 €* ou *4 322 €* ?"
+        voix_off: "Mille euros placés à cinq pour cent par an pendant trente ans. Deux mille cinq cents euros, ou quatre mille trois cent vingt-deux ? Les deux réponses existent."
+      - type: etapes
+        texte: "*Intérêts simples* : toujours sur les 1 000 € de départ"
+        etapes:
+          - "Chaque année : 5 % de 1 000 € = *50 €*"
+          - "30 ans : 30 × 50 € = *1 500 €* d'intérêts"
+          - "Total : *2 500 €*"
+        note: "Taux fictif de 5 %, constant pendant 30 ans."
+        voix_off: "Avec des intérêts simples, les intérêts sont toujours calculés sur les mille euros de départ. Chaque année, cinq pour cent de mille euros, soit cinquante euros. En trente ans, trente fois cinquante, soit mille cinq cents euros d'intérêts. Au total, deux mille cinq cents euros."
+        verifier:
+          - {expression: "0.05 * 1000", attendu: 50, libelle: "Intérêts simples par an"}
+          - {expression: "30 * 0.05 * 1000", attendu: 1500, libelle: "Intérêts simples sur 30 ans"}
+          - {expression: "1000 * (1 + 0.05 * 30)", attendu: 2500, libelle: "Total à intérêts simples"}
+      - type: formule
+        texte: "*Intérêts composés* : les intérêts rapportent des intérêts"
+        formule:
+          - 'VF=1000\times 1{,}05^{30}'
+          - '\approx 4322\ \text{€}'
+        note: "Chaque année, le capital est multiplié par 1,05. Capitalisation annuelle."
+        voix_off: "Avec des intérêts composés, les intérêts s'ajoutent au capital et rapportent à leur tour. Chaque année, le capital est multiplié par un virgule zéro cinq. Au bout de trente ans, mille fois un virgule zéro cinq à la puissance trente donne environ quatre mille trois cent vingt-deux euros."
+        verifier:
+          - {expression: "1000 * 1.05**30", attendu: 4322, libelle: "Valeur future après 30 ans à 5 %"}
+      - type: etapes
+        texte: "Repère : durée approximative de doublement = *72 ÷ taux (en %)*"
+        etapes:
+          - "À 5 % : 72 ÷ 5 = *14,4 ans*"
+          - "Durée exacte : environ *14,2 ans*"
+        note: "Durée exacte : log(2) ÷ log(1,05) ≈ 14,2 ans."
+        voix_off: "Un repère pour calculer de tête : l'argent double à peu près en soixante-douze divisé par le taux en pour cent. À cinq pour cent, soixante-douze divisé par cinq donne quatorze virgule quatre ans. La durée exacte est d'environ quatorze virgule deux ans : assez proche pour une vérification rapide."
+        verifier:
+          - {expression: "72 / 5", attendu: 14.4, libelle: "Règle de 72 à 5 %"}
+          - {expression: "log(2) / log(1.05)", attendu: 14.2, libelle: "Durée exacte de doublement à 5 %"}
+      - type: texte
+        texte: "Et dans l'autre sens ? *L'actualisation*"
+        note: "Leçon complète sur la chaîne : intérêts composés, actualisation, valeur actuelle, formules de tableur."
+        voix_off: "Les actuaires utilisent surtout le calcul dans l'autre sens : combien mettre de côté aujourd'hui pour un paiement futur. C'est l'actualisation, expliquée dans la leçon complète sur la chaîne."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "$1,000 at 5% for 30 years: $2,500 or $4,322?"
+    legende: |
+      $1,000 invested at 5% a year for 30 years: with simple interest, $2,500; with compound interest, about $4,322. Where does the difference come from, and how do you estimate in your head how many years it takes for money to double? The rule of 72. An extract from the lesson "$1,000 today or in 30 years: is it really the same money?" of our actuarial science series, watch the full lesson on the channel. Made-up rate, checked calculations, no investment advice.
+    hashtags: [actuarialscience, compoundinterest, ruleof72]
+    scenes:
+      - type: accroche
+        texte: "$1,000 at 5% for 30 years: *$2,500* or *$4,322*?"
+        voix_off: "One thousand dollars invested at five percent a year for thirty years. Two thousand five hundred dollars, or four thousand three hundred and twenty-two? Both answers exist."
+      - type: etapes
+        texte: "*Simple interest*: always on the original $1,000"
+        etapes:
+          - "Each year: 5% of $1,000 = *$50*"
+          - "30 years: 30 × $50 = *$1,500* of interest"
+          - "Total: *$2,500*"
+        note: "Made-up 5% rate, constant for 30 years."
+        voix_off: "With simple interest, the interest is always computed on the original one thousand dollars. Each year, five percent of one thousand dollars, that is fifty dollars. Over thirty years, thirty times fifty, that is one thousand five hundred dollars of interest. In total, two thousand five hundred dollars."
+        verifier:
+          - {expression: "0.05 * 1000", attendu: 50, libelle: "Simple interest per year"}
+          - {expression: "30 * 0.05 * 1000", attendu: 1500, libelle: "Simple interest over 30 years"}
+          - {expression: "1000 * (1 + 0.05 * 30)", attendu: 2500, libelle: "Total with simple interest"}
+      - type: formule
+        texte: "*Compound interest*: interest earns interest"
+        formule:
+          - 'FV=1000\times 1.05^{30}'
+          - '\approx 4322\ \text{dollars}'
+        note: "Each year, the balance is multiplied by 1.05. Annual compounding."
+        voix_off: "With compound interest, the interest is added to the balance and earns interest in turn. Each year, the balance is multiplied by one point zero five. After thirty years, one thousand times one point zero five to the power thirty gives about four thousand three hundred and twenty-two dollars."
+        verifier:
+          - {expression: "1000 * 1.05**30", attendu: 4322, libelle: "Future value after 30 years at 5%"}
+      - type: etapes
+        texte: "Rule of thumb: approximate doubling time = *72 ÷ rate (in %)*"
+        etapes:
+          - "At 5%: 72 ÷ 5 = *14.4 years*"
+          - "Exact time: about *14.2 years*"
+        note: "Exact time: log(2) ÷ log(1.05) ≈ 14.2 years."
+        voix_off: "A rule of thumb for mental arithmetic: money doubles in roughly seventy-two divided by the rate in percent. At five percent, seventy-two divided by five gives fourteen point four years. The exact time is about fourteen point two years: close enough for a quick check."
+        verifier:
+          - {expression: "72 / 5", attendu: 14.4, libelle: "Rule of 72 at 5%"}
+          - {expression: "log(2) / log(1.05)", attendu: 14.2, libelle: "Exact doubling time at 5%"}
+      - type: texte
+        texte: "And the other way round? *Discounting*"
+        note: "Full lesson on the channel: compound interest, discounting, present value, spreadsheet formulas."
+        voix_off: "Actuaries mostly use the calculation the other way round: how much to set aside today for a future payment. That is discounting, explained in the full lesson on the channel."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

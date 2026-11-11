@@ -1,0 +1,110 @@
+# Parcours Actuariat, extrait vertical 2 de A0.01 (SHORT 9:16, TikTok et Shorts) : l'effet d'une franchise sur la prime pure.
+# Unité autonome : question, pause, correction vérifiée, renvoi vers la leçon complète.
+# Assureur fictif JG's Holding, chiffres fictifs ; nombres identiques à la leçon A0.01 et entre FR et EN.
+# Statut : brouillon, à relire par ChatGPT puis à valider par JG. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-x-a0-01b-la-franchise-de-100-euros
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: short
+habillage_sonore: true
+theme: "A0.01 · extrait 2 · Une franchise de 100 € : quelle prime pure ?"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Recalculer une prime pure quand une franchise réduit la prestation"
+    en:
+      - "Recompute a pure premium when a deductible reduces the payout"
+  prerequis:
+    fr: ["Prime pure = probabilité × coût. Leçon complète : le métier d'actuaire (A0, épisode 1)"]
+    en: ["Pure premium = probability × cost. Full lesson: the actuarial profession (A0, episode 1)"]
+  hypotheses:
+    fr: "JG's Holding et ses chiffres sont fictifs ; au plus un vol par téléphone et par an ; un téléphone volé coûte exactement 500 €"
+    en: "JG's Holding and its figures are fictional; at most one theft per phone per year; a stolen phone costs exactly $500"
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Une franchise de 100 € : de combien baisse la prime ?"
+    legende: |
+      Un assureur fictif, JG's Holding, assure 1 000 téléphones : 2 % de chances de vol, 500 € par téléphone volé, prime pure de 10 €. Il ajoute une franchise de 100 €. Quelle est la nouvelle prime pure ? À vous, puis la correction. Extrait de la première leçon de notre série sur l'actuariat, « Actuaire : comment les maths aident à décider face au risque », à voir en entier sur la chaîne. Chiffres fictifs, calculs vérifiés.
+    hashtags: [actuariat, assurance, franchise]
+    scenes:
+      - type: accroche
+        texte: "Une *franchise de 100 €* : de combien baisse la prime ?"
+        voix_off: "Un assureur ajoute une franchise de cent euros à son contrat. De combien la prime baisse-t-elle ? Faites le calcul avec moi."
+      - type: etapes
+        texte: "Le contrat de *JG's Holding*, assureur fictif"
+        etapes:
+          - "1 000 téléphones, *2 %* de chances de vol"
+          - "Un vol coûte *500 €*"
+          - "Prime pure sans franchise : 2 % × 500 € = *10 €*"
+        note: "Chiffres fictifs ; au plus un vol par téléphone et par an."
+        voix_off: "Voici le contrat. JG's Holding, un assureur fictif, assure mille téléphones, avec deux pour cent de chances de vol chacun. Un vol lui coûte cinq cents euros. Sans franchise, la prime pure vaut deux pour cent de cinq cents euros, soit dix euros."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure sans franchise"}
+      - type: exercice
+        texte: "Avec une *franchise de 100 €*, l'assuré paie les 100 premiers euros. Nouvelle prime pure ?"
+        pause: 5
+        voix_off: "À vous. Avec une franchise de cent euros, l'assuré paie les cent premiers euros de chaque vol. Quelle est la nouvelle prime pure ?"
+      - type: correction
+        etapes:
+          - "Après un vol, l'assureur verse 500 € − 100 € = *400 €*"
+          - "Prime pure : 2 % × 400 € = *8 €*"
+        reponse: "8 € par téléphone, au lieu de 10 €"
+        voix_off: "Faisons le calcul. Après un vol, l'assureur ne verse plus que cinq cents moins cent, soit quatre cents euros. La prime pure devient deux pour cent de quatre cents, soit huit euros. La franchise fait passer la prime pure de dix à huit euros par téléphone."
+        verifier:
+          - {expression: "500 - 100", attendu: 400, libelle: "Prestation après franchise"}
+          - {expression: "0.02 * (500 - 100)", attendu: 8, libelle: "Prime pure avec franchise"}
+      - type: texte
+        texte: "La probabilité ne change pas, *la prestation* oui"
+        note: "Leçon complète sur la chaîne : ce qu'est un contrat d'assurance et le premier calcul actuariel."
+        voix_off: "Retenez l'idée : la franchise ne change pas la probabilité du vol, elle réduit ce que verse l'assureur. Pour le contrat complet et les chargements qui s'ajoutent à la prime pure, voyez la leçon complète sur la chaîne."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "A $100 deductible: how much does the premium drop?"
+    legende: |
+      A fictional insurer, JG's Holding, insures 1,000 phones: a 2% chance of theft, $500 per stolen phone, a pure premium of $10. It adds a $100 deductible. What is the new pure premium? Your turn, then the answer. An extract from the first lesson of our actuarial science series, "Actuaries: how maths helps make decisions under risk", watch the full lesson on the channel. Made-up figures, checked calculations.
+    hashtags: [actuarialscience, insurance, deductible]
+    scenes:
+      - type: accroche
+        texte: "A *$100 deductible*: how much does the premium drop?"
+        voix_off: "An insurer adds a one hundred dollar deductible to its contract. How much does the premium drop? Work it out with me."
+      - type: etapes
+        texte: "The contract of *JG's Holding*, a fictional insurer"
+        etapes:
+          - "1,000 phones, a *2%* chance of theft"
+          - "A theft costs *$500*"
+          - "Pure premium without deductible: 2% × $500 = *$10*"
+        note: "Made-up figures; at most one theft per phone per year."
+        voix_off: "Here is the contract. JG's Holding, a fictional insurer, covers one thousand phones, each with a two percent chance of theft. A theft costs it five hundred dollars. Without a deductible, the pure premium is two percent of five hundred dollars, that is ten dollars."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium without deductible"}
+      - type: exercice
+        texte: "With a *$100 deductible*, the policyholder pays the first $100. New pure premium?"
+        pause: 5
+        voix_off: "Your turn. With a one hundred dollar deductible, the policyholder pays the first one hundred dollars of each theft. What is the new pure premium?"
+      - type: correction
+        etapes:
+          - "After a theft, the insurer pays $500 − $100 = *$400*"
+          - "Pure premium: 2% × $400 = *$8*"
+        reponse: "$8 per phone, instead of $10"
+        voix_off: "Let us work it out. After a theft, the insurer now pays five hundred minus one hundred, that is four hundred dollars. The pure premium becomes two percent of four hundred, that is eight dollars. The deductible takes the pure premium from ten to eight dollars per phone."
+        verifier:
+          - {expression: "500 - 100", attendu: 400, libelle: "Payout after deductible"}
+          - {expression: "0.02 * (500 - 100)", attendu: 8, libelle: "Pure premium with deductible"}
+      - type: texte
+        texte: "The probability does not change, *the payout* does"
+        note: "Full lesson on the channel: what an insurance contract is, and the first actuarial calculation."
+        voix_off: "Remember the idea: the deductible does not change the probability of theft, it reduces what the insurer pays. For the full contract and the loadings added on top of the pure premium, see the full lesson on the channel."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
