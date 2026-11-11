@@ -1,129 +1,159 @@
-# ACTU-BASICS · Parcours Actuariat de A à Z (proposition)
+# ACTU-BASICS · Parcours Actuariat de A à Z (proposition v2)
 
-Statut : **proposition, à relire par ChatGPT puis à valider par JG.** Aucun script ni vidéo n'est produit avant validation.
+Statut : **proposition v2, relecture ChatGPT intégrée, à valider par JG.** Aucun script ni vidéo n'est produit avant validation.
 
-Demande de JG (2026-11-11) : « ajouter une partie Actuariat pour laquelle on fera des vidéos plutôt longues mais virales et très utiles aux étudiants débutants en actuariat, et qui leur permettent d'évoluer de A à Z, car l'actuariat c'est bien l'application des statistiques et probas… Toujours dans les chaînes ACTU-BASICS ».
+Demande de JG (2026-11-11) : « ajouter une partie Actuariat pour laquelle on fera des vidéos plutôt longues mais virales et très utiles aux étudiants débutants en actuariat, et qui leur permettent d'évoluer de A à Z […] Toujours dans les chaînes ACTU-BASICS ».
+
+Précision de JG (2026-11-11) : « pour le parcours actuariat on commence uniquement par la chaîne en anglais donc uniquement des vidéos en anglais ; après avoir tout produit en anglais on pourra si possible faire les équivalents en français ».
+
+## Ce qui change dans la v2
+
+- **Anglais d'abord** : tout le parcours est produit en anglais pour YouTube EN (@actu-basics_en) et TikTok EN (@actu_basics_en). La version française viendra après, comme une adaptation et non une traduction mot pour mot.
+- **Périmètre international** : socle mathématique commun, exemples localisés seulement quand les règles diffèrent (cadre européen, Royaume-Uni, États-Unis). Les références purement françaises sont gardées pour la future version FR.
+- **A2 devient un vrai module de probabilités** et n'affirme plus que l'assureur « gagne en moyenne ».
+- **Pilote** : A0.01, A1.01 et **A2.01** (mutualisation et prime pure) au lieu de A3.01.
+- **Trois blocs affichés**, contrats expliqués avant les modèles, logiciels présents dès A1, et A3, A4, A5, A6, A7 et A8 précisés.
 
 ## Résumé
 
-**La proposition en cinq lignes**
-
-1. On crée un nouveau pilier **« A · Actuariat »** sur les chaînes ACTU-BASICS (FR et EN), à côté des fiches de statistiques et de probabilités.
-2. Le parcours compte **dix modules, de A0 à A9**, soit environ **45 vidéos longues** qui mènent un étudiant débutant de la découverte du métier jusqu'à la solvabilité et la pratique sur logiciel.
-3. Chaque vidéo longue part d'une **question concrète** (« Combien vaut une rente à vie ? ») et suit le fil rouge d'un **assureur fictif**.
-4. Chaque vidéo longue donne **deux ou trois extraits verticaux** de 45 à 90 secondes pour TikTok et les Shorts : c'est là que se joue la viralité.
-5. On commence par un **pilote de trois vidéos**, relu par ChatGPT puis validé par JG avant tout rendu, comme pour les lots.
+1. Un nouveau pilier **« A · Actuarial Science »** sur les chaînes ACTU-BASICS en anglais.
+2. **Dix modules, de A0 à A9**, en trois blocs, soit environ **47 vidéos longues**.
+3. Chaque vidéo part d'une **question concrète** et suit le fil rouge d'un **assureur fictif**, toujours annoncé comme tel.
+4. Chaque vidéo donne **deux ou trois extraits verticaux autonomes** pour TikTok et les Shorts.
+5. Un **pilote de trois vidéos** en anglais, relu par ChatGPT et validé par JG avant tout rendu.
 
 **Décisions à prendre par JG**
 
-- Le format : vidéo longue de 12 à 20 minutes (proposé), ou plutôt 8 à 12 minutes ?
-- Le pilote : A0.01, A1.01 et A3.01 (proposé), ou un autre choix ?
-- L'ordre : le pilote passe avant le lot 4 (proposé), ou les deux avancent en parallèle ?
-- La langue : FR et EN en même temps (proposé), ou FR d'abord ?
+- Valider la v2 du parcours et le pilote A0.01, A1.01, A2.01.
+- Le nom du pilier en anglais : « Actuarial Science » (proposé) ou « Actuarial Basics ».
+- L'ordre : le pilote passe avant le lot 4 (proposé).
 
-## Format : vidéos longues et extraits viraux
+## Format
 
-**La vidéo longue (YouTube 16:9, 12 à 20 minutes)**
+**Vidéo longue (YouTube 16:9)**
 
-- **Une question accrocheuse en titre**, tirée de la vie réelle : « Pourquoi ton assurance auto coûte ce prix ? », « Combien vaut une rente à vie ? », « Comment un assureur survit à une tempête ? ».
-- **Structure fixe** : l'accroche (30 s), le problème posé sur l'assureur fictif, la notion expliquée pas à pas, un exemple chiffré complet, un exercice à faire en pause, la correction, puis le récapitulatif et le lien vers l'épisode suivant.
-- **Fil rouge** : un assureur fictif, nommé et présenté comme tel, avec ses clients, ses contrats et ses sinistres. Il revient d'un épisode à l'autre, ce qui donne envie de suivre la série.
-- **Chapitres YouTube** dans la description, pour qu'un étudiant retrouve vite une notion.
-- **Fiche à télécharger** (PDF d'une à deux pages : formules, exemple, exercice corrigé), utile pour réviser et pour fidéliser.
-- **Charte ACTU-BASICS inchangée** : logos officiels, slogans, zones de sécurité et lisibilité mobile vérifiées comme pour les fiches.
+- **Durée** : 12 à 18 minutes en moyenne, avec une plage de 8 à 20 minutes selon la difficulté. Une notion simple n'est pas étirée ; un cas long est bien chapitré.
+- **Ouverture** : la question, puis à l'écran les prérequis, les objectifs d'apprentissage et les chapitres.
+- **Structure** : accroche (30 s), problème posé sur l'assureur fictif, intuition et exemple numérique, puis notation générale (deux niveaux de lecture), exemple chiffré complet, exercice à faire en pause, correction, récapitulatif, épisode suivant.
+- **Fil rouge** : un assureur fictif, ses contrats, ses assurés et ses sinistres, qui reviennent d'un épisode à l'autre.
+- **Fiche PDF à télécharger** : formules, exemple, exercice corrigé.
+- **Charte ACTU-BASICS** : logos officiels, slogan « Enlightening through numbers. », zones de sécurité et lisibilité mobile vérifiées.
 
-**Les extraits verticaux (TikTok et Shorts 9:16, 45 à 90 secondes)**
+**Extraits verticaux (TikTok et Shorts 9:16, 45 à 90 secondes)**
 
-- Deux ou trois par vidéo longue, chacun construit autour d'**un seul résultat surprenant** (« À 5 %, 1 000 € dans 30 ans ne valent que 231 € aujourd'hui »).
-- Ils renvoient vers la vidéo longue (« La méthode complète est sur YouTube »).
-- Ils sont montés à partir des mêmes scènes, donc sans écriture supplémentaire importante.
+Deux ou trois par vidéo, conçus comme des **unités autonomes** et non comme de simples découpes. Chaque extrait :
+- pose le contexte en quelques secondes ;
+- contient une idée complète et vérifiable ;
+- affiche les unités et les hypothèses indispensables ;
+- ne transforme pas une hypothèse en vérité générale ;
+- renvoie vers la vidéo complète.
 
-**Pourquoi ce format** : la vidéo longue apporte la valeur durable et la recherche YouTube (les étudiants cherchent « chain ladder », « table de mortalité »), et les extraits courts apportent la découverte. Les durées sont des propositions, à ajuster après le pilote selon la rétention observée.
+La viralité ne se promet pas : après le pilote, on mesure la rétention, les clics vers la vidéo longue, les commentaires et les abonnements.
 
 ## Parcours A0 à A9
 
-| Module | Titre | Contenu | Vidéos | Question d'accroche |
-| --- | --- | --- | --- | --- |
-| A0 | Le métier d'actuaire | Ce que fait un actuaire, assurance vie et non-vie, banque, conseil ; carrière, salaires, examens et formations (Institut des actuaires, SOA, IFoA) | 3 | « Actuaire : le métier le plus méconnu des maths ? » |
-| A1 | Mathématiques financières | Intérêts simples et composés, actualisation, valeur actuelle, annuités et rentes certaines, taux nominal et effectif, courbe des taux | 5 | « Combien valent vraiment 1 000 € dans 30 ans ? » |
-| A2 | Probabilités pour l'assurance | Mutualisation, loi des grands nombres, espérance et variance de la perte, prime pure, pourquoi l'assureur gagne en moyenne | 4 | « Pourquoi l'assureur ne perd pas d'argent alors qu'il paie des sinistres ? » |
-| A3 | Assurance vie : mortalité | Tables de mortalité, probabilités de survie et de décès, espérance de vie, valeur actuelle probable, primes d'un capital décès et d'une rente viagère, fonctions de commutation | 6 | « Combien vaut une rente à vie ? » |
-| A4 | Provisions mathématiques en vie | Pourquoi l'assureur met de côté, provision prospective et rétrospective, évolution d'un contrat dans le temps | 4 | « Où va l'argent de ton assurance vie ? » |
-| A5 | Assurance non-vie : sinistres | Fréquence × coût moyen, modèle collectif, lois de Poisson, gamma et Pareto, prime pure, chargements | 5 | « Pourquoi ton assurance auto coûte ce prix ? » |
-| A6 | Tarification | GLM de fréquence et de coût, variables tarifaires, bonus-malus, crédibilité de Bühlmann | 5 | « Pourquoi un jeune conducteur paie plus cher ? » |
-| A7 | Provisionnement non-vie | Triangles de liquidation, Chain Ladder, méthode de Mack et incertitude | 4 | « Combien un assureur doit-il encore pour des accidents déjà arrivés ? » |
-| A8 | Risque et solvabilité | Théorie de la ruine (Lundberg), VaR et TVaR, Solvabilité II et SCR, réassurance | 5 | « Comment un assureur survit à une tempête ? » |
-| A9 | Pratique et examens | Excel, R et Python sur l'assureur fictif, études de cas complètes, préparation aux examens | 4 | « Tarifer un contrat de A à Z en 20 minutes » |
+### Bloc 1 · Fondamentaux (A0 à A2)
 
-**Total : 45 vidéos longues**, soit environ 90 à 135 extraits verticaux.
+| Module | Contenu | Vidéos | Accroche (EN) |
+| --- | --- | --- | --- |
+| A0 · The actuarial profession | Ce que fait un actuaire (vie, non-vie, santé, retraite, banque, conseil). **Qu'est-ce qu'un contrat d'assurance** : garanties, exclusions, primes, prestations, franchises, capitaux, bénéficiaires, durée. Parcours et certifications par juridiction (SOA, CAS, IFoA, associations européennes). Salaires seulement s'ils sont sourcés, datés et localisés. | 3 | « Actuaries: how maths helps make decisions under risk » |
+| A1 · Financial mathematics | Intérêts simples et composés, actualisation, valeur actuelle, annuités et rentes certaines, taux nominal et effectif, courbe des taux. Premiers calculs dans un tableur. | 5 | « $1,000 today or in 30 years: is it really the same money? » |
+| A2 · Probability for insurance | Événements, probabilités conditionnelles, indépendance ; variables aléatoires, lois usuelles, espérance, variance ; sommes de variables et loi des grands nombres ; **fréquence et sévérité, charge agrégée S = X₁ + … + X_N** ; mutualisation, diversification et ses limites ; **prime pure, prime commerciale et résultat technique**. | 6 | « Why do 10,000 policyholders make risk more predictable? » |
 
-Le niveau monte progressivement : A0 à A2 sont accessibles à un lycéen motivé, A3 à A5 correspondent à une première année de master ou aux premiers examens professionnels, A6 à A9 visent l'étudiant qui prépare un stage ou un premier poste. Le détail épisode par épisode sera écrit module par module, avec une fiche de conception par vidéo comme pour les lots.
+A2 est un vrai module de fondamentaux. La mutualisation y est présentée comme ce qui rend les pertes d'un portefeuille plus prévisibles, sous des hypothèses précises (indépendance, taille, homogénéité), et non comme une garantie de bénéfice. La rentabilité dépend aussi du tarif, des frais, des commissions, des revenus financiers, de la réassurance et des risques extrêmes.
 
-## Lien avec le programme existant et prérequis
+### Bloc 2 · Techniques actuarielles (A3 à A7)
 
-Le programme ACTU-BASICS prévoit déjà un parcours **« Actuariat et assurance »** (`programme/sections/03-statistiques.md`) qui regroupe environ 50 vidéos courtes des sections S5, S7, S10 (avec S10.06), S15 et S12. Le pilier A ne le remplace pas : il s'appuie dessus.
+| Module | Contenu | Vidéos | Accroche (EN) |
+| --- | --- | --- | --- |
+| A3 · Life insurance and mortality | Lire une table de mortalité (âge, lₓ, dₓ, qₓ, pₓ, eₓ) avec un rappel intégré des probabilités nécessaires. **Table démographique observée et table de tarification ou de provisionnement** : objectifs différents ; chaque table est donnée avec son organisme, sa population, sa période d'observation, son usage et sa date. Valeur actuelle probable, capital décès, rente viagère. Fonctions de commutation en complément, pas en prérequis. | 6 | « How does a life table price a lifetime annuity? » |
+| A4 · Life reserves | La provision comme valeur actuelle des engagements futurs nette des primes futures, dans un cadre d'hypothèses explicite (prestations, primes, frais, taux d'actualisation, mortalité). Approches prospective et rétrospective. **Participation aux bénéfices** (with-profits) comme notion dédiée. | 5 | « Where does the money in a life policy go? » |
+| A5 · Non-life claims | Fréquence × coût moyen, modèle collectif, Poisson et binomiale pour comparaison, **Poisson composée**. Coûts : gamma, lognormale, Pareto, qui ne sont pas interchangeables ; le choix dépend des données. Coût moyen et sinistres graves, queues de distribution. Inflation des coûts et évolution de l'exposition. Prime pure et chargements. | 5 | « How does an insurer estimate the average cost of claims? » |
+| A6 · Pricing | Exposition et offset pour la fréquence ; choix de la loi et de la fonction de lien ; modèle de fréquence et modèle de coût ; de la prime pure à la prime tarifaire ; segmentation, validation, sur-apprentissage et biais ; bonus-malus comme cas concret ; crédibilité de Bühlmann en complément. | 5 | « Why don't two drivers pay the same price? » |
+| A7 · Non-life reserving | Triangles payés et encourus, facteurs de développement, charge ultime, provisions pour sinistres à payer. Chain Ladder et ses hypothèses (cadences stables) et ses limites (changement de portefeuille, inflation, gestion). Mack pour quantifier l'incertitude, sans supprimer les limites du modèle. | 4 | « An accident happened this year: how much will the insurer pay in total? » |
 
-- **Les vidéos courtes restent les briques** : une notion par vidéo (loi de Poisson, théorème central limite, GLM, Kaplan-Meier).
-- **Les vidéos longues A les assemblent** dans un cas d'assurance concret, et renvoient vers les vidéos courtes en prérequis (lien en description et carte YouTube).
+### Bloc 3 · Gestion du risque et pratique (A8 et A9)
 
-| Module | Prérequis dans le programme |
-| --- | --- |
-| A0, A1 | Aucun (pourcentages et puissances, niveau 1) |
-| A2 | Espérance, variance, loi des grands nombres (S5) |
-| A3, A4 | Probabilités conditionnelles (S5), A1 |
-| A5 | Lois de Poisson, exponentielle, gamma, Pareto (S5) ; théorème central limite |
-| A6 | Régression et GLM, Gamma et Tweedie (S10, S10.06) ; méthodes bayésiennes pour la crédibilité |
-| A7 | A5, estimation et intervalles (S7) |
-| A8 | Quantiles et queues de distribution (S5, S12) |
-| A9 | Tous les modules précédents ; analyse de survie (S15) pour les cas en vie |
+| Module | Contenu | Vidéos | Accroche (EN) |
+| --- | --- | --- | --- |
+| A8 · Risk and solvency | Quatre objets distincts, puis leurs liens. **Théorie de la ruine** : dynamique du surplus et probabilité de ruine dans un modèle donné. **VaR et TVaR** : mesures de risque sur une distribution de pertes, à un horizon donné. **Solvabilité II** : cadre réglementaire européen, bilan économique, fonds propres éligibles, SCR, gouvernance. **Réassurance** : transfert du risque, avec son coût et un risque de contrepartie. Ouverture **IFRS 17** : provisions techniques, capital réglementaire et passif comptable ne sont pas la même chose. | 5 | « Can one catastrophe bankrupt an insurer? » |
+| A9 · Capstone project | Projet de synthèse complet sur l'assureur fictif (tarification, provisionnement, capital) en tableur, R et Python ; préparation aux examens. Mentions de la santé et de la dépendance comme domaines d'application. | 3 | « Pricing and reserving a portfolio from A to Z » |
 
-Conséquence pour l'ordre de production : A0 et A1 peuvent sortir tout de suite, car ils ne dépendent d'aucune vidéo courte encore à produire. Pour A2 et la suite, on produira en priorité les vidéos courtes de S5 qui leur servent de prérequis, ce qui fait avancer les deux piliers en même temps.
+**Total : 47 vidéos longues**, soit environ 95 à 140 extraits verticaux.
 
-## Sources et règles de rigueur
+Les logiciels ne sont pas réservés à la fin : chaque module à partir de A1 inclut une courte application en tableur, puis en R ou en Python, avec le fichier fourni. A9 devient le projet qui assemble tout.
 
-**Ouvrages de référence**
+## Prérequis et lien avec le programme existant
 
-- Bowers, Gerber, Hickman, Jones et Nesbitt, *Actuarial Mathematics* (assurance vie, A3 et A4).
-- Klugman, Panjer et Willmot, *Loss Models: From Data to Decisions* (non-vie, A5 et A8).
-- Wüthrich et Merz, *Stochastic Claims Reserving Methods in Insurance* (provisionnement, A7).
-- Petauton, *Théorie et pratique de l'assurance vie* (référence française, A3 et A4).
-- Ohlsson et Johansson, *Non-Life Insurance Pricing with Generalized Linear Models* (A6).
+Le programme prévoit déjà un parcours « Actuariat et assurance » de vidéos courtes (S5, S7, S10 avec S10.06, S15, S12). Le pilier A s'appuie dessus, mais **aucune vidéo longue ne dépend d'un prérequis caché** : si la vidéo courte n'existe pas encore, le rappel nécessaire est intégré à la vidéo longue.
 
-**Données et cadre réglementaire**
+| Module | Prérequis | Où il est couvert |
+| --- | --- | --- |
+| A0, A1 | Pourcentages et puissances | Niveau 1 déjà publié |
+| A2 | Aucun au-delà de A1 | Module autonome |
+| A3, A4 | Probabilités conditionnelles, A1 | A2 ; rappel intégré en A3.01 |
+| A5 | Lois usuelles, somme de variables | A2 ; S5 en complément |
+| A6 | Régression, GLM | Rappel intégré ; S10 et S10.06 en complément |
+| A7 | A5, estimation et intervalles | A5 ; S7 en complément |
+| A8 | Quantiles et queues de distribution | A5 ; S5 et S12 en complément |
+| A9 | Tous les modules | — |
 
-- Tables de mortalité de l'INSEE, et tables réglementaires françaises TH/TF 00-02 et TGH05/TGF05, avec leur source et leur année affichées à l'écran.
-- Institut des actuaires (métier, formations, examens) ; SOA et IFoA pour la version anglaise.
-- EIOPA et la directive Solvabilité II pour A8.
+## Sources, périmètre et rigueur
+
+**Périmètre**
+
+- Socle mathématique et actuariel **international**.
+- Encadrés explicitement localisés (« European framework », « UK », « US ») quand les règles diffèrent.
+- La future version FR ne recopie pas les règles anglo-saxonnes et la version EN ne transpose pas les règles françaises.
+- Chaque référence réglementaire est donnée avec sa source primaire, sa version et sa date de consultation.
+
+**Ouvrages académiques**
+
+- Dickson, Hardy et Waters, *Actuarial Mathematics for Life Contingent Risks* (A3, A4).
+- Bowers et al., *Actuarial Mathematics* (A3, A4).
+- Klugman, Panjer et Willmot, *Loss Models* (A5, A8).
+- Ohlsson et Johansson, *Non-Life Insurance Pricing with GLMs* (A6).
+- Wüthrich et Merz, *Stochastic Claims Reserving Methods in Insurance* (A7).
+
+**Sources primaires**
+
+- Mortalité : Human Mortality Database, et tables nationales (US SSA, UK ONS), avec population, période et date.
+- Certifications : SOA, CAS, IFoA et associations nationales, consultés directement.
+- Réglementation : EIOPA et textes de Solvabilité II ; IASB pour IFRS 17.
+- Pour la future version FR : INSEE, tables réglementaires françaises, Institut des actuaires, ACPR.
 
 **Règles**
 
-- L'assureur fictif et ses chiffres sont **toujours annoncés comme fictifs** à l'écran et dans la description.
-- Chaque calcul passe par le **vérificateur** (`produire.py --verifier`), comme pour les fiches, avec la même tolérance d'arrondi.
-- Les chiffres réels (salaires, nombre d'actuaires, montants de sinistres) sont sourcés et datés, sinon ils ne sont pas cités.
-- Aucun conseil personnalisé en assurance ou en placement : la série explique les méthodes, elle ne recommande pas de produit.
-- Même boucle de relecture que les lots : script et fiche, relecture par ChatGPT sur la PR #17, validation par JG, puis rendu.
+- L'assureur fictif et ses chiffres sont toujours annoncés comme fictifs.
+- Chaque calcul passe par le vérificateur (`produire.py --verifier`).
+- Un chiffre réel non sourcé et non daté n'est pas cité.
+- Aucun conseil personnalisé en assurance ou en placement.
+- Pas de titre qui promet une réponse universelle.
+- Même boucle que les lots : fiche, relecture ChatGPT sur la PR #17, validation par JG, rendu.
 
 ## Plan de démarrage
 
-**Pilote : trois vidéos longues**
+**Pilote (anglais uniquement)**
 
-| Code | Titre de travail | Pourquoi elle |
+| Code | Titre de travail (EN) | Rôle |
 | --- | --- | --- |
-| A0.01 | Actuaire : le métier que personne ne connaît | Présente la série et attire les étudiants qui hésitent sur leur orientation |
-| A1.01 | Intérêts composés et actualisation : combien valent 1 000 € dans 30 ans ? | Base de tout le reste, très partageable |
-| A3.01 | Lire une table de mortalité | Le premier vrai outil d'actuaire, avec de vraies données INSEE |
+| A0.01 | Actuaries: how maths helps make decisions under risk | Présente le métier, la série et ce qu'est un contrat |
+| A1.01 | $1,000 today or in 30 years: is it really the same money? | Premier calcul financier, très partageable |
+| A2.01 | Why do 10,000 policyholders make risk more predictable? | Le lien distinctif entre probabilités et assurance |
 
-**Étapes, dans l'ordre**
+A3.01 (lire une table de mortalité) ouvre ensuite le bloc assurance vie.
 
-1. Validation de ce plan par ChatGPT puis par JG (format, parcours, pilote).
-2. Adaptation du moteur de rendu pour les vidéos longues : chapitres, scènes plus nombreuses, export des extraits verticaux. Ce travail passe par une branche et une pull request, conformément aux règles du dépôt. Le moteur actuel le permet sans refonte.
-3. Écriture des trois fiches et scripts du pilote, avec vérification des calculs.
-4. Relecture par ChatGPT sur la PR #17, puis validation par JG.
-5. Rendu local des trois vidéos (FR et EN, 16:9) et de leurs extraits (9:16), livrés dans le dossier partagé comme les lots.
-6. Publication par JG, puis bilan après deux à trois semaines (rétention, abonnés, commentaires) pour ajuster la durée et le rythme.
+**Étapes**
 
-**Calendrier proposé**
+1. Validation de la v2 par JG.
+2. Adaptation du moteur pour les vidéos longues (chapitres, scènes plus nombreuses, extraits verticaux) sur une branche et une pull request, conformément aux règles du dépôt.
+3. Écriture des trois fiches en anglais, avec vérification des calculs.
+4. Relecture ChatGPT sur la PR #17, puis validation par JG.
+5. Rendu local en anglais (16:9 et extraits 9:16), livré dans le dossier partagé.
+6. Publication par JG, puis bilan après deux à trois semaines.
 
-- Pendant le pilote, JG continue de publier le stock des 33 vidéos déjà rendues sur YouTube et TikTok.
-- Le lot 4 (S3.07 à S3.09 et premières probabilités) reprend après le pilote, en donnant la priorité aux vidéos de S5 qui servent de prérequis à A2 et A5.
-- Rythme cible ensuite : une vidéo longue par semaine, avec ses extraits répartis sur la semaine.
+**Calendrier**
+
+- Pendant le pilote, JG continue de publier le stock des 33 vidéos déjà rendues.
+- Le lot 4 reprend après le pilote.
+- Ensuite : une vidéo longue par semaine en anglais. La version FR commence quand le parcours EN est terminé, si JG le décide.
