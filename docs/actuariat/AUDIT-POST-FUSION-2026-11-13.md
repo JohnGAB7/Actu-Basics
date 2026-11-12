@@ -80,7 +80,17 @@ Commande exacte, lancée dans le répertoire `production/` sur le commit `41bb48
 cd production && python3 -m pytest -q tests
 ```
 
-Résultat : **voir annexe `audit-tests.log` dans le même dossier**.
+Résultat : **254 tests passés, aucun échec**, en 18 min 32 s (1112,89 s).
+
+```
+........................................................................ [ 28%]
+........................................................................ [ 56%]
+........................................................................ [ 85%]
+......................................                                   [100%]
+254 passed in 1112.89s (0:18:32)
+```
+
+Lancé sur le commit `41bb483` (fusion de la PR #17 sur `main`).
 
 ### 2.2 Reproductibilité des rendus
 
