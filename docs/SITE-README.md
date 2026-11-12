@@ -6,7 +6,7 @@ Site static servi par GitHub Pages. **Pas de workflow GitHub Actions** : la publ
 
 1. Aller dans https://github.com/JohnGAB7/le-monde-en-chiffres/settings/pages
 2. Choisir **Source** : « Deploy from a branch »
-3. Choisir **Branch** : `main` et **Folder** : `/site`
+3. Choisir **Branch** : `main` et **Folder** : `/docs`
 4. Cliquer **Save**
 
 Le site sera accessible à `https://johngab7.github.io/le-monde-en-chiffres/` quelques minutes plus tard.
@@ -18,7 +18,7 @@ Acheter un nom de domaine (par exemple `actu-basics.com`), puis dans la même pa
 ## Structure
 
 ```
-site/
+docs/
 ├── index.html          Accueil FR
 ├── en/index.html       Accueil EN
 ├── assets/
@@ -36,8 +36,8 @@ Copier `lecons/A0-01/` dans `lecons/A3-01/` et son équivalent EN. Mettre à jou
 
 ## Fiches PDF, tableurs et fichiers R/Python
 
-Ils sont servis directement depuis le dossier `site/lecons/<code>/` (ou `site/en/lessons/<code>/`). Nommer les fichiers avec le code de la leçon : `A0-01-fiche-fr.pdf`, `A3-01-table-mortalite.xlsx`, etc.
+Ils sont servis directement depuis le dossier `docs/lecons/<code>/` (ou `docs/en/lessons/<code>/`). Nommer les fichiers avec le code de la leçon : `A0-01-fiche-fr.pdf`, `A3-01-table-mortalite.xlsx`, etc.
 
 ## Logo
 
-Les logos officiels sont dans `assets/brand/actu-basics/`. Ils seront copiés dans `site/assets/img/` dans un prochain commit, avec le CSS adapté.
+Les logos officiels sont dans `assets/brand/actu-basics/`. Ils seront copiés dans `docs/assets/img/` dans un prochain commit, avec le CSS adapté.
