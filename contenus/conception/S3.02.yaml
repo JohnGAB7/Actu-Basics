@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Chiffres fictifs.
+id_programme: S3.02
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s3-02-tableaux-croises-et-pourcentages-conditionnels.yaml
+question_centrale:
+  fr: '« 80 % des accidents impliquent un conducteur qui n''a pas bu » : faut-il alors boire avant de conduire ?'
+  en: '“80% of crashes involve a sober driver”: so should you drink before driving?'
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S3
+  rang_dans_module: 2
+public:
+  prerequis:
+  - S1.08
+  - S2.01
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Un pourcentage dépend de ce qu''on met au dénominateur : il faut toujours demander « parmi qui ? ».'
+exemple_fil_rouge: '100 000 conducteurs fictifs : 98 000 sobres (400 accidents), 2 000 ivres (100 accidents).'
+exemple_reel: null
+idees_fausses:
+- idee: Lire un pourcentage de colonne comme un pourcentage de ligne
+  desamorcee_a_l_etape: 'Partie 2 : parmi les accidents, parmi les conducteurs'
+exercice:
+  question: 'Fumeurs et toux : part des tousseurs chez les fumeurs, chez les non-fumeurs, part des fumeurs parmi les tousseurs
+    ?'
+  correction: 30 %, 10 %, environ 43 %
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: '« 70 % des noyades ont lieu chez des bons nageurs » : que faut-il savoir de plus ?'
+  diagnostic_d_erreur: 'Confondre « parmi les accidents » et « parmi les conducteurs » : montrer l''erreur sur le tableau.'
+duree_estimee_min:
+- 5
+- 7
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

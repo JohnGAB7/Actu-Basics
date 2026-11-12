@@ -1,0 +1,60 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S1.04
+statut: revue_claude   # 2026-11-03 : à relire par ChatGPT, puis validation de JG
+fiche_production: contenus/fiches/2026-11-n1-s1-04-d-ou-viennent-les-donnees.yaml
+
+titres: {fr: "Combien de chômeurs ? D'où viennent les données", en: "How many unemployed? Where numbers come from"}
+question_centrale:
+  fr: "Comment sait-on combien il y a de chômeurs, de naissances ou de voitures sur la route ?"
+  en: "How do we know how many people are unemployed, how many babies are born, how many cars are on the road?"
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 4}
+public: {prerequis: [S1.02], niveau_maths: M0, rappel_conseille: []}
+
+intuition: "Chaque façon de collecter laisse sa trace dans le chiffre : ce qui n'est pas collecté n'existe pas dans les données."
+exemple_fil_rouge: "Le chômage : enquête Emploi de l'Insee (BIT) et fichier de France Travail."
+exemple_reel:
+  description: "Chômage au sens du BIT, 2e trimestre 2026 : 2 677 000 personnes (Insee). Le nombre d'inscrits à France Travail n'est pas cité (publication de la Dares non lue : page anti-robot)."
+  source:
+    organisme: "Insee"
+    titre: "Informations Rapides n° 192, « Au deuxième trimestre 2026, le taux de chômage augmente de 0,2 point et atteint 8,3 % »"
+    url: "https://www.insee.fr/fr/statistiques/9032359"
+    date_publication: "2026-08-07"
+    periode_donnees: "2e trimestre 2026"
+    consulte_le: "2026-11-03"
+
+provenance:
+  - {chiffre: "2,7 millions (2 677 milliers)", support: ecran_et_voix, nature: donnee_publiee, calcul: {entrees: "2 677 milliers", formule: "÷ 1 000", transformations: "arrondi au dixième de million"}, definition: "Chômage au sens du BIT", unite: "personnes", population: "15 ans ou plus, France (y compris Mayotte depuis cette publication)", periode: "T2 2026", couverture: "France", revisions: "CVS révisées à chaque publication ; T3 2026 publié le 10/11/2026", source_primaire: {organisme: "Insee", url: "https://www.insee.fr/fr/statistiques/9032359", consulte_le: "2026-11-03"}, incertitude: "Enquête par sondage : intervalle de confiance publié par l'Insee, non repris ici", comparabilite: "Champ « France » qui inclut Mayotte depuis 2026"}
+
+affirmations_qualitatives:
+  - {affirmation: "Une personne qui a travaillé quelques heures peut rester inscrite sans être chômeuse au sens du BIT ; une personne sans emploi non inscrite est comptée par l'enquête", statut: hypothese, source: "Définitions du BIT et des catégories de France Travail (à citer : page Insee « définitions » ou Dares)", verification: "À sourcer avant validation"}
+  - {affirmation: "Les naissances sont déclarées à la mairie (état civil)", statut: hypothese, source: "Connaissance générale", verification: "À confirmer"}
+
+deroule:
+  - {etape: question, contenu: "Combien de chômeurs ?"}
+  - {etape: formalisation, contenu: "Quatre sources"}
+  - {etape: raisonnement, contenu: "Une force, une limite"}
+  - {etape: application, contenu: "Chômage : enquête BIT ou fichier"}
+  - {etape: exercice, contenu: "Naissances, confiance, trafic"}
+  - {etape: rappel, contenu: "Qui a collecté, et comment ?"}
+
+calculs_a_verifier:
+  - {expression: "2677 / 1000", attendu: 2.7, libelle: "Chômeurs BIT en millions"}
+
+idees_fausses:
+  - {idee: "Penser qu'un chiffre officiel et un chiffre administratif mesurent forcément la même chose", desamorcee_a_l_etape: "Le chômage : enquête ou fichier ?"}
+
+exercice: {question: "D'où viennent : les naissances de l'année, la confiance dans les scientifiques, le trafic à 8 h ?", correction: "Fichier administratif, sondage, capteurs", pause_secondes: 6}
+
+preuve_apprentissage:
+  tache: "Répondre à la question de transfert sans aide"
+  question_de_transfert: "Le nombre de vélos en libre-service loués à Paris : quelle source, quelle force, quelle limite ?"
+  diagnostic_d_erreur: "« Le chômage a baissé, puisque moins de gens sont inscrits à France Travail » : pourquoi est-ce hâtif ?"
+  limite_a_enoncer: "Les sources se combinent : le recensement français est lui-même tournant, par enquêtes annuelles"
+
+duree_estimee_min: [5, 7]
+format: educational
+declinaisons: [vertical_9_16, youtube_16_9]   # demande de JG, 2026-11-03 : une version par plateforme
+derives_short: ["Chômeurs : deux sources, deux chiffres (45 s)"]
+adaptation_en: "Mêmes nombres ; décimales et séparateurs anglais ; noms d'organismes expliqués (Insee, France Travail)."
+licences: "Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+controle: {test_du_debutant: "À mesurer", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu (inspection)"}

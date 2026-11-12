@@ -1,0 +1,48 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-07, à valider avant tout rendu (JG). Exemples fictifs : pas d'exemple réel sourcé.
+id_programme: M0.03
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-m0-03-lire-un-graphique-et-un-repere.yaml
+question_centrale:
+  fr: Que représente un point sur un graphique ?
+  en: What does a point on a chart represent?
+position:
+  pilier: boite_a_outils
+  niveau: 1
+  module: M0
+  rang_dans_module: 3
+public:
+  prerequis:
+  - M0.01
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Un point porte deux informations : une sur chaque axe.'
+exemple_fil_rouge: Hauteur d'une plante, semaine par semaine (fictif).
+exemple_reel: null
+idees_fausses:
+- idee: Inverser l'ordre des coordonnées
+  desamorcee_a_l_etape: Un point = deux nombres, dans l'ordre
+- idee: Compter les traits au lieu des intervalles
+  desamorcee_a_l_etape: Le pas d'une graduation
+exercice:
+  question: 'Axe de 0 à 50, 10 intervalles : valeur d''une graduation ?'
+  correction: '5'
+  pause_secondes: 6
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Sur un axe gradué de 100 à 200 avec 5 intervalles, quelle valeur correspond à la troisième graduation
+    après 100 ?
+  diagnostic_d_erreur: '« De 0 à 20 avec 5 traits, donc 4 par graduation » : où est l''erreur ? (5 traits = 4 intervalles,
+    soit 5)'
+duree_estimee_min:
+- 2
+- 4
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 7/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)

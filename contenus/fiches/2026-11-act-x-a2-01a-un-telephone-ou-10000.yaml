@@ -1,0 +1,140 @@
+# Parcours Actuariat, extrait vertical 1 de A2.01 (SHORT 9:16, TikTok et Shorts) : la mutualisation.
+# Unité autonome : un contrat = 0 € ou 500 €, écart-type 70 € ; σ ÷ √n ; 7 € pour 100 contrats, 0,70 € pour 10 000.
+# Assureur fictif JG's Holding, chiffres fictifs ; nombres identiques à la leçon A2.01 et entre FR et EN.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-x-a2-01a-un-telephone-ou-10000
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: short
+habillage_sonore: true
+theme: "A2.01 · extrait 1 · Un téléphone, c'est un pari ; 10 000, c'est presque prévisible"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Voir comment l'écart-type du coût moyen par contrat diminue en σ ÷ √n avec le nombre de contrats indépendants"
+    en:
+      - "See how the standard deviation of the average cost per policy falls as σ ÷ √n with the number of independent policies"
+  prerequis:
+    fr: ["L'écart-type (série statistiques, S2.08). Leçon complète : mutualisation et prime pure (A2, épisode 1)"]
+    en: ["The standard deviation (statistics series, S2.08). Full lesson: pooling and the pure premium (A2, episode 1)"]
+  hypotheses:
+    fr: "Assureur et chiffres fictifs ; vols indépendants d'un téléphone à l'autre ; 2 % de probabilité et 500 € de coût pour chaque téléphone ; au plus un vol par téléphone et par an"
+    en: "Fictional insurer and figures; thefts independent from one phone to another; 2% probability and $500 cost for every phone; at most one theft per phone per year"
+
+validation:
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Un téléphone, c'est un pari. 10 000 téléphones, c'est presque prévisible."
+    legende: |
+      Pour un seul téléphone assuré, l'assureur ne verse rien ou verse 500 € : un pari. Pour 10 000 téléphones, le coût moyen par téléphone devient presque prévisible. Pourquoi ? L'écart-type de la moyenne diminue en sigma divisé par racine de n : 70 € pour un téléphone, 7 € pour 100, 0,70 € pour 10 000. C'est la mutualisation. Extrait de la leçon « Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Assureur et chiffres fictifs, calculs vérifiés.
+    hashtags: [actuariat, assurance, loidesgrandsnombres]
+    scenes:
+      - type: accroche
+        texte: "Un téléphone, c'est *un pari*. 10 000 téléphones, c'est *presque prévisible*."
+        voix_off: "Assurer un téléphone, c'est un pari. Assurer dix mille téléphones, c'est presque prévisible. Pourquoi ? C'est l'une des idées fondamentales de l'assurance : la mutualisation."
+      - type: etapes
+        texte: "Un téléphone, un an : *ce que paie JG's Holding*"
+        etapes:
+          - "Dans 98 % des cas : *0 €*"
+          - "Dans 2 % des cas : *500 €*"
+          - "Coût moyen : *10 €*, écart-type : *70 €*"
+        note: "JG's Holding est un assureur fictif. Écart-type : √(0,02 × 500² − 10²) = 70 €."
+        voix_off: "Regardons un seul téléphone chez notre assureur fictif, JG's Holding. Dans quatre-vingt-dix-huit pour cent des cas, pas de vol, il ne paie rien. Dans deux pour cent des cas, le téléphone est volé, il paie cinq cents euros. Le coût moyen vaut dix euros, mais la dispersion autour, l'écart-type, vaut soixante-dix euros : sept fois la moyenne."
+        verifier:
+          - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Coût attendu d'un téléphone"}
+          - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Écart-type d'un téléphone"}
+          - {expression: "70 / 10", attendu: 7, libelle: "Écart-type divisé par la moyenne"}
+      - type: formule
+        texte: "Avec *n téléphones indépendants*"
+        formule:
+          - '\sigma_{\bar{X}}=\dfrac{70}{\sqrt{n}}'
+          - 'n=100:\ 7\ \text{€}'
+          - 'n=10\,000:\ 0{,}70\ \text{€}'
+        note: "Valable pour des coûts indépendants et de même loi."
+        voix_off: "Quand les coûts des contrats sont indépendants et suivent la même loi, l'écart-type du coût moyen par téléphone vaut soixante-dix divisé par racine de n. Avec cent téléphones, sept euros. Avec dix mille téléphones, soixante-dix centimes seulement."
+        verifier:
+          - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Écart-type du coût moyen, 100 téléphones"}
+          - {expression: "70 / sqrt(10000)", attendu: 0.7, libelle: "Écart-type du coût moyen, 10 000 téléphones"}
+      - type: courbe
+        texte: "Écart-type du *coût moyen par téléphone*"
+        courbe:
+          style: barres
+          points: [[0, 70], [1, 7], [2, 0.7]]
+          etiquettes: ["1", "100", "10 000"]
+          etiquettes_valeurs: ["70 €", "7 €", "0,70 €"]
+          valeurs: true
+          y_min: 0
+          y_max: 80
+          axe_x: "Téléphones assurés"
+          axe_y: "Écart-type (€)"
+        note: "Coût moyen par téléphone : 10 € dans les trois cas. Vols indépendants."
+        voix_off: "Le coût moyen reste dix euros dans les trois cas. Mais l'incertitude tombe de soixante-dix euros, à sept euros, à soixante-dix centimes. Les hauts et les bas du hasard se compensent : c'est la mutualisation."
+      - type: texte
+        texte: "Prévisible *n'est pas* rentable"
+        note: "Leçon complète sur la chaîne : ce que la mutualisation fait, et ce qu'elle ne fait pas."
+        voix_off: "Attention : prévisible ne veut pas dire rentable. Ce que la mutualisation promet, et ce qu'elle ne promet pas, c'est dans la leçon complète sur la chaîne."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "One phone is a gamble. 10,000 phones are almost predictable."
+    legende: |
+      For a single insured phone, the insurer pays either $0 or $500: a gamble. For 10,000 phones, the average cost per phone becomes almost predictable. Why? The standard deviation of the average falls as sigma divided by the square root of n: $70 for one phone, $7 for 100, $0.70 for 10,000. This is pooling. An extract from the lesson "Why is the average claim cost more predictable with 10,000 policies?" of our actuarial science series, watch the full lesson on the channel. Fictional insurer and figures, checked calculations.
+    hashtags: [actuarialscience, insurance, lawoflargenumbers]
+    scenes:
+      - type: accroche
+        texte: "One phone is *a gamble*. 10,000 phones are *almost predictable*."
+        voix_off: "Insuring one phone is a gamble. Insuring ten thousand phones is almost predictable. Why? This is one of the key ideas behind insurance: pooling."
+      - type: etapes
+        texte: "One phone, one year: *what JG's Holding pays*"
+        etapes:
+          - "In 98% of cases: *$0*"
+          - "In 2% of cases: *$500*"
+          - "Average cost: *$10*, standard deviation: *$70*"
+        note: "JG's Holding is a fictional insurer. Standard deviation: √(0.02 × 500² − 10²) = $70."
+        voix_off: "Look at a single phone at our fictional insurer, JG's Holding. In ninety-eight percent of cases, no theft, it pays nothing. In two percent of cases, the phone is stolen, it pays five hundred dollars. The average cost is ten dollars, but the spread around it, the standard deviation, is seventy dollars: seven times the average."
+        verifier:
+          - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Expected cost of one phone"}
+          - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Standard deviation of one phone"}
+          - {expression: "70 / 10", attendu: 7, libelle: "Standard deviation divided by the mean"}
+      - type: formule
+        texte: "With *n independent phones*"
+        formule:
+          - '\sigma_{\bar{X}}=\dfrac{70}{\sqrt{n}}'
+          - 'n=100:\ 7\ \text{dollars}'
+          - 'n=10\,000:\ 0.70\ \text{dollars}'
+        note: "Valid for independent, identically distributed costs."
+        voix_off: "When policy costs are independent and identically distributed, the standard deviation of the average cost per phone is seventy divided by the square root of n. With one hundred phones, seven dollars. With ten thousand phones, only seventy cents."
+        verifier:
+          - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Standard deviation of the average cost, 100 phones"}
+          - {expression: "70 / sqrt(10000)", attendu: 0.7, libelle: "Standard deviation of the average cost, 10,000 phones"}
+      - type: courbe
+        texte: "Standard deviation of the *average cost per phone*"
+        courbe:
+          style: barres
+          points: [[0, 70], [1, 7], [2, 0.7]]
+          etiquettes: ["1", "100", "10,000"]
+          etiquettes_valeurs: ["$70", "$7", "$0.70"]
+          valeurs: true
+          y_min: 0
+          y_max: 80
+          axe_x: "Insured phones"
+          axe_y: "Standard deviation ($)"
+        note: "Average cost per phone: $10 in all three cases. Independent thefts."
+        voix_off: "The average cost stays ten dollars in all three cases. But the uncertainty falls from seventy dollars, to seven dollars, to seventy cents. The ups and downs of chance cancel out: this is pooling."
+      - type: texte
+        texte: "Predictable *is not* profitable"
+        note: "Full lesson on the channel: what pooling does, and what it does not do."
+        voix_off: "Careful: predictable does not mean profitable. What pooling promises, and what it does not, is in the full lesson on the channel."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

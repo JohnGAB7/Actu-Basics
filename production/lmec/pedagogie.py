@@ -154,10 +154,14 @@ def valider_entete(brut: dict, erreurs: list[str]) -> dict:
     niveau = p.get("niveau")
     if niveau not in NIVEAUX:
         erreurs.append(f"pedagogie.niveau « {niveau} » inconnu ({' | '.join(NIVEAUX)})")
+    langues = brut.get("langues")
+    langues = [l for l in ("fr", "en") if l in langues] if isinstance(langues, list) else ["fr", "en"]
+    langues = langues or ["fr", "en"]
     objectifs = p.get("objectifs")
     if not isinstance(objectifs, dict) or not all(isinstance(objectifs.get(l), list) and objectifs.get(l)
-                                                  for l in ("fr", "en")):
-        erreurs.append("pedagogie.objectifs : listes « fr » et « en » d'objectifs (« À la fin, vous saurez… »)")
+                                                  for l in langues):
+        erreurs.append("pedagogie.objectifs : listes " + " et ".join(f"« {l} »" for l in langues)
+                       + " d'objectifs (« À la fin, vous saurez… »)")
     prerequis = p.get("prerequis", {})
     if prerequis is not None and not isinstance(prerequis, dict):
         erreurs.append("pedagogie.prerequis doit être un bloc {fr: [...], en: [...]}")
@@ -209,6 +213,13 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             conf["icone"] = None
         else:
             conf["icone"] = icone
+    if modele == "grille":
+        conf["n"] = entier("n", 4, 400)
+        conf["personnes"] = entier("personnes", 1, 5000)
+        if a.get("colonnes") is not None:
+            conf["colonnes"] = entier("colonnes", 2, 40)
+        graine = entier("graine", 0, 10 ** 6, requis=False)
+        conf["graine"] = 1 if graine is None else graine   # une graine 0 explicite est gardée
     if modele == "complement":
         v = a.get("valeur")
         if not _nombre(v) or not 0 < v < 1:
@@ -291,13 +302,57 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
         if not isinstance(c, dict):
             erreurs.append(f"{ctx} : bloc « courbe » manquant (points, ou expression + de + a)")
         else:
+            boites = c.get("boites")
+            if c.get("style") == "boites":
+                # Boîtes à moustaches : [{etiquette, valeurs: [min, Q1, médiane, Q3, max], atypiques}], une par
+                # catégorie. Les « points » (rang, valeur la plus haute) servent seulement à caler les axes.
+                ok = isinstance(boites, list) and 1 <= len(boites) <= 6 and all(
+                    isinstance(b, dict) and isinstance(b.get("valeurs"), list) and len(b["valeurs"]) == 5
+                    and all(_nombre(z) for z in b["valeurs"])
+                    and all(float(u) <= float(w) for u, w in zip(b["valeurs"], b["valeurs"][1:]))
+                    and isinstance(b.get("atypiques", []), list) and all(_nombre(z) for z in b.get("atypiques", []))
+                    for b in boites)
+                if not ok:
+                    erreurs.append(f"{ctx}.courbe.boites : 1 à 6 boîtes {{etiquette, valeurs: [min, Q1, médiane, Q3, "
+                                   f"max] croissantes, atypiques: [...]}}")
+                    boites = None
+                else:
+                    c = dict(c, points=[[i, max([float(z) for z in b["valeurs"] + b.get("atypiques", [])])]
+                                        for i, b in enumerate(boites)])
+                    if c.get("etiquettes") is None:
+                        c["etiquettes"] = [str(b.get("etiquette", "")) for b in boites]
             try:
                 pts = points_courbe(c)
                 extra["courbe"] = dict(c, _points=pts)
             except (CalculInvalide, KeyError, TypeError, ValueError) as exc:
                 erreurs.append(f"{ctx}.courbe : {exc}")
-            if c.get("style", "ligne") not in ("ligne", "points"):
-                erreurs.append(f"{ctx}.courbe.style : « ligne » (défaut) ou « points »")
+            if c.get("style", "ligne") not in ("ligne", "points", "barres", "histogramme", "boites"):
+                erreurs.append(f"{ctx}.courbe.style : « ligne » (défaut), « points », « barres », « histogramme » "
+                               f"ou « boites »")
+            if c.get("etiquettes") is not None and not (isinstance(c["etiquettes"], list) and "_points" in extra.get(
+                    "courbe", {}) and len(c["etiquettes"]) == len(extra["courbe"]["_points"])):
+                erreurs.append(f"{ctx}.courbe.etiquettes : une étiquette par barre")
+            ev = c.get("etiquettes_valeurs")
+            if ev is not None and not (isinstance(ev, list) and all(isinstance(z, str) and z.strip() for z in ev)
+                                       and "_points" in extra.get("courbe", {})
+                                       and len(ev) == len(extra["courbe"]["_points"])):
+                erreurs.append(f"{ctx}.courbe.etiquettes_valeurs : un texte par barre (ex. « 0,70 € »)")
+            s2 = c.get("serie_2")
+            if s2 is not None and not (isinstance(s2, dict) and isinstance(s2.get("points"), list)
+                                       and len(s2["points"]) >= 2 and all(
+                        isinstance(q, (list, tuple)) and len(q) == 2 and all(_nombre(z) for z in q)
+                        for q in s2["points"])):
+                erreurs.append(f"{ctx}.courbe.serie_2 : {{points: [[x, y], …], y_min, y_max, axe_y}}")
+            elif s2 is not None:
+                pts1 = extra.get("courbe", {}).get("_points")
+                if pts1 is not None and [float(q[0]) for q in s2["points"]] != [float(x) for x, _ in pts1]:
+                    erreurs.append(f"{ctx}.courbe.serie_2.points : mêmes abscisses que la courbe principale")
+                b2 = (s2.get("y_min", 0), s2.get("y_max"))
+                if b2[1] is not None and not (_nombre(b2[0]) and _nombre(b2[1]) and b2[0] < b2[1]):
+                    erreurs.append(f"{ctx}.courbe.serie_2 : y_min doit être inférieur à y_max")
+            for cle in ("x_min", "x_max"):
+                if c.get(cle) is not None and not _nombre(c[cle]):
+                    erreurs.append(f"{ctx}.courbe.{cle} doit être un nombre")
             seuils = c.get("seuils")
             if seuils is not None and not (isinstance(seuils, list) and all(
                     isinstance(x, dict) and _nombre(x.get("valeur")) for x in seuils)):
@@ -317,13 +372,14 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
 
 
 # --------------------------------------------------------------------------- contrôles qualité
-def controler_pedagogie(fiche, r, langues=("fr", "en")) -> None:
+def controler_pedagogie(fiche, r, langues=None) -> None:
     """Contrôles propres aux fiches pédagogiques (s'ajoutent aux contrôles communs)."""
     from .qc import BLOQUANT
     p = fiche.pedagogie
     r.ok.append(f"Fiche pédagogique : famille {fiche.famille}, format {fiche.format}, niveau {p.get('niveau')}")
+    langues = langues or fiche.langues
     objectifs = p.get("objectifs") or {}
-    if len(objectifs.get("fr", [])) != len(objectifs.get("en", [])):
+    if len(langues) == 2 and len(objectifs.get("fr", [])) != len(objectifs.get("en", [])):
         r.avertir("Nombre d'objectifs différent entre FR et EN")
     for l in langues:
         ed = fiche.editions[l]
@@ -367,7 +423,7 @@ def controler_pedagogie(fiche, r, langues=("fr", "en")) -> None:
                     erreur = formule_valide(ligne)
                     if erreur:
                         r.bloquant(f"Scène {i} : formule illisible par le moteur « {ligne[:40]} » ({erreur})", l)
-    nb_verifs = sum(len(s.extra.get("verifier", [])) for s in fiche.editions["fr"].scenes)
+    nb_verifs = sum(len(s.extra.get("verifier", [])) for s in fiche.editions[fiche.langues[0]].scenes)
     if not nb_verifs:
         r.avertir("Aucun résultat numérique n'est recalculé par la machine (bloc « verifier »)")
     r.a_verifier.append("Exactitude pédagogique : définitions, notations et raisonnements relus par une "

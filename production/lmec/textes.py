@@ -124,21 +124,56 @@ def ecrire_script_voix(fiche: Fiche, edition: Edition, durees: list[float], dest
 def legende_complete(fiche: Fiche, edition: Edition) -> str:
     langue = edition.langue
     noms = ", ".join(_texte_langue(s["nom"], langue) for s in fiche.sources)
-    source = (f"Source : {noms} ({fiche.contexte('periode', langue)})" if langue == "fr"
-              else f"Source: {noms} ({fiche.contexte('periode', langue)})")
+    periode = (fiche.contexte('periode', langue) or "").strip()
+    suite = f" ({periode})" if periode else ""
+    source = (f"Source : {noms}{suite}" if langue == "fr" else f"Source: {noms}{suite}")
     morceaux = [edition.legende.strip()] + ([typographie(source, langue)] if noms else [])
     if edition.hashtags:
         morceaux.append(" ".join(edition.hashtags))
     return "\n\n".join(morceaux)
 
 
+def _minutes(t: float) -> str:
+    t = int(t)
+    h, m, s = t // 3600, t // 60 % 60, t % 60
+    return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+
+
+def chapitres(edition: Edition, durees: list[float]) -> list[tuple[str, str]]:
+    """Chapitres YouTube tirés des cartes « titre » : [("0:00", "Intro"), ("1:12", "1. …"), …].
+
+    YouTube n'affiche des chapitres que s'il y en a au moins trois, le premier à 0:00, chacun d'au moins
+    10 secondes : sinon la liste est vide."""
+    debuts, t = [], 0.0
+    for scene, d in zip(edition.scenes, durees):
+        if scene.type == "titre":
+            num = scene.extra.get("numero")
+            titre = sans_marqueurs(scene.texte)
+            debuts.append((t, f"{num}. {titre}" if num not in (None, "") else titre))
+        t += d
+    if not debuts:
+        return []
+    if debuts[0][0] >= 1:
+        debuts.insert(0, (0.0, "Introduction" if edition.langue == "fr" else "Intro"))
+    else:
+        debuts[0] = (0.0, debuts[0][1])
+    fins = [b for b, _ in debuts[1:]] + [t]
+    if len(debuts) < 3 or any(f - b < 10 for (b, _), f in zip(debuts, fins)):
+        return []
+    return [(_minutes(b), titre) for b, titre in debuts]
+
+
 def ecrire_metadonnees(fiche: Fiche, edition: Edition, durees: list[float], dossier: Path,
                        voix: dict | None = None, mode: str = "apercu") -> dict:
     legende = legende_complete(fiche, edition)
     (dossier / "legende.txt").write_text(legende + "\n", encoding="utf-8")
+    liste_chapitres = chapitres(edition, durees) if fiche.format_image == "lecon" else []
+    if liste_chapitres:
+        (dossier / "chapitres.txt").write_text(
+            "\n".join(f"{h} {t}" for h, t in liste_chapitres) + "\n", encoding="utf-8")
     meta = {
         "id": fiche.id, "langue": edition.langue, "theme": fiche.theme,
-        "type_fiche": fiche.type_fiche, "famille": fiche.famille, "format": fiche.format,
+        "type_fiche": fiche.type_fiche, "famille": fiche.famille, "format": fiche.format, "image": fiche.format_image,
         "titre": edition.titre, "legende": legende, "hashtags": edition.hashtags,
         "sources": fiche.sources, "periode": fiche.contexte("periode", edition.langue),
         "perimetre": fiche.contexte("perimetre", edition.langue),
@@ -146,6 +181,7 @@ def ecrire_metadonnees(fiche: Fiche, edition: Edition, durees: list[float], doss
                        "date": fiche.date_validation},
         "duree_video_s": round(sum(durees), 2),
         "durees_scenes_s": [round(d, 2) for d in durees],
+        "chapitres": [f"{h} {t}" for h, t in liste_chapitres],
         "mode": mode,
         "voix": voix or {"fournisseur": None},
         "fichiers": {"video": "video.mp4", "sous_titres": "sous-titres.srt",

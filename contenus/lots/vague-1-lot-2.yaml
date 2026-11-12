@@ -1,0 +1,15 @@
+# Vague 1, lot 2 : scripts à valider avant toute production vidéo (règle de JG, 2026-11-07 :
+# scripts et PDF d'abord, par lots de 10). Relecture : ChatGPT dans les commentaires de la PR #17,
+# Claude intègre, JG valide. Documents : docs/scripts/vague-1/lot-2/ (GitHub) et Drive.
+lot: 2
+episodes: [S1.08, S1.09, S1.10, S1.11, S1.12, S2.01, S2.02, S2.03, S2.04, S2.05]
+deja_valides:   # vidéos pilotes, validées par JG avant ce lot : non modifiées
+  S1.08: contenus/fiches/2026-11-pilote-s1-08-pourcentages-et-points.yaml
+  S2.05: contenus/fiches/2026-11-pilote-s2-05-moyenne-ou-mediane.yaml
+nouveaux: [S1.09, S1.10, S1.11, S1.12, S2.01, S2.02, S2.03, S2.04]
+moteur: "Nouveaux graphiques « barres » et « histogramme » (classes inégales comprises), pour S2.01 à S2.03"
+drive:
+  dossier: "https://drive.google.com/drive/folders/1roBsIStE3fMT9Y3AwalT747zN70NlE0q"
+  sommaire: 1M4r-s3dZLbuO1WowlXNJ7FG4ETtyE_ILNecV6CaYEFk   # renvoie vers GitHub, où se fait la relecture
+pdf: "dossier partagé du projet : actu-basics/scripts-vague-1/lot-2/ (FR et EN)"
+statut: valide   # 2026-11-08, carte de décision de JG ; vidéos rendues en local

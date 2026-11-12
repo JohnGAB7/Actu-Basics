@@ -1,0 +1,45 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Pays imaginaire pour D9/D1 (le catalogue proposait des chiffres réels non sourcés).
+id_programme: S2.06
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-06-quantiles-quartiles-et-boite-a-moustaches.yaml
+question_centrale:
+  fr: Comment décrire « le haut », « le bas » et « le milieu » d'une distribution ?
+  en: How do you describe the “top”, the “bottom” and the “middle” of a distribution?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 6
+public:
+  prerequis:
+  - S2.05
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Couper la série triée en quatre parts égales : les trois coupures sont les quartiles, la boîte en montre la moitié
+  du milieu.'
+exemple_fil_rouge: 'Temps de trajet de 11 personnes fictives (5 à 45 min) : médiane 18, Q1 10, Q3 25.'
+exemple_reel: null
+idees_fausses:
+- idee: Confondre le 9e décile (une valeur) et les 10 % les plus riches (un groupe)
+  desamorcee_a_l_etape: 'Partie 3 : D9 est un seuil, pas un groupe'
+exercice:
+  question: 'Boîte 2, 6, 9, 14, 20 : médiane, écart interquartile, part des valeurs dans la boîte ?'
+  correction: Médiane 9, écart interquartile 8, la moitié des valeurs
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Pour la série 3, 4, 7, 8, 10, 12, 15, donner la médiane et les quartiles.
+  diagnostic_d_erreur: '« Le 9e décile, c''est le revenu moyen des 10 % les plus riches » : qu''est-ce qui ne va pas ?'
+duree_estimee_min:
+- 5
+- 7
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

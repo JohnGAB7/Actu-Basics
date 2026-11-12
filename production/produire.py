@@ -14,6 +14,11 @@ Exemples :
     python production/produire.py contenus/fiches/ma-fiche.yaml --mode final
     python production/produire.py ma-fiche.yaml --voix openai      # change de fournisseur de voix
     python production/produire.py ma-fiche.yaml --verifier         # contrôle la fiche, ne produit rien
+    python production/produire.py ma-fiche.yaml --horizontal       # déclinaison 16:9 pour YouTube
+
+Déclinaisons par plateforme : la fiche donne la version verticale 9:16 (TikTok, Reels, Shorts).
+--horizontal produit, depuis la même fiche, la version 16:9 1920 × 1080 pour YouTube, dans
+sortie/<id>-16x9/. Un SHORT reste vertical : il n'a pas de déclinaison 16:9.
 """
 from __future__ import annotations
 
@@ -68,16 +73,33 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
         resume += [f"### ❌ `{chemin}` — fiche inexploitable", "", "```", str(exc), "```", ""]
         return False
 
+    if args.horizontal:
+        if fiche.format == "short":
+            print("  ↷ SHORT : format vertical seulement, pas de déclinaison 16:9")
+            resume += [f"### {fiche.id} (16:9)", "", "Format SHORT : vertical seulement, pas de déclinaison 16:9.", ""]
+            return True
+        if fiche.format_image != "lecon":
+            fiche.format_image_impose = "lecon"
+
     rapport = Rapport()
     controler_fiche(fiche, rapport)
     controler_marque(charte, rapport)
+    langues = [l for l in LANGUES if l in (args.langues or fiche.langues)]
+    absentes = [l for l in langues if l not in fiche.langues]
+    if absentes:
+        rapport.bloquant(f"Langue(s) demandée(s) absente(s) de la fiche : {', '.join(absentes).upper()} "
+                         f"(la fiche est en {', '.join(fiche.langues).upper()})")
+        langues = [l for l in langues if l in fiche.langues]
+    if args.mode == "final" and set(langues) != set(fiche.langues):
+        rapport.bloquant("Le mode final produit toutes les langues de la fiche : "
+                         + ", ".join(fiche.langues).upper())
     if args.verifier:
         _afficher(rapport)
         print("✅ Aucune erreur bloquante" if not rapport.bloquants else
               f"❌ {len(rapport.bloquants)} erreur(s) bloquante(s)")
         return not rapport.bloquants
 
-    racine_sortie = Path(args.sortie) / fiche.id
+    racine_sortie = Path(args.sortie) / (fiche.id + ("-16x9" if fiche.format_image_impose else ""))
     if args.mode == "final" and rapport.bloquants:
         racine_sortie.mkdir(parents=True, exist_ok=True)
         etat = ecrire_rapport(fiche, rapport, racine_sortie / "rapport-qc.md", args.mode)
@@ -92,7 +114,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
     durees_langues: dict[str, list[float]] = {}
     lignes_resume: list[list[str]] = []
 
-    for langue in args.langues:
+    for langue in langues:
         t0 = time.time()
         edition = fiche.editions[langue]
         dossier = racine_sortie / langue
@@ -184,7 +206,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
                 dossier / "miniature.jpg", quality=90)
             for a in rendu_v.alertes:
                 rapport.avertir(a, langue)
-            attendus = [("video", i, s.type) for i, s in enumerate(edition.scenes) if rendu_v.logo_prevu(s)]
+            attendus = [(format_v, i, s.type) for i, s in enumerate(edition.scenes) if rendu_v.logo_prevu(s)]
             if rendu_v.logo_prevu(edition.scenes[0], couverture=True):
                 attendus.append(("couverture", 0, edition.scenes[0].type))
             controler_logo(langue, rendu_v, attendus, charte, plateformes, rapport)
@@ -253,17 +275,18 @@ def main() -> int:
     parseur.add_argument("--mode", choices=("apercu", "final"), default="apercu")
     parseur.add_argument("--voix", help="fournisseur de voix : kokoro (défaut) | piper | openai | elevenlabs | manuel | test")
     parseur.add_argument("--sortie", default="sortie", help="dossier de sortie (défaut : sortie/)")
-    parseur.add_argument("--langues", nargs="+", choices=LANGUES, default=list(LANGUES))
+    parseur.add_argument("--langues", nargs="+", choices=LANGUES, default=None,
+                         help="langues à produire (défaut : celles de la fiche, champ « langues »)")
     parseur.add_argument("--sans-video", action="store_true", help="carrousels et textes seulement")
     parseur.add_argument("--sans-inspection", action="store_true", help="ne pas générer les images d'inspection")
     parseur.add_argument("--filigrane", action="store_true",
                          help="remettre le filigrane « BROUILLON » sur les aperçus bloqués (désactivé par défaut)")
+    parseur.add_argument("--horizontal", action="store_true",
+                         help="déclinaison 16:9 (YouTube) d'une fiche verticale, dans sortie/<id>-16x9/")
     parseur.add_argument("--verifier", action="store_true", help="contrôler la fiche sans rien produire")
     parseur.add_argument("--brouillon-autorise", action="store_true", help=argparse.SUPPRESS)  # ancien nom d'« apercu »
     parseur.add_argument("--charte", type=Path, default=RACINE / "charte.yaml")
     args = parseur.parse_args()
-    if args.mode == "final" and set(args.langues) != set(LANGUES):
-        parseur.error("le mode final produit toujours FR et EN")
     charger_env(DEPOT / ".env")
     charte, plateformes, config_tts = _yaml(args.charte), _yaml(RACINE / "plateformes.yaml"), _yaml(RACINE / "tts.yaml")
     resume = [f"## Production — mode {args.mode}", ""]

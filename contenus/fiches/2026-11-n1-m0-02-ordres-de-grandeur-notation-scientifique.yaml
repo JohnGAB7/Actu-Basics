@@ -1,0 +1,267 @@
+# Niveau 1, vague 1, lot 1 : M0.02 « Ordres de grandeur et notation scientifique » (EDUCATIONAL, rappel)
+# Fiche de conception : contenus/conception/M0.02.yaml
+# Aucun chiffre extérieur : conversions de durées (année de 365,25 jours) et exemples fictifs.
+# Statut : brouillon, script à valider avant tout rendu (décision de JG, 2026-11-07).
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-m0-02-ordres-de-grandeur-notation-scientifique
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "M0.02 · Ordres de grandeur et notation scientifique"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Situer mille, un million et un milliard avec les puissances de 10"
+      - "Écrire un nombre en notation scientifique"
+      - "Comparer deux grandeurs par leur ordre de grandeur"
+    en:
+      - "Place a thousand, a million and a billion using powers of 10"
+      - "Write a number in scientific notation"
+      - "Compare two quantities by their order of magnitude"
+  prerequis:
+    fr: ["M0.01 : fractions et règle de trois"]
+    en: ["M0.01: fractions and proportions"]
+  hypotheses:
+    fr: "Une année compte 365,25 jours en moyenne ; budgets de l'exemple fictifs"
+    en: "A year has 365.25 days on average; the budgets in the example are fictional"
+
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Un milliard de secondes, c'est combien ? Ordres de grandeur"
+    legende: |
+      Un million de secondes, c'est environ 11,6 jours. Un milliard de secondes ? Près de 32 ans. Entre un million et un milliard, il y a un facteur mille que l'intuition écrase. On apprend à compter en puissances de 10, à écrire un nombre en notation scientifique et à comparer deux grandeurs par leur ordre de grandeur. Attention aussi au faux ami « billion ». Calculs vérifiés. Série « Lire un chiffre sans se faire avoir », boîte à outils.
+    hashtags: [maths, ordresdegrandeur, chiffres]
+    scenes:
+      - type: accroche
+        texte: "Un *million* de secondes, c'est environ *11,6 jours*"
+        voix_off: "Un million de secondes, c'est environ onze jours et demi. Et un milliard de secondes ?"
+        verifier:
+          - {expression: "1e6 / 86400", attendu: 11.6, libelle: "Un million de secondes, en jours"}
+      - type: exercice
+        texte: "Un *milliard* de secondes : *12 jours*, *3 ans* ou *32 ans* ?"
+        etiquette: "DÉFI"
+        pause: 4
+        voix_off: "Choisissez avant la suite : douze jours, trois ans, ou trente-deux ans ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Compter en puissances de 10"
+        voix_off: "Pour répondre, comptons les zéros."
+      - type: etapes
+        texte: "Chaque palier *multiplie par mille*"
+        etapes:
+          - "Mille = 1 000 = *10³*"
+          - "Un million = 1 000 000 = *10⁶*"
+          - "Un milliard = 1 000 000 000 = *10⁹*"
+        voix_off: "Mille, c'est le chiffre un suivi de trois zéros : dix puissance trois. Un million, six zéros : dix puissance six. Un milliard, neuf zéros : dix puissance neuf. À chaque palier, on multiplie par mille."
+      - type: formule
+        texte: "Un milliard = *mille millions*"
+        formule:
+          - '10^{9}=10^{3}\times 10^{6}'
+        voix_off: "Un milliard, c'est donc mille millions. Si un million de secondes font onze jours et demi, un milliard en fait mille fois plus."
+        verifier:
+          - {expression: "1e9 / 1e6", attendu: 1000, libelle: "Un milliard divisé par un million"}
+      - type: chiffre
+        valeur: 31.7
+        suffixe: {fr: " ans", en: " years"}
+        texte: "pour un milliard de secondes"
+        voix_off: "Réponse au défi : un milliard de secondes, c'est près de trente-deux ans. Million, milliard : les deux mots se ressemblent, mais l'écart est immense."
+        note: "10⁹ s ÷ (365,25 × 86 400 s par an) ≈ 31,7 ans."
+        verifier:
+          - {expression: "1e9 / (365.25 * 86400)", attendu: 31.7, libelle: "Un milliard de secondes, en années"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La notation scientifique"
+        voix_off: "Pour écrire les très grands et les très petits nombres sans compter les zéros, on utilise la notation scientifique."
+      - type: formule
+        texte: "Un nombre *de 1 à moins de 10*, fois une puissance de 10"
+        formule:
+          - '45\,000=4{,}5\times 10^{4}'
+          - '0{,}003=3\times 10^{-3}'
+        voix_off: "On écrit un nombre au moins égal à un et plus petit que dix, multiplié par une puissance de dix. Quarante-cinq mille, c'est quatre virgule cinq fois dix puissance quatre : on a décalé la virgule de quatre rangs. Zéro virgule zéro zéro trois, c'est trois fois dix puissance moins trois : une puissance négative pour les nombres plus petits que un."
+        verifier:
+          - {expression: "4.5 * 10**4", attendu: 45000, libelle: "4,5 × 10⁴"}
+          - {expression: "3 * 10**-3", attendu: 0.003, libelle: "3 × 10⁻³"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Comparer par l'ordre de grandeur"
+        voix_off: "L'intérêt principal : comparer deux grandeurs d'un coup d'œil."
+      - type: etapes
+        texte: "Deux budgets *fictifs*"
+        etapes:
+          - "Projet A : 2 millions d'euros, soit *2 × 10⁶*"
+          - "Projet B : 3 milliards d'euros, soit *3 × 10⁹*"
+          - "9 − 6 = *3 ordres de grandeur*, soit un facteur d'environ 1 000"
+        voix_off: "Prenons deux budgets fictifs. Le projet A coûte deux millions d'euros, deux fois dix puissance six. Le projet B coûte trois milliards, trois fois dix puissance neuf. Entre les puissances, il y a trois crans : trois ordres de grandeur, c'est-à-dire un facteur de l'ordre de mille."
+      - type: chiffre
+        valeur: 1500
+        prefixe: "×"
+        texte: "entre les deux budgets"
+        voix_off: "Le rapport exact est de mille cinq cents. L'ordre de grandeur annonçait déjà un écart d'environ mille : ces deux projets ne jouent pas dans la même catégorie."
+        note: "3 × 10⁹ ÷ (2 × 10⁶) = 1 500."
+        verifier:
+          - {expression: "3e9 / 2e6", attendu: 1500, libelle: "Rapport des deux budgets"}
+      - type: etapes
+        texte: "Le *coefficient* ou la *puissance* ?"
+        etapes:
+          - "2 millions = 2 × *10⁶*"
+          - "3 millions = 3 × *10⁶* : même ordre de grandeur"
+          - "3 milliards = 3 × *10⁹* : trois ordres de grandeur au-dessus"
+        voix_off: "Comparez. Deux millions et trois millions ont la même puissance, dix puissance six : ils sont du même ordre de grandeur, seul le coefficient change. Trois milliards, c'est dix puissance neuf : trois crans plus haut. Le coefficient ajuste, la puissance fait le vrai saut."
+        verifier:
+          - {expression: "3e6 / 2e6", attendu: 1.5, libelle: "3 millions / 2 millions"}
+          - {expression: "3e9 / 3e6", attendu: 1000, libelle: "3 milliards / 3 millions"}
+      - type: texte
+        texte: "Faux ami : *billion* en anglais = *milliard*"
+        note: "En français, un billion vaut 10¹², mille milliards."
+        voix_off: "Un piège classique quand on lit la presse étrangère : le mot anglais billion veut dire milliard. En français, un billion, c'est mille milliards. Une erreur de traduction, et le chiffre est multiplié par mille."
+        verifier:
+          - {expression: "1e12 / 1e9", attendu: 1000, libelle: "Billion français / milliard"}
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Écrivez *52 millions* en notation scientifique"
+        pause: 6
+        voix_off: "À vous. Comment écrire cinquante-deux millions en notation scientifique ?"
+      - type: correction
+        etapes:
+          - "52 000 000 : on place la virgule après le premier chiffre"
+          - "5,2 : la virgule a reculé de 7 rangs"
+        reponse: "5,2 × 10⁷"
+        voix_off: "Cinquante-deux millions, c'est cinquante-deux suivi de six zéros. On place la virgule après le premier chiffre : cinq virgule deux. Elle a reculé de sept rangs. Réponse : cinq virgule deux fois dix puissance sept."
+        verifier:
+          - {expression: "5.2 * 10**7", attendu: 52000000, libelle: "5,2 × 10⁷"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Mille, million, milliard : *×1 000* à chaque palier"
+          - "Notation scientifique : un nombre *de 1 à moins de 10* × 10ⁿ"
+          - "Comparer : regarder d'abord *les puissances*"
+        voix_off: "À retenir. Mille, million, milliard : on multiplie par mille à chaque palier. En notation scientifique, un nombre d'au moins un et de moins de dix, multiplié par une puissance de dix. Et pour comparer deux grandeurs, regardez d'abord les puissances."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "How long is a billion seconds? Orders of magnitude"
+    legende: |
+      A million seconds is about 11.6 days. A billion seconds? Almost 32 years. Between a million and a billion there is a factor of a thousand that intuition flattens. We learn to count in powers of 10, to write a number in scientific notation and to compare two quantities by their order of magnitude. Plus a warning about "billion" in other languages. Checked calculations. Series "Reading numbers without being fooled", toolbox.
+    hashtags: [maths, ordersofmagnitude, numbers]
+    scenes:
+      - type: accroche
+        texte: "A *million* seconds is about *11.6 days*"
+        voix_off: "A million seconds is about eleven and a half days. What about a billion seconds?"
+        verifier:
+          - {expression: "1e6 / 86400", attendu: 11.6, libelle: "One million seconds, in days"}
+      - type: exercice
+        texte: "A *billion* seconds: *12 days*, *3 years* or *32 years*?"
+        etiquette: "CHALLENGE"
+        pause: 4
+        voix_off: "Pick one before we go on: twelve days, three years, or thirty-two years?"
+      - type: titre
+        numero: 1
+        texte: "Counting in powers of 10"
+        voix_off: "To answer, let's count the zeros."
+      - type: etapes
+        texte: "Each step *multiplies by a thousand*"
+        etapes:
+          - "A thousand = 1,000 = *10³*"
+          - "A million = 1,000,000 = *10⁶*"
+          - "A billion = 1,000,000,000 = *10⁹*"
+        voix_off: "A thousand is a one followed by three zeros: ten to the power three. A million, six zeros: ten to the six. A billion, nine zeros: ten to the nine. At each step, you multiply by a thousand."
+      - type: formule
+        texte: "A billion = *a thousand millions*"
+        formule:
+          - '10^{9}=10^{3}\times 10^{6}'
+        voix_off: "So a billion is a thousand millions. If a million seconds is eleven and a half days, a billion is a thousand times longer."
+        verifier:
+          - {expression: "1e9 / 1e6", attendu: 1000, libelle: "A billion divided by a million"}
+      - type: chiffre
+        valeur: 31.7
+        suffixe: {fr: " ans", en: " years"}
+        texte: "for a billion seconds"
+        voix_off: "The answer to the challenge: a billion seconds is almost thirty-two years. The words differ by one letter, but the gap is enormous."
+        note: "10⁹ s ÷ (365.25 × 86,400 s per year) ≈ 31.7 years."
+        verifier:
+          - {expression: "1e9 / (365.25 * 86400)", attendu: 31.7, libelle: "One billion seconds, in years"}
+      - type: titre
+        numero: 2
+        texte: "Scientific notation"
+        voix_off: "To write very large and very small numbers without counting zeros, we use scientific notation."
+      - type: formule
+        texte: "A number *from 1 to under 10*, times a power of 10"
+        formule:
+          - '45{,}000=4.5\times 10^{4}'
+          - '0.003=3\times 10^{-3}'
+        voix_off: "You write a number that is at least one and less than ten, multiplied by a power of ten. Forty-five thousand is four point five times ten to the four: the decimal point moved four places. Zero point zero zero three is three times ten to the minus three: a negative power for numbers smaller than one."
+        verifier:
+          - {expression: "4.5 * 10**4", attendu: 45000, libelle: "4.5 × 10⁴"}
+          - {expression: "3 * 10**-3", attendu: 0.003, libelle: "3 × 10⁻³"}
+      - type: titre
+        numero: 3
+        texte: "Comparing by order of magnitude"
+        voix_off: "The main benefit: comparing two quantities at a glance."
+      - type: etapes
+        texte: "Two *fictional* budgets"
+        etapes:
+          - "Project A: 2 million euros, or *2 × 10⁶*"
+          - "Project B: 3 billion euros, or *3 × 10⁹*"
+          - "9 − 6 = *3 orders of magnitude*, a factor of about 1,000"
+        voix_off: "Take two fictional budgets. Project A costs two million euros, two times ten to the six. Project B costs three billion, three times ten to the nine. Between the powers there are three steps: three orders of magnitude, meaning a factor of around a thousand."
+      - type: chiffre
+        valeur: 1500
+        prefixe: "×"
+        texte: "between the two budgets"
+        voix_off: "The exact ratio is fifteen hundred. The order of magnitude already pointed to a gap of about a thousand: these two projects are not in the same league."
+        note: "3 × 10⁹ ÷ (2 × 10⁶) = 1,500."
+        verifier:
+          - {expression: "3e9 / 2e6", attendu: 1500, libelle: "Ratio of the two budgets"}
+      - type: etapes
+        texte: "The *coefficient* or the *power*?"
+        etapes:
+          - "2 million = 2 × *10⁶*"
+          - "3 million = 3 × *10⁶*: same order of magnitude"
+          - "3 billion = 3 × *10⁹*: three orders of magnitude higher"
+        voix_off: "Compare. Two million and three million have the same power, ten to the six: they're the same order of magnitude, only the coefficient changes. Three billion is ten to the nine: three steps higher. The coefficient fine-tunes, the power makes the real jump."
+        verifier:
+          - {expression: "3e6 / 2e6", attendu: 1.5, libelle: "3 million / 2 million"}
+          - {expression: "3e9 / 3e6", attendu: 1000, libelle: "3 billion / 3 million"}
+      - type: texte
+        texte: "False friend: in French, *billion* = *10¹²*"
+        note: "In English, a billion is 10⁹; in French, a « billion » is a thousand times more."
+        voix_off: "A classic trap when reading the foreign press: in French, the word billion means a million million, ten to the twelve. The English billion is called a milliard. One translation slip, and the figure is off by a factor of a thousand."
+        verifier:
+          - {expression: "1e12 / 1e9", attendu: 1000, libelle: "French billion / English billion"}
+      - type: exercice
+        texte: "Write *52 million* in scientific notation"
+        pause: 6
+        voix_off: "Your turn. How do you write fifty-two million in scientific notation?"
+      - type: correction
+        etapes:
+          - "52,000,000: put the decimal point after the first digit"
+          - "5.2: the point moved back 7 places"
+        reponse: "5.2 × 10⁷"
+        voix_off: "Fifty-two million is fifty-two followed by six zeros. Put the decimal point after the first digit: five point two. It moved back seven places. The answer: five point two times ten to the seven."
+        verifier:
+          - {expression: "5.2 * 10**7", attendu: 52000000, libelle: "5.2 × 10⁷"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Thousand, million, billion: *×1,000* at each step"
+          - "Scientific notation: a number *from 1 to under 10* × 10ⁿ"
+          - "To compare: look at *the powers* first"
+        voix_off: "Key takeaways. Thousand, million, billion: multiply by a thousand at each step. In scientific notation, a number of at least one and less than ten, times a power of ten. And to compare two quantities, look at the powers first."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

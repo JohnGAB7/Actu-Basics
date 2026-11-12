@@ -1,0 +1,45 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Chiffres de l'étude repris du catalogue du programme : à confirmer sur l'article lors de la relecture.
+id_programme: S3.03
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s3-03-le-paradoxe-de-simpson.yaml
+question_centrale:
+  fr: Comment un traitement peut-il être meilleur dans chaque groupe mais pire au total ?
+  en: How can a treatment be better in every group but worse overall?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S3
+  rang_dans_module: 3
+public:
+  prerequis:
+  - S3.02
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Quand les groupes n'ont pas la même composition, le total peut inverser ce que montre chaque groupe.
+exemple_fil_rouge: 'Calculs rénaux : chirurgie ouverte contre néphrolithotomie percutanée (Charig et coll., BMJ, 1986).'
+exemple_reel: C. R. Charig et coll., British Medical Journal, 1986, doi 10.1136/bmj.292.6524.879
+idees_fausses:
+- idee: Toujours faire confiance au chiffre agrégé, ou toujours au chiffre détaillé
+  desamorcee_a_l_etape: 'Partie 3 : se demander quelle variable sépare les groupes'
+exercice:
+  question: 'Deux hôpitaux fictifs : H1 meilleur dans chaque service, H2 meilleur au total. Lequel choisir ?'
+  correction: H1, meilleur à cas comparables ; H2 doit son total à des cas plus faciles
+  pause_secondes: 10
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Deux lycées : meilleur taux de réussite dans chaque filière pour l''un, au total pour l''autre.
+    Comment est-ce possible ?'
+  diagnostic_d_erreur: '« Au total, B guérit 83 % contre 78 % : B est meilleur » : que faut-il vérifier ?'
+duree_estimee_min:
+- 6
+- 8
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

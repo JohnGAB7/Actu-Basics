@@ -1191,7 +1191,7 @@ def test_courbe_en_points_avec_plusieurs_seuils(tmp_path):
     assert points.tobytes() != ligne.tobytes()
     brut = valider(brut_lancement())
     scene = next(x for x in brut["editions"]["fr"]["scenes"] if x["type"] == "courbe")
-    scene["courbe"] = dict(scene["courbe"], style="barres", seuils=[{"label": "sans valeur"}])
+    scene["courbe"] = dict(scene["courbe"], style="camembert", seuils=[{"label": "sans valeur"}])
     with pytest.raises(FicheInvalide) as exc:
         charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
     assert "courbe.style" in str(exc.value) and "courbe.seuils" in str(exc.value)
@@ -1437,6 +1437,7 @@ def test_un_nombre_ne_se_coupe_pas():
     assert mots("Sept salaires : 1 500, 1 600")[-2:] == ["1 500,", "1 600"]   # liste : coupable entre deux nombres
     assert mots("les 3 enfants") == ["les", "3", "enfants"]
     assert "5 min" in mots("Court intervalle : 5 min sur 20") and "1 point" in mots("écart de 1 point")
+    assert "2,1 millions" in mots("La commune de Paris : 2,1 millions") and "20 °C" in mots("à 20 °C")
 
 
 def test_prononciation_de_la_marque_dans_la_voix_seulement():
@@ -1639,3 +1640,272 @@ def test_inventaire_signale_une_video_manquante(tmp_path):
     texte, erreurs = inventaire.inventorier(tmp_path)
     assert "fiche/en/video.mp4 manquant" in erreurs
     assert "| `fr/video.mp4` |" in texte and "## Contrôle" in texte
+
+
+# ---------------------------------------------------------------- déclinaison 16:9 (YouTube)
+
+PILOTE_S108 = RACINE / "contenus/fiches/2026-11-pilote-s1-08-pourcentages-et-points.yaml"
+
+
+def test_horizontal_ignore_un_short(tmp_path):
+    r = lancer(EXEMPLE, "--horizontal", "--voix", "test", "--sans-video", "--sortie", tmp_path)
+    assert r.returncode == 0
+    assert "pas de déclinaison 16:9" in r.stdout
+    assert not (tmp_path / "exemple-fictif-16x9").exists()
+
+
+def test_horizontal_decline_une_lecon_verticale_en_16_9(tmp_path):
+    assert charger_fiche(PILOTE_S108).format_image == "video"
+    r = lancer(PILOTE_S108, "--horizontal", "--voix", "test", "--sans-video", "--langues", "fr", "--sortie", tmp_path)
+    assert r.returncode == 0, r.stdout + r.stderr
+    meta = json.loads((tmp_path / "2026-11-pilote-s1-08-pourcentages-et-points-16x9/fr/metadonnees.json").read_text())
+    assert meta["image"] == "lecon" and meta["format"] == "educational"
+    assert not (tmp_path / "2026-11-pilote-s1-08-pourcentages-et-points").exists()
+
+
+def test_logo_de_fin_controle_en_16_9_sans_interface_d_application():
+    r, _, ed = _rendu_fin(CHARTE, fmt="lecon")
+    n = len(ed.scenes)
+    assert ("lecon", n - 1) in r.poses
+    rap = Rapport()
+    controler_logo("fr", r, [("lecon", n - 1, "fin")], CHARTE, PLATEFORMES, rap)
+    assert not rap.bloquants
+    assert not [a for a in rap.avertissements if "interface" in str(a)]
+
+
+def test_courbe_titre_d_axe_vertical_et_guide_horizontal():
+    """« axe_y » écrit l'unité sur l'axe vertical ; « guide_y » d'un repère trace le pointillé vers cet axe
+    (M0.03, relecture du 2026-11-07 : lire les deux coordonnées d'un point sur le graphique lui-même)."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-m0-03-lire-un-graphique-et-un-repere.yaml")
+    for langue in ("fr", "en"):
+        ed = fiche.editions[langue]
+        s = next(x for x in ed.scenes if x.type == "courbe")
+        c = s.extra["courbe"]
+        assert c["axe_y"] and c["reperes"][0]["guide_y"] is True
+        i = ed.scenes.index(s)
+        complet = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+        s.extra["courbe"] = dict(c, axe_y=None)
+        sans_titre = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+        s.extra["courbe"] = dict(c, reperes=[dict(c["reperes"][0], guide_y=False)])
+        sans_guide = Rendu(fiche, langue, CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+        s.extra["courbe"] = c
+        assert len({complet, sans_titre, sans_guide}) == 3
+
+
+def test_courbe_annees_sans_separateur_de_milliers():
+    """Abscisses en années (S1.07 : 2019 à 2023) : « 2019 », jamais « 2 019 ». L'image change si l'on
+    remplace les années par des nombres ordinaires du même ordre."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s1-07-donnees-manquantes-erreurs-definitions.yaml")
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe")
+    i = ed.scenes.index(s)
+    c = s.extra["courbe"]
+    annees = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = dict(c, _points=[(x + 0.5, y) for x, y in c["_points"]])
+    autres = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert annees != autres
+
+
+def test_courbe_barres_et_histogramme():
+    """S2.01 à S2.03 : « style: barres » (catégories étiquetées, barres séparées) et « style: histogramme »
+    (classes contiguës, éventuellement inégales : la dernière a la largeur « largeur_classe »)."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes.yaml")
+    ed = fiche.editions["fr"]
+    courbes = [s for s in ed.scenes if s.type == "courbe"]
+    assert [s.extra["courbe"]["style"] for s in courbes][:2] == ["barres", "histogramme"]
+    images = []
+    for s in courbes[:3]:
+        i = ed.scenes.index(s)
+        images.append(Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes())
+    # Les mêmes points en ligne ne donnent pas la même image : le style est bien pris en compte.
+    s = courbes[1]
+    c = s.extra["courbe"]
+    s.extra["courbe"] = dict(c, style="ligne")
+    ligne = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, ed.scenes.index(s), len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert len(set(images + [ligne])) == 4
+    # Une étiquette par barre, sinon la fiche est refusée.
+    brute = yaml.safe_load((RACINE / "contenus/fiches/2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes.yaml")
+                           .read_text(encoding="utf-8"))
+    sc = next(x for x in brute["editions"]["fr"]["scenes"] if x["type"] == "courbe")
+    sc["courbe"]["etiquettes"] = sc["courbe"]["etiquettes"][:2]
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / "f.yaml"
+        p.write_text(yaml.safe_dump(brute, allow_unicode=True), encoding="utf-8")
+        with pytest.raises(FicheInvalide, match="étiquette par barre"):
+            charger_fiche(p)
+
+
+def test_etiquettes_valeurs_des_barres():
+    """« etiquettes_valeurs » : le texte au-dessus de chaque barre est écrit tel quel dans la fiche (« 0,70 € »),
+    au lieu de la valeur formatée par le moteur ; une par barre, sinon la fiche est refusée."""
+    chemin = RACINE / "contenus/fiches/2026-11-act-a2-01-pooling-and-the-pure-premium.yaml"
+    fiche = charger_fiche(chemin)
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe")
+    c = s.extra["courbe"]
+    assert c["etiquettes_valeurs"] == ["70 €", "7 €", "0,70 €"]
+    i = ed.scenes.index(s)
+    avec = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = {k: v for k, v in c.items() if k != "etiquettes_valeurs"}
+    sans = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert avec != sans
+    brute = yaml.safe_load(chemin.read_text(encoding="utf-8"))
+    sc = next(x for x in brute["editions"]["fr"]["scenes"] if x["type"] == "courbe")
+    sc["courbe"]["etiquettes_valeurs"] = ["70 €", "7 €"]
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / "f.yaml"
+        p.write_text(yaml.safe_dump(brute, allow_unicode=True), encoding="utf-8")
+        with pytest.raises(FicheInvalide, match="un texte par barre"):
+            charger_fiche(p)
+
+
+def test_double_echelle_surface_et_grille():
+    """S1.09 : « serie_2 » trace une seconde courbe sur un axe de droite ; modèle « surface » (carrés de
+    côté 1 et 2). S1.10 : modèle « grille », répartition au hasard reproductible (graine fixe)."""
+    from lmec.animations import repartition_grille
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s1-09-lire-et-critiquer-un-graphique.yaml")
+    ed = fiche.editions["fr"]
+    s = next(x for x in ed.scenes if x.type == "courbe" and x.extra["courbe"].get("serie_2"))
+    i = ed.scenes.index(s)
+    c = s.extra["courbe"]
+    avec = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = {k: v for k, v in c.items() if k != "serie_2"}
+    sans = Rendu(fiche, "fr", CHARTE, "video", False).dessiner(s, i, len(ed.scenes), None).tobytes()
+    s.extra["courbe"] = c
+    assert avec != sans
+    surf = next(x for x in ed.scenes if x.type == "animation")
+    assert surf.extra["animation"]["modele"] == "surface"
+    Rendu(fiche, "fr", CHARTE, "video", False).dessiner(surf, ed.scenes.index(surf), len(ed.scenes), None)
+    comptes = repartition_grille(240, 500, 3)
+    assert sum(comptes) == 500 and comptes == repartition_grille(240, 500, 3)
+    assert (comptes.count(1), comptes.count(0)) == (61, 27)   # chiffres annoncés dans S1.10
+    f10 = charger_fiche(RACINE / "contenus/fiches/2026-11-n1-s1-10-donnees-ethique-et-vie-privee.yaml")
+    for langue in ("fr", "en"):
+        e10 = f10.editions[langue]
+        g = next(x for x in e10.scenes if x.type == "animation")
+        assert g.extra["animation"]["modele"] == "grille"
+        Rendu(f10, langue, CHARTE, "video", False).dessiner(g, e10.scenes.index(g), len(e10.scenes), None)
+
+
+def test_serie_2_et_graine_validees(tmp_path):
+    """Relecture du 2026-11-08 : la seconde série partage les abscisses de la première et a des bornes
+    valides ; une graine 0 explicite n'est pas remplacée par 1."""
+    from lmec.pedagogie import valider_scene
+    base = {"texte": "x", "voix_off": "x.", "courbe": {"points": [[1, 1], [2, 2]], "y_min": 0, "y_max": 3}}
+    erreurs = []
+    valider_scene("courbe", dict(base, courbe=dict(base["courbe"], serie_2={"points": [[1, 5], [3, 6]]})), "s", erreurs)
+    assert any("mêmes abscisses" in e for e in erreurs)
+    erreurs = []
+    valider_scene("courbe", dict(base, courbe=dict(base["courbe"], serie_2={"points": [[1, 5], [2, 6]], "y_min": 9,
+                                                                             "y_max": 4})), "s", erreurs)
+    assert any("y_min doit être inférieur" in e for e in erreurs)
+    erreurs = []
+    extra = valider_scene("animation", {"texte": "x", "voix_off": "x.", "animation": {
+        "modele": "grille", "n": 10, "personnes": 5, "graine": 0}}, "s", erreurs)
+    assert not erreurs and extra["animation"]["graine"] == 0
+
+
+def test_legende_sans_periode_sans_parentheses_vides():
+    from lmec.textes import legende_complete
+    fiche = charger_fiche(EXEMPLE)
+    for langue in ("fr", "en"):
+        edition = fiche.editions[langue]
+        fiche.periode = ""
+        assert "()" not in legende_complete(fiche, edition)
+        fiche.periode = "2024"
+        assert "(2024)" in legende_complete(fiche, edition)
+
+
+def test_boites_a_moustaches_et_nuage(tmp_path):
+    """Boîtes à moustaches (S2.06, S3.01) et nuage de points cadré, avec points mis en avant (S3.04)."""
+    from lmec.pedagogie import valider_scene
+
+    def valider(scene, ctx):
+        err = []
+        return valider_scene(scene["type"], scene, ctx, err), err
+    bon = {"type": "courbe", "texte": "Boîtes", "voix_off": "Deux boîtes.",
+           "courbe": {"style": "boites", "boites": [
+               {"etiquette": "Lundi", "valeurs": [0, 2, 4, 7, 12], "atypiques": [25]},
+               {"etiquette": "Mardi", "valeurs": [0, 1, 3, 5, 9]}]}}
+    extra, err = valider(bon, "s")
+    assert not err and extra["courbe"]["_points"] == [(0.0, 25.0), (1.0, 9.0)]
+    assert extra["courbe"]["etiquettes"] == ["Lundi", "Mardi"]
+    mauvais = copy.deepcopy(bon)
+    mauvais["courbe"]["boites"][0]["valeurs"] = [0, 5, 4, 7, 12]
+    assert any("boites" in e for e in valider(mauvais, "s")[1])
+    nuage = {"type": "courbe", "texte": "Nuage", "voix_off": "Un nuage.",
+             "courbe": {"style": "points", "points": [[5, 3], [2, 1], [9, 8]], "x_min": 0, "x_max": 10,
+                        "mis_en_avant": [2]}}
+    assert not valider(nuage, "s")[1]
+    nuage["courbe"]["x_min"] = "zéro"
+    assert any("x_min" in e for e in valider(nuage, "s")[1])
+
+
+# --------------------------------------------------------------------------- fiche en une seule langue
+def _brut_anglais_seul():
+    """Fiche de lancement réduite à l'anglais : parcours Actuariat, EN d'abord (demande de JG, 2026-11-11)."""
+    brut = valider(brut_lancement())
+    brut["langues"] = ["en"]
+    del brut["editions"]["fr"]
+    brut["pedagogie"]["objectifs"].pop("fr")
+    return brut
+
+
+def test_fiche_anglais_seul_acceptee(tmp_path):
+    fiche = charger_fiche(ecrire(tmp_path, _brut_anglais_seul(), "2026-11-lancement-actu-basics"))
+    assert fiche.langues == ("en",) and set(fiche.editions) == {"en"}
+    r = constats_pedago(tmp_path, _brut_anglais_seul())
+    assert not r.bloquants, [str(c) for c in r.bloquants]
+    assert any("une seule langue" in o for o in r.ok)
+    assert not any("FR et EN" in str(a) or "entre FR et EN" in str(a) for a in r.avertissements)
+
+
+def test_fiche_bilingue_par_defaut(tmp_path):
+    assert charger_fiche(LANCEMENT).langues == ("fr", "en")
+
+
+@pytest.mark.parametrize("modif, attendu", [
+    (lambda b: b.update(langues=["de"]), "langues doit être une liste"),
+    (lambda b: b.update(langues=[]), "langues doit être une liste"),
+    (lambda b: b["editions"].update(fr={"titre": "x"}), "editions.fr : langue absente"),
+    (lambda b: b.update(langues=["fr", "en"]), "editions.fr : édition manquante"),
+])
+def test_langues_mal_renseignees(tmp_path, modif, attendu):
+    brut = _brut_anglais_seul()
+    modif(brut)
+    with pytest.raises(FicheInvalide, match=attendu):
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+
+
+def test_objectifs_exiges_seulement_pour_les_langues_de_la_fiche(tmp_path):
+    brut = _brut_anglais_seul()
+    brut["pedagogie"]["objectifs"].pop("en")
+    with pytest.raises(FicheInvalide, match="« en » d'objectifs"):
+        charger_fiche(ecrire(tmp_path, brut, "2026-11-lancement-actu-basics"))
+
+
+def test_produire_anglais_seul_refuse_le_francais(tmp_path):
+    f = ecrire(tmp_path, _brut_anglais_seul(), "2026-11-lancement-actu-basics")
+    ok = lancer(f, "--verifier")
+    assert ok.returncode == 0, ok.stdout + ok.stderr
+    fr = lancer(f, "--verifier", "--langues", "fr")
+    assert fr.returncode != 0 and "absente(s) de la fiche : FR" in fr.stdout
+
+
+# --------------------------------------------------------------------------- chapitres YouTube
+def test_chapitres_youtube():
+    from lmec.fiche import Edition, Scene
+    from lmec.textes import chapitres
+    sc = [Scene(type="accroche", texte="x", voix_off="", duree=None, extra={})]
+    for n in (1, 2, 3):
+        sc.append(Scene(type="titre", texte=f"Part *{n}*", voix_off="", duree=None, extra={"numero": str(n)}))
+        sc.append(Scene(type="texte", texte="y", voix_off="", duree=None, extra={}))
+    ed = Edition(langue="en", titre="t", legende="l", hashtags=[], scenes=sc)
+    durees = [20, 3, 40, 3, 60, 3, 3600]
+    assert chapitres(ed, durees) == [("0:00", "Intro"), ("0:20", "1. Part 1"), ("1:03", "2. Part 2"),
+                                     ("2:06", "3. Part 3")]
+    assert chapitres(ed, [20, 3, 2, 3, 60, 3, 30]) == []            # un chapitre de moins de 10 s
+    assert chapitres(Edition(langue="en", titre="t", legende="l", hashtags=[], scenes=sc[:3]), [20, 3, 40]) == []

@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-07, à valider avant tout rendu (JG). Exemples fictifs : pas d'exemple réel sourcé.
+id_programme: M0.01
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-m0-01-fractions-ratios-regle-de-trois.yaml
+question_centrale:
+  fr: Comment passer de « 3 sur 12 » à « 25 % » sans calculatrice ?
+  en: How do you get from "3 out of 12" to "25%" without a calculator?
+position:
+  pilier: boite_a_outils
+  niveau: 1
+  module: M0
+  rang_dans_module: 1
+public:
+  prerequis: []
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Une fraction, un décimal et un pourcentage sont trois écritures de la même part.
+exemple_fil_rouge: 3 cyclistes dans une équipe de 12 ; recette pour 4 adaptée pour 6.
+exemple_reel: null
+idees_fausses:
+- idee: Confondre le ratio « 1 pour 3 » avec la fraction « 1 sur 3 »
+  desamorcee_a_l_etape: Ratio ou fraction ?
+- idee: Appliquer la règle de trois à une situation non proportionnelle
+  desamorcee_a_l_etape: Seulement si c'est proportionnel
+exercice:
+  question: '6 sur 40 : quel pourcentage ?'
+  correction: 15 %
+  pause_secondes: 6
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Une classe de 30 élèves compte 12 filles et 18 garçons. Quel est le ratio filles/garçons, et quelle
+    part de filles en pourcentage ?
+  diagnostic_d_erreur: '« 2 pour 5, donc 40 % » : où est l''erreur ? (2 pour 5 = 2 sur 7 ≈ 29 %)'
+duree_estimee_min:
+- 3
+- 5
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 7/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)

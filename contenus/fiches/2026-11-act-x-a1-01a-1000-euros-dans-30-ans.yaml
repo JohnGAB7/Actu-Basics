@@ -1,0 +1,118 @@
+# Parcours Actuariat, extrait vertical 1 de A1.01 (SHORT 9:16, TikTok et Shorts) : la valeur actuelle.
+# Unité autonome : 1 000 € dans 30 ans valent 231,38 € aujourd'hui à 5 % ; sensibilité au taux ; renvoi vers la leçon.
+# Taux fictifs et constants ; nombres identiques à la leçon A1.01 et entre FR et EN.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-x-a1-01a-1000-euros-dans-30-ans
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: short
+habillage_sonore: true
+theme: "A1.01 · extrait 1 · 1 000 € dans 30 ans valent 231 € aujourd'hui"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer la valeur actuelle d'un paiement futur et voir qu'elle dépend fortement du taux"
+    en:
+      - "Compute the present value of a future payment and see how strongly it depends on the rate"
+  prerequis:
+    fr: ["Les puissances. Leçon complète : intérêts composés et actualisation (A1, épisode 1)"]
+    en: ["Powers. Full lesson: compound interest and discounting (A1, episode 1)"]
+  hypotheses:
+    fr: "Taux annuels effectifs fictifs, constants pendant 30 ans, capitalisation annuelle ; fiscalité, inflation et risque de défaut ignorés"
+    en: "Made-up effective annual rates, constant for 30 years, annual compounding; tax, inflation and default risk ignored"
+
+validation:
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
+
+sources: []
+
+editions:
+  fr:
+    titre: "1 000 € dans 30 ans : 231 € aujourd'hui, à 5 % ?"
+    legende: |
+      Un assureur fictif, JG's Holding, promet 1 000 € dans 30 ans. Combien doit-il mettre de côté aujourd'hui ? À 5 % par an, environ 231 € seulement : c'est l'actualisation, l'outil de base de l'actuaire. Et à 2 % ou 8 %, le résultat change du tout au tout. Extrait de la leçon « 1 000 € aujourd'hui ou dans 30 ans : est-ce vraiment la même somme ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Taux fictifs, calculs vérifiés, aucun conseil de placement.
+    hashtags: [actuariat, valeuractuelle, interetscomposes]
+    scenes:
+      - type: accroche
+        texte: "*1 000 €* dans 30 ans : *231 €* aujourd'hui, à 5 % ?"
+        voix_off: "Mille euros dans trente ans peuvent représenter environ deux cent trente et un euros aujourd'hui, si l'on actualise à cinq pour cent par an. Comment arrive-t-on à ce chiffre ?"
+      - type: texte
+        texte: "JG's Holding promet *1 000 €* dans 30 ans. Combien mettre de côté *aujourd'hui* ?"
+        note: "JG's Holding est un assureur fictif. Taux fictif et constant : 5 % par an."
+        voix_off: "Un assureur fictif, JG's Holding, promet de verser mille euros dans trente ans. Combien doit-il mettre de côté aujourd'hui, si son argent rapporte cinq pour cent par an ?"
+      - type: formule
+        texte: "La *valeur actuelle*"
+        formule:
+          - 'VA=\dfrac{VF}{(1+i)^n}'
+          - 'VA=\dfrac{1000}{1{,}05^{30}}\approx 231{,}38\ \text{€}'
+        note: "Exemple mathématique : taux annuel effectif constant de 5 %, capitalisation annuelle. Vérification : 231,38 € × 1,05^30 ≈ 1 000 €."
+        voix_off: "On divise la somme future par un plus le taux, à la puissance du nombre d'années. Mille divisé par un virgule zéro cinq à la puissance trente donne environ deux cent trente et un euros et trente-huit centimes : placés à cinq pour cent, ils atteindraient mille euros dans trente ans, selon nos hypothèses."
+        verifier:
+          - {expression: "1000 / 1.05**30", attendu: 231.38, libelle: "Valeur actuelle de 1 000 € dans 30 ans à 5 %"}
+          - {expression: "231.38 * 1.05**30", attendu: 1000, tolerance: 0.1, libelle: "Vérification"}
+      - type: etapes
+        texte: "Le *taux* change tout"
+        etapes:
+          - "À 2 % : environ *552 €*"
+          - "À 5 % : environ *231 €*"
+          - "À 8 % : environ *99 €*"
+        note: "Taux fictifs, constants pendant 30 ans. Fiscalité, inflation et risque de défaut ignorés."
+        voix_off: "Changeons seulement le taux. À deux pour cent, il faut mettre de côté environ cinq cent cinquante-deux euros. À cinq pour cent, environ deux cent trente et un. À huit pour cent, environ quatre-vingt-dix-neuf euros seulement."
+        verifier:
+          - {expression: "1000 / 1.02**30", attendu: 552, libelle: "Valeur actuelle à 2 %"}
+          - {expression: "1000 / 1.05**30", attendu: 231, libelle: "Valeur actuelle à 5 %"}
+          - {expression: "1000 / 1.08**30", attendu: 99, libelle: "Valeur actuelle à 8 %"}
+      - type: texte
+        texte: "Plus le taux est bas, plus les *engagements futurs* pèsent aujourd'hui"
+        note: "Leçon complète sur la chaîne : intérêts simples et composés, actualisation, formules de tableur."
+        voix_off: "C'est pourquoi les actuaires surveillent les taux de si près : un taux plus bas augmente la valeur actuelle de tout ce qu'un assureur devra payer. La leçon complète sur la chaîne construit tout cela pas à pas, jusqu'aux formules de tableur."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "$1,000 in 30 years: $231 today at 5%?"
+    legende: |
+      A fictional insurer, JG's Holding, promises $1,000 in 30 years. How much does it need to set aside today? At 5% a year, only about $231: this is discounting, the actuary's basic tool. And at 2% or 8%, the answer changes completely. An extract from the lesson "$1,000 today or in 30 years: is it really the same money?" of our actuarial science series, watch the full lesson on the channel. Made-up rates, checked calculations, no investment advice.
+    hashtags: [actuarialscience, presentvalue, compoundinterest]
+    scenes:
+      - type: accroche
+        texte: "*$1,000* in 30 years: *$231* today, at 5%?"
+        voix_off: "One thousand dollars in thirty years can be worth about two hundred and thirty-one dollars today, when discounted at five percent a year. How do we get that number?"
+      - type: texte
+        texte: "JG's Holding promises *$1,000* in 30 years. How much to set aside *today*?"
+        note: "JG's Holding is a fictional insurer. Made-up, constant rate: 5% a year."
+        voix_off: "A fictional insurer, JG's Holding, promises to pay one thousand dollars in thirty years. How much does it need to set aside today, if its money earns five percent a year?"
+      - type: formule
+        texte: "The *present value*"
+        formule:
+          - 'PV=\dfrac{FV}{(1+i)^n}'
+          - 'PV=\dfrac{1000}{1.05^{30}}\approx 231.38\ \text{dollars}'
+        note: "Mathematical example: constant 5% effective annual rate, compounded annually. Check: $231.38 × 1.05^30 ≈ $1,000."
+        voix_off: "We divide the future amount by one plus the rate, raised to the number of years. One thousand divided by one point zero five to the power thirty gives about two hundred and thirty-one dollars and thirty-eight cents: invested at five percent, they would grow to one thousand dollars in thirty years, under our assumptions."
+        verifier:
+          - {expression: "1000 / 1.05**30", attendu: 231.38, libelle: "Present value of $1,000 in 30 years at 5%"}
+          - {expression: "231.38 * 1.05**30", attendu: 1000, tolerance: 0.1, libelle: "Check"}
+      - type: etapes
+        texte: "The *rate* changes everything"
+        etapes:
+          - "At 2%: about *$552*"
+          - "At 5%: about *$231*"
+          - "At 8%: about *$99*"
+        note: "Made-up rates, constant for 30 years. Tax, inflation and default risk ignored."
+        voix_off: "Change only the rate. At two percent, about five hundred and fifty-two dollars must be set aside. At five percent, about two hundred and thirty-one. At eight percent, only about ninety-nine dollars."
+        verifier:
+          - {expression: "1000 / 1.02**30", attendu: 552, libelle: "Present value at 2%"}
+          - {expression: "1000 / 1.05**30", attendu: 231, libelle: "Present value at 5%"}
+          - {expression: "1000 / 1.08**30", attendu: 99, libelle: "Present value at 8%"}
+      - type: texte
+        texte: "The lower the rate, the heavier *future commitments* weigh today"
+        note: "Full lesson on the channel: simple and compound interest, discounting, spreadsheet formulas."
+        voix_off: "That is why actuaries watch interest rates so closely: a lower rate raises the present value of everything an insurer will have to pay. The full lesson on the channel builds all of this step by step, up to the spreadsheet formulas."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -159,7 +159,7 @@ def controler_sources(fiche: Fiche, r: Rapport, aujourd_hui: dt.date) -> None:
 
 
 def controler_editions(fiche: Fiche, r: Rapport) -> None:
-    for langue in LANGUES:
+    for langue in fiche.langues:
         ed = fiche.editions[langue]
         types = [s.type for s in ed.scenes]
         for t in (SCENES_OBLIGATOIRES if not fiche.pedagogique else ("fin",)):
@@ -192,6 +192,9 @@ def controler_editions(fiche: Fiche, r: Rapport) -> None:
                    "(correction éditoriale)", AVERTISSEMENT, langue)
 
     nb = {l: len(e.scenes) for l, e in fiche.editions.items()}
+    if len(nb) < 2:
+        r.ok.append(f"Fiche en une seule langue ({', '.join(fiche.langues).upper()}), par choix éditorial")
+        return
     r.verifier(len(set(nb.values())) == 1, "FR et EN ont le même nombre de scènes",
                f"Nombre de scènes différent FR/EN {nb} (adaptation volontaire ?)", AVERTISSEMENT)
 
@@ -365,7 +368,7 @@ def controler_coherence(fiche: Fiche, r: Rapport) -> None:
                             "(non contrôlable automatiquement : période sans année)")
     else:
         hors = []
-        for l in LANGUES:
+        for l in fiche.langues:
             textes = [_unite_chiffre(ch, l)] + [s.texte for s in fiche.editions[l].scenes if s.type == "chiffre"]
             hors += [(l, a) for t in textes for a in _annees(t) if not debut <= a <= fin]
         for l, a in hors:
@@ -382,6 +385,10 @@ def controler_coherence(fiche: Fiche, r: Rapport) -> None:
 
 
 def _coherence_textes(fiche: Fiche, r: Rapport) -> None:
+    if set(fiche.langues) != set(LANGUES):
+        for langue in fiche.langues:
+            _format_nombres(fiche, langue, r)
+        return
     # Mêmes nombres en FR et en EN (une adaptation ne change pas les chiffres)
     ensembles = {}
     for langue in LANGUES:
@@ -398,16 +405,23 @@ def _coherence_textes(fiche: Fiche, r: Rapport) -> None:
         r.ok.append("Les mêmes nombres figurent en FR et en EN")
 
     # Format des nombres propre à chaque langue
-    for t in _textes_edition(fiche.editions["fr"]):
-        m = re.search(r"\b\d+\.\d+\b", t)
-        if m:
-            r.avertir(f"Nombre au format anglais dans le texte français : « {m.group()} »", "fr")
-            break
-    for t in _textes_edition(fiche.editions["en"]):
-        m = re.search(r"\b\d+,\d{1,2}\b(?!\d)", t)
-        if m:
-            r.avertir(f"Virgule décimale dans le texte anglais : « {m.group()} »", "en")
-            break
+    for langue in LANGUES:
+        _format_nombres(fiche, langue, r)
+
+
+def _format_nombres(fiche: Fiche, langue: str, r: Rapport) -> None:
+    if langue == "fr":
+        for t in _textes_edition(fiche.editions["fr"]):
+            m = re.search(r"\b\d+\.\d+\b", t)
+            if m:
+                r.avertir(f"Nombre au format anglais dans le texte français : « {m.group()} »", "fr")
+                break
+    else:
+        for t in _textes_edition(fiche.editions["en"]):
+            m = re.search(r"\b\d+,\d{1,2}\b(?!\d)", t)
+            if m:
+                r.avertir(f"Virgule décimale dans le texte anglais : « {m.group()} »", "en")
+                break
 
 
 def controler_fiche(fiche: Fiche, r: Rapport, aujourd_hui: dt.date | None = None) -> None:
@@ -511,7 +525,8 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         return  # signalé avant le rendu par controler_marque
     r.verifier(logos.langue == langue, f"[{langue}] Logo de la bonne langue",
                f"[{langue}] Logo de la langue « {logos.langue} » utilisé pour la version {langue.upper()}", BLOQUANT)
-    noms = {"video": "vidéo", "carrousel": "carrousel", "couverture": "couverture"}
+    noms = {"video": "vidéo", "lecon": "vidéo 16:9", "carrousel": "carrousel", "couverture": "couverture"}
+    horizontal = getattr(rendu, "format", "") == "lecon"   # cours 16:9 : pas d'interface d'application par-dessus
     zone_c = charte["marges_carrousel"]
     for support, index, type_ in attendus:
         pose = rendu.poses.get((support, index))
@@ -533,7 +548,7 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         if pose.largeur > pose.largeur_native:
             r.avertir(f"Logo agrandi au-delà de sa résolution ({pose.largeur} px pour un fichier de "
                       f"{pose.largeur_native} px, {lieu}) : risque de flou, fournir un fichier plus grand", langue)
-        ecran_tel = 844 if support == "lecon" else 390   # téléphone tenu à l'horizontale pour un cours 16:9
+        ecran_tel = 844 if horizontal else 390   # téléphone tenu à l'horizontale pour un cours 16:9
         if pose.largeur * ecran_tel / w < _logo.LARGEUR_MOBILE_MIN:
             r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * ecran_tel / w)} px à l'écran, {lieu})", langue)
         lis = (charte.get("logo") or {}).get("lisibilite") or {}
@@ -551,7 +566,7 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
                     or y1 > h - zone_c["bas"])
             if hors:
                 r.avertir(f"Logo hors des marges du carrousel ({lieu})", langue)
-        elif support != "lecon":
+        elif not horizontal:
             for cle in plateformes["cibles"]:
                 p = plateformes["plateformes"][cle]
                 z = p["zone_ui"]

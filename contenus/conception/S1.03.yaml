@@ -1,0 +1,57 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+id_programme: S1.03
+statut: revue_claude   # 2026-11-03 : à relire par ChatGPT, puis validation de JG
+fiche_production: contenus/fiches/2026-11-n1-s1-03-types-de-variables.yaml
+
+titres: {fr: "Peut-on faire la moyenne de codes postaux ?", en: "Can you average postcodes? Types of variables"}
+question_centrale:
+  fr: "Peut-on calculer la moyenne de codes postaux ou de niveaux de satisfaction ?"
+  en: "Can you average postcodes or satisfaction scores?"
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 3}
+public: {prerequis: [S1.02], niveau_maths: M0, rappel_conseille: []}
+
+intuition: "Un nombre n'est pas toujours une quantité : parfois c'est une étiquette, parfois un rang."
+exemple_fil_rouge: "Moyenne de 75001 et 13001 ; 10 °C et 20 °C ; étoiles d'hôtel."
+exemple_reel:
+  description: "Aucun : conversions physiques (0 °C = 273,15 K)."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - {chiffre: "44 001 ; 1,035 ; 3,5 %", support: ecran_et_voix, nature: calcul, calcul: {entrees: "Codes 75001 et 13001 ; 10 et 20 °C", formule: "(75001 + 13001) / 2 ; (20 + 273,15) / (10 + 273,15)", transformations: "arrondis"}, definition: "", unite: "", population: "", periode: "", couverture: "", revisions: "", source_primaire: {organisme: "", url: "", consulte_le: ""}, incertitude: "Aucune", comparabilite: ""}
+
+affirmations_qualitatives:
+  - {affirmation: "75001 : Paris ; 13001 : Marseille", statut: hypothese, source: "Connaissance générale (codes postaux des 1ers arrondissements)", verification: "À confirmer par ChatGPT ou JG"}
+
+deroule:
+  - {etape: question, contenu: "Défi : moyenne de deux codes postaux"}
+  - {etape: formalisation, contenu: "Quatre types de variables ; qualitatives et quantitatives"}
+  - {etape: correction, contenu: "Le code postal est une étiquette"}
+  - {etape: formalisation, contenu: "Quatre échelles et leurs opérations"}
+  - {etape: application, contenu: "20 °C et 20 kg ; kelvins"}
+  - {etape: raisonnement, contenu: "Moyenne d'une note de 1 à 5 : le dire"}
+  - {etape: exercice, contenu: "Étoiles d'hôtel"}
+  - {etape: rappel, contenu: "Étiquette, rang, quantité ; vrai zéro"}
+
+calculs_a_verifier:
+  - {expression: "(75001 + 13001) / 2", attendu: 44001, libelle: "Codes postaux"}
+  - {expression: "(20 + 273.15) / (10 + 273.15)", attendu: 1.035, libelle: "Kelvins"}
+
+idees_fausses:
+  - {idee: "Faire la moyenne d'étiquettes", desamorcee_a_l_etape: "Défi des codes postaux"}
+  - {idee: "Traiter une note de 1 à 5 comme des distances égales sans le dire", desamorcee_a_l_etape: "Note de 1 à 5"}
+
+exercice: {question: "Étoiles d'hôtel de 1 à 5 : type ? Un 4 étoiles est-il deux fois meilleur ?", correction: "Ordinale ; non, on peut classer mais pas faire de rapport", pause_secondes: 5}
+
+preuve_apprentissage:
+  tache: "Répondre à la question de transfert sans aide"
+  question_de_transfert: "Une année de naissance (1990, 2000) : quelle échelle ? Peut-on dire que 2000 est « plus » que 1990, et de combien ?"
+  diagnostic_d_erreur: "« Il fait 0 °C aujourd'hui et 10 °C demain : il fera infiniment plus chaud » : où est l'erreur ?"
+  limite_a_enoncer: "Le type d'une variable dépend aussi de l'usage : un âge en tranches devient ordinal"
+
+duree_estimee_min: [5, 7]
+format: educational
+declinaisons: [vertical_9_16, youtube_16_9]   # demande de JG, 2026-11-03 : une version par plateforme
+derives_short: ["20 °C, deux fois plus chaud que 10 °C ? (40 s)"]
+adaptation_en: "Mêmes nombres ; décimales et séparateurs anglais ; noms d'organismes expliqués (Insee, France Travail)."
+licences: "Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+controle: {test_du_debutant: "À mesurer", relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire", controle_mobile: "Après rendu (inspection)"}

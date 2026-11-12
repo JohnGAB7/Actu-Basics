@@ -1,0 +1,201 @@
+# Niveau 1, vague 1, lot 1 : S1.02 « Population, individu, variable » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S1.02.yaml
+# Aucun fait extérieur : titres de presse et village fictifs, annoncés comme tels.
+# Statut : brouillon. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s1-02-population-individu-variable
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S1.02 · Population, individu, variable"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Identifier dans une phrase la population, l'individu (unité statistique) et la variable"
+      - "Expliquer pourquoi changer d'unité, ménage ou personne, change le résultat"
+    en:
+      - "Identify the population, the unit and the variable in a sentence"
+      - "Explain why changing the unit, household or person, changes the result"
+  prerequis:
+    fr: ["S1.01 : qu'est-ce qu'une donnée ?"]
+    en: ["S1.01: what counts as data?"]
+  hypotheses:
+    fr: "Titres de presse et village fictifs, choisis pour que les calculs se suivent de tête"
+    en: "Made-up headlines and village, chosen so the arithmetic is easy to follow"
+
+validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 validé ; publication non autorisée)
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
+
+editions:
+  fr:
+    titre: "De qui parle ce chiffre ? Population, individu, variable"
+    legende: |
+      « Les Français dorment 7 heures par nuit » : de qui parle-t-on, et qu'a-t-on mesuré ? Pour comprendre une statistique, trois questions : quelle population, quelle unité, quelle variable. On apprend à repérer la population, l'individu et la variable, et l'on voit sur un petit village fictif qu'un revenu « par ménage » et un revenu « par personne » ne donnent pas du tout le même chiffre. Titres et nombres fictifs. Série « Lire un chiffre sans se faire avoir ».
+      Pour aller plus loin, nos anciennes leçons sur les variables (https://youtu.be/HMVPsnfzR4s) et les concepts de base (https://youtu.be/smo6HV79x_Q).
+    hashtags: [statistiques, donnees, chiffres]
+    scenes:
+      - type: accroche
+        texte: "« Les Français dorment *7 heures* par nuit. » De *qui* parle-t-on ?"
+        note: "Titre fictif, pour l'exemple."
+        voix_off: "Imaginons ce titre : les Français dorment sept heures par nuit. De qui parle-t-on exactement ? Et qu'a-t-on mesuré ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Qui, quelle unité, quelle mesure"
+        voix_off: "Pour comprendre une statistique, posez trois questions : quelle population étudie-t-on, quelle unité observe-t-on, et quelle variable mesure-t-on ?"
+      - type: etapes
+        texte: "Les trois briques d'une statistique"
+        disposition: cartes
+        etapes:
+          - "*Population* : l'ensemble que l'on étudie"
+          - "*Individu* : chaque élément que l'on compte"
+          - "*Variable* : ce que l'on mesure sur chacun"
+        voix_off: "Il y a trois briques. La population, c'est l'ensemble que l'on étudie. L'individu, qu'on appelle aussi l'unité statistique, c'est chaque élément de cette population. La variable, c'est ce que l'on mesure sur chaque individu."
+      - type: etapes
+        texte: "« Les Français dorment 7 heures »"
+        etapes:
+          - "Population : *quels* Français ? Adultes ? Enfants ?"
+          - "Individu : *une personne*"
+          - "Variable : durée de sommeil, *déclarée ou mesurée* ?"
+        voix_off: "Appliquons-les à notre titre. La population : de quels Français parle-t-on ? Les adultes, les enfants, tout le monde ? L'individu : ici, une personne. La variable : la durée de sommeil. Mais a-t-elle été déclarée par les personnes, ou mesurée par un appareil ?"
+      - type: texte
+        texte: "Un titre court cache souvent *la population* et *la méthode*"
+        voix_off: "Un titre court cache souvent la population et la méthode. Sans elles, impossible de savoir si deux chiffres sont comparables."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Changer d'unité change le chiffre"
+        voix_off: "L'individu choisi compte autant que la population. Voyons pourquoi."
+      - type: etapes
+        texte: "Un village fictif de 3 ménages"
+        etapes:
+          - "Ménage A : *1* personne, *2 000 €* par mois"
+          - "Ménage B : *4* personnes, *4 000 €*"
+          - "Ménage C : *2* personnes, *3 000 €*"
+        note: "Village fictif : 3 ménages, 7 habitants, 9 000 € de revenus par mois."
+        voix_off: "Prenons un village fictif de trois ménages. Le ménage A, une personne seule, gagne deux mille euros par mois. Le ménage B, quatre personnes, gagne quatre mille euros. Le ménage C, deux personnes, gagne trois mille euros."
+        verifier:
+          - {expression: "2000 + 4000 + 3000", attendu: 9000, libelle: "Revenus du village"}
+          - {expression: "1 + 4 + 2", attendu: 7, libelle: "Habitants du village"}
+      - type: etapes
+        texte: "Le revenu moyen du village"
+        etapes:
+          - "Par *ménage* : 9 000 ÷ 3 = *3 000 €*"
+          - "Par *habitant* : 9 000 ÷ 7 ≈ *1 286 €*"
+        voix_off: "Quel est le revenu moyen du village ? Par ménage, neuf mille euros divisés par trois ménages : trois mille euros. Par habitant, les mêmes neuf mille euros divisés par sept habitants : environ mille deux cent quatre-vingt-six euros."
+        verifier:
+          - {expression: "9000 / 3", attendu: 3000, libelle: "Revenu moyen par ménage"}
+          - {expression: "9000 / 7", attendu: 1286, libelle: "Revenu moyen par personne"}
+      - type: texte
+        texte: "Même village, deux chiffres : *précisez l'individu*"
+        voix_off: "C'est le même village et le même argent. Mais selon l'individu choisi, le ménage ou la personne, le revenu moyen passe de trois mille à moins de mille trois cents euros. Comparer un chiffre par ménage avec un chiffre par personne n'aurait aucun sens."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "« *30 %* des collégiens ont un téléphone avant 11 ans. » Population ? Individu ? Variable ?"
+        note: "Titre fictif, pour l'exercice."
+        pause: 6
+        voix_off: "À vous. Voici un autre titre fictif : trente pour cent des collégiens ont un téléphone avant onze ans. Quelle est la population, quel est l'individu, quelle est la variable ?"
+      - type: correction
+        etapes:
+          - "Population : *les collégiens*, mais où et quand ?"
+          - "Individu : *un collégien*"
+          - "Variable : téléphone *avant 11 ans*, oui ou non"
+        reponse: "Population, individu, variable : les trois sont à préciser"
+        voix_off: "La population, ce sont les collégiens, mais il faudrait savoir de quel pays et en quelle année. L'individu, c'est un collégien. La variable, c'est le fait d'avoir eu un téléphone avant onze ans : une réponse par oui ou par non. Dans un vrai article, chacune de ces trois briques doit être précisée."
+      - type: etapes
+        texte: "Ce qu'il faut retenir"
+        etapes:
+          - "Qui étudie-t-on ? *La population*"
+          - "Quelle unité observe-t-on ? *L'individu*"
+          - "Que mesure-t-on, et comment ? *La variable*"
+        voix_off: "Récapitulons. Qui étudie-t-on : c'est la population. Quelle unité observe-t-on : c'est l'individu, personne, ménage ou entreprise. Et que mesure-t-on, et comment : c'est la variable. Avant de comparer deux chiffres, vérifiez que ces trois briques sont les mêmes."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Who is this number about? Population, unit, variable"
+    legende: |
+      "People in France sleep 7 hours a night": who are we talking about, and what was measured? To understand a statistic, ask three questions: which population, which unit, which variable. We learn to spot the population, the unit and the variable, and we see on a small made-up village that income "per household" and income "per person" give very different figures. Made-up headlines and numbers. Series "Reading numbers without being fooled".
+      Going further, our earlier lessons (in French) on variables (https://youtu.be/HMVPsnfzR4s) and core concepts (https://youtu.be/smo6HV79x_Q).
+    hashtags: [statistics, data, numbers]
+    scenes:
+      - type: accroche
+        texte: "\"People in France sleep *7 hours* a night.\" *Who* is this about?"
+        note: "Made-up headline, for the example."
+        voix_off: "Imagine this headline: people in France sleep seven hours a night. Who exactly are we talking about? And what was measured?"
+      - type: titre
+        numero: 1
+        texte: "Who, which unit, which measure"
+        voix_off: "To understand a statistic, ask three questions: which population is studied, which unit is observed, and which variable is measured?"
+      - type: etapes
+        texte: "The three building blocks of a statistic"
+        disposition: cartes
+        etapes:
+          - "*Population*: the whole group being studied"
+          - "*Unit*: each element being counted"
+          - "*Variable*: what is measured on each one"
+        voix_off: "There are three building blocks. The population is the whole group being studied. The unit, also called the statistical unit, is each element of that population. The variable is what is measured on each unit."
+      - type: etapes
+        texte: "\"People in France sleep 7 hours\""
+        etapes:
+          - "Population: *which* people? Adults? Children?"
+          - "Unit: *one person*"
+          - "Variable: sleep time, *reported or measured*?"
+        voix_off: "Let's apply them to our headline. The population: which people are we talking about? Adults, children, everyone? The unit: here, one person. The variable: sleep time. But was it reported by the people themselves, or measured by a device?"
+      - type: texte
+        texte: "A short headline often hides *the population* and *the method*"
+        voix_off: "A short headline often hides the population and the method. Without them, there's no way to know whether two figures can be compared."
+      - type: titre
+        numero: 2
+        texte: "Change the unit, change the number"
+        voix_off: "The unit you choose matters as much as the population. Let's see why."
+      - type: etapes
+        texte: "A made-up village of 3 households"
+        etapes:
+          - "Household A: *1* person, *€2,000* a month"
+          - "Household B: *4* people, *€4,000*"
+          - "Household C: *2* people, *€3,000*"
+        note: "Made-up village: 3 households, 7 residents, €9,000 of income a month."
+        voix_off: "Take a made-up village of three households. Household A, one person living alone, earns two thousand euros a month. Household B, four people, earns four thousand euros. Household C, two people, earns three thousand euros."
+        verifier:
+          - {expression: "2000 + 4000 + 3000", attendu: 9000, libelle: "Village income"}
+          - {expression: "1 + 4 + 2", attendu: 7, libelle: "Village residents"}
+      - type: etapes
+        texte: "Average income in the village"
+        etapes:
+          - "Per *household*: 9,000 ÷ 3 = *€3,000*"
+          - "Per *resident*: 9,000 ÷ 7 ≈ *€1,286*"
+        voix_off: "What is the average income in the village? Per household, nine thousand euros divided by three households: three thousand euros. Per resident, the same nine thousand euros divided by seven residents: about one thousand two hundred and eighty-six euros."
+        verifier:
+          - {expression: "9000 / 3", attendu: 3000, libelle: "Average income per household"}
+          - {expression: "9000 / 7", attendu: 1286, libelle: "Average income per person"}
+      - type: texte
+        texte: "Same village, two numbers: *state the unit*"
+        voix_off: "It's the same village and the same money. But depending on the unit, household or person, the average income goes from three thousand to under one thousand three hundred euros. Comparing a per-household figure with a per-person figure would make no sense."
+      - type: exercice
+        texte: "\"*30%* of middle-school pupils have a phone before age 11.\" Population? Unit? Variable?"
+        note: "Made-up headline, for the exercise."
+        pause: 6
+        voix_off: "Your turn. Here's another made-up headline: thirty percent of middle-school pupils have a phone before age eleven. What is the population, what is the unit, what is the variable?"
+      - type: correction
+        etapes:
+          - "Population: *middle-school pupils*, but where and when?"
+          - "Unit: *one pupil*"
+          - "Variable: a phone *before age 11*, yes or no"
+        reponse: "Population, unit, variable: all three need to be stated"
+        voix_off: "The population is middle-school pupils, but we'd need to know which country and which year. The unit is one pupil. The variable is whether they had a phone before age eleven: a yes or no answer. In a real article, each of these three building blocks should be stated."
+      - type: etapes
+        texte: "What to remember"
+        etapes:
+          - "Who is studied? *The population*"
+          - "Which unit is observed? *The unit*: person, household…"
+          - "What is measured, and how? *The variable*"
+        voix_off: "Let's recap. Who is studied: that's the population. Which unit is observed: a person, a household or a company. And what is measured, and how: that's the variable. Before comparing two figures, check that these three building blocks are the same."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

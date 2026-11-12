@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Lignes et retards fictifs.
+id_programme: S3.01
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s3-01-comparer-des-groupes.yaml
+question_centrale:
+  fr: Les trains sont-ils plus en retard le lundi ? Comment le voir d'un coup d'œil ?
+  en: Are trains later on Mondays? How can you see it at a glance?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S3
+  rang_dans_module: 1
+public:
+  prerequis:
+  - S2.06
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Des boîtes côte à côte montrent d'un coup d'œil le centre, l'étalement et les atypiques de chaque groupe.
+exemple_fil_rouge: Deux lignes de train fictives de même retard moyen (5 min), puis retards par jour de la semaine.
+exemple_reel: null
+idees_fausses:
+- idee: Conclure à une différence à partir de deux moyennes très proches
+  desamorcee_a_l_etape: 'Partie 1 : même moyenne, distributions différentes'
+exercice:
+  question: 'Quatre boîtes (lundi, mardi, mercredi, vendredi) : quel jour a la médiane la plus haute, et le plus d''étalement
+    ?'
+  correction: Vendredi dans les deux cas
+  pause_secondes: 9
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Deux cantines : temps d''attente en boîtes côte à côte. Laquelle est la plus régulière ?'
+  diagnostic_d_erreur: '« Le mardi, la moyenne est de 4,9 min contre 5,1 le lundi, donc le lundi est pire » : que manque-t-il
+    ?'
+duree_estimee_min:
+- 4
+- 5
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

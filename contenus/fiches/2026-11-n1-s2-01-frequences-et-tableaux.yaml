@@ -1,0 +1,288 @@
+# Niveau 1, vague 1, lot 2 : S2.01 « Fréquences et tableaux » (EDUCATIONAL, démonstration)
+# Fiche de conception : contenus/conception/S2.01.yaml
+# Aucun chiffre extérieur : classe fictive de 25 élèves, entreprise fictive de 20 salariés (exercice du catalogue).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-01-frequences-et-tableaux
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.01 · Fréquences et tableaux"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Construire un tableau d'effectifs et de fréquences"
+      - "Calculer des fréquences cumulées"
+      - "Comparer deux groupes de tailles différentes avec des fréquences, pas des effectifs"
+    en:
+      - "Build a table of counts and frequencies"
+      - "Compute cumulative frequencies"
+      - "Compare two groups of different sizes with frequencies, not counts"
+  prerequis:
+    fr: ["S1.03 : variables et types de données", "S1.08 : pourcentages et points"]
+    en: ["S1.03: variables and types of data", "S1.08: percentages and points"]
+  hypotheses:
+    fr: "Classe fictive de 25 élèves ; deuxième classe fictive de 40 élèves ; entreprise fictive de 20 salariés"
+    en: "Fictional class of 25 pupils; second fictional class of 40 pupils; fictional company of 20 employees"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Résumer 1 000 réponses sans les lire une par une"
+    legende: |
+      Compter, puis rapporter au total : c'est déjà de la statistique. Avec une classe fictive de 25 élèves, on construit un tableau d'effectifs, de fréquences et de fréquences cumulées, puis on voit pourquoi 12 peut être « moins » que 10. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, frequences, tableaux]
+    scenes:
+      - type: accroche
+        texte: "Mille réponses : *comment les résumer* ?"
+        voix_off: "Mille réponses à un questionnaire : personne ne va les lire une par une. Pour comprendre la méthode, partons d'une petite classe de vingt-cinq élèves. Comment résumer leurs réponses ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Compter : les effectifs"
+        voix_off: "Première étape, toute simple : compter."
+      - type: courbe
+        texte: "Combien de *frères et sœurs* ? Classe de 25 élèves"
+        courbe:
+          style: barres
+          points: [[0, 5], [1, 10], [2, 6], [3, 4]]
+          etiquettes: ["0", "1", "2", "3"]
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Nombre de frères et sœurs"
+          axe_y: "Effectif (élèves)"
+        note: "Classe fictive de 25 élèves."
+        voix_off: "On demande à vingt-cinq élèves combien ils ont de frères et sœurs. Cinq n'en ont aucun, dix en ont un, six en ont deux et quatre en ont trois. Ces nombres s'appellent des effectifs."
+        verifier:
+          - {expression: "5 + 10 + 6 + 4", attendu: 25, libelle: "Total des effectifs"}
+      - type: texte
+        texte: "Toujours vérifier le *total* : 5 + 10 + 6 + 4 = 25"
+        voix_off: "Premier réflexe : vérifier le total. Cinq plus dix plus six plus quatre, cela fait bien vingt-cinq. Sans total, un effectif ne veut pas dire grand-chose."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Rapporter au total : les fréquences"
+        voix_off: "Deuxième étape : rapporter chaque effectif au total."
+      - type: formule
+        texte: "Fréquence = effectif ÷ total"
+        formule:
+          - '\text{fréquence}=\dfrac{\text{effectif}}{\text{effectif total}}'
+          - '\dfrac{10}{25}=0{,}40=40\ \%'
+        voix_off: "La fréquence, c'est l'effectif divisé par le total. Pour les élèves qui ont un frère ou une sœur : dix divisé par vingt-cinq, cela fait zéro virgule quarante, soit quarante pour cent."
+        verifier:
+          - {expression: "10 / 25 * 100", attendu: 40, libelle: "Fréquence de « 1 », en %"}
+      - type: etapes
+        texte: "Le tableau complet"
+        etapes:
+          - "0 : 5 élèves, soit *20 %*"
+          - "1 : 10 élèves, soit *40 %*"
+          - "2 : 6 élèves, soit *24 %*"
+          - "3 : 4 élèves, soit *16 %*"
+        voix_off: "Voici le tableau complet. Aucun frère ou sœur : cinq élèves, soit vingt pour cent. Un : dix élèves, soit quarante pour cent. Deux : six élèves, soit vingt-quatre pour cent. Trois : quatre élèves, soit seize pour cent."
+        verifier:
+          - {expression: "5 / 25 * 100", attendu: 20, libelle: "Fréquence de « 0 », en %"}
+          - {expression: "6 / 25 * 100", attendu: 24, libelle: "Fréquence de « 2 », en %"}
+          - {expression: "4 / 25 * 100", attendu: 16, libelle: "Fréquence de « 3 », en %"}
+          - {expression: "20 + 40 + 24 + 16", attendu: 100, libelle: "Total des fréquences, en %"}
+      - type: texte
+        texte: "Les fréquences font toujours *100 %*"
+        voix_off: "Les fréquences s'additionnent toujours pour faire cent pour cent. Si ce n'est pas le cas, il manque quelqu'un, ou un arrondi est passé par là."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Additionner : les fréquences cumulées"
+        voix_off: "Troisième étape : les fréquences cumulées."
+      - type: etapes
+        texte: "*Au plus* tant de frères et sœurs"
+        etapes:
+          - "Au plus 0 : *20 %*"
+          - "Au plus 1 : 20 + 40 = *60 %*"
+          - "Au plus 2 : 60 + 24 = *84 %*"
+          - "Au plus 3 : 84 + 16 = *100 %*"
+        voix_off: "On additionne les fréquences au fur et à mesure. Au plus zéro frère ou sœur : vingt pour cent. Au plus un : vingt plus quarante, soit soixante pour cent. Au plus deux : soixante plus vingt-quatre, soit quatre-vingt-quatre pour cent. Au plus trois : cent pour cent, toute la classe."
+        verifier:
+          - {expression: "20 + 40", attendu: 60, libelle: "Cumul jusqu'à 1"}
+          - {expression: "20 + 40 + 24", attendu: 84, libelle: "Cumul jusqu'à 2"}
+      - type: chiffre
+        valeur: 84
+        suffixe: {fr: " %", en: "%"}
+        texte: "des élèves ont *au plus deux* frères et sœurs"
+        note: "Le cumul suit l'ordre des valeurs : il a un sens ici parce que 0, 1, 2, 3 sont rangés."
+        voix_off: "Une seule phrase résume alors la classe : quatre-vingt-quatre pour cent des élèves ont au plus deux frères et sœurs. Le cumul a un sens ici parce que les valeurs sont rangées dans l'ordre."
+      # ---------------------------------------------------------------- piège
+      - type: titre
+        numero: 4
+        texte: "Le piège : comparer des effectifs"
+        voix_off: "Dernier point, et c'est le piège le plus courant."
+      - type: etapes
+        texte: "Deux classes, *deux tailles*"
+        etapes:
+          - "Classe A, 25 élèves : 10 ont un frère ou une sœur, *40 %*"
+          - "Classe B, 40 élèves : 12 en ont un, *30 %*"
+        voix_off: "Comparons deux classes. Dans la classe A, de vingt-cinq élèves, dix ont exactement un frère ou une sœur, soit quarante pour cent. Dans la classe B, de quarante élèves, ils sont douze, soit trente pour cent seulement."
+        verifier:
+          - {expression: "12 / 40 * 100", attendu: 30, libelle: "Classe B, en %"}
+      - type: texte
+        texte: "12 est plus grand que 10, mais *30 % est plus petit que 40 %*"
+        voix_off: "Douze est plus grand que dix. Mais rapporté à la taille de la classe, c'est moins. Pour comparer deux groupes de tailles différentes, on compare des fréquences, pas des effectifs."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "20 salariés : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*. Fréquences et cumul ?"
+        pause: 8
+        voix_off: "À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences, puis les fréquences cumulées."
+      - type: correction
+        etapes:
+          - "Voiture 8 ÷ 20 = *40 %*, transports 6 ÷ 20 = *30 %*"
+          - "Vélo 4 ÷ 20 = *20 %*, marche 2 ÷ 20 = *10 %*"
+          - "Cumul, de la voiture à la marche : 40, 70, 90, 100 %"
+        reponse: "Total 100 %, cumul dans l'ordre choisi"
+        voix_off: "Correction. Voiture : huit divisé par vingt, quarante pour cent ; transports en commun : trente pour cent. Vélo : vingt pour cent ; marche : dix pour cent. En cumulant dans cet ordre : quarante, soixante-dix, quatre-vingt-dix, puis cent pour cent. Attention : les modes de transport n'ont pas d'ordre naturel. Le cumul dépend de l'ordre choisi, ici du plus fréquent au moins fréquent."
+        verifier:
+          - {expression: "8 / 20 * 100", attendu: 40, libelle: "Voiture, en %"}
+          - {expression: "6 / 20 * 100", attendu: 30, libelle: "Transports en commun, en %"}
+          - {expression: "4 / 20 * 100", attendu: 20, libelle: "Vélo, en %"}
+          - {expression: "2 / 20 * 100", attendu: 10, libelle: "Marche, en %"}
+          - {expression: "40 + 30 + 20", attendu: 90, libelle: "Cumul jusqu'au vélo"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Compter*, puis vérifier le total"
+          - "*Rapporter au total* pour comparer"
+          - "*Cumuler* seulement si les valeurs ont un ordre"
+        voix_off: "À retenir. On compte, puis on vérifie le total. On rapporte au total pour comparer des groupes de tailles différentes. Et on ne cumule que si les valeurs ont un ordre, ou après en avoir choisi un."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Summing up 1,000 answers without reading them one by one"
+    legende: |
+      Count, then divide by the total: that is already statistics. With a fictional class of 25 pupils, we build a table of counts, frequencies and cumulative frequencies, then see why 12 can be “less” than 10. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, frequencies, tables]
+    scenes:
+      - type: accroche
+        texte: "A thousand answers: *how do you sum them up*?"
+        voix_off: "A thousand answers to a survey: nobody is going to read them one by one. To learn the method, let's start with a small class of twenty-five pupils. How do you sum up their answers?"
+      - type: titre
+        numero: 1
+        texte: "Counting: the counts"
+        voix_off: "Step one is very simple: count."
+      - type: courbe
+        texte: "How many *brothers and sisters*? Class of 25"
+        courbe:
+          style: barres
+          points: [[0, 5], [1, 10], [2, 6], [3, 4]]
+          etiquettes: ["0", "1", "2", "3"]
+          valeurs: true
+          y_min: 0
+          y_max: 12
+          axe_x: "Number of brothers and sisters"
+          axe_y: "Count (pupils)"
+        note: "Fictional class of 25 pupils."
+        voix_off: "We ask twenty-five pupils how many brothers and sisters they have. Five have none, ten have one, six have two and four have three. These numbers are called counts."
+        verifier:
+          - {expression: "5 + 10 + 6 + 4", attendu: 25, libelle: "Total count"}
+      - type: texte
+        texte: "Always check the *total*: 5 + 10 + 6 + 4 = 25"
+        voix_off: "First habit: check the total. Five plus ten plus six plus four does make twenty-five. Without the total, a count doesn't mean much."
+      - type: titre
+        numero: 2
+        texte: "Dividing by the total: frequencies"
+        voix_off: "Step two: divide each count by the total."
+      - type: formule
+        texte: "Frequency = count ÷ total"
+        formule:
+          - '\text{frequency}=\dfrac{\text{count}}{\text{total count}}'
+          - '\dfrac{10}{25}=0.40=40\%'
+        voix_off: "The frequency is the count divided by the total. For the pupils with one brother or sister: ten divided by twenty-five is zero point four zero, or forty percent."
+        verifier:
+          - {expression: "10 / 25 * 100", attendu: 40, libelle: "Frequency of “1”, in %"}
+      - type: etapes
+        texte: "The full table"
+        etapes:
+          - "0: 5 pupils, or *20%*"
+          - "1: 10 pupils, or *40%*"
+          - "2: 6 pupils, or *24%*"
+          - "3: 4 pupils, or *16%*"
+        voix_off: "Here is the full table. No brothers or sisters: five pupils, or twenty percent. One: ten pupils, or forty percent. Two: six pupils, or twenty-four percent. Three: four pupils, or sixteen percent."
+        verifier:
+          - {expression: "5 / 25 * 100", attendu: 20, libelle: "Frequency of “0”, in %"}
+          - {expression: "6 / 25 * 100", attendu: 24, libelle: "Frequency of “2”, in %"}
+          - {expression: "4 / 25 * 100", attendu: 16, libelle: "Frequency of “3”, in %"}
+          - {expression: "20 + 40 + 24 + 16", attendu: 100, libelle: "Total of frequencies, in %"}
+      - type: texte
+        texte: "Frequencies always add up to *100%*"
+        voix_off: "Frequencies always add up to one hundred percent. If they don't, someone is missing, or rounding got in the way."
+      - type: titre
+        numero: 3
+        texte: "Adding up: cumulative frequencies"
+        voix_off: "Step three: cumulative frequencies."
+      - type: etapes
+        texte: "*At most* so many brothers and sisters"
+        etapes:
+          - "At most 0: *20%*"
+          - "At most 1: 20 + 40 = *60%*"
+          - "At most 2: 60 + 24 = *84%*"
+          - "At most 3: 84 + 16 = *100%*"
+        voix_off: "We add the frequencies as we go. At most zero brothers or sisters: twenty percent. At most one: twenty plus forty, sixty percent. At most two: sixty plus twenty-four, eighty-four percent. At most three: one hundred percent, the whole class."
+        verifier:
+          - {expression: "20 + 40", attendu: 60, libelle: "Cumulative up to 1"}
+          - {expression: "20 + 40 + 24", attendu: 84, libelle: "Cumulative up to 2"}
+      - type: chiffre
+        valeur: 84
+        suffixe: {fr: " %", en: "%"}
+        texte: "of pupils have *at most two* brothers and sisters"
+        note: "Cumulating follows the order of the values: it makes sense here because 0, 1, 2, 3 are ordered."
+        voix_off: "One sentence now sums up the class: eighty-four percent of the pupils have at most two brothers and sisters. Cumulating makes sense here because the values come in order."
+      - type: titre
+        numero: 4
+        texte: "The trap: comparing counts"
+        voix_off: "One last point, and it is the most common trap."
+      - type: etapes
+        texte: "Two classes, *two sizes*"
+        etapes:
+          - "Class A, 25 pupils: 10 have one brother or sister, *40%*"
+          - "Class B, 40 pupils: 12 have one, *30%*"
+        voix_off: "Let's compare two classes. In class A, with twenty-five pupils, ten have exactly one brother or sister, or forty percent. In class B, with forty pupils, there are twelve, only thirty percent."
+        verifier:
+          - {expression: "12 / 40 * 100", attendu: 30, libelle: "Class B, in %"}
+      - type: texte
+        texte: "12 is more than 10, but *30% is less than 40%*"
+        voix_off: "Twelve is more than ten. But relative to the size of the class, it is less. To compare groups of different sizes, compare frequencies, not counts."
+      - type: exercice
+        texte: "20 employees: *8 car*, *6 public transport*, *4 bike*, *2 walk*. Frequencies and cumulative?"
+        pause: 8
+        voix_off: "Your turn. Twenty employees say how they get to work: eight by car, six by public transport, four by bike and two on foot. Work out the frequencies, then the cumulative frequencies."
+      - type: correction
+        etapes:
+          - "Car 8 ÷ 20 = *40%*, public transport 6 ÷ 20 = *30%*"
+          - "Bike 4 ÷ 20 = *20%*, walk 2 ÷ 20 = *10%*"
+          - "Cumulative, from car to walking: 40, 70, 90, 100%"
+        reponse: "Total 100%, cumulative in the chosen order"
+        voix_off: "Here's the answer. Car: eight divided by twenty, forty percent; public transport: thirty percent. Bike: twenty percent; walking: ten percent. Adding up in this order: forty, seventy, ninety, then one hundred percent. Careful: ways of getting to work have no natural order. The cumulative figures depend on the order chosen, here from most to least common."
+        verifier:
+          - {expression: "8 / 20 * 100", attendu: 40, libelle: "Car, in %"}
+          - {expression: "6 / 20 * 100", attendu: 30, libelle: "Public transport, in %"}
+          - {expression: "4 / 20 * 100", attendu: 20, libelle: "Bike, in %"}
+          - {expression: "2 / 20 * 100", attendu: 10, libelle: "Walk, in %"}
+          - {expression: "40 + 30 + 20", attendu: 90, libelle: "Cumulative up to bike"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Count*, then check the total"
+          - "*Divide by the total* to compare"
+          - "*Cumulate* only when the values have an order"
+        voix_off: "Key points. Count, then check the total. Divide by the total to compare groups of different sizes. And only cumulate when the values have an order, or once you have chosen one."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

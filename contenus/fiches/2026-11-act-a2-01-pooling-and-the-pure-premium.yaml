@@ -1,0 +1,360 @@
+# Parcours Actuariat (pilier A), pilote : A2.01 « Pooling and the pure premium » (YOUTUBE_LESSON, FR et EN)
+# Plan validé par JG le 2026-11-11 : docs/actuariat/PARCOURS-ACTUARIAT.md (v2, relecture ChatGPT intégrée).
+# Point bloquant de la relecture : la mutualisation rend les pertes plus PRÉVISIBLES sous hypothèses
+# (indépendance, risques semblables, nombre suffisant) ; elle ne garantit pas un bénéfice.
+# Modèle : vols indépendants, probabilité 2 % par téléphone et par an, coût fixe 500 $ (au plus un vol).
+# Le nombre de vols suit alors une loi binomiale ; les probabilités de perte sont calculées exactement.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après la relecture ChatGPT du 2026-11-11. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-a2-01-pooling-and-the-pure-premium
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2.01 · Pooling and the pure premium"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Décrire le coût d'un contrat comme une variable aléatoire, avec son espérance et son écart-type"
+      - "Expliquer pourquoi le coût moyen par contrat devient plus prévisible quand le nombre de contrats augmente"
+      - "Utiliser la règle : écart-type de la moyenne = sigma divisé par racine de n"
+      - "Énoncer les conditions de la mutualisation : indépendance, risques semblables, assez de contrats"
+      - "Distinguer prime pure, prime commerciale et résultat technique"
+    en:
+      - "Describe the cost of one policy as a random variable, with its expected value and standard deviation"
+      - "Explain why the average cost per policy becomes more predictable as the number of policies grows"
+      - "Use the rule: standard deviation of the average = sigma divided by the square root of n"
+      - "State the conditions pooling relies on: independence, similar risks, enough policies"
+      - "Tell apart the pure premium, the commercial premium and the technical result"
+  prerequis:
+    fr: ["A0.01 : le métier d'actuaire (prime pure)", "L'écart-type, intuitivement (série statistiques : variance et écart-type)"]
+    en: ["A0.01: the actuarial profession (pure premium)", "Standard deviation, intuitively (statistics series: variance and standard deviation)"]
+  hypotheses:
+    fr: "Assureur et chiffres fictifs ; vols indépendants d'un téléphone à l'autre ; 2 % de probabilité de vol par téléphone et par an ; au plus un vol par téléphone ; un vol coûte exactement 500 € ; frais ignorés"
+    en: "Fictional insurer and figures; thefts independent from one phone to another; 2% chance of theft per phone per year; at most one theft per phone; a theft costs exactly $500; expenses ignored"
+
+validation:
+  statut: valide   # EN validée par JG le 2026-11-11 ; FR relue par ChatGPT et validée par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ?"
+    legende: |
+      Assurer un téléphone, c'est un pari : l'assureur ne verse rien ou verse 500 €. Assurer 10 000 téléphones, c'est presque prévisible. Pourquoi ? Dans cet épisode de notre série sur l'actuariat, on traite le coût d'un contrat comme une variable aléatoire, on calcule son espérance et son écart-type, et on voit comment la mutualisation réduit l'incertitude par contrat : sigma divisé par racine de n. On voit aussi ce que la mutualisation ne fait pas : elle rend les pertes plus prévisibles, pas automatiquement rentables. Exercice corrigé à la fin. Assureur et chiffres fictifs, calculs vérifiés.
+    hashtags: [actuariat, assurance, probabilites, loidesgrandsnombres]
+    scenes:
+      - type: accroche
+        texte: "Un téléphone, c'est un pari. *10 000 téléphones*, c'est presque prévisible."
+        voix_off: "Pour un seul téléphone, l'issue est très incertaine : soit l'assureur ne verse rien, soit il verse cinq cents euros. Assurez dix mille téléphones, et vous pouvez prévoir le coût par téléphone remarquablement bien. Pourquoi ? C'est l'idée derrière toute assurance : la mutualisation."
+      - type: texte
+        texte: "Retour chez *JG's Holding* et ses téléphones"
+        note: "JG's Holding est un assureur fictif. Tous les chiffres sont inventés."
+        voix_off: "Dans le premier épisode, notre assureur fictif, JG's Holding, assurait des téléphones contre le vol. Chaque téléphone avait deux pour cent de chances d'être volé dans l'année, et un vol coûtait cinq cents euros. Nous avions trouvé une prime pure de dix euros par téléphone. Aujourd'hui, nous allons nous poser une question essentielle : dans quelle mesure ce coût moyen de dix euros est-il prévisible ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Un contrat : un pari"
+        voix_off: "Regardons d'abord un seul téléphone."
+      - type: etapes
+        texte: "Un téléphone, un an : *ce que paie JG's Holding*"
+        etapes:
+          - "Dans 98 % des cas : *0 €*"
+          - "Dans 2 % des cas : *500 €*"
+          - "Coût attendu : 0,98 × 0 € + 0,02 × 500 € = *10 €*"
+          - "Mais JG's Holding ne paie jamais 10 €"
+        voix_off: "Pour un seul téléphone, deux choses seulement peuvent arriver. Dans quatre-vingt-dix-huit pour cent des cas, pas de vol, et JG's Holding ne paie rien. Dans deux pour cent des cas, le téléphone est volé, et JG's Holding paie cinq cents euros. Le coût attendu pondère chaque issue par sa probabilité, ce qui donne dix euros. Mais remarquez : JG's Holding ne paie jamais dix euros pour ce téléphone ; il paie soit zéro, soit cinq cents."
+        verifier:
+          - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Coût attendu d'un téléphone"}
+      - type: texte
+        texte: "L'espérance est une *moyenne à long terme*, pas une prévision"
+        voix_off: "Le coût d'un contrat est ce que les statisticiens appellent une variable aléatoire : un nombre dont la valeur dépend du hasard. Son espérance, dix euros ici, est le coût moyen que l'on obtiendrait sur un très grand nombre de téléphones identiques. Pour un téléphone donné, ce n'est pas une prévision de ce qui va arriver."
+      - type: formule
+        texte: "Quelle incertitude pour *un téléphone* ?"
+        formule:
+          - '\mathrm{Var}(X)=0{,}02\times 500^2-10^2=4\,900\ \text{€}^2'
+          - '\sigma=\sqrt{4\,900}=70\ \text{€}'
+        voix_off: "Pour mesurer cette incertitude, on utilise l'écart-type, la distance typique à la moyenne. D'abord la variance : l'espérance du carré du coût, zéro virgule zéro deux fois cinq cents au carré, moins le carré de la moyenne, dix au carré. Cela donne quatre mille neuf cents. Sa racine carrée, l'écart-type, vaut soixante-dix euros."
+        verifier:
+          - {expression: "0.02 * 500**2 - 10**2", attendu: 4900, libelle: "Variance du coût d'un téléphone"}
+          - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Écart-type d'un téléphone"}
+          - {expression: "500 * sqrt(0.02 * 0.98)", attendu: 70, libelle: "Même résultat : 500 × √(p(1 − p))"}
+      - type: texte
+        texte: "Une dispersion de *70 €* autour d'une moyenne de *10 €*"
+        voix_off: "Pour un téléphone, l'incertitude est donc sept fois plus grande que la moyenne elle-même. Fixer un prix pour un seul téléphone, isolément, ressemble à un pari."
+        verifier:
+          - {expression: "70 / 10", attendu: 7, libelle: "Écart-type divisé par la moyenne"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Beaucoup de contrats : la mutualisation"
+        voix_off: "Assurons maintenant beaucoup de téléphones à la fois."
+      - type: etapes
+        texte: "Combien de vols *dans l'année* ?"
+        etapes:
+          - "100 téléphones : environ *2* vols ; écart-type d'environ *1,4* vol"
+          - "10 000 téléphones : environ *200* vols ; écart-type d'environ *14* vols"
+          - "Dispersion relative : 1,4 ÷ 2 = *70 %*, mais 14 ÷ 200 = *7 %*"
+        note: "Vols indépendants : le nombre de vols suit une loi binomiale. Écart-type : √(n × 0,02 × 0,98)."
+        voix_off: "Comptons les vols. Avec cent téléphones, JG's Holding attend environ deux vols, avec un écart-type d'environ un virgule quatre vol. Avec dix mille téléphones, il en attend environ deux cents, avec un écart-type d'environ quatorze vols. La dispersion grandit, mais bien plus lentement que le nombre de téléphones : elle vaut soixante-dix pour cent de la moyenne avec cent téléphones, et seulement sept pour cent avec dix mille."
+        verifier:
+          - {expression: "100 * 0.02", attendu: 2, libelle: "Vols attendus, 100 téléphones"}
+          - {expression: "sqrt(100 * 0.02 * 0.98)", attendu: 1.4, libelle: "Écart-type du nombre de vols, 100 téléphones"}
+          - {expression: "10000 * 0.02", attendu: 200, libelle: "Vols attendus, 10 000 téléphones"}
+          - {expression: "sqrt(10000 * 0.02 * 0.98)", attendu: 14, libelle: "Écart-type du nombre de vols, 10 000 téléphones"}
+          - {expression: "100 * sqrt(100 * 0.02 * 0.98) / (100 * 0.02)", attendu: 70, libelle: "Dispersion relative, 100 téléphones, en %"}
+          - {expression: "100 * sqrt(10000 * 0.02 * 0.98) / (10000 * 0.02)", attendu: 7, libelle: "Dispersion relative, 10 000 téléphones, en %"}
+      - type: formule
+        texte: "Incertitude du *coût moyen par téléphone*"
+        note: "Valable pour des coûts de contrats indépendants et de même loi."
+        formule:
+          - '\sigma_{\bar{X}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{70}{\sqrt{n}}'
+          - 'n=100:\ 7\ \text{€}'
+          - 'n=10\,000:\ 0{,}70\ \text{€}'
+        voix_off: "Regardons maintenant le coût moyen par téléphone. Quand les coûts des contrats sont indépendants et de même loi, comme ici avec les mêmes deux pour cent et les mêmes cinq cents euros, l'écart-type de leur moyenne est sigma divisé par racine de n, le nombre de téléphones. Avec cent téléphones, soixante-dix divisé par dix donne sept euros. Avec dix mille téléphones, soixante-dix divisé par cent donne seulement soixante-dix centimes."
+        verifier:
+          - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Écart-type du coût moyen, 100 téléphones"}
+          - {expression: "70 / sqrt(10000)", attendu: 0.70, libelle: "Écart-type du coût moyen, 10 000 téléphones"}
+      - type: courbe
+        texte: "Écart-type du *coût moyen par téléphone*"
+        courbe:
+          style: barres
+          points: [[0, 70], [1, 7], [2, 0.7]]
+          etiquettes: ["1 téléphone", "100 téléphones", "10 000 téléphones"]
+          etiquettes_valeurs: ["70 €", "7 €", "0,70 €"]
+          valeurs: true
+          y_min: 0
+          y_max: 80
+          axe_x: "Nombre de téléphones assurés"
+          axe_y: "Écart-type (€)"
+        note: "Coût moyen par téléphone : 10 € dans les trois cas. Vols indépendants."
+        voix_off: "Voici la même idée en image. Le coût moyen par téléphone est de dix euros dans les trois cas. Mais l'incertitude autour tombe de soixante-dix euros pour un téléphone, à sept euros pour cent téléphones, à soixante-dix centimes pour dix mille. Avec beaucoup de contrats indépendants, les hauts et les bas du hasard se compensent en grande partie."
+      - type: texte
+        texte: "La loi des grands nombres : le coût moyen *tend vers 10 €*"
+        voix_off: "C'est la loi des grands nombres à l'œuvre. Quand le nombre de contrats indépendants et de même loi augmente, le coût moyen par contrat tend à converger vers son espérance, dix euros. C'est cela, la mutualisation : répartir les risques entre de nombreux contrats rend le coût moyen du portefeuille bien plus prévisible."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Ce que la mutualisation ne fait pas"
+        voix_off: "La mutualisation est puissante, mais elle a des limites."
+      - type: etapes
+        texte: "Prime de *11 €* par téléphone : probabilité que les sinistres coûtent *plus que les primes*"
+        etapes:
+          - "100 téléphones : 3 vols ou plus, environ *32 %*"
+          - "10 000 téléphones : 221 vols ou plus, environ *7,3 %*"
+          - "Bien plus faible, mais *jamais nulle*"
+        note: "11 € = prime pure de 10 € + 1 € de marge de sécurité ; frais ignorés. Probabilités binomiales exactes."
+        voix_off: "Supposons que JG's Holding facture onze euros par téléphone : la prime pure de dix euros plus un euro de marge de sécurité. Avec cent téléphones, il encaisse mille cent euros, donc trois vols suffisent à coûter plus que cela : cela arrive dans environ trente-deux pour cent des cas. Avec dix mille téléphones, il faut deux cent vingt et un vols ou plus, ce qui arrive dans environ sept virgule trois pour cent des cas. La mutualisation rend une mauvaise année bien moins probable, mais jamais impossible."
+        verifier:
+          - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 vols ou plus sur 100), en %"}
+          - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 vols ou plus sur 10 000), en %"}
+          - {expression: "100 * 11", attendu: 1100, libelle: "Primes encaissées, 100 téléphones"}
+          - {expression: "floor(100 * 11 / 500) + 1", attendu: 3, libelle: "Plus petit nombre de vols dépassant les primes, 100 téléphones"}
+          - {expression: "floor(10000 * 11 / 500) + 1", attendu: 221, libelle: "Plus petit nombre de vols dépassant les primes, 10 000 téléphones"}
+      - type: etapes
+        texte: "La mutualisation repose sur *plusieurs conditions*…"
+        disposition: cartes
+        etapes:
+          - "Les risques sont indépendants"
+          - "Les risques sont semblables"
+          - "Il y a assez de contrats"
+          - "La probabilité reste stable"
+        voix_off: "La mutualisation repose sur plusieurs conditions, que les actuaires vérifient toujours. Les risques doivent être largement indépendants : une tempête de grêle qui abîme toutes les voitures d'une ville en même temps ne se compense pas. Les risques doivent être assez semblables pour être regroupés. Il faut assez de contrats pour que les moyennes se stabilisent. Et la probabilité doit rester stable : si les vols deviennent soudain plus fréquents, la moyenne de l'an dernier ne vaut plus."
+      - type: etapes
+        texte: "Prévisible *n'est pas* rentable"
+        etapes:
+          - "Prime pure : le *coût attendu des sinistres* par contrat"
+          - "Prime commerciale : prime pure *plus chargements*"
+          - "Résultat technique (exemple simplifié) : primes acquises − *charge des sinistres survenus* − frais de gestion"
+        voix_off: "Enfin, soyons précis sur ce que la mutualisation ne promet pas. La prime pure n'est que le coût attendu des sinistres par contrat. La prime commerciale, le prix réellement facturé, ajoute des chargements pour les frais, les commissions, l'incertitude et le capital. Et le résultat technique, qui dans cet exemple simplifié vaut les primes acquises moins la charge des sinistres survenus et les frais de gestion, peut encore être négatif si le prix est trop bas, les frais trop élevés, ou si un événement extrême et rare survient."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "JG's Holding assure *2 500 téléphones*. Vols attendus ? Écart-type du *coût moyen par téléphone* ?"
+        pause: 15
+        voix_off: "À vous. JG's Holding assure maintenant deux mille cinq cents téléphones, avec les mêmes deux pour cent de probabilité de vol et le même coût de cinq cents euros. Combien de vols doit-il attendre ? Et quel est l'écart-type du coût moyen par téléphone ?"
+      - type: correction
+        etapes:
+          - "Vols attendus : 2 500 × 2 % = *50*"
+          - "Un téléphone : σ = *70 €*"
+          - "Moyenne de 2 500 téléphones : 70 ÷ √2 500 = 70 ÷ 50"
+        reponse: "50 vols ; écart-type ≈ 1,40 € par téléphone"
+        voix_off: "Faisons le calcul. Le nombre de vols attendu est deux mille cinq cents fois deux pour cent, soit cinquante. Pour un téléphone, l'écart-type vaut toujours soixante-dix euros. Pour la moyenne de deux mille cinq cents téléphones, on divise soixante-dix par la racine carrée de deux mille cinq cents, qui vaut cinquante. JG's Holding attend donc cinquante vols, et l'écart-type du coût moyen par téléphone vaut environ un euro quarante."
+        verifier:
+          - {expression: "2500 * 0.02", attendu: 50, libelle: "Vols attendus, 2 500 téléphones"}
+          - {expression: "sqrt(2500)", attendu: 50, libelle: "Racine carrée de 2 500"}
+          - {expression: "70 / sqrt(2500)", attendu: 1.40, libelle: "Écart-type du coût moyen, 2 500 téléphones"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Un contrat : un coût de *0 € ou 500 €*, espérance *10 €*"
+          - "Moyenne de n contrats indépendants et de même loi : dispersion *σ ÷ √n*"
+          - "La mutualisation exige indépendance, risques semblables, assez de contrats"
+          - "Prévisible *n'est pas* rentable"
+        voix_off: "À retenir. Pour un contrat, le coût vaut zéro ou cinq cents euros, avec une espérance de dix. Pour la moyenne de n contrats indépendants et de même loi, la dispersion se réduit à sigma divisé par racine de n. La mutualisation ne marche qu'avec des risques indépendants, semblables, et assez de contrats. Et un coût prévisible n'est pas automatiquement un bénéfice."
+      - type: texte
+        texte: "La suite : *les outils de probabilité derrière la mutualisation*"
+        voix_off: "Dans les prochains épisodes du module A2, nous construisons pas à pas les outils de probabilité derrière les résultats d'aujourd'hui : événements et probabilités conditionnelles, variables aléatoires, et somme de nombreux sinistres."
+      - type: fin
+        texte: "Abonnez-vous pour le prochain épisode."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+  en:
+    titre: "Why is the average claim cost more predictable with 10,000 policies?"
+    legende: |
+      Insuring one phone is a gamble: the insurer pays either nothing or $500. Insuring 10,000 phones is almost predictable. Why? In this episode of our actuarial science series, we treat the cost of a policy as a random variable, compute its expected value and standard deviation, and see how pooling shrinks the uncertainty per policy: sigma divided by the square root of n. We also see what pooling cannot do: it makes losses more predictable, not automatically profitable. Worked exercise at the end. Fictional insurer and figures, checked calculations.
+    hashtags: [actuarialscience, insurance, probability, lawoflargenumbers]
+    scenes:
+      - type: accroche
+        texte: "One phone is a gamble. *10,000 phones* are almost predictable."
+        voix_off: "For one phone, the outcome is highly uncertain: the insurer pays either nothing or five hundred dollars. Insure ten thousand phones, and you can predict the cost per phone remarkably well. Why? That is the idea behind all insurance: pooling."
+      - type: texte
+        texte: "Back to *JG's Holding* and its phones"
+        note: "JG's Holding is a fictional insurer. All figures are made up."
+        voix_off: "In the first episode, our fictional insurer, JG's Holding, insured phones against theft. Each phone had a two percent chance of being stolen in a year, and a theft cost five hundred dollars. We found a pure premium of ten dollars per phone. Today, we ask a deeper question: how reliable is that ten dollars?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "One policy: a gamble"
+        voix_off: "Let's look at a single phone first."
+      - type: etapes
+        texte: "One phone, one year: *what JG's Holding pays*"
+        etapes:
+          - "98% of the time: *$0*"
+          - "2% of the time: *$500*"
+          - "Expected cost: 0.98 × $0 + 0.02 × $500 = *$10*"
+          - "But JG's Holding never actually pays $10"
+        voix_off: "For a single phone, only two things can happen. Ninety-eight percent of the time, there is no theft, and JG's Holding pays nothing. Two percent of the time, the phone is stolen, and JG's Holding pays five hundred dollars. The expected cost weighs each outcome by its probability, which gives ten dollars. But notice: JG's Holding never actually pays ten dollars for this phone; it pays either zero or five hundred."
+        verifier:
+          - {expression: "0.98 * 0 + 0.02 * 500", attendu: 10, libelle: "Expected cost of one phone"}
+      - type: texte
+        texte: "The expected value is a *long-run average*, not a forecast"
+        voix_off: "The cost of one policy is what statisticians call a random variable: a number whose value depends on chance. Its expected value, ten dollars here, is the average cost you would get over a very large number of identical phones. For any single phone, it is not a forecast of what will happen."
+      - type: formule
+        texte: "How uncertain is *one phone*?"
+        formule:
+          - '\mathrm{Var}(X)=0.02\times 500^2-10^2=4900'
+          - '\sigma=\sqrt{4900}=70\ \mathrm{dollars}'
+        voix_off: "To measure that uncertainty, we use the standard deviation, the typical distance from the average. First the variance: the expected square of the cost, zero point zero two times five hundred squared, minus the square of the mean, ten squared. That gives four thousand nine hundred. Its square root, the standard deviation, is seventy dollars."
+        verifier:
+          - {expression: "0.02 * 500**2 - 10**2", attendu: 4900, libelle: "Variance of the cost of one phone"}
+          - {expression: "sqrt(0.02 * 500**2 - 10**2)", attendu: 70, libelle: "Standard deviation of one phone"}
+          - {expression: "500 * sqrt(0.02 * 0.98)", attendu: 70, libelle: "Same result: 500 × √(p(1 − p))"}
+      - type: texte
+        texte: "A spread of *$70* around an average of *$10*"
+        voix_off: "So for one phone, the uncertainty is seven times larger than the average itself. Setting a price for a single phone, on its own, is close to a bet."
+        verifier:
+          - {expression: "70 / 10", attendu: 7, libelle: "Standard deviation divided by the mean"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Many policies: pooling"
+        voix_off: "Now let's insure many phones at once."
+      - type: etapes
+        texte: "How many thefts *in a year*?"
+        etapes:
+          - "100 phones: about *2* thefts, give or take *1.4*"
+          - "10,000 phones: about *200* thefts, give or take *14*"
+          - "Relative spread: 1.4 ÷ 2 = *70%*, but 14 ÷ 200 = *7%*"
+        note: "Independent thefts: the number of thefts follows a binomial distribution. Standard deviation: √(n × 0.02 × 0.98)."
+        voix_off: "Let's count the thefts. With one hundred phones, JG's Holding expects about two thefts, give or take one point four. With ten thousand phones, it expects about two hundred, give or take fourteen. The spread grows, but much more slowly than the number of phones: it is seventy percent of the average with one hundred phones, and only seven percent with ten thousand."
+        verifier:
+          - {expression: "100 * 0.02", attendu: 2, libelle: "Expected thefts, 100 phones"}
+          - {expression: "sqrt(100 * 0.02 * 0.98)", attendu: 1.4, libelle: "Standard deviation of thefts, 100 phones"}
+          - {expression: "10000 * 0.02", attendu: 200, libelle: "Expected thefts, 10,000 phones"}
+          - {expression: "sqrt(10000 * 0.02 * 0.98)", attendu: 14, libelle: "Standard deviation of thefts, 10,000 phones"}
+          - {expression: "100 * sqrt(100 * 0.02 * 0.98) / (100 * 0.02)", attendu: 70, libelle: "Relative spread, 100 phones, in %"}
+          - {expression: "100 * sqrt(10000 * 0.02 * 0.98) / (10000 * 0.02)", attendu: 7, libelle: "Relative spread, 10,000 phones, in %"}
+      - type: formule
+        texte: "Uncertainty of the *average cost per phone*"
+        note: "Valid for independent, identically distributed policy costs."
+        formule:
+          - '\sigma_{\bar{X}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{70}{\sqrt{n}}'
+          - 'n=100:\ 7\ \mathrm{dollars}\qquad n=10\,000:\ 0.70\ \mathrm{dollars}'
+        voix_off: "Now look at the average cost per phone. When the policy costs are independent and identically distributed, as here with the same two percent and the same five hundred dollars, the standard deviation of their average is sigma divided by the square root of n, the number of phones. With one hundred phones, seventy divided by ten gives seven dollars. With ten thousand phones, seventy divided by one hundred gives just seventy cents."
+        verifier:
+          - {expression: "70 / sqrt(100)", attendu: 7, libelle: "Std. dev. of average cost, 100 phones"}
+          - {expression: "70 / sqrt(10000)", attendu: 0.70, libelle: "Std. dev. of average cost, 10,000 phones"}
+      - type: courbe
+        texte: "Standard deviation of the *cost per phone*"
+        courbe:
+          style: barres
+          points: [[0, 70], [1, 7], [2, 0.7]]
+          etiquettes: ["1 phone", "100 phones", "10,000 phones"]
+          valeurs: true
+          y_min: 0
+          y_max: 80
+          axe_x: "Number of phones insured"
+          axe_y: "Standard deviation ($)"
+        note: "Average cost per phone: $10 in all three cases. Independent thefts."
+        voix_off: "Here is the same idea in a picture. The average cost per phone is ten dollars in all three cases. But the uncertainty around it falls from seventy dollars for one phone, to seven dollars for one hundred phones, to seventy cents for ten thousand. With many independent policies, the random ups and downs largely cancel out."
+      - type: texte
+        texte: "The law of large numbers: the average cost *tends towards $10*"
+        voix_off: "This is the law of large numbers at work. As the number of independent, similar policies grows, the average cost per policy tends to converge towards its expected value, ten dollars. That is what pooling means: sharing risks among many people turns an unpredictable cost into a fairly predictable one."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "What pooling cannot do"
+        voix_off: "Pooling is powerful, but it has limits."
+      - type: etapes
+        texte: "Premium *$11* per phone: chance that thefts cost *more than the premiums*"
+        etapes:
+          - "100 phones: 3 thefts or more, about *32%*"
+          - "10,000 phones: 221 thefts or more, about *7.3%*"
+          - "Much smaller, but *never zero*"
+        note: "$11 = pure premium $10 + a $1 safety margin; expenses ignored. Exact binomial probabilities."
+        voix_off: "Suppose JG's Holding charges eleven dollars per phone: the ten dollar pure premium plus a one dollar safety margin. With one hundred phones, it collects one thousand one hundred dollars, so three thefts are enough to cost more than that: this happens about thirty-two percent of the time. With ten thousand phones, it takes two hundred and twenty-one thefts or more, which happens about seven point three percent of the time. Pooling makes a bad year much less likely, but never impossible."
+        verifier:
+          - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 thefts or more out of 100), in %"}
+          - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 thefts or more out of 10,000), in %"}
+          - {expression: "100 * 11", attendu: 1100, libelle: "Premiums collected, 100 phones"}
+          - {expression: "floor(100 * 11 / 500) + 1", attendu: 3, libelle: "Fewest thefts costing more than the premiums, 100 phones"}
+          - {expression: "floor(10000 * 11 / 500) + 1", attendu: 221, libelle: "Fewest thefts costing more than the premiums, 10,000 phones"}
+      - type: etapes
+        texte: "Pooling works *only if*…"
+        disposition: cartes
+        etapes:
+          - "Risks are independent"
+          - "Risks are similar"
+          - "There are enough policies"
+          - "The probability stays stable"
+        voix_off: "Pooling relies on conditions that actuaries always check. The risks must be largely independent: a hailstorm that damages every car in a town at once does not cancel out. The risks must be similar enough to be grouped together. There must be enough policies for the averages to settle. And the probability must stay stable: if thefts suddenly become more common, last year's average no longer applies."
+      - type: etapes
+        texte: "Predictable is *not* the same as profitable"
+        etapes:
+          - "Pure premium: the *expected claims* per policy"
+          - "Commercial premium: pure premium *plus loadings*"
+          - "Technical result (simplified): premiums earned *minus* claims incurred and expenses"
+        voix_off: "Finally, let's be precise about what pooling does not promise. The pure premium is only the expected cost of claims per policy. The commercial premium, the price actually charged, adds loadings for expenses, commissions, uncertainty and capital. And the technical result, which in this simplified example is premiums earned minus claims incurred and operating expenses, can still be negative if the price is too low, the expenses too high, or a rare extreme event strikes."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "JG's Holding insures *2,500 phones*. Expected thefts? Standard deviation of the *average cost per phone*?"
+        pause: 15
+        voix_off: "Your turn. JG's Holding now insures two thousand five hundred phones, with the same two percent chance of theft and the same five hundred dollar cost. How many thefts should it expect? And what is the standard deviation of the average cost per phone?"
+      - type: correction
+        etapes:
+          - "Expected thefts: 2,500 × 2% = *50*"
+          - "One phone: σ = *$70*"
+          - "Average of 2,500 phones: 70 ÷ √2,500 = 70 ÷ 50"
+        reponse: "50 thefts; standard deviation ≈ $1.40 per phone"
+        voix_off: "Let's work it out. The expected number of thefts is two thousand five hundred times two percent, that is fifty. For one phone, the standard deviation is still seventy dollars. For the average of two thousand five hundred phones, we divide seventy by the square root of two thousand five hundred, which is fifty. So JG's Holding expects fifty thefts, and the standard deviation of the average cost per phone is about one dollar forty."
+        verifier:
+          - {expression: "2500 * 0.02", attendu: 50, libelle: "Expected thefts, 2,500 phones"}
+          - {expression: "sqrt(2500)", attendu: 50, libelle: "Square root of 2,500"}
+          - {expression: "70 / sqrt(2500)", attendu: 1.40, libelle: "Std. dev. of average cost, 2,500 phones"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "One policy: a cost of *$0 or $500*, expected value *$10*"
+          - "Average of n independent, identical policies: spread *σ ÷ √n*"
+          - "Pooling needs independence, similar risks, enough policies"
+          - "Predictable *is not* profitable"
+        voix_off: "Key takeaways. For one policy, the cost is either zero or five hundred dollars, with an expected value of ten. For the average of n independent, identically distributed policies, the spread shrinks to sigma divided by the square root of n. Pooling only works with independent, similar risks and enough policies. And a predictable cost is not automatically a profit."
+      - type: texte
+        texte: "Next: *the probability tools behind pooling*"
+        voix_off: "In the next episodes of module A2, we build the probability tools behind today's results, step by step: events and conditional probability, random variables, and the sum of many claims."
+      - type: fin
+        texte: "Follow for the next episode."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

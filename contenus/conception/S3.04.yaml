@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Pays imaginaires (le catalogue proposait des données réelles non sourcées).
+id_programme: S3.04
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s3-04-le-nuage-de-points.yaml
+question_centrale:
+  fr: Comment voir si deux quantités varient ensemble ?
+  en: How can you see whether two quantities move together?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S3
+  rang_dans_module: 4
+public:
+  prerequis:
+  - S2.03
+  niveau_maths: M1
+  rappel_conseille: []
+intuition: 'Un point par individu : la forme du nuage raconte la relation entre deux variables.'
+exemple_fil_rouge: 15 pays imaginaires, PIB par habitant et espérance de vie, puis en échelle logarithmique.
+exemple_reel: null
+idees_fausses:
+- idee: Ignorer un point ou un groupe séparé
+  desamorcee_a_l_etape: 'Partie 2 : le pays atypique'
+- idee: Oublier que l'échelle logarithmique change la forme
+  desamorcee_a_l_etape: 'Partie 3 : la courbe se redresse'
+exercice:
+  question: 'Heures de révision et notes de 14 élèves : forme, sens, intensité, atypiques ?'
+  correction: Droite, croissante, assez serrée, un atypique (9 h, 5 sur 20)
+  pause_secondes: 9
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Âge et prix de 12 voitures d''occasion : décrire le nuage en quatre mots.'
+  diagnostic_d_erreur: '« Ce point gêne, je l''enlève du graphique » : qu''est-ce qui ne va pas ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

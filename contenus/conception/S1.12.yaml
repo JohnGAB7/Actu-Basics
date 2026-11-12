@@ -1,0 +1,49 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Lazer et coll. 2014, résumé vérifié.
+id_programme: S1.12
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s1-12-mesurer-juste.yaml
+question_centrale:
+  fr: Un très grand jeu de données peut-il donner une conclusion très précise… et fausse ?
+  en: Can a huge dataset give a very precise… and wrong conclusion?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S1
+  rang_dans_module: 12
+public:
+  prerequis:
+  - S1.07
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Une balance qui ajoute toujours deux kilos est fiable et toujours fausse ; peser un million de personnes n'y change
+  rien.
+exemple_fil_rouge: Balance fictive qui ajoute 2 kg.
+exemple_reel: 'D. Lazer et coll., Science, 2014 : en février 2013, Google Flu Trends prévoyait plus du double des consultations
+  pour syndrome grippal (vérifié sur le résumé seulement).'
+idees_fausses:
+- idee: Croire qu'un grand échantillon corrige tout
+  desamorcee_a_l_etape: Bruit et biais
+- idee: Confondre précision et exactitude
+  desamorcee_a_l_etape: Fiable ou valide
+exercice:
+  question: '2 millions de réponses en ligne, marge de 0,1 point : pourquoi trompeur ?'
+  correction: La marge ne mesure que le bruit, pas le biais de sélection
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Une appli de course compte 10 millions d''utilisateurs : peut-elle mesurer la forme physique des
+    Français ?'
+  diagnostic_d_erreur: '« Avec un million de pesées, la moyenne est forcément juste » : qu''est-ce qui manque ?'
+duree_estimee_min:
+- 6
+- 8
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
+  controle_mobile: Après rendu (inspection)

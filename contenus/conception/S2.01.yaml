@@ -1,0 +1,48 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+id_programme: S2.01
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-01-frequences-et-tableaux.yaml
+question_centrale:
+  fr: Comment résumer 1 000 réponses sans les lire une par une ?
+  en: How do you sum up 1,000 answers without reading them one by one?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 1
+public:
+  prerequis:
+  - S1.03
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Compter, puis rapporter au total : c''est déjà de la statistique.'
+exemple_fil_rouge: Frères et sœurs dans une classe fictive de 25 élèves ; deux classes de 25 et 40 élèves.
+exemple_reel: null
+idees_fausses:
+- idee: Oublier le total
+  desamorcee_a_l_etape: 'Compter : les effectifs'
+- idee: Comparer des effectifs de groupes de tailles différentes
+  desamorcee_a_l_etape: 'Le piège : comparer des effectifs'
+exercice:
+  question: '20 salariés : 8 voiture, 6 transports, 4 vélo, 2 marche. Fréquences et cumul ?'
+  correction: 40, 30, 20, 10 % ; cumul 40, 70, 90, 100 %
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Ville A : 300 cyclistes sur 2 000 habitants ; ville B : 400 sur 5 000. Où fait-on le plus de vélo
+    ?'
+  diagnostic_d_erreur: '« 12 élèves, c''est plus que 10, donc la classe B a plus d''enfants uniques » : qu''est-ce qui manque
+    ?'
+duree_estimee_min:
+- 3
+- 5
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
+  controle_mobile: Après rendu (inspection)

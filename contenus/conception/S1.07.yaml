@@ -1,0 +1,49 @@
+# Fiche de conception, niveau 1, vague 1, lot 1. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-07, à valider avant tout rendu (JG). Exemples fictifs : pas d'exemple réel sourcé.
+id_programme: S1.07
+statut: revue_claude
+fiche_production: contenus/fiches/2026-11-n1-s1-07-donnees-manquantes-erreurs-definitions.yaml
+question_centrale:
+  fr: Un chiffre qui « explose » d'une année sur l'autre a-t-il vraiment changé, ou est-ce la façon de le mesurer ?
+  en: When a figure suddenly jumps, did reality change, or the way it is measured?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S1
+  rang_dans_module: 7
+public:
+  prerequis:
+  - S1.04
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Un trou ou un saut dans les données raconte souvent une histoire : qui ne répond pas, et qu''est-ce qui a changé
+  dans la mesure ?'
+exemple_fil_rouge: Plaintes pour vol de vélo après l'ouverture de la plainte en ligne (ville fictive) ; enquête fictive sur
+  les revenus avec non-réponse.
+exemple_reel: null
+idees_fausses:
+- idee: Ignorer les non-réponses
+  desamorcee_a_l_etape: Les données manquantes
+- idee: Comparer une série avant et après un changement de méthode
+  desamorcee_a_l_etape: Rupture de série
+exercice:
+  question: 'Taux de chômage fictif qui saute l''année d''un nouveau questionnaire : que vérifier ?'
+  correction: Note de méthode, série recalculée
+  pause_secondes: 7
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Le nombre d'accidents du travail déclarés baisse l'année où la déclaration devient plus compliquée.
+    Que peut-on conclure ?
+  diagnostic_d_erreur: '« Les 80 % qui ont répondu suffisent, l''échantillon est grand » : qu''est-ce qui manque ?'
+duree_estimee_min:
+- 5
+- 7
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 7/11/2026 ; ChatGPT puis JG à faire
+  controle_mobile: Après rendu (inspection)

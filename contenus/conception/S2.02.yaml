@@ -1,0 +1,48 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur. Deux largeurs de classes au lieu des trois du catalogue.
+id_programme: S2.02
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes.yaml
+question_centrale:
+  fr: Pourquoi un histogramme n'est-il pas un diagramme en barres ?
+  en: Why is a histogram not a bar chart?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 2
+public:
+  prerequis:
+  - S2.01
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Dans un histogramme, c'est la surface qui compte, pas la hauteur.
+exemple_fil_rouge: Temps de trajet fictifs de 20 salariés, en classes de 10 puis 20 minutes, puis classes inégales.
+exemple_reel: null
+idees_fausses:
+- idee: Espaces entre les barres d'un histogramme
+  desamorcee_a_l_etape: 'L''histogramme : des nombres en classes'
+- idee: Classes de largeurs inégales sans corriger les hauteurs
+  desamorcee_a_l_etape: 'Classes inégales : la surface compte'
+exercice:
+  question: 'Âges de 40 visiteurs : 0–20 : 8, 20–30 : 12, 30–60 : 20. Quelle classe est la plus dense ?'
+  correction: 20–30 ans (1,2 par an), l'histogramme en effectifs trompe
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Un histogramme des revenus regroupe « 5 000 € et plus » en une seule barre très haute. Que conclure
+    ?
+  diagnostic_d_erreur: '« La barre la plus haute est la classe la plus peuplée par unité » : vrai si les classes sont inégales
+    ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
+  controle_mobile: Après rendu (inspection)

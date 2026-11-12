@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+id_programme: S1.11
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s1-11-premier-contact-avec-le-hasard.yaml
+question_centrale:
+  fr: Que veut dire « une chance sur dix », et pourquoi le hasard est-il partout dans les données ?
+  en: What does “one chance in ten” mean, and why is chance everywhere in data?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S1
+  rang_dans_module: 11
+public:
+  prerequis:
+  - S1.08
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Une probabilité se lit comme une fréquence : sur 1 000 situations semblables, combien de fois ?'
+exemple_fil_rouge: Essais à une chance sur dix ; 60 lancers de dé ; pays fictif de 60 millions d'habitants.
+exemple_reel: null
+idees_fausses:
+- idee: Une chance sur dix signifie « au dixième essai »
+  desamorcee_a_l_etape: Une chance, trois écritures
+- idee: Un événement rare ne peut pas arriver
+  desamorcee_a_l_etape: Rare n'est pas impossible
+exercice:
+  question: '1 sur 500, 0,2 %, 2 pour 1 000, 20 sur 10 000 : laquelle est différente ?'
+  correction: 'Aucune : toutes valent 0,2 %'
+  pause_secondes: 7
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Un risque d'un sur 100 000 par an touche combien de personnes dans une ville de 2 millions ?
+  diagnostic_d_erreur: '« J''ai perdu neuf fois, la dixième sera la bonne » : où est l''erreur ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
+  controle_mobile: Après rendu (inspection)

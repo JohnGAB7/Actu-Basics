@@ -1,0 +1,238 @@
+# Niveau 1, vague 1, lot 2 : S2.04 « Ce que dit vraiment la moyenne » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S2.04.yaml
+# Calcul pur, nombres fictifs : cagnotte de quatre amis, notes avec coefficients, deux classes (exercice du catalogue).
+# Statut : validé par JG le 2026-11-08 (carte de décision), après deux relectures ChatGPT.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-04-ce-que-dit-vraiment-la-moyenne
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.04 · Ce que dit vraiment la moyenne"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer une moyenne simple et une moyenne pondérée"
+      - "Interpréter la moyenne comme un partage égal et comme un point d'équilibre"
+      - "Éviter la moyenne de moyennes de groupes de tailles différentes"
+    en:
+      - "Compute a simple mean and a weighted mean"
+      - "Read the mean as an equal share and as a balance point"
+      - "Avoid averaging the means of groups of different sizes"
+  prerequis:
+    fr: ["S2.01 : fréquences et tableaux"]
+    en: ["S2.01: frequencies and tables"]
+  hypotheses:
+    fr: "Sommes, notes et classes fictives, choisies pour que les calculs se suivent de tête"
+    en: "Made-up amounts, marks and classes, chosen so the arithmetic is easy to follow"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-08"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Que veut dire « en moyenne » ?"
+    legende: |
+      La moyenne, c'est ce que chacun aurait si l'on mettait tout en commun et qu'on partageait à parts égales. On la calcule à la main, on découvre la notation Σ pas à pas, on voit pourquoi elle est un point d'équilibre, puis on calcule une moyenne pondérée. Exercice corrigé : la moyenne de deux classes n'est pas la moyenne de leurs moyennes. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, moyenne, maths]
+    scenes:
+      - type: accroche
+        texte: "« En moyenne » : *ça veut dire quoi* ?"
+        voix_off: "« En moyenne. » On le lit dans tous les articles. Mais que veut dire ce mot, exactement ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "La moyenne, un partage égal"
+        voix_off: "Commençons par une image simple : un partage."
+      - type: etapes
+        texte: "Quatre amis, *une cagnotte*"
+        etapes:
+          - "Ils ont 5, 10, 15 et 30 €"
+          - "Tout dans la cagnotte : *60 €*"
+          - "Partagé en quatre : *15 € chacun*"
+        voix_off: "Quatre amis mettent leur argent en commun. Ils ont cinq, dix, quinze et trente euros. Dans la cagnotte, cela fait soixante euros. Partagés à parts égales entre les quatre, cela fait quinze euros chacun : c'est la moyenne."
+        verifier:
+          - {expression: "5 + 10 + 15 + 30", attendu: 60, libelle: "Total de la cagnotte"}
+          - {expression: "60 / 4", attendu: 15, libelle: "Part de chacun"}
+      - type: formule
+        texte: "Moyenne = *somme ÷ nombre*"
+        formule:
+          - '\text{moyenne}=\dfrac{\text{somme des valeurs}}{\text{nombre de valeurs}}'
+          - '\dfrac{5+10+15+30}{4}=\dfrac{60}{4}=15'
+        voix_off: "D'où la formule : la moyenne, c'est la somme des valeurs divisée par leur nombre. Ici, soixante divisé par quatre : quinze."
+        verifier:
+          - {expression: "(5 + 10 + 15 + 30) / 4", attendu: 15, libelle: "Moyenne de la cagnotte"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La notation Σ, pas à pas"
+        voix_off: "Dans les livres, cette formule s'écrit avec un symbole qui fait peur. Il n'a rien de compliqué."
+      - type: formule
+        texte: "Σ veut dire *« additionner »*"
+        formule:
+          - '\bar{x}=\dfrac{x_1+x_2+x_3+x_4}{4}'
+          - '\bar{x}=\dfrac{1}{n}\times\sum_{i=1}^{n}x_i'
+        voix_off: "On appelle les valeurs x un, x deux, x trois, x quatre, et la moyenne x barre. Le symbole sigma indique qu'on additionne toutes les valeurs, de la première à la n-ième. Puis on divise cette somme par n, le nombre de valeurs. C'est exactement le calcul de la cagnotte."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Le point d'équilibre"
+        voix_off: "Deuxième façon de voir la moyenne : un point d'équilibre."
+      - type: etapes
+        texte: "Les écarts *à la moyenne*"
+        etapes:
+          - "5 − 15 = −10 et 10 − 15 = −5"
+          - "15 − 15 = 0 et 30 − 15 = +15"
+          - "Somme des écarts : *0*"
+        voix_off: "Calculons l'écart de chaque valeur à la moyenne. Cinq moins quinze, moins dix ; dix moins quinze, moins cinq. Quinze moins quinze, zéro ; trente moins quinze, plus quinze. Additionnés, ces écarts font exactement zéro."
+        verifier:
+          - {expression: "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)", attendu: 0, libelle: "Somme des écarts à la moyenne"}
+      - type: texte
+        texte: "Les écarts à la moyenne se *compensent* : leur somme vaut 0"
+        voix_off: "Pour la moyenne arithmétique, c'est toujours le cas : la somme des écarts à la moyenne vaut zéro. Comme sur une balançoire, les écarts d'un côté compensent ceux de l'autre : la moyenne est le point d'équilibre. Une seule grande valeur, très loin, suffit donc à la déplacer."
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "La moyenne pondérée"
+        voix_off: "Et quand toutes les valeurs ne comptent pas autant ?"
+      - type: formule
+        texte: "14 en maths, *coefficient 3* ; 10 en français, *coefficient 1*"
+        formule:
+          - '\dfrac{14\times 3+10\times 1}{3+1}'
+          - '=\dfrac{52}{4}=13'
+        voix_off: "Une élève a quatorze en mathématiques, avec un coefficient trois, et dix en français, avec un coefficient un. On multiplie chaque note par son coefficient, on additionne, puis on divise par la somme des coefficients. Quatorze fois trois plus dix, cinquante-deux, divisé par quatre : treize."
+        verifier:
+          - {expression: "(14 * 3 + 10 * 1) / (3 + 1)", attendu: 13, libelle: "Moyenne pondérée"}
+      - type: texte
+        texte: "Sans coefficients : 12. Avec : *13*"
+        voix_off: "Sans les coefficients, on aurait trouvé douze. La moyenne pondérée donne plus de poids à ce qui compte le plus : ici, les mathématiques."
+        verifier:
+          - {expression: "(14 + 10) / 2", attendu: 12, libelle: "Moyenne simple des deux notes"}
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8. Moyenne générale ?"
+        pause: 8
+        voix_off: "À vous. Une classe de dix élèves a douze de moyenne. Une classe de trente élèves a huit de moyenne. Quelle est la moyenne générale des quarante élèves ?"
+      - type: correction
+        etapes:
+          - "10 × 12 = 120 points et 30 × 8 = 240 points"
+          - "(120 + 240) ÷ 40 = *9*"
+        reponse: "9, et non 10"
+        voix_off: "Faisons le calcul. La première classe totalise dix fois douze, cent vingt points ; la seconde, trente fois huit, deux cent quarante points. Trois cent soixante points pour quarante élèves : neuf de moyenne. Pas dix, qui serait la moyenne des deux moyennes : la grande classe pèse trois fois plus."
+        verifier:
+          - {expression: "(10 * 12 + 30 * 8) / 40", attendu: 9, libelle: "Moyenne générale"}
+          - {expression: "(12 + 8) / 2", attendu: 10, libelle: "Moyenne des moyennes (fausse)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Moyenne = *partage égal* de la somme"
+          - "Les écarts à la moyenne *se compensent*"
+          - "Groupes inégaux : *pondérer* par l'effectif"
+        voix_off: "À retenir. La moyenne, c'est la somme partagée à parts égales. Les écarts à la moyenne se compensent : c'est un point d'équilibre. Et pour réunir des groupes de tailles différentes, on pondère chaque moyenne par l'effectif du groupe."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "What does “on average” mean?"
+    legende: |
+      The mean is what everyone would get if we pooled everything and shared it out equally. We compute it by hand, meet the Σ notation step by step, see why it is a balance point, then compute a weighted mean. Worked exercise: the mean of two classes is not the mean of their means. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, mean, maths]
+    scenes:
+      - type: accroche
+        texte: "“On average”: *what does it mean*?"
+        voix_off: "“On average.” You read it in every article. But what exactly does it mean?"
+      - type: titre
+        numero: 1
+        texte: "The mean, an equal share"
+        voix_off: "Let's start with a simple picture: sharing."
+      - type: etapes
+        texte: "Four friends, *one shared pot*"
+        etapes:
+          - "They have €5, €10, €15 and €30"
+          - "All in the pot: *€60*"
+          - "Split four ways: *€15 each*"
+        voix_off: "Four friends pool their money. They have five, ten, fifteen and thirty euros. In the pot, that makes sixty euros. Shared equally between the four, that is fifteen euros each: that's the mean."
+        verifier:
+          - {expression: "5 + 10 + 15 + 30", attendu: 60, libelle: "Total in the pot"}
+          - {expression: "60 / 4", attendu: 15, libelle: "Each person's share"}
+      - type: formule
+        texte: "Mean = *sum ÷ count*"
+        formule:
+          - '\text{mean}=\dfrac{\text{sum of the values}}{\text{number of values}}'
+          - '\dfrac{5+10+15+30}{4}=\dfrac{60}{4}=15'
+        voix_off: "Hence the formula: the mean is the sum of the values divided by how many there are. Here, sixty divided by four: fifteen."
+        verifier:
+          - {expression: "(5 + 10 + 15 + 30) / 4", attendu: 15, libelle: "Mean of the pot"}
+      - type: titre
+        numero: 2
+        texte: "The Σ notation, step by step"
+        voix_off: "In textbooks, this formula is written with a scary-looking symbol. There is nothing complicated about it."
+      - type: formule
+        texte: "Σ means *“add up”*"
+        formule:
+          - '\bar{x}=\dfrac{x_1+x_2+x_3+x_4}{4}'
+          - '\bar{x}=\dfrac{1}{n}\times\sum_{i=1}^{n}x_i'
+        voix_off: "We call the values x one, x two, x three, x four, and the mean x bar. The sigma symbol tells you to add up all the values, from the first to the n-th. Then divide that sum by n, the number of values. It is exactly the shared pot calculation."
+      - type: titre
+        numero: 3
+        texte: "The balance point"
+        voix_off: "A second way to see the mean: a balance point."
+      - type: etapes
+        texte: "Deviations *from the mean*"
+        etapes:
+          - "5 − 15 = −10 and 10 − 15 = −5"
+          - "15 − 15 = 0 and 30 − 15 = +15"
+          - "Sum of deviations: *0*"
+        voix_off: "Let's work out how far each value is from the mean. Five minus fifteen, minus ten; ten minus fifteen, minus five. Fifteen minus fifteen, zero; thirty minus fifteen, plus fifteen. Added together, these deviations come to exactly zero."
+        verifier:
+          - {expression: "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)", attendu: 0, libelle: "Sum of deviations from the mean"}
+      - type: texte
+        texte: "Deviations from the mean *balance out*: they sum to 0"
+        voix_off: "For the arithmetic mean, this is always true: the deviations from the mean add up to zero. As on a seesaw, the deviations on one side balance those on the other: the mean is the balance point. So a single large value, far away, is enough to move it."
+      - type: titre
+        numero: 4
+        texte: "The weighted mean"
+        voix_off: "And what if the values don't all count the same?"
+      - type: formule
+        texte: "14 in maths, *weight 3*; 10 in French, *weight 1*"
+        formule:
+          - '\dfrac{14\times 3+10\times 1}{3+1}'
+          - '=\dfrac{52}{4}=13'
+        voix_off: "A pupil gets fourteen in maths, with a weight of three, and ten in French, with a weight of one. Multiply each mark by its weight, add them up, then divide by the sum of the weights. Fourteen times three plus ten, fifty-two, divided by four: thirteen."
+        verifier:
+          - {expression: "(14 * 3 + 10 * 1) / (3 + 1)", attendu: 13, libelle: "Weighted mean"}
+      - type: texte
+        texte: "Without weights: 12. With them: *13*"
+        voix_off: "Without the weights, we would have found twelve. The weighted mean gives more weight to what matters most: here, maths."
+        verifier:
+          - {expression: "(14 + 10) / 2", attendu: 12, libelle: "Simple mean of the two marks"}
+      - type: exercice
+        texte: "Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8. Overall mean?"
+        pause: 8
+        voix_off: "Your turn. A class of ten pupils has a mean mark of twelve. A class of thirty pupils has a mean of eight. What is the overall mean of the forty pupils?"
+      - type: correction
+        etapes:
+          - "10 × 12 = 120 points and 30 × 8 = 240 points"
+          - "(120 + 240) ÷ 40 = *9*"
+        reponse: "9, not 10"
+        voix_off: "Let's work it out. The first class has ten times twelve, one hundred and twenty points; the second, thirty times eight, two hundred and forty points. Three hundred and sixty points for forty pupils: a mean of nine. Not ten, which would be the mean of the two means: the big class weighs three times as much."
+        verifier:
+          - {expression: "(10 * 12 + 30 * 8) / 40", attendu: 9, libelle: "Overall mean"}
+          - {expression: "(12 + 8) / 2", attendu: 10, libelle: "Mean of the means (wrong)"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Mean = the sum *shared equally*"
+          - "Deviations from the mean *balance out*"
+          - "Unequal groups: *weight* by group size"
+        voix_off: "Key points. The mean is the sum shared out equally. Deviations from the mean balance out: it is a balance point. And to combine groups of different sizes, weight each mean by the size of its group."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

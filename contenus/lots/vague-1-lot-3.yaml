@@ -1,0 +1,12 @@
+# Vague 1, lot 3 : scripts à valider avant toute production vidéo (règle de JG, 2026-11-07 :
+# scripts et PDF d'abord, par lots de 10). Relecture : ChatGPT dans les commentaires de la PR #17,
+# Claude intègre, JG valide. Documents : docs/scripts/vague-1/lot-3/ (GitHub) et dossier partagé.
+lot: 3
+episodes: [S2.06, S2.07, S2.08, S2.09, S2.10, S3.01, S3.02, S3.03, S3.04, S3.05]
+deja_valides: {}
+nouveaux: [S2.06, S2.07, S2.08, S2.09, S2.10, S3.01, S3.02, S3.03, S3.04, S3.05]
+moteur: "Nouveau graphique « boites » (boîtes à moustaches, atypiques compris), options x_min et x_max, mis_en_avant pour les nuages de points"
+exemples_remplaces: "Exemples réels non sourcés du catalogue remplacés par des exemples fictifs annoncés comme tels : D9/D1 (S2.06), Brest et Strasbourg (S2.07), PIB et espérance de vie (S3.04)"
+a_confirmer: "S3.03 : totaux de Charig et coll. confirmés par ChatGPT sur l'article (relecture du 2026-11-09) ; étude présentée comme observationnelle"
+pdf: "dossier partagé du projet : actu-basics/scripts-vague-1/lot-3/ (FR et EN)"
+statut: valide   # 2026-11-09, carte de décision de JG ; vidéos rendues en local

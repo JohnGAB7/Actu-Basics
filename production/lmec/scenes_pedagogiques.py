@@ -332,7 +332,10 @@ class ScenesPedagogiques(Animations):
         lib = LIBELLES_PEDAGOGIE[self.langue]
         a = 1.0 if t is None else _ease(t / 0.4)
         zt, zc = self._zones(g, haut, dr, bas)
-        anneau = 240 if not self.colonnes else 420
+        anneau = 240 if not self.colonnes else 340
+        if self.colonnes:   # 16:9 : la question prend les deux tiers de la largeur, le compte à rebours le reste
+            l = dr - g
+            zt, zc = (g, haut, g + int(l * 0.64), bas), (g + int(l * 0.70), haut, dr, bas)
         pq, lq, pas_q, hq = self.ajuster_riche(scene.texte, "gras", zt[2] - zt[0],
                                                (bas - haut - 140 - (anneau + 120 if not self.colonnes else 0)),
                                                92 if not self.colonnes else 84, 44, 1.2, ctx, equilibre=True)
@@ -442,9 +445,31 @@ class ScenesPedagogiques(Animations):
 
         ymin = c.get("y_min", 0.0)
         ymax = c.get("y_max", max(v for _, v in pts) or 1.0)
-        xmin, xmax = pts[0][0], pts[-1][0]
+        style = c.get("style", "ligne")
+        # Barres : une par catégorie, centrée sur son rang (0, 1, 2…), étiquetée par « etiquettes ».
+        # Histogramme : chaque point est [début de classe, hauteur] ; une classe s'arrête au début de la
+        # suivante, la dernière a la largeur « largeur_classe » (par défaut celle de l'avant-dernière).
+        # Classes contiguës, éventuellement inégales : la surface compte, donc aucune espace entre les barres.
+        if style in ("barres", "boites"):
+            xmin, xmax = -0.5, len(pts) - 0.5
+        elif style == "histogramme":
+            lc = float(c.get("largeur_classe") or ((pts[-1][0] - pts[-2][0]) if len(pts) > 1 else 1.0))
+            bornes = [x for x, _ in pts] + [pts[-1][0] + lc]
+            xmin, xmax = bornes[0], bornes[-1]
+        else:   # « x_min » / « x_max » : cadrage d'un nuage de points qui ne commence pas à son premier point
+            xmin, xmax = float(c.get("x_min", pts[0][0])), float(c.get("x_max", pts[-1][0]))
         gauche = g + int(max(p_axe.getlength(fmt_y(ymax)), p_axe.getlength(fmt_y(ymin)))) + 24
         droite = dr - 20
+        # « serie_2 » : seconde courbe avec son propre axe vertical, à droite (double échelle, S1.09).
+        s2 = c.get("serie_2")
+        if s2:
+            pts2 = [(float(x), float(v)) for x, v in s2["points"]]
+            y2min = float(s2.get("y_min", 0.0))
+            y2max = float(s2.get("y_max", max(v for _, v in pts2) or 1.0))
+
+            def fmt_y2(v):
+                return formater_nombre(v, self.langue, s2.get("decimales_y"))
+            droite = dr - 20 - int(max(p_axe.getlength(fmt_y2(y2max)), p_axe.getlength(fmt_y2(y2min)))) - 24
         haut_g = haut_c + 80
         bas_g = bas - 120
         if not self.colonnes:   # graphique carré et centré : plus lisible qu'un graphique étiré
@@ -469,11 +494,35 @@ class ScenesPedagogiques(Animations):
             lbl = fmt_y(v)
             d.text((gauche - 18 - p_axe.getlength(lbl), yy - p_axe.size * 0.6), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
+            if s2:
+                lbl2 = fmt_y2(y2min + (y2max - y2min) * k / 4)
+                d.text((droite + 18, yy - p_axe.size * 0.6), lbl2, font=p_axe,
+                       fill=_melange(fond, self.c["texte"], a_axes))
         pas_x = next(p for p in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 10 ** 9)
                      if (xmax - xmin) / p <= 6)
-        v = math.ceil(xmin / pas_x) * pas_x
+        if style in ("barres", "boites"):   # étiquette de catégorie sous chaque barre, sur deux lignes au plus
+            etiq = c.get("etiquettes") or [formater_nombre(x, self.langue, None) for x, _ in pts]
+            l_cat = (droite - gauche) / len(pts) - 8
+            for n_b, lbl in enumerate(etiq):
+                lignes = self._couper(typographie(str(lbl), self.langue), p_axe, l_cat)[:2]
+                for n_l, ligne in enumerate(lignes):
+                    d.text((X(n_b) - p_axe.getlength(ligne) / 2, bas_g + 16 + n_l * (p_axe.size + 6)), ligne,
+                           font=p_axe, fill=_melange(fond, self.c["secondaire"], a_axes))
+            pas_x = None
+        elif style == "histogramme" and len(bornes) <= 9:   # graduations aux bornes des classes
+            # Une borne sur deux si les étiquettes se chevauchent (revenus « 1 000 », « 2 000 »… sur mobile).
+            l_max = max(p_axe.getlength(formater_nombre(b, self.langue, None)) for b in bornes)
+            saut = 2 if min(X(b1) - X(b0) for b0, b1 in zip(bornes, bornes[1:])) < l_max + 16 else 1
+            for b in bornes[::saut]:
+                lbl = formater_nombre(b, self.langue, None)
+                d.text((X(b) - p_axe.getlength(lbl) / 2, bas_g + 16), lbl, font=p_axe,
+                       fill=_melange(fond, self.c["secondaire"], a_axes))
+            pas_x = None
+        v = math.ceil(xmin / pas_x) * pas_x if pas_x else xmax + 1
+        # Des années (2019, 2023) s'écrivent sans séparateur de milliers : « 2 019 » se lirait comme un nombre.
+        annees = all(float(x).is_integer() and 1000 <= x <= 2999 for x, _ in pts)
         while v <= xmax + 1e-9:
-            lbl = formater_nombre(v, self.langue, 0)
+            lbl = str(int(round(v))) if annees else formater_nombre(v, self.langue, 0)
             d.text((X(v) - p_axe.getlength(lbl) / 2, bas_g + 16), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
             v += pas_x
@@ -481,6 +530,15 @@ class ScenesPedagogiques(Animations):
             lbl = typographie(c["axe_x"], self.langue)
             d.text((droite - p_axe.getlength(lbl), bas_g + 64), lbl, font=p_axe,
                    fill=_melange(fond, self.c["secondaire"], a_axes))
+        # Titre de l'axe vertical (« Hauteur (cm) ») au-dessus des graduations : l'unité se lit sur l'axe.
+        if c.get("axe_y"):
+            lbl = typographie(c["axe_y"], self.langue)
+            d.text((g, haut_g - p_axe.size * 1.6 - 22), lbl, font=p_axe,
+                   fill=_melange(fond, self.c["accent"] if s2 else self.c["secondaire"], a_axes))
+        if s2 and s2.get("axe_y"):   # titre de l'axe de droite, dans la couleur de sa courbe
+            lbl = typographie(s2["axe_y"], self.langue)
+            d.text((dr - p_axe.getlength(lbl), haut_g - p_axe.size * 1.6 - 22), lbl, font=p_axe,
+                   fill=_melange(fond, self.c["texte"], a_axes))
         # Seuils horizontaux en pointillés : « seuil » (ex. 0.9, étiqueté par sa valeur) et/ou « seuils »,
         # liste de {valeur, label} (ex. moyenne et médiane affichées ensemble). Couleurs : accent, puis texte.
         seuils = ([{"valeur": c["seuil"]}] if c.get("seuil") is not None else []) + list(c.get("seuils") or [])
@@ -505,11 +563,76 @@ class ScenesPedagogiques(Animations):
             return
         x_lim = xmin + (xmax - xmin) * k
         trace = [(X(x), Y(v)) for x, v in pts if x <= x_lim + 1e-9]
-        if c.get("style") == "points":
-            for px, py in trace:
-                d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=self.c["accent"])
+        if style in ("barres", "histogramme"):
+            avant = set(c.get("mis_en_avant") or [])
+            for n_b, (x, v_b) in enumerate(pts):
+                # Les barres poussent l'une après l'autre, de gauche à droite.
+                kb = min(1.0, max(0.0, k * len(pts) - n_b))
+                if kb <= 0:
+                    continue
+                x0, x1 = (X(n_b - 0.32), X(n_b + 0.32)) if style == "barres" else (X(x), X(bornes[n_b + 1]))
+                y_haut = Y(ymin + (v_b - ymin) * kb)
+                couleur = self.c["accent"] if (n_b in avant or not avant) else self.c["barre"]
+                d.rectangle((x0, y_haut, x1, bas_g), fill=couleur,
+                            outline=fond if style == "histogramme" else None, width=3 if style == "histogramme" else 0)
+                if c.get("valeurs") and kb >= 1.0:
+                    # « etiquettes_valeurs » : texte écrit tel quel au-dessus de chaque barre (unité, décimales
+                    # imposées : « 0,70 € »), sinon la valeur formatée selon la langue.
+                    lbl = str(c["etiquettes_valeurs"][n_b]) if c.get("etiquettes_valeurs") else fmt_y(v_b)
+                    d.text(((x0 + x1) / 2 - p_axe.getlength(lbl) / 2, y_haut - p_axe.size - 14), lbl, font=p_axe,
+                           fill=self.c["texte"])
+        elif style == "boites":
+            # Boîtes à moustaches posées l'une après l'autre : moustaches (min et max hors atypiques), boîte de
+            # Q1 à Q3, trait épais à la médiane, valeurs atypiques en points creux.
+            avant = set(c.get("mis_en_avant") or [])
+            demi = 0.18 if len(pts) == 1 else 0.3
+            for n_b, b in enumerate(c["boites"]):
+                kb = min(1.0, max(0.0, k * len(pts) - n_b))
+                if kb <= 0:
+                    continue
+                mn, q1, me, q3, mx = (float(z) for z in b["valeurs"])
+                couleur = self.c["accent"] if (n_b in avant or not avant) else self.c["barre"]
+                trait = _melange(fond, couleur, kb)
+                xc, x0, x1 = X(n_b), X(n_b - demi), X(n_b + demi)
+                xm0, xm1 = X(n_b - demi / 2), X(n_b + demi / 2)
+                d.line((xc, Y(mn), xc, Y(q1)), fill=trait, width=6)
+                d.line((xc, Y(q3), xc, Y(mx)), fill=trait, width=6)
+                d.line((xm0, Y(mn), xm1, Y(mn)), fill=trait, width=6)
+                d.line((xm0, Y(mx), xm1, Y(mx)), fill=trait, width=6)
+                d.rectangle((x0, Y(q3), x1, Y(q1)), fill=_melange(fond, couleur, 0.35 * kb), outline=trait, width=6)
+                d.line((x0, Y(me), x1, Y(me)), fill=_melange(fond, self.c["texte"], kb), width=10)
+                for v_a in b.get("atypiques", []):
+                    ya = Y(float(v_a))
+                    d.ellipse((xc - 14, ya - 14, xc + 14, ya + 14), outline=trait, width=6)
+                # « valeurs: true » : les cinq nombres écrits à droite de la boîte (une seule boîte, ou peu).
+                if c.get("valeurs") and kb >= 1.0:
+                    noms = {"fr": ("min", "Q1", "médiane", "Q3", "max"), "en": ("min", "Q1", "median", "Q3", "max")}
+                    # Étiquettes écartées les unes des autres (Q1 et min proches), de haut en bas.
+                    lignes = sorted(((Y(v_b) - p_axe.size * 0.6, f"{nom} {fmt_y(v_b)}", nom in ("médiane", "median"))
+                                     for nom, v_b in zip(noms.get(self.langue, noms["en"]), (mn, q1, me, q3, mx))))
+                    pas_l = p_axe.size + 10
+                    ys_l = [lignes[0][0]]
+                    for y_l, _, _ in lignes[1:]:
+                        ys_l.append(max(y_l, ys_l[-1] + pas_l))
+                    depasse = ys_l[-1] - (bas_g - p_axe.size * 0.6)
+                    if depasse > 0:
+                        ys_l = [v - depasse for v in ys_l]
+                    for y_l, (_, lbl, med) in zip(ys_l, lignes):
+                        d.text((x1 + 22, y_l), lbl, font=p_axe, fill=self.c["texte"] if med else self.c["secondaire"])
+        elif style == "points":
+            avant = set(c.get("mis_en_avant") or [])
+            rangs = [n_p for n_p, (x, _) in enumerate(pts) if x <= x_lim + 1e-9]
+            for n_p, (px, py) in zip(rangs, trace):
+                couleur = self.c["accent"] if (n_p in avant or not avant) else self.c["barre"]
+                d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=couleur)
         elif len(trace) >= 2:
             d.line(trace, fill=self.c["accent"], width=10, joint="curve")
+        if s2:
+            def Y2(v):
+                return bas_g - (v - y2min) / ((y2max - y2min) or 1) * (bas_g - haut_g)
+            trace2 = [(X(x), Y2(v)) for x, v in pts2 if x <= x_lim + 1e-9]
+            if len(trace2) >= 2:
+                d.line(trace2, fill=self.c["texte"], width=10, joint="curve")
         # Repères : point, pointillés, étiquette. Ils apparaissent quand la courbe les atteint et, si la
         # voix est connue, sur la phrase qui les annonce (une phrase d'introduction, puis une par repère).
         reperes = c.get("reperes", [])
@@ -527,6 +650,10 @@ class ScenesPedagogiques(Animations):
             px, py = X(xr), Y(yr)
             for yy in range(int(py), int(bas_g), 22):
                 d.line((px, yy, px, min(yy + 11, bas_g)), fill=_melange(fond, self.c["texte"], a), width=3)
+            # « guide_y: true » : second pointillé vers l'axe vertical, pour lire les deux coordonnées.
+            if rep.get("guide_y"):
+                for xx in range(int(px), int(gauche), -22):
+                    d.line((max(xx - 11, gauche), py, xx, py), fill=_melange(fond, self.c["texte"], a), width=3)
             r = 15 * (0.6 + 0.4 * a)
             d.ellipse((px - r, py - r, px + r, py + r), fill=self.c["texte"], outline=self.c["accent"], width=6)
             places.append((typographie(rep.get("label") or fmt_y(yr), self.langue), px, py, a))

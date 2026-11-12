@@ -1,0 +1,264 @@
+# Niveau 1, vague 1, lot 3 : S3.04 « Le nuage de points » (EDUCATIONAL, démonstration)
+# Fiche de conception : contenus/conception/S3.04.yaml
+# Nombres fictifs : 15 pays imaginaires (PIB par habitant et espérance de vie), construits avec une relation
+# logarithmique et un peu de bruit, plus un pays atypique. Le catalogue proposait les vraies données
+# PIB / espérance de vie : remplacées par des pays imaginaires pour ne citer aucun chiffre non sourcé ; la
+# forme générale (forte hausse puis plafonnement) est celle que montrent les données réelles, à sourcer
+# si l'on veut l'affirmer. Échelle logarithmique en intuition : l'axe indique la puissance de 10.
+# Exercice : heures de révision et notes, fictif.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s3-04-le-nuage-de-points
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S3.04 · Le nuage de points"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Construire et lire un nuage de points"
+      - "Décrire une relation par sa forme, son sens, son intensité et ses points atypiques"
+      - "Comprendre en intuition qu'une échelle logarithmique change la forme du nuage"
+    en:
+      - "Build and read a scatter plot"
+      - "Describe a relationship by its form, direction, strength and outliers"
+      - "Get an intuition for how a logarithmic scale changes the shape of the cloud"
+  prerequis:
+    fr: ["S2.03 : la forme d'une distribution"]
+    en: ["S2.03: the shape of a distribution"]
+  hypotheses:
+    fr: "Pays imaginaires et élèves fictifs ; aucune donnée réelle"
+    en: "Imaginary countries and fictional pupils; no real data"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Deux quantités varient-elles ensemble ? Le nuage de points"
+    legende: |
+      Chaque point est un individu, et la forme du nuage raconte une histoire. Avec quinze pays imaginaires, richesse et espérance de vie, on apprend à lire un nuage de points en quatre questions : la forme, le sens, l'intensité, les points atypiques. Et on voit comment une échelle logarithmique peut redresser une courbe. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, nuagedepoints, graphiques]
+    scenes:
+      - type: accroche
+        texte: "Deux quantités *varient-elles ensemble* ?"
+        voix_off: "Les pays les plus riches vivent-ils plus longtemps ? Pour voir si deux quantités varient ensemble, il existe un graphique très simple."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Un point par individu"
+        voix_off: "Le principe tient en une phrase."
+      - type: courbe
+        texte: "Richesse et espérance de vie, *15 pays imaginaires*"
+        courbe:
+          style: points
+          points: [[1, 56], [1.5, 55.6], [2, 59.1], [3, 59.7], [4, 63.7], [6, 64.3], [8, 65.0], [12, 69.1], [18, 69.1], [25, 72.3], [35, 74.3], [40, 63.0], [45, 74.3], [60, 76.9], [80, 77.8]]
+          x_min: 0
+          x_max: 80
+          y_min: 50
+          y_max: 80
+          axe_x: "PIB par habitant (milliers de $)"
+          axe_y: "Espérance de vie (ans)"
+        note: "Pays imaginaires : chiffres inventés pour l'exemple."
+        voix_off: "Chaque pays devient un point : sa richesse par habitant à l'horizontale, son espérance de vie à la verticale. Voici quinze pays imaginaires, posés un à un. Le nuage monte vite au début, puis il s'aplatit."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Quatre questions à poser"
+        voix_off: "Pour décrire un nuage, on se pose toujours quatre questions."
+      - type: etapes
+        texte: "Décrire un nuage *en quatre mots*"
+        etapes:
+          - "La *forme* : une droite, une courbe, des groupes ?"
+          - "Le *sens* : ça monte, ça descend ?"
+          - "L'*intensité* : les points sont-ils serrés ?"
+          - "Les *atypiques* : un point s'écarte-t-il ?"
+        voix_off: "Voici les quatre questions. La forme : les points suivent-ils une droite, une courbe, ou forment-ils des groupes séparés ? Le sens : quand l'un augmente, l'autre augmente-t-il ou diminue-t-il ? L'intensité : les points sont-ils serrés autour de leur tendance, ou très éparpillés ? Les atypiques : un point s'écarte-t-il nettement des autres ?"
+      - type: courbe
+        texte: "Un pays *s'écarte du nuage*"
+        courbe:
+          style: points
+          points: [[1, 56], [1.5, 55.6], [2, 59.1], [3, 59.7], [4, 63.7], [6, 64.3], [8, 65.0], [12, 69.1], [18, 69.1], [25, 72.3], [35, 74.3], [40, 63.0], [45, 74.3], [60, 76.9], [80, 77.8]]
+          mis_en_avant: [11]
+          x_min: 0
+          x_max: 80
+          y_min: 50
+          y_max: 80
+          axe_x: "PIB par habitant (milliers de $)"
+          axe_y: "Espérance de vie (ans)"
+          reperes: [{x: 40, y: 63.0, label: "40 000 $, 63 ans"}]
+        voix_off: "Appliquons-les à nos pays. La forme est une courbe, et non une droite. Le sens est croissant. L'intensité est assez forte : la plupart des points restent proches de la courbe. Mais un pays s'écarte nettement : riche, et pourtant une espérance de vie de soixante-trois ans seulement. C'est lui qu'il faut aller comprendre. Et ce nuage montre une association : il ne prouve pas que la richesse, à elle seule, allonge la vie."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Changer d'échelle"
+        voix_off: "Et si l'on changeait la façon de graduer l'axe horizontal ?"
+      - type: courbe
+        texte: "Échelle logarithmique : *la courbe se redresse*"
+        courbe:
+          style: points
+          points: [[3.0, 56], [3.18, 55.6], [3.3, 59.1], [3.48, 59.7], [3.6, 63.7], [3.78, 64.3], [3.9, 65.0], [4.08, 69.1], [4.26, 69.1], [4.4, 72.3], [4.54, 74.3], [4.6, 63.0], [4.65, 74.3], [4.78, 76.9], [4.9, 77.8]]
+          mis_en_avant: [11]
+          x_min: 3
+          x_max: 5
+          y_min: 50
+          y_max: 80
+          axe_x: "Puissance de 10 du PIB (3 = 1 000 $, 5 = 100 000 $)"
+          axe_y: "Espérance de vie (ans)"
+        note: "Échelle logarithmique : chaque graduation multiplie le PIB par 10. Mêmes pays imaginaires."
+        voix_off: "Sur cet axe, chaque graduation ne s'ajoute pas : elle multiplie la richesse par dix. Mille dollars, dix mille, cent mille. Avec cette échelle logarithmique, les mêmes points s'alignent presque sur une droite. Le nuage n'a pas changé, seule l'échelle a changé : il faut toujours vérifier comment un axe est gradué."
+        verifier:
+          - {expression: "10**3", attendu: 1000, libelle: "Graduation 3"}
+          - {expression: "10**5", attendu: 100000, libelle: "Graduation 5"}
+      # ---------------------------------------------------------------- exercice
+      - type: courbe
+        texte: "Heures de révision et note, *14 élèves*"
+        courbe:
+          style: points
+          points: [[0, 6], [1, 7], [2, 9], [2, 8], [3, 10], [4, 10], [5, 12], [5, 11], [6, 13], [7, 13], [8, 15], [9, 16], [9, 5], [10, 16]]
+          x_min: 0
+          x_max: 10
+          y_min: 0
+          y_max: 20
+          axe_x: "Heures de révision"
+          axe_y: "Note sur 20"
+        note: "Élèves fictifs."
+        voix_off: "Voici un dernier nuage : quatorze élèves imaginaires, leurs heures de révision et leur note. Observez-le bien."
+      - type: exercice
+        texte: "Décrivez ce nuage : *forme*, *sens*, *intensité*, *atypiques*."
+        pause: 9
+        voix_off: "À vous. Décrivez ce nuage en répondant aux quatre questions : la forme, le sens, l'intensité, et les points atypiques."
+      - type: correction
+        etapes:
+          - "Forme : *une droite*, à peu près"
+          - "Sens : *croissant*, plus d'heures, meilleure note"
+          - "Intensité : *assez serrée*"
+          - "Atypique : *un élève*, 9 h de révision et 5 sur 20"
+        reponse: "Droite, croissante, serrée, un atypique"
+        voix_off: "Voici une réponse. La forme est à peu près une droite. Le sens est croissant : plus d'heures de révision vont avec une meilleure note. L'intensité est assez forte : les points restent près de la droite. Et un élève s'écarte : neuf heures de révision, et cinq sur vingt. Peut-être était-il malade le jour du contrôle : là encore, le point atypique est une question à poser."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Un point *par individu*, deux variables"
+          - "Décrire : *forme, sens, intensité, atypiques*"
+          - "Vérifier *l'échelle* des axes"
+        voix_off: "À retenir. Dans un nuage, chaque point est un individu, placé selon deux variables. On le décrit par sa forme, son sens, son intensité et ses points atypiques. Et on vérifie toujours l'échelle des axes."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Do two quantities move together? The scatter plot"
+    legende: |
+      Every point is one individual, and the shape of the cloud tells a story. With fifteen imaginary countries, wealth and life expectancy, we learn to read a scatter plot by asking four questions: form, direction, strength, outliers. And we see how a logarithmic scale can straighten out a curve. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, scatterplot, charts]
+    scenes:
+      - type: accroche
+        texte: "Do two quantities *move together*?"
+        voix_off: "Do people in richer countries live longer? To see whether two quantities move together, there is a very simple chart."
+      - type: titre
+        numero: 1
+        texte: "One point per individual"
+        voix_off: "The idea fits in one sentence."
+      - type: courbe
+        texte: "Wealth and life expectancy, *15 imaginary countries*"
+        courbe:
+          style: points
+          points: [[1, 56], [1.5, 55.6], [2, 59.1], [3, 59.7], [4, 63.7], [6, 64.3], [8, 65.0], [12, 69.1], [18, 69.1], [25, 72.3], [35, 74.3], [40, 63.0], [45, 74.3], [60, 76.9], [80, 77.8]]
+          x_min: 0
+          x_max: 80
+          y_min: 50
+          y_max: 80
+          axe_x: "GDP per person (thousands of $)"
+          axe_y: "Life expectancy (years)"
+        note: "Imaginary countries: numbers made up for the example."
+        voix_off: "Each country becomes a point: its wealth per person across, its life expectancy up the side. Here are fifteen imaginary countries, placed one by one. The cloud climbs fast at first, then flattens out."
+      - type: titre
+        numero: 2
+        texte: "Four questions to ask"
+        voix_off: "To describe a cloud, always ask four questions."
+      - type: etapes
+        texte: "Describe a cloud *in four words*"
+        etapes:
+          - "*Form*: a line, a curve, clusters?"
+          - "*Direction*: going up, going down?"
+          - "*Strength*: are the points tight?"
+          - "*Outliers*: does a point stand apart?"
+        voix_off: "Here are the four questions. Form: do the points follow a straight line, a curve, or separate clusters? Direction: when one goes up, does the other go up or down? Strength: are the points tight around their trend, or widely scattered? Outliers: does any point stand clearly apart from the rest?"
+      - type: courbe
+        texte: "One country *stands apart*"
+        courbe:
+          style: points
+          points: [[1, 56], [1.5, 55.6], [2, 59.1], [3, 59.7], [4, 63.7], [6, 64.3], [8, 65.0], [12, 69.1], [18, 69.1], [25, 72.3], [35, 74.3], [40, 63.0], [45, 74.3], [60, 76.9], [80, 77.8]]
+          mis_en_avant: [11]
+          x_min: 0
+          x_max: 80
+          y_min: 50
+          y_max: 80
+          axe_x: "GDP per person (thousands of $)"
+          axe_y: "Life expectancy (years)"
+          reperes: [{x: 40, y: 63.0, label: "$40,000, 63 years"}]
+        voix_off: "Let's apply them to our countries. The form is a curve, not a straight line. The direction is upward. The strength is fairly high: most points stay close to the curve. But one country clearly stands apart: rich, and yet a life expectancy of only sixty-three years. That's the one to go and understand. And this cloud shows an association: it doesn't prove that wealth alone makes people live longer."
+      - type: titre
+        numero: 3
+        texte: "Changing the scale"
+        voix_off: "What if we changed the way the horizontal axis is marked?"
+      - type: courbe
+        texte: "Logarithmic scale: *the curve straightens*"
+        courbe:
+          style: points
+          points: [[3.0, 56], [3.18, 55.6], [3.3, 59.1], [3.48, 59.7], [3.6, 63.7], [3.78, 64.3], [3.9, 65.0], [4.08, 69.1], [4.26, 69.1], [4.4, 72.3], [4.54, 74.3], [4.6, 63.0], [4.65, 74.3], [4.78, 76.9], [4.9, 77.8]]
+          mis_en_avant: [11]
+          x_min: 3
+          x_max: 5
+          y_min: 50
+          y_max: 80
+          axe_x: "Power of 10 of GDP ($): 3 = $1,000, 5 = $100,000"
+          axe_y: "Life expectancy (years)"
+        note: "Logarithmic scale: each step multiplies GDP by 10. Same imaginary countries."
+        voix_off: "On this axis, each step doesn't add: it multiplies wealth by ten. One thousand dollars, ten thousand, one hundred thousand. With this logarithmic scale, the same points line up almost along a straight line. The cloud hasn't changed, only the scale has: always check how an axis is marked."
+        verifier:
+          - {expression: "10**3", attendu: 1000, libelle: "Tick 3"}
+          - {expression: "10**5", attendu: 100000, libelle: "Tick 5"}
+      - type: courbe
+        texte: "Hours of revision and marks, *14 pupils*"
+        courbe:
+          style: points
+          points: [[0, 6], [1, 7], [2, 9], [2, 8], [3, 10], [4, 10], [5, 12], [5, 11], [6, 13], [7, 13], [8, 15], [9, 16], [9, 5], [10, 16]]
+          x_min: 0
+          x_max: 10
+          y_min: 0
+          y_max: 20
+          axe_x: "Hours of revision"
+          axe_y: "Mark out of 20"
+        note: "Fictional pupils."
+        voix_off: "Here is one last cloud: fourteen imaginary pupils, their hours of revision and their marks. Take a good look at it."
+      - type: exercice
+        texte: "Describe this cloud: *form*, *direction*, *strength*, *outliers*."
+        pause: 9
+        voix_off: "Your turn. Describe this cloud by answering the four questions: form, direction, strength, and outliers."
+      - type: correction
+        etapes:
+          - "Form: roughly *a straight line*"
+          - "Direction: *upward*, more hours, better marks"
+          - "Strength: *fairly tight*"
+          - "Outlier: *one pupil*, 9 hours of revision and 5 out of 20"
+        reponse: "Straight, upward, tight, one outlier"
+        voix_off: "Here is one answer. The form is roughly a straight line. The direction is upward: more hours of revision go with better marks. The strength is fairly high: the points stay close to the line. And one pupil stands apart: nine hours of revision, and five out of twenty. Perhaps they were ill on the day of the test: once again, an outlier is a question to ask."
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "One point *per individual*, two variables"
+          - "Describe: *form, direction, strength, outliers*"
+          - "Check *the scale* of the axes"
+        voix_off: "Key points. In a scatter plot, each point is an individual, placed according to two variables. Describe it by its form, direction, strength and outliers. And always check the scale of the axes."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

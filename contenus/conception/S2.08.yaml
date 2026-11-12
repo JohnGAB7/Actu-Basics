@@ -1,0 +1,47 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+id_programme: S2.08
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-08-variance-et-ecart-type.yaml
+question_centrale:
+  fr: Pourquoi élève-t-on les écarts au carré au lieu de les additionner ?
+  en: Why do we square the deviations instead of adding them up?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 8
+public:
+  prerequis:
+  - S2.07
+  - S2.04
+  niveau_maths: M1
+  rappel_conseille: []
+intuition: On élève les écarts au carré pour qu'ils ne s'annulent plus, puis on reprend la racine pour revenir à l'unité.
+exemple_fil_rouge: 'Deux lignes de bus fictives, attentes 4, 5, 5, 6 et 1, 3, 7, 9 min : écarts-types 0,71 et 3,16.'
+exemple_reel: null
+idees_fausses:
+- idee: Oublier de prendre la racine
+  desamorcee_a_l_etape: 'Partie 3 : variance en min², écart-type en min'
+- idee: Débat n ou n − 1 sans explication
+  desamorcee_a_l_etape: 'Correction de l''exercice : les deux valeurs, renvoi à un épisode ultérieur'
+exercice:
+  question: Écart-type de 2, 4, 4, 6 ?
+  correction: 1,41 en divisant par n (1,63 en divisant par n − 1)
+  pause_secondes: 9
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Calculer l'écart-type de 1, 3, 5.
+  diagnostic_d_erreur: '« La variance des attentes est de 10 minutes » : où est l''erreur ?'
+duree_estimee_min:
+- 6
+- 8
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

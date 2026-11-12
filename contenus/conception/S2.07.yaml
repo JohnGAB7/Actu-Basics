@@ -1,0 +1,46 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Villes fictives (le catalogue citait Brest et Strasbourg sans données sourcées).
+id_programme: S2.07
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-07-mesurer-la-dispersion-simplement.yaml
+question_centrale:
+  fr: Deux villes ont la même moyenne annuelle. Ont-elles les mêmes températures au fil des mois ?
+  en: Two towns have the same yearly average. Do they have the same temperatures from month to month?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 7
+public:
+  prerequis:
+  - S2.06
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: 'Même moyenne ne veut pas dire même distribution : il faut aussi mesurer l''étalement.'
+exemple_fil_rouge: 'Deux villes fictives, températures mensuelles de moyenne 12 °C : étendues 10 et 22, écarts interquartiles
+  6 et 14.'
+exemple_reel: null
+idees_fausses:
+- idee: Juger deux distributions sur la seule moyenne
+  desamorcee_a_l_etape: 'Partie 1 : les deux villes'
+exercice:
+  question: Classer trois séries X, Y, Z de moyenne 11, de la moins à la plus dispersée
+  correction: X, puis Y, puis Z (étendues 2, 8 et 20)
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: 'Deux classes ont 12 de moyenne : notes de 10 à 14 dans l''une, de 2 à 19 dans l''autre. Que dire
+    ?'
+  diagnostic_d_erreur: '« Même moyenne, donc mêmes résultats » : qu''est-ce qui manque ?'
+duree_estimee_min:
+- 4
+- 5
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

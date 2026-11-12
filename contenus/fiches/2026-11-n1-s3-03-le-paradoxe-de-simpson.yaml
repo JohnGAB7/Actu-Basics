@@ -1,0 +1,223 @@
+# Niveau 1, vague 1, lot 3 : S3.03 « Le paradoxe de Simpson » (EDUCATIONAL, paradoxe)
+# Fiche de conception : contenus/conception/S3.03.yaml
+# Source : C. R. Charig, D. R. Webb, S. R. Payne et J. E. A. Wickham, « Comparison of treatment of renal
+# calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy »,
+# British Medical Journal 292 (6524), 29 mars 1986, p. 879-882, doi:10.1136/bmj.292.6524.879 ; notice PubMed
+# 3083922. Chiffres repris du catalogue du programme (vérifiés sur Crossref lors de la version 1.8 du
+# programme) : A = chirurgie ouverte, B = néphrolithotomie percutanée ; petits calculs < 2 cm. Le texte
+# complet n'a pas été relu par Claude ; relecture ChatGPT du 2026-11-09 : sous-groupes et totaux conformes à
+# l'article. Étude d'observation (patients traités successivement, sans tirage au sort), présentée comme telle.
+# « Succès » au sens de l'article.
+# Exercice : deux hôpitaux fictifs.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s3-03-le-paradoxe-de-simpson
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S3.03 · Le paradoxe de Simpson"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Reproduire un paradoxe de Simpson à partir d'un tableau"
+      - "Expliquer le rôle d'une variable de confusion quand on additionne des groupes"
+      - "Savoir que ni le total ni le détail ne suffisent sans comprendre comment les groupes ont été constitués"
+    en:
+      - "Reproduce a Simpson's paradox from a table"
+      - "Explain the role of a confounding variable when groups are pooled"
+      - "Know that neither the total nor the detail is enough without understanding how the groups were formed"
+  prerequis:
+    fr: ["S3.02 : tableaux croisés et pourcentages conditionnels"]
+    en: ["S3.02: cross-tabs and conditional percentages"]
+  hypotheses:
+    fr: "Données de l'étude sur les calculs rénaux (1986) ; hôpitaux de l'exercice fictifs"
+    en: "Data from the kidney stone study (1986); the hospitals in the exercise are fictional"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
+
+sources:
+  - nom:
+      fr: "C. R. Charig et coll., British Medical Journal, 1986"
+      en: "C. R. Charig et al., British Medical Journal, 1986"
+    url: "https://pubmed.ncbi.nlm.nih.gov/3083922/"
+    date_consultation: "2026-11-09"
+
+editions:
+  fr:
+    titre: "Meilleur dans chaque groupe, pire au total : le paradoxe de Simpson"
+    legende: |
+      Un traitement réussit mieux que l'autre chez les patients à petits calculs rénaux, et mieux aussi chez ceux à gros calculs. Pourtant, au total, c'est l'autre qui semble gagner. Comment est-ce possible ? Avec les chiffres d'une étude médicale d'observation de 1986, on reproduit le paradoxe de Simpson et on comprend le rôle d'une variable de confusion. Source : C. R. Charig et coll., British Medical Journal, 1986. Exercice corrigé (hôpitaux fictifs). Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, paradoxe, simpson]
+    scenes:
+      - type: accroche
+        texte: "Meilleur *dans chaque groupe*, pire *au total* ?"
+        voix_off: "Un traitement peut-il être meilleur chez les petits malades, meilleur chez les grands malades, et pourtant moins bon au total ? Oui. Et cela s'est vu dans une vraie étude médicale."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Deux traitements des calculs rénaux"
+        voix_off: "En mille neuf cent quatre-vingt-six, une équipe britannique compare, après coup, des patients traités de différentes façons pour des calculs rénaux."
+      - type: etapes
+        texte: "Au total, *B semble meilleur*"
+        etapes:
+          - "Traitement A, chirurgie ouverte : 273 succès sur 350, *78 %*"
+          - "Traitement B, technique percutanée : 289 sur 350, *≈ 83 %*"
+        voix_off: "Regardons deux d'entre eux, chacun utilisé chez trois cent cinquante patients. Le traitement A, la chirurgie ouverte, réussit deux cent soixante-treize fois : soixante-dix-huit pour cent. Le traitement B, une technique percutanée moins invasive, réussit deux cent quatre-vingt-neuf fois : environ quatre-vingt-trois pour cent."
+        verifier:
+          - {expression: "100 * 273 / 350", attendu: 78, libelle: "Taux de succès total, A (%)"}
+          - {expression: "100 * 289 / 350", attendu: 83, libelle: "Taux de succès total, B (%)"}
+        note: "Étude d'observation : les patients n'ont pas été répartis au hasard entre les traitements."
+      - type: etapes
+        texte: "Par taille de calcul, *A gagne deux fois*"
+        etapes:
+          - "Petits calculs : A *93 %* (81 sur 87) ; B *87 %* (234 sur 270)"
+          - "Gros calculs : A *73 %* (192 sur 263) ; B *69 %* (55 sur 80)"
+        voix_off: "Séparons maintenant les patients selon la taille de leur calcul. Pour les petits calculs, A réussit dans quatre-vingt-treize pour cent des cas, B dans quatre-vingt-sept pour cent. Pour les gros calculs, A réussit dans soixante-treize pour cent des cas, B dans soixante-neuf pour cent. A gagne dans les deux groupes."
+        verifier:
+          - {expression: "100 * 81 / 87", attendu: 93, libelle: "A, petits calculs (%)"}
+          - {expression: "100 * 234 / 270", attendu: 87, libelle: "B, petits calculs (%)"}
+          - {expression: "100 * 192 / 263", attendu: 73, libelle: "A, gros calculs (%)"}
+          - {expression: "100 * 55 / 80", attendu: 69, libelle: "B, gros calculs (%)"}
+          - {expression: "81 + 192", attendu: 273, libelle: "Succès de A, total"}
+          - {expression: "234 + 55", attendu: 289, libelle: "Succès de B, total"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La composition des groupes"
+        voix_off: "Comment le total peut-il dire l'inverse de chaque groupe ?"
+      - type: etapes
+        texte: "Qui a reçu *quel traitement* ?"
+        etapes:
+          - "A : *263 gros calculs* sur 350, les cas difficiles"
+          - "B : *270 petits calculs* sur 350, les cas faciles"
+          - "Le total mélange *des groupes de tailles différentes*"
+        voix_off: "Tout tient à qui a reçu quel traitement. La chirurgie ouverte a surtout été donnée aux patients à gros calculs, les cas les plus difficiles. La technique percutanée a surtout traité des petits calculs, les cas les plus faciles. Le total mélange donc des groupes de tailles très différentes, et B profite de ses patients plus faciles."
+        verifier:
+          - {expression: "87 + 263", attendu: 350, libelle: "Patients du traitement A"}
+          - {expression: "270 + 80", attendu: 350, libelle: "Patients du traitement B"}
+      - type: texte
+        texte: "La taille du calcul est une *variable de confusion*"
+        voix_off: "La taille du calcul est liée aux deux à la fois : au traitement reçu, et aux chances de succès. C'est une variable de confusion, qui contribue ici au renversement observé. Quand on l'oublie, elle peut renverser la conclusion : c'est le paradoxe de Simpson. Et comme les patients n'ont pas été tirés au sort, d'autres différences entre les groupes restent possibles."
+      - type: texte
+        texte: "Ni le total, ni le détail *ne suffisent seuls*"
+        voix_off: "Faut-il toujours croire le chiffre détaillé ? Pas forcément. Ici, il est plus parlant, parce que la taille du calcul existait avant le traitement. Mais si l'on découpait selon une conséquence du traitement, le détail pourrait tromper à son tour. Ni le total ni le détail ne suffisent sans comprendre comment les groupes ont été constitués."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Hôpital 1 : légers *90/100* survivent, graves *300/400*. Hôpital 2 : légers *340/400*, graves *70/100*. Lequel fait mieux, à gravité égale ?"
+        pause: 10
+        voix_off: "À vous, avec deux hôpitaux imaginaires. À l'hôpital un, quatre-vingt-dix patients légers sur cent survivent, et trois cents patients graves sur quatre cents. À l'hôpital deux, trois cent quarante légers sur quatre cents, et soixante-dix graves sur cent. Calculez les taux par groupe et au total. Quel hôpital a les meilleurs taux de survie, à gravité égale ?"
+      - type: correction
+        etapes:
+          - "Légers : H1 *90 %*, H2 *85 %*. Graves : H1 *75 %*, H2 *70 %*"
+          - "Total : H1, 390/500 = *78 %* ; H2, 410/500 = *82 %*"
+          - "H1 reçoit surtout *des cas graves*"
+        reponse: "L'hôpital 1, dans chaque groupe"
+        voix_off: "Voyons. Chez les patients légers, l'hôpital un fait mieux, quatre-vingt-dix pour cent contre quatre-vingt-cinq ; chez les graves aussi, soixante-quinze contre soixante-dix. Au total, pourtant, l'hôpital un affiche soixante-dix-huit pour cent, et l'hôpital deux quatre-vingt-deux. La raison : l'hôpital un reçoit surtout des cas graves. Dans cet exemple, l'hôpital un a les meilleurs taux de survie dans chacun des deux groupes, sans que cela prouve à lui seul qu'il soigne mieux."
+        verifier:
+          - {expression: "100 * 90 / 100", attendu: 90, libelle: "H1, légers (%)"}
+          - {expression: "100 * 340 / 400", attendu: 85, libelle: "H2, légers (%)"}
+          - {expression: "100 * 300 / 400", attendu: 75, libelle: "H1, graves (%)"}
+          - {expression: "100 * 70 / 100", attendu: 70, libelle: "H2, graves (%)"}
+          - {expression: "100 * (90 + 300) / 500", attendu: 78, libelle: "H1, total (%)"}
+          - {expression: "100 * (340 + 70) / 500", attendu: 82, libelle: "H2, total (%)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Un total peut dire *l'inverse* de chaque groupe"
+          - "En cause : une *variable de confusion* et des groupes de tailles inégales"
+          - "Toujours demander : *qui est dans chaque groupe* ?"
+        voix_off: "À retenir. Un total peut dire l'inverse de chacun de ses groupes. En cause : une variable de confusion, et des groupes de tailles inégales. Alors, devant une comparaison, demandez toujours qui se trouve dans chaque groupe."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Better in every group, worse overall: Simpson's paradox"
+    legende: |
+      One treatment works better than another for patients with small kidney stones, and better for those with large ones too. Yet overall, the other treatment seems to win. How is that possible? Using the figures from a 1986 observational medical study, we reproduce Simpson's paradox and see the role of a confounding variable. Source: C. R. Charig et al., British Medical Journal, 1986. Worked exercise (fictional hospitals). Series "Reading numbers without being fooled".
+    hashtags: [statistics, paradox, simpson]
+    scenes:
+      - type: accroche
+        texte: "Better *in every group*, worse *overall*?"
+        voix_off: "Can a treatment be better for mild cases, better for severe cases, and yet worse overall? Yes. And it happened in a real medical study."
+      - type: titre
+        numero: 1
+        texte: "Two treatments for kidney stones"
+        voix_off: "In nineteen eighty-six, a British team looked back at patients treated in different ways for kidney stones."
+      - type: etapes
+        texte: "Overall, *B looks better*"
+        etapes:
+          - "Treatment A, open surgery: 273 successes out of 350, *78%*"
+          - "Treatment B, percutaneous technique: 289 out of 350, *≈ 83%*"
+        voix_off: "Let's look at two of them, each used on three hundred and fifty patients. Treatment A, open surgery, succeeded two hundred and seventy-three times: seventy-eight percent. Treatment B, a less invasive percutaneous technique, succeeded two hundred and eighty-nine times: about eighty-three percent."
+        verifier:
+          - {expression: "100 * 273 / 350", attendu: 78, libelle: "Overall success rate, A (%)"}
+          - {expression: "100 * 289 / 350", attendu: 83, libelle: "Overall success rate, B (%)"}
+        note: "Observational study: patients were not randomly assigned to the treatments."
+      - type: etapes
+        texte: "By stone size, *A wins twice*"
+        etapes:
+          - "Small stones: A *93%* (81 of 87); B *87%* (234 of 270)"
+          - "Large stones: A *73%* (192 of 263); B *69%* (55 of 80)"
+        voix_off: "Now let's split the patients by the size of their stone. For small stones, A succeeds ninety-three percent of the time, B eighty-seven percent. For large stones, A succeeds seventy-three percent of the time, B sixty-nine percent. A wins in both groups."
+        verifier:
+          - {expression: "100 * 81 / 87", attendu: 93, libelle: "A, small stones (%)"}
+          - {expression: "100 * 234 / 270", attendu: 87, libelle: "B, small stones (%)"}
+          - {expression: "100 * 192 / 263", attendu: 73, libelle: "A, large stones (%)"}
+          - {expression: "100 * 55 / 80", attendu: 69, libelle: "B, large stones (%)"}
+          - {expression: "81 + 192", attendu: 273, libelle: "Successes for A, total"}
+          - {expression: "234 + 55", attendu: 289, libelle: "Successes for B, total"}
+      - type: titre
+        numero: 2
+        texte: "Who is in each group"
+        voix_off: "How can the total say the opposite of every group?"
+      - type: etapes
+        texte: "Who got *which treatment*?"
+        etapes:
+          - "A: *263 large stones* out of 350, the hard cases"
+          - "B: *270 small stones* out of 350, the easy cases"
+          - "The total mixes *groups of different sizes*"
+        voix_off: "It all comes down to who got which treatment. Open surgery was mostly given to patients with large stones, the hardest cases. The percutaneous technique mostly treated small stones, the easiest cases. So the total mixes groups of very different sizes, and B benefits from its easier patients."
+        verifier:
+          - {expression: "87 + 263", attendu: 350, libelle: "Patients on treatment A"}
+          - {expression: "270 + 80", attendu: 350, libelle: "Patients on treatment B"}
+      - type: texte
+        texte: "Stone size is a *confounding variable*"
+        voix_off: "Stone size is linked to both at once: to the treatment received, and to the chance of success. It's a confounding variable, which contributes here to the reversal. Forget it, and it can reverse the conclusion: that's Simpson's paradox. And since patients weren't randomly assigned, other differences between the groups remain possible."
+      - type: texte
+        texte: "Neither the total nor the detail *is enough alone*"
+        voix_off: "Should you always trust the detailed figure? Not necessarily. Here it is more telling, because stone size existed before the treatment. But if you split by a consequence of the treatment, the detail could mislead in turn. Neither the total nor the detail is enough without understanding how the groups were formed."
+      - type: exercice
+        texte: "Hospital 1: mild *90/100* survive, severe *300/400*. Hospital 2: mild *340/400*, severe *70/100*. Which does better, at equal severity?"
+        pause: 10
+        voix_off: "Your turn, with two imaginary hospitals. At hospital one, ninety mild patients out of a hundred survive, and three hundred severe patients out of four hundred. At hospital two, three hundred and forty mild patients out of four hundred, and seventy severe out of a hundred. Work out the rates by group and overall. Which hospital has the better survival rates, at equal severity?"
+      - type: correction
+        etapes:
+          - "Mild: H1 *90%*, H2 *85%*. Severe: H1 *75%*, H2 *70%*"
+          - "Overall: H1 390/500 = *78%*, H2 410/500 = *82%*"
+          - "H1 mostly gets *severe cases*"
+        reponse: "Hospital 1, in every group"
+        voix_off: "Let's see. Among mild patients, hospital one does better, ninety percent against eighty-five; among severe patients too, seventy-five against seventy. Overall, though, hospital one shows seventy-eight percent, and hospital two eighty-two. The reason: hospital one mostly gets severe cases. In this example, hospital one has the higher survival rate in both groups, though that alone doesn't prove it gives better care."
+        verifier:
+          - {expression: "100 * 90 / 100", attendu: 90, libelle: "H1, mild (%)"}
+          - {expression: "100 * 340 / 400", attendu: 85, libelle: "H2, mild (%)"}
+          - {expression: "100 * 300 / 400", attendu: 75, libelle: "H1, severe (%)"}
+          - {expression: "100 * 70 / 100", attendu: 70, libelle: "H2, severe (%)"}
+          - {expression: "100 * (90 + 300) / 500", attendu: 78, libelle: "H1, overall (%)"}
+          - {expression: "100 * (340 + 70) / 500", attendu: 82, libelle: "H2, overall (%)"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "A total can say *the opposite* of every group"
+          - "The cause: a *confounding variable* and groups of unequal size"
+          - "Always ask: *who is in each group*?"
+        voix_off: "Key points. A total can say the opposite of each of its groups. The cause: a confounding variable, and groups of unequal size. So when you see a comparison, always ask who is in each group."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

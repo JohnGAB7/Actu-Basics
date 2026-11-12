@@ -1,0 +1,133 @@
+# Parcours Actuariat, extrait vertical 2 de A2.01 (SHORT 9:16, TikTok et Shorts) : prévisible n'est pas rentable.
+# Unité autonome : prime de 11 €, probabilité que les vols coûtent plus que les primes (32 % pour 100 contrats,
+# 7,3 % pour 10 000, loi binomiale exacte) ; conditions de la mutualisation ; renvoi vers la leçon.
+# Assureur fictif JG's Holding, chiffres fictifs ; nombres identiques à la leçon A2.01 et entre FR et EN.
+# Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-act-x-a2-01b-previsible-n-est-pas-rentable
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: short
+habillage_sonore: true
+theme: "A2.01 · extrait 2 · Prévisible n'est pas rentable"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Comprendre que la mutualisation rend une mauvaise année moins probable, jamais impossible, et qu'elle a des conditions"
+    en:
+      - "Understand that pooling makes a bad year less likely, never impossible, and that it has conditions"
+  prerequis:
+    fr: ["Prime pure = coût attendu des sinistres par contrat. Leçon complète : mutualisation et prime pure (A2, épisode 1)"]
+    en: ["Pure premium = expected claim cost per policy. Full lesson: pooling and the pure premium (A2, episode 1)"]
+  hypotheses:
+    fr: "Assureur et chiffres fictifs ; vols indépendants, 2 % de probabilité et 500 € de coût par téléphone, au plus un vol par téléphone ; prime de 11 € = prime pure de 10 € + 1 € de marge ; frais ignorés ; probabilités binomiales exactes"
+    en: "Fictional insurer and figures; independent thefts, 2% probability and $500 cost per phone, at most one theft per phone; $11 premium = $10 pure premium + $1 margin; expenses ignored; exact binomial probabilities"
+
+validation:
+  statut: valide   # relu par ChatGPT (2 relectures) et validé par JG le 2026-11-11
+  valide_par: "JG"
+  date: "2026-11-11"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Assurer 10 000 téléphones : prévisible, oui. Rentable, pas forcément."
+    legende: |
+      La mutualisation rend le coût moyen par contrat presque prévisible. Mais prévisible n'est pas rentable. Notre assureur fictif, JG's Holding, facture 11 € par téléphone pour un coût attendu de 10 €. Avec 100 téléphones, les sinistres coûtent plus que les primes dans environ 32 % des cas ; avec 10 000 téléphones, dans environ 7,3 % des cas : bien moins, mais jamais zéro. Et la mutualisation a des conditions. Extrait de la leçon « Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ? » de notre série sur l'actuariat, à voir en entier sur la chaîne. Chiffres fictifs, calculs vérifiés.
+    hashtags: [actuariat, assurance, probabilites]
+    scenes:
+      - type: accroche
+        texte: "Assurer 10 000 téléphones : *prévisible*, oui. *Rentable*, pas forcément."
+        voix_off: "Avec dix mille contrats, le coût moyen d'un assureur devient presque prévisible. Alors, bénéfice garanti ? Non. Voici pourquoi."
+      - type: etapes
+        texte: "JG's Holding facture *11 €* par téléphone"
+        etapes:
+          - "Coût attendu d'un vol par téléphone : 2 % × 500 € = *10 €*"
+          - "Prime : 10 € + 1 € de marge = *11 €*"
+        note: "JG's Holding est un assureur fictif. Frais ignorés. Au plus un vol par téléphone et par an."
+        voix_off: "Notre assureur fictif, JG's Holding, assure des téléphones contre le vol. Avec deux pour cent de chances de vol et un coût de cinq cents euros, le coût attendu est de dix euros par téléphone. Il facture onze euros : un euro de marge."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Prime pure"}
+          - {expression: "10 + 1", attendu: 11, libelle: "Prime facturée"}
+      - type: etapes
+        texte: "Probabilité que les sinistres coûtent *plus que les primes*"
+        etapes:
+          - "100 téléphones : environ *32 %*"
+          - "10 000 téléphones : environ *7,3 %*"
+          - "Bien plus faible, mais *jamais nulle*"
+        note: "Primes : 1 100 € et 110 000 €. Dépassées dès 3 vols (100 tél.) ou 221 vols (10 000 tél.). Binomiale exacte."
+        voix_off: "Quelle est la probabilité que les sinistres coûtent plus que les primes ? Avec cent téléphones, il encaisse mille cent euros, et trois vols suffisent à dépasser : cela arrive dans environ trente-deux pour cent des cas. Avec dix mille téléphones, il encaisse cent dix mille euros, et il faut deux cent vingt et un vols ou plus : dans environ sept virgule trois pour cent des cas. La mutualisation rend la mauvaise année bien moins probable, mais jamais impossible."
+        verifier:
+          - {expression: "100 * 11", attendu: 1100, libelle: "Primes encaissées, 100 téléphones"}
+          - {expression: "10000 * 11", attendu: 110000, libelle: "Primes encaissées, 10 000 téléphones"}
+          - {expression: "floor(100 * 11 / 500) + 1", attendu: 3, libelle: "Plus petit nombre de vols dépassant les primes, 100 téléphones"}
+          - {expression: "floor(10000 * 11 / 500) + 1", attendu: 221, libelle: "Plus petit nombre de vols dépassant les primes, 10 000 téléphones"}
+          - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 vols ou plus sur 100), en %"}
+          - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 vols ou plus sur 10 000), en %"}
+      - type: etapes
+        texte: "La mutualisation repose sur *plusieurs conditions*…"
+        etapes:
+          - "Les risques sont *indépendants*"
+          - "Les risques ont des *distributions comparables*"
+          - "Il y a *assez* de contrats"
+          - "Les probabilités restent *stables* ou sont réévaluées"
+        voix_off: "Et la mutualisation repose sur plusieurs conditions. Les risques doivent être indépendants : une tempête qui touche toute une ville ne se compense pas. Ils doivent être suffisamment semblables : ici, chaque téléphone a la même probabilité de vol et le même coût. Il en faut assez pour que la moyenne se stabilise. Et pour prévoir les coûts futurs, les probabilités doivent rester suffisamment stables, ou être réévaluées quand le risque évolue."
+      - type: texte
+        texte: "Prime pure, chargements, capital : *la suite dans la leçon complète*"
+        note: "Leçon complète sur la chaîne : espérance, écart-type, σ ÷ √n, et ce que la mutualisation ne fait pas."
+        voix_off: "Prime pure, chargements et capital : tout est dans la leçon complète sur la chaîne."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Insuring 10,000 phones: predictable, yes. Profitable, not necessarily."
+    legende: |
+      Pooling makes the average cost per policy almost predictable. But predictable is not profitable. Our fictional insurer, JG's Holding, charges $11 per phone for an expected cost of $10. With 100 phones, claims cost more than the premiums in about 32% of cases; with 10,000 phones, in about 7.3% of cases: far less, but never zero. And pooling has conditions. An extract from the lesson "Why is the average claim cost more predictable with 10,000 policies?" of our actuarial science series, watch the full lesson on the channel. Made-up figures, checked calculations.
+    hashtags: [actuarialscience, insurance, probability]
+    scenes:
+      - type: accroche
+        texte: "Insuring 10,000 phones: *predictable*, yes. *Profitable*, not necessarily."
+        voix_off: "With ten thousand policies, an insurer's average cost becomes almost predictable. So, guaranteed profit? No. Here is why."
+      - type: etapes
+        texte: "JG's Holding charges *$11* per phone"
+        etapes:
+          - "Expected theft cost per phone: 2% × $500 = *$10*"
+          - "Premium: $10 + $1 margin = *$11*"
+        note: "JG's Holding is a fictional insurer. Expenses ignored. At most one theft per phone per year."
+        voix_off: "Our fictional insurer, JG's Holding, covers phones against theft. With a two percent chance of theft and a five-hundred-dollar cost, the expected cost is ten dollars per phone. It charges eleven dollars: a one-dollar margin."
+        verifier:
+          - {expression: "0.02 * 500", attendu: 10, libelle: "Pure premium"}
+          - {expression: "10 + 1", attendu: 11, libelle: "Premium charged"}
+      - type: etapes
+        texte: "Probability that claims cost *more than the premiums*"
+        etapes:
+          - "100 phones: about *32%*"
+          - "10,000 phones: about *7.3%*"
+          - "Far lower, but *never zero*"
+        note: "Premiums: $1,100 and $110,000. Exceeded from 3 thefts (100 phones) or 221 thefts (10,000 phones). Exact binomial."
+        voix_off: "What is the probability that claims cost more than the premiums? With one hundred phones, it collects one thousand one hundred dollars, and three thefts are enough to exceed that: this happens in about thirty-two percent of cases. With ten thousand phones, it collects one hundred and ten thousand dollars, and it takes two hundred and twenty-one thefts or more: in about seven point three percent of cases. Pooling makes the bad year far less likely, but never impossible."
+        verifier:
+          - {expression: "100 * 11", attendu: 1100, libelle: "Premiums collected, 100 phones"}
+          - {expression: "10000 * 11", attendu: 110000, libelle: "Premiums collected, 10,000 phones"}
+          - {expression: "floor(100 * 11 / 500) + 1", attendu: 3, libelle: "Smallest number of thefts exceeding premiums, 100 phones"}
+          - {expression: "floor(10000 * 11 / 500) + 1", attendu: 221, libelle: "Smallest number of thefts exceeding premiums, 10,000 phones"}
+          - {expression: "100 * (1 - sum(comb(100, k) * 0.02**k * 0.98**(100 - k) for k in range(3)))", attendu: 32, libelle: "P(3 thefts or more out of 100), in %"}
+          - {expression: "100 * (1 - sum(exp(log(comb(10000, k)) + k * log(0.02) + (10000 - k) * log(0.98)) for k in range(221)))", attendu: 7.3, libelle: "P(221 thefts or more out of 10,000), in %"}
+      - type: etapes
+        texte: "Pooling rests on *several conditions*…"
+        etapes:
+          - "Risks are *independent*"
+          - "Risks have *comparable distributions*"
+          - "There are *enough* policies"
+          - "Probabilities stay *stable* or are reassessed"
+        voix_off: "And pooling rests on several conditions. Risks must be independent: a storm that hits a whole town does not average out. They must be sufficiently similar: here, every phone has the same probability of theft and the same claim cost. There must be enough of them for the average to settle. And to forecast future costs, probabilities must remain sufficiently stable, or be reassessed when the risk changes."
+      - type: texte
+        texte: "Pure premium, loadings, capital: *more in the full lesson*"
+        note: "Full lesson on the channel: expectation, standard deviation, σ ÷ √n, and what pooling does not do."
+        voix_off: "Pure premium, loadings and capital: it is all in the full lesson on the channel."
+      - type: fin
+        texte: "Follow to learn to read the numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

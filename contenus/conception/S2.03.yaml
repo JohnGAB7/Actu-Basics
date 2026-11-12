@@ -1,0 +1,44 @@
+# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+id_programme: S2.03
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-03-la-forme-d-une-distribution.yaml
+question_centrale:
+  fr: Que nous apprend la silhouette d'un histogramme avant tout calcul ?
+  en: What does a histogram's shape tell us before any calculation?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 3
+public:
+  prerequis:
+  - S2.02
+  niveau_maths: M0
+  rappel_conseille: []
+intuition: Deux bosses signalent souvent deux populations mélangées.
+exemple_fil_rouge: Notes fictives (symétrique), revenus fictifs (queue à droite), tailles fictives d'adultes (deux bosses).
+exemple_reel: null
+idees_fausses:
+- idee: Résumer une distribution à deux bosses par un seul chiffre
+  desamorcee_a_l_etape: 'Deux bosses : deux groupes ?'
+exercice:
+  question: Associer symétrique, queue à droite, queue à gauche, deux bosses à âge au décès, revenus, notes, tailles
+  correction: Notes, revenus, âge au décès, tailles
+  pause_secondes: 8
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Les temps d'attente aux urgences ont une longue queue à droite. Que dire de leur moyenne ?
+  diagnostic_d_erreur: '« La taille moyenne est 170 cm, donc la plupart des adultes mesurent 170 cm » : où est l''erreur ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
+  controle_mobile: Après rendu (inspection)

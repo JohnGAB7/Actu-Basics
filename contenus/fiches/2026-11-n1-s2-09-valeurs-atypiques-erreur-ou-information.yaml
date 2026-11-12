@@ -1,0 +1,212 @@
+# Niveau 1, vague 1, lot 3 : S2.09 « Valeurs atypiques : erreur ou information ? » (EDUCATIONAL, étude de cas)
+# Fiche de conception : contenus/conception/S2.09.yaml
+# Calcul pur, nombres fictifs : onze tailles dont une saisie « 17 » au lieu de 1,70 ; dix revenus dont un
+# de 10 millions d'euros (exemples du catalogue). Règle des 1,5 × écart interquartile (J. W. Tukey) ;
+# quartiles par la méthode des demi-séries.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-09-valeurs-atypiques-erreur-ou-information
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.09 · Valeurs atypiques : erreur ou information ?"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Repérer une valeur atypique avec la règle des 1,5 × écart interquartile"
+      - "Choisir entre corriger, conserver ou analyser à part, en justifiant"
+      - "Ne jamais supprimer une valeur seulement parce qu'elle gêne le résultat"
+    en:
+      - "Flag an outlier with the 1.5 × interquartile range rule"
+      - "Choose between correcting, keeping or analysing separately, with a reason"
+      - "Never delete a value just because it spoils the result"
+  prerequis:
+    fr: ["S2.06 : quartiles et boîte à moustaches", "S2.08 : variance et écart-type"]
+    en: ["S2.06: quartiles and box plots", "S2.08: variance and standard deviation"]
+  hypotheses:
+    fr: "Fichiers fictifs ; quartiles par la méthode des demi-séries"
+    en: "Made-up files; quartiles by the half-series method"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Une valeur qui dépasse : faut-il la supprimer ?"
+    legende: |
+      Une taille de 17 mètres dans un fichier, un revenu de 10 millions d'euros dans un autre : deux valeurs atypiques, deux histoires très différentes. On apprend à repérer une valeur atypique avec la règle des 1,5 × écart interquartile, puis à décider : corriger, conserver ou analyser à part. Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, valeursatypiques, donnees]
+    scenes:
+      - type: accroche
+        texte: "Une valeur qui dépasse : *faut-il la supprimer* ?"
+        voix_off: "Dans vos données, une valeur dépasse toutes les autres. Faut-il la supprimer ? Pas si vite."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Repérer une valeur atypique"
+        voix_off: "Il faut d'abord une règle pour dire qu'une valeur dépasse."
+      - type: etapes
+        texte: "Onze tailles *dans un fichier* (en mètres)"
+        etapes:
+          - "1,58 · 1,62 · *1,65* · 1,68 · 1,70 · *1,72* · 1,74 · 1,76 · *1,80* · 1,85 · *17*"
+          - "Q1 = *1,65* ; médiane = *1,72* ; Q3 = *1,80*"
+          - "Écart interquartile : 1,80 − 1,65 = *0,15 m*"
+        voix_off: "Voici onze tailles, rangées, dans un fichier. Le premier quartile vaut un mètre soixante-cinq, la médiane un mètre soixante-douze, le troisième quartile un mètre quatre-vingts. L'écart interquartile vaut donc quinze centimètres."
+        verifier:
+          - {expression: "1.80 - 1.65", attendu: 0.15, libelle: "Écart interquartile (m)"}
+      - type: formule
+        texte: "La règle des *1,5 × écart interquartile*"
+        formule:
+          - '\text{haut} : Q_3+1{,}5\times 0{,}15=2{,}025\ \text{m}'
+          - '\text{bas} : Q_1-1{,}5\times 0{,}15=1{,}425\ \text{m}'
+        voix_off: "Une règle courante, proposée par le statisticien John Tukey, trace deux frontières. En haut : le troisième quartile plus une fois et demie l'écart interquartile, un peu plus de deux mètres. En bas : le premier quartile moins une fois et demie l'écart interquartile, un peu plus d'un mètre quarante-deux. Toute valeur hors de ces frontières est signalée comme atypique."
+        verifier:
+          - {expression: "1.80 + 1.5 * 0.15", attendu: 2.025, libelle: "Frontière haute (m)"}
+          - {expression: "1.65 - 1.5 * 0.15", attendu: 1.425, libelle: "Frontière basse (m)"}
+      - type: courbe
+        texte: "Une seule valeur *écrase tout le graphique*"
+        courbe:
+          style: boites
+          boites:
+            - {etiquette: "Onze tailles", valeurs: [1.58, 1.65, 1.72, 1.80, 1.85], atypiques: [17]}
+          y_min: 0
+          y_max: 20
+          axe_y: "Taille (m)"
+        voix_off: "Dix-sept mètres dépasse largement la frontière. Sur la boîte à moustaches, ce point isolé écrase tout le reste en bas du graphique."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Erreur ou information ?"
+        voix_off: "Une règle signale. Elle ne décide pas."
+      - type: etapes
+        texte: "Cas 1 : *17 mètres*"
+        etapes:
+          - "Impossible pour un être humain"
+          - "Sans doute une *virgule oubliée* : 1,70"
+          - "Action : *vérifier et corriger*, en le notant"
+        voix_off: "Premier cas : une taille de dix-sept mètres. Une taille humaine de dix-sept mètres est biologiquement impossible. C'est très probablement une erreur de saisie, une virgule oubliée : un mètre soixante-dix. On vérifie à la source, on corrige, et on note la correction."
+      - type: etapes
+        texte: "Cas 2 : un revenu de *10 millions d'euros*"
+        etapes:
+          - "Neuf revenus entre 18 000 et 35 000 €, et *un de 10 millions*"
+          - "Rare, mais *possible* : une dirigeante d'entreprise"
+          - "Action : *conserver*, et choisir des indicateurs robustes"
+        voix_off: "Deuxième cas : dix revenus annuels. Neuf sont entre dix-huit mille et trente-cinq mille euros, et le dixième atteint dix millions. C'est rare, mais possible : dans cet exemple fictif, c'est celui d'une dirigeante d'entreprise. On le garde, et on choisit des indicateurs qui résistent aux extrêmes, comme la médiane."
+      - type: texte
+        texte: "Supprimer une valeur *pour améliorer un résultat* : jamais"
+        voix_off: "Le piège, c'est de supprimer une valeur parce qu'elle gêne le résultat. Si l'on retire les revenus élevés, on fabrique une population plus égalitaire qu'elle ne l'est. Une valeur étrange est d'abord une question à poser."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        etiquette: "À VOUS"
+        texte: "Que faire ? *A* : un patient de 250 ans. *B* : 42 °C un jour de canicule. *C* : une commande d'entreprise de 3 000 € parmi des achats de particuliers."
+        pause: 9
+        voix_off: "À vous. Pour chaque valeur atypique, choisissez : corriger, conserver, ou analyser à part. A : un patient de deux cent cinquante ans dans un fichier d'hôpital. B : quarante-deux degrés un jour de canicule, dans une série de températures d'été. C : une commande de trois mille euros passée par une entreprise, au milieu des achats de particuliers."
+      - type: correction
+        etapes:
+          - "A : impossible, *vérifier la source* ; sinon, valeur manquante, notée"
+          - "B : réel, c'est l'information : *conserver*"
+          - "C : réel, mais une autre population : *analyser à part*"
+        reponse: "A corriger, B conserver, C à part"
+        voix_off: "Voyons. A est impossible : on vérifie la source et on corrige si l'erreur est confirmée ; sinon, on la traite comme une valeur manquante, et on le note. B est réel, et c'est justement ce qu'on veut savoir : on conserve. C est réel, mais ce n'est pas un particulier : on l'analyse à part. Donc : A corriger, B conserver, C à part."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Atypique : hors de *Q1 − 1,5 × EI* ou de *Q3 + 1,5 × EI*"
+          - "La règle *signale*, elle ne décide pas"
+          - "Corriger, conserver ou analyser à part : *toujours justifier*"
+        voix_off: "À retenir. Une valeur est signalée atypique hors des frontières des quartiles, plus ou moins une fois et demie l'écart interquartile. La règle signale, elle ne décide pas. Corriger, conserver ou analyser à part : on justifie toujours son choix."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "A value that sticks out: should you delete it?"
+    legende: |
+      A height of 17 metres in one file, an income of 10 million euros in another: two outliers, two very different stories. We learn to flag an outlier with the 1.5 × interquartile range rule, then to decide: correct it, keep it, or analyse it separately. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, outliers, data]
+    scenes:
+      - type: accroche
+        texte: "A value that sticks out: *should you delete it*?"
+        voix_off: "In your data, one value sticks out above all the others. Should you delete it? Not so fast."
+      - type: titre
+        numero: 1
+        texte: "Flagging an outlier"
+        voix_off: "First, we need a rule to say that a value sticks out."
+      - type: etapes
+        texte: "Eleven heights *in a file* (in metres)"
+        etapes:
+          - "1.58 · 1.62 · *1.65* · 1.68 · 1.70 · *1.72* · 1.74 · 1.76 · *1.80* · 1.85 · *17*"
+          - "Q1 = *1.65*; median = *1.72*; Q3 = *1.80*"
+          - "Interquartile range: 1.80 − 1.65 = *0.15 m*"
+        voix_off: "Here are eleven heights, sorted, from a file. The first quartile is one point six five metres, the median one point seven two, the third quartile one point eight zero. So the interquartile range is fifteen centimetres."
+        verifier:
+          - {expression: "1.80 - 1.65", attendu: 0.15, libelle: "Interquartile range (m)"}
+      - type: formule
+        texte: "The *1.5 × interquartile range* rule"
+        formule:
+          - '\text{top}: Q_3+1.5\times 0.15=2.025\ \text{m}'
+          - '\text{bottom}: Q_1-1.5\times 0.15=1.425\ \text{m}'
+        voix_off: "A common rule, proposed by the statistician John Tukey, draws two fences. At the top: the third quartile plus one and a half times the interquartile range, just over two metres. At the bottom: the first quartile minus one and a half times the interquartile range, just over one point four two metres. Any value outside these fences is flagged as an outlier."
+        verifier:
+          - {expression: "1.80 + 1.5 * 0.15", attendu: 2.025, libelle: "Upper fence (m)"}
+          - {expression: "1.65 - 1.5 * 0.15", attendu: 1.425, libelle: "Lower fence (m)"}
+      - type: courbe
+        texte: "A single value *squashes the whole chart*"
+        courbe:
+          style: boites
+          boites:
+            - {etiquette: "Eleven heights", valeurs: [1.58, 1.65, 1.72, 1.80, 1.85], atypiques: [17]}
+          y_min: 0
+          y_max: 20
+          axe_y: "Height (m)"
+        voix_off: "Seventeen metres is way beyond the fence. On the box plot, that lone point squashes everything else into the bottom of the chart."
+      - type: titre
+        numero: 2
+        texte: "Mistake or message?"
+        voix_off: "A rule flags. It doesn't decide."
+      - type: etapes
+        texte: "Case 1: *17 metres*"
+        etapes:
+          - "Impossible for a human being"
+          - "Probably a *missing decimal point*: 1.70"
+          - "Action: *check and correct*, and record it"
+        voix_off: "First case: a height of seventeen metres. A human height of seventeen metres is biologically impossible. It is most likely a typing error, a missing decimal point: one point seven zero metres. We check the source, correct it, and record the correction."
+      - type: etapes
+        texte: "Case 2: an income of *10 million euros*"
+        etapes:
+          - "Nine incomes between €18,000 and €35,000, and *one of 10 million*"
+          - "Rare, but *possible*: a company boss"
+          - "Action: *keep it*, and choose robust measures"
+        voix_off: "Second case: ten yearly incomes. Nine are between eighteen thousand and thirty-five thousand euros, and the tenth reaches ten million. It's rare, but possible: in this fictional example, it belongs to the head of a company. We keep it, and choose measures that cope with extremes, such as the median."
+      - type: texte
+        texte: "Deleting a value *to improve a result*: never"
+        voix_off: "The trap is to delete a value because it spoils the result. Remove the high incomes, and you invent a population that is more equal than it really is. A strange value is first of all a question to ask."
+      - type: exercice
+        etiquette: "YOUR TURN"
+        texte: "What would you do? *A*: a 250-year-old patient. *B*: 42 °C on a heatwave day. *C*: a €3,000 company order among individual shoppers' purchases."
+        pause: 9
+        voix_off: "Your turn. For each outlier, choose: correct, keep, or analyse separately. A: a two-hundred-and-fifty-year-old patient in a hospital file. B: forty-two degrees on a heatwave day, in a series of summer temperatures. C: a three-thousand-euro order placed by a company, among purchases by individual shoppers."
+      - type: correction
+        etapes:
+          - "A: impossible, *check the source*; otherwise, missing value, recorded"
+          - "B: real, it is the message: *keep it*"
+          - "C: real, but a different population: *analyse separately*"
+        reponse: "A correct, B keep, C separate"
+        voix_off: "Let's see. A is impossible: check the source and correct it if the error is confirmed; otherwise, treat it as a missing value, and record that. B is real, and it's exactly what we want to know: keep it. C is real, but it isn't an individual shopper: analyse it separately. So: A correct, B keep, C separate."
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Outlier: beyond *Q1 − 1.5 × IQR* or *Q3 + 1.5 × IQR*"
+          - "The rule *flags*, it doesn't decide"
+          - "Correct, keep or analyse separately: *always give a reason*"
+        voix_off: "Key points. A value is flagged as an outlier beyond the quartiles, plus or minus one and a half times the interquartile range. The rule flags, it doesn't decide. Correct, keep or analyse separately: always justify your choice."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

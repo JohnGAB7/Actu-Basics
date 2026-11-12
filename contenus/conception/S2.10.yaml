@@ -1,0 +1,45 @@
+# Fiche de conception, niveau 1, vague 1, lot 3. Modèle : modeles/fiche-conception-episode.yaml
+# Script écrit le 2026-11-09, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+id_programme: S2.10
+statut: valide
+fiche_production: contenus/fiches/2026-11-n1-s2-10-le-score-z.yaml
+question_centrale:
+  fr: Un 15 en maths vaut-il mieux qu'un 14 en philosophie ?
+  en: Is a 15 in maths better than a 14 in philosophy?
+position:
+  pilier: statistiques
+  niveau: 1
+  module: S2
+  rang_dans_module: 10
+public:
+  prerequis:
+  - S2.08
+  niveau_maths: M1
+  rappel_conseille: []
+intuition: Le score z compte les écarts-types qui séparent une valeur de la moyenne.
+exemple_fil_rouge: 'Léa 16 (moyenne 12, écart-type 4) et Tom 14 (moyenne 10, écart-type 2) : z = 1 et z = 2.'
+exemple_reel: null
+idees_fausses:
+- idee: Croire que la standardisation rend une distribution normale
+  desamorcee_a_l_etape: 'Partie 3 : l''échelle change, pas la forme'
+exercice:
+  question: 15 en maths (moyenne 12, écart-type 2) ou 14 en philo (moyenne 10, écart-type 3) ?
+  correction: 'Maths z = 1,5, philo z ≈ 1,33 : la note de maths'
+  pause_secondes: 9
+preuve_apprentissage:
+  tache: Répondre à la question de transfert sans aide
+  question_de_transfert: Un coureur fait 50 min (moyenne 55, écart-type 5), un autre 48 min (moyenne 52, écart-type 2). Qui
+    est le plus remarquable ?
+  diagnostic_d_erreur: '« Les scores z suivent maintenant une courbe en cloche » : vrai ou faux ?'
+duree_estimee_min:
+- 4
+- 6
+format: educational
+declinaisons:
+- vertical_9_16
+- youtube_16_9
+licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+controle:
+  test_du_debutant: À mesurer
+  relecture_definitions: Claude, 9/11/2026 ; ChatGPT 9/11/2026 ; validé par JG le 9/11/2026
+  controle_mobile: Après rendu (inspection)

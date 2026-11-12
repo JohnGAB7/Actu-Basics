@@ -1,0 +1,245 @@
+# Niveau 1, vague 1, lot 3 : S2.08 « Variance et écart-type » (EDUCATIONAL)
+# Fiche de conception : contenus/conception/S2.08.yaml
+# Calcul pur, nombres fictifs : temps d'attente de deux lignes de bus de même moyenne (5 min) ; exercice
+# du catalogue (2, 4, 4, 6, division par n puis par n − 1). Le débat n / n − 1 est seulement annoncé :
+# il est expliqué en S7.01.
+# Statut : validé par JG le 2026-11-09 (carte de décision), après la relecture ChatGPT du 2026-11-09.
+# Claude structure, ChatGPT relit, JG valide.
+id: 2026-11-n1-s2-08-variance-et-ecart-type
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S2.08 · Variance et écart-type"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer à la main la variance et l'écart-type de quatre valeurs"
+      - "Expliquer pourquoi la somme des écarts à la moyenne vaut zéro, et pourquoi on les élève au carré"
+      - "Interpréter un écart-type dans l'unité des données"
+    en:
+      - "Compute the variance and standard deviation of four values by hand"
+      - "Explain why deviations from the mean sum to zero, and why we square them"
+      - "Interpret a standard deviation in the units of the data"
+  prerequis:
+    fr: ["S2.07 : mesurer la dispersion simplement", "S2.04 : ce que dit vraiment la moyenne"]
+    en: ["S2.07: measuring spread, simply", "S2.04: what the mean really says"]
+  hypotheses:
+    fr: "Temps d'attente fictifs ; on divise d'abord par n (variance de la série observée)"
+    en: "Made-up waiting times; we first divide by n (variance of the observed data)"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-09"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Pourquoi élever les écarts au carré ? Variance et écart-type"
+    legende: |
+      Deux lignes de bus font attendre 5 minutes en moyenne. Sur l'une, on attend toujours à peu près 5 minutes ; sur l'autre, parfois 1, parfois 9. Comment mesurer cette différence en un seul nombre ? On calcule à la main la variance et l'écart-type, on comprend pourquoi on élève les écarts au carré, et ce que veut dire « un écart-type de 3 minutes ». Exercice corrigé à la fin. Exemples fictifs, calculs vérifiés. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, ecarttype, variance]
+    scenes:
+      - type: accroche
+        texte: "Pourquoi élever les écarts *au carré* ?"
+        voix_off: "Pour mesurer la dispersion, les statisticiens élèvent les écarts au carré. Pourquoi ne pas simplement les additionner ?"
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Deux lignes, même moyenne"
+        voix_off: "Partons de deux lignes de bus."
+      - type: etapes
+        texte: "Quatre attentes *sur chaque ligne* (en minutes)"
+        etapes:
+          - "Ligne 1 : *4, 5, 5, 6*"
+          - "Ligne 2 : *1, 3, 7, 9*"
+          - "Moyenne : *5 min* pour les deux"
+        voix_off: "On a noté quatre temps d'attente sur chaque ligne. Sur la ligne un : quatre, cinq, cinq et six minutes. Sur la ligne deux : une, trois, sept et neuf minutes. Les deux lignes ont la même moyenne, cinq minutes, mais la seconde est bien plus irrégulière."
+        verifier:
+          - {expression: "(4 + 5 + 5 + 6) / 4", attendu: 5, libelle: "Moyenne, ligne 1"}
+          - {expression: "(1 + 3 + 7 + 9) / 4", attendu: 5, libelle: "Moyenne, ligne 2"}
+      - type: etapes
+        texte: "Ligne 2 : les écarts *à la moyenne*"
+        etapes:
+          - "1 − 5 = −4 et 3 − 5 = −2"
+          - "7 − 5 = +2 et 9 − 5 = +4"
+          - "Somme des écarts : *0*"
+        voix_off: "Mesurons l'écart de chaque attente à la moyenne, sur la ligne deux. Un moins cinq, moins quatre ; trois moins cinq, moins deux. Sept moins cinq, plus deux ; neuf moins cinq, plus quatre. Additionnés, ces écarts font zéro : on l'a vu, c'est toujours le cas."
+        verifier:
+          - {expression: "(1 - 5) + (3 - 5) + (7 - 5) + (9 - 5)", attendu: 0, libelle: "Somme des écarts, ligne 2"}
+      - type: texte
+        texte: "Les écarts *s'annulent* : leur somme ne mesure rien"
+        voix_off: "Les écarts positifs et négatifs s'annulent. La somme des écarts à la moyenne vaut toujours zéro : elle ne peut donc pas mesurer la dispersion. Il faut se débarrasser des signes."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La variance"
+        voix_off: "L'idée : élever chaque écart au carré."
+      - type: etapes
+        texte: "Ligne 2 : les écarts *au carré*"
+        etapes:
+          - "(−4)² = 16 et (−2)² = 4"
+          - "2² = 4 et 4² = 16"
+          - "Moyenne des carrés : 40 ÷ 4 = *10*"
+        voix_off: "Un carré est toujours positif. Moins quatre au carré, seize ; moins deux au carré, quatre. Deux au carré, quatre ; quatre au carré, seize. La somme fait quarante, et la moyenne de ces carrés, quarante divisé par quatre, vaut dix : c'est la variance."
+        verifier:
+          - {expression: "((1 - 5)**2 + (3 - 5)**2 + (7 - 5)**2 + (9 - 5)**2) / 4", attendu: 10, libelle: "Variance, ligne 2"}
+      - type: formule
+        texte: "Variance : *la moyenne des carrés des écarts*"
+        formule:
+          - '\sigma^2=\dfrac{1}{n}\times\sum_{i=1}^{n}(x_i-\bar{x})^2'
+        voix_off: "En formule : pour chaque valeur, on prend son écart à la moyenne, on l'élève au carré, on additionne le tout, puis on divise par n. La lettre grecque sigma au carré désigne la variance."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "L'écart-type"
+        voix_off: "Reste un problème d'unité."
+      - type: formule
+        texte: "On revient *aux minutes* : la racine carrée"
+        formule:
+          - '\sigma=\sqrt{10}\approx 3{,}16\ \text{min}'
+          - '\text{ligne 1 :}\ \sigma=\sqrt{0{,}5}\approx 0{,}71\ \text{min}'
+        voix_off: "La variance s'exprime en minutes au carré, une unité peu intuitive à interpréter. On prend donc sa racine carrée : c'est l'écart-type. Pour la ligne deux, racine de dix, environ trois virgule un six minutes. Pour la ligne un, dont la variance vaut zéro virgule cinq, environ zéro virgule sept un minute."
+        verifier:
+          - {expression: "sqrt(10)", attendu: 3.16, libelle: "Écart-type, ligne 2"}
+          - {expression: "((4 - 5)**2 + (5 - 5)**2 + (5 - 5)**2 + (6 - 5)**2) / 4", attendu: 0.5, libelle: "Variance, ligne 1"}
+          - {expression: "sqrt(0.5)", attendu: 0.71, libelle: "Écart-type, ligne 1"}
+      - type: texte
+        texte: "L'écart-type : *l'ordre de grandeur* des écarts à la moyenne"
+        voix_off: "L'écart-type se lit dans l'unité des données. Sur la ligne deux, l'attente s'écarte typiquement d'environ trois minutes de la moyenne ; sur la ligne un, de moins d'une minute. Ce n'est pas exactement l'écart moyen, mais c'en est l'ordre de grandeur."
+      - type: texte
+        texte: "Diviser par *n*, ou par *n − 1* ?"
+        voix_off: "Vous verrez parfois la somme des carrés divisée par n moins un au lieu de n. Pour estimer la variance d'une population à partir d'un échantillon, on utilise souvent n moins un. Nous verrons pourquoi dans une prochaine leçon."
+      # ---------------------------------------------------------------- exercice
+      - type: exercice
+        texte: "Écart-type de *2, 4, 4, 6* : en divisant par *n*, puis par *n − 1* ?"
+        pause: 9
+        voix_off: "À vous. Calculez l'écart-type de deux, quatre, quatre et six. D'abord en divisant par n, puis en divisant par n moins un."
+      - type: correction
+        etapes:
+          - "Moyenne 4 ; carrés des écarts 4, 0, 0, 4 : somme *8*"
+          - "Par n : 8 ÷ 4 = 2, écart-type *√2 ≈ 1,41*"
+          - "Par n − 1 : 8 ÷ 3 ≈ 2,67, écart-type *≈ 1,63*"
+        reponse: "≈ 1,41 (par n) ; ≈ 1,63 (par n − 1)"
+        voix_off: "Faisons le calcul. La moyenne vaut quatre ; les carrés des écarts font quatre, zéro, zéro et quatre, soit huit en tout. En divisant par n, la variance vaut deux, et l'écart-type racine de deux, environ un virgule quatre un. En divisant par n moins un, la variance vaut huit tiers, et l'écart-type environ un virgule six trois. Les deux versions donnent environ un virgule quatre un et un virgule six trois."
+        verifier:
+          - {expression: "(2 + 4 + 4 + 6) / 4", attendu: 4, libelle: "Moyenne"}
+          - {expression: "(2 - 4)**2 + (4 - 4)**2 + (4 - 4)**2 + (6 - 4)**2", attendu: 8, libelle: "Somme des carrés des écarts"}
+          - {expression: "sqrt(8 / 4)", attendu: 1.41, libelle: "Écart-type, division par n"}
+          - {expression: "8 / 3", attendu: 2.67, libelle: "Variance, division par n − 1"}
+          - {expression: "sqrt(8 / 3)", attendu: 1.63, libelle: "Écart-type, division par n − 1"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Les écarts à la moyenne *s'annulent* : on les élève au carré"
+          - "Variance = *moyenne des carrés* des écarts"
+          - "Écart-type = *racine* de la variance, dans l'unité des données"
+        voix_off: "À retenir. Les écarts à la moyenne s'annulent : on les élève au carré. La variance est la moyenne de ces carrés. Et l'écart-type, sa racine, se lit dans l'unité des données."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Why square the deviations? Variance and standard deviation"
+    legende: |
+      Two bus lines both make you wait 5 minutes on average. On one, you always wait about 5 minutes; on the other, sometimes 1, sometimes 9. How do you capture that difference in a single number? We compute the variance and standard deviation by hand, see why the deviations are squared, and what "a standard deviation of 3 minutes" means. Worked exercise at the end. Fictional examples, checked calculations. Series "Reading numbers without being fooled".
+    hashtags: [statistics, standarddeviation, variance]
+    scenes:
+      - type: accroche
+        texte: "Why *square* the deviations?"
+        voix_off: "To measure spread, statisticians square the deviations. Why not just add them up?"
+      - type: titre
+        numero: 1
+        texte: "Two lines, same mean"
+        voix_off: "Let's start with two bus lines."
+      - type: etapes
+        texte: "Four waits *on each line* (in minutes)"
+        etapes:
+          - "Line 1: *4, 5, 5, 6*"
+          - "Line 2: *1, 3, 7, 9*"
+          - "Mean: *5 min* for both"
+        voix_off: "We timed four waits on each line. On line one: four, five, five and six minutes. On line two: one, three, seven and nine minutes. Both lines have the same mean, five minutes, but the second is far less regular."
+        verifier:
+          - {expression: "(4 + 5 + 5 + 6) / 4", attendu: 5, libelle: "Mean, line 1"}
+          - {expression: "(1 + 3 + 7 + 9) / 4", attendu: 5, libelle: "Mean, line 2"}
+      - type: etapes
+        texte: "Line 2: deviations *from the mean*"
+        etapes:
+          - "1 − 5 = −4 and 3 − 5 = −2"
+          - "7 − 5 = +2 and 9 − 5 = +4"
+          - "Sum of deviations: *0*"
+        voix_off: "Let's measure how far each wait is from the mean, on line two. One minus five, minus four; three minus five, minus two. Seven minus five, plus two; nine minus five, plus four. Added together, these deviations come to zero: as we saw, that is always the case."
+        verifier:
+          - {expression: "(1 - 5) + (3 - 5) + (7 - 5) + (9 - 5)", attendu: 0, libelle: "Sum of deviations, line 2"}
+      - type: texte
+        texte: "The deviations *cancel out*: their sum measures nothing"
+        voix_off: "Positive and negative deviations cancel out. The deviations from the mean always add up to zero: so their sum cannot measure spread. We need to get rid of the signs."
+      - type: titre
+        numero: 2
+        texte: "The variance"
+        voix_off: "The idea: square each deviation."
+      - type: etapes
+        texte: "Line 2: deviations *squared*"
+        etapes:
+          - "(−4)² = 16 and (−2)² = 4"
+          - "2² = 4 and 4² = 16"
+          - "Mean of the squares: 40 ÷ 4 = *10*"
+        voix_off: "A square is always positive. Minus four squared, sixteen; minus two squared, four. Two squared, four; four squared, sixteen. They add up to forty, and the mean of these squares, forty divided by four, is ten: that is the variance."
+        verifier:
+          - {expression: "((1 - 5)**2 + (3 - 5)**2 + (7 - 5)**2 + (9 - 5)**2) / 4", attendu: 10, libelle: "Variance, line 2"}
+      - type: formule
+        texte: "Variance: *the mean of the squared deviations*"
+        formule:
+          - '\sigma^2=\dfrac{1}{n}\times\sum_{i=1}^{n}(x_i-\bar{x})^2'
+        voix_off: "As a formula: for each value, take its deviation from the mean, square it, add everything up, then divide by n. The Greek letter sigma squared stands for the variance."
+      - type: titre
+        numero: 3
+        texte: "The standard deviation"
+        voix_off: "There is still a problem with the units."
+      - type: formule
+        texte: "Back *to minutes*: the square root"
+        formule:
+          - '\sigma=\sqrt{10}\approx 3.16\ \text{min}'
+          - '\text{line 1:}\ \sigma=\sqrt{0.5}\approx 0.71\ \text{min}'
+        voix_off: "The variance is in minutes squared, a unit that is hard to interpret directly. So we take its square root: that is the standard deviation. For line two, the square root of ten, about three point one six minutes. For line one, whose variance is zero point five, about zero point seven one minutes."
+        verifier:
+          - {expression: "sqrt(10)", attendu: 3.16, libelle: "Standard deviation, line 2"}
+          - {expression: "((4 - 5)**2 + (5 - 5)**2 + (5 - 5)**2 + (6 - 5)**2) / 4", attendu: 0.5, libelle: "Variance, line 1"}
+          - {expression: "sqrt(0.5)", attendu: 0.71, libelle: "Standard deviation, line 1"}
+      - type: texte
+        texte: "Standard deviation: *the typical size* of deviations from the mean"
+        voix_off: "The standard deviation is read in the units of the data. On line two, a wait typically differs from the mean by about three minutes; on line one, by less than a minute. It isn't exactly the average deviation, but it gives its order of magnitude."
+      - type: texte
+        texte: "Divide by *n*, or by *n − 1*?"
+        voix_off: "You will sometimes see the sum of squares divided by n minus one instead of n. To estimate the variance of a population from a sample, n minus one is often used. We'll see why in a later lesson."
+      - type: exercice
+        texte: "Standard deviation of *2, 4, 4, 6*: dividing by *n*, then by *n − 1*?"
+        pause: 9
+        voix_off: "Your turn. Work out the standard deviation of two, four, four and six. First dividing by n, then dividing by n minus one."
+      - type: correction
+        etapes:
+          - "Mean 4; squared deviations 4, 0, 0, 4: sum *8*"
+          - "By n: 8 ÷ 4 = 2, standard deviation *√2 ≈ 1.41*"
+          - "By n − 1: 8 ÷ 3 ≈ 2.67, standard deviation *≈ 1.63*"
+        reponse: "≈ 1.41 (by n); ≈ 1.63 (by n − 1)"
+        voix_off: "Let's work it out. The mean is four; the squared deviations are four, zero, zero and four, eight in total. Dividing by n, the variance is two, and the standard deviation is the square root of two, about one point four one. Dividing by n minus one, the variance is eight thirds, and the standard deviation about one point six three. The two versions give about one point four one and one point six three."
+        verifier:
+          - {expression: "(2 + 4 + 4 + 6) / 4", attendu: 4, libelle: "Mean"}
+          - {expression: "(2 - 4)**2 + (4 - 4)**2 + (4 - 4)**2 + (6 - 4)**2", attendu: 8, libelle: "Sum of squared deviations"}
+          - {expression: "sqrt(8 / 4)", attendu: 1.41, libelle: "Standard deviation, dividing by n"}
+          - {expression: "8 / 3", attendu: 2.67, libelle: "Variance, dividing by n − 1"}
+          - {expression: "sqrt(8 / 3)", attendu: 1.63, libelle: "Standard deviation, dividing by n − 1"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Deviations from the mean *cancel out*: square them"
+          - "Variance = *mean of the squared* deviations"
+          - "Standard deviation = *square root* of the variance, in the data's units"
+        voix_off: "Key points. Deviations from the mean cancel out: we square them. The variance is the mean of those squares. And the standard deviation, its square root, is read in the units of the data."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
