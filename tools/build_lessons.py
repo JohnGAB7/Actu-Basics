@@ -324,7 +324,6 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
 
     W, H = COURBE_W, COURBE_H
     pl, pr, pt, pb = COURBE_PAD_L, COURBE_PAD_R, COURBE_PAD_T, COURBE_PAD_B
-    inner_w = W - pl - pr
     inner_h = H - pt - pb
 
     # Expression continue (style par défaut si `expression` présent)
@@ -349,13 +348,21 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
                 except (TypeError, ValueError):
                     pass
 
+    # serie_2 accepte soit une liste de points (même échelle Y), soit un
+    # objet {points, y_min, y_max, axe_y} pour une véritable double échelle.
+    serie_2_cfg = courbe.get("serie_2") or []
+    serie_2_secondary_axis = isinstance(serie_2_cfg, dict)
+    serie_2_source = serie_2_cfg.get("points", []) if serie_2_secondary_axis else serie_2_cfg
     serie_2 = []
-    for p in (courbe.get("serie_2") or []):
+    for p in (serie_2_source or []):
         if isinstance(p, (list, tuple)) and len(p) >= 2:
             try:
                 serie_2.append([float(p[0]), float(p[1])])
             except (TypeError, ValueError):
                 pass
+    if serie_2_secondary_axis and serie_2:
+        pr = 64  # réserve les graduations et le titre de l'axe droit
+    inner_w = W - pl - pr
 
     # Domaines -------------------------------------------------------------
     def _bounds(key_min, key_max, values, pad_lo=False, pad_hi=False):
@@ -404,7 +411,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
             y_min = 0  # les barres partent de 0
     else:
         xs = [p[0] for p in pts] + [p[0] for p in serie_2]
-        ys = [p[1] for p in pts] + [p[1] for p in serie_2]
+        ys = [p[1] for p in pts] + ([] if serie_2_secondary_axis else [p[1] for p in serie_2])
         x_min, x_max = _bounds("x_min", "x_max", xs, pad_lo=False, pad_hi=True)
         # Pour points/ligne : si toutes les valeurs y >= 0, on ancre l'axe en 0.
         # Cela évite des graduations décimales étranges (1.4, 4.32…) et
@@ -423,11 +430,28 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
     if y_max == y_min:
         y_max = y_min + 1
 
+    # La seconde série peut avoir sa propre échelle verticale. On conserve
+    # une échelle commune uniquement pour l'ancien format liste.
+    secondary_y_min = secondary_y_max = None
+    axe_y_2 = ""
+    if serie_2_secondary_axis and serie_2:
+        secondary_values = [p[1] for p in serie_2]
+        secondary_y_min = float(serie_2_cfg.get("y_min", min(secondary_values)))
+        secondary_y_max = float(serie_2_cfg.get("y_max", max(secondary_values)))
+        if secondary_y_max == secondary_y_min:
+            secondary_y_max = secondary_y_min + 1
+        axe_y_2 = pick_lang(serie_2_cfg.get("axe_y"), lang) or ""
+
     def sx(x: float) -> float:
         return pl + (x - x_min) / (x_max - x_min) * inner_w
 
     def sy(y: float) -> float:
         return pt + inner_h - (y - y_min) / (y_max - y_min) * inner_h
+
+    def sy2(y: float) -> float:
+        if secondary_y_min is None or secondary_y_max is None:
+            return sy(y)
+        return pt + inner_h - (y - secondary_y_min) / (secondary_y_max - secondary_y_min) * inner_h
 
     # ---------------------------------------------------------------- SVG
     parts: list[str] = []
@@ -436,7 +460,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
     )
     parts.append(
         f'<figure class="courbe-figure">'
-        f'<svg class="courbe-svg" viewBox="0 0 {W} {H}" '
+        f'<svg class="courbe-svg{" courbe-svg-dual" if secondary_y_min is not None else ""}" viewBox="0 0 {W} {H}" '
         f'xmlns="http://www.w3.org/2000/svg" role="img" '
         f'aria-label="{label_attr}">'
     )
@@ -454,10 +478,21 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
             f'text-anchor="end">{_fmt_num(t)}</text>'
         )
 
+    # Graduations de droite : elles appartiennent à la seconde série.
+    if secondary_y_min is not None and secondary_y_max is not None:
+        for t in _axis_labels(secondary_y_min, secondary_y_max, 5):
+            y = sy2(t)
+            parts.append(
+                f'<line x1="{W - pr}" y1="{y:.1f}" x2="{W - pr + 5}" y2="{y:.1f}" class="courbe-axis" />'
+                f'<text x="{W - pr + 8}" y="{y + 4:.1f}" class="courbe-tick" text-anchor="start">{_fmt_num(t)}</text>'
+            )
+
     # Axes
     parts.append(
         f'<line x1="{pl}" y1="{pt}" x2="{pl}" y2="{H - pb}" class="courbe-axis" />'
         f'<line x1="{pl}" y1="{H - pb}" x2="{W - pr}" y2="{H - pb}" class="courbe-axis" />'
+        + (f'<line x1="{W - pr}" y1="{pt}" x2="{W - pr}" y2="{H - pb}" class="courbe-axis courbe-axis-right" />'
+           if secondary_y_min is not None else "")
     )
 
     # Graduations X : pour barres/boites on utilise les étiquettes ; sinon 5 ticks
@@ -601,7 +636,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
             d = " ".join(f"{sx(x):.1f},{sy(y):.1f}" for x, y in pts)
             parts.append(f'<polyline points="{d}" class="courbe-line" />')
         if serie_2:
-            d2 = " ".join(f"{sx(x):.1f},{sy(y):.1f}" for x, y in serie_2)
+            d2 = " ".join(f"{sx(x):.1f},{sy2(y):.1f}" for x, y in serie_2)
             parts.append(f'<polyline points="{d2}" class="courbe-line courbe-line-alt" />')
 
     else:  # points (défaut)
@@ -611,7 +646,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
             )
         for x, y in serie_2:
             parts.append(
-                f'<circle cx="{sx(x):.1f}" cy="{sy(y):.1f}" r="4" class="courbe-point courbe-point-alt" />'
+                f'<circle cx="{sx(x):.1f}" cy="{sy2(y):.1f}" r="4" class="courbe-point courbe-point-alt" />'
             )
 
     # Repères (annotations) -----------------------------------------------
@@ -667,11 +702,51 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
             f'transform="rotate(-90 14 {pt + inner_h / 2:.1f})">{html.escape(str(axe_y))}</text>'
         )
 
+    if axe_y_2:
+        parts.append(
+            f'<text x="{W - 8}" y="{pt + inner_h / 2:.1f}" class="courbe-axis-title courbe-axis-title-right" '
+            f'text-anchor="middle" transform="rotate(90 {W - 8} {pt + inner_h / 2:.1f})">{html.escape(str(axe_y_2))}</text>'
+        )
+
     parts.append("</svg></figure>")
     return "".join(parts)
 
 
 # --- Rendu d'une scène ------------------------------------------------------
+
+def render_surface_svg(lang: str) -> str:
+    """Illustre la différence entre une valeur et la surface d'un dessin."""
+    labels = (
+        ("Valeur ×1", "Aire ×1", "Valeur ×2", "Aire ×4", "Valeur ×2", "Aire ×2")
+        if lang == "fr" else
+        ("Value ×1", "Area ×1", "Value ×2", "Area ×4", "Value ×2", "Area ×2")
+    )
+    aria = (
+        "Comparer une surface : doubler les côtés multiplie l'aire par quatre"
+        if lang == "fr" else
+        "Comparing area: doubling both sides multiplies area by four"
+    )
+    parts = [
+        '<figure class="surface-figure">',
+        f'<svg class="surface-svg" viewBox="0 0 720 270" role="img" xmlns="http://www.w3.org/2000/svg" aria-label="{html.escape(aria)}">',
+        '<line x1="240" y1="24" x2="240" y2="238" class="surface-divider" />',
+        '<line x1="480" y1="24" x2="480" y2="238" class="surface-divider" />',
+        '<rect x="76" y="58" width="64" height="64" rx="5" class="surface-cell" />',
+        '<rect x="308" y="26" width="128" height="128" rx="5" class="surface-cell surface-cell-warn" />',
+        '<path d="M372 26V154 M308 90H436" class="surface-grid" />',
+        '<rect x="548" y="58" width="128" height="64" rx="5" class="surface-cell surface-cell-good" />',
+        '<path d="M612 58V122" class="surface-grid" />',
+        f'<text x="108" y="184" class="surface-label" text-anchor="middle">{html.escape(labels[0])}</text>',
+        f'<text x="108" y="207" class="surface-value" text-anchor="middle">{html.escape(labels[1])}</text>',
+        f'<text x="372" y="184" class="surface-label" text-anchor="middle">{html.escape(labels[2])}</text>',
+        f'<text x="372" y="207" class="surface-value surface-value-warn" text-anchor="middle">{html.escape(labels[3])}</text>',
+        f'<text x="612" y="184" class="surface-label" text-anchor="middle">{html.escape(labels[4])}</text>',
+        f'<text x="612" y="207" class="surface-value surface-value-good" text-anchor="middle">{html.escape(labels[5])}</text>',
+        '</svg>',
+        '</figure>',
+    ]
+    return "".join(parts)
+
 
 def render_scene(s: dict, lang: str) -> str:
     """Convertit une scène YAML en un fragment HTML."""
@@ -803,6 +878,9 @@ def render_scene(s: dict, lang: str) -> str:
             parts.append(f"<h3>{md_inline(texte)}</h3>")
         if voix:
             parts.append(f"<p>{md_inline(voix)}</p>")
+        animation = s.get("animation") or {}
+        if isinstance(animation, dict) and animation.get("modele") == "surface":
+            parts.append(render_surface_svg(lang))
         parts.append(md_items(etapes))
         return "".join(parts)
 

@@ -21,6 +21,8 @@ on:
       - "docs/SITE-README.md"
       - "docs/assets/css/main.css"
       - "docs/assets/js/site.js"
+      - "docs/lecons/**"
+      - "docs/en/lessons/**"
       - ".github/workflows/site.yml"
   push:
     branches: [main]
@@ -65,12 +67,6 @@ jobs:
           echo "Build reproductible : aucun fichier suivi ou non suivi modifié."
       - name: Cross-browser responsive, keyboard and interaction checks
         run: python3 tools/test_browser_site.py
-      - name: Upload desktop/mobile screenshots (best effort)
-        if: always()
-        continue-on-error: true
-        uses: actions/upload-artifact@v4
-        with:
-          name: actu-basics-browser-qa-${{ github.run_number }}
-          path: browser-artifacts/
-          if-no-files-found: warn
-          retention-days: 7
+      # Les captures sont produites localement par le script pour le diagnostic.
+      # Ne pas les téléverser automatiquement : elles saturent le quota de stockage
+      # des artefacts sans être nécessaires à la validation CI.
