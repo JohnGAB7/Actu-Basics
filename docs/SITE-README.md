@@ -76,3 +76,23 @@ Les changements en cours sur la branche `chatgpt/actu-basics-v1-1-social` sont s
 - harmonisation de la devise de l'exemple A0.01 en euros dans les deux langues.
 
 Aucune page de nouvelle leçon ni aucun lien vidéo individuel n'est ajouté tant que les pages et URL de vidéos correspondantes ne sont pas confirmées.
+
+
+## Catalogue du lot 4 — candidate V1.1 — 13 novembre 2026
+
+Le lot 4 du Niveau 1 a été intégré au catalogue bilingue sur une branche candidate distincte, à partir des fiches YAML de la PR #19.
+
+- 10 leçons concernées : S3.07 à S3.09 et S4.01 à S4.07.
+- 20 pages de présentation pédagogique créées : 10 en français et 10 en anglais.
+- Les bibliothèques FR et EN affichent désormais les 10 nouvelles fiches en plus de A0.01.
+- Chaque page présente le résumé, les objectifs pédagogiques, les prérequis lorsqu'ils sont renseignés dans la fiche source et les notions abordées.
+- Les statuts YAML sont conservés tels qu'ils apparaissent sur la branche de la PR #19 : `valide`, `valide_par: JG`, date du 13 novembre 2026.
+- Les URL YouTube individuelles ne sont pas présentes dans le dépôt consulté. Les pages signalent donc que le rendu vidéo existe selon la PR #19, mais que son lien public individuel reste à renseigner. Aucun lien vidéo n'a été inventé.
+
+### Séparation des changements
+
+- PR #21 : améliorations techniques et sociales du site, base `chatgpt/actu-basics-site-v1`.
+- Branche catalogue : `chatgpt/actu-basics-v1-1-catalogue-lot4`, créée depuis la branche de la PR #21.
+- La PR catalogue cible la branche de la PR #21 ; elle est donc dépendante de celle-ci.
+- Aucune de ces PR n'est fusionnée dans `main` et aucune publication n'est déclenchée par ce travail.
+- Les tests réalisés sont des vérifications statiques des fichiers et liens internes. Les tests visuels réels, multi-navigateurs, mobiles et clavier restent à effectuer.
