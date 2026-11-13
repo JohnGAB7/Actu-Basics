@@ -621,3 +621,123 @@ p { color: var(--ink); max-width: var(--measure); }
 
 /* Programme — liste de modules (grid responsive, badges status) --------- */
 .programme-modules-list { margin-top: var(--space-4); }
+
+/* ==========================================================================
+   Polish éditorial — inspirés de la PR #30 de ChatGPT
+   Intégrés via les tokens existants (palette ACTU-BASICS inchangée).
+   ========================================================================== */
+
+/* Rayon signature asymétrique : marque visuelle discrète du site.
+   `4px 24px 24px 24px` évoque une page de magazine avec le coin
+   supérieur gauche « non arrondi » ; distinctif sans être gimmicky. */
+:root {
+  --radius-signature: 4px 24px 24px 24px;
+}
+
+.hero-note,
+.feature-panel,
+.quote-panel,
+.card.path-card,
+.lesson-takeaway {
+  border-radius: var(--radius-signature);
+}
+
+/* Nav : underline-reveal au survol et sur la page courante -------------- */
+.nav-links a {
+  position: relative;
+  padding-block: 10px;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: calc(100% - 14px);
+  bottom: 4px;
+  height: 1.5px;
+  background: var(--gold);
+  transition: right var(--dur-m) var(--ease);
+}
+.nav-links a:hover::after,
+.nav-links a[aria-current="page"]::after {
+  right: 14px;
+}
+/* On évite que le sous-lignage s'ajoute en plus du fond pastille */
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  background: transparent;
+  color: var(--teal);
+}
+
+/* Label « LA PROMESSE » / « THE PROMISE » dans la carte hero ------------ */
+.hero-note {
+  position: relative;
+}
+.hero-note::before {
+  content: "LA PROMESSE";
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--size-mini);
+  font-weight: 850;
+  letter-spacing: .18em;
+  color: #e7c383;
+  margin-bottom: var(--space-5);
+}
+html[lang="en"] .hero-note::before { content: "THE PROMISE"; }
+
+/* Hero-proof avec séparateurs verticaux -------------------------------- */
+.hero-proof { gap: 0; }
+.hero-proof span {
+  padding: 0 var(--space-5);
+  border-right: 1px solid rgba(245, 239, 224, .22);
+  display: block;
+}
+.hero-proof span:first-child { padding-left: 0; }
+.hero-proof span:last-child { border-right: 0; padding-right: 0; }
+.hero-proof strong { display: block; margin-bottom: 4px; font-size: 1.5rem; }
+
+/* Bouton thème : garde-fou pour qu'il ne soit jamais caché ------------- */
+.nav-actions .theme-toggle { display: inline-grid !important; }
+
+/* Panneau feature à la une sur l'accueil : scission ivoire / sombre
+   (reprise du geste de ChatGPT, sans toucher à la palette) */
+.feature-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  padding: 0;
+  box-shadow: var(--shadow-m);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .85fr);
+}
+.feature-copy {
+  padding: clamp(28px, 4vw, 54px);
+}
+.feature-visual {
+  margin: var(--space-5);
+  background: linear-gradient(145deg, #0c1c26, #1b3d50);
+  border-radius: var(--radius-signature);
+  padding: var(--space-5);
+  color: #f5efe0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.feature-visual svg { width: 100%; height: auto; overflow: visible; }
+.feature-visual .feature-gridline { stroke: rgba(245, 239, 224, .14); stroke-width: 1; fill: none; }
+.feature-visual .feature-line { stroke: var(--gold); stroke-width: 2.5; fill: none; }
+.feature-visual circle { fill: var(--gold); }
+.feature-visual text { fill: #c7d4d9; font-size: 11px; font-family: var(--font-mono); }
+.feature-visual-top { display: flex; justify-content: space-between; font-family: var(--font-sans); font-size: var(--size-mini); letter-spacing: .12em; color: #c7d4d9; text-transform: uppercase; margin-bottom: var(--space-4); }
+.feature-visual-foot { display: flex; align-items: baseline; gap: 10px; margin-top: var(--space-4); }
+.feature-visual-foot strong { font-family: var(--font-serif); font-weight: 400; font-size: 2rem; color: var(--gold); }
+.feature-visual-foot span { color: var(--muted-2); font-size: var(--size-small); }
+.feature-copy h2 { font-size: clamp(2rem, 4vw, 3.4rem); margin: var(--space-3) 0 var(--space-4); }
+.feature-kicker { display: block; margin: var(--space-4) 0 10px; color: var(--teal); font-family: var(--font-sans); font-size: var(--size-mini); font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.feature-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: var(--space-4) 0 var(--space-5); }
+.feature-meta span { font-family: var(--font-sans); font-size: var(--size-mini); border: 1px solid var(--line-2); padding: 6px 12px; border-radius: 999px; color: var(--muted); letter-spacing: .04em; }
+
+@media (max-width: 850px) {
+  .feature-panel { grid-template-columns: 1fr; }
+  .feature-visual { min-height: 260px; }
+}
