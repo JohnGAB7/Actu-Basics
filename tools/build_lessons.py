@@ -218,6 +218,459 @@ def md_items(items) -> str:
     return f"<ul>{lis}</ul>"
 
 
+# --- Rendu d'un graphique (SVG inline) --------------------------------------
+#
+# Chaque scène `type: courbe` porte un bloc `courbe:` dont `style` vaut
+# `points`, `ligne`, `barres`, `histogramme` ou `boites` (ou rien quand il
+# s'agit d'une courbe définie par une `expression` continue). Le rendu produit
+# un <svg> accessible avec `role="img"` et un `aria-label` issu du titre.
+# Les couleurs sont tirées de variables CSS du site (via currentColor et
+# classes), de sorte que le thème clair/sombre est respecté sans JS.
+
+COURBE_W = 640
+COURBE_H = 320
+COURBE_PAD_L = 56
+COURBE_PAD_R = 24
+COURBE_PAD_T = 24
+COURBE_PAD_B = 48
+
+
+def _fmt_num(v) -> str:
+    """Format court pour les étiquettes d'axe."""
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return str(v)
+    if abs(f - round(f)) < 1e-9 and abs(f) < 1e6:
+        return str(int(round(f)))
+    # 2 décimales max, trim
+    s = f"{f:.2f}".rstrip("0").rstrip(".")
+    return s or "0"
+
+
+def _safe_eval_expr(expr: str, x: float) -> float | None:
+    """Évalue une expression YAML simple en ne laissant passer que
+    l'arithmétique de base et quelques fonctions math. Retourne None sur erreur.
+    """
+    import math
+    allowed = {
+        "abs": abs, "min": min, "max": max, "round": round,
+        "sqrt": math.sqrt, "log": math.log, "exp": math.exp,
+        "sin": math.sin, "cos": math.cos, "tan": math.tan,
+        "pi": math.pi, "e": math.e,
+    }
+    # Extraction de la variable : la plupart des expressions utilisent `t`
+    # ou `x` ou `n`. On expose x sous ces trois noms.
+    env = {"__builtins__": {}, "t": x, "x": x, "n": x, **allowed}
+    try:
+        # Interdire tout caractère suspect
+        if re.search(r"[;@]|__", str(expr)):
+            return None
+        return float(eval(str(expr), env, {}))  # noqa: S307
+    except Exception:
+        return None
+
+
+def _nice_step(span: float, n: int) -> float:
+    """Choisit un pas « lisible » proche de span/n (parmi 1, 2, 2.5, 5 × 10^k)."""
+    import math
+    if span <= 0:
+        return 1.0
+    raw = span / max(1, n)
+    mag = 10 ** math.floor(math.log10(raw))
+    for mult in (1, 2, 2.5, 5, 10):
+        if mult * mag >= raw:
+            return mult * mag
+    return 10 * mag
+
+
+def _axis_labels(v_min: float, v_max: float, n: int = 5) -> list[float]:
+    if v_max <= v_min:
+        return [v_min]
+    step = _nice_step(v_max - v_min, n)
+    import math
+    start = math.floor(v_min / step) * step
+    out: list[float] = []
+    t = start
+    # Bornes incluant v_max avec tolérance
+    while t <= v_max + step * 1e-6:
+        if t >= v_min - step * 1e-6:
+            out.append(round(t, 10))
+        t += step
+    return out or [v_min, v_max]
+
+
+def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
+    """Rend un graphique SVG à partir d'un bloc `courbe:` YAML.
+
+    Styles pris en charge :
+      - `points` : nuage de points
+      - `ligne`  : polyligne entre les points (par défaut sans `style` + `points`)
+      - `barres` : barres discrètes, avec `etiquettes` et éventuellement
+                    `valeurs: true` / `etiquettes_valeurs` / `mis_en_avant`
+      - `histogramme` : barres contiguës, largeur `largeur_classe`
+      - `boites` : boîtes à moustaches (`boites: [{etiquette, valeurs:[min,q1,med,q3,max]}]`)
+      - (sans style, avec `expression`) : courbe continue évaluée sur [de,a]
+
+    Options communes : `axe_x`, `axe_y`, `x_min`, `x_max`, `y_min`, `y_max`,
+    `reperes` (annotations), `serie_2` (points), `seuil`/`seuils` (ligne(s) y).
+    """
+    if not isinstance(courbe, dict):
+        return ""
+
+    style = (courbe.get("style") or "").strip().lower()
+    axe_x = pick_lang(courbe.get("axe_x"), lang) or ""
+    axe_y = pick_lang(courbe.get("axe_y"), lang) or ""
+
+    W, H = COURBE_W, COURBE_H
+    pl, pr, pt, pb = COURBE_PAD_L, COURBE_PAD_R, COURBE_PAD_T, COURBE_PAD_B
+    inner_w = W - pl - pr
+    inner_h = H - pt - pb
+
+    # Expression continue (style par défaut si `expression` présent)
+    if courbe.get("expression") and not style:
+        style = "ligne"
+        var_from = float(courbe.get("de", 0))
+        var_to = float(courbe.get("a", 10))
+        expr = courbe["expression"]
+        n_samples = 80
+        pts: list[list[float]] = []
+        for i in range(n_samples + 1):
+            x = var_from + (var_to - var_from) * i / n_samples
+            y = _safe_eval_expr(expr, x)
+            if y is not None:
+                pts.append([x, y])
+    else:
+        pts = []
+        for p in (courbe.get("points") or []):
+            if isinstance(p, (list, tuple)) and len(p) >= 2:
+                try:
+                    pts.append([float(p[0]), float(p[1])])
+                except (TypeError, ValueError):
+                    pass
+
+    serie_2 = []
+    for p in (courbe.get("serie_2") or []):
+        if isinstance(p, (list, tuple)) and len(p) >= 2:
+            try:
+                serie_2.append([float(p[0]), float(p[1])])
+            except (TypeError, ValueError):
+                pass
+
+    # Domaines -------------------------------------------------------------
+    def _bounds(key_min, key_max, values, pad_lo=False, pad_hi=False):
+        v_min = courbe.get(key_min)
+        v_max = courbe.get(key_max)
+        if v_min is None or v_max is None:
+            if values:
+                dmin = min(values)
+                dmax = max(values)
+            else:
+                dmin, dmax = 0.0, 1.0
+            if dmin == dmax:
+                dmin -= 1.0
+                dmax += 1.0
+            if v_min is None:
+                v_min = dmin - (0.05 * (dmax - dmin) if pad_lo else 0)
+            if v_max is None:
+                v_max = dmax + (0.05 * (dmax - dmin) if pad_hi else 0)
+        return float(v_min), float(v_max)
+
+    # Calcul des bornes selon style
+    if style == "boites":
+        boites = courbe.get("boites") or []
+        all_y: list[float] = []
+        for b in boites:
+            vs = b.get("valeurs") if isinstance(b, dict) else None
+            if isinstance(vs, list):
+                for v in vs:
+                    try:
+                        all_y.append(float(v))
+                    except (TypeError, ValueError):
+                        pass
+        y_min, y_max = _bounds("y_min", "y_max", all_y, pad_lo=True, pad_hi=True)
+        x_min, x_max = 0.0, float(max(1, len(boites)))
+    elif style in ("barres", "histogramme"):
+        xs = [p[0] for p in pts]
+        ys = [p[1] for p in pts]
+        if style == "histogramme":
+            lw = float(courbe.get("largeur_classe", 1))
+            x_min, x_max = _bounds("x_min", "x_max", xs + [max(xs) + lw if xs else 1])
+        else:
+            x_min = (min(xs) - 0.5) if xs else 0
+            x_max = (max(xs) + 0.5) if xs else 1
+        y_min, y_max = _bounds("y_min", "y_max", ys + [0], pad_hi=True)
+        if y_min > 0:
+            y_min = 0  # les barres partent de 0
+    else:
+        xs = [p[0] for p in pts] + [p[0] for p in serie_2]
+        ys = [p[1] for p in pts] + [p[1] for p in serie_2]
+        x_min, x_max = _bounds("x_min", "x_max", xs, pad_lo=False, pad_hi=True)
+        # Pour points/ligne : si toutes les valeurs y >= 0, on ancre l'axe en 0.
+        # Cela évite des graduations décimales étranges (1.4, 4.32…) et
+        # correspond à l'intuition pédagogique habituelle.
+        if ys and all(v >= 0 for v in ys) and courbe.get("y_min") is None:
+            y_min = 0.0
+            if courbe.get("y_max") is not None:
+                y_max = float(courbe["y_max"])
+            else:
+                y_max = max(ys) * 1.1 if max(ys) > 0 else 1.0
+        else:
+            y_min, y_max = _bounds("y_min", "y_max", ys, pad_lo=True, pad_hi=True)
+
+    if x_max == x_min:
+        x_max = x_min + 1
+    if y_max == y_min:
+        y_max = y_min + 1
+
+    def sx(x: float) -> float:
+        return pl + (x - x_min) / (x_max - x_min) * inner_w
+
+    def sy(y: float) -> float:
+        return pt + inner_h - (y - y_min) / (y_max - y_min) * inner_h
+
+    # ---------------------------------------------------------------- SVG
+    parts: list[str] = []
+    label_attr = html.escape(aria_label) if aria_label else (
+        "Graphique" if lang == "fr" else "Chart"
+    )
+    parts.append(
+        f'<figure class="courbe-figure">'
+        f'<svg class="courbe-svg" viewBox="0 0 {W} {H}" '
+        f'xmlns="http://www.w3.org/2000/svg" role="img" '
+        f'aria-label="{label_attr}">'
+    )
+
+    # Grille et graduations Y
+    y_ticks = _axis_labels(y_min, y_max, 5)
+    for t in y_ticks:
+        y = sy(t)
+        parts.append(
+            f'<line x1="{pl}" y1="{y:.1f}" x2="{W - pr}" y2="{y:.1f}" '
+            f'class="courbe-grid" />'
+        )
+        parts.append(
+            f'<text x="{pl - 6}" y="{y + 4:.1f}" class="courbe-tick" '
+            f'text-anchor="end">{_fmt_num(t)}</text>'
+        )
+
+    # Axes
+    parts.append(
+        f'<line x1="{pl}" y1="{pt}" x2="{pl}" y2="{H - pb}" class="courbe-axis" />'
+        f'<line x1="{pl}" y1="{H - pb}" x2="{W - pr}" y2="{H - pb}" class="courbe-axis" />'
+    )
+
+    # Graduations X : pour barres/boites on utilise les étiquettes ; sinon 5 ticks
+    if style in ("barres", "boites"):
+        etiquettes = []
+        if style == "boites":
+            boites = courbe.get("boites") or []
+            etiquettes = [pick_lang(b.get("etiquette"), lang) if isinstance(b, dict) else "" for b in boites]
+            n = max(1, len(boites))
+            for i, lbl in enumerate(etiquettes):
+                xc = sx(i + 0.5)
+                parts.append(
+                    f'<text x="{xc:.1f}" y="{H - pb + 18}" class="courbe-tick" '
+                    f'text-anchor="middle">{html.escape(str(lbl or ""))}</text>'
+                )
+        else:
+            etiquettes_src = courbe.get("etiquettes") or []
+            etiquettes = [pick_lang(e, lang) if isinstance(e, dict) else e for e in etiquettes_src]
+            for i, p in enumerate(pts):
+                if i < len(etiquettes):
+                    xc = sx(p[0])
+                    parts.append(
+                        f'<text x="{xc:.1f}" y="{H - pb + 18}" class="courbe-tick" '
+                        f'text-anchor="middle">{html.escape(str(etiquettes[i] or ""))}</text>'
+                    )
+    else:
+        x_ticks = _axis_labels(x_min, x_max, 5)
+        for t in x_ticks:
+            xc = sx(t)
+            parts.append(
+                f'<text x="{xc:.1f}" y="{H - pb + 18}" class="courbe-tick" '
+                f'text-anchor="middle">{_fmt_num(t)}</text>'
+            )
+
+    # Seuils horizontaux
+    seuils = courbe.get("seuils") or ([courbe["seuil"]] if courbe.get("seuil") is not None else [])
+    for s_val in seuils:
+        try:
+            yv = float(s_val)
+        except (TypeError, ValueError):
+            continue
+        y = sy(yv)
+        parts.append(
+            f'<line x1="{pl}" y1="{y:.1f}" x2="{W - pr}" y2="{y:.1f}" '
+            f'class="courbe-seuil" />'
+        )
+
+    # --- Dessin principal selon style ------------------------------------
+    if style == "boites":
+        boites = courbe.get("boites") or []
+        for i, b in enumerate(boites):
+            if not isinstance(b, dict):
+                continue
+            vs = b.get("valeurs") or []
+            if len(vs) < 5:
+                continue
+            try:
+                vmin, q1, med, q3, vmax = [float(v) for v in vs[:5]]
+            except (TypeError, ValueError):
+                continue
+            xc = sx(i + 0.5)
+            box_w = inner_w / max(1, len(boites)) * 0.45
+            x_left = xc - box_w / 2
+            x_right = xc + box_w / 2
+            y_q1 = sy(q1)
+            y_q3 = sy(q3)
+            y_med = sy(med)
+            y_min_v = sy(vmin)
+            y_max_v = sy(vmax)
+            # moustaches
+            parts.append(
+                f'<line x1="{xc:.1f}" y1="{y_min_v:.1f}" x2="{xc:.1f}" y2="{y_max_v:.1f}" class="courbe-whisker" />'
+                f'<line x1="{x_left:.1f}" y1="{y_min_v:.1f}" x2="{x_right:.1f}" y2="{y_min_v:.1f}" class="courbe-whisker" />'
+                f'<line x1="{x_left:.1f}" y1="{y_max_v:.1f}" x2="{x_right:.1f}" y2="{y_max_v:.1f}" class="courbe-whisker" />'
+            )
+            # boîte
+            parts.append(
+                f'<rect x="{x_left:.1f}" y="{min(y_q1, y_q3):.1f}" '
+                f'width="{box_w:.1f}" height="{abs(y_q1 - y_q3):.1f}" class="courbe-box" />'
+            )
+            # médiane
+            parts.append(
+                f'<line x1="{x_left:.1f}" y1="{y_med:.1f}" x2="{x_right:.1f}" y2="{y_med:.1f}" class="courbe-median" />'
+            )
+            if courbe.get("valeurs"):
+                for yv, lbl in ((vmin, _fmt_num(vmin)), (q1, _fmt_num(q1)),
+                                (med, _fmt_num(med)), (q3, _fmt_num(q3)),
+                                (vmax, _fmt_num(vmax))):
+                    parts.append(
+                        f'<text x="{x_right + 4:.1f}" y="{sy(yv) + 4:.1f}" '
+                        f'class="courbe-value" text-anchor="start">{lbl}</text>'
+                    )
+
+    elif style in ("barres", "histogramme"):
+        mis = set(courbe.get("mis_en_avant") or [])
+        etiquettes_valeurs = courbe.get("etiquettes_valeurs") or []
+        show_values = bool(courbe.get("valeurs"))
+        y0 = sy(0)
+        if style == "histogramme":
+            lw = float(courbe.get("largeur_classe", 1))
+            for i, p in enumerate(pts):
+                x0 = sx(p[0])
+                x1 = sx(p[0] + lw)
+                y = sy(p[1])
+                cls = "courbe-bar courbe-bar-highlight" if i in mis else "courbe-bar"
+                parts.append(
+                    f'<rect x="{x0:.1f}" y="{min(y, y0):.1f}" '
+                    f'width="{max(1, x1 - x0 - 1):.1f}" height="{abs(y0 - y):.1f}" class="{cls}" />'
+                )
+                if show_values:
+                    parts.append(
+                        f'<text x="{(x0 + x1) / 2:.1f}" y="{y - 6:.1f}" '
+                        f'class="courbe-value" text-anchor="middle">{_fmt_num(p[1])}</text>'
+                    )
+        else:
+            n = len(pts)
+            if n > 0:
+                slot = inner_w / n
+                bw = slot * 0.6
+                for i, p in enumerate(pts):
+                    xc = pl + (i + 0.5) * slot
+                    y = sy(p[1])
+                    cls = "courbe-bar courbe-bar-highlight" if i in mis else "courbe-bar"
+                    parts.append(
+                        f'<rect x="{xc - bw / 2:.1f}" y="{min(y, y0):.1f}" '
+                        f'width="{bw:.1f}" height="{abs(y0 - y):.1f}" class="{cls}" />'
+                    )
+                    lbl = None
+                    if i < len(etiquettes_valeurs):
+                        lbl = pick_lang(etiquettes_valeurs[i], lang) if isinstance(etiquettes_valeurs[i], dict) else etiquettes_valeurs[i]
+                    elif show_values:
+                        lbl = _fmt_num(p[1])
+                    if lbl:
+                        parts.append(
+                            f'<text x="{xc:.1f}" y="{y - 6:.1f}" '
+                            f'class="courbe-value" text-anchor="middle">{html.escape(str(lbl))}</text>'
+                        )
+
+    elif style == "ligne" or (style == "" and pts):
+        if pts:
+            d = " ".join(f"{sx(x):.1f},{sy(y):.1f}" for x, y in pts)
+            parts.append(f'<polyline points="{d}" class="courbe-line" />')
+        if serie_2:
+            d2 = " ".join(f"{sx(x):.1f},{sy(y):.1f}" for x, y in serie_2)
+            parts.append(f'<polyline points="{d2}" class="courbe-line courbe-line-alt" />')
+
+    else:  # points (défaut)
+        for x, y in pts:
+            parts.append(
+                f'<circle cx="{sx(x):.1f}" cy="{sy(y):.1f}" r="4" class="courbe-point" />'
+            )
+        for x, y in serie_2:
+            parts.append(
+                f'<circle cx="{sx(x):.1f}" cy="{sy(y):.1f}" r="4" class="courbe-point courbe-point-alt" />'
+            )
+
+    # Repères (annotations) -----------------------------------------------
+    for r in (courbe.get("reperes") or []):
+        if not isinstance(r, dict):
+            continue
+        try:
+            rx = float(r["x"]) if "x" in r else None
+        except (TypeError, ValueError):
+            rx = None
+        try:
+            ry = float(r["y"]) if "y" in r else None
+        except (TypeError, ValueError):
+            ry = None
+        label = pick_lang(r.get("label"), lang) or ""
+        if rx is None:
+            continue
+        # Si y absent mais expression connue, évaluer
+        if ry is None and courbe.get("expression"):
+            ry = _safe_eval_expr(courbe["expression"], rx)
+        # Pour un point explicite [x,y] on cherche le y le plus proche
+        if ry is None and pts:
+            same = [p for p in pts if abs(p[0] - rx) < 1e-6]
+            if same:
+                ry = same[0][1]
+        if ry is None:
+            continue
+        cx = sx(rx)
+        cy = sy(ry)
+        if r.get("guide_y"):
+            parts.append(
+                f'<line x1="{cx:.1f}" y1="{H - pb}" x2="{cx:.1f}" y2="{cy:.1f}" class="courbe-guide" />'
+                f'<line x1="{pl}" y1="{cy:.1f}" x2="{cx:.1f}" y2="{cy:.1f}" class="courbe-guide" />'
+            )
+        parts.append(
+            f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="4" class="courbe-repere" />'
+        )
+        if label:
+            parts.append(
+                f'<text x="{cx + 8:.1f}" y="{cy - 6:.1f}" class="courbe-label">{html.escape(str(label))}</text>'
+            )
+
+    # Titres d'axes --------------------------------------------------------
+    if axe_x:
+        parts.append(
+            f'<text x="{pl + inner_w / 2:.1f}" y="{H - 6}" '
+            f'class="courbe-axis-title" text-anchor="middle">{html.escape(str(axe_x))}</text>'
+        )
+    if axe_y:
+        parts.append(
+            f'<text x="{14}" y="{pt + inner_h / 2:.1f}" '
+            f'class="courbe-axis-title" text-anchor="middle" '
+            f'transform="rotate(-90 14 {pt + inner_h / 2:.1f})">{html.escape(str(axe_y))}</text>'
+        )
+
+    parts.append("</svg></figure>")
+    return "".join(parts)
+
+
 # --- Rendu d'une scène ------------------------------------------------------
 
 def render_scene(s: dict, lang: str) -> str:
@@ -297,8 +750,12 @@ def render_scene(s: dict, lang: str) -> str:
             parts.append(f"<h3>{md_inline(texte)}</h3>")
         if voix:
             parts.append(f"<p>{md_inline(voix)}</p>")
-        placeholder = "Graphique associé à cette étape" if lang == "fr" else "Chart for this step"
-        parts.append(f'<p class="muted"><em>[{placeholder}]</em></p>')
+        courbe = s.get("courbe") or {}
+        if courbe:
+            parts.append(render_courbe_svg(courbe, lang, aria_label=texte or voix or ""))
+        else:
+            placeholder = "Graphique associé à cette étape" if lang == "fr" else "Chart for this step"
+            parts.append(f'<p class="muted"><em>[{placeholder}]</em></p>')
         if note:
             parts.append(f'<p class="muted"><small>{md_inline(note)}</small></p>')
         return "".join(parts)

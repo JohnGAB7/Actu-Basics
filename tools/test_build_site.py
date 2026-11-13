@@ -428,6 +428,78 @@ def test_generation_integrity() -> None:
                 F.add("gen_iframe_safety", f"iframe hors whitelist dans {path.name}: {src}")
 
 
+def test_courbe_svg_rendering() -> None:
+    """Chaque style de courbe produit un <svg> accessible avec aria-label.
+
+    Vérifie aussi qu'aucune scène `type: courbe` d'une fiche valide n'est
+    rendue comme placeholder `[Graphique associé à cette étape]` : si la
+    scène est présente mais sans bloc `courbe:`, c'est un défaut de contenu
+    (le générateur doit le rendre, pas afficher un placeholder).
+    """
+    name = "test_courbe_svg_rendering"
+
+    # 1) Chaque style renvoie un <svg> avec aria-label
+    styles = {
+        "points": {"style": "points", "points": [[0, 1], [1, 2], [2, 3]], "axe_x": "x", "axe_y": "y"},
+        "ligne": {"style": "ligne", "points": [[0, 1], [1, 2], [2, 3]]},
+        "barres": {"style": "barres", "points": [[0, 10], [1, 20]], "etiquettes": ["A", "B"], "valeurs": True},
+        "histogramme": {"style": "histogramme", "points": [[0, 3], [10, 7], [20, 6]], "largeur_classe": 10},
+        "boites": {"style": "boites", "boites": [{"etiquette": "x", "valeurs": [1, 2, 3, 4, 5]}]},
+        "expression": {"expression": "1000 * 1.05**t", "variable": "t", "de": 0, "a": 10, "y_max": 2000},
+    }
+    for st, courbe in styles.items():
+        svg = B.render_courbe_svg(courbe, "fr", aria_label=f"test {st}")
+        if "<svg" not in svg:
+            F.add(name, f"style {st} : <svg> manquant")
+        if 'aria-label="test ' not in svg:
+            F.add(name, f"style {st} : aria-label manquant")
+        if 'role="img"' not in svg:
+            F.add(name, f"style {st} : role=img manquant")
+
+    # 2) Aucune page leçon ne doit afficher le placeholder `[Graphique associé...]`
+    #    pour une scène courbe qui porte bien un bloc `courbe:` dans la fiche.
+    import glob, yaml
+    def walk(obj):
+        if isinstance(obj, dict):
+            yield obj
+            for v in obj.values():
+                yield from walk(v)
+        elif isinstance(obj, list):
+            for v in obj:
+                yield from walk(v)
+
+    for fp in glob.glob(str(ROOT / "contenus" / "fiches" / "*.yaml")):
+        try:
+            d = yaml.safe_load(open(fp))
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        if (d.get("validation", {}) or {}).get("statut") != "valide":
+            continue
+        if d.get("format") == "short":
+            continue
+        code = (d.get("fiche") or d.get("id") or "").upper().replace(".", "-")
+        if not code:
+            continue
+        page_fr = ROOT / "docs" / "lecons" / code / "index.html"
+        if not page_fr.exists():
+            continue
+        txt = page_fr.read_text(encoding="utf-8")
+        # compter les scènes courbe avec un bloc `courbe:`
+        n_courbes_with_data = sum(
+            1 for scn in walk(d)
+            if isinstance(scn, dict) and scn.get("type") == "courbe" and scn.get("courbe")
+        )
+        if n_courbes_with_data > 0:
+            # aucun placeholder admis
+            if "[Graphique associé à cette étape]" in txt:
+                F.add(name, f"{code}/index.html : placeholder affiché malgré {n_courbes_with_data} courbe(s) avec données")
+            # au moins un svg attendu
+            if txt.count("courbe-svg") < n_courbes_with_data:
+                F.add(name, f"{code}/index.html : {n_courbes_with_data} courbe(s) attendue(s), {txt.count('courbe-svg')} <svg> trouvé(s)")
+
+
 # -------------------- runner ----------------------------------------------
 
 def main() -> int:
@@ -446,6 +518,7 @@ def main() -> int:
         test_library_links_integrity,
         test_relative_links_resolve,
         test_short_fiches_not_generated,
+        test_courbe_svg_rendering,
     ]
     for t in tests:
         try:
