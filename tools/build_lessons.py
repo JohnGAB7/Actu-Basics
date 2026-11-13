@@ -1102,34 +1102,37 @@ _ICON_GMAIL = (
 )
 
 
-def _social_links(lang: str) -> str:
-    """Rend les liens sociaux (YouTube, TikTok, contact Gmail, GitHub) pour la
-    langue donnée. YouTube, TikTok et email sont dédiés par langue ; GitHub est
-    commun."""
+def _follow_links(lang: str) -> str:
+    """Liens de la colonne « Suivre / Follow » : YouTube, TikTok (dédiés par
+    langue) et GitHub (commun)."""
     if lang == "fr":
         yt = "https://www.youtube.com/channel/UC3MrzU4G6UnSfDsYSci9BuQ"
         tk = "https://www.tiktok.com/@actu_basics_fr"
-        mail = "actubasics.officiel@gmail.com"
         yt_label = "YouTube · Français"
         tk_label = "TikTok · Français"
-        mail_label = f"Email · {mail}"
     else:
         yt = "https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg"
         tk = "https://www.tiktok.com/@actu_basics"
-        mail = "actubasics.official@gmail.com"
         yt_label = "YouTube · English"
         tk_label = "TikTok · English"
-        mail_label = f"Email · {mail}"
     gh = "https://github.com/JohnGAB7/le-monde-en-chiffres"
     return (
         f'<a class="social-link" href="{yt}" target="_blank" rel="noopener" aria-label="{yt_label}">'
         f'{_ICON_YOUTUBE}<span>YouTube</span></a>'
         f'<a class="social-link" href="{tk}" target="_blank" rel="noopener" aria-label="{tk_label}">'
         f'{_ICON_TIKTOK}<span>TikTok</span></a>'
-        f'<a class="social-link" href="mailto:{mail}" aria-label="{mail_label}">'
-        f'{_ICON_GMAIL}<span>Email</span></a>'
         f'<a class="social-link" href="{gh}" target="_blank" rel="noopener" aria-label="GitHub">'
         f'{_ICON_GITHUB}<span>GitHub</span></a>'
+    )
+
+
+def _contact_links(lang: str) -> str:
+    """Liens de la colonne « Contact » : email dédié par langue."""
+    mail = "actubasics.officiel@gmail.com" if lang == "fr" else "actubasics.official@gmail.com"
+    label = f"Email · {mail}"
+    return (
+        f'<a class="social-link" href="mailto:{mail}" aria-label="{label}">'
+        f'{_ICON_GMAIL}<span>{mail}</span></a>'
     )
 
 
@@ -1147,7 +1150,10 @@ def footer_fr(depth: int) -> str:
         f'<a href="{b}a-propos/">À propos</a>'
         f'</div></div>'
         f'<div><h3>Suivre</h3><div class="social-links">'
-        f'{_social_links("fr")}'
+        f'{_follow_links("fr")}'
+        f'</div></div>'
+        f'<div><h3>Contact</h3><div class="social-links">'
+        f'{_contact_links("fr")}'
         f'</div></div></div>'
         f'<div class="footer-bottom">'
         f'<span>© ACTU-BASICS · Projet éducatif indépendant</span>'
@@ -1171,7 +1177,10 @@ def footer_en(depth: int) -> str:
         f'<a href="{b}en/about/">About</a>'
         f'</div></div>'
         f'<div><h3>Follow</h3><div class="social-links">'
-        f'{_social_links("en")}'
+        f'{_follow_links("en")}'
+        f'</div></div>'
+        f'<div><h3>Contact</h3><div class="social-links">'
+        f'{_contact_links("en")}'
         f'</div></div></div>'
         f'<div class="footer-bottom">'
         f'<span>© ACTU-BASICS · Independent educational project</span>'
