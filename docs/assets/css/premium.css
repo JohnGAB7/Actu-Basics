@@ -449,6 +449,9 @@ p { color: var(--ink); max-width: var(--measure); }
   padding: var(--space-8) 0 var(--space-5);
   color: var(--muted);
 }
+.footer-inner { grid-template-columns: 1.6fr 1fr 1fr 1.3fr; }
+@media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
 .footer h3 { color: var(--ink); font-family: var(--font-sans); font-weight: 750; font-size: var(--size-small); letter-spacing: .06em; text-transform: uppercase; margin-bottom: var(--space-4); }
 .footer-links a { color: var(--muted); display: block; margin: 6px 0; }
 .footer-links a:hover { color: var(--teal); }
