@@ -7,7 +7,7 @@ Site pédagogique bilingue (français / anglais), servi de manière statique par
 - **Hybride** : YouTube sert à découvrir les notions ; le site permet de les approfondir, de retrouver les méthodes et de pratiquer.
 - **Progressif** : une leçon n'est affichée comme disponible que lorsqu'une page existe et que son contenu a été vérifié.
 - **Sans backend** : pas de compte utilisateur ni de base de données pour cette première version.
-- **Publication** : GitHub Pages, « Deploy from a branch », branche `main`, dossier `/docs`. Aucun workflow GitHub Actions requis.
+- **Publication** : GitHub Pages, « Deploy from a branch », branche `chatgpt/actu-basics-site-v1`, dossier `/docs` (configuration de la V1 confirmée le 13 novembre 2026). Le workflow GitHub Pages Build and Deployment a également terminé avec succès. Ne pas supposer que `main` est la source publiée.
 
 ## Structure actuelle
 
@@ -43,14 +43,14 @@ Ne pas afficher de lien vidéo, PDF, tableur ou script tant que la ressource cor
 
 Les pages utilisent les logos officiels issus de `assets/brand/actu-basics/`. Ne jamais reconstituer ou modifier le logo. Palette du site : bleu profond, or/ambre et fond ivoire. La mise en page est responsive et privilégie la lisibilité.
 
-## Mise en ligne (action de JG)
+## Mise en ligne (configuration V1 confirmée)
 
 1. Ouvrir [Settings → Pages](https://github.com/JohnGAB7/le-monde-en-chiffres/settings/pages).
 2. Choisir « Deploy from a branch ».
-3. Choisir la branche `main` et le dossier `/docs`.
+3. Pour la V1 actuelle, choisir la branche `chatgpt/actu-basics-site-v1` et le dossier `/docs`.
 4. Enregistrer.
 
-Après fusion des changements et activation de Pages, l'adresse attendue est :
+Après publication depuis la branche configurée, l'adresse du site est :
 `https://johngab7.github.io/le-monde-en-chiffres/`
 
 Le site n'est pas considéré comme publié avant vérification de son URL publique.
