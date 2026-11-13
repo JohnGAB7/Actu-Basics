@@ -399,7 +399,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
         x_min, x_max = 0.0, float(max(1, len(boites)))
     elif style in ("barres", "histogramme"):
         xs = [p[0] for p in pts]
-        ys = [p[1] for p in pts] + ([] if serie_2_secondary_axis else [p[1] for p in serie_2])
+        ys = [p[1] for p in pts]
         if style == "histogramme":
             lw = float(courbe.get("largeur_classe", 1))
             x_min, x_max = _bounds("x_min", "x_max", xs + [max(xs) + lw if xs else 1])
@@ -411,7 +411,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
             y_min = 0  # les barres partent de 0
     else:
         xs = [p[0] for p in pts] + [p[0] for p in serie_2]
-        ys = [p[1] for p in pts]
+        ys = [p[1] for p in pts] + ([] if serie_2_secondary_axis else [p[1] for p in serie_2])
         x_min, x_max = _bounds("x_min", "x_max", xs, pad_lo=False, pad_hi=True)
         # Pour points/ligne : si toutes les valeurs y >= 0, on ancre l'axe en 0.
         # Cela évite des graduations décimales étranges (1.4, 4.32…) et
