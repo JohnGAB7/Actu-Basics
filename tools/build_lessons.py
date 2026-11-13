@@ -748,7 +748,7 @@ def render_surface_svg(lang: str) -> str:
     return "".join(parts)
 
 
-def render_scene(s: dict, lang: str) -> str:
+def render_scene(s: dict, lang: str, anchor: str | None = None) -> str:
     """Convertit une scène YAML en un fragment HTML."""
     if not isinstance(s, dict):
         return ""
@@ -780,7 +780,8 @@ def render_scene(s: dict, lang: str) -> str:
 
     if t == "titre":
         head_text = texte or voix or ""
-        parts.append(f"<h2>{md_inline(head_text)}</h2>")
+        heading_id = html.escape(anchor or "lesson-section")
+        parts.append(f'<h2 id="{heading_id}">{md_inline(head_text)}</h2>')
         if texte and voix and voix != texte:
             parts.append(f"<p>{md_inline(voix)}</p>")
         return "".join(parts)
@@ -1302,7 +1303,15 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
     prerequis = by_lang(ped.get("prerequis"))
     hypotheses = by_lang(ped.get("hypotheses"))
 
-    scene_html = "".join(render_scene(s, lang) for s in scenes)
+    scene_html = "".join(
+        render_scene(s, lang, anchor=f"section-{i:02d}")
+        for i, s in enumerate(scenes, start=1)
+    )
+    section_items = [
+        (f"section-{i:02d}", pick_lang(scene.get("texte"), lang) or pick_lang(scene.get("voix_off"), lang))
+        for i, scene in enumerate(scenes, start=1)
+        if isinstance(scene, dict) and scene.get("type") == "titre"
+    ]
 
     if lang == "fr":
         L = {
@@ -1343,9 +1352,52 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
     header = (header_fr if lang == "fr" else header_en)(depth_lesson, current="library" if lang == "en" else "bibliotheque")
     footer = (footer_fr if lang == "fr" else footer_en)(depth_lesson)
 
-    obj_block = f'<h2>{L["obj_h"]}</h2>{md_items(objectifs)}' if objectifs else ""
-    pre_block = f'<h2>{L["pre_h"]}</h2>{md_items(prerequis)}' if prerequis else ""
-    hyp_block = f'<h2>{L["hyp_h"]}</h2>{md_items(hypotheses)}' if hypotheses else ""
+    obj_id = "objectives" if lang == "en" else "objectifs"
+    pre_id = "prerequisites" if lang == "en" else "prerequis"
+    hyp_id = "assumptions" if lang == "en" else "hypotheses"
+    obj_block = (
+        f'<section class="lesson-outcomes" aria-labelledby="{obj_id}">'
+        f'<h2 id="{obj_id}">{L["obj_h"]}</h2>{md_items(objectifs)}</section>'
+    ) if objectifs else ""
+    pre_block = (
+        f'<section class="lesson-prerequisites" aria-labelledby="{pre_id}">'
+        f'<h2 id="{pre_id}">{L["pre_h"]}</h2>{md_items(prerequis)}</section>'
+    ) if prerequis else ""
+    hyp_block = (
+        f'<section class="lesson-assumptions" aria-labelledby="{hyp_id}">'
+        f'<h2 id="{hyp_id}">{L["hyp_h"]}</h2>{md_items(hypotheses)}</section>'
+    ) if hypotheses else ""
+
+    level = str(ped.get("niveau") or "").strip().lower()
+    level_labels = {
+        "decouverte": ("Découverte", "Beginner"),
+        "intermediaire": ("Intermédiaire", "Intermediate"),
+        "avance": ("Approfondissement", "Advanced"),
+        "expert": ("Expert", "Expert"),
+    }
+    level_label = level_labels.get(level, (level.replace("_", " ").title(), level.replace("_", " ").title()))[0 if lang == "fr" else 1]
+    category = category_for(code)
+    category_label = (CATEGORY_LABELS_FR if lang == "fr" else CATEGORY_LABELS_EN).get(category, "")
+    format_value = str(data.get("format") or "").lower()
+    format_labels = {
+        "educational": ("Leçon pédagogique", "Learning lesson"),
+        "youtube_lesson": ("Cours approfondi", "In-depth lesson"),
+        "short": ("Capsule", "Short video"),
+    }
+    format_label = format_labels.get(format_value, ("Leçon", "Lesson"))[0 if lang == "fr" else 1]
+    meta_items = [x for x in (category_label, level_label, format_label) if x]
+    meta_block = '<div class="lesson-meta">' + "".join(
+        f'<span>{html.escape(x)}</span>' for x in meta_items
+    ) + '</div>'
+    toc_label = "Dans cette leçon" if lang == "fr" else "In this lesson"
+    toc_block = (
+        f'<nav class="lesson-toc" aria-label="{toc_label}"><h3>{toc_label}</h3><ol>'
+        + "".join(
+            f'<li><a href="#{html.escape(anchor)}">{md_inline(label)}</a></li>'
+            for anchor, label in section_items if label
+        )
+        + '</ol></nav>'
+    ) if section_items else ""
 
     page_hero = (
         f'<section class="page-hero"><div class="container">'
@@ -1353,6 +1405,7 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
         f'<a href="{L["home_href"]}">{L["home"]}</a> / '
         f'<a href="{L["lib_href"]}">{L["lib_label"]}</a> / {code}</div>'
         f'<span class="eyebrow">{code}</span>'
+        f'{meta_block}'
         f'<h1>{md_inline(titre)}</h1>'
         f'{f"<p>{md_inline(legende)}</p>" if legende else ""}'
         f'</div></section>'
@@ -1399,6 +1452,7 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
         f'<span class="tag">{L["tag_available"]}</span>'
         f'<h3>{L["at_a_glance"]}</h3>'
         f'<p><strong>Code</strong><br>{code}</p>'
+        f'{toc_block}'
         f'{parcours_aside}'
         f'<a class="button button-dark" href="{L["lib_href"]}">{L["lib_back"]}</a>'
         f'<a class="button button-outline" href="{L["other_lang_href"]}">{L["other_lang_label"]}</a>'
