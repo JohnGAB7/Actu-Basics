@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     html.setAttribute("data-theme",t);
     try{localStorage.setItem("ab-theme",t);}catch(e){}
     const metaTheme=document.querySelector('meta[name="theme-color"]');
-    if(metaTheme)metaTheme.setAttribute("content",t==="dark"?"#0f1619":"#f8f6ef");
+    if(metaTheme)metaTheme.setAttribute("content",t==="dark"?"#0f1619":"#f7f6f1");
   };
   btns.forEach(b=>{
     b.addEventListener("click",()=>apply(getCurrent()==="dark"?"light":"dark"));
