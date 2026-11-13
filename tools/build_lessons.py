@@ -460,7 +460,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
     )
     parts.append(
         f'<figure class="courbe-figure">'
-        f'<svg class="courbe-svg" viewBox="0 0 {W} {H}" '
+        f'<svg class="courbe-svg{" courbe-svg-dual" if secondary_y_min is not None else ""}" viewBox="0 0 {W} {H}" '
         f'xmlns="http://www.w3.org/2000/svg" role="img" '
         f'aria-label="{label_attr}">'
     )
