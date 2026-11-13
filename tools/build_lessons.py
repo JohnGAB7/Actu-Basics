@@ -281,8 +281,15 @@ def render_scene(s: dict, lang: str) -> str:
             parts.append(f"<p>{md_inline(voix)}</p>")
         if formule:
             raw = formule[0] if isinstance(formule, list) else formule
-            # LaTeX brut en V1.1 ; KaTeX viendra dans une étape ultérieure.
-            parts.append(f'<div class="formula"><code>{html.escape(str(raw))}</code></div>')
+            # LaTeX display math : rendu client-side par KaTeX (CDN, voir head/footer).
+            # Fallback sans JS : la source LaTeX reste visible dans un <code>.
+            latex = str(raw)
+            parts.append(
+                f'<div class="formula katex-block">'
+                f'<span class="katex-src">\\[{html.escape(latex)}\\]</span>'
+                f'<noscript><code>{html.escape(latex)}</code></noscript>'
+                f'</div>'
+            )
         return "".join(parts)
 
     if t == "courbe":
@@ -352,6 +359,32 @@ def render_scene(s: dict, lang: str) -> str:
 
 # --- Templates HTML --------------------------------------------------------
 
+KATEX_VERSION = "0.16.11"
+KATEX_CSS_URL  = f"https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.css"
+KATEX_JS_URL   = f"https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.js"
+KATEX_AUTO_URL = f"https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/contrib/auto-render.min.js"
+
+
+def _katex_head() -> str:
+    """Lien stylesheet KaTeX chargé en <head> des pages leçon."""
+    return (
+        f'<link rel="stylesheet" href="{KATEX_CSS_URL}" crossorigin="anonymous">'
+    )
+
+
+def _katex_footer_scripts() -> str:
+    """Scripts KaTeX + auto-render, chargés en fin de <body> sur les pages leçon.
+    Grâce à defer, ils s'exécutent dans l'ordre d'apparition. L'auto-render ne
+    reconnaît que les délimiteurs display `\\[...\\]` et inline `\\(...\\)`.
+    throwOnError:false évite qu'une faute de frappe LaTeX casse le reste.
+    """
+    return (
+        f'<script defer src="{KATEX_JS_URL}" crossorigin="anonymous"></script>'
+        f'<script defer src="{KATEX_AUTO_URL}" crossorigin="anonymous" '
+        f'onload="renderMathInElement(document.body,{{delimiters:[{{left:\'\\\\[\',right:\'\\\\]\',display:true}},{{left:\'\\\\(\',right:\'\\\\)\',display:false}}],throwOnError:false}});"></script>'
+    )
+
+
 def head_fr(titre: str, code: str, description: str, depth: int) -> str:
     base = "../" * depth
     page_url = f"https://johngab7.github.io/le-monde-en-chiffres/lecons/{code}/"
@@ -373,6 +406,7 @@ def head_fr(titre: str, code: str, description: str, depth: int) -> str:
         f'<meta name="twitter:card" content="summary">'
         f'<title>{code} — {html.escape(titre)} · ACTU-BASICS</title>'
         f'<link rel="stylesheet" href="{base}assets/css/main.css">'
+        f'{_katex_head()}'
         f'</head>'
     )
 
@@ -398,6 +432,7 @@ def head_en(titre: str, code: str, description: str, depth: int) -> str:
         f'<meta name="twitter:card" content="summary">'
         f'<title>{code} — {html.escape(titre)} · ACTU-BASICS</title>'
         f'<link rel="stylesheet" href="{base}assets/css/main.css">'
+        f'{_katex_head()}'
         f'</head>'
     )
 
@@ -840,7 +875,9 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
         f'<a class="skip-link" href="#contenu">{L["skip"]}</a>'
         f'{header}'
         f'<main id="contenu">{page_hero}{lesson_section}</main>'
-        f'{footer}</body></html>'
+        f'{footer}'
+        f'{_katex_footer_scripts()}'
+        f'</body></html>'
     )
 
 
