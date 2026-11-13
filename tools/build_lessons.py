@@ -33,6 +33,7 @@ CATEGORY_LABELS_FR = {
     "probabilites":  "Probabilités",
     "actuariat":     "Actuariat",
     "finance":       "Mathématiques financières",
+    "autre":         "Autres",
 }
 CATEGORY_LABELS_EN = {
     "fondations":    "Foundations",
@@ -40,6 +41,7 @@ CATEGORY_LABELS_EN = {
     "probabilites":  "Probability",
     "actuariat":     "Actuarial science",
     "finance":       "Financial mathematics",
+    "autre":         "Other",
 }
 
 # Libellés des modules connus. Un module inconnu (ex: S5, A1, MF1…) reçoit
@@ -97,18 +99,24 @@ def module_of(code: str) -> str:
     return code.upper()
 
 
+# Taxonomie des piliers : lettre(s) de préfixe -> catégorie.
+# Un préfixe non listé renvoie "autre" plutôt qu'une catégorie par défaut :
+# on refuse de classer silencieusement un module inconnu dans « statistiques ».
+PILLAR_BY_LETTERS: dict[str, str] = {
+    "M":  "fondations",
+    # S : voir category_for (S1-S3 = statistiques, S4+ = probabilités).
+    "A":  "actuariat",
+    "MF": "finance",
+    "F":  "finance",
+}
+
+
 def category_for(code: str) -> str:
     letters, num = _letters_and_number(module_of(code))
-    if letters == "M":
-        return "fondations"
     if letters == "S":
-        # Convention : S1-S3 = statistiques, S4+ = probabilités.
+        # Convention explicite : S1-S3 = statistiques, S4+ = probabilités.
         return "statistiques" if num <= 3 else "probabilites"
-    if letters == "A":
-        return "actuariat"
-    if letters in ("MF", "F"):
-        return "finance"
-    return "statistiques"
+    return PILLAR_BY_LETTERS.get(letters, "autre")
 
 
 def module_meta(mod: str, lang: str) -> dict:
@@ -1481,11 +1489,36 @@ def load_parcours() -> list[dict]:
     return sorted(parcours, key=lambda p: p.get("ordre", 999))
 
 
+def _cleanup_orphans(valid_codes: set[str]) -> int:
+    """Supprime les répertoires de leçon qui ne correspondent plus à une fiche
+    valide (fiche supprimée, filtrée en `format: short`, renommée…).
+
+    Retourne le nombre de répertoires retirés.
+    """
+    import shutil
+    removed = 0
+    for lesson_dir in (DOCS / "lecons").glob("*"):
+        if lesson_dir.is_dir() and lesson_dir.name not in valid_codes:
+            shutil.rmtree(lesson_dir)
+            removed += 1
+    for lesson_dir in (DOCS / "en" / "lessons").glob("*"):
+        if lesson_dir.is_dir() and lesson_dir.name not in valid_codes:
+            shutil.rmtree(lesson_dir)
+            removed += 1
+    return removed
+
+
 def main() -> int:
     fiches = load_fiches()
     if not fiches:
-        sys.exit("Aucune fiche n1-* valide trouvée dans contenus/fiches/")
+        sys.exit("Aucune fiche valide trouvée dans contenus/fiches/")
     parcours_list = load_parcours()
+
+    # Retire d'abord les pages leçons orphelines (fiches retirées, filtrées
+    # ou renommées) pour éviter tout page orpheline servie sur le site.
+    valid_codes = {L["code"] for L in fiches}
+    orphans_removed = _cleanup_orphans(valid_codes)
+
     pages = 0
     for L in fiches:
         code = L["code"]
@@ -1541,6 +1574,7 @@ def main() -> int:
 
     print(f"Fiches valides   : {len(fiches)}")
     print(f"Pages écrites    : {pages} (leçons FR + EN)")
+    print(f"Orphelines ôtées : {orphans_removed} (répertoires sans fiche valide)")
     print(f"Bibliothèques    : FR + EN mises à jour ({len(lessons_for_lib)} leçons affichées)")
     print(f"Pages parcours   : {parcours_pages} (index + détails, FR + EN)")
     return 0

@@ -161,8 +161,8 @@ def test_parcours_lesson_relations() -> None:
         if not B.category_for(f"{mod}-00"):
             F.add("parcours_modules", f"module {mod!r} sans catégorie")
 
-    # Multi-parcours : si deux parcours partagent un module, une leçon de ce
-    # module doit remonter plusieurs parcours.
+    # Multi-parcours (données réelles) : si deux parcours partagent un module,
+    # une leçon de ce module doit remonter plusieurs parcours.
     overlap_mods = set()
     for i, p1 in enumerate(parcours):
         for p2 in parcours[i + 1:]:
@@ -173,6 +173,76 @@ def test_parcours_lesson_relations() -> None:
             if len(found) < 2:
                 F.add("parcours_multi", f"{code} dans un module partagé "
                                         f"mais rattaché à {len(found)} parcours")
+
+
+def test_parcours_multi_synthetic() -> None:
+    """Exerce le cas multi-parcours sur données synthétiques, indépendamment
+    de l'état de contenus/parcours.yaml : garantit que la logique continue
+    de fonctionner si deux parcours se partageaient un module."""
+    fake = [
+        {"slug": "tronc-commun", "modules": ["M0", "S1"], "titre": {"fr": "TC", "en": "TC"}},
+        {"slug": "statistiques-decouverte", "modules": ["S1", "S2", "S3"],
+         "titre": {"fr": "Stats D", "en": "Stats D"}},
+        {"slug": "parcours-court", "modules": ["S1"], "titre": {"fr": "Court", "en": "Short"}},
+    ]
+    # Une leçon S1 doit être rattachée aux 3 parcours.
+    matching = B.parcours_for_lesson("S1-04", fake)
+    if len(matching) != 3:
+        F.add("parcours_multi_synth", f"S1-04 attendu dans 3 parcours, trouvé {len(matching)}")
+    # Une leçon M0 : 1 parcours seulement (tronc-commun).
+    matching_m0 = B.parcours_for_lesson("M0-01", fake)
+    if len(matching_m0) != 1 or matching_m0[0]["slug"] != "tronc-commun":
+        F.add("parcours_multi_synth", f"M0-01 devrait être dans tronc-commun uniquement, trouvé "
+                                      f"{[p['slug'] for p in matching_m0]}")
+    # Une leçon d'un module non référencé : 0 parcours.
+    matching_x = B.parcours_for_lesson("X9-01", fake)
+    if matching_x:
+        F.add("parcours_multi_synth", f"X9-01 devrait être orphelin, trouvé {matching_x}")
+
+
+def test_category_unknown_module_is_autre() -> None:
+    """Un module dont la lettre n'est pas dans la taxonomie connue est
+    classé en 'autre', jamais silencieusement en 'statistiques'."""
+    for code in ("Z1-01", "XY42-01", "Q2-04"):
+        got = B.category_for(code)
+        if got not in ("autre", "statistiques", "probabilites"):
+            continue
+        # Q* n'est pas dans la taxonomie : doit tomber en "autre".
+        letters = re.match(r"^[A-Za-z]+", code).group(0).upper()
+        if letters not in ("M", "S", "A", "MF", "F"):
+            if got != "autre":
+                F.add("category_unknown", f"{code!r} -> {got!r}, attendu 'autre'")
+
+
+def test_short_fiches_not_generated() -> None:
+    """Un code qui n'est représenté QUE par des fiches `format: short` ne doit
+    produire aucune page. Un code qui a à la fois une fiche long-form (valide)
+    et une variante short est autorisé à avoir une page générée par le long-form.
+    """
+    import yaml as _y
+    by_code_formats: dict[str, list[str]] = {}
+    for fp in sorted((ROOT / "contenus" / "fiches").glob("*.yaml")):
+        try:
+            with fp.open(encoding="utf-8") as f:
+                data = _y.safe_load(f) or {}
+        except Exception:
+            continue
+        fid = data.get("id") or ""
+        if not fid:
+            continue
+        if data.get("validation", {}).get("statut") != "valide":
+            continue
+        fmt = str(data.get("format") or "").lower()
+        code = B.module_code(fid)
+        by_code_formats.setdefault(code, []).append(fmt)
+    for code, fmts in by_code_formats.items():
+        only_short = all(f == "short" for f in fmts) and len(fmts) > 0
+        if not only_short:
+            continue
+        for lang_dir in ("lecons", "en/lessons"):
+            path = ROOT / "docs" / lang_dir / code / "index.html"
+            if path.exists():
+                F.add("short_filter", f"page générée pour un code 100 % short : {path.relative_to(ROOT)}")
 
 
 # -------------------- integration tests -----------------------------------
@@ -240,11 +310,14 @@ def main() -> int:
         test_module_code,
         test_module_of_and_sort,
         test_category_for,
+        test_category_unknown_module_is_autre,
         test_pick_lang,
         test_url_whitelist_youtube,
         test_url_whitelist_tiktok,
         test_parcours_lesson_relations,
+        test_parcours_multi_synthetic,
         test_generation_integrity,
+        test_short_fiches_not_generated,
     ]
     for t in tests:
         try:
