@@ -1,0 +1,260 @@
+# Niveau 1, vague 1, lot 4 : S4.07 « La probabilité conditionnelle » (EDUCATIONAL, leçon)
+# Tableau croisé fictif : 100 jours imaginaires, 4 cases (pluie × bouchon). Statut : brouillon.
+id: 2026-11-n1-s4-07-probabilite-conditionnelle
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.07 · La probabilité conditionnelle"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer P(A | B) dans un tableau croisé"
+      - "Distinguer P(A | B) et P(B | A)"
+    en:
+      - "Compute P(A | B) in a cross-table"
+      - "Tell apart P(A | B) and P(B | A)"
+  prerequis:
+    fr:
+      - "S4.05 : complément, union, intersection"
+      - "S3.02 : tableaux croisés et pourcentages conditionnels"
+    en:
+      - "S4.05: complement, union, intersection"
+      - "S3.02: cross-tabs and conditional percentages"
+  hypotheses:
+    fr: "Ville imaginaire, 100 jours imaginaires. Aucun chiffre réel."
+    en: "Imaginary city, 100 imaginary days. No real figures."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "La probabilité conditionnelle"
+    legende: |
+      Savoir qu'il pleut change-t-il la probabilité d'un bouchon ? Avec un tableau croisé de 100 jours imaginaires, on découvre la probabilité conditionnelle : conditionner, c'est réduire l'univers aux cas où l'hypothèse est vraie. Et on apprend à ne pas confondre P(A | B) et P(B | A), erreur à l'origine du sophisme du procureur. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, conditionnelle]
+    scenes:
+      - type: accroche
+        texte: "*Il pleut* : la probabilité d'un *bouchon* change-t-elle ?"
+        voix_off: "Dans une ville imaginaire, on observe la météo et le trafic pendant cent jours. Savoir qu'il pleut change-t-il la probabilité qu'il y ait un bouchon ?"
+      - type: titre
+        numero: 1
+        texte: "Les 100 jours : un tableau croisé"
+        voix_off: "Voici le tableau croisé, en nombre de jours."
+      - type: etapes
+        texte: "Les 4 cases de *nos 100 jours imaginaires*"
+        etapes:
+          - "Pluie *et* bouchon : *30 jours*"
+          - "Pluie *sans* bouchon : *20 jours*"
+          - "Pas de pluie *et* bouchon : *10 jours*"
+          - "Pas de pluie *sans* bouchon : *40 jours*"
+          - "Total : *100 jours*"
+        voix_off: "Trente jours avec pluie et bouchon. Vingt avec pluie sans bouchon. Dix sans pluie mais avec bouchon. Quarante sans l'un ni l'autre. Total : cent jours."
+      - type: titre
+        numero: 2
+        texte: "Les probabilités de départ"
+        voix_off: "Commençons par les probabilités « brutes »."
+      - type: etapes
+        texte: "Les *marges* du tableau"
+        etapes:
+          - "P(pluie) = *50 / 100 = 0,50*"
+          - "P(bouchon) = *40 / 100 = 0,40*"
+          - "P(pluie et bouchon) = *30 / 100 = 0,30*"
+        voix_off: "Sur cent jours, cinquante jours de pluie — un sur deux. Quarante jours avec bouchon — quatre sur dix. Et dans trente jours, pluie et bouchon vont ensemble — trois sur dix."
+        verifier:
+          - {expression: "50 / 100", attendu: 0.5, libelle: "P(pluie)"}
+          - {expression: "40 / 100", attendu: 0.4, libelle: "P(bouchon)"}
+          - {expression: "30 / 100", attendu: 0.3, libelle: "P(pluie et bouchon)"}
+      - type: titre
+        numero: 3
+        texte: "Conditionner : réduire l'univers"
+        voix_off: "Maintenant, on apprend qu'il pleut aujourd'hui."
+      - type: etapes
+        texte: "*Qu'un bouchon arrive, sachant qu'il pleut*"
+        etapes:
+          - "On *ne regarde plus* que les jours de pluie : *50 jours*"
+          - "Parmi eux, *combien* avec bouchon ? *30*"
+          - "P(bouchon | pluie) = *30 / 50 = 0,60*"
+        voix_off: "Quand on apprend qu'il pleut, on ne regarde plus que les cinquante jours de pluie — pas les cent. Parmi eux, trente ont un bouchon. La probabilité conditionnelle, c'est trente sur cinquante, soit zéro virgule soixante. Alors que la probabilité « brute » de bouchon était zéro virgule quarante. L'information « il pleut » a *augmenté* la probabilité."
+        verifier:
+          - {expression: "30 / 50", attendu: 0.6, libelle: "P(bouchon | pluie)"}
+      - type: formule
+        texte: "*P(A | B) = P(A et B) / P(B)*"
+        formule: "P(A | B) = P(A ∩ B) / P(B)"
+        voix_off: "La formule générale : la probabilité de A sachant B, c'est la probabilité de A et B divisée par la probabilité de B. Dans notre exemple : zéro virgule trente divisé par zéro virgule cinquante, soit zéro virgule soixante. Même résultat que par le tableau."
+      - type: titre
+        numero: 4
+        texte: "L'autre sens : P(pluie | bouchon)"
+        voix_off: "Mais si on retourne la question ?"
+      - type: etapes
+        texte: "*Qu'il pleuve, sachant qu'il y a un bouchon*"
+        etapes:
+          - "On *ne regarde plus* que les jours avec bouchon : *40 jours*"
+          - "Parmi eux, *combien* avec pluie ? *30*"
+          - "P(pluie | bouchon) = *30 / 40 = 0,75*"
+        voix_off: "Même tableau, question retournée. On ne regarde plus que les quarante jours avec bouchon. Parmi eux, trente avec pluie. Probabilité conditionnelle : trente sur quarante, soit zéro virgule soixante-quinze."
+        verifier:
+          - {expression: "30 / 40", attendu: 0.75, libelle: "P(pluie | bouchon)"}
+      - type: texte
+        texte: "P(bouchon | pluie) = *0,60*, P(pluie | bouchon) = *0,75*"
+        voix_off: "Et là, surprise. P de bouchon sachant pluie vaut zéro virgule soixante. P de pluie sachant bouchon vaut zéro virgule soixante-quinze. Les deux sont différents, parce qu'ils répondent à deux questions différentes. Inverser le conditionnement n'est pas neutre."
+      - type: titre
+        numero: 5
+        texte: "L'erreur : le sophisme du procureur"
+        voix_off: "Et c'est cette confusion qui donne un faux raisonnement célèbre."
+      - type: etapes
+        texte: "Le *sophisme* en trois temps"
+        etapes:
+          - "P(trace ADN compatible | innocent) est *très faible*"
+          - "⇒ on conclut : P(innocent | trace compatible) est aussi *très faible*"
+          - "C'est *faux* : il faut aussi tenir compte de *combien* de gens ont une trace compatible dans la population"
+        voix_off: "Dans un procès, on dit : la probabilité qu'un innocent ait cette trace d'A.D.N. est d'une sur un million. Donc l'accusé est coupable. Faux. Un sur un million, c'est P de trace sachant innocent, pas P d'innocent sachant trace. Si la population d'une grande ville compte plusieurs millions de gens, la chance que plusieurs d'entre eux aient une trace compatible n'est pas du tout négligeable. On ne peut pas conclure sans information sur l'ensemble des suspects possibles."
+      - type: texte
+        texte: "« La plupart des accidents ont lieu *près de chez soi* »"
+        voix_off: "Même piège dans la phrase : la plupart des accidents ont lieu près de chez soi. C'est vrai, parce qu'on y passe plus de temps. Mais cela ne dit pas que conduire près de chez soi est plus dangereux. C'est P(près de chez soi | accident), pas P(accident | près de chez soi)."
+      - type: titre
+        numero: 6
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "Avec le *même tableau*, calculez P(pas de bouchon | pas de pluie) et P(pas de pluie | pas de bouchon)."
+        pause: 15
+        voix_off: "Mêmes cent jours. Calculez la probabilité qu'il n'y ait pas de bouchon sachant qu'il ne pleut pas. Puis la probabilité qu'il ne pleuve pas sachant qu'il n'y a pas de bouchon. Pause."
+      - type: correction
+        etapes:
+          - "P(pas de bouchon | pas de pluie) = *40 / 50 = 0,80*"
+          - "P(pas de pluie | pas de bouchon) = *40 / 60 ≈ 0,67*"
+          - "Deux probabilités *différentes*"
+        reponse: "0,80 d'un côté, 0,67 de l'autre"
+        voix_off: "Cinquante jours sans pluie, dont quarante sans bouchon : quarante sur cinquante, zéro virgule quatre-vingt. Soixante jours sans bouchon, dont quarante sans pluie : quarante sur soixante, environ zéro virgule soixante-sept. Deux probabilités différentes, encore une fois."
+        verifier:
+          - {expression: "40 / 50", attendu: 0.8, libelle: "P(pas de bouchon | pas de pluie)"}
+          - {expression: "round(40 / 60, 2)", attendu: 0.67, libelle: "P(pas de pluie | pas de bouchon)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Conditionner, c'est *réduire l'univers* aux cas où B est vrai"
+          - "*P(A | B) = P(A et B) / P(B)*"
+          - "*Inverser* le conditionnement change le résultat"
+        voix_off: "À retenir. Conditionner, c'est réduire l'univers aux seuls cas où l'hypothèse est vraie. La formule : probabilité de A sachant B égale probabilité de A et B divisée par probabilité de B. Et attention : inverser le conditionnement change le résultat, et donne parfois un faux raisonnement spectaculaire."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Conditional probability"
+    legende: |
+      Does knowing it is raining change the probability of a traffic jam? With a cross-table of 100 imaginary days, we meet conditional probability: conditioning means restricting the sample space to the cases where the hypothesis holds. And we learn not to confuse P(A | B) with P(B | A), the mistake behind the prosecutor's fallacy. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, conditional]
+    scenes:
+      - type: accroche
+        texte: "*It's raining*: does the probability of a *jam* change?"
+        voix_off: "In an imaginary city, we watch weather and traffic over one hundred days. Does knowing it is raining change the probability of a jam?"
+      - type: titre
+        numero: 1
+        texte: "The 100 days: a cross-table"
+        voix_off: "Here is the cross-table, in number of days."
+      - type: etapes
+        texte: "The 4 cells of our *100 imaginary days*"
+        etapes:
+          - "Rain *and* jam: *30 days*"
+          - "Rain *without* jam: *20 days*"
+          - "No rain *but* jam: *10 days*"
+          - "No rain *and* no jam: *40 days*"
+          - "Total: *100 days*"
+        voix_off: "Thirty days with rain and jam. Twenty with rain and no jam. Ten with no rain but a jam. Forty with neither. Total: one hundred days."
+      - type: titre
+        numero: 2
+        texte: "The starting probabilities"
+        voix_off: "Start with the 'raw' probabilities."
+      - type: etapes
+        texte: "The *marginals* of the table"
+        etapes:
+          - "P(rain) = *50 / 100 = 0.50*"
+          - "P(jam) = *40 / 100 = 0.40*"
+          - "P(rain and jam) = *30 / 100 = 0.30*"
+        voix_off: "Out of one hundred days, fifty days of rain — one in two. Forty days with a jam — four in ten. And on thirty days, rain and jam happen together — three in ten."
+        verifier:
+          - {expression: "50 / 100", attendu: 0.5, libelle: "P(rain)"}
+          - {expression: "40 / 100", attendu: 0.4, libelle: "P(jam)"}
+          - {expression: "30 / 100", attendu: 0.3, libelle: "P(rain and jam)"}
+      - type: titre
+        numero: 3
+        texte: "Conditioning: restrict the sample space"
+        voix_off: "Now we learn it is raining today."
+      - type: etapes
+        texte: "*A jam, given that it's raining*"
+        etapes:
+          - "Look *only* at rainy days: *50 days*"
+          - "Among them, *how many* have a jam? *30*"
+          - "P(jam | rain) = *30 / 50 = 0.60*"
+        voix_off: "Once we learn it is raining, we no longer look at all one hundred days: only the fifty rainy days. Among them, thirty have a jam. The conditional probability is thirty over fifty, or zero point sixty. Where the raw probability of a jam was zero point forty. The information 'it is raining' has *raised* the probability."
+        verifier:
+          - {expression: "30 / 50", attendu: 0.6, libelle: "P(jam | rain)"}
+      - type: formule
+        texte: "*P(A | B) = P(A and B) / P(B)*"
+        formule: "P(A | B) = P(A ∩ B) / P(B)"
+        voix_off: "The general formula: P of A given B equals P of A and B divided by P of B. In our example: zero point thirty over zero point fifty, that is zero point sixty. Same result as from the table."
+      - type: titre
+        numero: 4
+        texte: "The other direction: P(rain | jam)"
+        voix_off: "What if we flip the question?"
+      - type: etapes
+        texte: "*Rain, given that there is a jam*"
+        etapes:
+          - "Look *only* at days with a jam: *40 days*"
+          - "Among them, *how many* with rain? *30*"
+          - "P(rain | jam) = *30 / 40 = 0.75*"
+        voix_off: "Same table, flipped question. Look only at the forty days with a jam. Among them, thirty with rain. Conditional probability: thirty over forty, zero point seventy-five."
+        verifier:
+          - {expression: "30 / 40", attendu: 0.75, libelle: "P(rain | jam)"}
+      - type: texte
+        texte: "P(jam | rain) = *0.60*, P(rain | jam) = *0.75*"
+        voix_off: "And here comes a surprise. P of jam given rain is zero point sixty. P of rain given jam is zero point seventy-five. Both are different, because they answer different questions. Flipping the conditioning is not neutral."
+      - type: titre
+        numero: 5
+        texte: "The mistake: the prosecutor's fallacy"
+        voix_off: "This confusion powers a famous bad argument."
+      - type: etapes
+        texte: "The *fallacy* in three steps"
+        etapes:
+          - "P(DNA match | innocent) is *very small*"
+          - "⇒ conclude: P(innocent | DNA match) is also *very small*"
+          - "This is *wrong*: you must also know *how many* people in the population match"
+        voix_off: "At trial: the probability an innocent person has this DNA match is one in a million. Therefore the defendant is guilty. Wrong. One in a million is P of match given innocent, not P of innocent given match. In a city of several million, the chance that several innocent people match is not small at all. You cannot conclude without information about the full suspect pool."
+      - type: texte
+        texte: "'Most accidents happen *close to home*'"
+        voix_off: "Same trap in the phrase: most accidents happen close to home. True, because you spend more time there. But it does not say driving close to home is more dangerous. That is P(close to home | accident), not P(accident | close to home)."
+      - type: titre
+        numero: 6
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "From the *same table*, compute P(no jam | no rain) and P(no rain | no jam)."
+        pause: 15
+        voix_off: "Same one hundred days. Compute the probability of no jam given no rain. Then the probability of no rain given no jam. Pause."
+      - type: correction
+        etapes:
+          - "P(no jam | no rain) = *40 / 50 = 0.80*"
+          - "P(no rain | no jam) = *40 / 60 ≈ 0.67*"
+          - "Two *different* probabilities"
+        reponse: "0.80 one way, 0.67 the other"
+        voix_off: "Fifty days without rain, forty of them without a jam: forty over fifty, zero point eighty. Sixty days without a jam, forty of them without rain: forty over sixty, about zero point sixty-seven. Two different probabilities, once again."
+        verifier:
+          - {expression: "40 / 50", attendu: 0.8, libelle: "P(no jam | no rain)"}
+          - {expression: "round(40 / 60, 2)", attendu: 0.67, libelle: "P(no rain | no jam)"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Conditioning *restricts* the sample space to cases where B holds"
+          - "*P(A | B) = P(A and B) / P(B)*"
+          - "*Flipping* the conditioning changes the result"
+        voix_off: "Key points. Conditioning restricts the sample space to the cases where the hypothesis holds. The formula: probability of A given B equals probability of A and B divided by probability of B. And beware: flipping the conditioning changes the result, and sometimes powers a spectacular fallacy."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
