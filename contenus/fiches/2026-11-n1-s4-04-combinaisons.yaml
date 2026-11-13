@@ -35,7 +35,7 @@ editions:
   fr:
     titre: "Combinaisons : choisir sans ordre"
     legende: |
-      Combien de façons de choisir deux délégués dans une classe de quatre ? Et combien de grilles au loto ? Avec un petit exemple où l'on peut *tout écrire*, on voit pourquoi il faut diviser par la factorielle de k : chaque groupe a été compté plusieurs fois. On en tire la formule du coefficient binomial, et on calcule la probabilité d'une grille gagnante. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+      Combien de façons de choisir deux délégués dans une classe de quatre ? Et combien de grilles au loto ? Avec un petit exemple où l'on peut tout écrire, on voit pourquoi il faut diviser par la factorielle de k : chaque groupe a été compté plusieurs fois. On en tire la formule du coefficient binomial, et on calcule la probabilité d'une grille gagnante. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, probabilites, combinaisons]
     scenes:
       - type: accroche
@@ -154,7 +154,7 @@ editions:
   en:
     titre: "Combinations: choosing without order"
     legende: |
-      How many ways to pick two class reps from four pupils? And how many lottery tickets? With a small example where we can *list them all*, we see why we must divide by k factorial: each group has been counted several times. We derive the binomial coefficient, and compute the probability of a winning ticket. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+      How many ways to pick two class reps from four pupils? And how many lottery tickets? With a small example where we can list them all, we see why we must divide by k factorial: each group has been counted several times. We derive the binomial coefficient, and compute the probability of a winning ticket. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
     hashtags: [statistics, probability, combinations]
     scenes:
       - type: accroche
