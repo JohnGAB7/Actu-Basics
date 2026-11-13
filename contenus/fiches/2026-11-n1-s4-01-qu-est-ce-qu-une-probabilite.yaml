@@ -1,0 +1,258 @@
+# Niveau 1, vague 1, lot 4 : S4.01 « Qu'est-ce qu'une probabilité ? » (EDUCATIONAL, leçon)
+# Ouverture du module S4 (probabilités). Trois lectures d'une probabilité : symétrie, fréquence, confiance.
+# Nombres fictifs : prévisions météo imaginaires, dé équilibré, confiance d'un expert fictif.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s4-01-qu-est-ce-qu-une-probabilite
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.01 · Qu'est-ce qu'une probabilité ?"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer trois lectures d'une probabilité : symétrie, fréquence à long terme, degré de confiance"
+      - "Exprimer une probabilité en fraction, décimal et pourcentage"
+    en:
+      - "Tell apart three readings of a probability: symmetry, long-run frequency, degree of confidence"
+      - "Write a probability as a fraction, a decimal and a percentage"
+  prerequis:
+    fr: ["S1.08 : pourcentages et points"]
+    en: ["S1.08: percentages and points"]
+  hypotheses:
+    fr: "Prévisions météo imaginaires et dé parfaitement équilibré supposé ; aucune statistique réelle citée."
+    en: "Imaginary weather forecasts and an assumed perfectly balanced die; no real statistics cited."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Trois lectures d'une probabilité"
+    legende: |
+      « Soixante-dix pour cent de chances de pluie demain » : qu'est-ce que cela veut dire ? Avec un dé équilibré, une longue série de jours « à soixante-dix pour cent », et une experte imaginaire, on découvre trois lectures d'une même probabilité : la symétrie, la fréquence à long terme, le degré de confiance. Et on les traduit en fractions, décimaux et pourcentages. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, pourcentages]
+    scenes:
+      - type: accroche
+        texte: "« *70 % de chances de pluie demain* » : ça veut dire quoi au juste ?"
+        voix_off: "Le journal télévisé annonce : soixante-dix pour cent de chances de pluie demain. Il ne pleut pas. Est-ce que la prévision était fausse ? Pas forcément."
+      - type: titre
+        numero: 1
+        texte: "Lecture n° 1 : la symétrie"
+        voix_off: "Première lecture, la plus simple : la symétrie."
+      - type: etapes
+        texte: "Quand *tous les cas se valent*"
+        etapes:
+          - "Un dé équilibré : *six faces*, également possibles"
+          - "La probabilité d'un *6* est *1/6*"
+          - "Décimal : *0,167* · Pourcentage : *16,7 %*"
+        voix_off: "Un dé équilibré a six faces. On fait l'hypothèse — forte — que chacune a la même chance de sortir. Alors la probabilité d'obtenir un six vaut un sixième : environ seize virgule sept pour cent. C'est la lecture « symétrie » : elle marche quand on peut recenser un nombre fini de cas tous équivalents."
+        verifier:
+          - {expression: "round(1 / 6, 3)", attendu: 0.167, libelle: "Probabilité d'un 6 avec un dé équilibré"}
+          - {expression: "round(1 / 6 * 100, 1)", attendu: 16.7, libelle: "En pourcentage"}
+      - type: titre
+        numero: 2
+        texte: "Lecture n° 2 : la fréquence à long terme"
+        voix_off: "Deuxième lecture : la fréquence observée sur une longue série."
+      - type: etapes
+        texte: "Quand *on observe beaucoup de fois*"
+        etapes:
+          - "On prend *tous les jours* annoncés à 70 %"
+          - "On compte *combien de fois* il a plu"
+          - "Si la prévision est *bien calibrée*, environ *7 sur 10*"
+        voix_off: "Prenons tous les jours où la prévision a annoncé soixante-dix pour cent. Si l'on compte, sur ces jours seulement, il doit pleuvoir environ sept fois sur dix. Si c'est le cas, la prévision est bien calibrée. Pour un jour isolé, « soixante-dix pour cent » ne veut pas dire que l'ordinateur est à moitié certain : il veut dire que, à long terme, sept annonces identiques sur dix sont suivies de pluie."
+      - type: courbe
+        texte: "La fréquence *se stabilise* quand n grandit"
+        courbe:
+          style: ligne
+          points: [[10, 0.6], [20, 0.75], [50, 0.68], [100, 0.72], [200, 0.69], [500, 0.71], [1000, 0.705], [2000, 0.700], [5000, 0.702]]
+          x_min: 0
+          x_max: 5000
+          y_min: 0
+          y_max: 1
+          axe_x: "Nombre de jours observés"
+          axe_y: "Fréquence de pluie"
+          reperes: [{x: 5000, y: 0.70, label: "70 %"}]
+        note: "Simulation imaginaire : la fréquence se rapproche de 70 % quand on observe plus de jours."
+        voix_off: "Dans une simulation imaginaire, la fréquence oscille au début, et se stabilise autour de soixante-dix pour cent au bout de quelques milliers de jours."
+      - type: titre
+        numero: 3
+        texte: "Lecture n° 3 : le degré de confiance"
+        voix_off: "Troisième lecture : le degré de confiance."
+      - type: etapes
+        texte: "Quand *il n'y a qu'un essai*"
+        etapes:
+          - "Une experte imaginaire : *80 % de confiance* dans son hypothèse"
+          - "C'est son *pari rationnel*"
+          - "Révisable à l'arrivée de *nouvelles données*"
+        voix_off: "Prenons une experte imaginaire, qui dit : je suis à quatre-vingts pour cent sûre que mon hypothèse est juste. Elle ne vient pas de recenser des cas symétriques, et elle n'a pas répété son expérience mille fois. Son quatre-vingts pour cent est un degré de confiance : le pari qu'elle ferait si on lui demandait, révisable quand de nouvelles données arrivent."
+      - type: titre
+        numero: 4
+        texte: "Fraction, décimal, pourcentage"
+        voix_off: "Trois écritures pour la même probabilité."
+      - type: tableau
+        texte: "La *même* probabilité, *trois* écritures"
+        colonnes: ["Fraction", "Décimal", "Pourcentage"]
+        lignes:
+          - ["1/6", "0,167", "16,7 %"]
+          - ["1/4", "0,25", "25 %"]
+          - ["3/10", "0,3", "30 %"]
+          - ["7/10", "0,7", "70 %"]
+        voix_off: "Un sixième, zéro virgule cent soixante-sept, seize virgule sept pour cent. Un quart, zéro virgule vingt-cinq, vingt-cinq pour cent. Trois dixièmes, zéro virgule trois, trente pour cent. Sept dixièmes, zéro virgule sept, soixante-dix pour cent. Toujours : décimal fois cent égale pourcentage. Et le décimal reste entre zéro et un."
+        verifier:
+          - {expression: "round(1 / 4, 3)", attendu: 0.25, libelle: "1/4 en décimal"}
+          - {expression: "round(7 / 10 * 100, 1)", attendu: 70.0, libelle: "7/10 en pourcentage"}
+      - type: titre
+        numero: 5
+        texte: "Erreur classique"
+        voix_off: "Une erreur classique."
+      - type: etapes
+        texte: "La prévision à 70 % n'est *pas fausse* s'il ne pleut pas"
+        etapes:
+          - "70 %, c'est *70 fois sur 100* à long terme"
+          - "Un *jour sec* ne la contredit pas"
+          - "Elle est contredite si, sur *tous* les jours à 70 %, il pleut *30 %* du temps"
+        voix_off: "Le journal télévisé annonce soixante-dix pour cent de pluie. Il ne pleut pas. Est-ce que la prévision était fausse ? Non : trente pour cent des jours à soixante-dix pour cent sont des jours secs, par définition. La prévision serait fausse si, sur tous les jours à soixante-dix pour cent, il pleuvait seulement trente pour cent du temps : c'est à long terme qu'on juge la calibration."
+      - type: titre
+        numero: 6
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "Pour chacune des *quatre phrases*, dites *quelle lecture* : symétrie, fréquence ou confiance."
+        pause: 10
+        voix_off: "Quatre phrases. Pour chacune, dites quelle lecture de la probabilité est à l'œuvre : symétrie, fréquence, ou confiance. Phrase un : « la probabilité d'un trois avec un dé équilibré est un sur six ». Phrase deux : « sur mille lancers, pile est sorti environ 497 fois ». Phrase trois : « je suis à soixante pour cent sûr que la réunion aura lieu ». Phrase quatre : « sur tous les tests, un tirage au sort donne gagnant une fois sur vingt ». Pause."
+      - type: correction
+        etapes:
+          - "Phrase 1 : *symétrie* (faces équivalentes)"
+          - "Phrase 2 : *fréquence* (long série d'essais)"
+          - "Phrase 3 : *confiance* (pari rationnel sur un événement unique)"
+          - "Phrase 4 : *fréquence* ou *symétrie*, selon la lecture"
+        reponse: "Symétrie · fréquence · confiance · fréquence (ou symétrie)"
+        voix_off: "Phrase un, symétrie : les six faces sont toutes équivalentes. Phrase deux, fréquence : on a observé une longue série. Phrase trois, confiance : un événement unique, un pari rationnel. Phrase quatre, fréquence sur l'ensemble des tirages, ou symétrie si l'on suppose que chaque résultat est également possible : les deux lectures coïncident quand le tirage est équitable."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Une probabilité, *trois lectures* : symétrie, fréquence, confiance"
+          - "Trois écritures : *fraction, décimal, pourcentage*"
+          - "La prévision à 70 % n'est pas *fausse* s'il ne pleut pas, elle est *calibrée* à long terme"
+        voix_off: "À retenir. Une probabilité se lit de trois façons : par la symétrie des cas, par la fréquence observée à long terme, ou par le degré de confiance d'un pari rationnel. Elle s'écrit en fraction, en décimal entre zéro et un, ou en pourcentage. Et un soixante-dix pour cent n'est pas démenti par un jour sec."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Three readings of a probability"
+    legende: |
+      "Seventy percent chance of rain tomorrow": what does it really mean? With a balanced die, a long series of "seventy-percent" days, and an imaginary expert, we meet three readings of the same probability: symmetry, long-run frequency, degree of confidence. And we translate them into fractions, decimals and percentages. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, percentages]
+    scenes:
+      - type: accroche
+        texte: "'*70% chance of rain tomorrow*': what does that really mean?"
+        voix_off: "The news says: seventy percent chance of rain tomorrow. It does not rain. Was the forecast wrong? Not necessarily."
+      - type: titre
+        numero: 1
+        texte: "Reading no. 1: symmetry"
+        voix_off: "First reading, the simplest: symmetry."
+      - type: etapes
+        texte: "When *all cases are equivalent*"
+        etapes:
+          - "A balanced die: *six faces*, equally possible"
+          - "The probability of a *6* is *1/6*"
+          - "Decimal: *0.167* · Percentage: *16.7%*"
+        voix_off: "A balanced die has six faces. We make the assumption — a strong one — that each has the same chance of coming up. Then the probability of a six is one sixth: about sixteen point seven percent. This is the symmetry reading: it works when you can list a finite number of equivalent cases."
+        verifier:
+          - {expression: "round(1 / 6, 3)", attendu: 0.167, libelle: "Probability of a 6 on a balanced die"}
+          - {expression: "round(1 / 6 * 100, 1)", attendu: 16.7, libelle: "As a percentage"}
+      - type: titre
+        numero: 2
+        texte: "Reading no. 2: long-run frequency"
+        voix_off: "Second reading: the frequency observed over a long series."
+      - type: etapes
+        texte: "When *we observe many times*"
+        etapes:
+          - "Take *every day* forecast at 70%"
+          - "Count *how often* it rained"
+          - "If the forecast is *well calibrated*, about *7 in 10*"
+        voix_off: "Take all the days when the forecast announced seventy percent. If you count, on those days only, it should rain about seven times out of ten. If it does, the forecast is well calibrated. For one isolated day, 'seventy percent' doesn't mean the computer is half sure: it means that, in the long run, seven identical announcements out of ten are followed by rain."
+      - type: courbe
+        texte: "The frequency *stabilises* as n grows"
+        courbe:
+          style: ligne
+          points: [[10, 0.6], [20, 0.75], [50, 0.68], [100, 0.72], [200, 0.69], [500, 0.71], [1000, 0.705], [2000, 0.700], [5000, 0.702]]
+          x_min: 0
+          x_max: 5000
+          y_min: 0
+          y_max: 1
+          axe_x: "Number of days observed"
+          axe_y: "Rain frequency"
+          reperes: [{x: 5000, y: 0.70, label: "70%"}]
+        note: "Imaginary simulation: the frequency gets close to 70% as more days are observed."
+        voix_off: "In an imaginary simulation, the frequency wobbles at first, and settles around seventy percent after a few thousand days."
+      - type: titre
+        numero: 3
+        texte: "Reading no. 3: degree of confidence"
+        voix_off: "Third reading: degree of confidence."
+      - type: etapes
+        texte: "When *there is only one try*"
+        etapes:
+          - "An imaginary expert: *80% confident* in her hypothesis"
+          - "It is her *rational bet*"
+          - "Revisable when *new data* arrive"
+        voix_off: "An imaginary expert says: I am eighty percent sure my hypothesis is right. She has not counted symmetric cases, and she has not repeated her experiment a thousand times. Her eighty percent is a degree of confidence: the bet she would make if asked, revisable when new data arrive."
+      - type: titre
+        numero: 4
+        texte: "Fraction, decimal, percentage"
+        voix_off: "Three ways to write the same probability."
+      - type: tableau
+        texte: "The *same* probability, *three* writings"
+        colonnes: ["Fraction", "Decimal", "Percentage"]
+        lignes:
+          - ["1/6", "0.167", "16.7%"]
+          - ["1/4", "0.25", "25%"]
+          - ["3/10", "0.3", "30%"]
+          - ["7/10", "0.7", "70%"]
+        voix_off: "One sixth, zero point one six seven, sixteen point seven percent. One quarter, zero point two five, twenty-five percent. Three tenths, zero point three, thirty percent. Seven tenths, zero point seven, seventy percent. Always: decimal times one hundred equals percentage. And the decimal stays between zero and one."
+        verifier:
+          - {expression: "round(1 / 4, 3)", attendu: 0.25, libelle: "1/4 as decimal"}
+          - {expression: "round(7 / 10 * 100, 1)", attendu: 70.0, libelle: "7/10 as percentage"}
+      - type: titre
+        numero: 5
+        texte: "A classic mistake"
+        voix_off: "A classic mistake."
+      - type: etapes
+        texte: "A 70% forecast is *not wrong* if it does not rain"
+        etapes:
+          - "70% means *70 times in 100* in the long run"
+          - "A *dry day* does not contradict it"
+          - "It is contradicted only if, across *all* 70% days, rain falls *30%* of the time"
+        voix_off: "The news announces seventy percent rain. It does not rain. Was the forecast wrong? No: by definition, thirty percent of seventy-percent days are dry. The forecast would be wrong if, across all seventy-percent days, rain fell only thirty percent of the time: calibration is judged in the long run."
+      - type: titre
+        numero: 6
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "For each of the *four sentences*, say *which reading*: symmetry, frequency, or confidence."
+        pause: 10
+        voix_off: "Four sentences. For each, say which reading is at work: symmetry, frequency, or confidence. One: 'the probability of a three on a balanced die is one in six'. Two: 'out of one thousand tosses, heads came up about 497 times'. Three: 'I am sixty percent sure the meeting will take place'. Four: 'across all draws, a lottery pays out one time in twenty'. Pause."
+      - type: correction
+        etapes:
+          - "Sentence 1: *symmetry* (equivalent faces)"
+          - "Sentence 2: *frequency* (a long series of trials)"
+          - "Sentence 3: *confidence* (rational bet on a one-off)"
+          - "Sentence 4: *frequency* or *symmetry*, depending on the reading"
+        reponse: "Symmetry · frequency · confidence · frequency (or symmetry)"
+        voix_off: "Sentence one, symmetry: the six faces are all equivalent. Sentence two, frequency: a long series has been observed. Sentence three, confidence: a one-off event, a rational bet. Sentence four, frequency across all draws, or symmetry if we assume each outcome is equally likely: the two readings coincide when the draw is fair."
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "A probability, *three readings*: symmetry, frequency, confidence"
+          - "Three writings: *fraction, decimal, percentage*"
+          - "A 70% forecast is not *wrong* on a dry day; it is *calibrated* in the long run"
+        voix_off: "Key points. A probability can be read three ways: through symmetry of cases, through observed frequency in the long run, or as a degree of confidence in a rational bet. It is written as a fraction, a decimal between zero and one, or a percentage. And a seventy-percent announcement is not refuted by a dry day."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
