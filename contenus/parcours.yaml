@@ -1,0 +1,51 @@
+# Déclaration des parcours d'apprentissage ACTU-BASICS.
+#
+# Chaque parcours regroupe des modules dans un ordre pédagogique.
+# Un module (M0, S1…) correspond au préfixe du code des fiches
+# (M0-01, S4-07…). Les fiches sont rattachées automatiquement.
+#
+# Ajouter un parcours ou un module ne demande qu'une entrée ici,
+# puis `python3 tools/build_site.py`.
+
+parcours:
+  - slug: stats-probas
+    ordre: 1
+    titre:
+      fr: "Statistiques & probabilités — Niveau 1"
+      en: "Statistics & probability — Level 1"
+    sous_titre:
+      fr: "Lire un chiffre, construire un indicateur, raisonner sur l'incertain."
+      en: "Read a number, build an indicator, reason under uncertainty."
+    description:
+      fr: "Un parcours d'introduction qui part des rappels de calcul et conduit jusqu'aux probabilités conditionnelles. Chaque module prépare le suivant."
+      en: "An introductory path, from basic arithmetic refreshers up to conditional probability. Each module prepares the next."
+    modules: [M0, S1, S2, S3, S4]
+    statut: en_cours   # en_cours | a_venir | complet
+
+  - slug: actuariat
+    ordre: 2
+    titre:
+      fr: "Sciences actuarielles — Pilier A"
+      en: "Actuarial science — Pillar A"
+    sous_titre:
+      fr: "Comprendre le métier d'actuaire : risque, prime, provisions."
+      en: "Understand the actuary's work: risk, premiums, reserves."
+    description:
+      fr: "La probabilité et la statistique au service de la mesure, de la tarification et de la gestion des risques. Les exemples utilisent l'entreprise fictive « JG's Holding »."
+      en: "Probability and statistics put to work for measurement, pricing and risk management. Examples use the fictional company “JG's Holding”."
+    modules: [A0]        # A1, A2, A3… à ajouter quand les fiches existent
+    statut: en_cours
+
+  - slug: finance
+    ordre: 3
+    titre:
+      fr: "Mathématiques financières"
+      en: "Financial mathematics"
+    sous_titre:
+      fr: "Taux, intérêts, actualisation : la valeur du temps."
+      en: "Rates, interest, discounting: the time value of money."
+    description:
+      fr: "Les outils mathématiques pour comparer des flux dans le temps : intérêts simples et composés, actualisation, taux d'équivalence."
+      en: "The math toolkit for comparing cash flows over time: simple and compound interest, discounting, equivalent rates."
+    modules: []          # à alimenter (MF1, MF2…)
+    statut: a_venir

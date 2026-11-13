@@ -447,9 +447,123 @@ def footer_en(depth: int) -> str:
     )
 
 
+# --- Vidéos : slots YouTube 16:9 et TikTok 9:16 ---------------------------
+
+def _youtube_embed_url(url: str) -> str | None:
+    """https://youtu.be/XYZ -> https://www.youtube.com/embed/XYZ
+       https://www.youtube.com/watch?v=XYZ -> https://www.youtube.com/embed/XYZ
+       Autre forme (/embed/, /shorts/) : retournée telle quelle.
+    """
+    if not url:
+        return None
+    url = str(url).strip()
+    if "youtu.be/" in url:
+        vid = url.split("youtu.be/", 1)[1].split("?", 1)[0].split("&", 1)[0]
+        return f"https://www.youtube.com/embed/{vid}"
+    if "youtube.com/watch" in url and "v=" in url:
+        vid = url.split("v=", 1)[1].split("&", 1)[0]
+        return f"https://www.youtube.com/embed/{vid}"
+    if "/shorts/" in url:
+        vid = url.split("/shorts/", 1)[1].split("?", 1)[0].split("&", 1)[0]
+        return f"https://www.youtube.com/embed/{vid}"
+    if "/embed/" in url:
+        return url
+    return None
+
+
+def build_video_block(data: dict | None, lang: str) -> str:
+    """Rend le bloc Vidéo. Si aucune URL : état « à venir »."""
+    pub = {} if not isinstance(data, dict) else (data.get("publication") or {})
+    yt = (pub.get("youtube") or {}) if isinstance(pub, dict) else {}
+    tt = (pub.get("tiktok") or {}) if isinstance(pub, dict) else {}
+    yt_url = yt.get(lang) if isinstance(yt, dict) else None
+    tt_url = tt.get(lang) if isinstance(tt, dict) else None
+
+    L = {
+        "fr": {
+            "heading": "Vidéos",
+            "yt_h": "YouTube · format long",
+            "tt_h": "TikTok · format court",
+            "soon": "Vidéo à venir",
+            "watch_yt": "Regarder sur YouTube ↗",
+            "watch_tt": "Regarder sur TikTok ↗",
+            "hint": "Les vidéos officielles apparaîtront ici dès leur publication.",
+        },
+        "en": {
+            "heading": "Videos",
+            "yt_h": "YouTube · long form",
+            "tt_h": "TikTok · short form",
+            "soon": "Video coming soon",
+            "watch_yt": "Watch on YouTube ↗",
+            "watch_tt": "Watch on TikTok ↗",
+            "hint": "Official videos will appear here once published.",
+        },
+    }[lang]
+
+    def slot_youtube(url: str | None) -> str:
+        if url:
+            embed = _youtube_embed_url(url) or url
+            player = (
+                f'<div class="video-frame video-frame-16x9">'
+                f'<iframe src="{html.escape(embed)}" '
+                f'title="YouTube" loading="lazy" '
+                f'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '
+                f'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+                f'</div>'
+                f'<a class="text-link" href="{html.escape(url)}" target="_blank" rel="noopener">{L["watch_yt"]}</a>'
+            )
+            return player
+        return (
+            f'<div class="video-frame video-frame-16x9 video-frame-soon">'
+            f'<span class="video-soon">{L["soon"]}</span>'
+            f'</div>'
+        )
+
+    def slot_tiktok(url: str | None) -> str:
+        if url:
+            return (
+                f'<div class="video-frame video-frame-9x16 video-frame-link">'
+                f'<a class="video-link" href="{html.escape(url)}" target="_blank" rel="noopener">'
+                f'<span class="video-link-label">TikTok</span>'
+                f'<span class="video-link-cta">{L["watch_tt"]}</span>'
+                f'</a></div>'
+            )
+        return (
+            f'<div class="video-frame video-frame-9x16 video-frame-soon">'
+            f'<span class="video-soon">{L["soon"]}</span>'
+            f'</div>'
+        )
+
+    return (
+        f'<section class="video-section" aria-label="{html.escape(L["heading"])}">'
+        f'<h2>{html.escape(L["heading"])}</h2>'
+        f'<div class="video-grid">'
+        f'<figure class="video-slot video-slot-yt">'
+        f'<figcaption class="video-caption">{html.escape(L["yt_h"])}</figcaption>'
+        f'{slot_youtube(yt_url)}'
+        f'</figure>'
+        f'<figure class="video-slot video-slot-tt">'
+        f'<figcaption class="video-caption">{html.escape(L["tt_h"])}</figcaption>'
+        f'{slot_tiktok(tt_url)}'
+        f'</figure>'
+        f'</div>'
+        f'<p class="muted"><small>{html.escape(L["hint"])}</small></p>'
+        f'</section>'
+    )
+
+
+def parcours_for_lesson(code: str, parcours_list: list[dict]) -> dict | None:
+    """Trouve le premier parcours contenant le module de cette leçon."""
+    mod = module_of(code)
+    for p in parcours_list:
+        if mod in (p.get("modules") or []):
+            return p
+    return None
+
+
 # --- Page leçon ------------------------------------------------------------
 
-def render_lesson_page(data: dict, lang: str) -> str:
+def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None = None) -> str:
     code = module_code(data["id"])
     ed = data.get("editions", {}).get(lang, {})
     titre = ed.get("titre", code)
@@ -530,9 +644,32 @@ def render_lesson_page(data: dict, lang: str) -> str:
         f'</div></section>'
     )
 
+    video_block = build_video_block(data, lang)
+
+    # Parcours auquel appartient cette leçon (facultatif).
+    p = parcours_for_lesson(code, parcours_list or [])
+    parcours_aside = ""
+    if p:
+        p_slug = p.get("slug", "")
+        p_titre = (p.get("titre") or {}).get(lang) or p.get("slug") or ""
+        if lang == "fr":
+            path_href = f"../../parcours/{p_slug}/"
+            path_label = "Parcours"
+            see_path = "Voir le parcours →"
+        else:
+            path_href = f"../../../en/paths/{p_slug}/"
+            path_label = "Learning path"
+            see_path = "See learning path →"
+        parcours_aside = (
+            f'<p><strong>{path_label}</strong><br>'
+            f'<a class="text-link" href="{path_href}">{html.escape(p_titre)}</a></p>'
+            f'<a class="button button-outline" href="{path_href}">{see_path}</a>'
+        )
+
     lesson_section = (
         f'<section class="section"><div class="container lesson-layout">'
         f'<article class="lesson-content">'
+        f'{video_block}'
         f'{obj_block}{pre_block}'
         f'{scene_html}'
         f'{hyp_block}'
@@ -541,6 +678,7 @@ def render_lesson_page(data: dict, lang: str) -> str:
         f'<span class="tag">{L["tag_available"]}</span>'
         f'<h3>{L["at_a_glance"]}</h3>'
         f'<p><strong>Code</strong><br>{code}</p>'
+        f'{parcours_aside}'
         f'<a class="button button-dark" href="{L["lib_href"]}">{L["lib_back"]}</a>'
         f'<a class="button button-outline" href="{L["other_lang_href"]}">{L["other_lang_label"]}</a>'
         f'</aside></div></section>'
@@ -741,7 +879,8 @@ def build_parcours_overview(lessons: list[dict], lang: str) -> str:
 
 
 def render_library_page(lessons: list[dict], lang: str) -> str:
-    cards_html = build_library_cards(lessons, lang)
+    overview_html = build_parcours_overview(lessons, lang)
+    sections_html = build_modules_sections(lessons, lang)
     cats_in_use = sorted({L["category"] for L in lessons})
     cat_labels = CATEGORY_LABELS_FR if lang == "fr" else CATEGORY_LABELS_EN
     label_all = "Tous les domaines" if lang == "fr" else "All subjects"
@@ -823,14 +962,306 @@ def render_library_page(lessons: list[dict], lang: str) -> str:
         f'<h1>{hero_title}</h1><p>{hero_body}</p>'
         f'</div></section>'
         f'<section class="section"><div class="container">'
+        f'{overview_html}'
         f'<div class="catalog-tools">'
         f'<label class="skip-link" for="search-{lang}">{search_label}</label>'
         f'<input id="search-{lang}" class="search-input" type="search" placeholder="{html.escape(search_placeholder)}" data-search>'
         f'<label class="skip-link" for="filter-{lang}">{filter_label}</label>'
         f'<select id="filter-{lang}" class="filter-select" data-filter>{"".join(options)}</select>'
         f'</div>'
-        f'<div class="grid-3">{cards_html}</div>'
+        f'{sections_html}'
         f'<p class="empty-state" data-empty role="status" aria-live="polite" hidden>{empty_msg}</p>'
+        f'</div></section>'
+        f'</main>{footer}</body></html>'
+    )
+
+
+# --- Pages parcours --------------------------------------------------------
+
+def _parcours_statut_label(statut: str, lang: str) -> str:
+    key = (statut or "en_cours").lower()
+    labels_fr = {
+        "en_cours": "En cours",
+        "a_venir":  "À venir",
+        "complet":  "Complet",
+    }
+    labels_en = {
+        "en_cours": "In progress",
+        "a_venir":  "Coming soon",
+        "complet":  "Complete",
+    }
+    return (labels_fr if lang == "fr" else labels_en).get(key, key)
+
+
+def render_parcours_index(parcours_list: list[dict], lessons: list[dict], lang: str) -> str:
+    # Compte de leçons disponibles par parcours.
+    by_mod: dict[str, list[dict]] = {}
+    for L in lessons:
+        by_mod.setdefault(L["module"], []).append(L)
+
+    L = {
+        "fr": {
+            "head_title": "Parcours d'apprentissage · ACTU-BASICS",
+            "head_desc": "Parcours progressifs ACTU-BASICS en statistiques, probabilités et actuariat.",
+            "canon": "https://johngab7.github.io/le-monde-en-chiffres/parcours/",
+            "alt": "https://johngab7.github.io/le-monde-en-chiffres/en/paths/",
+            "og_locale": "fr_BE",
+            "og_title": "Parcours d'apprentissage · ACTU-BASICS",
+            "og_desc": "Trois parcours pour progresser étape par étape.",
+            "css": "../assets/css/main.css",
+            "breadcrumb": "ACTU-BASICS / Parcours",
+            "eyebrow": "Apprendre avec un fil conducteur",
+            "h1": "Les parcours.",
+            "intro": "Trois chemins pour organiser tes apprentissages et relier les notions, étape par étape.",
+            "skip": "Aller au contenu",
+            "lessons_label": "leçons disponibles",
+            "lesson_label_1": "leçon disponible",
+            "open": "Ouvrir le parcours →",
+            "current": "parcours",
+        },
+        "en": {
+            "head_title": "Learning paths · ACTU-BASICS",
+            "head_desc": "ACTU-BASICS progressive paths in statistics, probability and actuarial science.",
+            "canon": "https://johngab7.github.io/le-monde-en-chiffres/en/paths/",
+            "alt": "https://johngab7.github.io/le-monde-en-chiffres/parcours/",
+            "og_locale": "en_US",
+            "og_title": "Learning paths · ACTU-BASICS",
+            "og_desc": "Three paths to progress step by step.",
+            "css": "../../assets/css/main.css",
+            "breadcrumb": "ACTU-BASICS / Learning paths",
+            "eyebrow": "A guided way to learn",
+            "h1": "Learning paths.",
+            "intro": "Three paths to organize your learning and connect ideas, one step at a time.",
+            "skip": "Skip to content",
+            "lessons_label": "lessons available",
+            "lesson_label_1": "lesson available",
+            "open": "Open path →",
+            "current": "paths",
+        },
+    }[lang]
+
+    head = (
+        f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
+        f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<meta name="description" content="{html.escape(L["head_desc"])}">'
+        f'<meta name="theme-color" content="#102638">'
+        f'<link rel="canonical" href="{L["canon"]}">'
+        f'<link rel="alternate" hreflang="fr" href="https://johngab7.github.io/le-monde-en-chiffres/parcours/">'
+        f'<link rel="alternate" hreflang="en" href="https://johngab7.github.io/le-monde-en-chiffres/en/paths/">'
+        f'<link rel="alternate" hreflang="x-default" href="https://johngab7.github.io/le-monde-en-chiffres/parcours/">'
+        f'<meta property="og:type" content="website">'
+        f'<meta property="og:locale" content="{L["og_locale"]}">'
+        f'<meta property="og:title" content="{html.escape(L["og_title"])}">'
+        f'<meta property="og:description" content="{html.escape(L["og_desc"])}">'
+        f'<meta property="og:url" content="{L["canon"]}">'
+        f'<meta name="twitter:card" content="summary">'
+        f'<title>{html.escape(L["head_title"])}</title>'
+        f'<link rel="stylesheet" href="{L["css"]}"></head>'
+    )
+    header = (header_fr if lang == "fr" else header_en)(depth=1 if lang == "fr" else 2, current=L["current"])
+    footer = (footer_fr if lang == "fr" else footer_en)(depth=1 if lang == "fr" else 2)
+
+    cards = []
+    for i, p in enumerate(parcours_list, start=1):
+        slug = p.get("slug", "")
+        titre = (p.get("titre") or {}).get(lang, slug)
+        sous_titre = (p.get("sous_titre") or {}).get(lang, "")
+        modules = p.get("modules") or []
+        n_lessons = sum(len(by_mod.get(m, [])) for m in modules)
+        statut = _parcours_statut_label(p.get("statut", "en_cours"), lang)
+
+        if lang == "fr":
+            lessons_txt = (
+                f"{n_lessons} {L['lesson_label_1']}" if n_lessons == 1
+                else f"{n_lessons} {L['lessons_label']}"
+            )
+            href = f"../parcours/{slug}/"
+        else:
+            lessons_txt = (
+                f"{n_lessons} {L['lesson_label_1']}" if n_lessons == 1
+                else f"{n_lessons} {L['lessons_label']}"
+            )
+            href = f"../paths/{slug}/"
+
+        mods_chips = "".join(
+            f'<span class="mod-chip">{m}</span>' for m in modules
+        ) or '<span class="mod-chip mod-chip-empty">—</span>'
+
+        cards.append(
+            f'<article class="card path-card parcours-card" data-number="{i:02d}">'
+            f'<div class="card-top"><span class="icon-tile">{i:02d}</span>'
+            f'<span class="tag">{html.escape(statut)}</span></div>'
+            f'<h3>{md_inline(titre)}</h3>'
+            f'<p>{md_inline(sous_titre)}</p>'
+            f'<div class="mod-chips">{mods_chips}</div>'
+            f'<div class="card-bottom">'
+            f'<span class="muted"><small>{lessons_txt}</small></span>'
+            f'<a class="text-link" href="{href}">{L["open"]}</a>'
+            f'</div></article>'
+        )
+
+    return (
+        f'{head}<body>'
+        f'<a class="skip-link" href="#contenu">{L["skip"]}</a>'
+        f'{header}'
+        f'<main id="contenu">'
+        f'<section class="page-hero"><div class="container">'
+        f'<div class="breadcrumb">{L["breadcrumb"]}</div>'
+        f'<span class="eyebrow">{L["eyebrow"]}</span>'
+        f'<h1>{L["h1"]}</h1><p>{L["intro"]}</p>'
+        f'</div></section>'
+        f'<section class="section"><div class="container">'
+        f'<div class="grid-3">{"".join(cards)}</div>'
+        f'</div></section>'
+        f'</main>{footer}</body></html>'
+    )
+
+
+def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
+    """Page d'un parcours : liste ordonnée des modules et leçons."""
+    slug = p.get("slug", "")
+    titre = (p.get("titre") or {}).get(lang, slug)
+    sous_titre = (p.get("sous_titre") or {}).get(lang, "")
+    description = (p.get("description") or {}).get(lang, "")
+    modules = p.get("modules") or []
+    statut = _parcours_statut_label(p.get("statut", "en_cours"), lang)
+
+    by_mod: dict[str, list[dict]] = {}
+    for L in lessons:
+        by_mod.setdefault(L["module"], []).append(L)
+
+    meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
+
+    L = {
+        "fr": {
+            "head_title": f"{titre} · Parcours · ACTU-BASICS",
+            "canon": f"https://johngab7.github.io/le-monde-en-chiffres/parcours/{slug}/",
+            "alt":   f"https://johngab7.github.io/le-monde-en-chiffres/en/paths/{slug}/",
+            "og_locale": "fr_BE",
+            "og_title": f"{titre} · Parcours · ACTU-BASICS",
+            "css": "../../assets/css/main.css",
+            "breadcrumb": f'<a href="../../index.html">ACTU-BASICS</a> / <a href="../">Parcours</a> / {slug}',
+            "skip": "Aller au contenu",
+            "lesson_word": "leçon",
+            "lessons_word": "leçons",
+            "modules_title": "Les modules de ce parcours",
+            "open": "Consulter →",
+            "soon": "À venir",
+            "empty_mod": "Les leçons de ce module seront ajoutées progressivement.",
+            "back": "← Tous les parcours",
+            "current": "parcours",
+            "home_href": "../../",
+        },
+        "en": {
+            "head_title": f"{titre} · Learning path · ACTU-BASICS",
+            "canon": f"https://johngab7.github.io/le-monde-en-chiffres/en/paths/{slug}/",
+            "alt":   f"https://johngab7.github.io/le-monde-en-chiffres/parcours/{slug}/",
+            "og_locale": "en_US",
+            "og_title": f"{titre} · Learning path · ACTU-BASICS",
+            "css": "../../../assets/css/main.css",
+            "breadcrumb": f'<a href="../../../en/">ACTU-BASICS</a> / <a href="../">Learning paths</a> / {slug}',
+            "skip": "Skip to content",
+            "lesson_word": "lesson",
+            "lessons_word": "lessons",
+            "modules_title": "Modules in this path",
+            "open": "Open →",
+            "soon": "Coming soon",
+            "empty_mod": "Lessons for this module will be added progressively.",
+            "back": "← All learning paths",
+            "current": "paths",
+            "home_href": "../../../",
+        },
+    }[lang]
+
+    head = (
+        f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
+        f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<meta name="description" content="{html.escape(description[:300])}">'
+        f'<meta name="theme-color" content="#102638">'
+        f'<link rel="canonical" href="{L["canon"]}">'
+        f'<link rel="alternate" hreflang="fr" href="https://johngab7.github.io/le-monde-en-chiffres/parcours/{slug}/">'
+        f'<link rel="alternate" hreflang="en" href="https://johngab7.github.io/le-monde-en-chiffres/en/paths/{slug}/">'
+        f'<link rel="alternate" hreflang="x-default" href="https://johngab7.github.io/le-monde-en-chiffres/parcours/{slug}/">'
+        f'<meta property="og:type" content="website">'
+        f'<meta property="og:locale" content="{L["og_locale"]}">'
+        f'<meta property="og:title" content="{html.escape(L["og_title"])}">'
+        f'<meta property="og:description" content="{html.escape(description[:300])}">'
+        f'<meta property="og:url" content="{L["canon"]}">'
+        f'<meta name="twitter:card" content="summary">'
+        f'<title>{html.escape(L["head_title"])}</title>'
+        f'<link rel="stylesheet" href="{L["css"]}"></head>'
+    )
+    depth_detail = 2 if lang == "fr" else 3
+    header = (header_fr if lang == "fr" else header_en)(depth=depth_detail, current=L["current"])
+    footer = (footer_fr if lang == "fr" else footer_en)(depth=depth_detail)
+
+    # Barre de progression modulaire.
+    steps = []
+    for i, mod in enumerate(modules, start=1):
+        m = meta.get(mod, {"titre": mod})
+        n = len(by_mod.get(mod, []))
+        count_label = (
+            f"{n} {L['lesson_word'] if n == 1 else L['lessons_word']}"
+            if n > 0 else L["soon"]
+        )
+        state_class = "parcours-step-ready" if n > 0 else "parcours-step-pending"
+        steps.append(
+            f'<a class="parcours-step {state_class}" href="#mod-{mod}">'
+            f'<span class="parcours-index">{i:02d}</span>'
+            f'<span class="parcours-body">'
+            f'<span class="parcours-code">{mod}</span>'
+            f'<span class="parcours-title">{html.escape(m["titre"])}</span>'
+            f'<span class="parcours-count">{count_label}</span>'
+            f'</span>'
+            f'</a>'
+        )
+    progress_html = (
+        f'<section class="parcours-overview parcours-progress" aria-label="Progression">'
+        f'<div class="parcours-steps">{"".join(steps)}</div>'
+        f'</section>'
+    )
+
+    # Un bloc par module.
+    sections = []
+    for mod in modules:
+        m = meta.get(mod, {"titre": mod, "sous_titre": "", "category": "statistiques"})
+        bucket = sorted(by_mod.get(mod, []), key=lambda x: x["code"])
+        if bucket:
+            cards_html = "".join(build_lesson_card(x, lang) for x in bucket)
+            inner = f'<div class="grid-3 module-grid">{cards_html}</div>'
+        else:
+            inner = f'<p class="empty-state">{L["empty_mod"]}</p>'
+        sections.append(
+            f'<section class="module-section" id="mod-{mod}">'
+            f'<div class="module-head">'
+            f'<div class="module-head-text">'
+            f'<span class="eyebrow">Module {mod}</span>'
+            f'<h2>{md_inline(m["titre"])}</h2>'
+            f'<p>{md_inline(m["sous_titre"])}</p>'
+            f'</div>'
+            f'<span class="module-count">{len(bucket)} {L["lesson_word"] if len(bucket) == 1 else L["lessons_word"]}</span>'
+            f'</div>'
+            f'{inner}'
+            f'</section>'
+        )
+
+    return (
+        f'{head}<body>'
+        f'<a class="skip-link" href="#contenu">{L["skip"]}</a>'
+        f'{header}'
+        f'<main id="contenu">'
+        f'<section class="page-hero"><div class="container">'
+        f'<div class="breadcrumb">{L["breadcrumb"]}</div>'
+        f'<span class="eyebrow">{html.escape(statut)}</span>'
+        f'<h1>{md_inline(titre)}</h1>'
+        f'{f"<p>{md_inline(sous_titre)}</p>" if sous_titre else ""}'
+        f'{f"<p>{md_inline(description)}</p>" if description else ""}'
+        f'</div></section>'
+        f'<section class="section"><div class="container">'
+        f'<h2>{html.escape(L["modules_title"])}</h2>'
+        f'{progress_html}'
+        f'{"".join(sections)}'
+        f'<p style="margin-top:32px"><a class="text-link" href="../">{L["back"]}</a></p>'
         f'</div></section>'
         f'</main>{footer}</body></html>'
     )
@@ -853,6 +1284,7 @@ def load_fiches() -> list[dict]:
         fiches.append({
             "data": data,
             "code": code,
+            "module": module_of(code),
             "category": category_for(code),
             "ed_fr": data["editions"]["fr"],
             "ed_en": data["editions"]["en"],
@@ -860,10 +1292,21 @@ def load_fiches() -> list[dict]:
     return fiches
 
 
+def load_parcours() -> list[dict]:
+    fp = ROOT / "contenus" / "parcours.yaml"
+    if not fp.exists():
+        return []
+    with fp.open(encoding="utf-8") as f:
+        raw = yaml.safe_load(f) or {}
+    parcours = raw.get("parcours", []) or []
+    return sorted(parcours, key=lambda p: p.get("ordre", 999))
+
+
 def main() -> int:
     fiches = load_fiches()
     if not fiches:
         sys.exit("Aucune fiche n1-* valide trouvée dans contenus/fiches/")
+    parcours_list = load_parcours()
     pages = 0
     for L in fiches:
         code = L["code"]
@@ -871,15 +1314,21 @@ def main() -> int:
         en_dir = DOCS / "en" / "lessons" / code
         fr_dir.mkdir(parents=True, exist_ok=True)
         en_dir.mkdir(parents=True, exist_ok=True)
-        (fr_dir / "index.html").write_text(render_lesson_page(L["data"], "fr"), encoding="utf-8")
-        (en_dir / "index.html").write_text(render_lesson_page(L["data"], "en"), encoding="utf-8")
+        (fr_dir / "index.html").write_text(
+            render_lesson_page(L["data"], "fr", parcours_list), encoding="utf-8"
+        )
+        (en_dir / "index.html").write_text(
+            render_lesson_page(L["data"], "en", parcours_list), encoding="utf-8"
+        )
         pages += 2
 
     # A0.01 reste manuelle ; on l'ajoute en entrée de bibliothèque uniquement.
     a0_entry = {
         "code": "A0-01",
+        "module": "A0",
         "category": "actuariat",
         "manual": True,
+        "data": None,  # pas de YAML pour cette fiche manuelle
         "ed_fr": {
             "titre": "Actuaires : le métier et un premier calcul",
             "legende": "Le rôle de l'actuaire, le contrat d'assurance et le calcul d'une prime pure.",
@@ -900,9 +1349,38 @@ def main() -> int:
         render_library_page(lessons_for_lib, "en"), encoding="utf-8"
     )
 
+    # Pages parcours : index + une page par parcours.
+    parcours_pages = 0
+    if parcours_list:
+        (DOCS / "parcours").mkdir(parents=True, exist_ok=True)
+        (DOCS / "en" / "paths").mkdir(parents=True, exist_ok=True)
+        (DOCS / "parcours" / "index.html").write_text(
+            render_parcours_index(parcours_list, lessons_for_lib, "fr"), encoding="utf-8"
+        )
+        (DOCS / "en" / "paths" / "index.html").write_text(
+            render_parcours_index(parcours_list, lessons_for_lib, "en"), encoding="utf-8"
+        )
+        parcours_pages += 2
+        for p in parcours_list:
+            slug = p.get("slug", "")
+            if not slug:
+                continue
+            fr_dir = DOCS / "parcours" / slug
+            en_dir = DOCS / "en" / "paths" / slug
+            fr_dir.mkdir(parents=True, exist_ok=True)
+            en_dir.mkdir(parents=True, exist_ok=True)
+            (fr_dir / "index.html").write_text(
+                render_parcours_detail(p, lessons_for_lib, "fr"), encoding="utf-8"
+            )
+            (en_dir / "index.html").write_text(
+                render_parcours_detail(p, lessons_for_lib, "en"), encoding="utf-8"
+            )
+            parcours_pages += 2
+
     print(f"Fiches valides   : {len(fiches)}")
     print(f"Pages écrites    : {pages} (leçons FR + EN)")
     print(f"Bibliothèques    : FR + EN mises à jour ({len(lessons_for_lib)} leçons affichées)")
+    print(f"Pages parcours   : {parcours_pages} (index + détails, FR + EN)")
     return 0
 
 
