@@ -1,0 +1,240 @@
+# Niveau 1, vague 1, lot 4 : S4.06 « Le paradoxe des anniversaires » (EDUCATIONAL, paradoxe)
+# Variante leçon du paradoxe déjà produit en vidéo de lancement (sortie séparée, décision JG).
+# Hypothèses classiques : 365 jours équiprobables, pas d'années bissextiles, pas de jumeaux.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s4-06-paradoxe-des-anniversaires
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.06 · Le paradoxe des anniversaires"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Compter les paires d'un groupe par la formule n(n−1)/2"
+      - "Calculer la probabilité que tous les anniversaires soient différents, puis passer par le complément"
+      - "Expliquer pourquoi l'intuition se trompe"
+    en:
+      - "Count the pairs in a group with n(n-1)/2"
+      - "Compute the probability that all birthdays differ, then use the complement"
+      - "Explain why intuition fails"
+  prerequis:
+    fr: ["S4.04 : combinaisons", "S4.05 : complément et union"]
+    en: ["S4.04: combinations", "S4.05: complement and union"]
+  hypotheses:
+    fr: "365 jours équiprobables ; pas d'années bissextiles ni de jumeaux. Hypothèses classiques."
+    en: "365 equally likely days; no leap years, no twins. Classic assumptions."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Le paradoxe des anniversaires"
+    legende: |
+      Dans un groupe de 23 personnes, quelle est la probabilité que deux partagent le même anniversaire ? L'intuition dit « vraiment très peu », mais la bonne réponse dépasse 50 %. L'astuce : on ne compte pas les 22 paires qui nous concernent personnellement, mais les 253 paires du groupe entier. Et on passe par le complément « tous différents ». Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, paradoxe]
+    scenes:
+      - type: accroche
+        texte: "23 personnes dans une pièce : *2 partagent* un anniversaire ?"
+        voix_off: "Vingt-trois personnes dans une pièce. Quelle est la probabilité que deux partagent la même date de naissance, jour et mois ? Beaucoup répondent « quelques pour cent ». La bonne réponse, dans le modèle classique, dépasse cinquante pour cent."
+      - type: titre
+        numero: 1
+        texte: "Pourquoi l'intuition se trompe"
+        voix_off: "D'abord, comprendre où va de travers l'intuition."
+      - type: etapes
+        texte: "Ce que *vous* comptez, ce que *le groupe* compte"
+        etapes:
+          - "Vous : *vos 22 paires* avec les autres"
+          - "Le groupe : *toutes les paires* possibles"
+          - "C(23, 2) = *253 paires*"
+        voix_off: "Chacun, instinctivement, pense aux vingt-deux paires qu'il forme avec les autres. Mais la question ne porte pas sur vous : elle porte sur une coïncidence dans tout le groupe. Et le groupe, c'est deux cent cinquante-trois paires, pas vingt-deux."
+        verifier:
+          - {expression: "comb(23, 2)", attendu: 253, libelle: "Paires dans un groupe de 23 : C(23, 2)"}
+      - type: formule
+        texte: "*Nombre de paires = n(n − 1) / 2*"
+        formule: "nb_paires(n) = n × (n - 1) / 2"
+        voix_off: "C'est la formule du nombre de paires dans un groupe de n personnes : n fois n moins un, divisé par deux. Pour vingt-trois : vingt-trois fois vingt-deux sur deux, deux cent cinquante-trois."
+      - type: titre
+        numero: 2
+        texte: "La méthode : passer par le complément"
+        voix_off: "Compter les coïncidences directement serait pénible. On passe par le contraire : *tous différents*."
+      - type: formule
+        texte: "*P(tous différents) = 365/365 × 364/365 × … × 343/365*"
+        formule: "P(tous diff) = prod((365 - k) / 365 for k in range(n))"
+        voix_off: "La première personne prend un anniversaire parmi trois cent soixante-cinq jours : trois cent soixante-cinq sur trois cent soixante-cinq. La deuxième doit tomber sur un jour différent : trois cent soixante-quatre sur trois cent soixante-cinq. La troisième, sur un des trois cent soixante-trois jours restants. Et ainsi de suite jusqu'à la vingt-troisième. On multiplie tous ces rapports."
+      - type: titre
+        numero: 3
+        texte: "Le calcul pour 23 personnes"
+        voix_off: "Appliquons."
+      - type: etapes
+        texte: "Résultat *pour n = 23*"
+        etapes:
+          - "P(tous différents) ≈ *0,493*"
+          - "P(au moins un partage) = *1 − 0,493*"
+          - "≈ *0,507*, soit *50,7 %*"
+        voix_off: "Le produit vaut environ zéro virgule quatre cent quatre-vingt-treize. Son complément, c'est-à-dire la probabilité d'au moins un partage, vaut un moins cela : zéro virgule cinq cent sept. Cinquante virgule sept pour cent. À partir de vingt-trois personnes, c'est déjà plus probable que pas."
+        verifier:
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(23))) * 100, 1)", attendu: 50.7, libelle: "P(au moins un partage) pour n = 23"}
+      - type: titre
+        numero: 4
+        texte: "Que se passe-t-il quand n augmente ?"
+        voix_off: "Et avec plus de personnes ?"
+      - type: etapes
+        texte: "La probabilité monte *très vite*"
+        etapes:
+          - "n = 23 : *50,7 %*"
+          - "n = 30 : *70,6 %*"
+          - "n = 40 : *89,1 %*"
+          - "n = 41 : *90,3 %*"
+          - "n = 50 : *97,0 %*"
+        voix_off: "À trente personnes, soixante-dix pour cent. À quarante, presque neuf chances sur dix. À cinquante, quatre-vingt-dix-sept pour cent. Quand n grandit, le nombre de paires croît en n au carré : on finit par en avoir tellement qu'une coïncidence devient presque certaine."
+        verifier:
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(30))) * 100, 1)", attendu: 70.6, libelle: "P pour n = 30"}
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(41))) * 100, 1)", attendu: 90.3, libelle: "P pour n = 41"}
+      - type: titre
+        numero: 5
+        texte: "Deux erreurs à éviter"
+        voix_off: "Deux pièges."
+      - type: etapes
+        texte: "Les deux erreurs classiques"
+        etapes:
+          - "Croire qu'il faut calculer *23 / 365* : c'est la probabilité qu'une personne précise partage *votre* anniversaire"
+          - "Croire que *les paires sont indépendantes* : elles ne le sont pas"
+        voix_off: "Première erreur : calculer vingt-trois divisé par trois cent soixante-cinq. C'est la probabilité qu'une personne particulière partage précisément votre anniversaire, pas celle d'une coïncidence quelque part dans le groupe. Seconde erreur : croire que les deux cent cinquante-trois paires sont indépendantes. Elles ne le sont pas : si A et B ont la même date, et A et C aussi, alors B et C l'ont aussi."
+      - type: titre
+        numero: 6
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "À partir de *combien de personnes* la probabilité d'un partage dépasse-t-elle *90 %* ?"
+        pause: 12
+        voix_off: "À partir de combien de personnes la probabilité d'au moins un anniversaire partagé dépasse-t-elle quatre-vingt-dix pour cent ? Pause."
+      - type: correction
+        etapes:
+          - "On cherche le plus petit n tel que *1 − P(tous différents) ≥ 0,9*"
+          - "n = 40 : *89,1 %* (pas encore)"
+          - "n = 41 : *90,3 %* — ça y est"
+          - "Réponse : *41 personnes*"
+        reponse: "41 personnes"
+        voix_off: "À quarante personnes, on est à quatre-vingt-neuf pour cent : pas encore. À quarante et une, quatre-vingt-dix virgule trois pour cent : c'est bon. La réponse est quarante et une personnes."
+        verifier:
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(40))) * 100, 1)", attendu: 89.1, libelle: "P pour n = 40"}
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(41))) * 100, 1)", attendu: 90.3, libelle: "P pour n = 41"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Les paires d'un groupe de n : *n(n − 1) / 2*"
+          - "Passer par le complément *tous différents*"
+          - "L'intuition ne compte pas *toutes les paires*"
+        voix_off: "À retenir. Dans un groupe de n personnes, il y a n fois n moins un divisé par deux paires, et non n paires. Pour la probabilité d'au moins un anniversaire partagé, on passe par « tous différents » et on prend le complément. Et l'intuition se trompe parce qu'on ne compte que les paires qui nous concernent."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "The birthday problem"
+    legende: |
+      In a group of 23 people, what is the probability that two share a birthday? Intuition says "very small", but the right answer is over 50%. The trick: you do not count the 22 pairs that involve you, but the 253 pairs of the whole group. And you go through the complement, "all different". Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, paradox]
+    scenes:
+      - type: accroche
+        texte: "23 people in a room: do *two share* a birthday?"
+        voix_off: "Twenty-three people in a room. What is the probability that two share the same birthday, day and month? Many answer 'a few percent'. The right answer, in the classic model, is over fifty percent."
+      - type: titre
+        numero: 1
+        texte: "Why intuition fails"
+        voix_off: "First, understand where intuition goes wrong."
+      - type: etapes
+        texte: "What *you* count, what *the group* counts"
+        etapes:
+          - "You: *your 22 pairs* with the others"
+          - "The group: *all possible pairs*"
+          - "C(23, 2) = *253 pairs*"
+        voix_off: "Each person instinctively thinks of the twenty-two pairs they form with the others. But the question is not about you: it is about a coincidence anywhere in the group. And the group has two hundred and fifty-three pairs, not twenty-two."
+        verifier:
+          - {expression: "comb(23, 2)", attendu: 253, libelle: "Pairs in a group of 23: C(23, 2)"}
+      - type: formule
+        texte: "*Number of pairs = n(n − 1) / 2*"
+        formule: "nb_pairs(n) = n × (n - 1) / 2"
+        voix_off: "This is the formula for the number of pairs in a group of n: n times n minus one, divided by two. For twenty-three: twenty-three times twenty-two over two, two hundred and fifty-three."
+      - type: titre
+        numero: 2
+        texte: "The method: go through the complement"
+        voix_off: "Counting coincidences directly would be painful. Go through the opposite: *all different*."
+      - type: formule
+        texte: "*P(all different) = 365/365 × 364/365 × … × 343/365*"
+        formule: "P(all diff) = prod((365 - k) / 365 for k in range(n))"
+        voix_off: "The first person picks a birthday among three hundred and sixty-five days: three hundred and sixty-five over three hundred and sixty-five. The second must fall on a different day: three hundred and sixty-four over three hundred and sixty-five. The third, on one of the remaining three hundred and sixty-three. And so on, up to the twenty-third. Multiply all these ratios."
+      - type: titre
+        numero: 3
+        texte: "The calculation for 23 people"
+        voix_off: "Apply it."
+      - type: etapes
+        texte: "Result *for n = 23*"
+        etapes:
+          - "P(all different) ≈ *0.493*"
+          - "P(at least one match) = *1 − 0.493*"
+          - "≈ *0.507*, or *50.7%*"
+        voix_off: "The product is about zero point four hundred and ninety-three. Its complement — the probability of at least one match — is one minus that: zero point five hundred and seven. Fifty point seven percent. From twenty-three people, it is already more likely than not."
+        verifier:
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(23))) * 100, 1)", attendu: 50.7, libelle: "P(at least one match) for n = 23"}
+      - type: titre
+        numero: 4
+        texte: "What happens as n grows?"
+        voix_off: "And with more people?"
+      - type: etapes
+        texte: "The probability rises *very fast*"
+        etapes:
+          - "n = 23: *50.7%*"
+          - "n = 30: *70.6%*"
+          - "n = 40: *89.1%*"
+          - "n = 41: *90.3%*"
+          - "n = 50: *97.0%*"
+        voix_off: "At thirty people, seventy percent. At forty, almost nine in ten. At fifty, ninety-seven percent. As n grows, the number of pairs grows as n squared: eventually you have so many that a coincidence becomes almost certain."
+        verifier:
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(30))) * 100, 1)", attendu: 70.6, libelle: "P for n = 30"}
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(41))) * 100, 1)", attendu: 90.3, libelle: "P for n = 41"}
+      - type: titre
+        numero: 5
+        texte: "Two mistakes to avoid"
+        voix_off: "Two traps."
+      - type: etapes
+        texte: "The two classic mistakes"
+        etapes:
+          - "Thinking you should compute *23 / 365*: that is the probability one specific person shares *your* birthday"
+          - "Thinking the *pairs are independent*: they are not"
+        voix_off: "First mistake: twenty-three divided by three hundred and sixty-five. That is the probability one specific person shares *your* birthday, not the probability of a coincidence anywhere in the group. Second mistake: assuming the two hundred and fifty-three pairs are independent. They are not: if A and B match, and A and C match, then B and C match too."
+      - type: titre
+        numero: 6
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "From *how many people* does the probability of a match exceed *90%*?"
+        pause: 12
+        voix_off: "From how many people does the probability of at least one shared birthday exceed ninety percent? Pause."
+      - type: correction
+        etapes:
+          - "Find the smallest n such that *1 − P(all different) ≥ 0.9*"
+          - "n = 40: *89.1%* (not yet)"
+          - "n = 41: *90.3%* — there we are"
+          - "Answer: *41 people*"
+        reponse: "41 people"
+        voix_off: "At forty people, eighty-nine percent: not yet. At forty-one, ninety point three percent: there we are. The answer is forty-one people."
+        verifier:
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(40))) * 100, 1)", attendu: 89.1, libelle: "P for n = 40"}
+          - {expression: "round((1 - prod((365 - k) / 365 for k in range(41))) * 100, 1)", attendu: 90.3, libelle: "P for n = 41"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Pairs in a group of n: *n(n − 1) / 2*"
+          - "Go through the complement, *all different*"
+          - "Intuition does not count *all pairs*"
+        voix_off: "Key points. In a group of n people, there are n times n minus one over two pairs, not n pairs. For the probability of at least one shared birthday, go through 'all different' and take the complement. And intuition fails because it only counts the pairs involving you."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
