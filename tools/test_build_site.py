@@ -539,6 +539,21 @@ def test_premium_foundations() -> None:
     if not embed or "youtube-nocookie.com/embed/" not in embed:
         F.add(name, "embed YouTube n'utilise pas youtube-nocookie.com")
 
+    # 8) Logo dark en mode sombre, et « Jeux de données / Datasets » dans la
+    #    navigation horizontale (pas uniquement au footer).
+    for pg in sample_pages:
+        if not pg.exists():
+            continue
+        txt = pg.read_text(encoding="utf-8")
+        if "brand-logo-dark" not in txt:
+            F.add(name, f"{pg.relative_to(ROOT)} : logo dark manquant")
+        # Le lien nav vers /data/ doit être au-dessus du footer. Repérable par
+        # la présence du label dans la nav (classe nav-links).
+        is_en = "/en/" in str(pg).replace("\\", "/")
+        label = "Datasets" if is_en else "Jeux de données"
+        if "nav-links" in txt and label not in txt.split("site-header", 1)[-1].split("</header>", 1)[0]:
+            F.add(name, f"{pg.relative_to(ROOT)} : lien nav « {label} » manquant")
+
 
 def test_courbe_svg_rendering() -> None:
     """Chaque style de courbe produit un <svg> accessible avec aria-label.

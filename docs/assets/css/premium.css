@@ -780,7 +780,15 @@ html[lang="en"] .hero-note::before { content: "THE PROMISE"; }
 
 /* ---- Marque : logo + nom ---------------------------------------------- */
 .brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
-.brand img { flex: 0 0 auto; width: 48px; max-height: 48px; object-fit: contain; object-position: left center; }
+.brand img, .brand .brand-logo { flex: 0 0 auto; width: 48px; max-height: 48px; object-fit: contain; object-position: left center; }
+/* Logo switch clair/sombre — le script theme-init place data-theme AVANT que le CSS ne charge donc pas de clignotement. */
+.brand-logo-dark { display: none; }
+:root[data-theme="dark"] .brand-logo-light { display: none; }
+:root[data-theme="dark"] .brand-logo-dark { display: inline-block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand-logo-light { display: none; }
+  :root:not([data-theme="light"]) .brand-logo-dark { display: inline-block; }
+}
 .brand-name {
   font-family: var(--font-sans);
   font-weight: 850;
