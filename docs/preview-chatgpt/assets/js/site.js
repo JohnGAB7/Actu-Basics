@@ -1,4 +1,28 @@
 document.addEventListener("DOMContentLoaded",()=>{
+  const nav=document.querySelector(".nav-links");
+  const actions=document.querySelector(".nav-actions");
+  const isFrench=document.documentElement.lang.toLowerCase().startsWith("fr");
+  if(nav){
+    const brand=document.querySelector(".brand");
+    const programmeHref=brand?new URL("programme/",brand.href).href:null;
+    if(programmeHref&&!Array.from(nav.querySelectorAll("a")).some(a=>/programme/i.test(a.textContent)||/programme\\//i.test(a.href))){
+      const link=document.createElement("a");
+      link.href=programmeHref;
+      link.textContent="Programme";
+      nav.insertBefore(link,nav.firstChild);
+    }
+  }
+  if(actions&&!actions.querySelector("[data-theme-toggle]")){
+    const theme=document.createElement("button");
+    theme.type="button";
+    theme.className="theme-toggle";
+    theme.setAttribute("data-theme-toggle","");
+    theme.setAttribute("aria-label",isFrench?"Changer de thème":"Switch theme");
+    theme.title=isFrench?"Changer de thème":"Switch theme";
+    theme.innerHTML='<svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+    const lang=actions.querySelector(".lang");
+    actions.insertBefore(theme,lang||null);
+  }
   const toggle=document.querySelector(".menu-toggle");
   const nav=document.querySelector(".nav-links");
   if(toggle&&nav){
@@ -65,6 +89,10 @@ document.addEventListener("DOMContentLoaded",()=>{
   const btns=document.querySelectorAll("[data-theme-toggle]");
   if(!btns.length)return;
   const html=document.documentElement;
+  try{
+    const saved=localStorage.getItem("ab-theme");
+    if(saved==="dark"||saved==="light")html.setAttribute("data-theme",saved);
+  }catch(e){}
   const getCurrent=()=>{
     const explicit=html.getAttribute("data-theme");
     if(explicit==="dark"||explicit==="light")return explicit;
@@ -106,12 +134,12 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
   nav.appendChild(list);
   const io=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      const a=links.get(e.target.id);
-      if(!a)return;
-      if(e.isIntersecting)a.classList.add("is-active");
-      else a.classList.remove("is-active");
-    });
+    const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+    if(visible.length){
+      links.forEach(a=>a.classList.remove("is-active"));
+      const active=links.get(visible[0].target.id);
+      if(active)active.classList.add("is-active");
+    }
   },{rootMargin:"-30% 0px -60% 0px",threshold:0});
   headings.forEach(h=>io.observe(h));
 });
