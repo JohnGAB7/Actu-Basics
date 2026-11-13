@@ -456,6 +456,42 @@ def test_courbe_svg_rendering() -> None:
         if 'role="img"' not in svg:
             F.add(name, f"style {st} : role=img manquant")
 
+    # 1b) Double axe : la seconde série structurée doit être visible sur
+    # son propre domaine Y, avec graduations et titre d'axe à droite.
+    dual = B.render_courbe_svg({
+        "style": "ligne",
+        "points": [[2020, 100], [2021, 110], [2022, 120], [2023, 130], [2024, 140]],
+        "y_min": 100, "y_max": 140, "axe_y": "Vélos (milliers)",
+        "serie_2": {
+            "points": [[2020, 20], [2021, 26], [2022, 32], [2023, 38], [2024, 44]],
+            "y_min": 16, "y_max": 48, "axe_y": "Trottinettes (milliers)",
+        },
+    }, "fr", aria_label="Double échelle")
+    for token in ("courbe-line-alt", "courbe-axis-right", "Trottinettes (milliers)", ">16<", ">48<"):
+        if token not in dual:
+            F.add(name, f"double axe : élément manquant {token!r}")
+
+    # 1c) L'animation de surface doit devenir une illustration SVG, pas
+    # uniquement une liste d'étapes textuelles.
+    surface = B.render_scene({
+        "type": "animation",
+        "animation": {"modele": "surface"},
+        "etapes": ["Valeur ×1", "Valeur ×2"],
+    }, "fr")
+    if "surface-svg" not in surface or "Aire ×4" not in surface or "Aire ×2" not in surface:
+        F.add(name, "illustration de surface absente ou incomplète")
+
+    # 1d) Les pages publiées FR et EN de S1-09 doivent contenir les deux
+    # graphiques à double axe et la comparaison de surfaces.
+    for rel in ("docs/lecons/S1-09/index.html", "docs/en/lessons/S1-09/index.html"):
+        page = ROOT / rel
+        if page.exists():
+            txt = page.read_text(encoding="utf-8")
+            if txt.count("courbe-axis-right") < 2:
+                F.add(name, f"{rel}: les deux axes droits ne sont pas rendus")
+            if "surface-svg" not in txt:
+                F.add(name, f"{rel}: illustration de surface absente")
+
     # 2) Aucune page leçon ne doit afficher le placeholder `[Graphique associé...]`
     #    pour une scène courbe qui porte bien un bloc `courbe:` dans la fiche.
     import glob, yaml
