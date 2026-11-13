@@ -293,7 +293,7 @@ def test_library_links_integrity() -> None:
         text = library.read_text(encoding="utf-8")
         module_count = len({fiche["module"] for fiche in fiches})
         expected_overview = (
-            f"{module_count} portes d'entrée" if "bibliotheque" in str(library)
+            f"{module_count} portes d&#x27;entrée" if "bibliotheque" in str(library)
             else f"{module_count} entry points"
         )
         if expected_overview not in text:
