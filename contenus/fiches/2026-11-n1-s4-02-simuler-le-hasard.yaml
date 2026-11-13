@@ -1,0 +1,228 @@
+# Niveau 1, vague 1, lot 4 : S4.02 « Simuler le hasard » (EDUCATIONAL, simulation)
+# Nombres fictifs : une série de 20 lancers de pièce ; une simulation imaginaire de 10 000 lancers.
+# Probabilité exacte d'une série d'au moins 4 piles en 20 lancers calculée par récurrence : 47,80 %.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s4-02-simuler-le-hasard
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.02 · Simuler le hasard"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Décrire comment la fréquence observée se stabilise quand n augmente"
+      - "Utiliser une simulation pour estimer une probabilité"
+    en:
+      - "Describe how the observed frequency stabilises as n grows"
+      - "Use a simulation to estimate a probability"
+  prerequis:
+    fr: ["S4.01 : qu'est-ce qu'une probabilité"]
+    en: ["S4.01: what is a probability"]
+  hypotheses:
+    fr: "Pièce supposée équilibrée (50/50). Simulation imaginaire présentée à titre pédagogique."
+    en: "Coin assumed fair (50/50). Imaginary simulation shown for pedagogy."
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Simuler le hasard : la fréquence se stabilise"
+    legende: |
+      Lancer une pièce dix fois, puis dix mille fois : que se passe-t-il ? Le hasard est imprévisible au coup par coup, mais très régulier en grand nombre. Avec une simulation imaginaire, on voit la fréquence de pile s'approcher de cinquante pour cent. Et on apprend à estimer une probabilité quand le calcul exact serait pénible : au moins quatre piles d'affilée en vingt lancers, c'est fréquent ou rare ? Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, simulation]
+    scenes:
+      - type: accroche
+        texte: "10 lancers, puis *10 000* : que voit-on ?"
+        voix_off: "Une pièce équilibrée. On la lance dix fois, puis cent, puis dix mille. Qu'est-ce qui change ?"
+      - type: titre
+        numero: 1
+        texte: "Dix lancers : l'imprévisible"
+        voix_off: "Commençons par dix lancers."
+      - type: etapes
+        texte: "Une *série imaginaire* de 10 lancers"
+        etapes:
+          - "1 · Pile · 1 · 100 %"
+          - "2 · Face · 1 · 50 %"
+          - "3 · Pile · 2 · 67 %"
+          - "4 · Pile · 3 · 75 %"
+          - "5 · Face · 3 · 60 %"
+          - "6 · Face · 3 · 50 %"
+          - "7 · Pile · 4 · 57 %"
+          - "8 · Pile · 5 · 63 %"
+          - "9 · Face · 5 · 56 %"
+          - "10 · Pile · 6 · 60 %"
+        voix_off: "Dix lancers, six piles, quatre faces. Fréquence finale : soixante pour cent. Est-ce « anormal » ? Non : sur dix lancers, obtenir six piles ou six faces arrive très souvent, par pur hasard."
+      - type: titre
+        numero: 2
+        texte: "Beaucoup plus de lancers : la stabilisation"
+        voix_off: "Et maintenant, le même dispositif, répété dix mille fois."
+      - type: courbe
+        texte: "Fréquence de pile *sur n lancers* (simulation imaginaire)"
+        courbe:
+          style: ligne
+          points: [[10, 0.60], [50, 0.54], [100, 0.52], [500, 0.51], [1000, 0.508], [2000, 0.503], [5000, 0.501], [10000, 0.5004]]
+          x_min: 0
+          x_max: 10000
+          y_min: 0.3
+          y_max: 0.7
+          axe_x: "Nombre de lancers (n)"
+          axe_y: "Fréquence de pile"
+          reperes: [{x: 10000, y: 0.50, label: "50 %"}]
+        note: "Simulation imaginaire : la fréquence se rapproche de 50 % quand n augmente."
+        voix_off: "À dix lancers, la fréquence peut valoir soixante pour cent. À cent, elle oscille déjà autour de cinquante. À dix mille, elle est tout près de cinquante pour cent. C'est la *loi des grands nombres* : la fréquence observée se stabilise autour de la probabilité quand le nombre d'essais augmente."
+      - type: titre
+        numero: 3
+        texte: "Une erreur classique : le « rattrapage »"
+        voix_off: "Attention à une erreur très répandue."
+      - type: etapes
+        texte: "La pièce n'a *pas de mémoire*"
+        etapes:
+          - "Si on a vu *8 piles* d'affilée"
+          - "La prochaine *n'est pas plus probable* d'être face"
+          - "Elle reste à *50 %*"
+          - "La loi des grands nombres *dilue* les écarts, elle ne les *rattrape* pas"
+        voix_off: "On entend souvent : après huit piles, il est temps que face sorte. C'est faux. La pièce n'a pas de mémoire. La loi des grands nombres ne rattrape pas les écarts : elle les dilue, parce que les lancers nouveaux pèsent de plus en plus lourd dans la moyenne."
+      - type: titre
+        numero: 4
+        texte: "Estimer une probabilité par simulation"
+        voix_off: "Une simulation sert à estimer une probabilité quand le calcul exact serait pénible."
+      - type: etapes
+        texte: "La *recette* de la simulation"
+        etapes:
+          - "Reproduire l'expérience *une fois* (20 lancers)"
+          - "Noter si *l'événement* a eu lieu (au moins 4 piles d'affilée)"
+          - "Recommencer *1 000 fois*"
+          - "La *fréquence* est une estimation de la probabilité"
+        voix_off: "On reproduit l'expérience — vingt lancers d'une pièce — mille fois. Pour chacune, on note oui ou non. Et on compte la fréquence des « oui ». C'est une estimation de la probabilité. Plus on refait, plus l'estimation est précise."
+      - type: titre
+        numero: 5
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "Dans *20 lancers* d'une pièce équilibrée, une série d'au moins *4 piles* d'affilée est-elle surprenante ?"
+        pause: 12
+        voix_off: "Vingt lancers, une pièce équilibrée. Au moins quatre piles d'affilée, quelque part dans la série. Pensez-vous que ce soit rare, ou au contraire fréquent ? Donnez une fourchette. Pause."
+      - type: correction
+        etapes:
+          - "*Simulation* (1 000 séries) : fréquence *autour de 48 %*, à ± 3 points près d'une simulation à l'autre"
+          - "*Calcul exact* (récurrence sur 2²⁰ suites) : *47,80 %*"
+          - "La simulation *approche* la probabilité ; elle ne la *donne* pas"
+        reponse: "Simulation ≈ 48 %, probabilité exacte = 47,80 %"
+        voix_off: "Attention à ne pas confondre deux choses. La simulation produit une fréquence : si on refait l'expérience mille fois, on obtient souvent autour de quarante-huit pour cent, avec une variabilité de l'ordre de plus ou moins trois points d'une simulation à l'autre. La probabilité exacte, elle, se calcule : par une récurrence qui compte les deux puissance vingt suites binaires sans série de quatre. Résultat : quarante-sept virgule quatre-vingts pour cent exactement. La simulation approche cette probabilité ; elle ne la donne pas. Et dans les deux cas, la conclusion est la même : une série de quatre piles arrive presque une fois sur deux."
+        verifier:
+          - {expression: "round((1 - 547337 / 1048576) * 100, 2)", attendu: 47.8, libelle: "Probabilité exacte d'au moins 4 piles d'affilée en 20 lancers (547 337 suites sans série de 4 sur 1 048 576)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Loi des grands nombres* : la fréquence se stabilise quand n grandit"
+          - "La pièce *n'a pas de mémoire* : aucun rattrapage"
+          - "*Simuler* permet d'estimer une probabilité sans calcul"
+        voix_off: "À retenir. La loi des grands nombres : la fréquence observée se stabilise autour de la probabilité quand le nombre d'essais augmente. Le hasard n'a pas de mémoire : il ne rattrape rien. Et une simulation, bien faite et répétée, remplace souvent avantageusement un calcul exact."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Simulating chance: the frequency settles"
+    legende: |
+      Toss a coin ten times, then ten thousand: what happens? Chance is unpredictable one toss at a time, but very regular in large numbers. With an imaginary simulation, we watch the frequency of heads close in on fifty percent. And we learn to estimate a probability when the exact calculation would be painful: at least four heads in a row in twenty tosses — frequent or rare? Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, simulation]
+    scenes:
+      - type: accroche
+        texte: "10 tosses, then *10,000*: what do we see?"
+        voix_off: "A fair coin. We toss it ten times, then one hundred, then ten thousand. What changes?"
+      - type: titre
+        numero: 1
+        texte: "Ten tosses: the unpredictable"
+        voix_off: "Start with ten tosses."
+      - type: etapes
+        texte: "An *imaginary* 10-toss series"
+        etapes:
+          - "1 · Heads · 1 · 100%"
+          - "2 · Tails · 1 · 50%"
+          - "3 · Heads · 2 · 67%"
+          - "4 · Heads · 3 · 75%"
+          - "5 · Tails · 3 · 60%"
+          - "6 · Tails · 3 · 50%"
+          - "7 · Heads · 4 · 57%"
+          - "8 · Heads · 5 · 63%"
+          - "9 · Tails · 5 · 56%"
+          - "10 · Heads · 6 · 60%"
+        voix_off: "Ten tosses, six heads, four tails. Final frequency: sixty percent. Is this 'abnormal'? No: in ten tosses, getting six heads or six tails happens very often, by pure chance."
+      - type: titre
+        numero: 2
+        texte: "Many more tosses: stabilisation"
+        voix_off: "Now, the same set-up, repeated ten thousand times."
+      - type: courbe
+        texte: "Frequency of heads *over n tosses* (imaginary simulation)"
+        courbe:
+          style: ligne
+          points: [[10, 0.60], [50, 0.54], [100, 0.52], [500, 0.51], [1000, 0.508], [2000, 0.503], [5000, 0.501], [10000, 0.5004]]
+          x_min: 0
+          x_max: 10000
+          y_min: 0.3
+          y_max: 0.7
+          axe_x: "Number of tosses (n)"
+          axe_y: "Frequency of heads"
+          reperes: [{x: 10000, y: 0.50, label: "50%"}]
+        note: "Imaginary simulation: the frequency gets close to 50% as n grows."
+        voix_off: "At ten tosses, the frequency can hit sixty percent. At one hundred, it already hovers around fifty. At ten thousand, it is very close to fifty percent. This is the *law of large numbers*: the observed frequency stabilises around the probability as the number of trials grows."
+      - type: titre
+        numero: 3
+        texte: "A classic mistake: 'catching up'"
+        voix_off: "Beware a very common mistake."
+      - type: etapes
+        texte: "The coin has *no memory*"
+        etapes:
+          - "If you saw *8 heads* in a row"
+          - "The next is *not more likely* to be tails"
+          - "It stays at *50%*"
+          - "The law of large numbers *dilutes* gaps; it does not *catch them up*"
+        voix_off: "People often say: after eight heads, tails is due. Not true. The coin has no memory. The law of large numbers does not catch up with gaps: it dilutes them, because new tosses weigh more and more in the average."
+      - type: titre
+        numero: 4
+        texte: "Estimating a probability by simulation"
+        voix_off: "A simulation estimates a probability when the exact calculation would be painful."
+      - type: etapes
+        texte: "The *recipe* for a simulation"
+        etapes:
+          - "Reproduce the experiment *once* (20 tosses)"
+          - "Note whether the *event* happened (at least 4 heads in a row)"
+          - "Repeat *1,000 times*"
+          - "The *frequency* estimates the probability"
+        voix_off: "Reproduce the experiment — twenty tosses of a coin — one thousand times. For each, record yes or no. Count the frequency of 'yes'. That estimates the probability. The more you repeat, the sharper the estimate."
+      - type: titre
+        numero: 5
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "In *20 tosses* of a fair coin, is a run of at least *4 heads* in a row surprising?"
+        pause: 12
+        voix_off: "Twenty tosses, a fair coin. At least four heads in a row, somewhere in the series. Do you think this is rare, or common? Give a range. Pause."
+      - type: correction
+        etapes:
+          - "*Simulation* (1,000 series): frequency *around 48%*, varying by about ± 3 points between runs"
+          - "*Exact calculation* (recurrence over 2²⁰ sequences): *47.80%*"
+          - "The simulation *approximates* the probability; it does *not* equal it"
+        reponse: "Simulation ≈ 48%, exact probability = 47.80%"
+        voix_off: "Do not confuse two things. The simulation produces a frequency: if you redo the experiment of one thousand series, you often land around forty-eight percent, with a variability of about plus or minus three points between simulations. The exact probability, on the other hand, is computed: through a recurrence that counts the two to the twenty binary sequences with no run of four. Result: forty-seven point eighty percent exactly. The simulation approximates this probability; it does not give it. Either way, the conclusion is the same: a run of four heads happens almost one time in two."
+        verifier:
+          - {expression: "round((1 - 547337 / 1048576) * 100, 2)", attendu: 47.8, libelle: "Exact probability of at least 4 heads in a row over 20 tosses (547,337 sequences with no run of 4 out of 1,048,576)"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Law of large numbers*: the frequency stabilises as n grows"
+          - "The coin has *no memory*: no catch-up"
+          - "*Simulating* estimates a probability without a calculation"
+        voix_off: "Key points. Law of large numbers: the observed frequency stabilises around the probability as the number of trials grows. Chance has no memory: it catches nothing up. And a simulation, done well and repeated, often beats an exact calculation."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
