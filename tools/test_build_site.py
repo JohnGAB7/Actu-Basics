@@ -11,7 +11,9 @@ Couvre:
   reconnu par les fonctions et attribué à une catégorie
 - génération complète + contrôle d'intégrité:
   * tout fiche produit exactement ses deux pages (FR + EN)
-  * tout code apparaît dans la bibliothèque FR + EN
+  * chaque code apparaît exactement une fois dans les bibliothèques FR + EN
+  * chaque lien de bibliothèque pointe vers une page existante, sans lien orphelin
+  * slugs et modules des parcours sont valides et non ambigus
   * tout parcours produit index + détail FR + EN
   * tout fichier lie bien hreflang fr et en
   * aucune page ne contient de dict Python brut `{'fr': ...}`
@@ -205,13 +207,15 @@ def test_category_unknown_module_is_autre() -> None:
     classé en 'autre', jamais silencieusement en 'statistiques'."""
     for code in ("Z1-01", "XY42-01", "Q2-04"):
         got = B.category_for(code)
-        if got not in ("autre", "statistiques", "probabilites"):
-            continue
-        # Q* n'est pas dans la taxonomie : doit tomber en "autre".
-        letters = re.match(r"^[A-Za-z]+", code).group(0).upper()
-        if letters not in ("M", "S", "A", "MF", "F"):
-            if got != "autre":
-                F.add("category_unknown", f"{code!r} -> {got!r}, attendu 'autre'")
+        if got != "autre":
+            F.add("category_unknown", f"{code!r} -> {got!r}, attendu 'autre'")
+    # Les familles explicitement reconnues conservent leur catégorie.
+    for code, expected in (("M0-01", "fondations"), ("S1-01", "statistiques"),
+                           ("S4-01", "probabilites"), ("A0-01", "actuariat"),
+                           ("MF1-01", "finance"), ("F1-01", "finance")):
+        got = B.category_for(code)
+        if got != expected:
+            F.add("category_known", f"{code!r} -> {got!r}, attendu {expected!r}")
 
 
 def test_short_fiches_not_generated() -> None:
@@ -245,6 +249,64 @@ def test_short_fiches_not_generated() -> None:
                 F.add("short_filter", f"page générée pour un code 100 % short : {path.relative_to(ROOT)}")
 
 
+def test_parcours_schema() -> None:
+    """Les parcours doivent avoir des slugs uniques et des modules syntaxiquement valides."""
+    parcours = B.load_parcours()
+    seen_slugs: set[str] = set()
+    slug_re = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+    module_re = re.compile(r"^[A-Z]+[0-9]+$")
+    for p in parcours:
+        slug = str(p.get("slug") or "")
+        if not slug_re.fullmatch(slug):
+            F.add("parcours_schema", f"slug invalide : {slug!r}")
+        if slug in seen_slugs:
+            F.add("parcours_schema", f"slug dupliqué : {slug!r}")
+        seen_slugs.add(slug)
+        titles = p.get("titre") or {}
+        if not titles.get("fr") or not titles.get("en"):
+            F.add("parcours_schema", f"{slug}: titre FR/EN manquant")
+        modules = p.get("modules") or []
+        if len(modules) != len(set(modules)):
+            F.add("parcours_schema", f"{slug}: module déclaré plusieurs fois")
+        for mod in modules:
+            if not isinstance(mod, str) or not module_re.fullmatch(mod):
+                F.add("parcours_schema", f"{slug}: code module invalide {mod!r}")
+
+
+def test_library_links_integrity() -> None:
+    """Chaque fiche publiée apparaît exactement une fois dans chaque catalogue,
+    et chaque URL locale de leçon pointe vers un fichier HTML réellement généré."""
+    fiches = B.load_fiches()
+    expected = {f["code"] for f in fiches}
+    cases = (
+        (ROOT / "docs" / "bibliotheque" / "index.html",
+         re.compile(r'href="([^"]*/lecons/([A-Z0-9-]+)/?)"'),
+         ROOT / "docs" / "lecons"),
+        (ROOT / "docs" / "en" / "library" / "index.html",
+         re.compile(r'href="([^"]*/lessons/([A-Z0-9-]+)/?)"'),
+         ROOT / "docs" / "en" / "lessons"),
+    )
+    for library, pattern, lesson_root in cases:
+        if not library.exists():
+            F.add("library_links", f"catalogue manquant : {library.relative_to(ROOT)}")
+            continue
+        text = library.read_text(encoding="utf-8")
+        found = [m.group(2) for m in pattern.finditer(text)]
+        found_set = set(found)
+        if len(found) != len(found_set):
+            F.add("library_links", f"liens dupliqués dans {library.relative_to(ROOT)}")
+        missing = sorted(expected - found_set)
+        extra = sorted(found_set - expected)
+        if missing:
+            F.add("library_links", f"fiches absentes de {library.relative_to(ROOT)} : {missing}")
+        if extra:
+            F.add("library_links", f"liens sans fiche dans {library.relative_to(ROOT)} : {extra}")
+        for code in found_set:
+            target = lesson_root / code / "index.html"
+            if not target.is_file():
+                F.add("library_links", f"lien cassé {code} dans {library.relative_to(ROOT)}")
+
+
 # -------------------- integration tests -----------------------------------
 
 def test_generation_integrity() -> None:
@@ -272,6 +334,9 @@ def test_generation_integrity() -> None:
         F.add("gen_lib", "bibliotheque FR manquante")
     if not lib_en.exists():
         F.add("gen_lib", "bibliotheque EN manquante")
+
+    # Chaque fiche doit être liée exactement une fois et chaque lien doit être valide.
+    test_library_links_integrity()
 
     # Pages parcours.
     for p in parcours:
@@ -311,12 +376,14 @@ def main() -> int:
         test_module_of_and_sort,
         test_category_for,
         test_category_unknown_module_is_autre,
+        test_parcours_schema,
         test_pick_lang,
         test_url_whitelist_youtube,
         test_url_whitelist_tiktok,
         test_parcours_lesson_relations,
         test_parcours_multi_synthetic,
         test_generation_integrity,
+        test_library_links_integrity,
         test_short_fiches_not_generated,
     ]
     for t in tests:
