@@ -19,6 +19,8 @@ on:
       - "contenus/parcours.yaml"
       - "contenus/fiches/**"
       - "docs/SITE-README.md"
+      - "docs/index.html"
+      - "docs/en/index.html"
       - "docs/assets/css/main.css"
       - "docs/assets/js/site.js"
       - "docs/lecons/**"
