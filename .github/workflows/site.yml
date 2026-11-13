@@ -17,6 +17,7 @@ on:
       - "tools/test_build_site.py"
       - "contenus/parcours.yaml"
       - "contenus/fiches/**"
+      - "docs/SITE-README.md"
       - "docs/assets/css/main.css"
       - "docs/assets/js/site.js"
       - ".github/workflows/site.yml"
@@ -49,11 +50,13 @@ jobs:
         run: pip install --no-cache-dir pyyaml
       - name: Run site test suite
         run: python3 tools/test_build_site.py
-      - name: Re-check build is clean (no uncommitted drift)
+      - name: Verify generated site is committed and reproducible
         run: |
-          # Le test suite appelle main() et écrit dans docs/. Vérifier qu'aucune
-          # dérive incohérente n'est produite : les tests précédents valident déjà
-          # le contenu, ici on s'assure juste que la génération est idempotente.
+          # Les tests ont déjà appelé le générateur. Deux builds supplémentaires
+          # doivent laisser l'arbre Git strictement propre : cela détecte les
+          # pages manquantes, les fichiers générés périmés et les dérives.
           python3 tools/build_lessons.py
           python3 tools/build_lessons.py
-          echo "Génération idempotente OK."
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+          echo "Build reproductible : aucun fichier suivi ou non suivi modifié."
