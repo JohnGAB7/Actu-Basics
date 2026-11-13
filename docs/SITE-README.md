@@ -63,3 +63,16 @@ Le site n'est pas considéré comme publié avant vérification de son URL publi
 - simulations et visualisations interactives si elles apportent une valeur pédagogique réelle.
 
 Les évolutions doivent rester incrémentales et préserver l'accès direct aux pages, la navigation clavier, la lisibilité mobile et l'équivalence FR/EN.
+
+
+## V1.1 — améliorations proposées
+
+Les changements en cours sur la branche `chatgpt/actu-basics-v1-1-social` sont soumis à revue avant toute intégration dans la branche de publication :
+
+- liens sociaux officiels YouTube et TikTok pour les éditions française et anglaise ;
+- métadonnées de partage (Open Graph), URL canonique et liens de langue ;
+- navigation mobile avec fermeture par Échap, clic extérieur et retour du focus ;
+- indicateurs de focus clavier visibles ;
+- harmonisation de la devise de l'exemple A0.01 en euros dans les deux langues.
+
+Aucune page de nouvelle leçon ni aucun lien vidéo individuel n'est ajouté tant que les pages et URL de vidéos correspondantes ne sont pas confirmées.
