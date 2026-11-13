@@ -26,10 +26,12 @@ PAGES = [
     ("/bibliotheque/", "library-fr"),
     ("/parcours/", "paths-fr"),
     ("/lecons/S1-05/", "lesson-fr"),
+    ("/lecons/S1-09/", "chart-lesson-fr"),
     ("/en/", "home-en"),
     ("/en/library/", "library-en"),
     ("/en/paths/", "paths-en"),
     ("/en/lessons/S1-05/", "lesson-en"),
+    ("/en/lessons/S1-09/", "chart-lesson-en"),
 ]
 
 
@@ -135,6 +137,24 @@ def check_library_search(browser, browser_name: str, path: str, lang: str) -> No
     page.close()
 
 
+def check_chart_lesson(browser, browser_name: str, path: str, lang: str) -> None:
+    page = browser.new_page(viewport={"width": 390, "height": 844})
+    response = page.goto(BASE + path, wait_until="networkidle")
+    check(response is not None and response.status == 200,
+          f"{browser_name} {lang}: leçon graphique inaccessible")
+    check(page.locator(".courbe-svg-dual").count() == 2,
+          f"{browser_name} {lang}: les deux graphiques à double axe ne sont pas présents")
+    check(page.locator(".courbe-axis-right").count() == 2,
+          f"{browser_name} {lang}: les axes droits ne sont pas rendus")
+    check(page.locator(".courbe-line-alt").count() == 2,
+          f"{browser_name} {lang}: les deux séries secondaires ne sont pas visibles")
+    check(page.locator(".surface-svg").count() == 1,
+          f"{browser_name} {lang}: l'illustration de surface est absente")
+    check(page.locator(".surface-svg").get_attribute("aria-label") is not None,
+          f"{browser_name} {lang}: l'illustration de surface n'est pas accessible")
+    page.close()
+
+
 def main() -> int:
     server = subprocess.Popen(
         [sys.executable, "-m", "http.server", "8765", "--bind", "127.0.0.1"],
@@ -153,6 +173,11 @@ def main() -> int:
                                 check_page(browser, browser_name, path, slug, width, height)
                             except Exception as exc:
                                 failures.append(str(exc))
+                    for chart_path, chart_lang in (("/lecons/S1-09/", "fr"), ("/en/lessons/S1-09/", "en")):
+                        try:
+                            check_chart_lesson(browser, browser_name, chart_path, chart_lang)
+                        except Exception as exc:
+                            failures.append(str(exc))
                     for home, lang in (("/", "fr"), ("/en/", "en")):
                         try:
                             check_keyboard_and_mobile_menu(browser, browser_name, home, lang)
@@ -177,7 +202,7 @@ def main() -> int:
         for failure in failures:
             print(" - " + failure)
         return 1
-    print("SUCCÈS : 3 moteurs, 8 pages FR/EN, desktop/mobile, navigation clavier, menu mobile et recherche.")
+    print("SUCCÈS : 3 moteurs, 10 pages FR/EN, desktop/mobile, navigation clavier, menu mobile et recherche.")
     print(f"Captures enregistrées dans {ARTIFACTS.relative_to(ROOT)}/")
     return 0
 
