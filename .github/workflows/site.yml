@@ -15,6 +15,7 @@ on:
     paths:
       - "tools/build_lessons.py"
       - "tools/test_build_site.py"
+      - "tools/test_browser_site.py"
       - "contenus/parcours.yaml"
       - "contenus/fiches/**"
       - "docs/SITE-README.md"
@@ -40,14 +41,16 @@ concurrency:
 jobs:
   site-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install PyYAML
-        run: pip install --no-cache-dir pyyaml
+      - name: Install test dependencies
+        run: pip install --no-cache-dir pyyaml playwright
+      - name: Install browser engines
+        run: python -m playwright install --with-deps chromium firefox webkit
       - name: Run site test suite
         run: python3 tools/test_build_site.py
       - name: Verify generated site is committed and reproducible
@@ -60,3 +63,13 @@ jobs:
           git diff --exit-code
           test -z "$(git status --porcelain)"
           echo "Build reproductible : aucun fichier suivi ou non suivi modifié."
+      - name: Cross-browser responsive, keyboard and interaction checks
+        run: python3 tools/test_browser_site.py
+      - name: Upload desktop/mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: actu-basics-browser-qa-${{ github.run_number }}
+          path: browser-artifacts/
+          if-no-files-found: warn
+          retention-days: 7
