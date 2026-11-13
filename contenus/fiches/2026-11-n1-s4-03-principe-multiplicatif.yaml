@@ -1,0 +1,275 @@
+# Niveau 1, vague 1, lot 4 : S4.03 « Compter sans tout écrire : le principe multiplicatif » (EDUCATIONAL, leçon)
+# Nombres fictifs : codes à 4 chiffres, menus imaginaires, podiums de course. Résultats recalculés.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s4-03-principe-multiplicatif
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.03 · Compter sans tout écrire : le principe multiplicatif"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Appliquer le principe multiplicatif"
+      - "Calculer une factorielle et un arrangement"
+      - "Dire si l'ordre compte dans une situation"
+    en:
+      - "Apply the multiplication rule"
+      - "Compute a factorial and an arrangement"
+      - "Say whether order matters in a given situation"
+  prerequis:
+    fr: ["S4.01 : qu'est-ce qu'une probabilité"]
+    en: ["S4.01: what is a probability"]
+  hypotheses:
+    fr: "Exemples imaginaires ; aucune donnée réelle citée."
+    en: "Imaginary examples; no real data cited."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Compter sans tout écrire : le principe multiplicatif"
+    legende: |
+      Combien de codes à quatre chiffres existe-t-il, et combien de façons de ranger cinq livres ? Dans beaucoup de problèmes de probabilités, il faut d'abord compter. Avec un arbre de choix imaginaire, on découvre le principe multiplicatif, les factorielles et les arrangements. Et surtout : savoir quand l'ordre compte, et quand il ne compte pas. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, denombrement]
+    scenes:
+      - type: accroche
+        texte: "Combien de *codes à 4 chiffres* ? Pas besoin de tous les écrire."
+        voix_off: "On cherche le nombre de codes à quatre chiffres. Il y en a trop pour les écrire un par un. Comment faire ?"
+      - type: titre
+        numero: 1
+        texte: "Un arbre de choix"
+        voix_off: "Imaginons un arbre. À chaque niveau, un choix."
+      - type: etapes
+        texte: "Les codes à *4 chiffres*"
+        etapes:
+          - "Chiffre n° 1 : *10 possibilités* (0 à 9)"
+          - "Chiffre n° 2 : *10 possibilités*"
+          - "Chiffre n° 3 : *10 possibilités*"
+          - "Chiffre n° 4 : *10 possibilités*"
+          - "Total : *10 × 10 × 10 × 10 = 10 000*"
+        voix_off: "Un code à quatre chiffres. Le premier chiffre peut valoir de zéro à neuf : dix possibilités. Le deuxième : dix, indépendamment du premier. Le troisième : dix. Le quatrième : dix. À chaque étape, chaque branche se divise en dix nouvelles branches. Le total : dix mille codes possibles."
+        verifier:
+          - {expression: "10**4", attendu: 10000, libelle: "Codes à 4 chiffres"}
+      - type: titre
+        numero: 2
+        texte: "Le principe multiplicatif"
+        voix_off: "C'est la règle du jour."
+      - type: formule
+        texte: "*nombre total = n₁ × n₂ × … × nₖ*"
+        formule: "N = n_1 × n_2 × ... × n_k"
+        voix_off: "Si l'on fait k choix successifs, et qu'au i-ième choix on a n_i possibilités indépendantes du résultat des précédents, alors le nombre de résultats possibles est le produit des n_i. C'est le principe multiplicatif."
+      - type: titre
+        numero: 3
+        texte: "Quand les choix diminuent : la factorielle"
+        voix_off: "Changement de problème : comment ranger cinq livres sur une étagère ?"
+      - type: etapes
+        texte: "Ranger *5 livres*"
+        etapes:
+          - "1ʳᵉ place : *5 livres* possibles"
+          - "2ᵉ place : *4 livres* restants"
+          - "3ᵉ place : *3 livres*"
+          - "4ᵉ place : *2 livres*"
+          - "5ᵉ place : *1 livre*"
+          - "Total : *5 × 4 × 3 × 2 × 1 = 120*"
+        voix_off: "Pour la première place, j'ai cinq choix. Une fois placé, il reste quatre livres pour la deuxième place, puis trois, puis deux, puis un. Le produit vaut cent vingt. Ce produit a un nom : la factorielle de cinq, notée cinq point d'exclamation."
+        verifier:
+          - {expression: "factorial(5)", attendu: 120, libelle: "5 factorielle"}
+      - type: formule
+        texte: "*n! = n × (n−1) × … × 1*"
+        formule: "n! = n × (n-1) × (n-2) × ... × 1"
+        voix_off: "La factorielle de n, c'est le produit des entiers de un à n. Elle compte le nombre de façons de ranger n objets en ligne, en tenant compte de l'ordre. Factorielle de zéro vaut un par convention : il y a une seule façon de ne rien ranger."
+      - type: titre
+        numero: 4
+        texte: "Arranger k parmi n : l'arrangement"
+        voix_off: "Et si l'on ne veut prendre que quelques-uns ?"
+      - type: etapes
+        texte: "Un *podium* à partir de 10 coureurs"
+        etapes:
+          - "1ʳᵉ place : *10 coureurs* possibles"
+          - "2ᵉ place : *9 coureurs* restants"
+          - "3ᵉ place : *8 coureurs*"
+          - "Total : *10 × 9 × 8 = 720*"
+        voix_off: "Dix coureurs, trois marches sur le podium. Dix choix pour la première place, neuf pour la deuxième, huit pour la troisième. Le produit vaut sept cent vingt. C'est un *arrangement* : on choisit trois coureurs parmi dix, et l'ordre compte, parce qu'une médaille d'or n'est pas une médaille de bronze."
+        verifier:
+          - {expression: "perm(10, 3)", attendu: 720, libelle: "Arrangements A(10, 3)"}
+      - type: formule
+        texte: "*A(n, k) = n! / (n−k)!*"
+        formule: "A(n, k) = n! / (n-k)!"
+        voix_off: "L'arrangement de k parmi n, noté grand A de n k, vaut factorielle de n divisée par factorielle de n moins k. Il compte les façons d'extraire k objets parmi n, dans un certain ordre."
+      - type: titre
+        numero: 5
+        texte: "L'ordre compte-t-il ?"
+        voix_off: "Avant de multiplier, une question à se poser."
+      - type: etapes
+        texte: "*Deux questions* à se poser"
+        etapes:
+          - "*Les objets* sont-ils interchangeables, ou chacun est-il différent ?"
+          - "*Le résultat* dépend-il de l'ordre, ou seulement de la liste ?"
+        voix_off: "Est-ce que les objets sont tous différents ? Un dé a six faces distinctes, un podium a trois médailles distinctes : oui. Et est-ce que l'ordre change le résultat ? Pour un code à quatre chiffres, oui : mille deux cent trente-quatre n'est pas quatre mille trois cent vingt et un. Pour un podium, oui : l'or n'est pas le bronze. Si l'une des réponses est non, le principe multiplicatif doit être corrigé : c'est l'affaire de la prochaine leçon, les combinaisons."
+      - type: titre
+        numero: 6
+        texte: "Erreur classique"
+        voix_off: "Une erreur très fréquente."
+      - type: etapes
+        texte: "Additionner ou multiplier ?"
+        etapes:
+          - "*Multiplier* quand on fait les choix *l'un après l'autre*"
+          - "*Additionner* quand il y a *plusieurs cas disjoints*"
+          - "Confondre les deux donne des *résultats absurdes*"
+        voix_off: "On multiplie quand on enchaîne des choix indépendants, l'un après l'autre. On additionne quand on sépare des cas qui ne peuvent pas arriver en même temps. Confondre les deux donne des résultats absurdes : par exemple, un code à quatre chiffres n'a pas quarante possibilités, mais dix mille."
+      - type: titre
+        numero: 7
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "Combien de *podiums différents* avec *8 coureurs* ?"
+        pause: 10
+        voix_off: "Huit coureurs se présentent au départ. Combien de podiums différents sont possibles, en tenant compte de l'ordre or-argent-bronze ? Pause."
+      - type: correction
+        etapes:
+          - "1ʳᵉ place : *8 coureurs* possibles"
+          - "2ᵉ place : *7 coureurs* restants"
+          - "3ᵉ place : *6 coureurs*"
+          - "Total : *8 × 7 × 6 = 336*"
+        reponse: "336 podiums"
+        voix_off: "Huit pour la première place, sept pour la deuxième, six pour la troisième. Produit : trois cent trente-six. C'est l'arrangement de trois parmi huit."
+        verifier:
+          - {expression: "perm(8, 3)", attendu: 336, libelle: "Arrangements A(8, 3) : podiums"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Principe multiplicatif* : multiplier le nombre de choix successifs"
+          - "*Factorielle n!* : n × (n−1) × … × 1"
+          - "*Arrangement A(n, k)* : choisir k parmi n *avec* ordre"
+          - "Avant de multiplier : *l'ordre compte-t-il* ?"
+        voix_off: "À retenir. Le principe multiplicatif : quand on enchaîne des choix indépendants, on multiplie leurs nombres de possibilités. La factorielle compte les façons de ranger n objets en ligne. L'arrangement de k parmi n compte les façons d'extraire k objets avec ordre. Et avant de multiplier, on se demande toujours si l'ordre compte."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Counting without listing: the multiplication rule"
+    legende: |
+      How many 4-digit codes exist, and how many ways are there to arrange five books? In many probability problems, counting comes first. With an imaginary tree of choices, we meet the multiplication rule, factorials and arrangements. And, above all, when order matters, and when it does not. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, counting]
+    scenes:
+      - type: accroche
+        texte: "How many *4-digit codes*? No need to list them all."
+        voix_off: "We want to know how many 4-digit codes there are. Far too many to list them one by one. How do we do it?"
+      - type: titre
+        numero: 1
+        texte: "A tree of choices"
+        voix_off: "Picture a tree. At each level, a choice."
+      - type: etapes
+        texte: "*4-digit* codes"
+        etapes:
+          - "Digit 1: *10 possibilities* (0 to 9)"
+          - "Digit 2: *10 possibilities*"
+          - "Digit 3: *10 possibilities*"
+          - "Digit 4: *10 possibilities*"
+          - "Total: *10 × 10 × 10 × 10 = 10,000*"
+        voix_off: "A four-digit code. The first digit can be zero to nine: ten possibilities. The second: ten, independent of the first. The third: ten. The fourth: ten. Each branch splits into ten new branches. Total: ten thousand possible codes."
+        verifier:
+          - {expression: "10**4", attendu: 10000, libelle: "4-digit codes"}
+      - type: titre
+        numero: 2
+        texte: "The multiplication rule"
+        voix_off: "Here is the rule."
+      - type: formule
+        texte: "*total = n₁ × n₂ × … × nₖ*"
+        formule: "N = n_1 × n_2 × ... × n_k"
+        voix_off: "If you make k successive choices, and at the i-th step you have n_i possibilities, independent of the previous ones, then the number of possible outcomes is the product of the n_i. This is the multiplication rule."
+      - type: titre
+        numero: 3
+        texte: "When choices shrink: the factorial"
+        voix_off: "A new problem: how many ways to arrange five books on a shelf?"
+      - type: etapes
+        texte: "Arranging *5 books*"
+        etapes:
+          - "Position 1: *5 books* available"
+          - "Position 2: *4 books* left"
+          - "Position 3: *3 books*"
+          - "Position 4: *2 books*"
+          - "Position 5: *1 book*"
+          - "Total: *5 × 4 × 3 × 2 × 1 = 120*"
+        voix_off: "Five choices for the first position. Once placed, four books remain for the second, then three, two, one. The product is one hundred and twenty. This product has a name: five factorial, written five exclamation mark."
+        verifier:
+          - {expression: "factorial(5)", attendu: 120, libelle: "5 factorial"}
+      - type: formule
+        texte: "*n! = n × (n−1) × … × 1*"
+        formule: "n! = n × (n-1) × (n-2) × ... × 1"
+        voix_off: "The factorial of n is the product of the integers from one to n. It counts the number of ways to arrange n objects in a row, taking order into account. Zero factorial is one by convention: there is one way to arrange nothing."
+      - type: titre
+        numero: 4
+        texte: "Arranging k out of n: arrangements"
+        voix_off: "What if we only want a few of them?"
+      - type: etapes
+        texte: "A *podium* from 10 runners"
+        etapes:
+          - "Gold: *10 runners* available"
+          - "Silver: *9 runners* left"
+          - "Bronze: *8 runners*"
+          - "Total: *10 × 9 × 8 = 720*"
+        voix_off: "Ten runners, three podium steps. Ten choices for gold, nine for silver, eight for bronze. Product: seven hundred and twenty. This is an *arrangement*: three runners picked from ten, and order matters, because gold is not bronze."
+        verifier:
+          - {expression: "perm(10, 3)", attendu: 720, libelle: "Arrangements A(10, 3)"}
+      - type: formule
+        texte: "*A(n, k) = n! / (n−k)!*"
+        formule: "A(n, k) = n! / (n-k)!"
+        voix_off: "The arrangement of k out of n, A(n, k), is n factorial divided by (n − k) factorial. It counts the ways to pick k objects out of n, in a given order."
+      - type: titre
+        numero: 5
+        texte: "Does order matter?"
+        voix_off: "Before multiplying, one question."
+      - type: etapes
+        texte: "*Two questions* to ask"
+        etapes:
+          - "Are the *objects* interchangeable, or distinct?"
+          - "Does the *result* depend on the order, or only on the list?"
+        voix_off: "Are the objects all different? A die has six distinct faces, a podium three distinct medals: yes. Does order change the result? For a 4-digit code, yes: one two three four is not four three two one. For a podium, yes: gold is not bronze. If one answer is no, the multiplication rule must be adjusted: that is next lesson, combinations."
+      - type: titre
+        numero: 6
+        texte: "Classic mistake"
+        voix_off: "A very common mistake."
+      - type: etapes
+        texte: "Add or multiply?"
+        etapes:
+          - "*Multiply* when choices come *one after another*"
+          - "*Add* when there are *disjoint cases*"
+          - "Mixing the two gives *absurd results*"
+        voix_off: "Multiply when you chain independent choices one after another. Add when you split disjoint cases that cannot happen at once. Mixing the two gives absurd results: a 4-digit code does not have forty possibilities, it has ten thousand."
+      - type: titre
+        numero: 7
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "How many *different podiums* with *8 runners*?"
+        pause: 10
+        voix_off: "Eight runners at the start. How many different podiums are possible, counting gold-silver-bronze order? Pause."
+      - type: correction
+        etapes:
+          - "Gold: *8 runners* available"
+          - "Silver: *7 runners* left"
+          - "Bronze: *6 runners*"
+          - "Total: *8 × 7 × 6 = 336*"
+        reponse: "336 podiums"
+        voix_off: "Eight for gold, seven for silver, six for bronze. Product: three hundred and thirty-six. This is the arrangement of three out of eight."
+        verifier:
+          - {expression: "perm(8, 3)", attendu: 336, libelle: "Arrangements A(8, 3): podiums"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Multiplication rule*: multiply the choices in each step"
+          - "*Factorial n!*: n × (n−1) × … × 1"
+          - "*Arrangement A(n, k)*: choose k out of n *with* order"
+          - "Before multiplying: *does order matter*?"
+        voix_off: "Key points. The multiplication rule: when chaining independent choices, multiply their counts. The factorial counts ways to arrange n objects in a row. The arrangement of k out of n counts ways to pick k with order. And always ask first: does order matter?"
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
