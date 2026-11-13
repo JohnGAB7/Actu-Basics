@@ -1147,6 +1147,7 @@ def footer_fr(depth: int) -> str:
         f'<a href="{b}programme/">Programme</a>'
         f'<a href="{b}parcours/">Parcours</a>'
         f'<a href="{b}bibliotheque/">Bibliothèque</a>'
+        f'<a href="{b}data/">Jeux de données</a>'
         f'<a href="{b}a-propos/">À propos</a>'
         f'</div></div>'
         f'<div><h3>Suivre</h3><div class="social-links">'
@@ -1174,6 +1175,7 @@ def footer_en(depth: int) -> str:
         f'<a href="{b}en/programme/">Programme</a>'
         f'<a href="{b}en/paths/">Learning paths</a>'
         f'<a href="{b}en/library/">Library</a>'
+        f'<a href="{b}en/data/">Datasets</a>'
         f'<a href="{b}en/about/">About</a>'
         f'</div></div>'
         f'<div><h3>Follow</h3><div class="social-links">'
@@ -1235,7 +1237,11 @@ def _youtube_embed_url(url: str) -> str | None:
 
     if not vid or not _VIDEO_ID_RE.match(vid):
         return None
-    return f"https://www.youtube.com/embed/{vid}"
+    # Domaine "nocookie" : les vues YouTube sont comptées exactement comme sur
+    # www.youtube.com (c'est le même lecteur officiel), mais aucun cookie n'est
+    # posé avant que le lecteur ne soit activé. Ça simplifie la conformité RGPD
+    # et évite le bandeau de consentement pour les leçons sans interaction.
+    return f"https://www.youtube-nocookie.com/embed/{vid}"
 
 
 def _tiktok_safe_url(url: str) -> str | None:
@@ -1397,6 +1403,260 @@ def parcours_for_lesson(code: str, parcours_list: list[dict]) -> list[dict]:
     return [p for p in parcours_list if mod in (p.get("modules") or [])]
 
 
+# --- Jeux de données ------------------------------------------------------
+#
+# Chaque fiche peut déclarer un bloc `donnees:` listant les fichiers de
+# données (CSV, XLSX, JSON) que le lecteur peut télécharger pour reproduire
+# l'exercice. Les fichiers sont stockés dans `/docs/data/<code>/` et servis
+# tels quels par GitHub Pages. La page leçon rend un bloc « Jeux de données »
+# avec un bouton Télécharger par fichier ; l'index global `/data/` (et
+# `/en/data/`) en liste l'ensemble, regroupé par module.
+#
+# Schéma attendu dans la fiche :
+#   donnees:
+#     - titre:
+#         fr: "Ventes mensuelles 2024"
+#         en: "Monthly sales 2024"
+#       description:
+#         fr: "12 lignes, colonne Mois et colonne Chiffre d'affaires."
+#         en: "12 rows, columns Month and Revenue."
+#       fichier: ventes-2024.csv       # chemin relatif sous docs/data/<code>/
+#       format: CSV                     # libellé libre affiché (CSV, XLSX, …)
+#       source:                         # optionnel — attribution
+#         fr: "Jeu fictif produit pour l'exercice."
+#         en: "Fictional dataset for this exercise."
+
+_FORMAT_ICONS = {
+    "csv": "📊",
+    "xlsx": "📘",
+    "xls": "📘",
+    "json": "{·}",
+    "tsv": "📊",
+    "txt": "📄",
+    "md": "📄",
+}
+
+
+def _dataset_entries(data: dict | None) -> list[dict]:
+    if not isinstance(data, dict):
+        return []
+    d = data.get("donnees") or []
+    return [e for e in d if isinstance(e, dict) and e.get("fichier")]
+
+
+def build_datasets_block(data: dict | None, code: str, lang: str) -> str:
+    """Rend le bloc « Jeux de données » sur une page leçon.
+
+    Les fichiers sont servis depuis `/docs/data/<code>/` (racine FR) ; la
+    page EN pointe aussi vers la même racine FR car un jeu de données
+    bilingue partage son fichier binaire.
+    """
+    entries = _dataset_entries(data)
+    if not entries:
+        return ""
+
+    L = {
+        "fr": {
+            "h": "Jeux de données",
+            "intro": "Téléchargez les données utilisées dans la leçon pour reproduire chaque étape.",
+            "download": "Télécharger",
+            "source": "Source",
+        },
+        "en": {
+            "h": "Datasets",
+            "intro": "Download the data used in the lesson to reproduce every step.",
+            "download": "Download",
+            "source": "Source",
+        },
+    }[lang]
+
+    base_path = f"../../data/{code}/" if lang == "fr" else f"../../../data/{code}/"
+
+    cards = []
+    for e in entries:
+        fn = str(e.get("fichier", "")).strip().lstrip("/")
+        if not fn or ".." in fn:
+            continue
+        titre = pick_lang(e.get("titre"), lang) or fn
+        desc = pick_lang(e.get("description"), lang) or ""
+        fmt = (e.get("format") or fn.rsplit(".", 1)[-1]).upper()
+        icon = _FORMAT_ICONS.get(fmt.lower(), "📄")
+        source = pick_lang(e.get("source"), lang) or ""
+        href = base_path + fn
+        source_line = (
+            f'<p class="dataset-source"><strong>{L["source"]}</strong> · {md_inline(source)}</p>'
+            if source else ""
+        )
+        cards.append(
+            f'<article class="dataset-card">'
+            f'<div class="dataset-icon" aria-hidden="true">{icon}</div>'
+            f'<div class="dataset-body">'
+            f'<h3>{md_inline(titre)}</h3>'
+            f'{f"<p>{md_inline(desc)}</p>" if desc else ""}'
+            f'{source_line}'
+            f'<a class="button button-outline" href="{html.escape(href)}" download>'
+            f'{L["download"]} · {html.escape(fmt)}'
+            f'</a>'
+            f'</div></article>'
+        )
+    if not cards:
+        return ""
+    return (
+        f'<section class="lesson-datasets" aria-label="{L["h"]}">'
+        f'<h2>{L["h"]}</h2>'
+        f'<p class="lesson-datasets-intro">{L["intro"]}</p>'
+        f'<div class="dataset-grid">{"".join(cards)}</div>'
+        f'</section>'
+    )
+
+
+def render_datasets_index(lessons: list[dict], lang: str) -> str:
+    """Index global des jeux de données, regroupés par module."""
+    is_fr = lang == "fr"
+    base = "../" if is_fr else "../../"
+
+    L = {
+        "fr": {
+            "head_title": "Jeux de données · ACTU-BASICS",
+            "head_desc": "Tous les jeux de données utilisés dans les leçons ACTU-BASICS, à télécharger pour pratiquer.",
+            "canon": "https://johngab7.github.io/le-monde-en-chiffres/data/",
+            "alt": "https://johngab7.github.io/le-monde-en-chiffres/en/data/",
+            "og_locale": "fr_BE",
+            "og_title": "Jeux de données · ACTU-BASICS",
+            "skip": "Aller au contenu",
+            "home": "ACTU-BASICS",
+            "breadcrumb": "Jeux de données",
+            "eyebrow": "Pratiquer",
+            "h1": "Jeux de données",
+            "lead": "Tous les fichiers CSV, XLSX et JSON utilisés dans les leçons. Téléchargez-les pour reproduire chaque exemple dans Excel ou Python.",
+            "empty": "Les jeux de données arrivent au fil des leçons.",
+            "module": "Module",
+            "download": "Télécharger",
+            "open_lesson": "Ouvrir la leçon →",
+        },
+        "en": {
+            "head_title": "Datasets · ACTU-BASICS",
+            "head_desc": "Every dataset used in ACTU-BASICS lessons, ready to download and practice with.",
+            "canon": "https://johngab7.github.io/le-monde-en-chiffres/en/data/",
+            "alt": "https://johngab7.github.io/le-monde-en-chiffres/data/",
+            "og_locale": "en_US",
+            "og_title": "Datasets · ACTU-BASICS",
+            "skip": "Skip to content",
+            "home": "ACTU-BASICS",
+            "breadcrumb": "Datasets",
+            "eyebrow": "Practice",
+            "h1": "Datasets",
+            "lead": "Every CSV, XLSX and JSON used in the lessons. Download them to reproduce each example in Excel or Python.",
+            "empty": "Datasets will be added as lessons ship.",
+            "module": "Module",
+            "download": "Download",
+            "open_lesson": "Open lesson →",
+        },
+    }[lang]
+
+    # Regroupe par module.
+    by_module: dict[str, list[tuple[dict, dict]]] = {}
+    for L_item in lessons:
+        entries = _dataset_entries(L_item.get("data"))
+        if not entries:
+            continue
+        by_module.setdefault(L_item["module"], []).append((L_item, entries))
+
+    sections: list[str] = []
+    for mod in sorted(by_module.keys(), key=module_sort_key):
+        meta = module_meta(mod, lang)
+        rows = []
+        for L_item, entries in by_module[mod]:
+            code = L_item["code"]
+            ed = (L_item.get("data") or {}).get("editions", {}).get(lang, {})
+            titre_lecon = ed.get("titre", code)
+            lesson_href = (
+                f'{base}lecons/{code}/' if is_fr else f'{base}en/lessons/{code}/'
+            )
+            file_rows = []
+            data_base = f'{base}data/{code}/'
+            for e in entries:
+                fn = str(e.get("fichier", "")).strip().lstrip("/")
+                if not fn or ".." in fn:
+                    continue
+                titre_ds = pick_lang(e.get("titre"), lang) or fn
+                fmt = (e.get("format") or fn.rsplit(".", 1)[-1]).upper()
+                icon = _FORMAT_ICONS.get(fmt.lower(), "📄")
+                href = data_base + fn
+                file_rows.append(
+                    f'<li class="dataset-row">'
+                    f'<span class="dataset-row-icon" aria-hidden="true">{icon}</span>'
+                    f'<span class="dataset-row-title">{md_inline(titre_ds)}</span>'
+                    f'<a class="text-link" href="{html.escape(href)}" download>{L["download"]} · {html.escape(fmt)}</a>'
+                    f'</li>'
+                )
+            rows.append(
+                f'<div class="dataset-lesson-group">'
+                f'<div class="dataset-lesson-head">'
+                f'<span class="lesson-code">{code}</span>'
+                f'<h3><a href="{lesson_href}">{md_inline(titre_lecon)}</a></h3>'
+                f'</div>'
+                f'<ul class="dataset-row-list">{"".join(file_rows)}</ul>'
+                f'</div>'
+            )
+        sections.append(
+            f'<section class="section-tight"><div class="container">'
+            f'<div class="section-head"><div>'
+            f'<span class="eyebrow">{L["module"]} {mod}</span>'
+            f'<h2>{html.escape(meta["titre"])}</h2>'
+            f'</div></div>'
+            f'{"".join(rows)}'
+            f'</div></section>'
+        )
+
+    if not sections:
+        sections.append(
+            f'<section class="section"><div class="container">'
+            f'<p class="muted">{L["empty"]}</p>'
+            f'</div></section>'
+        )
+
+    head = (
+        f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
+        f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<meta name="description" content="{html.escape(L["head_desc"])}">'
+        f'<meta name="theme-color" content="#0f2130">'
+        f'<link rel="canonical" href="{L["canon"]}">'
+        f'<link rel="alternate" hreflang="fr" href="https://johngab7.github.io/le-monde-en-chiffres/data/">'
+        f'<link rel="alternate" hreflang="en" href="https://johngab7.github.io/le-monde-en-chiffres/en/data/">'
+        f'<meta property="og:type" content="website">'
+        f'<meta property="og:locale" content="{L["og_locale"]}">'
+        f'<meta property="og:title" content="{html.escape(L["og_title"])}">'
+        f'<meta property="og:url" content="{L["canon"]}">'
+        f'<title>{html.escape(L["head_title"])}</title>'
+        f'{_premium_head_assets(base)}'
+        f'</head>'
+    )
+    header = (header_fr if is_fr else header_en)(
+        depth=1 if is_fr else 2, current="library" if not is_fr else "bibliotheque"
+    )
+    footer = (footer_fr if is_fr else footer_en)(depth=1 if is_fr else 2)
+
+    body = (
+        f'<body>'
+        f'<a class="skip-link" href="#contenu">{L["skip"]}</a>'
+        f'{header}'
+        f'<main id="contenu">'
+        f'<section class="page-hero"><div class="container">'
+        f'<div class="breadcrumb">'
+        f'<a href="{base}{"index.html" if is_fr else "en/"}">{L["home"]}</a> / '
+        f'{L["breadcrumb"]}'
+        f'</div>'
+        f'<span class="eyebrow">{L["eyebrow"]}</span>'
+        f'<h1>{L["h1"]}</h1>'
+        f'<p>{L["lead"]}</p>'
+        f'</div></section>'
+        f'{"".join(sections)}'
+        f'</main>{footer}</body></html>'
+    )
+    return head + body
+
+
 # --- Page leçon ------------------------------------------------------------
 
 def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None = None) -> str:
@@ -1538,6 +1798,7 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
     )
 
     video_block = build_video_block(data, lang)
+    datasets_block = build_datasets_block(data, code, lang)
 
     # Parcours auxquels appartient cette leçon (0, 1 ou plusieurs).
     parcours_matching = parcours_for_lesson(code, parcours_list or [])
@@ -1575,6 +1836,7 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
         f'{obj_block}{pre_block}'
         f'{scene_html}'
         f'{hyp_block}'
+        f'{datasets_block}'
         f'{takeaway_html}'
         f'</article>'
         f'<aside class="lesson-aside">'
@@ -2948,6 +3210,18 @@ def main() -> int:
         )
         module_pages += 2
 
+    # Index des jeux de données (FR + EN).
+    (DOCS / "data").mkdir(parents=True, exist_ok=True)
+    (DOCS / "en" / "data").mkdir(parents=True, exist_ok=True)
+    (DOCS / "data" / "index.html").write_text(
+        render_datasets_index(lessons_for_lib, "fr"), encoding="utf-8"
+    )
+    (DOCS / "en" / "data" / "index.html").write_text(
+        render_datasets_index(lessons_for_lib, "en"), encoding="utf-8"
+    )
+    # Décompte des datasets effectivement référencés par les fiches.
+    total_datasets = sum(len(_dataset_entries(L["data"])) for L in lessons_for_lib)
+
     # Page de référence du design system (tokens + composants).
     (DOCS / "technique").mkdir(parents=True, exist_ok=True)
     (DOCS / "technique" / "design-system" / "index.html").parent.mkdir(exist_ok=True)
@@ -2962,6 +3236,7 @@ def main() -> int:
     print(f"Pages parcours   : {parcours_pages} (index + détails, FR + EN)")
     print(f"Programme        : FR + EN générée")
     print(f"Pages de module  : {module_pages} ({len(all_modules)} modules × FR + EN)")
+    print(f"Jeux de données  : FR + EN index générés ({total_datasets} entrées référencées)")
     print(f"Design system    : page de référence générée")
     return 0
 

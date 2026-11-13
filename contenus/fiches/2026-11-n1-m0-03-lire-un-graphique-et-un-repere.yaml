@@ -35,6 +35,22 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 
 sources: []
 
+# Jeux de données associés à la leçon. Les fichiers sont servis depuis
+# /docs/data/M0-03/. Donnée fictive produite pour l'exercice, à reproduire
+# à la main ou dans un tableur pour pratiquer la lecture d'un graphique.
+donnees:
+  - titre:
+      fr: "Températures moyennes 2024 — une ville fictive"
+      en: "Monthly mean temperatures 2024 — a fictional city"
+    description:
+      fr: "12 lignes, deux colonnes (mois, température en °C). Jeu fictif pour tracer un graphique et lire les ordres de grandeur."
+      en: "12 rows, two columns (month, temperature in °C). Fictional dataset to plot a chart and read orders of magnitude."
+    fichier: temperatures-2024-ville-fictive.csv
+    format: CSV
+    source:
+      fr: "Données fictives produites pour la leçon M0-03."
+      en: "Fictional data produced for lesson M0-03."
+
 editions:
   fr:
     titre: "Que dit vraiment un point sur un graphique ?"

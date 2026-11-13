@@ -515,6 +515,30 @@ def test_premium_foundations() -> None:
     if "actubasics.officiel@gmail.com" in en_home:
         F.add(name, "accueil EN : contact FR visible par erreur")
 
+    # 7) Jeux de données : la fiche M0-03 déclare un dataset ; le bloc doit
+    #    apparaître sur la leçon et le CSV doit exister. L'index global existe
+    #    en FR et EN et liste la leçon. L'embed YouTube bascule sur nocookie.
+    fr_m003 = (ROOT / "docs" / "lecons" / "M0-03" / "index.html").read_text(encoding="utf-8")
+    en_m003 = (ROOT / "docs" / "en" / "lessons" / "M0-03" / "index.html").read_text(encoding="utf-8")
+    if "lesson-datasets" not in fr_m003 or "temperatures-2024-ville-fictive.csv" not in fr_m003:
+        F.add(name, "M0-03 FR : bloc Jeux de données manquant ou fichier non référencé")
+    if "lesson-datasets" not in en_m003 or "temperatures-2024-ville-fictive.csv" not in en_m003:
+        F.add(name, "M0-03 EN : bloc Datasets manquant ou fichier non référencé")
+    csv_path = ROOT / "docs" / "data" / "M0-03" / "temperatures-2024-ville-fictive.csv"
+    if not csv_path.exists():
+        F.add(name, "fichier CSV M0-03 manquant sur disque")
+    for p in (ROOT / "docs" / "data" / "index.html", ROOT / "docs" / "en" / "data" / "index.html"):
+        if not p.exists():
+            F.add(name, f"index datasets manquant : {p.relative_to(ROOT)}")
+            continue
+        txt = p.read_text(encoding="utf-8")
+        if "M0-03" not in txt or "temperatures-2024-ville-fictive.csv" not in txt:
+            F.add(name, f"{p.relative_to(ROOT)} : ne liste pas le dataset M0-03")
+    # Embed YouTube : la fonction doit produire une URL nocookie
+    embed = B._youtube_embed_url("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    if not embed or "youtube-nocookie.com/embed/" not in embed:
+        F.add(name, "embed YouTube n'utilise pas youtube-nocookie.com")
+
 
 def test_courbe_svg_rendering() -> None:
     """Chaque style de courbe produit un <svg> accessible avec aria-label.
