@@ -483,6 +483,38 @@ def test_premium_foundations() -> None:
     if not ds.exists():
         F.add(name, "page design system manquante")
 
+    # 5) Les pages de module existent (FR + EN) pour M0 et S1, chargent les
+    #    assets premium, et depuis Programme le code du module est cliquable.
+    for mod in ("M0", "S1", "A1"):
+        fr_mod = ROOT / "docs" / "modules" / mod / "index.html"
+        en_mod = ROOT / "docs" / "en" / "modules" / mod / "index.html"
+        for p in (fr_mod, en_mod):
+            if not p.exists():
+                F.add(name, f"module {mod} : {p.relative_to(ROOT)} manquante")
+                continue
+            t = p.read_text(encoding="utf-8")
+            for token in ("tokens.css", "premium.css", "data-theme-toggle"):
+                if token not in t:
+                    F.add(name, f"{p.relative_to(ROOT)} : {token} manquant")
+    # Depuis Programme FR, le lien vers /modules/M0/ doit être présent.
+    if 'href="../modules/M0/"' not in fr:
+        F.add(name, "programme FR : lien ../modules/M0/ manquant")
+    if 'href="../../en/modules/M0/"' not in en:
+        F.add(name, "programme EN : lien ../../en/modules/M0/ manquant")
+
+    # 6) Contacts par langue : FR porte actubasics.officiel, EN porte
+    #    actubasics.official, et chaque langue n'inclut que le sien.
+    fr_home = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+    en_home = (ROOT / "docs" / "en" / "index.html").read_text(encoding="utf-8")
+    if "actubasics.officiel@gmail.com" not in fr_home:
+        F.add(name, "accueil FR : actubasics.officiel@gmail.com manquant")
+    if "actubasics.official@gmail.com" not in en_home:
+        F.add(name, "accueil EN : actubasics.official@gmail.com manquant")
+    if "actubasics.official@gmail.com" in fr_home:
+        F.add(name, "accueil FR : contact EN visible par erreur")
+    if "actubasics.officiel@gmail.com" in en_home:
+        F.add(name, "accueil EN : contact FR visible par erreur")
+
 
 def test_courbe_svg_rendering() -> None:
     """Chaque style de courbe produit un <svg> accessible avec aria-label.
