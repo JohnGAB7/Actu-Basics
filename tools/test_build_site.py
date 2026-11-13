@@ -451,7 +451,7 @@ def test_premium_foundations() -> None:
         ROOT / "docs" / "programme" / "index.html",
         ROOT / "docs" / "en" / "programme" / "index.html",
     ]
-    required = ["tokens.css", "premium.css", "print.css", "Fraunces", "data-theme-toggle", "ab-theme"]
+    required = ["tokens.css", "premium.css", "print.css", "Source+Serif+4", "data-theme-toggle", "ab-theme"]
     for pg in sample_pages:
         if not pg.exists():
             F.add(name, f"page absente : {pg.relative_to(ROOT)}")
