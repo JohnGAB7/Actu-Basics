@@ -118,7 +118,7 @@ def check_library_search(browser, browser_name: str, path: str, lang: str) -> No
     page.goto(BASE + path, wait_until="networkidle")
     search = page.locator("[data-search]")
     check(search.count() == 1, f"{browser_name} {lang}: champ de recherche absent")
-    search.fill("Literary Digest")
+    search.fill("S1-05")
     card = page.locator('[data-lesson]').filter(has_text="S1-05")
     check(card.count() == 1 and card.is_visible(),
           f"{browser_name} {lang}: la recherche ne retrouve pas S1-05")
