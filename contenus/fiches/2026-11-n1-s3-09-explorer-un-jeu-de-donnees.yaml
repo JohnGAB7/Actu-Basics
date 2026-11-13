@@ -1,0 +1,358 @@
+# Niveau 1, vague 1, lot 4 : S3.09 « Explorer un jeu de données de A à Z » (YOUTUBE_LESSON, étude de cas, 12-20 min)
+# Nombres fictifs : 12 mois de naissances dans une région imaginaire. L'objet pédagogique est la démarche,
+# pas la statistique démographique. Aucune source réelle n'est citée : les chiffres sont inventés pour l'exemple.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s3-09-explorer-un-jeu-de-donnees
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: youtube_lesson
+habillage_sonore: true
+theme: "S3.09 · Explorer un jeu de données de A à Z"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Appliquer la démarche complète : question, provenance, nettoyage, description, graphique, limites, conclusion"
+      - "Rédiger une conclusion honnête en trois phrases"
+    en:
+      - "Apply the full workflow: question, provenance, cleaning, description, chart, limits, conclusion"
+      - "Write an honest three-sentence conclusion"
+  prerequis:
+    fr:
+      - "S3.01 : comparer des groupes"
+      - "S3.05 : la corrélation"
+      - "S3.08 : indices et moyennes mobiles"
+      - "S1.07 : données manquantes, erreurs, définitions"
+    en:
+      - "S3.01: comparing groups"
+      - "S3.05: correlation"
+      - "S3.08: indices and moving averages"
+      - "S1.07: missing data, errors, definitions"
+  hypotheses:
+    fr: "Jeu de données imaginaire : naissances par mois dans une région fictive. Aucun chiffre réel."
+    en: "Fictional dataset: births per month in a fictional region. No real numbers."
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Un jeu de données de A à Z : la démarche complète"
+    legende: |
+      Un tableau de chiffres atterrit sur votre bureau. Que fait-on ? On ne commence pas par calculer. Avec une étude de cas imaginaire — les naissances mois par mois dans une région fictive —, on parcourt toute la démarche : poser une question, vérifier la provenance, nettoyer les données, les décrire, les représenter, en identifier les limites, et conclure en trois phrases honnêtes. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, demarche, etudedecas]
+    scenes:
+      - type: accroche
+        texte: "Un *tableau de chiffres* tombe sur le bureau. On fait quoi ?"
+        voix_off: "Un collègue vous envoie un tableau de données, douze lignes, deux colonnes. Il faut en « tirer quelque chose » pour demain. On commence par quoi ?"
+      - type: titre
+        numero: 1
+        texte: "Les données imaginaires du jour"
+        voix_off: "Voici ce que contient ce tableau imaginaire."
+      - type: etapes
+        texte: "Naissances mensuelles, *région fictive*"
+        etapes:
+          - "Janvier · 820"
+          - "Février · 790"
+          - "Mars · 850"
+          - "Avril · 880"
+          - "Mai · 920"
+          - "Juin · 950"
+          - "Juillet · 1 010"
+          - "Août · 980"
+          - "Septembre · 930"
+          - "Octobre · 890"
+          - "Novembre · 850"
+          - "Décembre · 810"
+        note: "Chiffres inventés : région fictive. Aucun chiffre réel."
+        voix_off: "Douze mois, de janvier à décembre, et un nombre de naissances pour chaque mois. On est tenté d'appuyer tout de suite sur le bouton « calculer la moyenne ». On va résister, et faire sept gestes dans l'ordre."
+      - type: titre
+        numero: 2
+        texte: "Geste 1 : quelle question ?"
+        voix_off: "Avant tout chiffre, une question."
+      - type: etapes
+        texte: "La question *précède* le calcul"
+        etapes:
+          - "Y a-t-il *plus de naissances* en été qu'en hiver ?"
+          - "La différence est-elle *forte* ou *marginale* ?"
+          - "Que pourrait-elle *cacher* ?"
+        voix_off: "Qu'est-ce qu'on veut savoir ? Dans notre cas, trois questions en une : y a-t-il plus de naissances en été qu'en hiver, de combien, et qu'est-ce que cela pourrait vouloir dire ? Sans question, on fait parler les données à notre place."
+      - type: titre
+        numero: 3
+        texte: "Geste 2 : la provenance"
+        voix_off: "D'où viennent ces chiffres ?"
+      - type: etapes
+        texte: "Les *cinq questions* à poser sur la source"
+        etapes:
+          - "Qui *a produit* le chiffre ?"
+          - "*Quoi exactement* : la définition"
+          - "Sur *quelle population* ?"
+          - "Sur *quelle période* ?"
+          - "*Quand* ces chiffres sont-ils datés ?"
+        voix_off: "Qui a produit le chiffre : un organisme officiel, un sondage, une estimation ? Quoi exactement : une naissance déclarée, une naissance à l'hôpital, une naissance avant un jour donné ? Sur quelle population : toute la région, une ville seulement ? Sur quelle période : une année, une moyenne sur dix ans ? Et quand : les chiffres de 2015 ne disent pas la même chose que ceux de 2024. Dans notre exemple imaginaire, on l'ignore volontairement, pour voir ce que la démarche révèle."
+      - type: titre
+        numero: 4
+        texte: "Geste 3 : les données parlent avant la moyenne"
+        voix_off: "Avant de résumer, on regarde."
+      - type: courbe
+        texte: "Les 12 mois, *en barres*"
+        courbe:
+          style: barres
+          points: [[1, 820], [2, 790], [3, 850], [4, 880], [5, 920], [6, 950], [7, 1010], [8, 980], [9, 930], [10, 890], [11, 850], [12, 810]]
+          x_min: 0
+          x_max: 13
+          y_min: 700
+          y_max: 1100
+          axe_x: "Mois"
+          axe_y: "Naissances"
+        note: "Région fictive. Chiffres inventés."
+        voix_off: "Le graphique est fait avant la moyenne. Et on voit tout de suite une forme : un creux en début d'année, un pic en milieu d'année, et des mois intermédiaires qui montent et descendent. La moyenne seule aurait caché cette forme. Qu'elle corresponde à une vraie saisonnalité se jugera sur plusieurs années, pas sur une."
+      - type: titre
+        numero: 5
+        texte: "Geste 4 : décrire avec quelques nombres"
+        voix_off: "Maintenant, les nombres, mais ceux qui ajoutent quelque chose."
+      - type: etapes
+        texte: "*Quatre* nombres utiles"
+        etapes:
+          - "*Moyenne mensuelle* : 890"
+          - "*Mois le plus bas* : février (790)"
+          - "*Mois le plus haut* : juillet (1 010)"
+          - "*Écart entre les deux* : 220, soit environ 28 %"
+        voix_off: "Moyenne mensuelle : huit cent quatre-vingt-dix. Mois le plus bas : février, sept cent quatre-vingt-dix. Mois le plus haut : juillet, mille dix. L'écart entre les deux vaut deux cent vingt, soit environ vingt-huit pour cent du minimum. Ce dernier chiffre est le plus parlant : il quantifie le pic d'été."
+        verifier:
+          - {expression: "round(sum([820, 790, 850, 880, 920, 950, 1010, 980, 930, 890, 850, 810]) / 12, 1)", attendu: 890.0, libelle: "Moyenne mensuelle"}
+          - {expression: "round((1010 - 790) / 790 * 100, 0)", attendu: 28.0, libelle: "Écart juillet/février en pourcentage du min"}
+      - type: titre
+        numero: 6
+        texte: "Geste 5 : lisser pour voir la tendance"
+        voix_off: "On applique ce que l'on a vu en S3.08 : la moyenne mobile."
+      - type: etapes
+        texte: "*Moyenne mobile sur 3 mois*"
+        etapes:
+          - "Janvier · 820 · —"
+          - "Février · 790 · 820"
+          - "Mars · 850 · 840"
+          - "Avril · 880 · 883"
+          - "Mai · 920 · 917"
+          - "Juin · 950 · 960"
+          - "Juillet · 1 010 · 980"
+          - "Août · 980 · 973"
+          - "Septembre · 930 · 933"
+          - "Octobre · 890 · 890"
+          - "Novembre · 850 · 850"
+          - "Décembre · 810 · —"
+        voix_off: "La série lissée confirme la forme : elle monte régulièrement du début d'année jusqu'à juin, culmine autour de juillet, puis redescend jusqu'en décembre. Les vagues mensuelles s'effacent, la tendance apparaît."
+        verifier:
+          - {expression: "round((820 + 790 + 850) / 3, 0)", attendu: 820.0, libelle: "MM3 en février"}
+          - {expression: "round((950 + 1010 + 980) / 3, 0)", attendu: 980.0, libelle: "MM3 en juillet"}
+      - type: titre
+        numero: 7
+        texte: "Geste 6 : les limites"
+        voix_off: "Puis on dit ce que ces chiffres ne disent pas."
+      - type: etapes
+        texte: "Ce que *la table ne dit pas*"
+        etapes:
+          - "Pas de *source* ni de *date* : on ne peut pas vérifier"
+          - "*Une seule année* : impossible de parler de tendance longue"
+          - "Pas de *décomposition* : ville / campagne, âge de la mère"
+          - "Pas d'*écart-type* : les 1 010 sont peut-être la moyenne de mois très différents"
+        voix_off: "Sans source ni date, on ne peut pas vérifier. Une seule année ne permet pas de dire si cette saisonnalité se répète. Il n'y a pas de décomposition par ville ou par âge : la différence pourrait venir d'une seule sous-population. Et il n'y a pas d'écart-type : les mille dix de juillet pourraient être la moyenne de mois très dispersés d'une année sur l'autre."
+      - type: titre
+        numero: 8
+        texte: "Geste 7 : conclure en trois phrases"
+        voix_off: "Et on finit par trois phrases honnêtes."
+      - type: etapes
+        texte: "La *conclusion* tient en trois phrases"
+        etapes:
+          - "*Ce qu'on observe* : le pic d'été est d'environ 28 % au-dessus du creux d'hiver"
+          - "*Ce que ça peut être* : un cycle, une variation ponctuelle, ou les deux — indiscernable sur une seule année"
+          - "*Ce qu'il faudrait pour aller plus loin* : plusieurs années, et une décomposition"
+        voix_off: "Un, ce qu'on observe. Dans cette région fictive, le mois de juillet enregistre environ vingt-huit pour cent de naissances de plus que février, dans les données reçues. Deux, ce que cela peut être. On ne peut pas dire, avec une seule année, s'il s'agit d'une saisonnalité qui se répète ou d'une variation ponctuelle de cette année-là. Trois, ce qu'il faudrait. Plusieurs années de données pour tester la répétition, et une décomposition par zone ou par âge pour savoir à quoi elle tient."
+      - type: titre
+        numero: 9
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "On vous envoie un tableau de données que vous n'avez jamais vu. Formulez *trois questions* à poser avant tout graphique."
+        pause: 12
+        voix_off: "Un tableau arrive, vous ne l'avez jamais vu. Avant tout graphique, avant toute moyenne, écrivez trois questions. Pause."
+      - type: correction
+        etapes:
+          - "*Qui* a produit le chiffre, *quoi exactement*, *quand* ?"
+          - "Y a-t-il *une seule période* ou *plusieurs* ?"
+          - "La définition est-elle *la même* partout ?"
+        reponse: "Provenance, période, définition homogène"
+        voix_off: "Une réponse possible. Qui a produit le chiffre, quoi exactement, quand : les cinq questions de la provenance. Y a-t-il une seule période ou plusieurs : impossible de parler de tendance sans plusieurs points. Et la définition est-elle la même partout : un changement de définition peut créer un faux saut. Avec ces trois questions, vous êtes déjà à mi-parcours."
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Question* avant *calcul*"
+          - "*Provenance*, *nettoyage*, *description*, *graphique*, *limites*, *conclusion*"
+          - "*Trois phrases honnêtes* valent mieux qu'un tableau de nombres précis"
+        voix_off: "À retenir. Une question précède tout calcul. La démarche est linéaire : provenance, nettoyage, description, graphique, limites, conclusion. Et trois phrases honnêtes, avec leurs limites, valent mieux qu'un tableau de chiffres au centième."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "A dataset from start to finish: the full workflow"
+    legende: |
+      A table of numbers lands on your desk. What do you do? You do not start by computing. With a fictional case study — monthly births in an imaginary region — we walk through the full workflow: ask a question, check the provenance, clean, describe, chart, state the limits, and conclude in three honest sentences. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, workflow, casestudy]
+    scenes:
+      - type: accroche
+        texte: "A *table of numbers* lands on your desk. What do you do?"
+        voix_off: "A colleague sends you a table of data, twelve rows, two columns. You need to 'get something out of it' by tomorrow. Where do you start?"
+      - type: titre
+        numero: 1
+        texte: "Today's imaginary dataset"
+        voix_off: "Here is what the table contains."
+      - type: etapes
+        texte: "Monthly births, *fictional region*"
+        etapes:
+          - "January · 820"
+          - "February · 790"
+          - "March · 850"
+          - "April · 880"
+          - "May · 920"
+          - "June · 950"
+          - "July · 1,010"
+          - "August · 980"
+          - "September · 930"
+          - "October · 890"
+          - "November · 850"
+          - "December · 810"
+        note: "Made-up numbers: fictional region. No real data."
+        voix_off: "Twelve months, January to December, and a number of births for each. You are tempted to press 'compute the mean' straight away. We'll resist, and go through seven steps, in order."
+      - type: titre
+        numero: 2
+        texte: "Step 1: which question?"
+        voix_off: "Before any number, a question."
+      - type: etapes
+        texte: "The question *comes first*"
+        etapes:
+          - "Are there *more births* in summer than in winter?"
+          - "Is the gap *large* or *marginal*?"
+          - "What might it *hide*?"
+        voix_off: "What do we want to know? Here, three questions in one: are there more births in summer than in winter, by how much, and what could that mean? Without a question, the data speak for themselves — and that is never good."
+      - type: titre
+        numero: 3
+        texte: "Step 2: provenance"
+        voix_off: "Where do these numbers come from?"
+      - type: etapes
+        texte: "*Five questions* to ask about the source"
+        etapes:
+          - "Who *produced* the number?"
+          - "*What exactly*: the definition"
+          - "On *which population*?"
+          - "Over *which period*?"
+          - "*When* were these numbers dated?"
+        voix_off: "Who produced the number: an official body, a survey, an estimate? What exactly: a declared birth, a hospital birth, a birth before a certain date? Which population: the whole region, or one city? Which period: a single year, or an average over ten years? And when: numbers from 2015 do not say the same as those from 2024. In our example, we leave this blank on purpose, to see what the workflow reveals."
+      - type: titre
+        numero: 4
+        texte: "Step 3: the data speak before the mean"
+        voix_off: "Before summarising, look."
+      - type: courbe
+        texte: "The 12 months, *as bars*"
+        courbe:
+          style: barres
+          points: [[1, 820], [2, 790], [3, 850], [4, 880], [5, 920], [6, 950], [7, 1010], [8, 980], [9, 930], [10, 890], [11, 850], [12, 810]]
+          x_min: 0
+          x_max: 13
+          y_min: 700
+          y_max: 1100
+          axe_x: "Month"
+          axe_y: "Births"
+        note: "Fictional region. Made-up numbers."
+        voix_off: "Draw the chart before the mean. And you see the shape straight away: an early-year dip, a mid-year peak, and intermediate months that rise and fall. The mean alone would have hidden this shape. Whether it reflects a true seasonality will be judged on several years, not on one."
+      - type: titre
+        numero: 5
+        texte: "Step 4: describe with a few numbers"
+        voix_off: "Now the numbers, but only those that add something."
+      - type: etapes
+        texte: "*Four* useful numbers"
+        etapes:
+          - "*Monthly mean*: 890"
+          - "*Lowest month*: February (790)"
+          - "*Highest month*: July (1,010)"
+          - "*Gap between the two*: 220, about 28%"
+        voix_off: "Monthly mean: eight hundred and ninety. Lowest month: February, seven hundred and ninety. Highest: July, one thousand and ten. The gap is two hundred and twenty, about twenty-eight percent of the minimum. This last number is the most informative: it quantifies the summer peak."
+        verifier:
+          - {expression: "round(sum([820, 790, 850, 880, 920, 950, 1010, 980, 930, 890, 850, 810]) / 12, 1)", attendu: 890.0, libelle: "Monthly mean"}
+          - {expression: "round((1010 - 790) / 790 * 100, 0)", attendu: 28.0, libelle: "July-February gap as % of min"}
+      - type: titre
+        numero: 6
+        texte: "Step 5: smooth to see the trend"
+        voix_off: "Apply what we saw in S3.08: the moving average."
+      - type: etapes
+        texte: "*3-month moving average*"
+        etapes:
+          - "January · 820 · —"
+          - "February · 790 · 820"
+          - "March · 850 · 840"
+          - "April · 880 · 883"
+          - "May · 920 · 917"
+          - "June · 950 · 960"
+          - "July · 1,010 · 980"
+          - "August · 980 · 973"
+          - "September · 930 · 933"
+          - "October · 890 · 890"
+          - "November · 850 · 850"
+          - "December · 810 · —"
+        voix_off: "The smoothed series confirms the shape: it climbs steadily from the start of the year through June, peaks around July, and falls back through December. The monthly waves vanish, the trend appears."
+        verifier:
+          - {expression: "round((820 + 790 + 850) / 3, 0)", attendu: 820.0, libelle: "MA3 in February"}
+          - {expression: "round((950 + 1010 + 980) / 3, 0)", attendu: 980.0, libelle: "MA3 in July"}
+      - type: titre
+        numero: 7
+        texte: "Step 6: the limits"
+        voix_off: "Then say what these numbers do not say."
+      - type: etapes
+        texte: "What the *table does not tell you*"
+        etapes:
+          - "No *source* or *date*: you cannot check"
+          - "*One year only*: no long trend"
+          - "No *breakdown*: urban vs rural, mother's age"
+          - "No *standard deviation*: 1,010 may be the mean of very different years"
+        voix_off: "With no source or date, you cannot check. A single year does not tell you if this seasonality repeats. There is no breakdown by area or by age, so the gap could come from one sub-population only. And there is no standard deviation: the one thousand and ten in July could be the mean of very dispersed years."
+      - type: titre
+        numero: 8
+        texte: "Step 7: conclude in three sentences"
+        voix_off: "Finish with three honest sentences."
+      - type: etapes
+        texte: "The *conclusion* fits in three sentences"
+        etapes:
+          - "*What we observe*: the summer peak is about 28% above the winter trough"
+          - "*What it could be*: a cycle, a one-off, or both — indistinguishable on one year"
+          - "*What we would need*: several years, and a breakdown"
+        voix_off: "One, what we observe. In this fictional region, July records about twenty-eight percent more births than February, in the data we received. Two, what it could be. We cannot say, on one year, whether this is a seasonality that repeats or a one-off variation specific to that year. Three, what we would need. Several years of data to test repetition, and a breakdown by area or by age to know what drives it."
+      - type: titre
+        numero: 9
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "A table of data you have never seen lands on your desk. Write *three questions* to ask before any chart."
+        pause: 12
+        voix_off: "A table arrives, you have never seen it. Before any chart, before any mean, write three questions. Pause."
+      - type: correction
+        etapes:
+          - "*Who* produced the number, *what exactly*, *when*?"
+          - "Is there *one period* or *several*?"
+          - "Is the definition *the same* everywhere?"
+        reponse: "Provenance, period, consistent definition"
+        voix_off: "One possible answer. Who produced the number, what exactly, when: the five questions of provenance. One period or several: no trend without several points. Is the definition the same everywhere: a change of definition can create a false jump. With these three questions, you are already halfway there."
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Question* before *calculation*"
+          - "*Provenance*, *cleaning*, *description*, *chart*, *limits*, *conclusion*"
+          - "*Three honest sentences* beat a table of precise numbers"
+        voix_off: "Key points. A question comes before any calculation. The workflow is linear: provenance, cleaning, description, chart, limits, conclusion. And three honest sentences, with their limits, beat a table of numbers to two decimal places."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
