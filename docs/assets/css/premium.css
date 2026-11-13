@@ -757,3 +757,27 @@ html[lang="en"] .hero-note::before { content: "THE PROMISE"; }
   .brand img { width: 40px; max-height: 40px; }
   .brand-name { font-size: .9rem; letter-spacing: .12em; }
 }
+
+/* ---- Liens sociaux du footer (icônes officielles) --------------------- */
+.social-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--size-small);
+  font-weight: 650;
+  transition: all var(--dur-s) var(--ease);
+}
+.social-link:hover {
+  background: var(--teal-soft);
+  color: var(--teal-ink);
+  border-color: var(--teal);
+  text-decoration: none;
+}
+.social-ico { width: 18px; height: 18px; flex: 0 0 auto; }

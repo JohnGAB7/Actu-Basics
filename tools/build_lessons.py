@@ -894,11 +894,13 @@ def render_scene(s: dict, lang: str) -> str:
 
 # --- Templates HTML --------------------------------------------------------
 
-# Google Fonts : Fraunces (serif éditoriale, display + opsz) + Inter (sans).
+# Google Fonts : Source Serif 4 (serif éditoriale sobre, classique) + Inter.
 # Variable fonts chargées en WOFF2 par Google. `display=swap` évite le FOIT.
+# Source Serif 4 est une serif de référence utilisée par Adobe et beaucoup
+# de publications : élégante sans être « fantaisiste ».
 FRAUNCES_URL = (
     "https://fonts.googleapis.com/css2?"
-    "family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700"
+    "family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700"
     "&family=Inter:wght@400;500;600;700;850&display=swap"
 )
 
@@ -1068,6 +1070,54 @@ def header_en(depth: int, current: str = "") -> str:
     )
 
 
+# --- Icônes SVG officielles des réseaux ----------------------------------
+# Chaque icône reste minimaliste (24x24, currentColor) pour s'adapter au
+# thème clair/sombre. Les tracés sont des simplifications des marques
+# officielles, sans texte ni logo complet.
+
+_ICON_YOUTUBE = (
+    '<svg class="social-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+    '<path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/>'
+    '</svg>'
+)
+
+_ICON_TIKTOK = (
+    '<svg class="social-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+    '<path fill="currentColor" d="M19.3 6.6a5.5 5.5 0 0 1-3.7-1.4 5.3 5.3 0 0 1-1.7-3H10V15a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V8.7a6.4 6.4 0 1 0 5.7 6.3V9.1a8.5 8.5 0 0 0 5.4 2v-3.9c-.3.1-.6.1-1 .1z"/>'
+    '</svg>'
+)
+
+_ICON_GITHUB = (
+    '<svg class="social-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+    '<path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0C17.7 4.6 18.6 5 18.6 5c.7 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9A11.5 11.5 0 0 0 12 .5z"/>'
+    '</svg>'
+)
+
+
+def _social_links(lang: str) -> str:
+    """Rend les 3 liens sociaux (YouTube, TikTok, GitHub) pour la langue donnée.
+    Les comptes YouTube/TikTok sont dédiés par langue ; GitHub est commun."""
+    if lang == "fr":
+        yt = "https://www.youtube.com/channel/UC3MrzU4G6UnSfDsYSci9BuQ"
+        tk = "https://www.tiktok.com/@actu_basics_fr"
+        yt_label = "YouTube · Français"
+        tk_label = "TikTok · Français"
+    else:
+        yt = "https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg"
+        tk = "https://www.tiktok.com/@actu_basics"
+        yt_label = "YouTube · English"
+        tk_label = "TikTok · English"
+    gh = "https://github.com/JohnGAB7/le-monde-en-chiffres"
+    return (
+        f'<a class="social-link" href="{yt}" target="_blank" rel="noopener" aria-label="{yt_label}">'
+        f'{_ICON_YOUTUBE}<span>YouTube</span></a>'
+        f'<a class="social-link" href="{tk}" target="_blank" rel="noopener" aria-label="{tk_label}">'
+        f'{_ICON_TIKTOK}<span>TikTok</span></a>'
+        f'<a class="social-link" href="{gh}" target="_blank" rel="noopener" aria-label="GitHub">'
+        f'{_ICON_GITHUB}<span>GitHub</span></a>'
+    )
+
+
 def footer_fr(depth: int) -> str:
     b = "../" * depth
     return (
@@ -1076,16 +1126,13 @@ def footer_fr(depth: int) -> str:
         f'<p>Éveiller par les chiffres. Comprendre les méthodes derrière les résultats.</p>'
         f'<p>Un projet éducatif indépendant consacré aux statistiques, aux probabilités et à l\'actuariat.</p></div>'
         f'<div><h3>Explorer</h3><div class="footer-links">'
+        f'<a href="{b}programme/">Programme</a>'
         f'<a href="{b}parcours/">Parcours</a>'
         f'<a href="{b}bibliotheque/">Bibliothèque</a>'
         f'<a href="{b}a-propos/">À propos</a>'
         f'</div></div>'
-        f'<div><h3>Retrouver les vidéos</h3><div class="footer-links">'
-        f'<a href="https://www.youtube.com/channel/UC3MrzU4G6UnSfDsYSci9BuQ" target="_blank" rel="noopener">YouTube · Français ↗</a>'
-        f'<a href="https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg" target="_blank" rel="noopener">YouTube · English ↗</a>'
-        f'<a href="https://www.tiktok.com/@actu_basics_fr" target="_blank" rel="noopener">TikTok · Français ↗</a>'
-        f'<a href="https://www.tiktok.com/@actu_basics" target="_blank" rel="noopener">TikTok · English ↗</a>'
-        f'<a href="https://github.com/JohnGAB7/le-monde-en-chiffres" target="_blank" rel="noopener">GitHub ↗</a>'
+        f'<div><h3>Suivre</h3><div class="social-links">'
+        f'{_social_links("fr")}'
         f'</div></div></div>'
         f'<div class="footer-bottom">'
         f'<span>© ACTU-BASICS · Projet éducatif indépendant</span>'
@@ -1103,16 +1150,13 @@ def footer_en(depth: int) -> str:
         f'<p>Enlightening through numbers. Understand the methods behind the results.</p>'
         f'<p>An independent educational project about statistics, probability and actuarial science.</p></div>'
         f'<div><h3>Explore</h3><div class="footer-links">'
+        f'<a href="{b}en/programme/">Programme</a>'
         f'<a href="{b}en/paths/">Learning paths</a>'
         f'<a href="{b}en/library/">Library</a>'
         f'<a href="{b}en/about/">About</a>'
         f'</div></div>'
-        f'<div><h3>Watch the videos</h3><div class="footer-links">'
-        f'<a href="https://www.youtube.com/channel/UC3MrzU4G6UnSfDsYSci9BuQ" target="_blank" rel="noopener">YouTube · Français ↗</a>'
-        f'<a href="https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg" target="_blank" rel="noopener">YouTube · English ↗</a>'
-        f'<a href="https://www.tiktok.com/@actu_basics_fr" target="_blank" rel="noopener">TikTok · Français ↗</a>'
-        f'<a href="https://www.tiktok.com/@actu_basics" target="_blank" rel="noopener">TikTok · English ↗</a>'
-        f'<a href="https://github.com/JohnGAB7/le-monde-en-chiffres" target="_blank" rel="noopener">GitHub ↗</a>'
+        f'<div><h3>Follow</h3><div class="social-links">'
+        f'{_social_links("en")}'
         f'</div></div></div>'
         f'<div class="footer-bottom">'
         f'<span>© ACTU-BASICS · Independent educational project</span>'
