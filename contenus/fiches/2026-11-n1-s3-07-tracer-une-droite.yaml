@@ -126,7 +126,7 @@ editions:
         texte: "La droite ne dit *pas encore*"
         etapes:
           - "Est-elle due *au hasard de l'échantillon* ? (sera vu en S6)"
-          - "La relation est-elle *causale* ? (sera vue en E1.04)"
+          - "La relation est-elle *causale* ? (sera vue dans un module suivant)"
           - "Vaut-elle *hors des données* observées ?"
         voix_off: "Un, la droite pourrait venir du hasard de l'échantillon : avec douze autres élèves, on aurait une autre droite. Deux, une relation n'est pas forcément causale : la droite ne dit pas que réviser davantage fait monter la note. Trois, elle vaut dans le domaine observé, et pas plus loin."
       - type: titre
@@ -256,7 +256,7 @@ editions:
         texte: "The line does *not yet* tell you"
         etapes:
           - "Is it due to *sampling chance*? (will be seen in S6)"
-          - "Is the relation *causal*? (will be seen in E1.04)"
+          - "Is the relation *causal*? (covered in a later module)"
           - "Does it hold *outside the observed data*?"
         voix_off: "One: the line could come from sampling chance. With twelve other pupils, we would get another line. Two: a relation is not necessarily causal. The line does not say that revising more makes the mark go up. Three: it holds inside the observed range, and not further."
       - type: titre
