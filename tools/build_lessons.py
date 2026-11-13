@@ -1093,26 +1093,41 @@ _ICON_GITHUB = (
     '</svg>'
 )
 
+# Icône Gmail stylisée : enveloppe à rabat ouvert, coloration officielle.
+# Reste une interprétation (pas le logo exact), compatible currentColor.
+_ICON_GMAIL = (
+    '<svg class="social-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+    '<path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.5 2.6V17.5h3V11l4.5 3.6L16.5 11v6.5h3V7.6l-7.5 6-7.5-6z"/>'
+    '</svg>'
+)
+
 
 def _social_links(lang: str) -> str:
-    """Rend les 3 liens sociaux (YouTube, TikTok, GitHub) pour la langue donnée.
-    Les comptes YouTube/TikTok sont dédiés par langue ; GitHub est commun."""
+    """Rend les liens sociaux (YouTube, TikTok, contact Gmail, GitHub) pour la
+    langue donnée. YouTube, TikTok et email sont dédiés par langue ; GitHub est
+    commun."""
     if lang == "fr":
         yt = "https://www.youtube.com/channel/UC3MrzU4G6UnSfDsYSci9BuQ"
         tk = "https://www.tiktok.com/@actu_basics_fr"
+        mail = "actubasics.officiel@gmail.com"
         yt_label = "YouTube · Français"
         tk_label = "TikTok · Français"
+        mail_label = f"Email · {mail}"
     else:
         yt = "https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg"
         tk = "https://www.tiktok.com/@actu_basics"
+        mail = "actubasics.official@gmail.com"
         yt_label = "YouTube · English"
         tk_label = "TikTok · English"
+        mail_label = f"Email · {mail}"
     gh = "https://github.com/JohnGAB7/le-monde-en-chiffres"
     return (
         f'<a class="social-link" href="{yt}" target="_blank" rel="noopener" aria-label="{yt_label}">'
         f'{_ICON_YOUTUBE}<span>YouTube</span></a>'
         f'<a class="social-link" href="{tk}" target="_blank" rel="noopener" aria-label="{tk_label}">'
         f'{_ICON_TIKTOK}<span>TikTok</span></a>'
+        f'<a class="social-link" href="mailto:{mail}" aria-label="{mail_label}">'
+        f'{_ICON_GMAIL}<span>Email</span></a>'
         f'<a class="social-link" href="{gh}" target="_blank" rel="noopener" aria-label="GitHub">'
         f'{_ICON_GITHUB}<span>GitHub</span></a>'
     )
@@ -2251,6 +2266,211 @@ def _cleanup_orphans(valid_codes: set[str]) -> int:
     return removed
 
 
+# --- Pages de module -------------------------------------------------------
+#
+# Chaque module (M0, S1, S2, …) dispose de sa propre page, accessible depuis
+# la page Programme et depuis chaque leçon du module. La page présente le
+# module, liste ses leçons dans l'ordre, et pointe vers les parcours qui
+# l'utilisent. C'est le chaînon manquant entre « Programme » (vue d'ensemble)
+# et « Leçon » (détail d'une fiche) : il permet de parcourir un sujet
+# complet sans passer par le programme global ni par la bibliothèque.
+
+
+def _module_parcours(mod: str, parcours_list: list[dict]) -> list[dict]:
+    return [p for p in (parcours_list or []) if mod in (p.get("modules") or [])]
+
+
+def render_module_page(mod: str, lessons: list[dict], parcours_list: list[dict], lang: str) -> str:
+    """Rend la page dédiée à un module donné."""
+    meta = module_meta(mod, lang)
+    is_fr = lang == "fr"
+    base = "../../" if is_fr else "../../../"
+
+    module_lessons = _module_lessons_sorted(mod, lessons)
+    linked_parcours = _module_parcours(mod, parcours_list)
+
+    L = {
+        "fr": {
+            "head_title": f"{mod} · {meta['titre']} · ACTU-BASICS",
+            "head_desc": meta.get("sous_titre") or f"Le module {mod} du programme ACTU-BASICS.",
+            "canon": f"https://johngab7.github.io/le-monde-en-chiffres/modules/{mod}/",
+            "alt":   f"https://johngab7.github.io/le-monde-en-chiffres/en/modules/{mod}/",
+            "og_locale": "fr_BE",
+            "og_title": f"{mod} — {meta['titre']} · ACTU-BASICS",
+            "og_desc": meta.get("sous_titre") or "",
+            "skip": "Aller au contenu",
+            "breadcrumb_home": "ACTU-BASICS",
+            "breadcrumb_prog": "Programme",
+            "breadcrumb_mod": "Module",
+            "eyebrow": f"Module {mod}",
+            "lessons_h": "Les leçons du module",
+            "lessons_empty": "Les leçons de ce module seront ajoutées progressivement.",
+            "parcours_h": "Parcours qui utilisent ce module",
+            "nav_prev_mod": "Module précédent",
+            "nav_next_mod": "Module suivant",
+            "see_programme": "Voir tout le programme →",
+        },
+        "en": {
+            "head_title": f"{mod} · {meta['titre']} · ACTU-BASICS",
+            "head_desc": meta.get("sous_titre") or f"Module {mod} of the ACTU-BASICS programme.",
+            "canon": f"https://johngab7.github.io/le-monde-en-chiffres/en/modules/{mod}/",
+            "alt":   f"https://johngab7.github.io/le-monde-en-chiffres/modules/{mod}/",
+            "og_locale": "en_US",
+            "og_title": f"{mod} — {meta['titre']} · ACTU-BASICS",
+            "og_desc": meta.get("sous_titre") or "",
+            "skip": "Skip to content",
+            "breadcrumb_home": "ACTU-BASICS",
+            "breadcrumb_prog": "Programme",
+            "breadcrumb_mod": "Module",
+            "eyebrow": f"Module {mod}",
+            "lessons_h": "Lessons in this module",
+            "lessons_empty": "Lessons in this module will be added as they ship.",
+            "parcours_h": "Learning paths that use this module",
+            "nav_prev_mod": "Previous module",
+            "nav_next_mod": "Next module",
+            "see_programme": "See the full programme →",
+        },
+    }[lang]
+
+    # Pour les liens précédent / suivant : on calcule l'ordre global.
+    all_mods = sorted({m["module"] for m in lessons} | {mod}, key=module_sort_key)
+    try:
+        idx = all_mods.index(mod)
+    except ValueError:
+        idx = -1
+    prev_mod = all_mods[idx - 1] if idx > 0 else None
+    next_mod = all_mods[idx + 1] if 0 <= idx < len(all_mods) - 1 else None
+
+    # Cartes de leçon dans l'ordre.
+    lesson_cards = []
+    for L_item in module_lessons:
+        code = L_item["code"]
+        ed = L_item["data"].get("editions", {}).get(lang, {})
+        titre = ed.get("titre", code)
+        legende = ed.get("legende", "")
+        href = (f"{base}lecons/{code}/" if is_fr else f"{base}en/lessons/{code}/")
+        lesson_cards.append(
+            f'<a class="card lesson-card" href="{href}">'
+            f'<span class="lesson-code">{code}</span>'
+            f'<h3>{md_inline(titre)}</h3>'
+            f'<p>{md_inline((legende or "").split(".")[0] + "." if legende else "")}</p>'
+            f'<span class="text-link">{"Ouvrir →" if is_fr else "Open →"}</span>'
+            f'</a>'
+        )
+    cards_html = "".join(lesson_cards) or (
+        f'<p class="muted">{L["lessons_empty"]}</p>'
+    )
+
+    # Parcours liés.
+    parcours_cards = []
+    for p in linked_parcours:
+        slug = p.get("slug", "")
+        p_titre = (p.get("titre") or {}).get(lang) or slug
+        p_desc = (p.get("sous_titre") or {}).get(lang) or ""
+        href = (f"{base}parcours/{slug}/" if is_fr else f"{base}en/paths/{slug}/")
+        parcours_cards.append(
+            f'<a class="card path-card" href="{href}">'
+            f'<h3>{html.escape(p_titre)}</h3>'
+            f'<p>{html.escape(p_desc)}</p>'
+            f'<span class="text-link">{"Voir le parcours →" if is_fr else "See path →"}</span>'
+            f'</a>'
+        )
+    parcours_html = ""
+    if parcours_cards:
+        parcours_html = (
+            f'<section class="section-tight"><div class="container">'
+            f'<div class="section-head"><div>'
+            f'<span class="eyebrow">{L["parcours_h"]}</span>'
+            f'</div></div>'
+            f'<div class="grid-{min(3, len(parcours_cards))}">{"".join(parcours_cards)}</div>'
+            f'</div></section>'
+        )
+
+    # Navigation module précédent / suivant.
+    nav_prev = ""
+    nav_next = ""
+    if prev_mod:
+        href = f"{base}{'modules' if is_fr else 'en/modules'}/{prev_mod}/"
+        p_meta = module_meta(prev_mod, lang)
+        nav_prev = (
+            f'<a class="module-nav-link module-nav-prev" href="{href}">'
+            f'<span class="module-nav-label">← {L["nav_prev_mod"]}</span>'
+            f'<span class="module-nav-title">{prev_mod} · {html.escape(p_meta["titre"])}</span>'
+            f'</a>'
+        )
+    if next_mod:
+        href = f"{base}{'modules' if is_fr else 'en/modules'}/{next_mod}/"
+        n_meta = module_meta(next_mod, lang)
+        nav_next = (
+            f'<a class="module-nav-link module-nav-next" href="{href}">'
+            f'<span class="module-nav-label">{L["nav_next_mod"]} →</span>'
+            f'<span class="module-nav-title">{next_mod} · {html.escape(n_meta["titre"])}</span>'
+            f'</a>'
+        )
+    module_nav = ""
+    if nav_prev or nav_next:
+        module_nav = (
+            f'<section class="section-tight"><div class="container">'
+            f'<nav class="module-nav" aria-label="Navigation des modules">'
+            f'{nav_prev or "<span></span>"}{nav_next or "<span></span>"}'
+            f'</nav></div></section>'
+        )
+
+    head = (
+        f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
+        f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<meta name="description" content="{html.escape(L["head_desc"])}">'
+        f'<meta name="theme-color" content="#0f2130">'
+        f'<link rel="canonical" href="{L["canon"]}">'
+        f'<link rel="alternate" hreflang="fr" href="https://johngab7.github.io/le-monde-en-chiffres/modules/{mod}/">'
+        f'<link rel="alternate" hreflang="en" href="https://johngab7.github.io/le-monde-en-chiffres/en/modules/{mod}/">'
+        f'<link rel="alternate" hreflang="x-default" href="https://johngab7.github.io/le-monde-en-chiffres/modules/{mod}/">'
+        f'<meta property="og:type" content="website">'
+        f'<meta property="og:locale" content="{L["og_locale"]}">'
+        f'<meta property="og:title" content="{html.escape(L["og_title"])}">'
+        f'<meta property="og:description" content="{html.escape(L["og_desc"])}">'
+        f'<meta property="og:url" content="{L["canon"]}">'
+        f'<meta name="twitter:card" content="summary">'
+        f'<title>{html.escape(L["head_title"])}</title>'
+        f'{_premium_head_assets(base)}'
+        f'</head>'
+    )
+
+    header = (header_fr if is_fr else header_en)(
+        depth=2 if is_fr else 3, current="programme"
+    )
+    footer = (footer_fr if is_fr else footer_en)(depth=2 if is_fr else 3)
+
+    body = (
+        f'<body>'
+        f'<a class="skip-link" href="#contenu">{L["skip"]}</a>'
+        f'{header}'
+        f'<main id="contenu">'
+        f'<section class="page-hero"><div class="container">'
+        f'<div class="breadcrumb">'
+        f'<a href="{base}{"index.html" if is_fr else "en/"}">{L["breadcrumb_home"]}</a> / '
+        f'<a href="{base}{"programme" if is_fr else "en/programme"}/">{L["breadcrumb_prog"]}</a> / '
+        f'{L["breadcrumb_mod"]} {mod}'
+        f'</div>'
+        f'<span class="eyebrow">{L["eyebrow"]}</span>'
+        f'<h1>{html.escape(meta["titre"])}</h1>'
+        f'<p>{html.escape(meta.get("sous_titre") or "")}</p>'
+        f'<a class="text-link" href="{base}{"programme" if is_fr else "en/programme"}/">{L["see_programme"]}</a>'
+        f'</div></section>'
+        f'<section class="section"><div class="container">'
+        f'<div class="section-head"><div>'
+        f'<span class="eyebrow">{L["lessons_h"]}</span>'
+        f'</div></div>'
+        f'<div class="grid-3">{cards_html}</div>'
+        f'</div></section>'
+        f'{parcours_html}'
+        f'{module_nav}'
+        f'</main>{footer}</body></html>'
+    )
+
+    return head + body
+
+
 # --- Page Programme --------------------------------------------------------
 #
 # Vue d'ensemble unique du programme ACTU-BASICS :
@@ -2427,11 +2647,12 @@ def render_programme_page(parcours_list: list[dict], lessons: list[dict], lang: 
                 )
             chips_html = "".join(chips)
 
+            mod_href = f'{base}{"modules" if is_fr else "en/modules"}/{mod}/'
             rows.append(
                 f'<div class="module-row" data-module="{mod}">'
-                f'<div class="module-code">{mod}</div>'
-                f'<div class="module-title">{html.escape(meta["titre"])}'
-                f'<small>{html.escape(meta.get("sous_titre") or "")}</small></div>'
+                f'<a class="module-code" href="{mod_href}">{mod}</a>'
+                f'<a class="module-title" href="{mod_href}">{html.escape(meta["titre"])}'
+                f'<small>{html.escape(meta.get("sous_titre") or "")}</small></a>'
                 f'<div class="module-lessons">{chips_html}</div>'
                 f'<div class="module-status {status}">{html.escape(status_label)}</div>'
                 f'</div>'
@@ -2461,11 +2682,12 @@ def render_programme_page(parcours_list: list[dict], lessons: list[dict], lang: 
                 f'<a href="{base}{"lecons" if is_fr else "en/lessons"}/{L["code"]}/">{L["code"]}</a>'
                 for L in lesson_rows
             )
+            mod_href = f'{base}{"modules" if is_fr else "en/modules"}/{mod}/'
             rows.append(
                 f'<div class="module-row" data-module="{mod}">'
-                f'<div class="module-code">{mod}</div>'
-                f'<div class="module-title">{html.escape(meta["titre"])}'
-                f'<small>{html.escape(meta.get("sous_titre") or "")}</small></div>'
+                f'<a class="module-code" href="{mod_href}">{mod}</a>'
+                f'<a class="module-title" href="{mod_href}">{html.escape(meta["titre"])}'
+                f'<small>{html.escape(meta.get("sous_titre") or "")}</small></a>'
                 f'<div class="module-lessons">{chips}</div>'
                 f'<div class="module-status partial">{len(lesson_rows)} {labels["lesson_label"]}</div>'
                 f'</div>'
@@ -2694,6 +2916,29 @@ def main() -> int:
         render_programme_page(parcours_list, lessons_for_lib, "en"), encoding="utf-8"
     )
 
+    # Pages de module : une page par M0, S1, A1… en FR et EN.
+    # On couvre tous les modules référencés par les piliers du programme ET
+    # les modules qui ont au moins une leçon publiée (dont ceux hors piliers,
+    # comme Q3, listés en « modules autonomes »).
+    pillar_mods = {m for p in _PROGRAMME_PILLARS for m in p["modules"]}
+    lesson_mods = {L["module"] for L in lessons_for_lib}
+    all_modules = sorted(pillar_mods | lesson_mods, key=module_sort_key)
+    module_pages = 0
+    for mod in all_modules:
+        fr_dir = DOCS / "modules" / mod
+        en_dir = DOCS / "en" / "modules" / mod
+        fr_dir.mkdir(parents=True, exist_ok=True)
+        en_dir.mkdir(parents=True, exist_ok=True)
+        (fr_dir / "index.html").write_text(
+            render_module_page(mod, lessons_for_lib, parcours_list, "fr"),
+            encoding="utf-8",
+        )
+        (en_dir / "index.html").write_text(
+            render_module_page(mod, lessons_for_lib, parcours_list, "en"),
+            encoding="utf-8",
+        )
+        module_pages += 2
+
     # Page de référence du design system (tokens + composants).
     (DOCS / "technique").mkdir(parents=True, exist_ok=True)
     (DOCS / "technique" / "design-system" / "index.html").parent.mkdir(exist_ok=True)
@@ -2707,6 +2952,7 @@ def main() -> int:
     print(f"Bibliothèques    : FR + EN mises à jour ({len(lessons_for_lib)} leçons affichées)")
     print(f"Pages parcours   : {parcours_pages} (index + détails, FR + EN)")
     print(f"Programme        : FR + EN générée")
+    print(f"Pages de module  : {module_pages} ({len(all_modules)} modules × FR + EN)")
     print(f"Design system    : page de référence générée")
     return 0
 
