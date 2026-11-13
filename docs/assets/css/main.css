@@ -1,4 +1,4 @@
-:root{color-scheme:light;--ink:#102638;--ink-2:#1d3a50;--muted:#607180;--paper:#fbfaf7;--surface:#fff;--line:#e6e2d9;--gold:#e9a323;--gold-soft:#fff2d7;--teal:#176b70;--shadow:0 18px 48px rgba(16,38,56,.09);--radius:18px}
+:root{color-scheme:light;--ink:#102638;--ink-2:#1d3a50;--muted:#657583;--paper:#f7f6f1;--surface:#fffefa;--line:#e7e3d9;--gold:#d6a24b;--gold-soft:#f7eedc;--teal:#176b70;--shadow:0 24px 64px rgba(16,38,56,.10);--radius:22px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:4px}img{max-width:100%;height:auto}button,input{font:inherit}.skip-link{position:absolute;left:-9999px;top:8px;background:#fff;padding:10px;z-index:20}.skip-link:focus{left:8px}
 .site-header{position:sticky;top:0;z-index:10;background:rgba(251,250,247,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(16,38,56,.08)}.nav-wrap{max-width:1160px;margin:auto;padding:0 28px;min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:12px;min-width:180px}.brand img{width:168px;max-height:54px;object-fit:contain;object-position:left center}.brand-fallback{font-weight:850;letter-spacing:.09em;font-size:1.1rem}.nav-links{display:flex;align-items:center;gap:28px;font-size:.93rem;font-weight:650}.nav-links a[aria-current=page]{color:var(--teal)}.nav-actions{display:flex;align-items:center;gap:12px}.lang{font-size:.82rem;font-weight:750;border:1px solid var(--line);padding:7px 11px;border-radius:999px}.menu-toggle{display:none;border:1px solid var(--line);background:white;border-radius:10px;padding:8px 12px;color:var(--ink)}
 main{min-height:60vh}.container{width:min(1120px,calc(100% - 48px));margin:auto}.narrow{width:min(780px,calc(100% - 48px));margin:auto}.eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.13em;font-size:.73rem;font-weight:800;color:var(--teal)}.eyebrow:before{content:"";width:24px;height:2px;background:var(--gold)}h1,h2,h3{line-height:1.12;letter-spacing:-.035em}h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.8rem,6.2vw,5.5rem);font-weight:500;margin:18px 0}h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:500;margin:0 0 16px}h3{font-size:1.15rem;margin:0 0 10px}p{margin:0 0 16px}.lead{font-size:clamp(1.1rem,2vw,1.32rem);color:#d5e0e7;max-width:660px}.muted{color:var(--muted)}.section{padding:88px 0}.section-tight{padding:58px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:30px}.section-head p{max-width:470px;color:var(--muted);margin:0}.hero{background:var(--ink);color:#fff;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:520px;height:520px;border:1px solid rgba(233,163,35,.23);border-radius:50%;right:-120px;top:-210px;box-shadow:0 0 0 54px rgba(233,163,35,.035),0 0 0 110px rgba(233,163,35,.025)}.hero-inner{position:relative;z-index:1;max-width:1160px;margin:auto;padding:94px 28px 100px;display:grid;grid-template-columns:1.25fr .75fr;gap:64px;align-items:center}.hero h1 span{color:var(--gold)}.hero .eyebrow{color:#f3c66f}.hero-note{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);padding:28px;border-radius:var(--radius);backdrop-filter:blur(8px)}.hero-note strong{display:block;font:500 1.7rem/1.2 Georgia,serif;margin-bottom:12px}.hero-note p{color:#d5e0e7;margin:0}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:13px 20px;font-size:.92rem;font-weight:800;border:1px solid transparent;transition:transform .2s,background .2s}.button:hover{transform:translateY(-2px);text-decoration:none}.button-primary{background:var(--gold);color:var(--ink)}.button-light{border-color:rgba(255,255,255,.35);color:#fff}.button-dark{background:var(--ink);color:#fff}.button-outline{border-color:var(--line);background:#fff}.text-link{color:var(--teal);font-weight:800}
@@ -107,19 +107,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
    Keep the original ink / teal / warm-gold identity; refine hierarchy,
    rhythm, surfaces and responsive behaviour without changing the brand.
    ========================================================================== */
-:root{
-  --ink:#102638;
-  --ink-2:#1d3a50;
-  --muted:#657583;
-  --paper:#f7f6f1;
-  --surface:#fffefa;
-  --line:#e7e3d9;
-  --gold:#d6a24b;
-  --gold-soft:#f7eedc;
-  --teal:#176b70;
-  --shadow:0 24px 64px rgba(16,38,56,.10);
-  --radius:22px;
-}
 body{background:var(--paper);color:var(--ink);letter-spacing:-.006em}
 .site-header{background:rgba(250,249,245,.88);border-bottom:1px solid rgba(16,38,56,.09);box-shadow:0 4px 24px rgba(16,38,56,.025)}
 .nav-wrap{max-width:1240px;min-height:88px;padding-inline:34px}
