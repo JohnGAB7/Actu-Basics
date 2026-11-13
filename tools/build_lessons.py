@@ -894,6 +894,41 @@ def render_scene(s: dict, lang: str) -> str:
 
 # --- Templates HTML --------------------------------------------------------
 
+# Google Fonts : Fraunces (serif éditoriale, display + opsz) + Inter (sans).
+# Variable fonts chargées en WOFF2 par Google. `display=swap` évite le FOIT.
+FRAUNCES_URL = (
+    "https://fonts.googleapis.com/css2?"
+    "family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700"
+    "&family=Inter:wght@400;500;600;700;850&display=swap"
+)
+
+
+def _premium_head_assets(base: str) -> str:
+    """Les feuilles et polices premium à charger dans chaque <head>.
+
+    Les tokens sont chargés AVANT main.css pour que les variables soient
+    définies quand les règles historiques s'appliquent. `premium.css`
+    est chargé APRÈS pour pouvoir surcharger. `theme-init.js` est un
+    petit script bloquant qui pose `data-theme` sur <html> avant la
+    première peinture, ce qui évite un flash clair en mode sombre.
+    """
+    return (
+        f'<link rel="preconnect" href="https://fonts.googleapis.com">'
+        f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+        f'<link rel="stylesheet" href="{FRAUNCES_URL}">'
+        f'<link rel="stylesheet" href="{base}assets/css/tokens.css">'
+        f'<link rel="stylesheet" href="{base}assets/css/main.css">'
+        f'<link rel="stylesheet" href="{base}assets/css/premium.css">'
+        f'<link rel="stylesheet" href="{base}assets/css/print.css" media="print">'
+        f'<script>'
+        f'(function(){{try{{var t=localStorage.getItem("ab-theme");'
+        f'if(t==="dark"||t==="light"){{'
+        f'document.documentElement.setAttribute("data-theme",t);'
+        f'}}}}catch(e){{}}}})();'
+        f'</script>'
+    )
+
+
 KATEX_VERSION = "0.16.11"
 KATEX_CSS_URL  = f"https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.css"
 KATEX_JS_URL   = f"https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.js"
@@ -940,7 +975,7 @@ def head_fr(titre: str, code: str, description: str, depth: int) -> str:
         f'<meta property="og:url" content="{page_url}">'
         f'<meta name="twitter:card" content="summary">'
         f'<title>{code} — {html.escape(titre)} · ACTU-BASICS</title>'
-        f'<link rel="stylesheet" href="{base}assets/css/main.css">'
+        f'{_premium_head_assets(base)}'
         f'{_katex_head()}'
         f'</head>'
     )
@@ -966,10 +1001,23 @@ def head_en(titre: str, code: str, description: str, depth: int) -> str:
         f'<meta property="og:url" content="{page_url}">'
         f'<meta name="twitter:card" content="summary">'
         f'<title>{code} — {html.escape(titre)} · ACTU-BASICS</title>'
-        f'<link rel="stylesheet" href="{base}assets/css/main.css">'
+        f'{_premium_head_assets(base)}'
         f'{_katex_head()}'
         f'</head>'
     )
+
+
+_THEME_TOGGLE_FR = (
+    '<button class="theme-toggle" type="button" data-theme-toggle '
+    'aria-label="Changer de thème" title="Changer de thème">'
+    '<svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    '<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>'
+    '</button>'
+)
+_THEME_TOGGLE_EN = _THEME_TOGGLE_FR.replace(
+    'aria-label="Changer de thème" title="Changer de thème"',
+    'aria-label="Switch theme" title="Switch theme"',
+)
 
 
 def header_fr(depth: int, current: str = "") -> str:
@@ -982,11 +1030,13 @@ def header_fr(depth: int, current: str = "") -> str:
         f'onerror="this.style.display=\'none\';this.insertAdjacentHTML(\'afterend\',\'<span class=&quot;brand-fallback&quot;>ACTU-BASICS</span>\')">'
         f'</a>'
         f'<nav id="site-navigation" class="nav-links" aria-label="Navigation principale">'
+        f'<a href="{b}programme/"{cls("programme")}>Programme</a>'
         f'<a href="{b}parcours/"{cls("parcours")}>Parcours</a>'
         f'<a href="{b}bibliotheque/"{cls("bibliotheque")}>Bibliothèque</a>'
         f'<a href="{b}a-propos/"{cls("apropos")}>À propos</a>'
         f'</nav>'
         f'<div class="nav-actions">'
+        f'{_THEME_TOGGLE_FR}'
         f'<a class="lang" href="{b}en/" lang="en" aria-label="Switch to English">EN</a>'
         f'<button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Ouvrir le menu">☰</button>'
         f'</div></div></header>'
@@ -1003,11 +1053,13 @@ def header_en(depth: int, current: str = "") -> str:
         f'onerror="this.style.display=\'none\';this.insertAdjacentHTML(\'afterend\',\'<span class=&quot;brand-fallback&quot;>ACTU-BASICS</span>\')">'
         f'</a>'
         f'<nav id="site-navigation" class="nav-links" aria-label="Main navigation">'
+        f'<a href="{b}en/programme/"{cls("programme")}>Programme</a>'
         f'<a href="{b}en/paths/"{cls("paths")}>Learning paths</a>'
         f'<a href="{b}en/library/"{cls("library")}>Library</a>'
         f'<a href="{b}en/about/"{cls("about")}>About</a>'
         f'</nav>'
         f'<div class="nav-actions">'
+        f'{_THEME_TOGGLE_EN}'
         f'<a class="lang" href="{b}index.html" lang="fr" aria-label="Passer en français">FR</a>'
         f'<button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Open menu">☰</button>'
         f'</div></div></header>'
@@ -1347,6 +1399,63 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
     pre_block = f'<h2>{L["pre_h"]}</h2>{md_items(prerequis)}' if prerequis else ""
     hyp_block = f'<h2>{L["hyp_h"]}</h2>{md_items(hypotheses)}' if hypotheses else ""
 
+    # --- Méta leçon : temps de lecture estimé + date de révision --------
+    #
+    # Temps de lecture : ~230 mots/minute en lecture informée. On compte les
+    # mots du texte des scènes (voix_off + texte + étapes), pas des formules.
+    def _count_words(obj) -> int:
+        if obj is None:
+            return 0
+        if isinstance(obj, dict):
+            return _count_words(obj.get(lang) or obj.get("fr") or obj.get("en") or "")
+        if isinstance(obj, list):
+            return sum(_count_words(x) for x in obj)
+        if isinstance(obj, str):
+            return len(re.findall(r"\w+", obj))
+        return 0
+
+    total_words = 0
+    for scn in (scenes or []):
+        if isinstance(scn, dict):
+            for key in ("texte", "voix_off", "etapes", "note", "etiquette", "reponse"):
+                total_words += _count_words(scn.get(key))
+    reading_minutes = max(1, round(total_words / 230))
+
+    date_update = (data.get("validation", {}) or {}).get("date") or data.get("date_maj") or data.get("date")
+    date_str = str(date_update) if date_update else ""
+    author = (data.get("validation", {}) or {}).get("valide_par") or data.get("auteur") or "JG"
+
+    if lang == "fr":
+        meta_parts = [
+            f'<span>⏱ <strong>{reading_minutes} min</strong> de lecture</span>',
+            f'<span>✎ Rédigé par <strong>{html.escape(author)}</strong></span>',
+        ]
+        if date_str:
+            meta_parts.append(f'<span>↻ Mis à jour le <strong>{html.escape(date_str)}</strong></span>')
+    else:
+        meta_parts = [
+            f'<span>⏱ <strong>{reading_minutes} min</strong> read</span>',
+            f'<span>✎ Written by <strong>{html.escape(author)}</strong></span>',
+        ]
+        if date_str:
+            meta_parts.append(f'<span>↻ Updated <strong>{html.escape(date_str)}</strong></span>')
+    lesson_meta = f'<div class="lesson-meta">{"".join(meta_parts)}</div>'
+
+    # --- Bloc « À retenir » : dérivé du scène `fin` si présent ---------
+    takeaway_html = ""
+    for scn in reversed(scenes or []):
+        if isinstance(scn, dict) and scn.get("type") == "fin":
+            msg = pick_lang(scn.get("texte"), lang) or pick_lang(scn.get("voix_off"), lang)
+            if msg:
+                label = "À retenir" if lang == "fr" else "Takeaway"
+                takeaway_html = (
+                    f'<aside class="lesson-takeaway" aria-label="{label}">'
+                    f'<strong>{label}</strong>'
+                    f'<p>{md_inline(msg)}</p>'
+                    f'</aside>'
+                )
+            break
+
     page_hero = (
         f'<section class="page-hero"><div class="container">'
         f'<div class="breadcrumb">'
@@ -1387,18 +1496,22 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
             f'<a class="button button-outline" href="{hrefs[0]}">{see_first}</a>'
         )
 
+    toc_label = "Dans cette leçon" if lang == "fr" else "In this lesson"
     lesson_section = (
         f'<section class="section"><div class="container lesson-layout">'
         f'<article class="lesson-content">'
+        f'{lesson_meta}'
         f'{video_block}'
         f'{obj_block}{pre_block}'
         f'{scene_html}'
         f'{hyp_block}'
+        f'{takeaway_html}'
         f'</article>'
         f'<aside class="lesson-aside">'
         f'<span class="tag">{L["tag_available"]}</span>'
         f'<h3>{L["at_a_glance"]}</h3>'
         f'<p><strong>Code</strong><br>{code}</p>'
+        f'<nav data-lesson-toc aria-label="{toc_label}" class="lesson-toc"><p><strong>{toc_label}</strong></p></nav>'
         f'{parcours_aside}'
         f'<a class="button button-dark" href="{L["lib_href"]}">{L["lib_back"]}</a>'
         f'<a class="button button-outline" href="{L["other_lang_href"]}">{L["other_lang_label"]}</a>'
@@ -1648,7 +1761,7 @@ def render_library_page(lessons: list[dict], lang: str) -> str:
             '<meta property="og:url" content="https://johngab7.github.io/le-monde-en-chiffres/bibliotheque/">'
             '<meta name="twitter:card" content="summary">'
             '<title>Bibliothèque des leçons · ACTU-BASICS</title>'
-            '<link rel="stylesheet" href="../assets/css/main.css"></head>'
+            f'{_premium_head_assets("../")}</head>'
         )
         header = header_fr(depth=1, current="bibliotheque")
         footer = footer_fr(depth=1)
@@ -1678,7 +1791,7 @@ def render_library_page(lessons: list[dict], lang: str) -> str:
             '<meta property="og:url" content="https://johngab7.github.io/le-monde-en-chiffres/en/library/">'
             '<meta name="twitter:card" content="summary">'
             '<title>Lesson library · ACTU-BASICS</title>'
-            '<link rel="stylesheet" href="../../assets/css/main.css"></head>'
+            f'{_premium_head_assets("../../")}</head>'
         )
         header = header_en(depth=2, current="library")
         footer = footer_en(depth=2)
@@ -1754,7 +1867,7 @@ def render_parcours_index(parcours_list: list[dict], lessons: list[dict], lang: 
             "og_locale": "fr_BE",
             "og_title": "Parcours d'apprentissage · ACTU-BASICS",
             "og_desc": "Trois parcours pour progresser étape par étape.",
-            "css": "../assets/css/main.css",
+            "css_base": "../",
             "breadcrumb": "ACTU-BASICS / Parcours",
             "eyebrow": "Apprendre avec un fil conducteur",
             "h1": "Les parcours.",
@@ -1773,7 +1886,7 @@ def render_parcours_index(parcours_list: list[dict], lessons: list[dict], lang: 
             "og_locale": "en_US",
             "og_title": "Learning paths · ACTU-BASICS",
             "og_desc": "Three paths to progress step by step.",
-            "css": "../../assets/css/main.css",
+            "css_base": "../../",
             "breadcrumb": "ACTU-BASICS / Learning paths",
             "eyebrow": "A guided way to learn",
             "h1": "Learning paths.",
@@ -1802,7 +1915,7 @@ def render_parcours_index(parcours_list: list[dict], lessons: list[dict], lang: 
         f'<meta property="og:url" content="{L["canon"]}">'
         f'<meta name="twitter:card" content="summary">'
         f'<title>{html.escape(L["head_title"])}</title>'
-        f'<link rel="stylesheet" href="{L["css"]}"></head>'
+        f'{_premium_head_assets(L["css_base"])}</head>'
     )
     header = (header_fr if lang == "fr" else header_en)(depth=1 if lang == "fr" else 2, current=L["current"])
     footer = (footer_fr if lang == "fr" else footer_en)(depth=1 if lang == "fr" else 2)
@@ -1883,7 +1996,7 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
             "alt":   f"https://johngab7.github.io/le-monde-en-chiffres/en/paths/{slug}/",
             "og_locale": "fr_BE",
             "og_title": f"{titre} · Parcours · ACTU-BASICS",
-            "css": "../../assets/css/main.css",
+            "css_base": "../../",
             "breadcrumb": f'<a href="../../index.html">ACTU-BASICS</a> / <a href="../">Parcours</a> / {slug}',
             "skip": "Aller au contenu",
             "lesson_word": "leçon",
@@ -1902,7 +2015,7 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
             "alt":   f"https://johngab7.github.io/le-monde-en-chiffres/parcours/{slug}/",
             "og_locale": "en_US",
             "og_title": f"{titre} · Learning path · ACTU-BASICS",
-            "css": "../../../assets/css/main.css",
+            "css_base": "../../../",
             "breadcrumb": f'<a href="../../../en/">ACTU-BASICS</a> / <a href="../">Learning paths</a> / {slug}',
             "skip": "Skip to content",
             "lesson_word": "lesson",
@@ -1933,7 +2046,7 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
         f'<meta property="og:url" content="{L["canon"]}">'
         f'<meta name="twitter:card" content="summary">'
         f'<title>{html.escape(L["head_title"])}</title>'
-        f'<link rel="stylesheet" href="{L["css"]}"></head>'
+        f'{_premium_head_assets(L["css_base"])}</head>'
     )
     depth_detail = 2 if lang == "fr" else 3
     header = (header_fr if lang == "fr" else header_en)(depth=depth_detail, current=L["current"])
@@ -2092,6 +2205,375 @@ def _cleanup_orphans(valid_codes: set[str]) -> int:
     return removed
 
 
+# --- Page Programme --------------------------------------------------------
+#
+# Vue d'ensemble unique du programme ACTU-BASICS :
+#   3 piliers (Fondations · Statistiques & Probabilités · Actuariat & Finance)
+#   → 11 modules connus ou référencés
+#   → les leçons disponibles de chaque module, et la mention « à venir » pour
+#     les slots pédagogiques prévus mais non encore livrés.
+#
+# Le pilier n'est pas la catégorie d'une leçon : on regroupe ici par pilier
+# pédagogique de haut niveau. Les modules suivants sont inclus même sans
+# fiche : ils figurent au programme et montrent la trajectoire.
+
+_PROGRAMME_PILLARS = [
+    {
+        "slug": "foundations",
+        "modules": ["M0"],
+        "fr": {
+            "number": "I",
+            "titre": "Fondations",
+            "intro": "Les repères indispensables : lecture des chiffres, fractions, pourcentages, lecture d'un graphique.",
+        },
+        "en": {
+            "number": "I",
+            "titre": "Foundations",
+            "intro": "The essentials: reading numbers, fractions, percentages, reading a chart.",
+        },
+    },
+    {
+        "slug": "stats-probas",
+        "modules": ["S1", "S2", "S3", "S4"],
+        "fr": {
+            "number": "II",
+            "titre": "Statistiques et probabilités",
+            "intro": "Décrire les données, comparer, mesurer la dispersion, puis raisonner avec l'incertitude.",
+        },
+        "en": {
+            "number": "II",
+            "titre": "Statistics and probability",
+            "intro": "Describe data, compare groups, measure spread, then reason under uncertainty.",
+        },
+    },
+    {
+        "slug": "actuariat-finance",
+        "modules": ["A0", "A1", "A2", "A3", "MF1", "MF2"],
+        "fr": {
+            "number": "III",
+            "titre": "Actuariat et mathématiques financières",
+            "intro": "Du calcul actuariel au risque assurable, de l'actualisation aux produits financiers.",
+        },
+        "en": {
+            "number": "III",
+            "titre": "Actuarial science and financial mathematics",
+            "intro": "Actuarial computation, insurable risk, discounting and financial products.",
+        },
+    },
+]
+
+
+def _lesson_title_for(code: str, lessons: list[dict], lang: str) -> str:
+    for L in lessons:
+        if L.get("code") == code:
+            d = L.get("data", {})
+            ed = d.get(f"edition_{lang}", {}) or d.get("edition_fr", {}) or {}
+            t = ed.get("titre") or d.get("titre") or code
+            return t if isinstance(t, str) else str(t)
+    return code
+
+
+def _module_lessons_sorted(mod: str, lessons: list[dict]) -> list[dict]:
+    rows = [L for L in lessons if L.get("module") == mod]
+    return sorted(rows, key=lambda L: L["code"])
+
+
+def render_programme_page(parcours_list: list[dict], lessons: list[dict], lang: str) -> str:
+    """Rend la page Programme : piliers → modules → leçons disponibles."""
+    is_fr = lang == "fr"
+    base = "../" if is_fr else "../../"
+    header = (header_fr if is_fr else header_en)(
+        depth=1 if is_fr else 2, current="programme"
+    )
+    footer = (footer_fr if is_fr else footer_en)(depth=1 if is_fr else 2)
+
+    labels = {
+        "fr": {
+            "head_title": "Programme · ACTU-BASICS",
+            "head_desc": "Le programme complet d'ACTU-BASICS : trois piliers, onze modules, quarante-cinq leçons.",
+            "canon": "https://johngab7.github.io/le-monde-en-chiffres/programme/",
+            "alt":   "https://johngab7.github.io/le-monde-en-chiffres/en/programme/",
+            "og_locale": "fr_BE",
+            "og_title": "Programme · ACTU-BASICS",
+            "og_desc": "Le programme complet en un coup d'œil.",
+            "skip": "Aller au contenu",
+            "breadcrumb_home": "ACTU-BASICS",
+            "breadcrumb_here": "Programme",
+            "eyebrow": "Le programme en un coup d'œil",
+            "h1": "Le programme.",
+            "lead": "Trois piliers, onze modules, une trentaine de leçons livrées, le reste en préparation. Chaque ligne mène à ce qui est disponible ; les slots gris sont au programme et arriveront.",
+            "lesson_label": "leçons",
+            "status_available": "Disponible",
+            "status_partial": "Partiel",
+            "status_soon": "À venir",
+            "lessons_soon": "Prochaines leçons",
+            "see_module": "Voir le module →",
+        },
+        "en": {
+            "head_title": "Programme · ACTU-BASICS",
+            "head_desc": "The complete ACTU-BASICS programme: three pillars, eleven modules, forty-five lessons.",
+            "canon": "https://johngab7.github.io/le-monde-en-chiffres/en/programme/",
+            "alt":   "https://johngab7.github.io/le-monde-en-chiffres/programme/",
+            "og_locale": "en_US",
+            "og_title": "Programme · ACTU-BASICS",
+            "og_desc": "The complete programme at a glance.",
+            "skip": "Skip to content",
+            "breadcrumb_home": "ACTU-BASICS",
+            "breadcrumb_here": "Programme",
+            "eyebrow": "The programme at a glance",
+            "h1": "The programme.",
+            "lead": "Three pillars, eleven modules, around thirty lessons shipped, more in the works. Each row links to what is available; greyed slots are on the roadmap.",
+            "lesson_label": "lessons",
+            "status_available": "Available",
+            "status_partial": "Partial",
+            "status_soon": "Coming",
+            "lessons_soon": "Upcoming lessons",
+            "see_module": "See module →",
+        },
+    }[lang]
+
+    # Ensemble des modules effectivement couverts dans les parcours ou ayant
+    # des leçons, pour détecter ceux en dehors des piliers connus.
+    modules_with_lessons = {L["module"] for L in lessons}
+
+    pillar_cards = []
+    pillar_sections = []
+
+    for pillar in _PROGRAMME_PILLARS:
+        p = pillar[lang]
+        modules = pillar["modules"]
+        # carte d'introduction (pilier)
+        pillar_cards.append(
+            f'<article class="pillar">'
+            f'<div class="pillar-number">{p["number"]}</div>'
+            f'<h2>{html.escape(p["titre"])}</h2>'
+            f'<p>{html.escape(p["intro"])}</p>'
+            f'</article>'
+        )
+
+        rows = []
+        for mod in modules:
+            meta = module_meta(mod, lang)
+            lesson_rows = _module_lessons_sorted(mod, lessons)
+            total_slots = len(lesson_rows)  # on ne connaît pas plus ici
+            if not lesson_rows:
+                status = "soon"
+                status_label = labels["status_soon"]
+            elif total_slots >= 4:
+                status = "available"
+                status_label = f"{labels['status_available']} · {total_slots} {labels['lesson_label']}"
+            else:
+                status = "partial"
+                status_label = f"{labels['status_partial']} · {total_slots} {labels['lesson_label']}"
+
+            chips = []
+            for L in lesson_rows:
+                code = L["code"]
+                href = (f"{base}lecons/{code}/" if is_fr else f"{base}en/lessons/{code}/")
+                title = _lesson_title_for(code, lessons, lang)
+                # ne pas tout afficher en gros : chip courte = code, titre en attribut
+                chips.append(
+                    f'<a href="{href}" title="{html.escape(title)}">{code}</a>'
+                )
+            if not lesson_rows:
+                chips.append(
+                    f'<span class="lesson-upcoming">{labels["lessons_soon"]}</span>'
+                )
+            chips_html = "".join(chips)
+
+            rows.append(
+                f'<div class="module-row" data-module="{mod}">'
+                f'<div class="module-code">{mod}</div>'
+                f'<div class="module-title">{html.escape(meta["titre"])}'
+                f'<small>{html.escape(meta.get("sous_titre") or "")}</small></div>'
+                f'<div class="module-lessons">{chips_html}</div>'
+                f'<div class="module-status {status}">{html.escape(status_label)}</div>'
+                f'</div>'
+            )
+
+        pillar_sections.append(
+            f'<section class="programme-pillar" id="pillar-{pillar["slug"]}">'
+            f'<div class="programme-pillar-head">'
+            f'<h2>{p["number"]}. {html.escape(p["titre"])}</h2>'
+            f'<p>{html.escape(p["intro"])}</p>'
+            f'</div>'
+            f'<div class="programme-modules-list">'
+            f'{"".join(rows)}'
+            f'</div>'
+            f'</section>'
+        )
+
+    # Modules présents dans les fiches mais hors piliers connus → section "autres"
+    known_mods = {m for pillar in _PROGRAMME_PILLARS for m in pillar["modules"]}
+    orphans = sorted(modules_with_lessons - known_mods, key=module_sort_key)
+    if orphans:
+        rows = []
+        for mod in orphans:
+            meta = module_meta(mod, lang)
+            lesson_rows = _module_lessons_sorted(mod, lessons)
+            chips = "".join(
+                f'<a href="{base}{"lecons" if is_fr else "en/lessons"}/{L["code"]}/">{L["code"]}</a>'
+                for L in lesson_rows
+            )
+            rows.append(
+                f'<div class="module-row" data-module="{mod}">'
+                f'<div class="module-code">{mod}</div>'
+                f'<div class="module-title">{html.escape(meta["titre"])}'
+                f'<small>{html.escape(meta.get("sous_titre") or "")}</small></div>'
+                f'<div class="module-lessons">{chips}</div>'
+                f'<div class="module-status partial">{len(lesson_rows)} {labels["lesson_label"]}</div>'
+                f'</div>'
+            )
+        if is_fr:
+            other_title, other_intro = "Modules complémentaires", "D'autres modules déjà commencés, qui trouveront leur place dans un pilier au fil des parutions."
+        else:
+            other_title, other_intro = "Additional modules", "Other modules already in motion; they will slot into a pillar as content ships."
+        pillar_sections.append(
+            f'<section class="programme-pillar">'
+            f'<div class="programme-pillar-head">'
+            f'<h2>+. {html.escape(other_title)}</h2>'
+            f'<p>{html.escape(other_intro)}</p>'
+            f'</div>'
+            f'<div class="programme-modules-list">{"".join(rows)}</div>'
+            f'</section>'
+        )
+
+    head = (
+        f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
+        f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<meta name="description" content="{html.escape(labels["head_desc"])}">'
+        f'<meta name="theme-color" content="#0f2130">'
+        f'<link rel="canonical" href="{labels["canon"]}">'
+        f'<link rel="alternate" hreflang="fr" href="https://johngab7.github.io/le-monde-en-chiffres/programme/">'
+        f'<link rel="alternate" hreflang="en" href="https://johngab7.github.io/le-monde-en-chiffres/en/programme/">'
+        f'<link rel="alternate" hreflang="x-default" href="https://johngab7.github.io/le-monde-en-chiffres/programme/">'
+        f'<meta property="og:type" content="website">'
+        f'<meta property="og:locale" content="{labels["og_locale"]}">'
+        f'<meta property="og:title" content="{html.escape(labels["og_title"])}">'
+        f'<meta property="og:description" content="{html.escape(labels["og_desc"])}">'
+        f'<meta property="og:url" content="{labels["canon"]}">'
+        f'<meta name="twitter:card" content="summary">'
+        f'<title>{html.escape(labels["head_title"])}</title>'
+        f'{_premium_head_assets(base)}'
+        f'</head>'
+    )
+
+    body = (
+        f'<body>'
+        f'<a class="skip-link" href="#contenu">{labels["skip"]}</a>'
+        f'{header}'
+        f'<main id="contenu">'
+        f'<section class="programme-hero"><div class="container">'
+        f'<div class="breadcrumb">'
+        f'<a href="{base}{"index.html" if is_fr else "en/"}">{labels["breadcrumb_home"]}</a> / {labels["breadcrumb_here"]}'
+        f'</div>'
+        f'<span class="eyebrow">{labels["eyebrow"]}</span>'
+        f'<h1>{labels["h1"]}</h1>'
+        f'<p class="lead">{labels["lead"]}</p>'
+        f'<div class="pillars">{"".join(pillar_cards)}</div>'
+        f'</div></section>'
+        f'<section class="section"><div class="container">'
+        f'{"".join(pillar_sections)}'
+        f'</div></section>'
+        f'</main>{footer}</body></html>'
+    )
+
+    return head + body
+
+
+# --- Page Design System (référence interne) ------------------------------
+#
+# Expose les tokens clés (couleurs, typographie, échelles d'espace) et une
+# galerie des composants premium. Sert de vitrine ET de contrat : si la
+# page rend mal, c'est que la token-sheet a dérivé.
+
+def render_design_system_page() -> str:
+    swatches = [
+        ("Ink", "--ink", "Texte principal"),
+        ("Paper", "--paper", "Fond général"),
+        ("Surface", "--surface", "Cartes, panneaux"),
+        ("Teal", "--teal", "Accent de marque"),
+        ("Gold", "--gold", "Accent chaud"),
+        ("Muted", "--muted", "Texte adouci"),
+        ("Line", "--line", "Séparateurs"),
+        ("Success", "--success", "États OK"),
+        ("Warn", "--warn", "Alertes"),
+    ]
+    swatch_html = "".join(
+        f'<div class="ds-swatch">'
+        f'<div class="ds-swatch-sample" style="background:var({var});"></div>'
+        f'<div class="ds-swatch-meta"><strong>{name}</strong>{var} · {note}</div>'
+        f'</div>'
+        for (name, var, note) in swatches
+    )
+
+    type_samples = [
+        ("Display · 6.2rem", "--size-display", "Un chiffre dit l'essentiel."),
+        ("H1 · 4rem",         "--size-h1",       "Les chiffres racontent."),
+        ("H2 · 2.6rem",       "--size-h2",       "Lire sans se faire avoir."),
+        ("H3 · 1.35rem",      "--size-h3",       "Une section de leçon."),
+        ("Lead · 1.32rem",    "--size-lead",     "Un paragraphe d'ouverture, posé."),
+        ("Body · 1.02rem",    "--size-body",     "Le texte courant d'une leçon."),
+        ("Small · .88rem",    "--size-small",    "Mention secondaire."),
+    ]
+    type_html = "".join(
+        f'<div class="ds-type-sample">'
+        f'<small>{label} · {var}</small>'
+        f'<div style="font-family:var(--font-serif);font-weight:400;font-size:var({var});letter-spacing:-.04em;line-height:1.1;">{html.escape(text)}</div>'
+        f'</div>'
+        for (label, var, text) in type_samples
+    )
+
+    tokens_table = (
+        '<table class="ds-token-table"><thead><tr>'
+        '<th>Token</th><th>Rôle</th></tr></thead><tbody>'
+        '<tr><td>--radius-s/m/l/xl</td><td>Rayons : 10 / 18 / 24 / 36 px</td></tr>'
+        '<tr><td>--space-1..10</td><td>Grille 4/8/12/16/24/32/48/64/96/128 px</td></tr>'
+        '<tr><td>--shadow-s/m/l</td><td>Ombres éditoriales chaudes</td></tr>'
+        '<tr><td>--dur-s/m/l + --ease</td><td>Durées animation + courbe .2,.8,.2,1</td></tr>'
+        '<tr><td>--measure</td><td>Limite typographique : 70ch</td></tr>'
+        '</tbody></table>'
+    )
+
+    head = (
+        '<!doctype html><html lang="fr"><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">'
+        '<meta name="description" content="Référence du design system ACTU-BASICS : tokens, typographie, composants.">'
+        '<meta name="theme-color" content="#0f2130">'
+        '<meta name="robots" content="noindex,follow">'
+        '<title>Design System · ACTU-BASICS</title>'
+        f'{_premium_head_assets("../../")}'
+        '</head>'
+    )
+    return (
+        f'{head}<body>'
+        f'<a class="skip-link" href="#contenu">Aller au contenu</a>'
+        f'{header_fr(depth=2)}'
+        f'<main id="contenu">'
+        f'<section class="programme-hero"><div class="container">'
+        f'<div class="breadcrumb"><a href="../../index.html">ACTU-BASICS</a> / Technique / Design system</div>'
+        f'<span class="eyebrow">Référence interne</span>'
+        f'<h1>Le design system.</h1>'
+        f'<p class="lead">La source de vérité visuelle : couleurs, typographie, échelles. Tout le site se sert exclusivement de ces variables CSS ; aucun hexadécimal n\'est écrit à la main.</p>'
+        f'</div></section>'
+        f'<section class="section"><div class="container">'
+        f'<div class="ds-section"><h2>Couleurs</h2><div class="ds-grid">{swatch_html}</div></div>'
+        f'<div class="ds-section"><h2>Typographie</h2>{type_html}</div>'
+        f'<div class="ds-section"><h2>Jetons structurels</h2>{tokens_table}</div>'
+        f'<div class="ds-section"><h2>Composants</h2>'
+        f'<div class="grid-3">'
+        f'<article class="card"><div class="card-top"><span class="icon-tile">∑</span><span class="tag">Carte</span></div><h3>Une carte standard</h3><p>Fond surface, ombre douce, radius-l. Au survol, elle monte de 3 px.</p></article>'
+        f'<article class="card"><div class="card-top"><span class="icon-tile">✓</span><span class="tag">Tag</span></div><h3>Un tag éditorial</h3><p>Pastille teal, bordure teintée ; sert à qualifier un module ou un niveau.</p></article>'
+        f'<article class="card"><div class="card-top"><span class="icon-tile">▶</span><span class="tag">Action</span></div><h3>Bouton primary</h3><p><a class="button button-primary" href="#">Voir un exemple</a></p></article>'
+        f'</div></div>'
+        f'<div class="ds-section"><h2>Bloc À retenir</h2>'
+        f'<aside class="lesson-takeaway"><strong>À retenir</strong><p>Chaque composant du site se résume en une seule intention : rendre un sens exact plus lisible.</p></aside>'
+        f'</div>'
+        f'</div></section>'
+        f'</main>{footer_fr(depth=2)}</body></html>'
+    )
+
+
 def main() -> int:
     fiches = load_fiches()
     if not fiches:
@@ -2156,11 +2638,30 @@ def main() -> int:
             )
             parcours_pages += 2
 
+    # Page Programme (vue d'ensemble unique du cursus) : FR + EN.
+    (DOCS / "programme").mkdir(parents=True, exist_ok=True)
+    (DOCS / "en" / "programme").mkdir(parents=True, exist_ok=True)
+    (DOCS / "programme" / "index.html").write_text(
+        render_programme_page(parcours_list, lessons_for_lib, "fr"), encoding="utf-8"
+    )
+    (DOCS / "en" / "programme" / "index.html").write_text(
+        render_programme_page(parcours_list, lessons_for_lib, "en"), encoding="utf-8"
+    )
+
+    # Page de référence du design system (tokens + composants).
+    (DOCS / "technique").mkdir(parents=True, exist_ok=True)
+    (DOCS / "technique" / "design-system" / "index.html").parent.mkdir(exist_ok=True)
+    (DOCS / "technique" / "design-system" / "index.html").write_text(
+        render_design_system_page(), encoding="utf-8"
+    )
+
     print(f"Fiches valides   : {len(fiches)}")
     print(f"Pages écrites    : {pages} (leçons FR + EN)")
     print(f"Orphelines ôtées : {orphans_removed} (répertoires sans fiche valide)")
     print(f"Bibliothèques    : FR + EN mises à jour ({len(lessons_for_lib)} leçons affichées)")
     print(f"Pages parcours   : {parcours_pages} (index + détails, FR + EN)")
+    print(f"Programme        : FR + EN générée")
+    print(f"Design system    : page de référence générée")
     return 0
 
 
