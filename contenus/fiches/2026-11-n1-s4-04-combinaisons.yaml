@@ -1,0 +1,271 @@
+# Niveau 1, vague 1, lot 4 : S4.04 « Combinaisons : choisir sans ordre » (EDUCATIONAL, leçon)
+# Exemples fictifs : délégués d'une classe imaginaire, loto imaginaire à 5 numéros parmi 49.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s4-04-combinaisons
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.04 · Combinaisons : choisir sans ordre"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer un coefficient binomial"
+      - "Expliquer la division par k! comme suppression des ordres en double"
+      - "Calculer la probabilité d'une grille gagnante au loto"
+    en:
+      - "Compute a binomial coefficient"
+      - "Explain the division by k! as removing duplicate orderings"
+      - "Compute the probability of a winning lottery ticket"
+  prerequis:
+    fr: ["S4.03 : le principe multiplicatif"]
+    en: ["S4.03: the multiplication rule"]
+  hypotheses:
+    fr: "Classe et loto imaginaires. Aucun jeu réel cité."
+    en: "Imaginary class and lottery. No real game cited."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Combinaisons : choisir sans ordre"
+    legende: |
+      Combien de façons de choisir deux délégués dans une classe de quatre ? Et combien de grilles au loto ? Avec un petit exemple où l'on peut *tout écrire*, on voit pourquoi il faut diviser par la factorielle de k : chaque groupe a été compté plusieurs fois. On en tire la formule du coefficient binomial, et on calcule la probabilité d'une grille gagnante. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, combinaisons]
+    scenes:
+      - type: accroche
+        texte: "*2 délégués* dans une classe de *4* : combien de choix ?"
+        voix_off: "On veut choisir deux délégués dans une classe de quatre élèves : Anne, Bruno, Clara, David. Combien de groupes différents de deux délégués peut-on former ?"
+      - type: titre
+        numero: 1
+        texte: "Tout écrire d'abord"
+        voix_off: "Commençons par tout écrire."
+      - type: etapes
+        texte: "*Tous les groupes possibles*"
+        etapes:
+          - "{Anne, Bruno}"
+          - "{Anne, Clara}"
+          - "{Anne, David}"
+          - "{Bruno, Clara}"
+          - "{Bruno, David}"
+          - "{Clara, David}"
+          - "Total : *6 groupes*"
+        voix_off: "Six groupes, pas un de plus. Et vous remarquez : l'ordre ne compte pas. Le groupe Anne-Bruno est le même que Bruno-Anne."
+      - type: titre
+        numero: 2
+        texte: "Compter avec ordre, puis corriger"
+        voix_off: "Essayons par le principe multiplicatif."
+      - type: etapes
+        texte: "*Avec ordre*, puis *diviser*"
+        etapes:
+          - "1ᵉ délégué : *4 choix*"
+          - "2ᵉ délégué : *3 choix* restants"
+          - "Avec ordre : *4 × 3 = 12*"
+          - "Chaque groupe est compté *2 fois* (deux ordres)"
+          - "Donc : *12 / 2 = 6*"
+        voix_off: "Quatre choix pour le premier délégué, trois pour le deuxième : douze. Mais douze est le double de six, parce qu'on a compté chaque groupe deux fois, une fois dans chaque ordre. On divise donc par deux, c'est-à-dire par factorielle de deux. Résultat : six."
+        verifier:
+          - {expression: "4 * 3 / factorial(2)", attendu: 6.0, libelle: "Groupes de 2 parmi 4"}
+      - type: titre
+        numero: 3
+        texte: "La formule du coefficient binomial"
+        voix_off: "Et voici la règle générale."
+      - type: formule
+        texte: "*C(n, k) = n! / (k! × (n−k)!)*"
+        formule: "C(n, k) = n! / (k! × (n-k)!)"
+        voix_off: "Le coefficient binomial, noté C de n k, ou parfois entre parenthèses, vaut factorielle de n divisée par factorielle de k multipliée par factorielle de n moins k. Il compte les façons de choisir k objets parmi n, sans tenir compte de l'ordre. Le k factorielle au dénominateur efface les ordres en double."
+      - type: etapes
+        texte: "Dans notre exemple"
+        etapes:
+          - "C(4, 2) = *4! / (2! × 2!)*"
+          - "= *24 / (2 × 2)*"
+          - "= *24 / 4 = 6*"
+        voix_off: "Dans notre exemple : factorielle de quatre divisée par factorielle de deux au carré. Vingt-quatre divisé par quatre : six. On retrouve nos six groupes."
+        verifier:
+          - {expression: "comb(4, 2)", attendu: 6, libelle: "C(4, 2)"}
+      - type: titre
+        numero: 4
+        texte: "Le loto : 5 numéros parmi 49"
+        voix_off: "Passons au loto imaginaire : cinq numéros différents parmi quarante-neuf, sans ordre."
+      - type: etapes
+        texte: "*Nombre de grilles possibles*"
+        etapes:
+          - "Avec ordre : *49 × 48 × 47 × 46 × 45*"
+          - "= *228 826 080*"
+          - "Chaque grille est comptée *5! = 120* fois"
+          - "C(49, 5) = 228 826 080 / 120 = *1 906 884*"
+        voix_off: "Avec ordre, quarante-neuf fois quarante-huit fois quarante-sept fois quarante-six fois quarante-cinq : environ deux cent vingt-huit millions. Mais chaque grille est comptée cent vingt fois — cinq factorielle — puisque les cinq numéros peuvent apparaître dans n'importe quel ordre. On divise : il y a près d'un million neuf cent mille grilles possibles."
+        verifier:
+          - {expression: "comb(49, 5)", attendu: 1906884, libelle: "C(49, 5) : grilles du loto imaginaire"}
+      - type: titre
+        numero: 5
+        texte: "La probabilité de gagner"
+        voix_off: "Et la probabilité qu'une grille soit la bonne ?"
+      - type: formule
+        texte: "*P(gagner) = 1 / C(49, 5)*"
+        formule: "P = 1 / C(49, 5)"
+        voix_off: "Une seule grille gagne sur un million neuf cent six mille huit cent quatre-vingt-quatre : un sur un million neuf cent mille, environ. En décimal, cinq pour dix millions : 0,0000005. C'est très petit."
+        verifier:
+          - {expression: "round(1 / comb(49, 5) * 1_000_000, 3)", attendu: 0.524, libelle: "P(gagner) en millionièmes"}
+      - type: titre
+        numero: 6
+        texte: "Arrangement ou combinaison ?"
+        voix_off: "Avant d'écrire, une question à se poser."
+      - type: etapes
+        texte: "*L'ordre compte ?*"
+        etapes:
+          - "Oui → *arrangement* A(n, k) = n! / (n−k)!"
+          - "Non → *combinaison* C(n, k) = n! / (k! × (n−k)!)"
+          - "Le C a *un k! en plus* au dénominateur"
+        voix_off: "Si l'ordre compte, c'est un arrangement : A de n k. Si l'ordre ne compte pas, c'est une combinaison : C de n k. La seule différence, c'est un k factorielle supplémentaire au dénominateur de la combinaison. Il efface les ordres en double."
+      - type: titre
+        numero: 7
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "Combien de *mains de 2 cartes* dans un jeu de *32* ?"
+        pause: 10
+        voix_off: "Un jeu de trente-deux cartes, une main de deux cartes : l'ordre ne compte pas. Combien de mains possibles ? Pause."
+      - type: correction
+        etapes:
+          - "C(32, 2) = *32 × 31 / 2*"
+          - "= *992 / 2*"
+          - "= *496*"
+        reponse: "496 mains"
+        voix_off: "Trente-deux fois trente et un divisé par deux. Trente-deux fois trente et un vaut neuf cent quatre-vingt-douze. Divisé par deux : quatre cent quatre-vingt-seize. Il y a donc quatre cent quatre-vingt-seize mains de deux cartes."
+        verifier:
+          - {expression: "comb(32, 2)", attendu: 496, libelle: "C(32, 2) : mains de 2 cartes dans un jeu de 32"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*Combinaison* : choisir sans ordre"
+          - "*C(n, k) = n! / (k! × (n−k)!)*"
+          - "Le *k!* efface les ordres en double"
+        voix_off: "À retenir. Une combinaison, c'est un choix sans ordre. Elle se calcule par le coefficient binomial. Et son k factorielle au dénominateur rattrape le principe multiplicatif, en effaçant les ordres en double."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Combinations: choosing without order"
+    legende: |
+      How many ways to pick two class reps from four pupils? And how many lottery tickets? With a small example where we can *list them all*, we see why we must divide by k factorial: each group has been counted several times. We derive the binomial coefficient, and compute the probability of a winning ticket. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, combinations]
+    scenes:
+      - type: accroche
+        texte: "*2 reps* in a class of *4*: how many choices?"
+        voix_off: "We want to pick two class reps from four pupils: Anne, Bruno, Clara, David. How many different pairs can we form?"
+      - type: titre
+        numero: 1
+        texte: "List them all first"
+        voix_off: "Let's list them all."
+      - type: etapes
+        texte: "*All possible pairs*"
+        etapes:
+          - "{Anne, Bruno}"
+          - "{Anne, Clara}"
+          - "{Anne, David}"
+          - "{Bruno, Clara}"
+          - "{Bruno, David}"
+          - "{Clara, David}"
+          - "Total: *6 pairs*"
+        voix_off: "Six pairs, not one more. And notice: order does not matter. The pair Anne-Bruno is the same as Bruno-Anne."
+      - type: titre
+        numero: 2
+        texte: "Count with order, then correct"
+        voix_off: "Let's try the multiplication rule."
+      - type: etapes
+        texte: "*With order*, then *divide*"
+        etapes:
+          - "1st rep: *4 choices*"
+          - "2nd rep: *3 choices* left"
+          - "With order: *4 × 3 = 12*"
+          - "Each pair is counted *twice* (two orderings)"
+          - "So: *12 / 2 = 6*"
+        voix_off: "Four choices for the first rep, three for the second: twelve. But twelve is double six, because each pair has been counted twice — once in each order. We divide by two, that is, by two factorial. Six."
+        verifier:
+          - {expression: "4 * 3 / factorial(2)", attendu: 6.0, libelle: "Pairs from 4"}
+      - type: titre
+        numero: 3
+        texte: "The binomial coefficient"
+        voix_off: "And here is the general rule."
+      - type: formule
+        texte: "*C(n, k) = n! / (k! × (n−k)!)*"
+        formule: "C(n, k) = n! / (k! × (n-k)!)"
+        voix_off: "The binomial coefficient, C(n, k), is n factorial divided by k factorial times (n − k) factorial. It counts the ways to choose k out of n, regardless of order. The k factorial in the denominator wipes out duplicate orderings."
+      - type: etapes
+        texte: "In our example"
+        etapes:
+          - "C(4, 2) = *4! / (2! × 2!)*"
+          - "= *24 / (2 × 2)*"
+          - "= *24 / 4 = 6*"
+        voix_off: "In our example: four factorial over two factorial squared. Twenty-four over four: six. We recover our six pairs."
+        verifier:
+          - {expression: "comb(4, 2)", attendu: 6, libelle: "C(4, 2)"}
+      - type: titre
+        numero: 4
+        texte: "Lottery: 5 out of 49"
+        voix_off: "Now an imaginary lottery: five different numbers out of forty-nine, no order."
+      - type: etapes
+        texte: "*Number of possible tickets*"
+        etapes:
+          - "With order: *49 × 48 × 47 × 46 × 45*"
+          - "= *228,826,080*"
+          - "Each ticket counted *5! = 120* times"
+          - "C(49, 5) = 228,826,080 / 120 = *1,906,884*"
+        voix_off: "With order, forty-nine times forty-eight times forty-seven times forty-six times forty-five: about two hundred and twenty-eight million. But each ticket is counted one hundred and twenty times — five factorial — since the five numbers can appear in any order. Divide: close to one million nine hundred thousand possible tickets."
+        verifier:
+          - {expression: "comb(49, 5)", attendu: 1906884, libelle: "C(49, 5): imaginary lottery tickets"}
+      - type: titre
+        numero: 5
+        texte: "The probability of winning"
+        voix_off: "And the probability that your ticket is the right one?"
+      - type: formule
+        texte: "*P(win) = 1 / C(49, 5)*"
+        formule: "P = 1 / C(49, 5)"
+        voix_off: "One winning ticket out of one million nine hundred and six thousand eight hundred and eighty-four: roughly one in one point nine million. As a decimal, five in ten million: 0.0000005. Very small."
+        verifier:
+          - {expression: "round(1 / comb(49, 5) * 1_000_000, 3)", attendu: 0.524, libelle: "P(win) in millionths"}
+      - type: titre
+        numero: 6
+        texte: "Arrangement or combination?"
+        voix_off: "Before writing, one question."
+      - type: etapes
+        texte: "*Does order matter?*"
+        etapes:
+          - "Yes → *arrangement* A(n, k) = n! / (n−k)!"
+          - "No → *combination* C(n, k) = n! / (k! × (n−k)!)"
+          - "C has *an extra k!* in the denominator"
+        voix_off: "If order matters, arrangement: A(n, k). If not, combination: C(n, k). The only difference is an extra k factorial in the combination's denominator. It wipes out duplicate orderings."
+      - type: titre
+        numero: 7
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "How many *2-card hands* in a deck of *32*?"
+        pause: 10
+        voix_off: "A deck of thirty-two cards, a hand of two cards: order does not matter. How many possible hands? Pause."
+      - type: correction
+        etapes:
+          - "C(32, 2) = *32 × 31 / 2*"
+          - "= *992 / 2*"
+          - "= *496*"
+        reponse: "496 hands"
+        voix_off: "Thirty-two times thirty-one, divided by two. Thirty-two times thirty-one is nine hundred and ninety-two. Divided by two: four hundred and ninety-six. So there are four hundred and ninety-six 2-card hands."
+        verifier:
+          - {expression: "comb(32, 2)", attendu: 496, libelle: "C(32, 2): 2-card hands in a 32-card deck"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Combination*: choose without order"
+          - "*C(n, k) = n! / (k! × (n−k)!)*"
+          - "The *k!* wipes out duplicate orderings"
+        voix_off: "Key points. A combination is a choice without order. It is computed by the binomial coefficient. And its k factorial in the denominator corrects the multiplication rule by removing duplicate orderings."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
