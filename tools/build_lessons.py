@@ -399,7 +399,7 @@ def render_courbe_svg(courbe: dict, lang: str, aria_label: str = "") -> str:
         x_min, x_max = 0.0, float(max(1, len(boites)))
     elif style in ("barres", "histogramme"):
         xs = [p[0] for p in pts]
-        ys = [p[1] for p in pts]
+        ys = [p[1] for p in pts] + ([] if serie_2_secondary_axis else [p[1] for p in serie_2])
         if style == "histogramme":
             lw = float(courbe.get("largeur_classe", 1))
             x_min, x_max = _bounds("x_min", "x_max", xs + [max(xs) + lw if xs else 1])
