@@ -1,0 +1,284 @@
+# Niveau 1, vague 1, lot 4 : S4.05 « Événements : complément, union, intersection » (EDUCATIONAL, leçon)
+# Repère historique : la correspondance Pascal-Fermat (1654) sur le problème du chevalier de Méré.
+# Exemples fictifs (dé supposé équilibré, cartes supposées équiprobables).
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s4-05-evenements-union-intersection
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S4.05 · Événements : complément, union, intersection"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Représenter des événements par un diagramme de Venn"
+      - "Utiliser le complément et la formule de l'union"
+      - "Repérer des événements incompatibles"
+    en:
+      - "Represent events with a Venn diagram"
+      - "Use the complement and the union formula"
+      - "Spot incompatible events"
+  prerequis:
+    fr: ["S4.01 : qu'est-ce qu'une probabilité"]
+    en: ["S4.01: what is a probability"]
+  hypotheses:
+    fr: "Dés et cartes supposés équilibrés. Repère historique : Pascal et Fermat (1654)."
+    en: "Dice and cards assumed fair. Historical landmark: Pascal and Fermat (1654)."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Événements : complément, union, intersection"
+    legende: |
+      Au moins un six en quatre lancers de dé : est-ce probable ? Avec un diagramme de Venn imaginaire et un vieux problème posé par le chevalier de Méré à Pascal et Fermat en 1654, on apprend à manipuler les événements. Le complément transforme un « au moins un » en « aucun ». La formule de l'union évite de compter deux fois. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, probabilites, evenements]
+    scenes:
+      - type: accroche
+        texte: "*Au moins un 6* en 4 lancers de dé : c'est quelle probabilité ?"
+        voix_off: "Je lance un dé équilibré quatre fois. Quelle est la probabilité d'obtenir au moins un six ? À l'instinct, beaucoup disent quatre sur six, soit soixante-sept pour cent. On va voir que la bonne méthode est tout autre."
+      - type: titre
+        numero: 1
+        texte: "Un événement, c'est un sous-ensemble"
+        voix_off: "D'abord, le vocabulaire."
+      - type: etapes
+        texte: "Dans l'*univers* des résultats"
+        etapes:
+          - "L'*univers* : tous les résultats possibles"
+          - "Un *événement* : un sous-ensemble de résultats"
+          - "Sa *probabilité* : la part de l'univers qu'il couvre"
+        voix_off: "Pour un dé équilibré, l'univers est l'ensemble des six faces : un, deux, trois, quatre, cinq, six. Un événement est un sous-ensemble : par exemple, « obtenir un nombre pair » est l'événement {deux, quatre, six}. Et sa probabilité est la part de l'univers qu'il couvre : trois faces sur six, soit un demi."
+        verifier:
+          - {expression: "3 / 6", attendu: 0.5, libelle: "P(pair) sur un dé équilibré"}
+      - type: titre
+        numero: 2
+        texte: "Le complément : passer par le contraire"
+        voix_off: "Première règle, celle qui va résoudre le problème du dé."
+      - type: formule
+        texte: "*P(A) + P(non A) = 1*"
+        formule: "P(A) + P(non A) = 1"
+        voix_off: "La probabilité d'un événement, plus celle de son complément — tout ce qui n'est pas lui — fait toujours un. Autrement dit, P de A vaut un moins P de non A."
+      - type: etapes
+        texte: "Résoudre le *problème du dé*"
+        etapes:
+          - "Événement A : *au moins un 6* en 4 lancers"
+          - "Complément : *aucun 6* en 4 lancers"
+          - "P(aucun 6) = *(5/6)⁴ ≈ 0,482*"
+          - "P(au moins un 6) = *1 − 0,482 = 0,518*"
+          - "Soit *51,8 %*"
+        voix_off: "Traduire « au moins un six » directement, c'est compliqué : il faudrait compter les cas avec un, deux, trois, quatre six. Mais son contraire est simple : « aucun six », donc « pas un six » quatre fois de suite. À chaque lancer, cinq faces sur six ne sont pas un six : cinq sixièmes. Les quatre lancers étant indépendants, on multiplie : cinq sixièmes à la puissance quatre, soit zéro virgule quatre cent quatre-vingt-deux. Un moins cela : zéro virgule cinq cent dix-huit, soit cinquante et un virgule huit pour cent."
+        verifier:
+          - {expression: "round((5/6)**4, 3)", attendu: 0.482, libelle: "P(aucun 6) en 4 lancers"}
+          - {expression: "round((1 - (5/6)**4) * 100, 1)", attendu: 51.8, libelle: "P(au moins un 6) en %"}
+      - type: titre
+        numero: 3
+        texte: "Un peu d'histoire : Pascal et Fermat"
+        voix_off: "Ce problème n'est pas récent."
+      - type: etapes
+        texte: "Le *chevalier de Méré*, en 1654"
+        etapes:
+          - "Il joue : *au moins un 6* en 4 lancers"
+          - "Il perd : *au moins un double 6* en 24 lancers avec deux dés"
+          - "Il écrit à *Blaise Pascal*"
+          - "Pascal correspond avec *Pierre de Fermat*"
+          - "Leurs lettres fondent *le calcul des probabilités*"
+        voix_off: "En 1654, un joueur, le chevalier de Méré, écrit à Blaise Pascal. Il gagne en pariant qu'il y aura au moins un six en quatre lancers d'un dé. Il perd — de peu — en pariant qu'il y aura au moins un double six en vingt-quatre lancers de deux dés. Pourquoi ? Pascal et Fermat échangent des lettres. Et leur correspondance fonde ce qu'on appelle aujourd'hui le calcul des probabilités."
+      - type: titre
+        numero: 4
+        texte: "Union : quand deux événements se chevauchent"
+        voix_off: "Deuxième règle, pour quand on combine deux événements."
+      - type: formule
+        texte: "*P(A ou B) = P(A) + P(B) − P(A et B)*"
+        formule: "P(A ∪ B) = P(A) + P(B) - P(A ∩ B)"
+        voix_off: "La probabilité qu'un des deux événements arrive — ou les deux — vaut la somme de leurs probabilités, moins la probabilité qu'ils arrivent ensemble. Pourquoi retrancher ? Parce que sinon, l'intersection a été comptée deux fois, une dans chaque somme."
+      - type: etapes
+        texte: "*Carte rouge ou figure* dans un jeu de 52"
+        etapes:
+          - "P(rouge) = *26/52 = 1/2*"
+          - "P(figure) = *12/52 = 3/13*"
+          - "P(rouge et figure) = *6/52 = 3/26*"
+          - "P(rouge ou figure) = *1/2 + 3/13 − 3/26*"
+          - "= *32/52 ≈ 0,615*"
+        voix_off: "Dans un jeu de cinquante-deux cartes : vingt-six rouges, douze figures, six cartes qui sont à la fois rouges et des figures. Par la formule : un demi plus trois treizièmes moins trois vingt-sixièmes. Trente-deux cinquante-deuxièmes, soit environ zéro virgule six cent quinze."
+        verifier:
+          - {expression: "round(26/52 + 12/52 - 6/52, 3)", attendu: 0.615, libelle: "P(rouge ou figure)"}
+      - type: titre
+        numero: 5
+        texte: "Incompatibles : la formule se simplifie"
+        voix_off: "Un cas particulier important."
+      - type: etapes
+        texte: "Si A et B ne peuvent *pas se produire ensemble*"
+        etapes:
+          - "P(A et B) = *0*"
+          - "P(A ou B) = *P(A) + P(B)*"
+          - "Exemples : *obtenir 1 ou obtenir 6* sur un dé"
+        voix_off: "Si deux événements ne peuvent pas se produire ensemble — on les appelle *incompatibles*, ou *disjoints* —, leur intersection a probabilité zéro, et la formule se réduit à la somme. Par exemple, sur un dé, « sortir un » et « sortir six » : on ajoute simplement un sixième à un sixième, soit un tiers."
+      - type: titre
+        numero: 6
+        texte: "Erreur classique"
+        voix_off: "Une erreur très fréquente."
+      - type: etapes
+        texte: "Attention à *l'oubli de l'intersection*"
+        etapes:
+          - "Additionner *P(A) + P(B)* sans retrancher *P(A et B)*"
+          - "Donne un résultat *trop grand*"
+          - "Vérifier *l'incompatibilité* avant d'additionner"
+        voix_off: "On additionne P de A et P de B, sans retrancher l'intersection. Cela compte deux fois les cas où les deux arrivent ensemble, et donne un résultat trop grand. Avant d'additionner, on vérifie toujours : ces événements sont-ils incompatibles ?"
+      - type: titre
+        numero: 7
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: exercice
+        texte: "Probabilité d'obtenir *au moins un 1* en *3 lancers* d'un dé équilibré ?"
+        pause: 12
+        voix_off: "Au moins un un, en trois lancers d'un dé équilibré. Passez par le complément. Pause."
+      - type: correction
+        etapes:
+          - "Complément : *aucun 1* en 3 lancers"
+          - "P(aucun 1) = *(5/6)³ ≈ 0,579*"
+          - "P(au moins un 1) = *1 − 0,579 = 0,421*"
+          - "Soit *42,1 %*"
+        reponse: "Environ 42,1 %"
+        voix_off: "Aucun un en trois lancers : cinq sixièmes au cube, soit zéro virgule cinq cent soixante-dix-neuf. Un moins cela : zéro virgule quatre cent vingt et un. Autrement dit, quarante-deux pour cent. Loin de trois sur six."
+        verifier:
+          - {expression: "round((1 - (5/6)**3) * 100, 1)", attendu: 42.1, libelle: "P(au moins un 1) en 3 lancers, en %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*P(A) + P(non A) = 1* : le passage par le complément"
+          - "*P(A ou B) = P(A) + P(B) − P(A et B)* : retrancher l'intersection"
+          - "Si *incompatibles*, l'intersection est *nulle* et on ajoute simplement"
+        voix_off: "À retenir. Pour « au moins un », penser au complément « aucun ». Pour une union, soustraire l'intersection, sauf si les événements sont incompatibles."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Events: complement, union, intersection"
+    legende: |
+      At least one six in four tosses of a die: how likely? With an imaginary Venn diagram and an old problem posed by the Chevalier de Méré to Pascal and Fermat in 1654, we learn how to handle events. The complement turns "at least one" into "none". The union formula avoids double counting. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, probability, events]
+    scenes:
+      - type: accroche
+        texte: "*At least one 6* in 4 dice tosses: what's the probability?"
+        voix_off: "I toss a fair die four times. What is the probability of at least one six? At first, many say four out of six, or sixty-seven percent. The right method is quite different."
+      - type: titre
+        numero: 1
+        texte: "An event is a subset"
+        voix_off: "First, vocabulary."
+      - type: etapes
+        texte: "Within the *sample space*"
+        etapes:
+          - "The *sample space*: all possible outcomes"
+          - "An *event*: a subset of outcomes"
+          - "Its *probability*: the share of the space it covers"
+        voix_off: "For a fair die, the sample space is the six faces: one, two, three, four, five, six. An event is a subset: for example, 'get an even number' is {two, four, six}. Its probability is the share it covers: three faces out of six, that is, one half."
+        verifier:
+          - {expression: "3 / 6", attendu: 0.5, libelle: "P(even) on a fair die"}
+      - type: titre
+        numero: 2
+        texte: "The complement: go through the opposite"
+        voix_off: "First rule, the one that solves the die problem."
+      - type: formule
+        texte: "*P(A) + P(not A) = 1*"
+        formule: "P(A) + P(not A) = 1"
+        voix_off: "The probability of an event plus the probability of its complement — everything that is not the event — always equals one. In other words, P(A) equals one minus P(not A)."
+      - type: etapes
+        texte: "Solve the *die problem*"
+        etapes:
+          - "Event A: *at least one 6* in 4 tosses"
+          - "Complement: *no 6* in 4 tosses"
+          - "P(no 6) = *(5/6)⁴ ≈ 0.482*"
+          - "P(at least one 6) = *1 − 0.482 = 0.518*"
+          - "That is *51.8%*"
+        voix_off: "Translating 'at least one six' directly is complicated: you would have to count cases with one, two, three, four sixes. But its opposite is simple: 'no six at all', that is, 'not a six' four times in a row. On each toss, five of six faces are not a six: five sixths. The four tosses are independent, so we multiply: five sixths to the fourth, about zero point four hundred and eighty-two. One minus that: zero point five hundred and eighteen, or fifty-one point eight percent."
+        verifier:
+          - {expression: "round((5/6)**4, 3)", attendu: 0.482, libelle: "P(no 6) in 4 tosses"}
+          - {expression: "round((1 - (5/6)**4) * 100, 1)", attendu: 51.8, libelle: "P(at least one 6) in %"}
+      - type: titre
+        numero: 3
+        texte: "A bit of history: Pascal and Fermat"
+        voix_off: "This problem is not recent."
+      - type: etapes
+        texte: "The *Chevalier de Méré*, in 1654"
+        etapes:
+          - "He bets: *at least one 6* in 4 tosses"
+          - "He loses: *at least one double 6* in 24 tosses of two dice"
+          - "He writes to *Blaise Pascal*"
+          - "Pascal corresponds with *Pierre de Fermat*"
+          - "Their letters found *modern probability*"
+        voix_off: "In 1654, a gambler, the Chevalier de Méré, writes to Blaise Pascal. He wins by betting on at least one six in four tosses of a die. He loses — narrowly — by betting on at least one double six in twenty-four tosses of two dice. Why? Pascal and Fermat exchange letters. And their correspondence founds what is today called probability theory."
+      - type: titre
+        numero: 4
+        texte: "Union: when events overlap"
+        voix_off: "Second rule, for combining two events."
+      - type: formule
+        texte: "*P(A or B) = P(A) + P(B) − P(A and B)*"
+        formule: "P(A ∪ B) = P(A) + P(B) - P(A ∩ B)"
+        voix_off: "The probability that one of the two events happens — or both — is the sum of their probabilities, minus the probability that they both happen. Why subtract? Because otherwise the intersection is counted twice, once in each term."
+      - type: etapes
+        texte: "*Red card or face card* in a deck of 52"
+        etapes:
+          - "P(red) = *26/52 = 1/2*"
+          - "P(face) = *12/52 = 3/13*"
+          - "P(red and face) = *6/52 = 3/26*"
+          - "P(red or face) = *1/2 + 3/13 − 3/26*"
+          - "= *32/52 ≈ 0.615*"
+        voix_off: "In a deck of fifty-two cards: twenty-six red, twelve face cards, six cards that are both red and faces. By the formula: one half plus three thirteenths minus three twenty-sixths. Thirty-two fifty-seconds, about zero point six hundred and fifteen."
+        verifier:
+          - {expression: "round(26/52 + 12/52 - 6/52, 3)", attendu: 0.615, libelle: "P(red or face)"}
+      - type: titre
+        numero: 5
+        texte: "Disjoint: the formula simplifies"
+        voix_off: "A key special case."
+      - type: etapes
+        texte: "If A and B *cannot happen together*"
+        etapes:
+          - "P(A and B) = *0*"
+          - "P(A or B) = *P(A) + P(B)*"
+          - "Example: *rolling a 1 or rolling a 6* on a die"
+        voix_off: "If two events cannot happen together — we call them *incompatible*, or *disjoint* — their intersection has probability zero, and the formula reduces to the sum. For example, on a die, 'roll a one' and 'roll a six': just add one sixth to one sixth, that is, one third."
+      - type: titre
+        numero: 6
+        texte: "Classic mistake"
+        voix_off: "A very common mistake."
+      - type: etapes
+        texte: "Beware the *forgotten intersection*"
+        etapes:
+          - "Adding *P(A) + P(B)* without subtracting *P(A and B)*"
+          - "Gives a result *too large*"
+          - "Check *disjointness* before adding"
+        voix_off: "People add P(A) and P(B) without subtracting the intersection. That double-counts the cases where both happen, and gives a result too large. Before adding, always check: are these events disjoint?"
+      - type: titre
+        numero: 7
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Probability of *at least one 1* in *3 tosses* of a fair die?"
+        pause: 12
+        voix_off: "At least one one, in three tosses of a fair die. Use the complement. Pause."
+      - type: correction
+        etapes:
+          - "Complement: *no 1* in 3 tosses"
+          - "P(no 1) = *(5/6)³ ≈ 0.579*"
+          - "P(at least one 1) = *1 − 0.579 = 0.421*"
+          - "That is *42.1%*"
+        reponse: "About 42.1%"
+        voix_off: "No one in three tosses: five sixths cubed, about zero point five hundred and seventy-nine. One minus that: zero point four hundred and twenty-one. In other words, forty-two percent. Far from three out of six."
+        verifier:
+          - {expression: "round((1 - (5/6)**3) * 100, 1)", attendu: 42.1, libelle: "P(at least one 1) in 3 tosses, %"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*P(A) + P(not A) = 1*: go through the complement"
+          - "*P(A or B) = P(A) + P(B) − P(A and B)*: subtract the intersection"
+          - "If *disjoint*, the intersection is *zero*: just add"
+        voix_off: "Key points. For 'at least one', think complement 'none'. For a union, subtract the intersection, unless the events are disjoint."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
