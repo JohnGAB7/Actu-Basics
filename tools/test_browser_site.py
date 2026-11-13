@@ -89,6 +89,8 @@ def check_keyboard_and_mobile_menu(browser, browser_name: str, home_path: str, l
     })""")
     check("skip-link" in str(active["className"]) and active["visible"],
           f"{browser_name} {lang}: le lien d'évitement n'est pas le premier arrêt clavier ({active})")
+    check(active["outlineWidth"] == "3px",
+          f"{browser_name} {lang}: indicateur de focus clavier absent ou trop discret ({active})")
     page.keyboard.press("Enter")
     check(page.url.endswith("#contenu"), f"{browser_name} {lang}: le lien d'évitement ne mène pas au contenu")
 
@@ -122,6 +124,10 @@ def check_library_search(browser, browser_name: str, path: str, lang: str) -> No
     card = page.locator('[data-lesson]').filter(has_text="S1-05")
     check(card.count() == 1 and card.is_visible(),
           f"{browser_name} {lang}: la recherche ne retrouve pas S1-05")
+    search.fill("")
+    page.locator("[data-filter]").select_option("probabilites")
+    check(not card.is_visible() and page.locator('[data-lesson]').filter(has_text="S4-01").is_visible(),
+          f"{browser_name} {lang}: le filtre par domaine ne fonctionne pas")
     search.fill("terme-qui-ne-correspond-a-aucune-lecon-xyz")
     empty = page.locator("[data-empty]")
     check(empty.count() == 1 and empty.is_visible(),
