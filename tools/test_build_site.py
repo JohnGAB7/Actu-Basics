@@ -314,6 +314,59 @@ def test_library_links_integrity() -> None:
                 F.add("library_links", f"lien cassé {code} dans {library.relative_to(ROOT)}")
 
 
+def test_relative_links_resolve() -> None:
+    """Résolution stricte de chaque href RELATIF sur chaque page générée :
+    le fichier cible doit exister sur disque.
+
+    Ce test aurait attrapé la régression où les cartes de leçons des pages
+    parcours pointaient vers ``../lecons/<CODE>/`` au lieu de
+    ``../../lecons/<CODE>/`` — ce qui donnait un lien vers
+    ``/parcours/lecons/<CODE>/`` au lieu de ``/lecons/<CODE>/``.
+    """
+    docs = ROOT / "docs"
+    href_re = re.compile(r'href="([^"#]+)(#[^"]*)?"')
+    # Toutes les pages générées à ausculter.
+    targets: list[Path] = []
+    targets.extend(docs.rglob("lecons/**/index.html"))
+    targets.extend(docs.rglob("en/lessons/**/index.html"))
+    targets.extend(docs.glob("parcours/**/index.html"))
+    targets.extend(docs.glob("en/paths/**/index.html"))
+    targets.extend([docs / "bibliotheque" / "index.html", docs / "en" / "library" / "index.html"])
+
+    for page in targets:
+        if not page.exists():
+            continue
+        text = page.read_text(encoding="utf-8")
+        for m in href_re.finditer(text):
+            href = m.group(1).strip()
+            # On ne teste que les URLs locales relatives.
+            if not href or href.startswith(("http://", "https://", "mailto:", "tel:", "#", "javascript:", "data:")):
+                continue
+            # URL absolue site (/foo/) : résoudre depuis docs/
+            if href.startswith("/"):
+                target_base = docs
+                rel = href.lstrip("/")
+            else:
+                target_base = page.parent
+                rel = href
+            # Résoudre comme un chemin : si ça finit par /, cherche index.html.
+            resolved = (target_base / rel).resolve()
+            if resolved.is_dir() or rel.endswith("/"):
+                resolved = resolved / "index.html"
+            # Rester dans l'arbre docs/ pour éviter les faux positifs en dehors.
+            try:
+                resolved.relative_to(docs.resolve())
+            except ValueError:
+                # Lien hors de docs/ : ignoré ici.
+                continue
+            if not resolved.is_file():
+                F.add(
+                    "relative_links",
+                    f"lien cassé {href!r} dans {page.relative_to(docs)} -> "
+                    f"{resolved.relative_to(docs.resolve())}",
+                )
+
+
 # -------------------- integration tests -----------------------------------
 
 def test_generation_integrity() -> None:
@@ -391,6 +444,7 @@ def main() -> int:
         test_parcours_multi_synthetic,
         test_generation_integrity,
         test_library_links_integrity,
+        test_relative_links_resolve,
         test_short_fiches_not_generated,
     ]
     for t in tests:
