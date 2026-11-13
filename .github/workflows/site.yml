@@ -21,6 +21,8 @@ on:
       - "docs/SITE-README.md"
       - "docs/assets/css/main.css"
       - "docs/assets/js/site.js"
+      - "docs/lecons/**"
+      - "docs/en/lessons/**"
       - ".github/workflows/site.yml"
   push:
     branches: [main]
