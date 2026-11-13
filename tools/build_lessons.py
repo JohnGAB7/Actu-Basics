@@ -1025,13 +1025,10 @@ def header_fr(depth: int, current: str = "") -> str:
     def cls(name): return ' aria-current="page"' if current == name else " "
     return (
         f'<header class="site-header"><div class="nav-wrap">'
-        f'<a class="brand" href="{b}index.html" aria-label="ACTU-BASICS · Éveiller par les chiffres">'
+        f'<a class="brand" href="{b}index.html" aria-label="ACTU-BASICS">'
         f'<img src="{b}assets/img/logo-light.png" alt="" '
         f'onerror="this.style.display=\'none\'">'
-        f'<span class="brand-text">'
         f'<span class="brand-name">ACTU-BASICS</span>'
-        f'<span class="brand-tagline">Éveiller par les chiffres.</span>'
-        f'</span>'
         f'</a>'
         f'<nav id="site-navigation" class="nav-links" aria-label="Navigation principale">'
         f'<a href="{b}programme/"{cls("programme")}>Programme</a>'
@@ -1052,13 +1049,10 @@ def header_en(depth: int, current: str = "") -> str:
     def cls(name): return ' aria-current="page"' if current == name else " "
     return (
         f'<header class="site-header"><div class="nav-wrap">'
-        f'<a class="brand" href="{b}en/" aria-label="ACTU-BASICS · Enlightening through numbers">'
+        f'<a class="brand" href="{b}en/" aria-label="ACTU-BASICS">'
         f'<img src="{b}assets/img/logo-light-en.png" alt="" '
         f'onerror="this.style.display=\'none\'">'
-        f'<span class="brand-text">'
         f'<span class="brand-name">ACTU-BASICS</span>'
-        f'<span class="brand-tagline">Enlightening through numbers.</span>'
-        f'</span>'
         f'</a>'
         f'<nav id="site-navigation" class="nav-links" aria-label="Main navigation">'
         f'<a href="{b}en/programme/"{cls("programme")}>Programme</a>'
