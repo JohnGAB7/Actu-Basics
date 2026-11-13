@@ -915,6 +915,8 @@ def _premium_head_assets(base: str) -> str:
     première peinture, ce qui évite un flash clair en mode sombre.
     """
     return (
+        f'<link rel="icon" type="image/png" href="{base}assets/img/favicon.png">'
+        f'<link rel="apple-touch-icon" href="{base}assets/img/favicon.png">'
         f'<link rel="preconnect" href="https://fonts.googleapis.com">'
         f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
         f'<link rel="stylesheet" href="{FRAUNCES_URL}">'
