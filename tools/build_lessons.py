@@ -895,7 +895,15 @@ def _niveau_label(data: dict | None, lang: str) -> str:
     return (mapping_fr if lang == "fr" else mapping_en).get(niv, niv.title())
 
 
-def build_lesson_card(L: dict, lang: str) -> str:
+def build_lesson_card(L: dict, lang: str, depth: int = 1) -> str:
+    """Rend une carte de leçon.
+
+    ``depth`` est la profondeur de la page conteneur par rapport à la racine :
+    - 1 pour /bibliotheque/ ou /parcours/<slug>/ (FR, depth=1)
+    - 2 pour /en/library/ ou /en/paths/<slug>/ (EN, depth=2)
+    Il détermine combien de ``../`` ajouter devant ``lecons/`` ou ``lessons/``
+    pour produire un lien valide vers la page leçon.
+    """
     code = L["code"]
     ed = L["ed_fr"] if lang == "fr" else L["ed_en"]
     titre = ed.get("titre", code)
@@ -906,7 +914,8 @@ def build_lesson_card(L: dict, lang: str) -> str:
     tags = ed.get("hashtags", []) or []
     keywords = " ".join(str(t) for t in tags)
     cat = L["category"]
-    path = f"../lecons/{code}/" if lang == "fr" else f"../lessons/{code}/"
+    up = "../" * depth
+    path = f"{up}lecons/{code}/" if lang == "fr" else f"{up}lessons/{code}/"
     open_label = "Consulter la leçon →" if lang == "fr" else "Open lesson →"
 
     data = L.get("data")
@@ -1390,7 +1399,9 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
         m = module_meta(mod, lang)
         bucket = sorted(by_mod.get(mod, []), key=lambda x: x["code"])
         if bucket:
-            cards_html = "".join(build_lesson_card(x, lang) for x in bucket)
+            # Les pages parcours sont une profondeur plus bas que la biblio :
+            # /parcours/<slug>/ et /en/paths/<slug>/ -> depth=2.
+            cards_html = "".join(build_lesson_card(x, lang, depth=2) for x in bucket)
             inner = f'<div class="grid-3 module-grid">{cards_html}</div>'
         else:
             inner = f'<p class="empty-state">{L["empty_mod"]}</p>'
