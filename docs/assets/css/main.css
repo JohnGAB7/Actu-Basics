@@ -289,3 +289,26 @@ html[lang="en"] .hero-note:before{content:"THE PROMISE"}
 
 /* Keep the primary page heading visible in every browser engine. */
 main h1{display:block;visibility:visible;opacity:1;}
+
+
+/* Lesson experience: clear metadata, outcomes and in-page orientation. */
+.lesson-meta{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 18px}
+.lesson-meta span{display:inline-flex;align-items:center;padding:7px 12px;border:1px solid #e4dfd3;border-radius:999px;background:rgba(255,255,255,.72);color:#526472;font-size:.74rem;font-weight:750;letter-spacing:.035em}
+.lesson-outcomes{margin:0 0 42px;padding:28px 30px;border:1px solid #e6dfd1;border-left:3px solid var(--gold);border-radius:4px 18px 18px 18px;background:linear-gradient(135deg,#fffefa,#f7f4ec)}
+.lesson-outcomes h2,.lesson-prerequisites h2,.lesson-assumptions h2{margin:0 0 14px!important;padding:0!important;border:0!important;font:500 1.55rem/1.2 Georgia,serif!important;letter-spacing:-.025em!important}
+.lesson-outcomes ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px;margin:0!important;padding:0!important;list-style:none}
+.lesson-outcomes li{position:relative;margin:0!important;padding:0 0 0 24px!important;color:#334b59}
+.lesson-outcomes li:before{content:"✓";position:absolute;left:0;top:0;color:var(--teal);font-weight:900}
+.lesson-prerequisites,.lesson-assumptions{margin:28px 0;padding:20px 22px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.55)}
+.lesson-prerequisites ul,.lesson-assumptions ul{margin:8px 0 0!important}
+.lesson-toc{margin:24px 0;padding-top:20px;border-top:1px solid var(--line)}
+.lesson-toc h3{font:700 .72rem/1.4 Inter,ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 12px}
+.lesson-toc ol{display:grid;gap:8px;padding:0;margin:0;list-style:none;counter-reset:lesson-section}
+.lesson-toc li{counter-increment:lesson-section}
+.lesson-toc a{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;color:#405766;font-size:.86rem;line-height:1.45;text-decoration:none}
+.lesson-toc a:before{content:counter(lesson-section,decimal-leading-zero);font-size:.67rem;font-weight:800;color:var(--gold);padding-top:2px}
+.lesson-toc a:hover{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.lesson-content [id^="section-"]{scroll-margin-top:120px}
+.lesson-content .notice{box-shadow:0 10px 28px rgba(16,38,56,.045)}
+@media(max-width:850px){.lesson-outcomes ul{grid-template-columns:1fr}.lesson-toc{display:none}}
+@media(max-width:600px){.lesson-outcomes{padding:22px 20px}.lesson-meta{margin:14px 0}.lesson-meta span{font-size:.68rem;padding:6px 10px}}
