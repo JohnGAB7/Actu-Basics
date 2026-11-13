@@ -282,3 +282,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(max-width:850px){.nav-wrap{padding-inline:22px}.hero-inner{min-height:auto;padding:78px 26px 82px;gap:40px}.hero-note{max-width:none}.feature-panel{grid-template-columns:1fr}.feature-visual{min-height:300px}}
 @media(max-width:600px){.hero-inner{padding:64px 20px 68px}.hero h1{font-size:clamp(3rem,13vw,4.3rem)}.hero-proof{gap:14px}.hero-proof span{padding:0 12px}.section{padding:72px 0}.feature-visual{margin:0 18px 18px;min-height:240px;padding:18px}.feature-copy{padding:30px 24px}.quote-panel{padding:30px 24px}.nav-wrap{min-height:72px}.nav-links{top:72px}}
 @media(hover:none){.card:hover{transform:none;box-shadow:0 8px 32px rgba(16,38,56,.035)}}
+
+/* Language and motion refinements for the shared bilingual hero. */
+html[lang="en"] .hero-note:before{content:"THE PROMISE"}
+@media(prefers-reduced-motion:reduce){.card,.button,.nav-links a:after{transition:none!important}.card:hover,.button:hover{transform:none}}
