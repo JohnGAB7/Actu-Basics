@@ -1025,10 +1025,11 @@ def build_modules_overview(lessons: list[dict], lang: str) -> str:
         )
 
     overview_title = title_fr if lang == "fr" else title_en
+    module_count = len(by_mod)
     overview_sub = (
-        "Six portes d'entrée. Clique pour sauter directement au module qui t'intéresse."
+        f"{module_count} portes d'entrée. Clique pour sauter directement au module qui t'intéresse."
         if lang == "fr"
-        else "Six entry points. Jump straight to the module you want."
+        else f"{module_count} entry points. Jump straight to the module you want."
     )
     return (
         f'<section class="parcours-overview modules-overview" aria-label="{html.escape(overview_title)}">'
