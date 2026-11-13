@@ -286,3 +286,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 /* Language and motion refinements for the shared bilingual hero. */
 html[lang="en"] .hero-note:before{content:"THE PROMISE"}
 @media(prefers-reduced-motion:reduce){.card,.button,.nav-links a:after{transition:none!important}.card:hover,.button:hover{transform:none}}
+
+/* Keep the primary page heading visible in every browser engine. */
+main h1{display:block;visibility:visible;opacity:1;}
