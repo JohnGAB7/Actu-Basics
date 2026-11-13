@@ -1107,3 +1107,20 @@ html[lang="en"] .hero-note::before { content: "THE PROMISE"; }
   text-decoration: none;
 }
 .social-ico { width: 18px; height: 18px; flex: 0 0 auto; }
+
+
+/* Micro-métadonnée éditoriale des leçons */
+.lesson-reading-meta {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font: 600 .78rem/1.4 var(--font-sans);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.lesson-aside h3 {
+  margin: 0 0 14px;
+  font: 750 .78rem/1.4 var(--font-sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
