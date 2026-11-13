@@ -232,7 +232,7 @@ body{background:var(--paper);color:var(--ink);letter-spacing:-.006em}
   .lesson-content h2{margin-top:48px}
   .lesson-aside{padding:20px}
   .courbe-figure{padding:14px 8px;overflow-x:auto}
-  .courbe-svg-dual{min-width:600px}
+  .courbe-svg-dual{min-width:0;width:100%;max-width:100%;overflow:visible}
   .surface-figure{padding:14px 8px;overflow-x:auto}
   .surface-svg{min-width:560px}
   .quote-panel{padding:28px}
