@@ -42,122 +42,160 @@ CATEGORY_LABELS_EN = {
     "finance":       "Financial mathematics",
 }
 
-# Ordre et libellés des modules (préfixe du code -> module).
-MODULE_ORDER = ["M0", "S1", "S2", "S3", "S4", "A0"]
-
-MODULE_META_FR = {
-    "M0": {
-        "titre": "Fondations",
-        "sous_titre": "Rappels mathématiques pour démarrer en confiance.",
-        "category": "fondations",
-    },
-    "S1": {
-        "titre": "Statistiques · lire un chiffre",
-        "sous_titre": "Vocabulaire, pourcentages, lecture des chiffres du quotidien.",
-        "category": "statistiques",
-    },
-    "S2": {
-        "titre": "Statistiques · indicateurs",
-        "sous_titre": "Moyennes, médianes, taux et comparaisons entre groupes.",
-        "category": "statistiques",
-    },
-    "S3": {
-        "titre": "Statistiques · séries et dispersion",
-        "sous_titre": "Écart-type, séries chronologiques et interprétation des graphiques.",
-        "category": "statistiques",
-    },
-    "S4": {
-        "titre": "Probabilités",
-        "sous_titre": "Événements, indépendance, probabilités conditionnelles.",
-        "category": "probabilites",
-    },
-    "A0": {
-        "titre": "Actuariat · premiers pas",
-        "sous_titre": "Métier d'actuaire, risque, prime pure.",
-        "category": "actuariat",
-    },
+# Libellés des modules connus. Un module inconnu (ex: S5, A1, MF1…) reçoit
+# un libellé générique dérivé de son code (voir module_meta()).
+MODULE_META_FR_KNOWN: dict[str, dict] = {
+    "M0": {"titre": "Fondations", "sous_titre": "Rappels mathématiques pour démarrer en confiance.", "category": "fondations"},
+    "S1": {"titre": "Statistiques · lire un chiffre", "sous_titre": "Vocabulaire, pourcentages, lecture des chiffres du quotidien.", "category": "statistiques"},
+    "S2": {"titre": "Statistiques · indicateurs", "sous_titre": "Moyennes, médianes, taux et comparaisons entre groupes.", "category": "statistiques"},
+    "S3": {"titre": "Statistiques · séries et dispersion", "sous_titre": "Écart-type, séries chronologiques et interprétation des graphiques.", "category": "statistiques"},
+    "S4": {"titre": "Probabilités", "sous_titre": "Événements, indépendance, probabilités conditionnelles.", "category": "probabilites"},
+    "A0": {"titre": "Actuariat · premiers pas", "sous_titre": "Métier d'actuaire, risque, prime pure.", "category": "actuariat"},
 }
 
-MODULE_META_EN = {
-    "M0": {
-        "titre": "Foundations",
-        "sous_titre": "A math refresher to start with confidence.",
-        "category": "fondations",
-    },
-    "S1": {
-        "titre": "Statistics · reading numbers",
-        "sous_titre": "Vocabulary, percentages, making sense of everyday numbers.",
-        "category": "statistiques",
-    },
-    "S2": {
-        "titre": "Statistics · indicators",
-        "sous_titre": "Averages, medians, rates and group comparisons.",
-        "category": "statistiques",
-    },
-    "S3": {
-        "titre": "Statistics · series and spread",
-        "sous_titre": "Standard deviation, time series and chart interpretation.",
-        "category": "statistiques",
-    },
-    "S4": {
-        "titre": "Probability",
-        "sous_titre": "Events, independence, conditional probability.",
-        "category": "probabilites",
-    },
-    "A0": {
-        "titre": "Actuarial science · first steps",
-        "sous_titre": "The actuary's role, risk, pure premium.",
-        "category": "actuariat",
-    },
+MODULE_META_EN_KNOWN: dict[str, dict] = {
+    "M0": {"titre": "Foundations", "sous_titre": "A math refresher to start with confidence.", "category": "fondations"},
+    "S1": {"titre": "Statistics · reading numbers", "sous_titre": "Vocabulary, percentages, making sense of everyday numbers.", "category": "statistiques"},
+    "S2": {"titre": "Statistics · indicators", "sous_titre": "Averages, medians, rates and group comparisons.", "category": "statistiques"},
+    "S3": {"titre": "Statistics · series and spread", "sous_titre": "Standard deviation, time series and chart interpretation.", "category": "statistiques"},
+    "S4": {"titre": "Probability", "sous_titre": "Events, independence, conditional probability.", "category": "probabilites"},
+    "A0": {"titre": "Actuarial science · first steps", "sous_titre": "The actuary's role, risk, pure premium.", "category": "actuariat"},
 }
+
+
+def _letters_and_number(prefix: str) -> tuple[str, int]:
+    """'S4' -> ('S', 4) ; 'MF12' -> ('MF', 12) ; 'A0' -> ('A', 0) ; 'M0' -> ('M', 0)."""
+    m = re.match(r"^([A-Za-z]+)(\d+)$", prefix)
+    if m:
+        return m.group(1).upper(), int(m.group(2))
+    return (prefix.upper(), 0)
+
+
+def module_sort_key(prefix: str) -> tuple:
+    """Ordre déterministe pour les modules : M*, S*, A*, MF*, F*, puis alpha.
+    Le module M0 vient en premier, puis les S croissants, puis A croissants,
+    puis MF croissants, puis tout le reste par alphabet.
+    """
+    letters, num = _letters_and_number(prefix)
+    bucket = {
+        "M":  0,   # fondations
+        "S":  1,   # statistiques / probas
+        "A":  2,   # actuariat
+        "MF": 3,   # finance (si utilisé)
+        "F":  4,
+    }.get(letters, 99)
+    return (bucket, letters, num, prefix)
 
 
 def module_of(code: str) -> str:
-    """M0-01 -> M0 ; S4-07 -> S4 ; A0-01 -> A0."""
-    low = code.lower()
-    if low.startswith("m0"):
-        return "M0"
-    if low.startswith("s1"):
-        return "S1"
-    if low.startswith("s2"):
-        return "S2"
-    if low.startswith("s3"):
-        return "S3"
-    if low.startswith("s4"):
-        return "S4"
-    if low.startswith("a"):
-        return "A0"
-    return "M0"
-
-
-def module_code(fiche_id: str) -> str:
-    """Extrait le code module d'un id fiche. 2026-11-n1-s2-04-xxx -> S2-04."""
-    m = re.match(r"2026-\d+-n1-([a-z0-9]+-\d+)-", fiche_id)
+    """S4-07 -> S4 ; A0-01 -> A0 ; MF2-03 -> MF2 ; M0-01 -> M0.
+    Accepte n'importe quel préfixe lettres+chiffres suivi d'un tiret.
+    """
+    m = re.match(r"^([A-Za-z]+\d+)[-_]", code)
     if m:
         return m.group(1).upper()
-    m = re.match(r"2026-\d+-act-(a\d+-\d+)-", fiche_id)
-    if m:
-        return m.group(1).upper()
-    return fiche_id.upper()
+    return code.upper()
 
 
 def category_for(code: str) -> str:
-    low = code.lower()
-    if low.startswith("m0"):
+    letters, num = _letters_and_number(module_of(code))
+    if letters == "M":
         return "fondations"
-    if low.startswith("s1") or low.startswith("s2") or low.startswith("s3"):
-        return "statistiques"
-    if low.startswith("s4"):
-        return "probabilites"
-    if low.startswith("a"):
+    if letters == "S":
+        # Convention : S1-S3 = statistiques, S4+ = probabilités.
+        return "statistiques" if num <= 3 else "probabilites"
+    if letters == "A":
         return "actuariat"
+    if letters in ("MF", "F"):
+        return "finance"
     return "statistiques"
+
+
+def module_meta(mod: str, lang: str) -> dict:
+    """Retourne {titre, sous_titre, category} pour un module, connu ou pas."""
+    known = (MODULE_META_FR_KNOWN if lang == "fr" else MODULE_META_EN_KNOWN).get(mod)
+    if known:
+        return known
+    # Fallback générique pour un module inconnu : on affiche au moins proprement.
+    letters, num = _letters_and_number(mod)
+    cat = category_for(f"{mod}-00")
+    if lang == "fr":
+        gen_title = {
+            "M": f"Fondations · M{num}",
+            "S": f"Statistiques · S{num}" if num <= 3 else f"Probabilités · S{num}",
+            "A": f"Actuariat · A{num}",
+            "MF": f"Mathématiques financières · MF{num}",
+            "F": f"Finance · F{num}",
+        }.get(letters, mod)
+    else:
+        gen_title = {
+            "M": f"Foundations · M{num}",
+            "S": f"Statistics · S{num}" if num <= 3 else f"Probability · S{num}",
+            "A": f"Actuarial science · A{num}",
+            "MF": f"Financial mathematics · MF{num}",
+            "F": f"Finance · F{num}",
+        }.get(letters, mod)
+    return {"titre": gen_title, "sous_titre": "", "category": cat}
+
+
+def module_order_from(lessons: list[dict], extra: list[str] | None = None) -> list[str]:
+    """Liste ordonnée des modules à partir des leçons chargées, plus d'éventuels
+    modules référencés par un parcours mais pas encore pourvus de leçons."""
+    mods = {L["module"] for L in lessons}
+    if extra:
+        mods.update(x for x in extra if x)
+    return sorted(mods, key=module_sort_key)
+
+
+def module_code(fiche_id: str) -> str:
+    """Extrait le code module d'un id fiche.
+
+    Reconnaît les schémas courants :
+    - `2026-11-n1-s2-04-xxx`         -> `S2-04`
+    - `2026-11-act-a3-01-xxx`        -> `A3-01`
+    - `YYYY-MM-<slot>-<code>-<slug>` -> `<CODE>`
+    - À défaut, scanne la chaîne pour un `<lettres><chiffres>-<chiffres>`.
+    """
+    # Forme explicite : AAAA-MM-<slot>-<lettres><chiffres>-<chiffres>-<slug>
+    m = re.match(r"^\d{4}-\d{2}-[a-z0-9]+-([a-z]+\d+)-(\d+)-", fiche_id.lower())
+    if m:
+        return f"{m.group(1).upper()}-{m.group(2)}"
+    # Forme libre : premier motif <lettres+chiffres>-<chiffres> trouvé dans l'id.
+    m = re.search(r"([a-z]+\d+)-(\d+)", fiche_id.lower())
+    if m:
+        return f"{m.group(1).upper()}-{m.group(2)}"
+    return fiche_id.upper()
 
 
 # --- Rendu Markdown léger -> HTML ------------------------------------------
 
-def md_inline(text: str) -> str:
-    """Rend l'emphase *...* en <em>, échappe le reste."""
+def pick_lang(v, lang: str, default: str = "") -> str:
+    """Résout une valeur per-langue en chaîne.
+
+    - `{fr: "a", en: "b"}`      -> "a" ou "b" selon lang.
+    - "foo"                      -> "foo"
+    - None / autre               -> default.
+    Évite le rendu brut d'un dict dans un f-string (bug observé sur `suffixe`).
+    """
+    if v is None:
+        return default
+    if isinstance(v, dict):
+        got = v.get(lang)
+        if got is None:
+            # Repli : autre langue si dispo, sinon default.
+            other = "en" if lang == "fr" else "fr"
+            got = v.get(other)
+        return "" if got is None else str(got)
+    return str(v)
+
+
+def md_inline(text, lang: str = "fr") -> str:
+    """Rend l'emphase *...* en <em>, échappe le reste.
+
+    Accepte aussi un dict per-langue : {fr: "...", en: "..."}.
+    """
+    if isinstance(text, dict):
+        text = pick_lang(text, lang)
     if not text:
         return ""
     text = html.escape(str(text))
@@ -181,16 +219,21 @@ def render_scene(s: dict, lang: str) -> str:
     t = s.get("type", "")
     parts: list[str] = []
 
-    texte = s.get("texte", "")
-    voix = s.get("voix_off", "")
+    # Résolution systématique des champs qui peuvent être soit un scalaire,
+    # soit un dict {fr/en}. Sans ce passage, un dict est rendu tel quel par
+    # f-string (bug observé : `24{'fr': ' %', 'en': '%'}` dans S1-05).
+    texte = pick_lang(s.get("texte"), lang)
+    voix = pick_lang(s.get("voix_off"), lang)
     etapes = s.get("etapes") or []
+    if isinstance(etapes, dict):
+        etapes = etapes.get(lang) or etapes.get("en" if lang == "fr" else "fr") or []
     formule = s.get("formule")
-    etiquette = s.get("etiquette", "")
-    reponse = s.get("reponse", "")
-    note = s.get("note", "")
-    prefixe = s.get("prefixe", "")
-    suffixe = s.get("suffixe", "")
-    valeur = s.get("valeur", "")
+    etiquette = pick_lang(s.get("etiquette"), lang)
+    reponse = pick_lang(s.get("reponse"), lang)
+    note = pick_lang(s.get("note"), lang)
+    prefixe = pick_lang(s.get("prefixe"), lang)
+    suffixe = pick_lang(s.get("suffixe"), lang)
+    valeur = pick_lang(s.get("valeur"), lang)
 
     if t == "accroche":
         if texte:
@@ -449,26 +492,71 @@ def footer_en(depth: int) -> str:
 
 # --- Vidéos : slots YouTube 16:9 et TikTok 9:16 ---------------------------
 
+_VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{6,32}$")
+_YOUTUBE_HOSTS = ("www.youtube.com", "youtube.com", "youtu.be", "m.youtube.com")
+_TIKTOK_HOSTS = ("www.tiktok.com", "tiktok.com", "vm.tiktok.com")
+
+
 def _youtube_embed_url(url: str) -> str | None:
-    """https://youtu.be/XYZ -> https://www.youtube.com/embed/XYZ
-       https://www.youtube.com/watch?v=XYZ -> https://www.youtube.com/embed/XYZ
-       Autre forme (/embed/, /shorts/) : retournée telle quelle.
+    """Convertit une URL YouTube reconnue en URL d'embed sûre.
+
+    - Domaine obligatoirement dans la whitelist (`youtube.com` / `youtu.be`).
+    - HTTPS requis.
+    - L'ID vidéo doit matcher ``[A-Za-z0-9_-]{6,32}`` (filtre les injections).
+    - Formes reconnues : youtu.be/<id>, youtube.com/watch?v=<id>,
+      youtube.com/shorts/<id>, youtube.com/embed/<id>.
+    Retourne None (et donc pas d'iframe rendu) pour toute autre URL.
     """
     if not url:
         return None
-    url = str(url).strip()
-    if "youtu.be/" in url:
-        vid = url.split("youtu.be/", 1)[1].split("?", 1)[0].split("&", 1)[0]
-        return f"https://www.youtube.com/embed/{vid}"
-    if "youtube.com/watch" in url and "v=" in url:
-        vid = url.split("v=", 1)[1].split("&", 1)[0]
-        return f"https://www.youtube.com/embed/{vid}"
-    if "/shorts/" in url:
-        vid = url.split("/shorts/", 1)[1].split("?", 1)[0].split("&", 1)[0]
-        return f"https://www.youtube.com/embed/{vid}"
-    if "/embed/" in url:
-        return url
-    return None
+    try:
+        from urllib.parse import urlparse, parse_qs
+    except Exception:  # pragma: no cover
+        return None
+    try:
+        u = urlparse(str(url).strip())
+    except Exception:
+        return None
+    if u.scheme != "https" or u.netloc.lower() not in _YOUTUBE_HOSTS:
+        return None
+
+    vid: str | None = None
+    host = u.netloc.lower()
+    path = u.path or ""
+    if host == "youtu.be":
+        vid = path.lstrip("/").split("/", 1)[0] or None
+    elif path.startswith("/watch"):
+        qs = parse_qs(u.query)
+        vid = (qs.get("v") or [None])[0]
+    elif path.startswith("/shorts/"):
+        vid = path[len("/shorts/"):].split("/", 1)[0] or None
+    elif path.startswith("/embed/"):
+        vid = path[len("/embed/"):].split("/", 1)[0] or None
+
+    if not vid or not _VIDEO_ID_RE.match(vid):
+        return None
+    return f"https://www.youtube.com/embed/{vid}"
+
+
+def _tiktok_safe_url(url: str) -> str | None:
+    """Vérifie qu'une URL TikTok est bien hébergée sur tiktok.com en HTTPS.
+
+    On ne rend jamais un iframe TikTok : seulement un lien externe. Cette
+    fonction sert donc à valider que l'URL mérite d'être affichée.
+    """
+    if not url:
+        return None
+    try:
+        from urllib.parse import urlparse
+    except Exception:  # pragma: no cover
+        return None
+    try:
+        u = urlparse(str(url).strip())
+    except Exception:
+        return None
+    if u.scheme != "https" or u.netloc.lower() not in _TIKTOK_HOSTS:
+        return None
+    return u.geturl()
 
 
 def _video_urls(data: dict | None, lang: str) -> tuple[str | None, str | None]:
@@ -481,12 +569,23 @@ def _video_urls(data: dict | None, lang: str) -> tuple[str | None, str | None]:
 
 
 def has_any_video(data: dict | None) -> bool:
-    """Vrai si au moins une URL vidéo (toute langue, toute plate-forme) est renseignée."""
+    """Vrai si au moins une URL vidéo validée (whitelist de domaine) est renseignée."""
     for lg in ("fr", "en"):
         yt, tt = _video_urls(data, lg)
-        if yt or tt:
+        if (yt and _youtube_embed_url(yt)) or (tt and _tiktok_safe_url(tt)):
             return True
     return False
+
+
+def has_publication_intent(data: dict | None) -> bool:
+    """Vrai si la fiche a UNE clé `publication:` (même avec des URLs invalides).
+
+    On veut montrer le gabarit vidéo dès qu'une intention de publication est
+    déclarée : les slots invalides tombent proprement en « non disponible ».
+    """
+    if not isinstance(data, dict):
+        return False
+    return bool(data.get("publication"))
 
 
 def build_video_block(data: dict | None, lang: str) -> str:
@@ -499,7 +598,9 @@ def build_video_block(data: dict | None, lang: str) -> str:
       slot indique explicitement son état.
     """
     yt_url, tt_url = _video_urls(data, lang)
-    any_video = has_any_video(data)
+    # Afficher la section dès qu'il y a UNE intention de publication (clé
+    # publication: présente) : les URLs invalides tombent en « non disponible ».
+    any_intent = has_publication_intent(data) or has_any_video(data)
 
     L = {
         "fr": {
@@ -524,8 +625,8 @@ def build_video_block(data: dict | None, lang: str) -> str:
         },
     }[lang]
 
-    # Aucune vidéo du tout — ligne d'état compacte, pas de faux lecteur.
-    if not any_video:
+    # Aucune intention de publication — ligne d'état compacte, pas de faux lecteur.
+    if not any_intent:
         return (
             f'<aside class="video-status" aria-label="{html.escape(L["heading"])}">'
             f'<span class="video-status-dot" aria-hidden="true"></span>'
@@ -534,8 +635,8 @@ def build_video_block(data: dict | None, lang: str) -> str:
         )
 
     def slot_youtube(url: str | None) -> str:
-        if url:
-            embed = _youtube_embed_url(url) or url
+        embed = _youtube_embed_url(url) if url else None
+        if embed:
             return (
                 f'<div class="video-frame video-frame-16x9">'
                 f'<iframe src="{html.escape(embed)}" '
@@ -545,6 +646,7 @@ def build_video_block(data: dict | None, lang: str) -> str:
                 f'</div>'
                 f'<a class="text-link" href="{html.escape(url)}" target="_blank" rel="noopener">{L["watch_yt"]}</a>'
             )
+        # URL absente OU non reconnue par la whitelist : pas d'iframe.
         return (
             f'<div class="video-frame video-frame-16x9 video-frame-soon">'
             f'<span class="video-soon">{L["not_yet"]}</span>'
@@ -552,10 +654,11 @@ def build_video_block(data: dict | None, lang: str) -> str:
         )
 
     def slot_tiktok(url: str | None) -> str:
-        if url:
+        safe = _tiktok_safe_url(url) if url else None
+        if safe:
             return (
                 f'<div class="video-frame video-frame-9x16 video-frame-link">'
-                f'<a class="video-link" href="{html.escape(url)}" target="_blank" rel="noopener">'
+                f'<a class="video-link" href="{html.escape(safe)}" target="_blank" rel="noopener">'
                 f'<span class="video-link-label">TikTok</span>'
                 f'<span class="video-link-cta">{L["watch_tt"]}</span>'
                 f'</a></div>'
@@ -584,13 +687,14 @@ def build_video_block(data: dict | None, lang: str) -> str:
     )
 
 
-def parcours_for_lesson(code: str, parcours_list: list[dict]) -> dict | None:
-    """Trouve le premier parcours contenant le module de cette leçon."""
+def parcours_for_lesson(code: str, parcours_list: list[dict]) -> list[dict]:
+    """Retourne la liste de tous les parcours contenant le module de cette leçon.
+
+    Une leçon peut légitimement appartenir à plusieurs parcours (p.ex. un module
+    partagé entre un parcours thématique et un parcours de spécialisation).
+    """
     mod = module_of(code)
-    for p in parcours_list:
-        if mod in (p.get("modules") or []):
-            return p
-    return None
+    return [p for p in parcours_list if mod in (p.get("modules") or [])]
 
 
 # --- Page leçon ------------------------------------------------------------
@@ -678,24 +782,31 @@ def render_lesson_page(data: dict, lang: str, parcours_list: list[dict] | None =
 
     video_block = build_video_block(data, lang)
 
-    # Parcours auquel appartient cette leçon (facultatif).
-    p = parcours_for_lesson(code, parcours_list or [])
+    # Parcours auxquels appartient cette leçon (0, 1 ou plusieurs).
+    parcours_matching = parcours_for_lesson(code, parcours_list or [])
     parcours_aside = ""
-    if p:
-        p_slug = p.get("slug", "")
-        p_titre = (p.get("titre") or {}).get(lang) or p.get("slug") or ""
+    if parcours_matching:
         if lang == "fr":
-            path_href = f"../../parcours/{p_slug}/"
-            path_label = "Parcours"
-            see_path = "Voir le parcours →"
+            path_label = "Parcours" if len(parcours_matching) == 1 else "Parcours concernés"
+            see_first = "Voir le parcours →"
         else:
-            path_href = f"../../../en/paths/{p_slug}/"
-            path_label = "Learning path"
-            see_path = "See learning path →"
+            path_label = "Learning path" if len(parcours_matching) == 1 else "Related learning paths"
+            see_first = "See first learning path →"
+        items = []
+        hrefs = []
+        for p in parcours_matching:
+            p_slug = p.get("slug", "")
+            p_titre = (p.get("titre") or {}).get(lang) or p.get("slug") or ""
+            if lang == "fr":
+                href = f"../../parcours/{p_slug}/"
+            else:
+                href = f"../../../en/paths/{p_slug}/"
+            hrefs.append(href)
+            items.append(f'<li><a class="text-link" href="{href}">{html.escape(p_titre)}</a></li>')
         parcours_aside = (
-            f'<p><strong>{path_label}</strong><br>'
-            f'<a class="text-link" href="{path_href}">{html.escape(p_titre)}</a></p>'
-            f'<a class="button button-outline" href="{path_href}">{see_path}</a>'
+            f'<p><strong>{path_label}</strong></p>'
+            f'<ul class="aside-list">{"".join(items)}</ul>'
+            f'<a class="button button-outline" href="{hrefs[0]}">{see_first}</a>'
         )
 
     lesson_section = (
@@ -836,22 +947,21 @@ def build_lesson_card(L: dict, lang: str) -> str:
 
 
 def build_modules_sections(lessons: list[dict], lang: str) -> str:
-    """Regroupe par module avec en-têtes et compte."""
-    by_mod: dict[str, list[dict]] = {m: [] for m in MODULE_ORDER}
+    """Regroupe par module avec en-têtes et compte. Modules dérivés des leçons."""
+    by_mod: dict[str, list[dict]] = {}
     for L in lessons:
         by_mod.setdefault(L["module"], []).append(L)
 
-    meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
     lessons_word = ("leçon", "leçons") if lang == "fr" else ("lesson", "lessons")
     module_word = "Module" if lang == "fr" else "Module"
 
     out = []
-    for mod in MODULE_ORDER:
+    for mod in module_order_from(lessons):
         bucket = by_mod.get(mod) or []
         if not bucket:
             continue
         bucket = sorted(bucket, key=lambda x: x["code"])
-        m = meta.get(mod, {"titre": mod, "sous_titre": "", "category": "statistiques"})
+        m = module_meta(mod, lang)
         count = len(bucket)
         count_label = f"{count} {lessons_word[0] if count == 1 else lessons_word[1]}"
         cards_html = "".join(build_lesson_card(L, lang) for L in bucket)
@@ -881,16 +991,15 @@ def build_modules_overview(lessons: list[dict], lang: str) -> str:
     for L in lessons:
         by_mod[L["module"]] = by_mod.get(L["module"], 0) + 1
 
-    meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
     title_fr = "Explorer par module"
     title_en = "Browse by module"
     jump_label_fr = "Aller au module"
     jump_label_en = "Jump to module"
 
     items = []
-    for i, mod in enumerate([m for m in MODULE_ORDER if by_mod.get(m)], start=1):
+    for i, mod in enumerate([m for m in module_order_from(lessons) if by_mod.get(m)], start=1):
         count = by_mod[mod]
-        m = meta.get(mod, {"titre": mod})
+        m = module_meta(mod, lang)
         title_text = m["titre"]
         label_lessons = "leçons" if lang == "fr" else "lessons"
         label_lesson = "leçon" if lang == "fr" else "lesson"
@@ -929,6 +1038,7 @@ def render_library_page(lessons: list[dict], lang: str) -> str:
     sections_html = build_modules_sections(lessons, lang)
     cats_in_use = sorted({L["category"] for L in lessons})
     cat_labels = CATEGORY_LABELS_FR if lang == "fr" else CATEGORY_LABELS_EN
+    cat_labels = dict(cat_labels)  # local copy
     label_all = "Tous les domaines" if lang == "fr" else "All subjects"
 
     if lang == "fr":
@@ -1176,8 +1286,6 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
     for L in lessons:
         by_mod.setdefault(L["module"], []).append(L)
 
-    meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
-
     L = {
         "fr": {
             "head_title": f"{titre} · Parcours · ACTU-BASICS",
@@ -1244,7 +1352,7 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
     # Barre de progression modulaire.
     steps = []
     for i, mod in enumerate(modules, start=1):
-        m = meta.get(mod, {"titre": mod})
+        m = module_meta(mod, lang)
         n = len(by_mod.get(mod, []))
         count_label = (
             f"{n} {L['lesson_word'] if n == 1 else L['lessons_word']}"
@@ -1270,7 +1378,7 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
     # Un bloc par module.
     sections = []
     for mod in modules:
-        m = meta.get(mod, {"titre": mod, "sous_titre": "", "category": "statistiques"})
+        m = module_meta(mod, lang)
         bucket = sorted(by_mod.get(mod, []), key=lambda x: x["code"])
         if bucket:
             cards_html = "".join(build_lesson_card(x, lang) for x in bucket)
@@ -1316,24 +1424,49 @@ def render_parcours_detail(p: dict, lessons: list[dict], lang: str) -> str:
 # --- Main ------------------------------------------------------------------
 
 def load_fiches() -> list[dict]:
+    """Charge toutes les fiches *.yaml du dossier contenus/fiches.
+
+    Une fiche est retenue si elle est un dict, qu'elle a un `id`, qu'elle
+    est au statut `valide`, et qu'elle a des éditions FR ET EN.
+    Le glob est ouvert à tous les motifs : lots futurs, piliers A/MF… inclus.
+    """
     fiches = []
-    for fp in sorted(FICHES.glob("2026-11-n1-*.yaml")):
-        with fp.open(encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+    seen_codes: set[str] = set()
+    for fp in sorted(FICHES.glob("*.yaml")):
+        try:
+            with fp.open(encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+        except Exception as exc:
+            print(f"warning: fiche illisible {fp.name} : {exc}", file=sys.stderr)
+            continue
         if not isinstance(data, dict):
+            continue
+        fid = data.get("id")
+        if not fid:
             continue
         if data.get("validation", {}).get("statut") != "valide":
             continue
-        if not data.get("editions", {}).get("fr") or not data.get("editions", {}).get("en"):
+        ed = data.get("editions", {})
+        if not ed.get("fr") or not ed.get("en"):
             continue
-        code = module_code(data["id"])
+        # Les fiches « short » (TikTok/YouTube Shorts, 9:16) sont des extraits
+        # dérivés d'une leçon. Elles ne produisent pas de page web dédiée :
+        # elles existent comme média vertical rattaché à la leçon mère.
+        fmt = str(data.get("format") or "").lower()
+        if fmt == "short":
+            continue
+        code = module_code(fid)
+        if code in seen_codes:
+            print(f"warning: code {code} déjà vu (fiche en double : {fp.name})", file=sys.stderr)
+            continue
+        seen_codes.add(code)
         fiches.append({
             "data": data,
             "code": code,
             "module": module_of(code),
             "category": category_for(code),
-            "ed_fr": data["editions"]["fr"],
-            "ed_en": data["editions"]["en"],
+            "ed_fr": ed["fr"],
+            "ed_en": ed["en"],
         })
     return fiches
 
@@ -1368,25 +1501,8 @@ def main() -> int:
         )
         pages += 2
 
-    # A0.01 reste manuelle ; on l'ajoute en entrée de bibliothèque uniquement.
-    a0_entry = {
-        "code": "A0-01",
-        "module": "A0",
-        "category": "actuariat",
-        "manual": True,
-        "data": None,  # pas de YAML pour cette fiche manuelle
-        "ed_fr": {
-            "titre": "Actuaires : le métier et un premier calcul",
-            "legende": "Le rôle de l'actuaire, le contrat d'assurance et le calcul d'une prime pure.",
-            "hashtags": ["prime pure", "assurance", "risque", "probabilité", "métier"],
-        },
-        "ed_en": {
-            "titre": "Actuaries: the profession and a first calculation",
-            "legende": "The role of actuaries, insurance contracts and the calculation of a pure premium.",
-            "hashtags": ["pure premium", "insurance", "risk", "probability", "profession"],
-        },
-    }
-    lessons_for_lib = [a0_entry] + sorted(fiches, key=lambda x: x["code"])
+    # Plus de fiche manuelle hardcodée : A0-01 est désormais fourni par un YAML.
+    lessons_for_lib = sorted(fiches, key=lambda x: x["code"])
 
     (DOCS / "bibliotheque" / "index.html").write_text(
         render_library_page(lessons_for_lib, "fr"), encoding="utf-8"

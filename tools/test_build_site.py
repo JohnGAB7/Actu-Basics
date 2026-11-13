@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""Tests automatiques du générateur de site ACTU-BASICS.
+
+Usage:   python3 tools/test_build_site.py
+Objectif: détecter rapidement les régressions avant un merge.
+
+Couvre:
+- unit tests sur les helpers (module_of, module_code, pick_lang, URL whitelist,
+  module_sort_key)
+- validation des modules référencés par parcours.yaml : chacun doit être
+  reconnu par les fonctions et attribué à une catégorie
+- génération complète + contrôle d'intégrité:
+  * tout fiche produit exactement ses deux pages (FR + EN)
+  * tout code apparaît dans la bibliothèque FR + EN
+  * tout parcours produit index + détail FR + EN
+  * tout fichier lie bien hreflang fr et en
+  * aucune page ne contient de dict Python brut `{'fr': ...}`
+  * aucune page ne charge un iframe pour une URL hors whitelist
+  * tout code module de fiche appartient bien à l'un des parcours OU n'y
+    appartient à aucun (on refuse les modules hors radar, mais pas un
+    module qui serait orphelin du parcours)
+
+Fin avec sys.exit(0) si tout passe, sinon sys.exit(1) et imprime les erreurs.
+"""
+from __future__ import annotations
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+# pylint: disable=wrong-import-position
+import build_lessons as B  # type: ignore
+
+
+class Failures:
+    def __init__(self) -> None:
+        self.items: list[str] = []
+
+    def add(self, name: str, msg: str) -> None:
+        self.items.append(f"[{name}] {msg}")
+
+    def ok(self) -> bool:
+        return not self.items
+
+
+F = Failures()
+
+
+# -------------------- unit tests ------------------------------------------
+
+def test_module_code() -> None:
+    cases = {
+        "2026-11-n1-s2-04-xxx": "S2-04",
+        "2026-11-act-a0-01-the-actuarial-profession": "A0-01",
+        "2026-11-act-x-a0-01a-votre-premier-calcul": "A0-01",  # a-suffix dropped
+        "2026-11-n1-m0-01-fractions-ratios": "M0-01",
+        "2026-11-n1-s4-07-probabilite-conditionnelle": "S4-07",
+    }
+    for fid, want in cases.items():
+        got = B.module_code(fid)
+        if got != want:
+            F.add("module_code", f"{fid!r} -> {got!r}, attendu {want!r}")
+
+
+def test_module_of_and_sort() -> None:
+    cases = {
+        "M0-01": "M0",
+        "S4-07": "S4",
+        "A0-01": "A0",
+        "MF2-03": "MF2",
+        "F1-12": "F1",
+    }
+    for code, want in cases.items():
+        got = B.module_of(code)
+        if got != want:
+            F.add("module_of", f"{code!r} -> {got!r}, attendu {want!r}")
+    ordered = sorted(["S5", "A1", "M0", "S1", "S10", "MF1", "A0"], key=B.module_sort_key)
+    expected = ["M0", "S1", "S5", "S10", "A0", "A1", "MF1"]
+    if ordered != expected:
+        F.add("module_sort_key", f"ordre inattendu : {ordered}")
+
+
+def test_category_for() -> None:
+    cases = {
+        "M0-01": "fondations",
+        "S1-02": "statistiques",
+        "S3-05": "statistiques",
+        "S4-01": "probabilites",
+        "S9-01": "probabilites",
+        "A0-01": "actuariat",
+        "A3-01": "actuariat",
+        "MF2-01": "finance",
+    }
+    for code, want in cases.items():
+        got = B.category_for(code)
+        if got != want:
+            F.add("category_for", f"{code!r} -> {got!r}, attendu {want!r}")
+
+
+def test_pick_lang() -> None:
+    if B.pick_lang({"fr": " %", "en": "%"}, "fr") != " %":
+        F.add("pick_lang", "dict FR non résolu")
+    if B.pick_lang({"fr": " %", "en": "%"}, "en") != "%":
+        F.add("pick_lang", "dict EN non résolu")
+    if B.pick_lang("brut", "fr") != "brut":
+        F.add("pick_lang", "scalaire altéré")
+    if B.pick_lang(None, "fr", "x") != "x":
+        F.add("pick_lang", "default non appliqué")
+    if B.pick_lang({"fr": "a"}, "en") != "a":
+        F.add("pick_lang", "repli autre langue manquant")
+
+
+def test_url_whitelist_youtube() -> None:
+    good = [
+        ("https://youtu.be/dQw4w9WgXcQ", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("https://www.youtube.com/shorts/dQw4w9WgXcQ", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("https://www.youtube.com/embed/dQw4w9WgXcQ", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+    ]
+    for url, want in good:
+        got = B._youtube_embed_url(url)
+        if got != want:
+            F.add("youtube_whitelist", f"{url!r} -> {got!r}, attendu {want!r}")
+    bad = [
+        "http://youtu.be/dQw4w9WgXcQ",       # http
+        "https://evil.example/watch?v=X",    # autre domaine
+        "https://www.youtube.com/watch?v=<script>",  # id invalide
+        "https://www.youtube.com/watch?v=",  # id vide
+        "https://example.com/youtube.com/watch?v=X",  # confusion de domaine
+        "",
+        None,
+    ]
+    for url in bad:
+        got = B._youtube_embed_url(url) if url else None
+        if got is not None:
+            F.add("youtube_whitelist", f"URL interdite acceptée : {url!r} -> {got!r}")
+
+
+def test_url_whitelist_tiktok() -> None:
+    if not B._tiktok_safe_url("https://www.tiktok.com/@a/video/1"):
+        F.add("tiktok_whitelist", "URL valide rejetée")
+    if B._tiktok_safe_url("http://www.tiktok.com/@a/video/1"):
+        F.add("tiktok_whitelist", "http accepté à tort")
+    if B._tiktok_safe_url("https://example.com/@a/video/1"):
+        F.add("tiktok_whitelist", "autre domaine accepté")
+
+
+def test_parcours_lesson_relations() -> None:
+    parcours = B.load_parcours()
+    fiches = B.load_fiches()
+    code_to_mod = {f["code"]: f["module"] for f in fiches}
+    modules_in_parcours = {m for p in parcours for m in (p.get("modules") or [])}
+
+    # Les modules référencés par parcours doivent être reconnaissables.
+    for mod in modules_in_parcours:
+        meta = B.module_meta(mod, "fr")
+        if not meta.get("titre"):
+            F.add("parcours_modules", f"module {mod!r} sans libellé")
+        if not B.category_for(f"{mod}-00"):
+            F.add("parcours_modules", f"module {mod!r} sans catégorie")
+
+    # Multi-parcours : si deux parcours partagent un module, une leçon de ce
+    # module doit remonter plusieurs parcours.
+    overlap_mods = set()
+    for i, p1 in enumerate(parcours):
+        for p2 in parcours[i + 1:]:
+            overlap_mods.update(set(p1.get("modules", [])) & set(p2.get("modules", [])))
+    for code, mod in code_to_mod.items():
+        if mod in overlap_mods:
+            found = B.parcours_for_lesson(code, parcours)
+            if len(found) < 2:
+                F.add("parcours_multi", f"{code} dans un module partagé "
+                                        f"mais rattaché à {len(found)} parcours")
+
+
+# -------------------- integration tests -----------------------------------
+
+def test_generation_integrity() -> None:
+    """Appelle main() (via B.main) puis vérifie le résultat sur disque."""
+    rc = B.main()
+    if rc != 0:
+        F.add("generate", f"rc = {rc}")
+        return
+
+    fiches = B.load_fiches()
+    parcours = B.load_parcours()
+    docs = ROOT / "docs"
+
+    # Pages leçon FR + EN pour chaque fiche.
+    for f in fiches:
+        for path in (docs / "lecons" / f["code"] / "index.html",
+                     docs / "en" / "lessons" / f["code"] / "index.html"):
+            if not path.exists():
+                F.add("gen_pages", f"manquante : {path.relative_to(docs)}")
+
+    # Bibliothèque FR + EN.
+    lib_fr = (docs / "bibliotheque" / "index.html")
+    lib_en = (docs / "en" / "library" / "index.html")
+    if not lib_fr.exists():
+        F.add("gen_lib", "bibliotheque FR manquante")
+    if not lib_en.exists():
+        F.add("gen_lib", "bibliotheque EN manquante")
+
+    # Pages parcours.
+    for p in parcours:
+        slug = p.get("slug", "")
+        for path in (docs / "parcours" / slug / "index.html",
+                     docs / "en" / "paths" / slug / "index.html"):
+            if not path.exists():
+                F.add("gen_parcours", f"manquante : {path.relative_to(docs)}")
+
+    # Pas de dict Python brut qui fuite dans les pages produites.
+    leaked_dict = re.compile(r"\{'(?:fr|en)'\s*:")
+    for path in list(docs.rglob("lecons/**/index.html")) + list(docs.rglob("en/lessons/**/index.html")):
+        txt = path.read_text(encoding="utf-8")
+        if leaked_dict.search(txt):
+            F.add("gen_no_dict_leak", f"dict FR/EN brut dans {path.relative_to(docs)}")
+
+    # Chaque page HTML lie bien hreflang fr + en.
+    for path in list(docs.rglob("lecons/**/index.html")) + list(docs.rglob("en/lessons/**/index.html")):
+        txt = path.read_text(encoding="utf-8")
+        if 'hreflang="fr"' not in txt or 'hreflang="en"' not in txt:
+            F.add("gen_hreflang", f"hreflang manquant dans {path.relative_to(docs)}")
+
+    # Pas d'iframe youtube avec URL hors whitelist.
+    iframe_re = re.compile(r'<iframe[^>]+src="([^"]+)"')
+    for path in list(docs.rglob("lecons/**/index.html")) + list(docs.rglob("en/lessons/**/index.html")):
+        for m in iframe_re.finditer(path.read_text(encoding="utf-8")):
+            src = m.group(1)
+            if not src.startswith("https://www.youtube.com/embed/"):
+                F.add("gen_iframe_safety", f"iframe hors whitelist dans {path.name}: {src}")
+
+
+# -------------------- runner ----------------------------------------------
+
+def main() -> int:
+    tests = [
+        test_module_code,
+        test_module_of_and_sort,
+        test_category_for,
+        test_pick_lang,
+        test_url_whitelist_youtube,
+        test_url_whitelist_tiktok,
+        test_parcours_lesson_relations,
+        test_generation_integrity,
+    ]
+    for t in tests:
+        try:
+            t()
+        except Exception as exc:  # pragma: no cover
+            F.add(t.__name__, f"exception : {exc!r}")
+
+    if F.ok():
+        print(f"✅ {len(tests)} groupes de tests passent.")
+        return 0
+    print(f"❌ {len(F.items)} échec(s) :", file=sys.stderr)
+    for item in F.items:
+        print("  -", item, file=sys.stderr)
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

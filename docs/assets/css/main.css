@@ -39,6 +39,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .badge-prereq{background:#eef3f2;color:var(--teal);border-color:#cfe1e0}
 .badge-state-lesson{background:#eaf3ea;color:#1f6a3a;border-color:#cfe4cf}
 .badge-state-video{background:#102638;color:#ffdd8a;border-color:transparent}
+.aside-list{margin:4px 0 12px;padding-left:18px;font-size:.9rem;color:var(--muted)}
+.aside-list li{margin-bottom:4px}
 
 /* --- État vidéo compact (pas de 16:9 vide) ------------------------------ */
 .video-status{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;margin:4px 0 24px;background:#faf8f3;border:1px solid var(--line);border-radius:12px;font-size:.88rem;color:var(--ink)}
