@@ -428,6 +428,57 @@ def test_generation_integrity() -> None:
                 F.add("gen_iframe_safety", f"iframe hors whitelist dans {path.name}: {src}")
 
 
+def test_premium_foundations() -> None:
+    """Chaque page générée charge les assets premium (tokens, Fraunces,
+    premium.css, print.css, theme init). La page Programme existe en FR+EN
+    et mentionne les trois piliers. Le mode sombre est accessible par un
+    bouton `[data-theme-toggle]` dans chaque <header>."""
+    name = "test_premium_foundations"
+
+    # 1) Les assets premium sont partout.
+    sample_pages = [
+        ROOT / "docs" / "lecons" / "M0-03" / "index.html",
+        ROOT / "docs" / "en" / "lessons" / "M0-03" / "index.html",
+        ROOT / "docs" / "bibliotheque" / "index.html",
+        ROOT / "docs" / "en" / "library" / "index.html",
+        ROOT / "docs" / "parcours" / "index.html",
+        ROOT / "docs" / "en" / "paths" / "index.html",
+        ROOT / "docs" / "programme" / "index.html",
+        ROOT / "docs" / "en" / "programme" / "index.html",
+    ]
+    required = ["tokens.css", "premium.css", "print.css", "Fraunces", "data-theme-toggle", "ab-theme"]
+    for pg in sample_pages:
+        if not pg.exists():
+            F.add(name, f"page absente : {pg.relative_to(ROOT)}")
+            continue
+        txt = pg.read_text(encoding="utf-8")
+        for token in required:
+            if token not in txt:
+                F.add(name, f"{pg.relative_to(ROOT)} : {token} manquant")
+
+    # 2) La page Programme contient bien les trois piliers.
+    fr = (ROOT / "docs" / "programme" / "index.html").read_text(encoding="utf-8")
+    en = (ROOT / "docs" / "en" / "programme" / "index.html").read_text(encoding="utf-8")
+    for piece in ("I.", "II.", "III.", "Fondations", "Statistiques", "Actuariat"):
+        if piece not in fr:
+            F.add(name, f"programme FR : {piece!r} manquant")
+    for piece in ("I.", "II.", "III.", "Foundations", "Statistics", "Actuarial"):
+        if piece not in en:
+            F.add(name, f"programme EN : {piece!r} manquant")
+
+    # 3) La page Programme lie bien les leçons disponibles de chaque module.
+    #    Au moins M0-01 doit y figurer en tant que lien.
+    if 'href="../lecons/M0-01/"' not in fr:
+        F.add(name, "programme FR : lien ../lecons/M0-01/ manquant")
+    if 'href="../../en/lessons/M0-01/"' not in en:
+        F.add(name, "programme EN : lien ../../en/lessons/M0-01/ manquant")
+
+    # 4) La page design system existe.
+    ds = ROOT / "docs" / "technique" / "design-system" / "index.html"
+    if not ds.exists():
+        F.add(name, "page design system manquante")
+
+
 def test_courbe_svg_rendering() -> None:
     """Chaque style de courbe produit un <svg> accessible avec aria-label.
 
@@ -555,6 +606,7 @@ def main() -> int:
         test_relative_links_resolve,
         test_short_fiches_not_generated,
         test_courbe_svg_rendering,
+        test_premium_foundations,
     ]
     for t in tests:
         try:
