@@ -1,0 +1,282 @@
+# Niveau 1, vague 1, lot 4 : S3.07 « Tracer une droite dans un nuage » (EDUCATIONAL, démonstration)
+# Nombres fictifs : 12 élèves imaginaires (heures de révision et note sur 20). Trois droites proposées
+# pour illustrer le critère des moindres carrés, avec les carrés des erreurs calculés explicitement.
+# Clin d'œil à Galton (régression vers la moyenne) cité comme repère historique, sans chiffres réels.
+# Sommes des carrés calculées au préalable et vérifiées par le `verifier`.
+# Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
+id: 2026-11-n1-s3-07-tracer-une-droite
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: educational
+habillage_sonore: true
+theme: "S3.07 · Tracer une droite dans un nuage"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Expliquer le critère des moindres carrés avec des carrés visibles"
+      - "Utiliser une droite pour une prévision prudente, dans le domaine des données observées"
+      - "Énoncer trois questions que la droite ne résout pas encore"
+    en:
+      - "Explain the least squares criterion with visible squares"
+      - "Use a line for a careful prediction, inside the range of the observed data"
+      - "State three questions the line does not yet answer"
+  prerequis:
+    fr: ["S3.05 : la corrélation"]
+    en: ["S3.05: correlation"]
+  hypotheses:
+    fr: "Élèves fictifs ; aucune donnée réelle. Galton cité comme repère historique, sans reprendre ses chiffres."
+    en: "Fictional pupils; no real data. Galton cited as a historical landmark, without reusing his numbers."
+
+validation:
+  statut: brouillon
+
+sources: []
+
+editions:
+  fr:
+    titre: "Tracer une droite dans un nuage : les moindres carrés"
+    legende: |
+      Dans un nuage de points, comment choisir « la bonne » droite ? Avec douze élèves imaginaires et trois droites candidates, on rend visibles les carrés des erreurs et on découvre le critère des moindres carrés. On s'en sert pour une prévision prudente, et on dit en toutes lettres ce que la droite ne prouve pas encore. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+    hashtags: [statistiques, regression, moindrescarres]
+    scenes:
+      - type: accroche
+        texte: "Parmi *trois droites*, laquelle passe « au mieux » ?"
+        voix_off: "On a un nuage de points, et on voudrait le résumer par une droite. Mais parmi toutes les droites possibles, comment choisir ?"
+      - type: titre
+        numero: 1
+        texte: "Le nuage de nos douze élèves"
+        voix_off: "Commençons par poser le nuage."
+      - type: courbe
+        texte: "Heures de révision et note, *12 élèves fictifs*"
+        courbe:
+          style: points
+          points: [[1, 7], [2, 8], [2, 10], [3, 9], [4, 11], [4, 13], [5, 12], [6, 13], [7, 15], [7, 14], [8, 16], [9, 17]]
+          x_min: 0
+          x_max: 10
+          y_min: 0
+          y_max: 20
+          axe_x: "Heures de révision"
+          axe_y: "Note sur 20"
+        note: "Élèves imaginaires : chiffres inventés pour l'exemple."
+        voix_off: "Douze élèves imaginaires. En abscisse, les heures de révision ; en ordonnée, la note sur vingt. Le nuage monte : plus d'heures va avec de meilleures notes. On voudrait maintenant en tirer une droite."
+      - type: titre
+        numero: 2
+        texte: "La droite et ses deux nombres"
+        voix_off: "Une droite se décrit par deux nombres : son point de départ et sa pente."
+      - type: formule
+        texte: "*y = a + b × x*"
+        formule: "y = a + b x"
+        voix_off: "Y égale a plus b fois x. Le nombre a est l'ordonnée à l'origine : la hauteur de la droite quand x vaut zéro. Le nombre b est la pente : de combien y monte quand x augmente d'une unité."
+      - type: titre
+        numero: 3
+        texte: "Quel critère pour choisir ?"
+        voix_off: "Entre toutes les droites possibles, on en veut une qui soit, en moyenne, proche des points."
+      - type: etapes
+        texte: "Pour *chaque point*, mesurer l'erreur verticale"
+        etapes:
+          - "Prendre *l'écart vertical* entre le point et la droite"
+          - "Le mettre *au carré*, pour qu'il compte toujours positivement"
+          - "Faire *la somme* sur tous les points"
+          - "Choisir la droite qui *rend cette somme minimale*"
+        voix_off: "Pour chaque point, on mesure la distance verticale entre le point et la droite. On met cet écart au carré, pour qu'une erreur en dessous et une erreur au-dessus comptent toutes les deux positivement. On fait la somme sur les douze élèves. Et parmi toutes les droites possibles, on garde celle qui rend cette somme la plus petite. C'est ce qu'on appelle les *moindres carrés*."
+      - type: titre
+        numero: 4
+        texte: "Trois candidates, trois sommes"
+        voix_off: "Essayons trois droites candidates."
+      - type: tableau
+        texte: "Somme des *carrés des erreurs* pour trois droites"
+        colonnes: ["Droite candidate", "Équation", "Somme des carrés"]
+        lignes:
+          - ["A", "y = 6 + x", "29,0"]
+          - ["B", "y = 6 + 1,2 x", "8,76"]
+          - ["C", "y = 4 + 2 x", "87,0"]
+        voix_off: "Trois équations, trois sommes. La droite A donne vingt-neuf. La droite B, un peu plus pentue, donne huit virgule soixante-seize : trois fois moins. La droite C, qui vise trop haut, est très mauvaise : quatre-vingt-sept. C'est donc la droite B qui gagne. Et un calcul exact, sur ces douze élèves, donnerait une droite très proche de B."
+        verifier:
+          - {expression: "sum(((6 + 1*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 29.0, libelle: "Somme pour la droite A"}
+          - {expression: "sum(((6 + 1.2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 8.76, libelle: "Somme pour la droite B"}
+          - {expression: "sum(((4 + 2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 87.0, libelle: "Somme pour la droite C"}
+      - type: titre
+        numero: 5
+        texte: "Prédire, mais pas n'importe comment"
+        voix_off: "Une fois la droite choisie, on peut l'utiliser pour prédire."
+      - type: etapes
+        texte: "Prédire *avec prudence*"
+        etapes:
+          - "Prédire *dans le domaine* observé (ici, entre 1 et 9 heures)"
+          - "*Pas* en dehors : la droite peut ne plus coller"
+          - "Garder en tête que *chaque prédiction a une erreur*"
+        voix_off: "Prédire, oui, mais à l'intérieur du domaine observé : entre une heure et neuf heures de révision. Au-delà, on extrapole, et rien ne garantit que la relation reste linéaire. Même à l'intérieur, chaque prédiction a une erreur : la droite est un résumé, pas un oracle. En 1886, Francis Galton a tracé une telle droite entre la taille des parents et celle des enfants, et il a remarqué que les enfants des parents très grands étaient, en moyenne, un peu moins grands : c'est la *régression vers la moyenne*."
+      - type: titre
+        numero: 6
+        texte: "Trois questions que la droite ne résout pas"
+        voix_off: "Et avant de conclure, trois questions que la droite ne résout pas."
+      - type: etapes
+        texte: "La droite ne dit *pas encore*"
+        etapes:
+          - "Est-elle due *au hasard de l'échantillon* ? (sera vu en S6)"
+          - "La relation est-elle *causale* ? (sera vue en E1.04)"
+          - "Vaut-elle *hors des données* observées ?"
+        voix_off: "Un, la droite pourrait venir du hasard de l'échantillon : avec douze autres élèves, on aurait une autre droite. Deux, une relation n'est pas forcément causale : la droite ne dit pas que réviser davantage fait monter la note. Trois, elle vaut dans le domaine observé, et pas plus loin."
+      - type: titre
+        numero: 7
+        texte: "À vous"
+        voix_off: "À vous."
+      - type: tableau
+        texte: "Trois nouvelles droites, *quatre points*"
+        colonnes: ["Point", "x", "y"]
+        lignes:
+          - ["P1", "0", "2"]
+          - ["P2", "1", "3"]
+          - ["P3", "2", "6"]
+          - ["P4", "3", "5"]
+        voix_off: "Quatre points cette fois. P1 : zéro, deux. P2 : un, trois. P3 : deux, six. P4 : trois, cinq. Et voici trois droites candidates."
+      - type: exercice
+        texte: "Parmi *y = 2 + x*, *y = 1,5 + 1,5 x* et *y = 1 + 2 x*, laquelle a la plus petite somme des carrés des erreurs ?"
+        pause: 12
+        voix_off: "Y égale deux plus x. Y égale un virgule cinq plus un virgule cinq fois x. Y égale un plus deux x. Pour chacune, calculez la somme des carrés des erreurs verticales sur les quatre points, et dites laquelle gagne."
+      - type: correction
+        etapes:
+          - "y = 2 + x : *4,0*"
+          - "y = 1,5 + 1,5 x : *3,5*"
+          - "y = 1 + 2 x : *6,0*"
+        reponse: "C'est y = 1,5 + 1,5 x qui gagne, avec 3,5"
+        voix_off: "Pour la première droite, y égale deux plus x, les prédictions valent deux, trois, quatre, cinq. Les écarts avec les observations sont zéro, zéro, moins deux, zéro. Somme des carrés : quatre. Pour la deuxième, y égale un virgule cinq plus un virgule cinq fois x : prédictions un virgule cinq, trois, quatre virgule cinq, six. Écarts : moins zéro virgule cinq, zéro, moins un virgule cinq, un. Carrés : zéro virgule vingt-cinq, zéro, deux virgule vingt-cinq, un. Somme : trois virgule cinquante. Pour la troisième, y égale un plus deux x : prédictions un, trois, cinq, sept. Écarts : moins un, zéro, moins un, deux. Carrés : un, zéro, un, quatre. Somme : six. C'est bien la deuxième droite qui gagne."
+        verifier:
+          - {expression: "sum(((2 + 1*x) - y)**2 for x, y in [(0,2),(1,3),(2,6),(3,5)])", attendu: 4.0, libelle: "Droite y = 2 + x"}
+          - {expression: "sum(((1.5 + 1.5*x) - y)**2 for x, y in [(0,2),(1,3),(2,6),(3,5)])", attendu: 3.5, libelle: "Droite y = 1,5 + 1,5 x"}
+          - {expression: "sum(((1 + 2*x) - y)**2 for x, y in [(0,2),(1,3),(2,6),(3,5)])", attendu: 6.0, libelle: "Droite y = 1 + 2 x"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Les *moindres carrés* : la droite qui minimise la somme des carrés"
+          - "Prédire *dans le domaine* observé seulement"
+          - "La droite *ne prouve pas* une cause"
+        voix_off: "À retenir. Les moindres carrés : la droite qui minimise la somme des carrés des erreurs verticales. On s'en sert pour prédire, dans le domaine observé, et pas plus loin. Et une droite, même belle, ne prouve pas une cause."
+      - type: fin
+        texte: "Abonnez-vous pour apprendre à lire les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Drawing a line through the cloud: least squares"
+    legende: |
+      In a scatter plot, how do we pick "the right" line? With twelve imaginary pupils and three candidate lines, we make the squared errors visible and discover the least squares criterion. We use it for a careful prediction, and we spell out what the line does not yet prove. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+    hashtags: [statistics, regression, leastsquares]
+    scenes:
+      - type: accroche
+        texte: "Among *three lines*, which one fits best?"
+        voix_off: "We have a scatter plot, and we would like to summarise it with a line. But among all the possible lines, how do we choose?"
+      - type: titre
+        numero: 1
+        texte: "The cloud of our twelve pupils"
+        voix_off: "Let us start by placing the cloud."
+      - type: courbe
+        texte: "Hours of revision and marks, *12 fictional pupils*"
+        courbe:
+          style: points
+          points: [[1, 7], [2, 8], [2, 10], [3, 9], [4, 11], [4, 13], [5, 12], [6, 13], [7, 15], [7, 14], [8, 16], [9, 17]]
+          x_min: 0
+          x_max: 10
+          y_min: 0
+          y_max: 20
+          axe_x: "Hours of revision"
+          axe_y: "Mark out of 20"
+        note: "Imaginary pupils: numbers made up for the example."
+        voix_off: "Twelve imaginary pupils. On the horizontal axis, hours of revision; on the vertical axis, the mark out of twenty. The cloud goes up: more hours goes with better marks. We would now like to draw a line through it."
+      - type: titre
+        numero: 2
+        texte: "The line and its two numbers"
+        voix_off: "A line is described by two numbers: where it starts and how steep it is."
+      - type: formule
+        texte: "*y = a + b x*"
+        formule: "y = a + b x"
+        voix_off: "Y equals a plus b times x. The number a is the intercept: the height of the line when x is zero. The number b is the slope: how much y goes up when x increases by one unit."
+      - type: titre
+        numero: 3
+        texte: "Which criterion?"
+        voix_off: "Among all the possible lines, we want one that is, on average, close to the points."
+      - type: etapes
+        texte: "For *each point*, measure the vertical error"
+        etapes:
+          - "Take the *vertical gap* between the point and the line"
+          - "*Square it*, so it always counts positively"
+          - "*Add them up* over all the points"
+          - "Pick the line that *makes this sum smallest*"
+        voix_off: "For each point, we measure the vertical distance between the point and the line. We square it, so that an error below and an error above both count positively. We add them up over the twelve pupils. And among all possible lines, we keep the one that makes this sum smallest. This is called *least squares*."
+      - type: titre
+        numero: 4
+        texte: "Three candidates, three sums"
+        voix_off: "Let us try three candidate lines."
+      - type: tableau
+        texte: "Sum of *squared errors* for three lines"
+        colonnes: ["Candidate line", "Equation", "Sum of squares"]
+        lignes:
+          - ["A", "y = 6 + x", "29.0"]
+          - ["B", "y = 6 + 1.2 x", "8.76"]
+          - ["C", "y = 4 + 2 x", "87.0"]
+        voix_off: "Three equations, three sums. Line A gives twenty-nine. Line B, a bit steeper, gives eight point seven six: three times less. Line C, which aims too high, is very poor: eighty-seven. Line B wins. And an exact calculation, on these twelve pupils, would give a line very close to B."
+        verifier:
+          - {expression: "sum(((6 + 1*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 29.0, libelle: "Sum for line A"}
+          - {expression: "sum(((6 + 1.2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 8.76, libelle: "Sum for line B"}
+          - {expression: "sum(((4 + 2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 87.0, libelle: "Sum for line C"}
+      - type: titre
+        numero: 5
+        texte: "Predicting, but carefully"
+        voix_off: "Once the line is chosen, we can use it to predict."
+      - type: etapes
+        texte: "Predict *with care*"
+        etapes:
+          - "Predict *inside the observed range* (here, 1 to 9 hours)"
+          - "*Not* outside: the line may no longer fit"
+          - "Remember that *every prediction has an error*"
+        voix_off: "Predict, yes, but inside the observed range: between one and nine hours of revision. Outside, you extrapolate, and nothing guarantees the relation stays linear. Even inside, every prediction has an error: the line is a summary, not an oracle. In 1886, Francis Galton drew such a line between parents' and children's heights, and noticed that the children of very tall parents were, on average, slightly less tall: this is *regression towards the mean*."
+      - type: titre
+        numero: 6
+        texte: "Three questions the line does not answer"
+        voix_off: "And before we conclude, three questions the line does not answer."
+      - type: etapes
+        texte: "The line does *not yet* tell you"
+        etapes:
+          - "Is it due to *sampling chance*? (will be seen in S6)"
+          - "Is the relation *causal*? (will be seen in E1.04)"
+          - "Does it hold *outside the observed data*?"
+        voix_off: "One: the line could come from sampling chance. With twelve other pupils, we would get another line. Two: a relation is not necessarily causal. The line does not say that revising more makes the mark go up. Three: it holds inside the observed range, and not further."
+      - type: titre
+        numero: 7
+        texte: "Your turn"
+        voix_off: "Your turn."
+      - type: tableau
+        texte: "Three new lines, *four points*"
+        colonnes: ["Point", "x", "y"]
+        lignes:
+          - ["P1", "0", "2"]
+          - ["P2", "1", "3"]
+          - ["P3", "2", "6"]
+          - ["P4", "3", "5"]
+        voix_off: "Four points this time. P1: zero, two. P2: one, three. P3: two, six. P4: three, five. And three candidate lines."
+      - type: exercice
+        texte: "Among *y = 2 + x*, *y = 1.5 + 1.5 x* and *y = 1 + 2 x*, which has the smallest sum of squared errors?"
+        pause: 12
+        voix_off: "Y equals two plus x. Y equals one point five plus one point five x. Y equals one plus two x. For each, compute the sum of squared vertical errors on the four points, and say which one wins."
+      - type: correction
+        etapes:
+          - "y = 2 + x : *4.0*"
+          - "y = 1.5 + 1.5 x : *3.5*"
+          - "y = 1 + 2 x : *6.0*"
+        reponse: "The middle line, y = 1.5 + 1.5 x, wins with 3.5"
+        voix_off: "For the first line, y equals two plus x, the predictions are two, three, four, five. The gaps with the observations are zero, zero, minus two, zero. Sum of squares: four. For the second, y equals one point five plus one point five x: predictions one point five, three, four point five, six. Gaps: minus zero point five, zero, minus one point five, one. Squares: zero point two five, zero, two point two five, one. Sum: three point five. For the third, y equals one plus two x: predictions one, three, five, seven. Gaps: minus one, zero, minus one, two. Squares: one, zero, one, four. Sum: six. The middle line wins."
+        verifier:
+          - {expression: "sum(((2 + 1*x) - y)**2 for x, y in [(0,2),(1,3),(2,6),(3,5)])", attendu: 4.0, libelle: "Line y = 2 + x"}
+          - {expression: "sum(((1.5 + 1.5*x) - y)**2 for x, y in [(0,2),(1,3),(2,6),(3,5)])", attendu: 3.5, libelle: "Line y = 1.5 + 1.5 x"}
+          - {expression: "sum(((1 + 2*x) - y)**2 for x, y in [(0,2),(1,3),(2,6),(3,5)])", attendu: 6.0, libelle: "Line y = 1 + 2 x"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "*Least squares*: the line that minimises the sum of squares"
+          - "Predict *inside the observed range* only"
+          - "The line *does not prove* a cause"
+        voix_off: "Key points. Least squares: the line that minimises the sum of squared vertical errors. We use it to predict, inside the observed range, and not further. And a line, however neat, does not prove a cause."
+      - type: fin
+        texte: "Follow to learn how to read numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
