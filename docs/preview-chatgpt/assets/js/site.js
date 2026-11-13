@@ -114,10 +114,34 @@ document.addEventListener("DOMContentLoaded",()=>{
  * pendant le défilement. Pas de polyfill : IntersectionObserver suffit.
  */
 document.addEventListener("DOMContentLoaded",()=>{
-  const nav=document.querySelector("[data-lesson-toc]");
   const content=document.querySelector(".lesson-content");
-  if(!nav||!content)return;
+  if(!content)return;
+  let nav=document.querySelector("[data-lesson-toc]");
   const headings=content.querySelectorAll("h2");
+  if(!nav&&headings.length>2){
+    const layout=content.closest(".lesson-layout");
+    if(layout){
+      nav=document.createElement("aside");
+      nav.className="lesson-aside";
+      nav.setAttribute("data-lesson-toc","");
+      nav.setAttribute("aria-label",document.documentElement.lang.toLowerCase().startsWith("fr")?"Sommaire":"Contents");
+      const title=document.createElement("h3");
+      title.textContent=document.documentElement.lang.toLowerCase().startsWith("fr")?"Dans cette leçon":"In this lesson";
+      nav.appendChild(title);
+      layout.appendChild(nav);
+    }
+  }
+  if(!nav)return;
+  const hero=document.querySelector(".page-hero .container");
+  const intro=hero?.querySelector("p");
+  if(intro&&!hero.querySelector(".lesson-reading-meta")){
+    const words=(content.textContent||"").trim().split(/\\s+/).filter(Boolean).length;
+    const minutes=Math.max(1,Math.ceil(words/220));
+    const meta=document.createElement("p");
+    meta.className="lesson-reading-meta";
+    meta.textContent=document.documentElement.lang.toLowerCase().startsWith("fr")?"Lecture · "+minutes+" min":"Reading time · "+minutes+" min";
+    intro.insertAdjacentElement("afterend",meta);
+  }
   if(!headings.length){nav.remove();return;}
   const list=document.createElement("ol");
   list.className="lesson-toc-list";
