@@ -37,6 +37,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .badge{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.02em;border:1px solid transparent}
 .badge-level{background:#fff2d7;color:#8a5a00;border-color:#f1d89e}
 .badge-prereq{background:#eef3f2;color:var(--teal);border-color:#cfe1e0}
+.badge-state-lesson{background:#eaf3ea;color:#1f6a3a;border-color:#cfe4cf}
+.badge-state-video{background:#102638;color:#ffdd8a;border-color:transparent}
+
+/* --- État vidéo compact (pas de 16:9 vide) ------------------------------ */
+.video-status{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;margin:4px 0 24px;background:#faf8f3;border:1px solid var(--line);border-radius:12px;font-size:.88rem;color:var(--ink)}
+.video-status-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(233,163,35,.15)}
+.video-status-text strong{color:var(--teal);letter-spacing:.04em}
 
 /* --- Vidéos : slot YouTube 16:9 + TikTok 9:16 --------------------------- */
 .video-section{margin:4px 0 36px;padding:22px 22px 18px;background:#fff;border:1px solid var(--line);border-radius:18px}

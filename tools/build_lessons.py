@@ -471,39 +471,72 @@ def _youtube_embed_url(url: str) -> str | None:
     return None
 
 
-def build_video_block(data: dict | None, lang: str) -> str:
-    """Rend le bloc Vidéo. Si aucune URL : état « à venir »."""
+def _video_urls(data: dict | None, lang: str) -> tuple[str | None, str | None]:
     pub = {} if not isinstance(data, dict) else (data.get("publication") or {})
     yt = (pub.get("youtube") or {}) if isinstance(pub, dict) else {}
     tt = (pub.get("tiktok") or {}) if isinstance(pub, dict) else {}
     yt_url = yt.get(lang) if isinstance(yt, dict) else None
     tt_url = tt.get(lang) if isinstance(tt, dict) else None
+    return yt_url, tt_url
+
+
+def has_any_video(data: dict | None) -> bool:
+    """Vrai si au moins une URL vidéo (toute langue, toute plate-forme) est renseignée."""
+    for lg in ("fr", "en"):
+        yt, tt = _video_urls(data, lg)
+        if yt or tt:
+            return True
+    return False
+
+
+def build_video_block(data: dict | None, lang: str) -> str:
+    """Rend le bloc Vidéos.
+
+    Principe (alignement sur le doc d'architecture) :
+    - Aucune URL renseignée du tout : on affiche une ligne honnête
+      « Vidéo en préparation » (pas de faux lecteur, pas de 16:9 vide).
+    - Au moins une URL renseignée : on affiche le bloc complet et chaque
+      slot indique explicitement son état.
+    """
+    yt_url, tt_url = _video_urls(data, lang)
+    any_video = has_any_video(data)
 
     L = {
         "fr": {
             "heading": "Vidéos",
             "yt_h": "YouTube · format long",
             "tt_h": "TikTok · format court",
-            "soon": "Vidéo à venir",
+            "preparing_short": "Vidéo en préparation",
+            "not_yet": "Non disponible — en préparation",
             "watch_yt": "Regarder sur YouTube ↗",
             "watch_tt": "Regarder sur TikTok ↗",
-            "hint": "Les vidéos officielles apparaîtront ici dès leur publication.",
+            "hint": "Les vidéos apparaîtront ici dès leur publication officielle.",
         },
         "en": {
             "heading": "Videos",
             "yt_h": "YouTube · long form",
             "tt_h": "TikTok · short form",
-            "soon": "Video coming soon",
+            "preparing_short": "Video in preparation",
+            "not_yet": "Not yet available — in preparation",
             "watch_yt": "Watch on YouTube ↗",
             "watch_tt": "Watch on TikTok ↗",
-            "hint": "Official videos will appear here once published.",
+            "hint": "Videos will appear here once officially published.",
         },
     }[lang]
+
+    # Aucune vidéo du tout — ligne d'état compacte, pas de faux lecteur.
+    if not any_video:
+        return (
+            f'<aside class="video-status" aria-label="{html.escape(L["heading"])}">'
+            f'<span class="video-status-dot" aria-hidden="true"></span>'
+            f'<span class="video-status-text"><strong>{html.escape(L["heading"])}</strong> · {html.escape(L["preparing_short"])}</span>'
+            f'</aside>'
+        )
 
     def slot_youtube(url: str | None) -> str:
         if url:
             embed = _youtube_embed_url(url) or url
-            player = (
+            return (
                 f'<div class="video-frame video-frame-16x9">'
                 f'<iframe src="{html.escape(embed)}" '
                 f'title="YouTube" loading="lazy" '
@@ -512,10 +545,9 @@ def build_video_block(data: dict | None, lang: str) -> str:
                 f'</div>'
                 f'<a class="text-link" href="{html.escape(url)}" target="_blank" rel="noopener">{L["watch_yt"]}</a>'
             )
-            return player
         return (
             f'<div class="video-frame video-frame-16x9 video-frame-soon">'
-            f'<span class="video-soon">{L["soon"]}</span>'
+            f'<span class="video-soon">{L["not_yet"]}</span>'
             f'</div>'
         )
 
@@ -530,7 +562,7 @@ def build_video_block(data: dict | None, lang: str) -> str:
             )
         return (
             f'<div class="video-frame video-frame-9x16 video-frame-soon">'
-            f'<span class="video-soon">{L["soon"]}</span>'
+            f'<span class="video-soon">{L["not_yet"]}</span>'
             f'</div>'
         )
 
@@ -773,9 +805,19 @@ def build_lesson_card(L: dict, lang: str) -> str:
     module = L["module"]
     search_blob = f"{code} {module} {titre} {keywords} {legende}"
 
+    # Badges d'état explicites (alignement sur le doc d'architecture : disponibilité explicite).
+    fiche_label = "Fiche disponible" if lang == "fr" else "Lesson available"
+    video_label = "Vidéo en ligne" if lang == "fr" else "Video online"
+    state_badges = [f'<span class="badge badge-state badge-state-lesson">{html.escape(fiche_label)}</span>']
+    if has_any_video(data):
+        state_badges.append(
+            f'<span class="badge badge-state badge-state-video">{html.escape(video_label)}</span>'
+        )
+
     badges = (
         f'<span class="badge badge-level">{html.escape(niveau)}</span>'
         f'<span class="badge badge-prereq">{html.escape(prereq_label)}</span>'
+        + "".join(state_badges)
     )
 
     return (
@@ -830,14 +872,18 @@ def build_modules_sections(lessons: list[dict], lang: str) -> str:
     return "".join(out)
 
 
-def build_parcours_overview(lessons: list[dict], lang: str) -> str:
+def build_modules_overview(lessons: list[dict], lang: str) -> str:
+    """Barre de navigation inter-modules affichée en tête de la bibliothèque.
+
+    Distincte des pages parcours : ici c'est un simple jump-nav par module.
+    """
     by_mod: dict[str, int] = {}
     for L in lessons:
         by_mod[L["module"]] = by_mod.get(L["module"], 0) + 1
 
     meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
-    title_fr = "Parcours"
-    title_en = "Learning path"
+    title_fr = "Explorer par module"
+    title_en = "Browse by module"
     jump_label_fr = "Aller au module"
     jump_label_en = "Jump to module"
 
@@ -863,12 +909,12 @@ def build_parcours_overview(lessons: list[dict], lang: str) -> str:
 
     overview_title = title_fr if lang == "fr" else title_en
     overview_sub = (
-        "Un fil pédagogique : chaque module prépare le suivant."
+        "Six portes d'entrée. Clique pour sauter directement au module qui t'intéresse."
         if lang == "fr"
-        else "A learning thread: each module leads into the next."
+        else "Six entry points. Jump straight to the module you want."
     )
     return (
-        f'<section class="parcours-overview" aria-label="{html.escape(overview_title)}">'
+        f'<section class="parcours-overview modules-overview" aria-label="{html.escape(overview_title)}">'
         f'<div class="parcours-head">'
         f'<span class="eyebrow">{html.escape(overview_title)}</span>'
         f'<p class="muted">{html.escape(overview_sub)}</p>'
@@ -879,7 +925,7 @@ def build_parcours_overview(lessons: list[dict], lang: str) -> str:
 
 
 def render_library_page(lessons: list[dict], lang: str) -> str:
-    overview_html = build_parcours_overview(lessons, lang)
+    overview_html = build_modules_overview(lessons, lang)
     sections_html = build_modules_sections(lessons, lang)
     cats_in_use = sorted({L["category"] for L in lessons})
     cat_labels = CATEGORY_LABELS_FR if lang == "fr" else CATEGORY_LABELS_EN
