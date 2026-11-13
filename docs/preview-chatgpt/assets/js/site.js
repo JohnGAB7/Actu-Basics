@@ -55,3 +55,63 @@ document.addEventListener("DOMContentLoaded",()=>{
   filter?.addEventListener("change",apply);
   apply();
 });
+
+/* ---- Thème clair/sombre (ACTU-BASICS premium) ---------------------------
+ * Le thème initial est posé AVANT la première peinture par un script inline
+ * du <head> qui lit `localStorage.getItem("ab-theme")`. Ici on se contente
+ * de câbler la bascule : clic ↔ data-theme ↔ localStorage.
+ */
+document.addEventListener("DOMContentLoaded",()=>{
+  const btns=document.querySelectorAll("[data-theme-toggle]");
+  if(!btns.length)return;
+  const html=document.documentElement;
+  const getCurrent=()=>{
+    const explicit=html.getAttribute("data-theme");
+    if(explicit==="dark"||explicit==="light")return explicit;
+    return matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+  };
+  const apply=(t)=>{
+    html.setAttribute("data-theme",t);
+    try{localStorage.setItem("ab-theme",t);}catch(e){}
+    const metaTheme=document.querySelector('meta[name="theme-color"]');
+    if(metaTheme)metaTheme.setAttribute("content",t==="dark"?"#0f1619":"#f8f6ef");
+  };
+  btns.forEach(b=>{
+    b.addEventListener("click",()=>apply(getCurrent()==="dark"?"light":"dark"));
+  });
+});
+
+/* ---- Table des matières sticky sur les pages leçons ---------------------
+ * Alimentée par les <h2> de .lesson-content. Indique la section active
+ * pendant le défilement. Pas de polyfill : IntersectionObserver suffit.
+ */
+document.addEventListener("DOMContentLoaded",()=>{
+  const nav=document.querySelector("[data-lesson-toc]");
+  const content=document.querySelector(".lesson-content");
+  if(!nav||!content)return;
+  const headings=content.querySelectorAll("h2");
+  if(!headings.length){nav.remove();return;}
+  const list=document.createElement("ol");
+  list.className="lesson-toc-list";
+  const links=new Map();
+  headings.forEach((h,i)=>{
+    if(!h.id)h.id="s-"+(i+1)+"-"+(h.textContent||"").toLowerCase().replace(/[^\w]+/g,"-").slice(0,40);
+    const li=document.createElement("li");
+    const a=document.createElement("a");
+    a.href="#"+h.id;
+    a.textContent=h.textContent;
+    li.appendChild(a);
+    list.appendChild(li);
+    links.set(h.id,a);
+  });
+  nav.appendChild(list);
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      const a=links.get(e.target.id);
+      if(!a)return;
+      if(e.isIntersecting)a.classList.add("is-active");
+      else a.classList.remove("is-active");
+    });
+  },{rootMargin:"-30% 0px -60% 0px",threshold:0});
+  headings.forEach(h=>io.observe(h));
+});
