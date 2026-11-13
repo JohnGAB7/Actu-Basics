@@ -291,6 +291,13 @@ def test_library_links_integrity() -> None:
             F.add("library_links", f"catalogue manquant : {library.relative_to(ROOT)}")
             continue
         text = library.read_text(encoding="utf-8")
+        module_count = len({fiche["module"] for fiche in fiches})
+        expected_overview = (
+            f"{module_count} portes d'entrée" if "bibliotheque" in str(library)
+            else f"{module_count} entry points"
+        )
+        if expected_overview not in text:
+            F.add("library_overview", f"compteur de modules absent ou incorrect dans {library.relative_to(ROOT)}")
         found = [m.group(2) for m in pattern.finditer(text)]
         found_set = set(found)
         if len(found) != len(found_set):
