@@ -253,3 +253,25 @@ body{background:var(--paper);color:var(--ink);letter-spacing:-.006em}
 @media(prefers-reduced-motion:reduce){
   .card,.parcours-step,.button{transition:none}
 }
+
+
+/* Featured lesson — editorial cover block on the home pages. */
+.feature-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:54px;align-items:center;padding:54px;border-radius:30px;background:radial-gradient(circle at 85% 10%,rgba(214,162,75,.16),transparent 32%),linear-gradient(125deg,#102638,#173c4a);color:#fff;box-shadow:0 28px 72px rgba(16,38,56,.14)}
+.feature-copy .eyebrow{color:#f0c979}
+.feature-kicker{display:block;margin:18px 0 8px;color:#c5d6d8;font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.feature-copy h2{max-width:620px;margin:0 0 18px;color:#fff;font-size:clamp(2.1rem,4vw,3.45rem);line-height:1.03;letter-spacing:-.05em}
+.feature-copy p{max-width:620px;color:#d5e0e7;line-height:1.8}
+.feature-meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 28px}
+.feature-meta span{padding:7px 11px;border:1px solid rgba(255,255,255,.18);border-radius:999px;color:#d5e0e7;font-size:.72rem;font-weight:700}
+.feature-visual{padding:24px 24px 20px;border:1px solid rgba(255,255,255,.15);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));box-shadow:inset 0 1px rgba(255,255,255,.08)}
+.feature-visual-top,.feature-visual-foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.feature-visual-top{color:#c7d6d8;font-size:.66rem;font-weight:800;letter-spacing:.12em}
+.feature-visual svg{display:block;width:100%;height:auto;margin:18px 0 8px;overflow:visible}
+.feature-gridline{fill:none;stroke:rgba(255,255,255,.15);stroke-width:1}
+.feature-line{fill:none;stroke:#e6b75e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.feature-visual circle{fill:#f4d18c;stroke:#173c4a;stroke-width:2}
+.feature-visual svg text{fill:#fff;font:700 12px Inter,system-ui,sans-serif}
+.feature-visual-foot{padding-top:15px;border-top:1px solid rgba(255,255,255,.14);color:#d5e0e7;font-size:.8rem}
+.feature-visual-foot strong{font:500 1.8rem/1 Georgia,serif;color:#f0c979}
+@media(max-width:850px){.feature-panel{grid-template-columns:1fr;gap:32px;padding:38px}}
+@media(max-width:600px){.feature-panel{padding:26px;border-radius:24px}.feature-visual{padding:18px}}
