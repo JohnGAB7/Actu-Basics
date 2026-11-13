@@ -435,8 +435,13 @@ def test_premium_foundations() -> None:
     bouton `[data-theme-toggle]` dans chaque <header>."""
     name = "test_premium_foundations"
 
-    # 1) Les assets premium sont partout.
+    # 1) Les assets premium sont partout, y compris les accueils manuels
+    #    (régression constatée : le bouton de thème manquait sur /index.html).
     sample_pages = [
+        ROOT / "docs" / "index.html",
+        ROOT / "docs" / "en" / "index.html",
+        ROOT / "docs" / "a-propos" / "index.html",
+        ROOT / "docs" / "en" / "about" / "index.html",
         ROOT / "docs" / "lecons" / "M0-03" / "index.html",
         ROOT / "docs" / "en" / "lessons" / "M0-03" / "index.html",
         ROOT / "docs" / "bibliotheque" / "index.html",
