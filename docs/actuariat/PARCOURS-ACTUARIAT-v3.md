@@ -1,8 +1,8 @@
-# ACTU-BASICS · Parcours Actuariat de A à Z (proposition v3.2)
+# ACTU-BASICS · Parcours Actuariat de A à Z (proposition v3.3)
 
-Statut : **proposition v3.2 : v3 de Claude, débattue avec Perplexity le 2026-11-12, retour intégré ; relecture pédagogique de ChatGPT du 2026-11-12, retour intégré. À valider par JG.** La v2 (`PARCOURS-ACTUARIAT.md`) reste la référence tant que la v3.2 n'est pas validée. Rien n'est produit sur cette base avant validation.
+Statut : **proposition v3.3 : v3.2 validée par JG le 2026-11-12, enrichie d'une colonne Canada et d'une colonne France précise ; audit post-fusion de ChatGPT du 2026-11-12 pris en compte. À valider par JG.** La v2 (`PARCOURS-ACTUARIAT.md`) reste la référence tant que la v3.3 n'est pas validée. Rien n'est produit sur cette base avant validation.
 
-Dernière vérification des correspondances d'examens : 2026-11-12.
+Dernière vérification des correspondances d'examens : 2026-11-13.
 
 Demande de JG (2026-11-12) : « Adaptons le programme et débat d'une nouvelle version avec Claude et Perplexity ».
 
@@ -30,25 +30,38 @@ Ce document part du bilan du pilote (trois leçons et six extraits, FR et EN, va
 
 **Repères de recouvrement thématique avec les examens**
 
-| Module | SOA | CAS | IFoA | France |
-| --- | --- | --- | --- | --- |
-| A1 Mathématiques financières | Exam FM | Exam 2 | CM1 (partie financière) | Notions communes à certains cursus reconnus |
-| A2 Probabilités pour l'assurance | Exam P | Exam 1 | CS1 (partie probabilités) | Notions communes à certains cursus reconnus |
-| A2b Statistique pour l'assurance | SRM (en partie) | MAS-I, MAS-II | CS1 (partie statistique) | Notions communes à certains cursus reconnus |
-| A3, A4 Vie et provisions vie | FAM (partie vie), ALTAM | — | CM1 (partie vie) ; CS2 (analyse de survie) | Notions communes à certains cursus reconnus |
-| A5 Sinistres non-vie | FAM (partie courte durée), ASTAM | MAS-I, Exam 5 | CS2 | Notions communes à certains cursus reconnus |
-| A6 Tarification | SRM, PA, ASTAM | Exam 5 | CS1, CS2 (**à vérifier**) | Notions communes à certains cursus reconnus |
-| A7 Provisionnement non-vie | ASTAM | Exam 5 | **à vérifier** | Notions communes à certains cursus reconnus |
-| A8 Risque et solvabilité | ALTAM, ASTAM (en partie) | Exam 6 (variante selon le pays) | CM2, CP1 (mise en perspective, **à vérifier**) | Repères réglementaires : Solvabilité II, ACPR |
+| Module | SOA (États-Unis) | CAS (États-Unis) | ICA (Canada) | IFoA (Royaume-Uni) | France |
+| --- | --- | --- | --- | --- | --- |
+| A1 Mathématiques financières | Exam FM | Exam 2 | SOA FM (via accord) | CM1 (partie financière) | Bases communes |
+| A2 Probabilités pour l'assurance | Exam P | Exam 1 | SOA P (via accord) | CS1 (partie probabilités) | Bases communes |
+| A2b Statistique pour l'assurance | SRM (en partie) | MAS-I, MAS-II | SOA SRM | CS1 (partie statistique) | Bases communes |
+| A3, A4 Vie et provisions vie | FAM (partie vie), ALTAM | — | SOA FAM, ALTAM ; module ICA vie | CM1 (partie vie) ; CS2 (analyse de survie) | Bases communes |
+| A5 Sinistres non-vie | FAM (partie courte durée), ASTAM | MAS-I, Exam 5 | CAS 5 ou SOA ASTAM ; module ICA IARD | CS2 | Bases communes |
+| A6 Tarification | SRM, PA, ASTAM | Exam 5 | CAS 5, SOA PA | CS1, CS2 (**à vérifier**) | Bases communes |
+| A7 Provisionnement non-vie | ASTAM | Exam 5 | CAS 5, SOA ASTAM | **à vérifier** (vraisemblablement CM2 ou SP7) | Bases communes |
+| A8 Risque et solvabilité | ALTAM, ASTAM (en partie) | Exam 6 (variante selon le pays) | Exam 6-Canada (CAS) ; cadre OSFI, LICA | CM2, CP1 (mise en perspective, **à vérifier**) | Repères réglementaires : Solvabilité II, ACPR |
 
-« Notions communes à certains cursus actuariels reconnus en France » signifie : le module ne constitue pas une préparation à une épreuve française spécifique et ne remplace pas un diplôme reconnu par l'Institut des actuaires. Solvabilité II et l'ACPR sont un cadre réglementaire et une autorité de contrôle, pas des examens.
+« Bases communes » signifie : le module couvre des notions communes à certains cursus reconnus par l'Institut des actuaires (France) ou par l'ICA (Canada), mais ne constitue pas une préparation à une épreuve française ou canadienne spécifique et ne remplace pas un cursus complet. Solvabilité II et l'ACPR sont un cadre réglementaire européen et une autorité de contrôle française ; l'OSFI et la LICA sont les équivalents canadiens, pas des examens.
 
-**Sources (consultées le 2026-11-12)**
-- SOA, pages « ASA Pathway Changes and Transition Information » et « Associate of the Society of Actuaries (ASA) » : Exam P, FM, FAM, SRM, PA, puis ALTAM ou ASTAM, plus VEE, modules e-learning, FAP et APC.
-- SOA, « June 2026 SOA Board of Directors Meeting Recap » : **la SOA a lancé une phase d'étude d'une évolution de l'ASA ; le contenu et le calendrier restent à confirmer.** Aucun examen n'est annoncé comme ajouté ou supprimé.
-- CAS, « Credential Requirements » : l'ACAS comprend notamment MAS-I, MAS-II, Exam 5, Exam 6, le Course on Professionalism, et le PCPA (examen et projet). La date d'entrée en vigueur du PCPA (1er janvier 2026, selon Perplexity) est **à vérifier**.
-- IFoA, syllabi 2026 : CS1 « Actuarial Statistics », CS2 « Risk Modelling and Survival Analysis », CM1 « Actuarial Mathematics for Modelling », CM2 « Economic Modelling ». Le détail des programmes CS2, CM1 et CM2 n'a pas pu être lu dans cette passe : les rattachements marqués **à vérifier** le seront dans les syllabi avant publication.
-- France : page de l'Institut des actuaires sur les formations reconnues, **à consulter** avant publication.
+**Note Canada (utile pour JG)**
+- Au Canada, les titres sont **AICA** (Associate / membre associé) et **FICA** (Fellow). Trois parcours de qualification existent (Parcours 1, 2, 3), détaillés sur le site de l'ICA.
+- **Parcours 1 (PAU, Programme d'agrément universitaire)** : diplôme d'une université agréée par l'ICA, puis modules et Examen synthèse de niveau AICA administrés par l'ICA, sans note minimale sur les examens universitaires.
+- **Parcours 2 et 3** : cursus combinant les examens de la SOA ou de la CAS avec des modules spécifiques de l'ICA (dont les Canadian Practice Modules / Modules de pratique canadienne). Le Parcours 3 est le plus proche du modèle historique SOA/CAS + CIA.
+- Une liste de douze universités canadiennes est agréée par l'ICA au titre du PAU : Concordia, Simon Fraser, Montréal, UQAM, Laval, Calgary, Manitoba, Regina, Toronto, Waterloo (premier cycle + M. Sc.), Western Ontario, York (depuis la cohorte d'automne 2025). Source : https://www.cia-ica.ca/fr/commencer-votre-parcours/education-actuarielle-au-canada/
+
+**Reformulation France (utile pour JG)**
+
+L'Institut des actuaires reconnaît **huit formations initiales** donnant accès au statut d'Actuaire Associé après soutenance d'un mémoire devant son jury : Collège des Ingénieurs, ENSAE, ESSEC, EURIA, ISFA, ISUP, Université de Strasbourg, Université Paris-Dauphine. Une **neuvième formation** est accréditée depuis le 12 mars 2024 avec une période probatoire jusqu'en 2030 : l'IRA (Institut du Risque et de l'Assurance, Le Mans). Source : https://www.institutdesactuaires.com/article/les-formations-initiales-1132
+
+Les modules du parcours ACTU-BASICS couvrent des notions communes à ces cursus mais ne constituent pas une préparation à une épreuve française spécifique.
+
+**Sources primaires (consultées le 2026-11-13)**
+- **SOA**, page « ASA Pathway Changes and Transition Information » : Exam P, FM, FAM, SRM, PA, puis ALTAM ou ASTAM, plus VEE, modules e-learning, FAP et APC.
+- **SOA**, « June 2026 SOA Board of Directors Meeting Recap » : la SOA a lancé une phase d'étude d'une évolution de l'ASA ; le contenu et le calendrier restent à confirmer.
+- **CAS**, « Credential Requirements » : l'ACAS comprend MAS-I, MAS-II, Exam 5, Exam 6, le Course on Professionalism et le PCPA (examen et projet). La date d'entrée en vigueur du PCPA (1er janvier 2026, selon Perplexity) est **à vérifier** sur un communiqué officiel CAS.
+- **IFoA** : CS1 « Actuarial Statistics », CS2 « Risk Modelling and Survival Analysis », CM1 « Actuarial Mathematics for Modelling », CM2 « Economic Modelling ». Syllabi 2027 annoncés sans changement significatif. Le détail de A6 et A7 reste **à vérifier** dans les syllabi détaillés.
+- **ICA / CIA** : page « Éducation en actuariat au Canada » (voir ci-dessus) et pages des trois parcours de qualification. Douze universités agréées listées.
+- **Institut des actuaires** : page officielle des formations initiales reconnues (voir ci-dessus).
 
 ### 2.2 Durées réalistes
 
@@ -145,6 +158,9 @@ A2b constitue le socle d'inférence statistique utilisé dans les modules actuar
 
 ## 7. Décisions à prendre par JG
 
-1. Valider la v3.2 telle quelle, ou indiquer ce qui doit changer.
-2. Choisir où héberger les fichiers tableur, R et Python (et les fiches PDF), **avant toute annonce de calendrier**.
-3. Choisir la suite de la production : finir A0 (A0.02 à A0.05) ou ouvrir A3.01 comme prévu dans la v2.
+1. Valider la v3.3 telle quelle, ou indiquer ce qui doit changer.
+2. **Hébergement des ressources** (fiches PDF, fichiers tableur, R et Python). Deux options recommandées :
+   - **GitHub Pages depuis ce dépôt** : gratuit, URL publique, chaque leçon a sa page `actubasics.github.io/<module>/<leçon>` avec les téléchargements. Hébergé par GitHub, aucune maintenance, intégré à notre flux de production. Option recommandée.
+   - **Dossier partagé Claude** (comme actuellement) : seul JG peut l'ouvrir, pas de lien public pour le spectateur. Convient pour les ressources personnelles de JG, pas pour les ressources destinées au public.
+   - Un lien `linktree`-style depuis la description YouTube peut être rajouté quand le site est en place.
+3. Choisir la suite de la production : A3.01 (recommandé par ChatGPT et validé par JG) ou finir A0 (A0.02 à A0.05) d'abord.
