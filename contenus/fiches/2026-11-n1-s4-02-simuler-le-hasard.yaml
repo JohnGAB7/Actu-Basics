@@ -44,20 +44,19 @@ editions:
         numero: 1
         texte: "Dix lancers : l'imprévisible"
         voix_off: "Commençons par dix lancers."
-      - type: tableau
+      - type: etapes
         texte: "Une *série imaginaire* de 10 lancers"
-        colonnes: ["Lancer", "Résultat", "Nb piles cumulé", "Fréquence"]
-        lignes:
-          - ["1", "Pile", "1", "100 %"]
-          - ["2", "Face", "1", "50 %"]
-          - ["3", "Pile", "2", "67 %"]
-          - ["4", "Pile", "3", "75 %"]
-          - ["5", "Face", "3", "60 %"]
-          - ["6", "Face", "3", "50 %"]
-          - ["7", "Pile", "4", "57 %"]
-          - ["8", "Pile", "5", "63 %"]
-          - ["9", "Face", "5", "56 %"]
-          - ["10", "Pile", "6", "60 %"]
+        etapes:
+          - "1 · Pile · 1 · 100 %"
+          - "2 · Face · 1 · 50 %"
+          - "3 · Pile · 2 · 67 %"
+          - "4 · Pile · 3 · 75 %"
+          - "5 · Face · 3 · 60 %"
+          - "6 · Face · 3 · 50 %"
+          - "7 · Pile · 4 · 57 %"
+          - "8 · Pile · 5 · 63 %"
+          - "9 · Face · 5 · 56 %"
+          - "10 · Pile · 6 · 60 %"
         voix_off: "Dix lancers, six piles, quatre faces. Fréquence finale : soixante pour cent. Est-ce « anormal » ? Non : sur dix lancers, obtenir six piles ou six faces arrive très souvent, par pur hasard."
       - type: titre
         numero: 2
@@ -142,20 +141,19 @@ editions:
         numero: 1
         texte: "Ten tosses: the unpredictable"
         voix_off: "Start with ten tosses."
-      - type: tableau
+      - type: etapes
         texte: "An *imaginary* 10-toss series"
-        colonnes: ["Toss", "Result", "Heads so far", "Frequency"]
-        lignes:
-          - ["1", "Heads", "1", "100%"]
-          - ["2", "Tails", "1", "50%"]
-          - ["3", "Heads", "2", "67%"]
-          - ["4", "Heads", "3", "75%"]
-          - ["5", "Tails", "3", "60%"]
-          - ["6", "Tails", "3", "50%"]
-          - ["7", "Heads", "4", "57%"]
-          - ["8", "Heads", "5", "63%"]
-          - ["9", "Tails", "5", "56%"]
-          - ["10", "Heads", "6", "60%"]
+        etapes:
+          - "1 · Heads · 1 · 100%"
+          - "2 · Tails · 1 · 50%"
+          - "3 · Heads · 2 · 67%"
+          - "4 · Heads · 3 · 75%"
+          - "5 · Tails · 3 · 60%"
+          - "6 · Tails · 3 · 50%"
+          - "7 · Heads · 4 · 57%"
+          - "8 · Heads · 5 · 63%"
+          - "9 · Tails · 5 · 56%"
+          - "10 · Heads · 6 · 60%"
         voix_off: "Ten tosses, six heads, four tails. Final frequency: sixty percent. Is this 'abnormal'? No: in ten tosses, getting six heads or six tails happens very often, by pure chance."
       - type: titre
         numero: 2

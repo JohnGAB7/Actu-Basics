@@ -94,14 +94,13 @@ editions:
         numero: 4
         texte: "Fraction, décimal, pourcentage"
         voix_off: "Trois écritures pour la même probabilité."
-      - type: tableau
+      - type: etapes
         texte: "La *même* probabilité, *trois* écritures"
-        colonnes: ["Fraction", "Décimal", "Pourcentage"]
-        lignes:
-          - ["1/6", "0,167", "16,7 %"]
-          - ["1/4", "0,25", "25 %"]
-          - ["3/10", "0,3", "30 %"]
-          - ["7/10", "0,7", "70 %"]
+        etapes:
+          - "1/6 · 0,167 · 16,7 %"
+          - "1/4 · 0,25 · 25 %"
+          - "3/10 · 0,3 · 30 %"
+          - "7/10 · 0,7 · 70 %"
         voix_off: "Un sixième, zéro virgule cent soixante-sept, seize virgule sept pour cent. Un quart, zéro virgule vingt-cinq, vingt-cinq pour cent. Trois dixièmes, zéro virgule trois, trente pour cent. Sept dixièmes, zéro virgule sept, soixante-dix pour cent. Toujours : décimal fois cent égale pourcentage. Et le décimal reste entre zéro et un."
         verifier:
           - {expression: "round(1 / 4, 3)", attendu: 0.25, libelle: "1/4 en décimal"}
@@ -207,14 +206,13 @@ editions:
         numero: 4
         texte: "Fraction, decimal, percentage"
         voix_off: "Three ways to write the same probability."
-      - type: tableau
+      - type: etapes
         texte: "The *same* probability, *three* writings"
-        colonnes: ["Fraction", "Decimal", "Percentage"]
-        lignes:
-          - ["1/6", "0.167", "16.7%"]
-          - ["1/4", "0.25", "25%"]
-          - ["3/10", "0.3", "30%"]
-          - ["7/10", "0.7", "70%"]
+        etapes:
+          - "1/6 · 0.167 · 16.7%"
+          - "1/4 · 0.25 · 25%"
+          - "3/10 · 0.3 · 30%"
+          - "7/10 · 0.7 · 70%"
         voix_off: "One sixth, zero point one six seven, sixteen point seven percent. One quarter, zero point two five, twenty-five percent. Three tenths, zero point three, thirty percent. Seven tenths, zero point seven, seventy percent. Always: decimal times one hundred equals percentage. And the decimal stays between zero and one."
         verifier:
           - {expression: "round(1 / 4, 3)", attendu: 0.25, libelle: "1/4 as decimal"}

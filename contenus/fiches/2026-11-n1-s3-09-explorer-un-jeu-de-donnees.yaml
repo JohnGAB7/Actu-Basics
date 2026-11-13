@@ -52,22 +52,21 @@ editions:
         numero: 1
         texte: "Les données imaginaires du jour"
         voix_off: "Voici ce que contient ce tableau imaginaire."
-      - type: tableau
+      - type: etapes
         texte: "Naissances mensuelles, *région fictive*"
-        colonnes: ["Mois", "Naissances"]
-        lignes:
-          - ["Janvier", "820"]
-          - ["Février", "790"]
-          - ["Mars", "850"]
-          - ["Avril", "880"]
-          - ["Mai", "920"]
-          - ["Juin", "950"]
-          - ["Juillet", "1 010"]
-          - ["Août", "980"]
-          - ["Septembre", "930"]
-          - ["Octobre", "890"]
-          - ["Novembre", "850"]
-          - ["Décembre", "810"]
+        etapes:
+          - "Janvier · 820"
+          - "Février · 790"
+          - "Mars · 850"
+          - "Avril · 880"
+          - "Mai · 920"
+          - "Juin · 950"
+          - "Juillet · 1 010"
+          - "Août · 980"
+          - "Septembre · 930"
+          - "Octobre · 890"
+          - "Novembre · 850"
+          - "Décembre · 810"
         note: "Chiffres inventés : région fictive. Aucun chiffre réel."
         voix_off: "Douze mois, de janvier à décembre, et un nombre de naissances pour chaque mois. On est tenté d'appuyer tout de suite sur le bouton « calculer la moyenne ». On va résister, et faire sept gestes dans l'ordre."
       - type: titre
@@ -130,22 +129,21 @@ editions:
         numero: 6
         texte: "Geste 5 : lisser pour voir la tendance"
         voix_off: "On applique ce que l'on a vu en S3.08 : la moyenne mobile."
-      - type: tableau
+      - type: etapes
         texte: "*Moyenne mobile sur 3 mois*"
-        colonnes: ["Mois", "Brut", "MM3"]
-        lignes:
-          - ["Janvier", "820", "—"]
-          - ["Février", "790", "820"]
-          - ["Mars", "850", "840"]
-          - ["Avril", "880", "883"]
-          - ["Mai", "920", "917"]
-          - ["Juin", "950", "960"]
-          - ["Juillet", "1 010", "980"]
-          - ["Août", "980", "973"]
-          - ["Septembre", "930", "933"]
-          - ["Octobre", "890", "890"]
-          - ["Novembre", "850", "850"]
-          - ["Décembre", "810", "—"]
+        etapes:
+          - "Janvier · 820 · —"
+          - "Février · 790 · 820"
+          - "Mars · 850 · 840"
+          - "Avril · 880 · 883"
+          - "Mai · 920 · 917"
+          - "Juin · 950 · 960"
+          - "Juillet · 1 010 · 980"
+          - "Août · 980 · 973"
+          - "Septembre · 930 · 933"
+          - "Octobre · 890 · 890"
+          - "Novembre · 850 · 850"
+          - "Décembre · 810 · —"
         voix_off: "La série lissée confirme la forme : elle monte régulièrement du début d'année jusqu'à juin, culmine autour de juillet, puis redescend jusqu'en décembre. Les vagues mensuelles s'effacent, la tendance apparaît."
         verifier:
           - {expression: "round((820 + 790 + 850) / 3, 0)", attendu: 820.0, libelle: "MM3 en février"}
@@ -212,22 +210,21 @@ editions:
         numero: 1
         texte: "Today's imaginary dataset"
         voix_off: "Here is what the table contains."
-      - type: tableau
+      - type: etapes
         texte: "Monthly births, *fictional region*"
-        colonnes: ["Month", "Births"]
-        lignes:
-          - ["January", "820"]
-          - ["February", "790"]
-          - ["March", "850"]
-          - ["April", "880"]
-          - ["May", "920"]
-          - ["June", "950"]
-          - ["July", "1,010"]
-          - ["August", "980"]
-          - ["September", "930"]
-          - ["October", "890"]
-          - ["November", "850"]
-          - ["December", "810"]
+        etapes:
+          - "January · 820"
+          - "February · 790"
+          - "March · 850"
+          - "April · 880"
+          - "May · 920"
+          - "June · 950"
+          - "July · 1,010"
+          - "August · 980"
+          - "September · 930"
+          - "October · 890"
+          - "November · 850"
+          - "December · 810"
         note: "Made-up numbers: fictional region. No real data."
         voix_off: "Twelve months, January to December, and a number of births for each. You are tempted to press 'compute the mean' straight away. We'll resist, and go through seven steps, in order."
       - type: titre
@@ -290,22 +287,21 @@ editions:
         numero: 6
         texte: "Step 5: smooth to see the trend"
         voix_off: "Apply what we saw in S3.08: the moving average."
-      - type: tableau
+      - type: etapes
         texte: "*3-month moving average*"
-        colonnes: ["Month", "Raw", "MA3"]
-        lignes:
-          - ["January", "820", "—"]
-          - ["February", "790", "820"]
-          - ["March", "850", "840"]
-          - ["April", "880", "883"]
-          - ["May", "920", "917"]
-          - ["June", "950", "960"]
-          - ["July", "1,010", "980"]
-          - ["August", "980", "973"]
-          - ["September", "930", "933"]
-          - ["October", "890", "890"]
-          - ["November", "850", "850"]
-          - ["December", "810", "—"]
+        etapes:
+          - "January · 820 · —"
+          - "February · 790 · 820"
+          - "March · 850 · 840"
+          - "April · 880 · 883"
+          - "May · 920 · 917"
+          - "June · 950 · 960"
+          - "July · 1,010 · 980"
+          - "August · 980 · 973"
+          - "September · 930 · 933"
+          - "October · 890 · 890"
+          - "November · 850 · 850"
+          - "December · 810 · —"
         voix_off: "The smoothed series confirms the shape: it climbs steadily from the start of the year through June, peaks around July, and falls back through December. The monthly waves vanish, the trend appears."
         verifier:
           - {expression: "round((820 + 790 + 850) / 3, 0)", attendu: 820.0, libelle: "MA3 in February"}

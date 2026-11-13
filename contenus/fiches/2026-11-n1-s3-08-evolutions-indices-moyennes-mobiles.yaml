@@ -46,17 +46,16 @@ editions:
         numero: 1
         texte: "Deux séries aux niveaux très différents"
         voix_off: "Le problème, c'est que les deux séries ne vivent pas dans le même monde."
-      - type: tableau
+      - type: etapes
         texte: "Pain et loyer, *7 années imaginaires*"
-        colonnes: ["Année", "Pain (€)", "Loyer (€)"]
-        lignes:
-          - ["2000", "2,50", "500"]
-          - ["2001", "2,60", "560"]
-          - ["2002", "2,80", "620"]
-          - ["2003", "3,00", "680"]
-          - ["2004", "3,20", "730"]
-          - ["2005", "3,30", "800"]
-          - ["2006", "3,50", "850"]
+        etapes:
+          - "2000 · 2,50 · 500"
+          - "2001 · 2,60 · 560"
+          - "2002 · 2,80 · 620"
+          - "2003 · 3,00 · 680"
+          - "2004 · 3,20 · 730"
+          - "2005 · 3,30 · 800"
+          - "2006 · 3,50 · 850"
         voix_off: "Sept années, un prix du pain qui monte de deux euros cinquante à trois euros cinquante, et un loyer qui passe de cinq cents à huit cent cinquante euros. Mais mettre ces deux colonnes sur le même graphique, c'est impossible : les ordres de grandeur sont trop différents."
       - type: titre
         numero: 2
@@ -66,17 +65,16 @@ editions:
         texte: "*indice = valeur / valeur de base × 100*"
         formule: "indice_t = (valeur_t / valeur_base) × 100"
         voix_off: "L'indice à l'instant t, c'est la valeur à l'instant t divisée par la valeur de base, multipliée par cent. On choisit une année de référence — ici 2000 — et on lui donne la valeur cent."
-      - type: tableau
+      - type: etapes
         texte: "Les mêmes séries, *en base 100*"
-        colonnes: ["Année", "Pain (indice)", "Loyer (indice)"]
-        lignes:
-          - ["2000", "100", "100"]
-          - ["2001", "104", "112"]
-          - ["2002", "112", "124"]
-          - ["2003", "120", "136"]
-          - ["2004", "128", "146"]
-          - ["2005", "132", "160"]
-          - ["2006", "140", "170"]
+        etapes:
+          - "2000 · 100 · 100"
+          - "2001 · 104 · 112"
+          - "2002 · 112 · 124"
+          - "2003 · 120 · 136"
+          - "2004 · 128 · 146"
+          - "2005 · 132 · 160"
+          - "2006 · 140 · 170"
         voix_off: "Et voilà. En 2000, les deux séries valent cent. En 2006, le pain est à cent quarante — plus quarante pour cent — et le loyer à cent soixante-dix — plus soixante-dix pour cent. Le loyer a nettement plus augmenté, dans notre exemple imaginaire."
         verifier:
           - {expression: "round(3.50 / 2.50 * 100, 1)", attendu: 140.0, libelle: "Indice du pain en 2006"}
@@ -110,19 +108,18 @@ editions:
           - "Placer cette moyenne *au centre* des trois"
           - "Décaler d'un pas, et recommencer"
         voix_off: "On prend trois valeurs consécutives, on en fait la moyenne, et on place cette moyenne au centre. Puis on décale d'un pas, et on recommence. Pour nos neuf mois, on obtient sept valeurs lissées."
-      - type: tableau
+      - type: etapes
         texte: "Série brute et *moyenne mobile sur 3 mois*"
-        colonnes: ["Mois", "Brut", "MM3"]
-        lignes:
-          - ["1", "10", "—"]
-          - ["2", "12", "11,00"]
-          - ["3", "11", "12,33"]
-          - ["4", "14", "13,67"]
-          - ["5", "16", "15,00"]
-          - ["6", "15", "16,33"]
-          - ["7", "18", "17,67"]
-          - ["8", "20", "19,00"]
-          - ["9", "19", "—"]
+        etapes:
+          - "1 · 10 · —"
+          - "2 · 12 · 11,00"
+          - "3 · 11 · 12,33"
+          - "4 · 14 · 13,67"
+          - "5 · 16 · 15,00"
+          - "6 · 15 · 16,33"
+          - "7 · 18 · 17,67"
+          - "8 · 20 · 19,00"
+          - "9 · 19 · —"
         voix_off: "Les premiers et derniers mois n'ont pas de moyenne : il faut des voisins. Pour le reste, la série lissée monte régulièrement : de onze à dix-neuf. Les vagues saisonnières disparaissent, la tendance apparaît."
         verifier:
           - {expression: "round((10 + 12 + 11) / 3, 2)", attendu: 11.0, libelle: "MM3 au mois 2"}
@@ -181,17 +178,16 @@ editions:
         numero: 1
         texte: "Two series at very different levels"
         voix_off: "The problem is that the two series do not live in the same world."
-      - type: tableau
+      - type: etapes
         texte: "Bread and rent, *7 imaginary years*"
-        colonnes: ["Year", "Bread ($)", "Rent ($)"]
-        lignes:
-          - ["2000", "2.50", "500"]
-          - ["2001", "2.60", "560"]
-          - ["2002", "2.80", "620"]
-          - ["2003", "3.00", "680"]
-          - ["2004", "3.20", "730"]
-          - ["2005", "3.30", "800"]
-          - ["2006", "3.50", "850"]
+        etapes:
+          - "2000 · 2.50 · 500"
+          - "2001 · 2.60 · 560"
+          - "2002 · 2.80 · 620"
+          - "2003 · 3.00 · 680"
+          - "2004 · 3.20 · 730"
+          - "2005 · 3.30 · 800"
+          - "2006 · 3.50 · 850"
         voix_off: "Seven years. Bread goes from two dollars fifty to three dollars fifty; rent, from five hundred to eight hundred and fifty dollars. Putting both columns on the same chart is impossible: the orders of magnitude are too different."
       - type: titre
         numero: 2
@@ -201,17 +197,16 @@ editions:
         texte: "*index = value / base value × 100*"
         formule: "index_t = (value_t / value_base) × 100"
         voix_off: "The index at time t is the value at time t divided by the base value, times one hundred. We pick a reference year — here 2000 — and give it the value one hundred."
-      - type: tableau
+      - type: etapes
         texte: "The same series, *in base 100*"
-        colonnes: ["Year", "Bread (index)", "Rent (index)"]
-        lignes:
-          - ["2000", "100", "100"]
-          - ["2001", "104", "112"]
-          - ["2002", "112", "124"]
-          - ["2003", "120", "136"]
-          - ["2004", "128", "146"]
-          - ["2005", "132", "160"]
-          - ["2006", "140", "170"]
+        etapes:
+          - "2000 · 100 · 100"
+          - "2001 · 104 · 112"
+          - "2002 · 112 · 124"
+          - "2003 · 120 · 136"
+          - "2004 · 128 · 146"
+          - "2005 · 132 · 160"
+          - "2006 · 140 · 170"
         voix_off: "There we are. In 2000, both series are at one hundred. In 2006, bread is at one hundred and forty — up forty percent — and rent at one hundred and seventy — up seventy percent. Rent has clearly gone up more, in our imaginary example."
         verifier:
           - {expression: "round(3.50 / 2.50 * 100, 1)", attendu: 140.0, libelle: "Bread index in 2006"}
@@ -245,19 +240,18 @@ editions:
           - "Place the average *at the centre* of the three"
           - "Move by one step, and repeat"
         voix_off: "Take three consecutive values, average them, and place the average at the centre. Then move by one step, and repeat. For our nine months, we get seven smoothed values."
-      - type: tableau
+      - type: etapes
         texte: "Raw series and *3-month moving average*"
-        colonnes: ["Month", "Raw", "MA3"]
-        lignes:
-          - ["1", "10", "—"]
-          - ["2", "12", "11.00"]
-          - ["3", "11", "12.33"]
-          - ["4", "14", "13.67"]
-          - ["5", "16", "15.00"]
-          - ["6", "15", "16.33"]
-          - ["7", "18", "17.67"]
-          - ["8", "20", "19.00"]
-          - ["9", "19", "—"]
+        etapes:
+          - "1 · 10 · —"
+          - "2 · 12 · 11.00"
+          - "3 · 11 · 12.33"
+          - "4 · 14 · 13.67"
+          - "5 · 16 · 15.00"
+          - "6 · 15 · 16.33"
+          - "7 · 18 · 17.67"
+          - "8 · 20 · 19.00"
+          - "9 · 19 · —"
         voix_off: "The first and last months have no average: you need neighbours. For the rest, the smoothed series climbs steadily: from eleven to nineteen. The seasonal waves vanish, the trend appears."
         verifier:
           - {expression: "round((10 + 12 + 11) / 3, 2)", attendu: 11.0, libelle: "MA3 at month 2"}

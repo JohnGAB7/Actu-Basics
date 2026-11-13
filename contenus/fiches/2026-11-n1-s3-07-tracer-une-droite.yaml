@@ -85,13 +85,12 @@ editions:
         numero: 4
         texte: "Trois candidates, trois sommes"
         voix_off: "Essayons trois droites candidates."
-      - type: tableau
+      - type: etapes
         texte: "Somme des *carrés des erreurs* pour trois droites"
-        colonnes: ["Droite candidate", "Équation", "Somme des carrés"]
-        lignes:
-          - ["A", "y = 6 + x", "29,0"]
-          - ["B", "y = 6 + 1,2 x", "8,76"]
-          - ["C", "y = 4 + 2 x", "87,0"]
+        etapes:
+          - "A · y = 6 + x · somme *29,0*"
+          - "B · y = 6 + 1,2 x · somme *8,76*"
+          - "C · y = 4 + 2 x · somme *87,0*"
         voix_off: "Trois équations, trois sommes. La droite A donne vingt-neuf. La droite B, un peu plus pentue, donne huit virgule soixante-seize : trois fois moins. La droite C, qui vise trop haut, est très mauvaise : quatre-vingt-sept. C'est donc la droite B qui gagne. Et un calcul exact, sur ces douze élèves, donnerait une droite très proche de B."
         verifier:
           - {expression: "sum(((6 + 1*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 29.0, libelle: "Somme pour la droite A"}
@@ -123,14 +122,13 @@ editions:
         numero: 7
         texte: "À vous"
         voix_off: "À vous."
-      - type: tableau
+      - type: etapes
         texte: "Trois nouvelles droites, *quatre points*"
-        colonnes: ["Point", "x", "y"]
-        lignes:
-          - ["P1", "0", "2"]
-          - ["P2", "1", "3"]
-          - ["P3", "2", "6"]
-          - ["P4", "3", "5"]
+        etapes:
+          - "P1 : (0, 2)"
+          - "P2 : (1, 3)"
+          - "P3 : (2, 6)"
+          - "P4 : (3, 5)"
         voix_off: "Quatre points cette fois. P1 : zéro, deux. P2 : un, trois. P3 : deux, six. P4 : trois, cinq. Et voici trois droites candidates."
       - type: exercice
         texte: "Parmi *y = 2 + x*, *y = 1,5 + 1,5 x* et *y = 1 + 2 x*, laquelle a la plus petite somme des carrés des erreurs ?"
@@ -208,13 +206,12 @@ editions:
         numero: 4
         texte: "Three candidates, three sums"
         voix_off: "Let us try three candidate lines."
-      - type: tableau
+      - type: etapes
         texte: "Sum of *squared errors* for three lines"
-        colonnes: ["Candidate line", "Equation", "Sum of squares"]
-        lignes:
-          - ["A", "y = 6 + x", "29.0"]
-          - ["B", "y = 6 + 1.2 x", "8.76"]
-          - ["C", "y = 4 + 2 x", "87.0"]
+        etapes:
+          - "A · y = 6 + x · sum *29.0*"
+          - "B · y = 6 + 1.2 x · sum *8.76*"
+          - "C · y = 4 + 2 x · sum *87.0*"
         voix_off: "Three equations, three sums. Line A gives twenty-nine. Line B, a bit steeper, gives eight point seven six: three times less. Line C, which aims too high, is very poor: eighty-seven. Line B wins. And an exact calculation, on these twelve pupils, would give a line very close to B."
         verifier:
           - {expression: "sum(((6 + 1*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 29.0, libelle: "Sum for line A"}
@@ -246,14 +243,13 @@ editions:
         numero: 7
         texte: "Your turn"
         voix_off: "Your turn."
-      - type: tableau
+      - type: etapes
         texte: "Three new lines, *four points*"
-        colonnes: ["Point", "x", "y"]
-        lignes:
-          - ["P1", "0", "2"]
-          - ["P2", "1", "3"]
-          - ["P3", "2", "6"]
-          - ["P4", "3", "5"]
+        etapes:
+          - "P1: (0, 2)"
+          - "P2: (1, 3)"
+          - "P3: (2, 6)"
+          - "P4: (3, 5)"
         voix_off: "Four points this time. P1: zero, two. P2: one, three. P3: two, six. P4: three, five. And three candidate lines."
       - type: exercice
         texte: "Among *y = 2 + x*, *y = 1.5 + 1.5 x* and *y = 1 + 2 x*, which has the smallest sum of squared errors?"
