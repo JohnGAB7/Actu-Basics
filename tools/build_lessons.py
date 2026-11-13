@@ -42,6 +42,93 @@ CATEGORY_LABELS_EN = {
     "finance":       "Financial mathematics",
 }
 
+# Ordre et libellés des modules (préfixe du code -> module).
+MODULE_ORDER = ["M0", "S1", "S2", "S3", "S4", "A0"]
+
+MODULE_META_FR = {
+    "M0": {
+        "titre": "Fondations",
+        "sous_titre": "Rappels mathématiques pour démarrer en confiance.",
+        "category": "fondations",
+    },
+    "S1": {
+        "titre": "Statistiques · lire un chiffre",
+        "sous_titre": "Vocabulaire, pourcentages, lecture des chiffres du quotidien.",
+        "category": "statistiques",
+    },
+    "S2": {
+        "titre": "Statistiques · indicateurs",
+        "sous_titre": "Moyennes, médianes, taux et comparaisons entre groupes.",
+        "category": "statistiques",
+    },
+    "S3": {
+        "titre": "Statistiques · séries et dispersion",
+        "sous_titre": "Écart-type, séries chronologiques et interprétation des graphiques.",
+        "category": "statistiques",
+    },
+    "S4": {
+        "titre": "Probabilités",
+        "sous_titre": "Événements, indépendance, probabilités conditionnelles.",
+        "category": "probabilites",
+    },
+    "A0": {
+        "titre": "Actuariat · premiers pas",
+        "sous_titre": "Métier d'actuaire, risque, prime pure.",
+        "category": "actuariat",
+    },
+}
+
+MODULE_META_EN = {
+    "M0": {
+        "titre": "Foundations",
+        "sous_titre": "A math refresher to start with confidence.",
+        "category": "fondations",
+    },
+    "S1": {
+        "titre": "Statistics · reading numbers",
+        "sous_titre": "Vocabulary, percentages, making sense of everyday numbers.",
+        "category": "statistiques",
+    },
+    "S2": {
+        "titre": "Statistics · indicators",
+        "sous_titre": "Averages, medians, rates and group comparisons.",
+        "category": "statistiques",
+    },
+    "S3": {
+        "titre": "Statistics · series and spread",
+        "sous_titre": "Standard deviation, time series and chart interpretation.",
+        "category": "statistiques",
+    },
+    "S4": {
+        "titre": "Probability",
+        "sous_titre": "Events, independence, conditional probability.",
+        "category": "probabilites",
+    },
+    "A0": {
+        "titre": "Actuarial science · first steps",
+        "sous_titre": "The actuary's role, risk, pure premium.",
+        "category": "actuariat",
+    },
+}
+
+
+def module_of(code: str) -> str:
+    """M0-01 -> M0 ; S4-07 -> S4 ; A0-01 -> A0."""
+    low = code.lower()
+    if low.startswith("m0"):
+        return "M0"
+    if low.startswith("s1"):
+        return "S1"
+    if low.startswith("s2"):
+        return "S2"
+    if low.startswith("s3"):
+        return "S3"
+    if low.startswith("s4"):
+        return "S4"
+    if low.startswith("a"):
+        return "A0"
+    return "M0"
+
 
 def module_code(fiche_id: str) -> str:
     """Extrait le code module d'un id fiche. 2026-11-n1-s2-04-xxx -> S2-04."""
@@ -470,38 +557,187 @@ def render_lesson_page(data: dict, lang: str) -> str:
 
 # --- Bibliothèque ----------------------------------------------------------
 
-def build_library_cards(lessons: list[dict], lang: str) -> str:
-    cards = []
-    for L in lessons:
-        code = L["code"]
-        ed = L["ed_fr"] if lang == "fr" else L["ed_en"]
-        titre = ed.get("titre", code)
-        legende = (ed.get("legende", "") or "").strip()
-        legende_short = legende.split(".")[0] if legende else ""
-        if len(legende_short) > 180:
-            legende_short = legende_short[:177] + "…"
-        tags = ed.get("hashtags", []) or []
-        keywords = " ".join(str(t) for t in tags)
-        cat = L["category"]
-        if L.get("manual"):
-            path = f"../lecons/{code}/" if lang == "fr" else f"../lessons/{code}/"
-        else:
-            path = f"../lecons/{code}/" if lang == "fr" else f"../lessons/{code}/"
-        avail_label = "Disponible" if lang == "fr" else "Available"
-        open_label = "Consulter la leçon →" if lang == "fr" else "Open lesson →"
-        cards.append(
-            f'<article class="card lesson-card" data-lesson '
-            f'data-category="{html.escape(cat)}" '
-            f'data-keywords="{html.escape(keywords)}">'
-            f'<div class="card-top"><span class="lesson-code">{code}</span>'
-            f'<span class="tag">{avail_label}</span></div>'
-            f'<h3>{md_inline(titre)}</h3>'
-            f'<p>{md_inline(legende_short)}</p>'
-            f'<div class="card-bottom">'
-            f'<a class="text-link" href="{path}">{open_label}</a>'
-            f'</div></article>'
+def _prereq_count(data: dict | None, lang: str) -> int:
+    if not isinstance(data, dict):
+        return 0
+    ped = data.get("pedagogie", {}) or {}
+    pre = ped.get("prerequis")
+    if isinstance(pre, dict):
+        v = pre.get(lang, [])
+    else:
+        v = pre
+    if not v:
+        return 0
+    if isinstance(v, str):
+        # Une entrée comme « Aucun : rappel de calcul de base » compte 0.
+        lowered = v.lower()
+        if "aucun" in lowered or "none" in lowered:
+            return 0
+        return 1
+    if isinstance(v, list):
+        n = 0
+        for item in v:
+            if not item:
+                continue
+            txt = str(item).lower()
+            if "aucun" in txt or "none" in txt:
+                continue
+            n += 1
+        return n
+    return 0
+
+
+def _niveau_label(data: dict | None, lang: str) -> str:
+    """Retourne le label de niveau. decouverte -> Découverte / Intro."""
+    if not isinstance(data, dict):
+        return "Découverte" if lang == "fr" else "Intro"
+    ped = data.get("pedagogie", {}) or {}
+    niv = (ped.get("niveau") or "decouverte").lower()
+    mapping_fr = {
+        "decouverte": "Découverte",
+        "intermediaire": "Intermédiaire",
+        "avance": "Avancé",
+    }
+    mapping_en = {
+        "decouverte": "Intro",
+        "intermediaire": "Intermediate",
+        "avance": "Advanced",
+    }
+    return (mapping_fr if lang == "fr" else mapping_en).get(niv, niv.title())
+
+
+def build_lesson_card(L: dict, lang: str) -> str:
+    code = L["code"]
+    ed = L["ed_fr"] if lang == "fr" else L["ed_en"]
+    titre = ed.get("titre", code)
+    legende = (ed.get("legende", "") or "").strip()
+    legende_short = legende.split(".")[0] if legende else ""
+    if len(legende_short) > 180:
+        legende_short = legende_short[:177] + "…"
+    tags = ed.get("hashtags", []) or []
+    keywords = " ".join(str(t) for t in tags)
+    cat = L["category"]
+    path = f"../lecons/{code}/" if lang == "fr" else f"../lessons/{code}/"
+    open_label = "Consulter la leçon →" if lang == "fr" else "Open lesson →"
+
+    data = L.get("data")
+    prereq_n = _prereq_count(data, lang)
+    niveau = _niveau_label(data, lang)
+    if lang == "fr":
+        prereq_label = "Sans prérequis" if prereq_n == 0 else (
+            "1 prérequis" if prereq_n == 1 else f"{prereq_n} prérequis"
         )
-    return "".join(cards)
+    else:
+        prereq_label = "No prerequisite" if prereq_n == 0 else (
+            "1 prerequisite" if prereq_n == 1 else f"{prereq_n} prerequisites"
+        )
+
+    module = L["module"]
+    search_blob = f"{code} {module} {titre} {keywords} {legende}"
+
+    badges = (
+        f'<span class="badge badge-level">{html.escape(niveau)}</span>'
+        f'<span class="badge badge-prereq">{html.escape(prereq_label)}</span>'
+    )
+
+    return (
+        f'<article class="card lesson-card" data-lesson '
+        f'data-category="{html.escape(cat)}" '
+        f'data-module="{html.escape(module)}" '
+        f'data-keywords="{html.escape(keywords)}">'
+        f'<div class="card-top"><span class="lesson-code">{code}</span></div>'
+        f'<h3>{md_inline(titre)}</h3>'
+        f'<p>{md_inline(legende_short)}</p>'
+        f'<div class="card-badges">{badges}</div>'
+        f'<div class="card-bottom">'
+        f'<a class="text-link" href="{path}">{open_label}</a>'
+        f'</div></article>'
+    )
+
+
+def build_modules_sections(lessons: list[dict], lang: str) -> str:
+    """Regroupe par module avec en-têtes et compte."""
+    by_mod: dict[str, list[dict]] = {m: [] for m in MODULE_ORDER}
+    for L in lessons:
+        by_mod.setdefault(L["module"], []).append(L)
+
+    meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
+    lessons_word = ("leçon", "leçons") if lang == "fr" else ("lesson", "lessons")
+    module_word = "Module" if lang == "fr" else "Module"
+
+    out = []
+    for mod in MODULE_ORDER:
+        bucket = by_mod.get(mod) or []
+        if not bucket:
+            continue
+        bucket = sorted(bucket, key=lambda x: x["code"])
+        m = meta.get(mod, {"titre": mod, "sous_titre": "", "category": "statistiques"})
+        count = len(bucket)
+        count_label = f"{count} {lessons_word[0] if count == 1 else lessons_word[1]}"
+        cards_html = "".join(build_lesson_card(L, lang) for L in bucket)
+        out.append(
+            f'<section class="module-section" id="mod-{mod}" '
+            f'data-module-section="{mod}" data-category="{html.escape(m["category"])}">'
+            f'<div class="module-head">'
+            f'<div class="module-head-text">'
+            f'<span class="eyebrow">{module_word} {mod}</span>'
+            f'<h2>{md_inline(m["titre"])}</h2>'
+            f'<p>{md_inline(m["sous_titre"])}</p>'
+            f'</div>'
+            f'<span class="module-count" data-visible-count>{count_label}</span>'
+            f'</div>'
+            f'<div class="grid-3 module-grid">{cards_html}</div>'
+            f'</section>'
+        )
+    return "".join(out)
+
+
+def build_parcours_overview(lessons: list[dict], lang: str) -> str:
+    by_mod: dict[str, int] = {}
+    for L in lessons:
+        by_mod[L["module"]] = by_mod.get(L["module"], 0) + 1
+
+    meta = MODULE_META_FR if lang == "fr" else MODULE_META_EN
+    title_fr = "Parcours"
+    title_en = "Learning path"
+    jump_label_fr = "Aller au module"
+    jump_label_en = "Jump to module"
+
+    items = []
+    for i, mod in enumerate([m for m in MODULE_ORDER if by_mod.get(m)], start=1):
+        count = by_mod[mod]
+        m = meta.get(mod, {"titre": mod})
+        title_text = m["titre"]
+        label_lessons = "leçons" if lang == "fr" else "lessons"
+        label_lesson = "leçon" if lang == "fr" else "lesson"
+        n_label = f"{count} {label_lesson if count == 1 else label_lessons}"
+        items.append(
+            f'<a class="parcours-step" href="#mod-{mod}" '
+            f'aria-label="{html.escape((jump_label_fr if lang == "fr" else jump_label_en))} {mod} — {html.escape(title_text)}">'
+            f'<span class="parcours-index">{i:02d}</span>'
+            f'<span class="parcours-body">'
+            f'<span class="parcours-code">{mod}</span>'
+            f'<span class="parcours-title">{html.escape(title_text)}</span>'
+            f'<span class="parcours-count">{n_label}</span>'
+            f'</span>'
+            f'</a>'
+        )
+
+    overview_title = title_fr if lang == "fr" else title_en
+    overview_sub = (
+        "Un fil pédagogique : chaque module prépare le suivant."
+        if lang == "fr"
+        else "A learning thread: each module leads into the next."
+    )
+    return (
+        f'<section class="parcours-overview" aria-label="{html.escape(overview_title)}">'
+        f'<div class="parcours-head">'
+        f'<span class="eyebrow">{html.escape(overview_title)}</span>'
+        f'<p class="muted">{html.escape(overview_sub)}</p>'
+        f'</div>'
+        f'<div class="parcours-steps">{"".join(items)}</div>'
+        f'</section>'
+    )
 
 
 def render_library_page(lessons: list[dict], lang: str) -> str:
