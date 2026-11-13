@@ -467,7 +467,7 @@ def test_courbe_svg_rendering() -> None:
             "y_min": 16, "y_max": 48, "axe_y": "Trottinettes (milliers)",
         },
     }, "fr", aria_label="Double échelle")
-    for token in ("courbe-line-alt", "courbe-axis-right", "Trottinettes (milliers)", ">16<", ">48<"):
+    for token in ("courbe-line-alt", "courbe-axis-right", "Trottinettes (milliers)", ">20<", ">40<"):
         if token not in dual:
             F.add(name, f"double axe : élément manquant {token!r}")
 
