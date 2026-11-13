@@ -30,7 +30,9 @@ pedagogie:
     en: "Fictional pupils; no real data. Galton cited as a historical landmark, without reusing his numbers."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

@@ -28,7 +28,9 @@ pedagogie:
     en: "Fictional bread and rent prices; a monthly series that fluctuates; no real data cited. A single year does not prove seasonality: smoothing here reveals the trend, not a cycle."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

@@ -43,7 +43,9 @@ pedagogie:
     en: "365 equally likely days; no leap years, no twins. Classic assumptions."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

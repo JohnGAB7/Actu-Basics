@@ -28,7 +28,9 @@ pedagogie:
     en: "Dice and cards assumed fair. Historical landmark: Pascal and Fermat (1654)."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

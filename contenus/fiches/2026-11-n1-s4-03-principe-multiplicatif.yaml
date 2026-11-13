@@ -27,7 +27,9 @@ pedagogie:
     en: "Imaginary examples; no real data cited."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

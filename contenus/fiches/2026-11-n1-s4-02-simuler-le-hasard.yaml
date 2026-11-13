@@ -26,7 +26,9 @@ pedagogie:
     en: "Coin assumed fair (50/50). Imaginary simulation shown for pedagogy."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

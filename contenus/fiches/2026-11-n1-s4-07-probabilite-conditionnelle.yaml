@@ -28,7 +28,9 @@ pedagogie:
     en: "Imaginary city, 100 imaginary days. No real figures."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 

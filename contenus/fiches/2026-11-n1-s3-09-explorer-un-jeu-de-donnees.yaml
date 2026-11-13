@@ -34,7 +34,9 @@ pedagogie:
     en: "Fictional dataset: births per month in a fictional region. No real numbers."
 
 validation:
-  statut: brouillon
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-13"
 
 sources: []
 
