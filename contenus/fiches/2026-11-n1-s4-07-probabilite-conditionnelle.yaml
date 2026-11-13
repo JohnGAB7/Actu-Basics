@@ -108,12 +108,24 @@ editions:
         texte: "L'erreur : le sophisme du procureur"
         voix_off: "Et c'est cette confusion qui donne un faux raisonnement célèbre."
       - type: etapes
-        texte: "Le *sophisme* en trois temps"
+        texte: "Un cas *fictif* chiffré"
         etapes:
-          - "P(trace ADN compatible | innocent) est *très faible*"
-          - "⇒ on conclut : P(innocent | trace compatible) est aussi *très faible*"
-          - "C'est *faux* : il faut aussi tenir compte de *combien* de gens ont une trace compatible dans la population"
-        voix_off: "Dans un procès, on dit : la probabilité qu'un innocent ait cette trace d'A.D.N. est d'une sur un million. Donc l'accusé est coupable. Faux. Un sur un million, c'est P de trace sachant innocent, pas P d'innocent sachant trace. Si la population d'une grande ville compte plusieurs millions de gens, la chance que plusieurs d'entre eux aient une trace compatible n'est pas du tout négligeable. On ne peut pas conclure sans information sur l'ensemble des suspects possibles."
+          - "Ville imaginaire de *1 000 000* d'habitants, un vrai coupable parmi eux"
+          - "Marqueur ADN qui *correspond* chez *1 personne sur 100 000* au hasard"
+          - "Attendu : *≈ 10 innocents* qui correspondent, plus le coupable"
+          - "Soit *11 personnes* au total avec une correspondance"
+        voix_off: "Prenons un cas chiffré. Une ville imaginaire d'un million d'habitants. Un marqueur d'A.D.N. qui, chez une personne prise au hasard dans la population, correspond une fois sur cent mille. On s'attend donc à environ dix correspondances au hasard, plus le vrai coupable s'il est dans la ville. Soit onze personnes qui présentent le marqueur."
+        verifier:
+          - {expression: "1_000_000 / 100_000", attendu: 10.0, libelle: "Correspondances attendues au hasard dans la population"}
+      - type: etapes
+        texte: "La *bonne* probabilité"
+        etapes:
+          - "P(marqueur | innocent) = *1 / 100 000* — très faible"
+          - "P(coupable | marqueur) ≈ *1 / 11* ≈ *9 %* — pas du tout certain"
+          - "Les deux probabilités ne sont *pas* les mêmes"
+        voix_off: "La probabilité qu'un innocent corresponde est bien un sur cent mille : très faible. Mais la question d'un procès est l'inverse : quelle est la probabilité que l'accusé soit coupable, sachant qu'il correspond ? Puisqu'il y a onze personnes qui correspondent et une seule coupable, la probabilité conditionnelle est environ un sur onze, soit neuf pour cent. L'accusé peut parfaitement être innocent. Le procureur qui présente le « un sur cent mille » comme une preuve de culpabilité confond les deux sens de conditionnement."
+        verifier:
+          - {expression: "round(1 / 11 * 100, 1)", attendu: 9.1, libelle: "P(coupable | marqueur) dans ce scénario fictif, en %"}
       - type: texte
         texte: "« La plupart des accidents ont lieu *près de chez soi* »"
         voix_off: "Même piège dans la phrase : la plupart des accidents ont lieu près de chez soi. C'est vrai, parce qu'on y passe plus de temps. Mais cela ne dit pas que conduire près de chez soi est plus dangereux. C'est P(près de chez soi | accident), pas P(accident | près de chez soi)."
@@ -221,12 +233,24 @@ editions:
         texte: "The mistake: the prosecutor's fallacy"
         voix_off: "This confusion powers a famous bad argument."
       - type: etapes
-        texte: "The *fallacy* in three steps"
+        texte: "A *fictional* numbered case"
         etapes:
-          - "P(DNA match | innocent) is *very small*"
-          - "⇒ conclude: P(innocent | DNA match) is also *very small*"
-          - "This is *wrong*: you must also know *how many* people in the population match"
-        voix_off: "At trial: the probability an innocent person has this DNA match is one in a million. Therefore the defendant is guilty. Wrong. One in a million is P of match given innocent, not P of innocent given match. In a city of several million, the chance that several innocent people match is not small at all. You cannot conclude without information about the full suspect pool."
+          - "Imaginary city of *1,000,000* people, one true culprit among them"
+          - "DNA marker that *matches* on *1 random person in 100,000*"
+          - "Expected: *≈ 10 innocents* who match, plus the culprit"
+          - "That is *11 people* in total who match"
+        voix_off: "Take a numbered example. An imaginary city of one million people. A DNA marker that, on a random person in the population, matches one time in one hundred thousand. We expect about ten random matches, plus the true culprit if they are in the city. That is eleven people with a match."
+        verifier:
+          - {expression: "1_000_000 / 100_000", attendu: 10.0, libelle: "Expected random matches in the population"}
+      - type: etapes
+        texte: "The *right* probability"
+        etapes:
+          - "P(match | innocent) = *1 / 100,000* — very small"
+          - "P(culprit | match) ≈ *1 / 11* ≈ *9%* — not at all certain"
+          - "The two probabilities are *not* the same"
+        voix_off: "The probability that an innocent person matches is indeed one in one hundred thousand: very small. But a trial asks the reverse: what is the probability that the defendant is the culprit, given that they match? With eleven matches and only one culprit, the conditional probability is about one in eleven, or nine percent. The defendant may well be innocent. A prosecutor who presents 'one in one hundred thousand' as proof of guilt confuses the two directions."
+        verifier:
+          - {expression: "round(1 / 11 * 100, 1)", attendu: 9.1, libelle: "P(culprit | match) in this fictional scenario, in %"}
       - type: texte
         texte: "'Most accidents happen *close to home*'"
         voix_off: "Same trap in the phrase: most accidents happen close to home. True, because you spend more time there. But it does not say driving close to home is more dangerous. That is P(close to home | accident), not P(accident | close to home)."

@@ -15,17 +15,17 @@ pedagogie:
     fr:
       - "Calculer un indice base 100 pour comparer deux séries"
       - "Lisser une série par une moyenne mobile"
-      - "Repérer une saisonnalité et la distinguer d'une tendance"
+      - "Distinguer les fluctuations d'une série de sa tendance"
     en:
       - "Compute a base-100 index to compare two series"
       - "Smooth a series with a moving average"
-      - "Spot seasonality and tell it apart from a trend"
+      - "Tell the short-term fluctuations of a series apart from its trend"
   prerequis:
     fr: ["S1.08 : pourcentages et points", "S2.04 : ce que dit vraiment la moyenne"]
     en: ["S1.08: percentages and points", "S2.04: what the mean really says"]
   hypotheses:
-    fr: "Prix du pain et du loyer imaginaires, série saisonnière inventée ; aucune donnée réelle citée."
-    en: "Fictional bread and rent prices; imaginary seasonal series; no real data cited."
+    fr: "Prix du pain et du loyer imaginaires, série mensuelle qui fluctue ; aucune donnée réelle citée. Une seule année ne démontre pas une saisonnalité : le lissage sert ici à faire ressortir la tendance, pas à conclure sur un cycle."
+    en: "Fictional bread and rent prices; a monthly series that fluctuates; no real data cited. A single year does not prove seasonality: smoothing here reveals the trend, not a cycle."
 
 validation:
   statut: brouillon
@@ -36,7 +36,7 @@ editions:
   fr:
     titre: "Indices et moyennes mobiles : lire une évolution"
     legende: |
-      Comment comparer l'évolution du pain et du loyer depuis 2000 ? Avec deux séries imaginaires, on découvre l'indice base 100 : on ramène tout le monde au même point de départ pour comparer les trajectoires. Puis, avec une autre série qui fait des vagues, on lisse par une moyenne mobile pour voir la tendance malgré la saisonnalité. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
+      Comment comparer l'évolution du pain et du loyer depuis 2000 ? Avec deux séries imaginaires, on découvre l'indice base 100 : on ramène tout le monde au même point de départ pour comparer les trajectoires. Puis, avec une autre série qui fluctue de mois en mois, on lisse par une moyenne mobile pour faire ressortir la tendance. Exercice corrigé à la fin. Données fictives. Série « Lire un chiffre sans se faire avoir ».
     hashtags: [statistiques, indices, moyennemobile]
     scenes:
       - type: accroche
@@ -95,7 +95,7 @@ editions:
           axe_x: "Mois"
           axe_y: "Pains vendus (centaines)"
         note: "Boulangerie imaginaire : chiffres inventés."
-        voix_off: "Neuf mois de ventes d'une boulangerie imaginaire. La série monte globalement, mais fait des vagues : les mois d'hiver sont plus faibles, les mois d'été plus forts. Comment voir la tendance sous la saisonnalité ?"
+        voix_off: "Neuf mois de ventes d'une boulangerie imaginaire. La série monte globalement, mais fluctue d'un mois à l'autre. Avec neuf mois seulement, on ne peut pas conclure à une saisonnalité : il faudrait plusieurs années pour voir si ce motif se répète. En revanche, on peut faire ressortir la tendance en lissant les fluctuations."
       - type: titre
         numero: 4
         texte: "La moyenne mobile : lisser la série"
@@ -120,7 +120,7 @@ editions:
           - "7 · 18 · 17,67"
           - "8 · 20 · 19,00"
           - "9 · 19 · —"
-        voix_off: "Les premiers et derniers mois n'ont pas de moyenne : il faut des voisins. Pour le reste, la série lissée monte régulièrement : de onze à dix-neuf. Les vagues saisonnières disparaissent, la tendance apparaît."
+        voix_off: "Les premiers et derniers mois n'ont pas de moyenne : il faut des voisins. Pour le reste, la série lissée monte régulièrement : de onze à dix-neuf. Les fluctuations mensuelles sont atténuées, la tendance ressort."
         verifier:
           - {expression: "round((10 + 12 + 11) / 3, 2)", attendu: 11.0, libelle: "MM3 au mois 2"}
           - {expression: "round((14 + 16 + 15) / 3, 2)", attendu: 15.0, libelle: "MM3 au mois 5"}
@@ -133,8 +133,8 @@ editions:
         texte: "Les deux pièges"
         etapes:
           - "Comparer des *niveaux* au lieu d'évolutions"
-          - "Prendre une *vague saisonnière* pour une tendance"
-        voix_off: "Un, comparer un prix en euros à un autre prix en euros : ça ne dit rien si les niveaux sont très différents. Il faut passer par un indice base cent, qui ramène tout à la même échelle. Deux, voir une variation d'été comme un signe de croissance : les ventes de glaces augmentent chaque juin et retombent chaque janvier, ce n'est pas une tendance."
+          - "Prendre une *fluctuation* pour une tendance (et vice-versa)"
+        voix_off: "Un, comparer un prix en euros à un autre prix en euros : ça ne dit rien si les niveaux sont très différents. Il faut passer par un indice base cent, qui ramène tout à la même échelle. Deux, prendre une fluctuation ponctuelle pour une tendance, ou inversement : la moyenne mobile sert précisément à distinguer les deux, à condition d'avoir assez de données. Une saisonnalité ne s'affirme qu'après plusieurs cycles complets."
       - type: titre
         numero: 6
         texte: "À vous"
@@ -160,7 +160,7 @@ editions:
           - "*Indice base 100* : ramener tout le monde au même point de départ"
           - "*Moyenne mobile* : lisser pour voir la tendance"
           - "*Comparer des évolutions*, pas des niveaux"
-        voix_off: "À retenir. L'indice base cent ramène toutes les séries au même point de départ, et permet de comparer leurs évolutions. La moyenne mobile remplace chaque valeur par la moyenne de ses voisins, et laisse apparaître la tendance sous la saisonnalité. Et on compare toujours des évolutions, pas des niveaux."
+        voix_off: "À retenir. L'indice base cent ramène toutes les séries au même point de départ, et permet de comparer leurs évolutions. La moyenne mobile remplace chaque valeur par la moyenne de ses voisins, et fait ressortir la tendance en atténuant les fluctuations. Et on compare toujours des évolutions, pas des niveaux."
       - type: fin
         texte: "Abonnez-vous pour apprendre à lire les chiffres."
         voix_off: "ACTU-BASICS. Éveiller par les chiffres."
@@ -168,7 +168,7 @@ editions:
   en:
     titre: "Indices and moving averages: reading change over time"
     legende: |
-      How can we compare the change in bread prices and rent since 2000? With two imaginary series, we meet the base-100 index: bring everyone back to the same starting point, then compare paths. Then, with another wavy series, we smooth with a moving average to see the trend under the seasonality. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
+      How can we compare the change in bread prices and rent since 2000? With two imaginary series, we meet the base-100 index: bring everyone back to the same starting point, then compare paths. Then, with another series that fluctuates from month to month, we smooth with a moving average to reveal the trend. Worked exercise at the end. Fictional data. Series "Reading numbers without being fooled".
     hashtags: [statistics, indices, movingaverage]
     scenes:
       - type: accroche
@@ -227,7 +227,7 @@ editions:
           axe_x: "Month"
           axe_y: "Loaves sold (hundreds)"
         note: "Imaginary bakery: numbers made up."
-        voix_off: "Nine months of sales from an imaginary bakery. The series goes up overall, but it makes waves: winter months are weaker, summer months stronger. How do we see the trend under the seasonality?"
+        voix_off: "Nine months of sales from an imaginary bakery. The series goes up overall, but fluctuates from month to month. Nine months are too few to claim a seasonality: you would need several years to see whether the pattern repeats. What we can do is reveal the trend by smoothing the fluctuations."
       - type: titre
         numero: 4
         texte: "The moving average: smoothing the series"
@@ -252,7 +252,7 @@ editions:
           - "7 · 18 · 17.67"
           - "8 · 20 · 19.00"
           - "9 · 19 · —"
-        voix_off: "The first and last months have no average: you need neighbours. For the rest, the smoothed series climbs steadily: from eleven to nineteen. The seasonal waves vanish, the trend appears."
+        voix_off: "The first and last months have no average: you need neighbours. For the rest, the smoothed series climbs steadily: from eleven to nineteen. The monthly fluctuations are dampened, the trend comes through."
         verifier:
           - {expression: "round((10 + 12 + 11) / 3, 2)", attendu: 11.0, libelle: "MA3 at month 2"}
           - {expression: "round((14 + 16 + 15) / 3, 2)", attendu: 15.0, libelle: "MA3 at month 5"}
@@ -265,8 +265,8 @@ editions:
         texte: "The two traps"
         etapes:
           - "Comparing *levels* instead of changes"
-          - "Mistaking a *seasonal wave* for a trend"
-        voix_off: "One: comparing a price in dollars to another price in dollars tells you nothing if the levels are very different. You need an index in base 100, which brings everything to the same scale. Two: seeing a summer bump as a sign of growth — ice cream sales rise every June and fall every January; that is not a trend."
+          - "Mistaking a *fluctuation* for a trend (and vice-versa)"
+        voix_off: "One: comparing a price in dollars to another price in dollars tells you nothing if the levels are very different. Use a base-100 index, which brings everything to the same scale. Two: mistaking a short-term fluctuation for a trend, or vice versa. The moving average separates the two — provided you have enough data. Seasonality is only confirmed after several complete cycles."
       - type: titre
         numero: 6
         texte: "Your turn"
@@ -292,7 +292,7 @@ editions:
           - "*Base-100 index*: bring everyone to the same starting point"
           - "*Moving average*: smooth to see the trend"
           - "*Compare changes*, not levels"
-        voix_off: "Key points. The base-100 index brings all series to the same starting point and lets you compare their paths. A moving average replaces each value with the average of its neighbours, and lets the trend appear under the seasonality. And always compare changes, not levels."
+        voix_off: "Key points. The base-100 index brings all series to the same starting point and lets you compare their paths. A moving average replaces each value with the average of its neighbours, and lets the trend show by dampening the fluctuations. And always compare changes, not levels."
       - type: fin
         texte: "Follow to learn how to read numbers."
         voix_off: "ACTU-BASICS. Enlightening through numbers."

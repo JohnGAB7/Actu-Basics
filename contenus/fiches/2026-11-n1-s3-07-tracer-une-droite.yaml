@@ -91,11 +91,20 @@ editions:
           - "A · y = 6 + x · somme *29,0*"
           - "B · y = 6 + 1,2 x · somme *8,76*"
           - "C · y = 4 + 2 x · somme *87,0*"
-        voix_off: "Trois équations, trois sommes. La droite A donne vingt-neuf. La droite B, un peu plus pentue, donne huit virgule soixante-seize : trois fois moins. La droite C, qui vise trop haut, est très mauvaise : quatre-vingt-sept. C'est donc la droite B qui gagne. Et un calcul exact, sur ces douze élèves, donnerait une droite très proche de B."
+        voix_off: "Trois équations, trois sommes. La droite A donne vingt-neuf. La droite B, un peu plus pentue, donne huit virgule soixante-seize : trois fois moins. La droite C, qui vise trop haut, est très mauvaise : quatre-vingt-sept. Parmi ces trois candidates, la droite B gagne. Mais ce n'est pas la meilleure droite possible : seulement la meilleure parmi ces trois."
         verifier:
           - {expression: "sum(((6 + 1*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 29.0, libelle: "Somme pour la droite A"}
           - {expression: "sum(((6 + 1.2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 8.76, libelle: "Somme pour la droite B"}
           - {expression: "sum(((4 + 2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 87.0, libelle: "Somme pour la droite C"}
+      - type: etapes
+        texte: "La *vraie* droite des moindres carrés"
+        etapes:
+          - "Calcul sur les douze points : *y ≈ 6,36 + 1,18 x*"
+          - "Somme des carrés : *7,78*"
+          - "La droite B *approche* cette solution ; elle ne lui est pas égale"
+        voix_off: "La solution exacte, calculée sur les douze élèves, est à peu près : y égale six virgule trente-six plus un virgule dix-huit fois x. Sa somme des carrés vaut sept virgule soixante-dix-huit, un peu moins que la droite B. La droite B n'est donc pas la solution ; elle en est une bonne approximation."
+        verifier:
+          - {expression: "round(sum(((6.36 + 1.18*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)]), 2)", attendu: 7.78, libelle: "Somme pour la droite approchée (6,36 ; 1,18)"}
       - type: titre
         numero: 5
         texte: "Prédire, mais pas n'importe comment"
@@ -212,11 +221,20 @@ editions:
           - "A · y = 6 + x · sum *29.0*"
           - "B · y = 6 + 1.2 x · sum *8.76*"
           - "C · y = 4 + 2 x · sum *87.0*"
-        voix_off: "Three equations, three sums. Line A gives twenty-nine. Line B, a bit steeper, gives eight point seven six: three times less. Line C, which aims too high, is very poor: eighty-seven. Line B wins. And an exact calculation, on these twelve pupils, would give a line very close to B."
+        voix_off: "Three equations, three sums. Line A gives twenty-nine. Line B, a bit steeper, gives eight point seven six: three times less. Line C, which aims too high, is very poor: eighty-seven. Among these three candidates, line B wins. But it is not the best line overall: only the best among these three."
         verifier:
           - {expression: "sum(((6 + 1*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 29.0, libelle: "Sum for line A"}
           - {expression: "sum(((6 + 1.2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 8.76, libelle: "Sum for line B"}
           - {expression: "sum(((4 + 2*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)])", attendu: 87.0, libelle: "Sum for line C"}
+      - type: etapes
+        texte: "The *actual* least-squares line"
+        etapes:
+          - "Computed on the twelve points: *y ≈ 6.36 + 1.18 x*"
+          - "Sum of squares: *7.78*"
+          - "Line B *approximates* this solution; it is not equal to it"
+        voix_off: "The exact solution, computed on the twelve pupils, is roughly: y equals six point three six plus one point one eight times x. Its sum of squares is seven point seven eight, a bit less than line B. Line B is therefore not the solution; it is a good approximation of it."
+        verifier:
+          - {expression: "round(sum(((6.36 + 1.18*x) - y)**2 for x, y in [(1,7),(2,8),(2,10),(3,9),(4,11),(4,13),(5,12),(6,13),(7,15),(7,14),(8,16),(9,17)]), 2)", attendu: 7.78, libelle: "Sum for the approximate line (6.36 ; 1.18)"}
       - type: titre
         numero: 5
         texte: "Predicting, but carefully"

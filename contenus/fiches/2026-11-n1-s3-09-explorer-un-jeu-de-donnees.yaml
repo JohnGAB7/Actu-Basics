@@ -109,7 +109,7 @@ editions:
           axe_x: "Mois"
           axe_y: "Naissances"
         note: "Région fictive. Chiffres inventés."
-        voix_off: "Le graphique est fait avant la moyenne. Et on voit tout de suite une forme : un creux en hiver, un pic en été, et des mois intermédiaires qui montent et descendent. La moyenne seule aurait caché cette saisonnalité."
+        voix_off: "Le graphique est fait avant la moyenne. Et on voit tout de suite une forme : un creux en début d'année, un pic en milieu d'année, et des mois intermédiaires qui montent et descendent. La moyenne seule aurait caché cette forme. Qu'elle corresponde à une vraie saisonnalité se jugera sur plusieurs années, pas sur une."
       - type: titre
         numero: 5
         texte: "Geste 4 : décrire avec quelques nombres"
@@ -168,9 +168,9 @@ editions:
         texte: "La *conclusion* tient en trois phrases"
         etapes:
           - "*Ce qu'on observe* : le pic d'été est d'environ 28 % au-dessus du creux d'hiver"
-          - "*Ce que ça peut être* : une saisonnalité connue, mais sur une seule année"
+          - "*Ce que ça peut être* : un cycle, une variation ponctuelle, ou les deux — indiscernable sur une seule année"
           - "*Ce qu'il faudrait pour aller plus loin* : plusieurs années, et une décomposition"
-        voix_off: "Un, ce qu'on observe. Dans cette région fictive, le mois de juillet enregistre environ vingt-huit pour cent de naissances de plus que février, dans les données reçues. Deux, ce que cela peut être. Les démographes documentent depuis longtemps une saisonnalité des naissances, mais notre série ne couvre qu'une année et ne permet pas de la généraliser. Trois, ce qu'il faudrait. Plusieurs années de données, et une décomposition par zone ou par âge, pour savoir si cette saisonnalité est régulière et à quoi elle tient."
+        voix_off: "Un, ce qu'on observe. Dans cette région fictive, le mois de juillet enregistre environ vingt-huit pour cent de naissances de plus que février, dans les données reçues. Deux, ce que cela peut être. On ne peut pas dire, avec une seule année, s'il s'agit d'une saisonnalité qui se répète ou d'une variation ponctuelle de cette année-là. Trois, ce qu'il faudrait. Plusieurs années de données pour tester la répétition, et une décomposition par zone ou par âge pour savoir à quoi elle tient."
       - type: titre
         numero: 9
         texte: "À vous"
@@ -267,7 +267,7 @@ editions:
           axe_x: "Month"
           axe_y: "Births"
         note: "Fictional region. Made-up numbers."
-        voix_off: "Draw the chart before the mean. And you see the shape straight away: a winter dip, a summer peak, and intermediate months that rise and fall. The mean alone would have hidden this seasonality."
+        voix_off: "Draw the chart before the mean. And you see the shape straight away: an early-year dip, a mid-year peak, and intermediate months that rise and fall. The mean alone would have hidden this shape. Whether it reflects a true seasonality will be judged on several years, not on one."
       - type: titre
         numero: 5
         texte: "Step 4: describe with a few numbers"
@@ -326,9 +326,9 @@ editions:
         texte: "The *conclusion* fits in three sentences"
         etapes:
           - "*What we observe*: the summer peak is about 28% above the winter trough"
-          - "*What it could be*: a known seasonality, but on one year only"
+          - "*What it could be*: a cycle, a one-off, or both — indistinguishable on one year"
           - "*What we would need*: several years, and a breakdown"
-        voix_off: "One, what we observe. In this fictional region, July records about twenty-eight percent more births than February, in the data we received. Two, what it could be. Demographers have long documented a seasonality of births, but our series covers one year only and cannot generalise. Three, what we would need. Several years of data, and a breakdown by area or by age, to know whether this seasonality is regular and what drives it."
+        voix_off: "One, what we observe. In this fictional region, July records about twenty-eight percent more births than February, in the data we received. Two, what it could be. We cannot say, on one year, whether this is a seasonality that repeats or a one-off variation specific to that year. Three, what we would need. Several years of data to test repetition, and a breakdown by area or by age to know what drives it."
       - type: titre
         numero: 9
         texte: "Your turn"

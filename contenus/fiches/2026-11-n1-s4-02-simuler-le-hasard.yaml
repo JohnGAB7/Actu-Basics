@@ -110,13 +110,13 @@ editions:
         voix_off: "Vingt lancers, une pièce équilibrée. Au moins quatre piles d'affilée, quelque part dans la série. Pensez-vous que ce soit rare, ou au contraire fréquent ? Donnez une fourchette. Pause."
       - type: correction
         etapes:
-          - "Par *simulation* (1 000 séries) : environ *48 %*"
-          - "Par *calcul exact* (récurrence) : *47,80 %*"
-          - "Elle arrive donc *une fois sur deux* — rien de surprenant"
-        reponse: "Environ 48 %, c'est très fréquent"
-        voix_off: "Une simulation de mille séries donne une fréquence proche de quarante-huit pour cent. Le calcul exact, par une récurrence qui compte les suites sans série de quatre, donne quarante-sept virgule quatre-vingts pour cent. Autrement dit, une série d'au moins quatre piles d'affilée arrive presque une fois sur deux. Ce qui paraît « surprenant » à l'œil est, en fait, la norme."
+          - "*Simulation* (1 000 séries) : fréquence *autour de 48 %*, à ± 3 points près d'une simulation à l'autre"
+          - "*Calcul exact* (récurrence sur 2²⁰ suites) : *47,80 %*"
+          - "La simulation *approche* la probabilité ; elle ne la *donne* pas"
+        reponse: "Simulation ≈ 48 %, probabilité exacte = 47,80 %"
+        voix_off: "Attention à ne pas confondre deux choses. La simulation produit une fréquence : si on refait l'expérience mille fois, on obtient souvent autour de quarante-huit pour cent, avec une variabilité de l'ordre de plus ou moins trois points d'une simulation à l'autre. La probabilité exacte, elle, se calcule : par une récurrence qui compte les deux puissance vingt suites binaires sans série de quatre. Résultat : quarante-sept virgule quatre-vingts pour cent exactement. La simulation approche cette probabilité ; elle ne la donne pas. Et dans les deux cas, la conclusion est la même : une série de quatre piles arrive presque une fois sur deux."
         verifier:
-          - {expression: "round((1 - 547337 / 1048576) * 100, 2)", attendu: 47.8, libelle: "Probabilité d'au moins 4 piles d'affilée en 20 lancers (547 337 sur 1 048 576 suites sans série de 4)"}
+          - {expression: "round((1 - 547337 / 1048576) * 100, 2)", attendu: 47.8, libelle: "Probabilité exacte d'au moins 4 piles d'affilée en 20 lancers (547 337 suites sans série de 4 sur 1 048 576)"}
       - type: etapes
         texte: "À retenir"
         etapes:
@@ -207,13 +207,13 @@ editions:
         voix_off: "Twenty tosses, a fair coin. At least four heads in a row, somewhere in the series. Do you think this is rare, or common? Give a range. Pause."
       - type: correction
         etapes:
-          - "By *simulation* (1,000 series): about *48%*"
-          - "By *exact calculation* (recurrence): *47.80%*"
-          - "It happens *one time in two* — not surprising at all"
-        reponse: "About 48%, very common"
-        voix_off: "A simulation of one thousand series gives a frequency close to forty-eight percent. The exact calculation, through a recurrence that counts sequences with no run of four, gives forty-seven point eighty percent. In other words, a run of at least four heads happens almost one time in two. What seems 'surprising' at a glance is, in fact, the norm."
+          - "*Simulation* (1,000 series): frequency *around 48%*, varying by about ± 3 points between runs"
+          - "*Exact calculation* (recurrence over 2²⁰ sequences): *47.80%*"
+          - "The simulation *approximates* the probability; it does *not* equal it"
+        reponse: "Simulation ≈ 48%, exact probability = 47.80%"
+        voix_off: "Do not confuse two things. The simulation produces a frequency: if you redo the experiment of one thousand series, you often land around forty-eight percent, with a variability of about plus or minus three points between simulations. The exact probability, on the other hand, is computed: through a recurrence that counts the two to the twenty binary sequences with no run of four. Result: forty-seven point eighty percent exactly. The simulation approximates this probability; it does not give it. Either way, the conclusion is the same: a run of four heads happens almost one time in two."
         verifier:
-          - {expression: "round((1 - 547337 / 1048576) * 100, 2)", attendu: 47.8, libelle: "Probability of at least 4 heads in a row over 20 tosses (547,337 of 1,048,576 sequences have no run of 4)"}
+          - {expression: "round((1 - 547337 / 1048576) * 100, 2)", attendu: 47.8, libelle: "Exact probability of at least 4 heads in a row over 20 tosses (547,337 sequences with no run of 4 out of 1,048,576)"}
       - type: etapes
         texte: "Key points"
         etapes:

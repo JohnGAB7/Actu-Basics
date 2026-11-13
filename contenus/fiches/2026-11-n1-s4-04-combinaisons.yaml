@@ -91,7 +91,14 @@ editions:
       - type: titre
         numero: 4
         texte: "Le loto : 5 numéros parmi 49"
-        voix_off: "Passons au loto imaginaire : cinq numéros différents parmi quarante-neuf, sans ordre."
+        voix_off: "Passons à un loto imaginaire, règles simplifiées."
+      - type: etapes
+        texte: "Règles de *notre loto fictif*"
+        etapes:
+          - "Le joueur choisit *5 numéros différents* entre 1 et 49"
+          - "Le tirage sort *5 numéros différents* entre 1 et 49, *sans ordre*"
+          - "*Pas de numéro complémentaire*, pas de case étoile"
+          - "*Gagner* = retrouver *exactement les 5* numéros tirés"
       - type: etapes
         texte: "*Nombre de grilles possibles*"
         etapes:
@@ -210,7 +217,14 @@ editions:
       - type: titre
         numero: 4
         texte: "Lottery: 5 out of 49"
-        voix_off: "Now an imaginary lottery: five different numbers out of forty-nine, no order."
+        voix_off: "Now an imaginary lottery, simplified rules."
+      - type: etapes
+        texte: "Rules of *our fictional lottery*"
+        etapes:
+          - "The player picks *5 different numbers* between 1 and 49"
+          - "The draw picks *5 different numbers* between 1 and 49, *no order*"
+          - "*No bonus number*, no star box"
+          - "*Winning* = matching *exactly all 5* numbers drawn"
       - type: etapes
         texte: "*Number of possible tickets*"
         etapes:

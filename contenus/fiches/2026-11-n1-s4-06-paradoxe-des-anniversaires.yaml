@@ -1,6 +1,21 @@
 # Niveau 1, vague 1, lot 4 : S4.06 « Le paradoxe des anniversaires » (EDUCATIONAL, paradoxe)
-# Variante leçon du paradoxe déjà produit en vidéo de lancement (sortie séparée, décision JG).
+# Variante leçon du paradoxe déjà produit en vidéo de lancement (2026-11-lancement-actu-basics.yaml).
 # Hypothèses classiques : 365 jours équiprobables, pas d'années bissextiles, pas de jumeaux.
+#
+# Différence avec la vidéo de lancement :
+# - La vidéo de lancement est la **présentation d'ACTU-BASICS** : elle utilise le paradoxe comme accroche
+#   pour montrer ce qu'on peut apprendre sur la chaîne. Elle dure 8 min FR / 7 min 38 EN, utilise des
+#   animations de foule et comporte un bloc final « bienvenue » et une application aux empreintes
+#   numériques.
+# - Cette fiche S4.06 est une **leçon de module** : elle s'inscrit dans le parcours S4, avec les prérequis
+#   S4.04 (combinaisons) et S4.05 (complément), et termine sur « à retenir » plutôt que sur une invite
+#   d'abonnement. Pas d'animation de foule, pas d'application empreintes numériques.
+# - Les méthodes de calcul sont les mêmes ; les chiffres sont les mêmes (50,7 %, 41 personnes pour 90 %).
+#
+# JG arbitre : publier cette nouvelle version comme S4.06 du module (cohérente avec le lot),
+# réutiliser la vidéo de lancement à la place (mais son rôle « bienvenue » est alors doublé), ou
+# publier les deux (risque de doublon pour le spectateur).
+#
 # Statut : brouillon. En attente de relecture ChatGPT et de validation JG.
 id: 2026-11-n1-s4-06-paradoxe-des-anniversaires
 type_fiche: pedagogique

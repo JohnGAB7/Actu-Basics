@@ -63,8 +63,8 @@ editions:
         etapes:
           - "On prend *tous les jours* annoncés à 70 %"
           - "On compte *combien de fois* il a plu"
-          - "Si la prévision est *bien calibrée*, environ *7 sur 10*"
-        voix_off: "Prenons tous les jours où la prévision a annoncé soixante-dix pour cent. Si l'on compte, sur ces jours seulement, il doit pleuvoir environ sept fois sur dix. Si c'est le cas, la prévision est bien calibrée. Pour un jour isolé, « soixante-dix pour cent » ne veut pas dire que l'ordinateur est à moitié certain : il veut dire que, à long terme, sept annonces identiques sur dix sont suivies de pluie."
+          - "Sur *assez* de prévisions comparables, environ *7 sur 10* si la prévision est calibrée"
+        voix_off: "Prenons tous les jours où la prévision a annoncé soixante-dix pour cent. Sur un nombre suffisant d'annonces comparables — plusieurs centaines, plusieurs milliers —, il doit pleuvoir à peu près sept fois sur dix. On parle alors de prévision calibrée. Pour un jour isolé, « soixante-dix pour cent » ne dit pas que l'ordinateur est à moitié certain, et une fréquence calculée sur une poignée de jours ne tranche rien."
       - type: courbe
         texte: "La fréquence *se stabilise* quand n grandit"
         courbe:
@@ -115,7 +115,7 @@ editions:
           - "70 %, c'est *70 fois sur 100* à long terme"
           - "Un *jour sec* ne la contredit pas"
           - "Elle est contredite si, sur *tous* les jours à 70 %, il pleut *30 %* du temps"
-        voix_off: "Le journal télévisé annonce soixante-dix pour cent de pluie. Il ne pleut pas. Est-ce que la prévision était fausse ? Non : trente pour cent des jours à soixante-dix pour cent sont des jours secs, par définition. La prévision serait fausse si, sur tous les jours à soixante-dix pour cent, il pleuvait seulement trente pour cent du temps : c'est à long terme qu'on juge la calibration."
+        voix_off: "Le journal télévisé annonce soixante-dix pour cent de pluie. Il ne pleut pas. Est-ce que la prévision était fausse ? Non : si trente pour cent des jours annoncés à soixante-dix pour cent sont secs, c'est normal. On ne juge la calibration que sur un nombre suffisant d'annonces du même ordre : un jour isolé ne la confirme ni ne la réfute."
       - type: titre
         numero: 6
         texte: "À vous"
@@ -175,8 +175,8 @@ editions:
         etapes:
           - "Take *every day* forecast at 70%"
           - "Count *how often* it rained"
-          - "If the forecast is *well calibrated*, about *7 in 10*"
-        voix_off: "Take all the days when the forecast announced seventy percent. If you count, on those days only, it should rain about seven times out of ten. If it does, the forecast is well calibrated. For one isolated day, 'seventy percent' doesn't mean the computer is half sure: it means that, in the long run, seven identical announcements out of ten are followed by rain."
+          - "Over *enough* comparable forecasts, about *7 in 10* if the forecast is calibrated"
+        voix_off: "Take all the days when the forecast announced seventy percent. Over enough comparable announcements — many hundreds, many thousands — it should rain about seven times in ten. We then call the forecast calibrated. For one isolated day, 'seventy percent' doesn't mean the computer is half sure, and a frequency computed on a handful of days settles nothing."
       - type: courbe
         texte: "The frequency *stabilises* as n grows"
         courbe:
@@ -227,7 +227,7 @@ editions:
           - "70% means *70 times in 100* in the long run"
           - "A *dry day* does not contradict it"
           - "It is contradicted only if, across *all* 70% days, rain falls *30%* of the time"
-        voix_off: "The news announces seventy percent rain. It does not rain. Was the forecast wrong? No: by definition, thirty percent of seventy-percent days are dry. The forecast would be wrong if, across all seventy-percent days, rain fell only thirty percent of the time: calibration is judged in the long run."
+        voix_off: "The news announces seventy percent rain. It does not rain. Was the forecast wrong? No: if thirty percent of seventy-percent days are dry, that is as expected. Calibration can only be judged on enough comparable announcements: a single day neither confirms nor refutes it."
       - type: titre
         numero: 6
         texte: "Your turn"
