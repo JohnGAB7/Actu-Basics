@@ -1,0 +1,76 @@
+# Vérifie à chaque PR que le générateur de site produit un site cohérent :
+# - unit tests des helpers,
+# - whitelist des URLs vidéo,
+# - relations parcours/leçons,
+# - génération complète,
+# - absence de pages orphelines, hreflang, iframe sûrs.
+#
+# Pas de rendu vidéo, pas de clé API : seulement Python stdlib + PyYAML.
+# Budget minutes Actions négligeable (~30 s par exécution sur ubuntu-latest).
+
+name: Site — tests
+
+on:
+  pull_request:
+    paths:
+      - "tools/build_lessons.py"
+      - "tools/test_build_site.py"
+      - "tools/test_browser_site.py"
+      - "contenus/parcours.yaml"
+      - "contenus/fiches/**"
+      - "docs/SITE-README.md"
+      - "docs/assets/css/main.css"
+      - "docs/assets/js/site.js"
+      - ".github/workflows/site.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/build_lessons.py"
+      - "tools/test_build_site.py"
+      - "contenus/parcours.yaml"
+      - "contenus/fiches/**"
+      - ".github/workflows/site.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-tests-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  site-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test dependencies
+        run: pip install --no-cache-dir pyyaml playwright
+      - name: Install browser engines
+        run: python -m playwright install --with-deps chromium firefox webkit
+      - name: Run site test suite
+        run: python3 tools/test_build_site.py
+      - name: Verify generated site is committed and reproducible
+        run: |
+          # Les tests ont déjà appelé le générateur. Deux builds supplémentaires
+          # doivent laisser l'arbre Git strictement propre : cela détecte les
+          # pages manquantes, les fichiers générés périmés et les dérives.
+          python3 tools/build_lessons.py
+          python3 tools/build_lessons.py
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+          echo "Build reproductible : aucun fichier suivi ou non suivi modifié."
+      - name: Cross-browser responsive, keyboard and interaction checks
+        run: python3 tools/test_browser_site.py
+      - name: Upload desktop/mobile screenshots (best effort)
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: actu-basics-browser-qa-${{ github.run_number }}
+          path: browser-artifacts/
+          if-no-files-found: warn
+          retention-days: 7

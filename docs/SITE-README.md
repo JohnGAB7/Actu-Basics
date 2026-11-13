@@ -11,33 +11,61 @@ Site pédagogique bilingue (français / anglais), servi de manière statique par
 
 ## Structure actuelle
 
+Le site est désormais **généré** depuis les données :
+
 ```
-docs/
-├── index.html                  Accueil FR
-├── en/index.html               Home EN
-├── parcours/index.html         Parcours FR
-├── en/paths/index.html         Learning paths EN
-├── bibliotheque/index.html     Bibliothèque FR
-├── en/library/index.html       Library EN
-├── a-propos/index.html         À propos FR
-├── en/about/index.html         About EN
-├── lecons/A0-01/index.html     Leçon A0.01 FR
-├── en/lessons/A0-01/index.html Lesson A0.01 EN
-└── assets/
-    ├── css/main.css
-    ├── js/site.js
-    └── img/                    Logos officiels copiés depuis assets/brand/actu-basics/
+docs/                             (toutes les pages HTML sont écrites par le générateur
+                                   SAUF index.html, a-propos/ et en/about/, qui restent manuels)
+├── index.html                    Accueil FR (manuel)
+├── en/index.html                 Home EN (manuel)
+├── parcours/index.html           Index des parcours FR (généré)
+├── parcours/<slug>/index.html    Détail d'un parcours FR (généré)
+├── en/paths/index.html           Learning paths index EN (généré)
+├── en/paths/<slug>/index.html    Learning path detail EN (généré)
+├── bibliotheque/index.html       Bibliothèque FR (générée)
+├── en/library/index.html         Library EN (générée)
+├── a-propos/index.html           À propos FR (manuel)
+├── en/about/index.html           About EN (manuel)
+├── lecons/<CODE>/index.html      Leçon FR, une par fiche valide (générée)
+├── en/lessons/<CODE>/index.html  Lesson EN, une par fiche valide (générée)
+└── assets/{css,js,img}           Ressources statiques (manuelles)
 ```
 
-## Ajouter une leçon
+Sources de vérité :
+- `contenus/fiches/*.yaml` — les fiches pédagogiques (une par leçon).
+- `contenus/parcours.yaml` — la liste des parcours et leurs modules.
 
-1. Créer la page française dans `docs/lecons/<CODE>/index.html`.
-2. Créer la version anglaise dans `docs/en/lessons/<CODE>/index.html`.
-3. Ajouter la leçon dans les deux bibliothèques seulement lorsque les deux pages sont prêtes.
-4. Vérifier que les nombres, hypothèses, formules et conclusions sont cohérents entre les langues.
-5. Tester tous les liens relatifs et l'affichage mobile.
+## Ajouter / modifier du contenu
 
-Ne pas afficher de lien vidéo, PDF, tableur ou script tant que la ressource correspondante n'existe pas et n'a pas été vérifiée.
+Le site est **généré**. On n'écrit plus de HTML à la main pour une leçon, la bibliothèque ou un parcours. Toute l'édition passe par les YAML.
+
+**Ajouter une leçon** :
+1. Créer le fichier `contenus/fiches/<id>.yaml` avec ses éditions FR et EN.
+2. Passer sa validation à `valide` (`validation.statut: valide`).
+3. Lancer `python3 tools/build_lessons.py`.
+
+La leçon apparaît automatiquement dans la bibliothèque, dans la section du bon module, et dans tous les parcours qui référencent ce module.
+
+**Ajouter une vidéo à une leçon existante** : ajouter la clé `publication:` à la racine du YAML (voir `docs/technique/architecture-site-conformance.md` pour le schéma détaillé). Puis régénérer.
+
+**Ajouter un nouveau module** (ex: `A3`) :
+1. Créer les fiches YAML du module.
+2. L'ajouter dans la liste `modules:` d'un parcours de `contenus/parcours.yaml`.
+3. Régénérer.
+
+**Ajouter un nouveau parcours** : une entrée dans `contenus/parcours.yaml`, puis régénérer.
+
+**Commandes utiles** :
+```bash
+python3 tools/build_lessons.py        # génère le site
+python3 tools/test_build_site.py      # tests du générateur (CI en fait autant)
+```
+
+## Principes
+
+- Pages orphelines automatiquement nettoyées (une fiche supprimée ou renommée → son répertoire `docs/lecons/<CODE>/` est retiré au prochain build).
+- Les fiches `format: short` (TikTok/YouTube Shorts) **ne** produisent **pas** de page web : elles existent comme média court rattaché à leur leçon mère.
+- Ne pas afficher de lien vidéo, PDF, tableur ou script tant que la ressource correspondante n'existe pas et n'a pas été vérifiée. Le générateur applique une whitelist stricte sur les URLs YouTube/TikTok et refuse de rendre une `<iframe>` pour une URL hors whitelist.
 
 ## Identité visuelle
 
@@ -65,14 +93,14 @@ Le site n'est pas considéré comme publié avant vérification de son URL publi
 Les évolutions doivent rester incrémentales et préserver l'accès direct aux pages, la navigation clavier, la lisibilité mobile et l'équivalence FR/EN.
 
 
-## V1.1 — améliorations proposées
+## V1.1 — améliorations intégrées
 
-Les changements en cours sur la branche `chatgpt/actu-basics-v1-1-social` sont soumis à revue avant toute intégration dans la branche de publication :
+Les améliorations suivantes sont déjà intégrées dans la branche du site :
 
 - liens sociaux officiels YouTube et TikTok pour les éditions française et anglaise ;
-- métadonnées de partage (Open Graph), URL canonique et liens de langue ;
+- métadonnées de partage Open Graph, URL canonique et liens de langue ;
 - navigation mobile avec fermeture par Échap, clic extérieur et retour du focus ;
 - indicateurs de focus clavier visibles ;
 - harmonisation de la devise de l'exemple A0.01 en euros dans les deux langues.
 
-Aucune page de nouvelle leçon ni aucun lien vidéo individuel n'est ajouté tant que les pages et URL de vidéos correspondantes ne sont pas confirmées.
+Les pages de leçons sont générées depuis les fiches YAML validées. Les emplacements vidéo restent facultatifs : aucun lecteur ni lien individuel n'est affiché sans URL vérifiée.

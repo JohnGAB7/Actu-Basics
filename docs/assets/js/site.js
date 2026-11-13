@@ -29,6 +29,10 @@ document.addEventListener("DOMContentLoaded",()=>{
   const filter=document.querySelector("[data-filter]");
   const cards=[...document.querySelectorAll("[data-lesson]")];
   const empty=document.querySelector("[data-empty]");
+  const sections=[...document.querySelectorAll("[data-module-section]")];
+  const isFrenchLib=document.documentElement.lang.toLowerCase().startsWith("fr");
+  const lessonWord=isFrenchLib?"leçon":"lesson";
+  const lessonsWord=isFrenchLib?"leçons":"lessons";
   const apply=()=>{
     const q=(search?.value||"").trim().toLocaleLowerCase();
     const f=filter?.value||"all";
@@ -38,6 +42,12 @@ document.addEventListener("DOMContentLoaded",()=>{
       const category=card.dataset.category||"all";
       card.hidden=!(text.includes(q)&&(f==="all"||f===category));
       if(!card.hidden)visible++;
+    });
+    sections.forEach(sec=>{
+      const kept=[...sec.querySelectorAll("[data-lesson]")].filter(c=>!c.hidden).length;
+      sec.hidden=kept===0;
+      const counter=sec.querySelector("[data-visible-count]");
+      if(counter)counter.textContent=kept+" "+(kept===1?lessonWord:lessonsWord);
     });
     if(empty)empty.hidden=visible!==0;
   };
