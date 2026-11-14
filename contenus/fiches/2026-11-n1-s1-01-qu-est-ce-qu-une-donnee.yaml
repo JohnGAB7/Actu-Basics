@@ -42,6 +42,19 @@ sources:
     date_consultation: "2026-11-03"
 
 
+donnees:
+  - titre:
+      fr: "Paris — population selon trois définitions (Insee)"
+      en: "Paris — population under three definitions (Insee)"
+    description:
+      fr: "Trois lignes, trois chiffres : commune, unité urbaine, aire d'attraction. Illustre qu'un même objet produit des données différentes selon la définition retenue."
+      en: "Three rows, three figures: commune, urban unit, metropolitan area. Shows that one object yields different data depending on which definition is used."
+    fichier: population-paris-3-definitions.csv
+    format: CSV
+    source:
+      fr: "Valeurs arrondies d'après l'Insee (Institut national de la statistique et des études économiques), recensement 2023."
+      en: "Rounded values from Insee (French national statistics office), 2023 census."
+
 # Publication : URLs YouTube officielles de la vidéo correspondante
 # (FR et EN publiées en même temps). Vues comptées côté YouTube même
 # via l'embed nocookie utilisé par le site.
