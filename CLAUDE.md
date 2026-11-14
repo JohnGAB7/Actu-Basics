@@ -14,3 +14,5 @@ Ne jamais générer une approximation du logo, le déformer ou modifier ses coul
 Ne pas fusionner automatiquement ces changements. Toute modification du moteur de rendu doit passer par une branche et une pull request.
 
 Parcours Actuariat (pilier A) : l'entreprise fictive des exemples s'appelle « JG's Holding » (demande de JG, 2026-11-11), toujours annoncée comme fictive. Les vidéos sortent en français et en anglais en même temps (décision de JG, 2026-11-11, qui remplace « anglais d'abord »).
+
+Voix off FR — sigles (décision de JG, 2026-11-14) : pour toute nouvelle fiche, un sigle (INSEE, BIT, Dares, PIB, IPC, OCDE, ONU, UE, …) est écrit en toutes lettres dans la `voix_off`, à sa première occurrence dans la vidéo : « l'Insee, l'Institut national de la statistique et des études économiques, … ». Les occurrences suivantes peuvent reprendre le sigle seul. Le texte à l'écran (`texte`, cartes, étiquettes) peut rester au sigle. Cette règle ne s'applique **pas** rétroactivement aux fiches déjà publiées. Côté EN, la règle habituelle reste : développer à la première occurrence si l'audience EN ne connaît pas le sigle (Insee, Dares, …).
