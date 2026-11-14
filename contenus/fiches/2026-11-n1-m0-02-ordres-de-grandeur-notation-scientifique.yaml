@@ -36,6 +36,19 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 sources: []
 
 
+donnees:
+  - titre:
+      fr: "Ordres de grandeur — distances, populations, durées"
+      en: "Orders of magnitude — distances, populations, durations"
+    description:
+      fr: "Table de valeurs de référence pour s'exercer à la notation scientifique et aux puissances de 10."
+      en: "Reference values to practise scientific notation and powers of 10."
+    fichier: ordres-de-grandeur.csv
+    format: CSV
+    source:
+      fr: "Valeurs usuelles arrondies pour la leçon M0-02."
+      en: "Rounded reference values for lesson M0-02."
+
 # Publication : URLs YouTube officielles de la vidéo correspondante
 # (FR et EN publiées en même temps). Vues comptées côté YouTube même
 # via l'embed nocookie utilisé par le site.
