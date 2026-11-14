@@ -101,6 +101,22 @@ Première mise en page dédiée (novembre 2026), **à ne pas considérer comme t
 
 Reste à faire avant le premier vrai cours : sommaire et chapitres YouTube (horodatage dans la description), écrans plus denses autorisés en 16:9 (un cours se regarde sur grand écran), relecture visuelle sur une leçon de 10 minutes au moins.
 
+## Voix off FR — sigles (décision de JG, 2026-11-14)
+
+La voix off française des sigles n'est pas bonne quand on laisse « INSEE », « BIT » ou « PIB » tels quels dans le `voix_off` : la synthèse les prononce lettre par lettre de façon incorrecte.
+
+Règle pour toute nouvelle fiche : à la **première occurrence** dans la vidéo, un sigle est développé en toutes lettres dans le `voix_off`, puis le sigle peut revenir seul ensuite. Le texte à l'écran (`texte`, cartes, étiquettes) peut rester au sigle, plus lisible.
+
+```yaml
+- type: texte
+  texte: "Insee, enquête Emploi"
+  voix_off: "D'après l'Insee, l'Institut national de la statistique et des études économiques, enquête Emploi…"
+```
+
+Sigles concernés : Insee, BIT, Dares, PIB, IPC, OCDE, ONU, UE, Giec, HCL, Drees, et tout acronyme non évident à l'oral. Côté EN : règle habituelle, développer à la première occurrence si l'audience EN ne connaît pas le sigle.
+
+Cette règle ne s'applique **pas** rétroactivement aux fiches déjà publiées.
+
 ## Habillage sonore (prototype)
 
 `lmec/son.py` synthétise tout, sans fichier ni service extérieur ni droits à payer :
