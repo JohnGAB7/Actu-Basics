@@ -32,6 +32,11 @@ validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la P
   valide_par: "JG"
   date: "2026-11-03"
 
+publication:
+  tiktok:
+    fr: https://www.tiktok.com/@actu_basics_fr/video/7706516596029689110
+    en: https://www.tiktok.com/@actu_basics/video/7706509640615480598
+
 editions:
   fr:
     titre: "Moyenne ou médiane ?"
