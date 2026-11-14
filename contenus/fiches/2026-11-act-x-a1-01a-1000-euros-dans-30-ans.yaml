@@ -3,6 +3,7 @@
 # Taux fictifs et constants ; nombres identiques à la leçon A1.01 et entre FR et EN.
 # Statut : validé par JG le 2026-11-11 (carte de décision), après deux relectures ChatGPT. Claude structure, ChatGPT relit, JG valide.
 id: 2026-11-act-x-a1-01a-1000-euros-dans-30-ans
+palette_video: site
 type_fiche: pedagogique
 famille: statistiques_en_pratique
 format: short
