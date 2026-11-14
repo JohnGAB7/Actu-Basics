@@ -1370,6 +1370,22 @@ def build_video_block(data: dict | None, lang: str) -> str:
     def slot_tiktok(url: str | None) -> str:
         safe = _tiktok_safe_url(url) if url else None
         if safe:
+            # Extraction de l'ID vidéo depuis une URL /video/<ID> officielle.
+            m = re.search(r'/video/(\d{6,25})', safe)
+            if m:
+                vid = m.group(1)
+                # TikTok Player v1 : lecteur officiel embarquable, sans JS tiers.
+                embed = f"https://www.tiktok.com/player/v1/{vid}?music_info=1&description=1"
+                return (
+                    f'<div class="video-frame video-frame-9x16">'
+                    f'<iframe src="{html.escape(embed)}" '
+                    f'title="TikTok" loading="lazy" '
+                    f'allow="fullscreen; encrypted-media; picture-in-picture" '
+                    f'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+                    f'</div>'
+                    f'<a class="text-link" href="{html.escape(safe)}" target="_blank" rel="noopener">{L["watch_tt"]}</a>'
+                )
+            # URL TikTok valide mais sans ID extractible : lien externe de secours.
             return (
                 f'<div class="video-frame video-frame-9x16 video-frame-link">'
                 f'<a class="video-link" href="{html.escape(safe)}" target="_blank" rel="noopener">'
