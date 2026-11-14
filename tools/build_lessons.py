@@ -915,6 +915,8 @@ def _premium_head_assets(base: str) -> str:
     première peinture, ce qui évite un flash clair en mode sombre.
     """
     return (
+        f'<link rel="icon" type="image/png" href="{base}assets/img/favicon.png">'
+        f'<link rel="apple-touch-icon" href="{base}assets/img/favicon.png">'
         f'<link rel="preconnect" href="https://fonts.googleapis.com">'
         f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
         f'<link rel="stylesheet" href="{FRAUNCES_URL}">'
@@ -1028,7 +1030,9 @@ def header_fr(depth: int, current: str = "") -> str:
     return (
         f'<header class="site-header"><div class="nav-wrap">'
         f'<a class="brand" href="{b}index.html" aria-label="ACTU-BASICS">'
-        f'<img src="{b}assets/img/logo-light.png" alt="" '
+        f'<img class="brand-logo brand-logo-light" src="{b}assets/img/logo-light.png" alt="" '
+        f'onerror="this.style.display=\'none\'">'
+        f'<img class="brand-logo brand-logo-dark" src="{b}assets/img/logo-dark.png" alt="" '
         f'onerror="this.style.display=\'none\'">'
         f'<span class="brand-name">ACTU-BASICS</span>'
         f'</a>'
@@ -1036,6 +1040,7 @@ def header_fr(depth: int, current: str = "") -> str:
         f'<a href="{b}programme/"{cls("programme")}>Programme</a>'
         f'<a href="{b}parcours/"{cls("parcours")}>Parcours</a>'
         f'<a href="{b}bibliotheque/"{cls("bibliotheque")}>Bibliothèque</a>'
+        f'<a href="{b}data/"{cls("data")}>Jeux de données</a>'
         f'<a href="{b}a-propos/"{cls("apropos")}>À propos</a>'
         f'</nav>'
         f'<div class="nav-actions">'
@@ -1052,7 +1057,9 @@ def header_en(depth: int, current: str = "") -> str:
     return (
         f'<header class="site-header"><div class="nav-wrap">'
         f'<a class="brand" href="{b}en/" aria-label="ACTU-BASICS">'
-        f'<img src="{b}assets/img/logo-light-en.png" alt="" '
+        f'<img class="brand-logo brand-logo-light" src="{b}assets/img/logo-light-en.png" alt="" '
+        f'onerror="this.style.display=\'none\'">'
+        f'<img class="brand-logo brand-logo-dark" src="{b}assets/img/logo-dark-en.png" alt="" '
         f'onerror="this.style.display=\'none\'">'
         f'<span class="brand-name">ACTU-BASICS</span>'
         f'</a>'
@@ -1060,6 +1067,7 @@ def header_en(depth: int, current: str = "") -> str:
         f'<a href="{b}en/programme/"{cls("programme")}>Programme</a>'
         f'<a href="{b}en/paths/"{cls("paths")}>Learning paths</a>'
         f'<a href="{b}en/library/"{cls("library")}>Library</a>'
+        f'<a href="{b}en/data/"{cls("data")}>Datasets</a>'
         f'<a href="{b}en/about/"{cls("about")}>About</a>'
         f'</nav>'
         f'<div class="nav-actions">'
@@ -1111,7 +1119,7 @@ def _follow_links(lang: str) -> str:
         yt_label = "YouTube · Français"
         tk_label = "TikTok · Français"
     else:
-        yt = "https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg"
+        yt = "https://www.youtube.com/@actu_basics_en"
         tk = "https://www.tiktok.com/@actu_basics"
         yt_label = "YouTube · English"
         tk_label = "TikTok · English"
