@@ -34,6 +34,19 @@ validation:
 sources: []
 
 
+donnees:
+  - titre:
+      fr: "Indice fictif 2021-2024 — démonstration d'échelle trompeuse"
+      en: "Fictional index 2021-2024 — misleading-scale demonstration"
+    description:
+      fr: "Quatre points autour de 100, qui semblent plats ou explosifs selon l'axe. Permet de reproduire les deux graphiques côte à côte."
+      en: "Four points around 100, looking flat or dramatic depending on the axis. Lets you reproduce the two charts side by side."
+    fichier: indice-fictif-echelle-trompeuse.csv
+    format: CSV
+    source:
+      fr: "Données fictives produites pour la leçon S1-09."
+      en: "Fictional data produced for lesson S1-09."
+
 # Publication : URLs YouTube officielles de la vidéo correspondante
 # (FR et EN publiées en même temps). Vues comptées côté YouTube même
 # via l'embed nocookie utilisé par le site.

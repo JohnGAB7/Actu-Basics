@@ -1,0 +1,17 @@
+categorie,objet,valeur,unite
+distance,Terre vers Lune,384400,km
+distance,Terre vers Soleil,149600000,km
+distance,Paris vers New York,5837,km
+distance,Paris vers Marseille,775,km
+distance,rayon de la Terre,6371,km
+population,commune de Paris,2133111,habitants
+population,unite urbaine de Paris,11142303,habitants
+population,aire d attraction de Paris,13300000,habitants
+population,France,67500000,habitants
+population,Union europeenne,448000000,habitants
+population,Terre,8100000000,habitants
+duree,duree d un battement de coeur,1,seconde
+duree,une journee,86400,secondes
+duree,une annee,31557600,secondes
+duree,un siecle,3155760000,secondes
+duree,un milliard de secondes,1000000000,secondes

@@ -419,7 +419,9 @@ def test_generation_integrity() -> None:
         if 'hreflang="fr"' not in txt or 'hreflang="en"' not in txt:
             F.add("gen_hreflang", f"hreflang manquant dans {path.relative_to(docs)}")
 
-    # Pas d'iframe youtube/tiktok avec URL hors whitelist.
+    # Les iframes YouTube générées utilisent le domaine nocookie ; accepter
+    # les deux domaines d'embed officiels + le player TikTok, et aucun autre
+    # hôte.
     iframe_re = re.compile(r'<iframe[^>]+src="([^"]+)"')
     allowed_iframe_prefixes = (
         "https://www.youtube-nocookie.com/embed/",

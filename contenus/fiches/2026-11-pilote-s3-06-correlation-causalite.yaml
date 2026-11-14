@@ -32,6 +32,11 @@ validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la P
   valide_par: "JG"
   date: "2026-11-03"
 
+publication:
+  tiktok:
+    fr: https://www.tiktok.com/@actu_basics_fr/video/7706515872701009174
+    en: https://www.tiktok.com/@actu_basics/video/7706508669583674627
+
 editions:
   fr:
     titre: "Les glaces font-elles se noyer ?"

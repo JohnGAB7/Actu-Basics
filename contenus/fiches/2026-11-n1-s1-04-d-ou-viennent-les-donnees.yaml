@@ -51,6 +51,19 @@ sources:
     date_consultation: "2026-11-07"
 
 
+donnees:
+  - titre:
+      fr: "Chômage en France — trois sources, trois chiffres"
+      en: "Unemployment in France — three sources, three figures"
+    description:
+      fr: "Comparaison de l'enquête Emploi Insee (sens BIT), de France Travail catégorie A et de l'inscription élargie. Montre que la source change le nombre."
+      en: "Comparison of the Insee Labour Force Survey (ILO definition), France Travail category A, and broader registration. Shows that the source changes the figure."
+    fichier: chomage-france-trois-sources.csv
+    format: CSV
+    source:
+      fr: "Ordres de grandeur arrondis d'après l'Insee et la Dares, 2e trimestre 2024."
+      en: "Rounded orders of magnitude from Insee and Dares, Q2 2024."
+
 # Publication : URLs YouTube officielles de la vidéo correspondante
 # (FR et EN publiées en même temps). Vues comptées côté YouTube même
 # via l'embed nocookie utilisé par le site.
@@ -58,6 +71,9 @@ publication:
   youtube:
     fr: https://www.youtube.com/watch?v=e2X7BCDZ1gQ
     en: https://www.youtube.com/watch?v=ThwJLgCSomc
+  tiktok:
+    fr: https://www.tiktok.com/@actu_basics_fr/video/7706713288192609558
+    en: https://www.tiktok.com/@actu_basics/video/7706744307520245014
 
 editions:
   fr:

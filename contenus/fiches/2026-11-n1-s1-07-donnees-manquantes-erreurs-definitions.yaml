@@ -36,6 +36,19 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 sources: []
 
 
+donnees:
+  - titre:
+      fr: "Plaintes pour vol de vélo — ville fictive, 2019-2024"
+      en: "Bike theft reports — fictional city, 2019-2024"
+    description:
+      fr: "Six années de plaintes, avec un commentaire par ligne. Illustre une rupture de série en 2023, due à un changement de définition (plainte en ligne)."
+      en: "Six years of reports with a per-row comment. Illustrates a 2023 series break due to a definition change (online reporting)."
+    fichier: plaintes-vols-velos-2019-2024.csv
+    format: CSV
+    source:
+      fr: "Données fictives produites pour la leçon S1-07."
+      en: "Fictional data produced for lesson S1-07."
+
 # Publication : URLs YouTube officielles de la vidéo correspondante
 # (FR et EN publiées en même temps). Vues comptées côté YouTube même
 # via l'embed nocookie utilisé par le site.
