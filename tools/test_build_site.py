@@ -419,12 +419,17 @@ def test_generation_integrity() -> None:
         if 'hreflang="fr"' not in txt or 'hreflang="en"' not in txt:
             F.add("gen_hreflang", f"hreflang manquant dans {path.relative_to(docs)}")
 
-    # Pas d'iframe youtube avec URL hors whitelist.
+    # Les iframes YouTube générées utilisent le domaine nocookie ; accepter
+    # les deux domaines d'embed officiels, et aucun autre hôte.
     iframe_re = re.compile(r'<iframe[^>]+src="([^"]+)"')
+    allowed_iframe_prefixes = (
+        "https://www.youtube-nocookie.com/embed/",
+        "https://www.youtube.com/embed/",
+    )
     for path in list(docs.rglob("lecons/**/index.html")) + list(docs.rglob("en/lessons/**/index.html")):
         for m in iframe_re.finditer(path.read_text(encoding="utf-8")):
             src = m.group(1)
-            if not src.startswith("https://www.youtube.com/embed/"):
+            if not src.startswith(allowed_iframe_prefixes):
                 F.add("gen_iframe_safety", f"iframe hors whitelist dans {path.name}: {src}")
 
 
