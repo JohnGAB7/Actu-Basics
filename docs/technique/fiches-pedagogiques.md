@@ -101,6 +101,25 @@ Première mise en page dédiée (novembre 2026), **à ne pas considérer comme t
 
 Reste à faire avant le premier vrai cours : sommaire et chapitres YouTube (horodatage dans la description), écrans plus denses autorisés en 16:9 (un cours se regarde sur grand écran), relecture visuelle sur une leçon de 10 minutes au moins.
 
+## Palette vidéo (décision de JG, 2026-11-14)
+
+Deux palettes vidéo sont nommées dans `production/charte.yaml` (section `palettes:`) :
+
+| Palette | Fond | Accent | Usage éditorial |
+|---|---|---|---|
+| `classique` (défaut) | bleu nuit `#0B1526` → `#14284A` | jaune `#F2B134` | M0 et toute la playlist S1 (S1-01 à S1-12). |
+| `site` | bleu profond `#0f2130` → `#1b3348` (ivoire `#f8f6ef` pour le texte) | or mat `#c89046`, teal `#1c7a84` pour les barres | Pilier A (Actuariat) et toutes les nouvelles fiches à partir de A0-01, puis S2+, MF1+. |
+
+Chaque fiche du pilier A déclare la palette en tête :
+
+```yaml
+palette_video: site
+```
+
+Sans ce champ, la palette par défaut `classique` s'applique. Un nom inconnu retombe sur la palette par défaut et lève une alerte QC, pour qu'un rendu ne soit jamais mystérieusement différent.
+
+La bascule tombe sur une frontière de pilier (fin de « Statistiques — les bases », début de « Actuariat »), pour se lire comme un changement de saison et non comme une incohérence. Les anciennes fiches (M0, S1-01 à S1-12) ne sont pas repassées en palette site.
+
 ## Voix off FR — sigles (décision de JG, 2026-11-14)
 
 La voix off française des sigles n'est pas bonne quand on laisse « INSEE », « BIT » ou « PIB » tels quels dans le `voix_off` : la synthèse les prononce lettre par lettre de façon incorrecte.

@@ -138,7 +138,20 @@ class Rendu(ScenesPedagogiques):
         m = {"video": charte["zones_securite_video"], "carrousel": charte["marges_carrousel"],
              "lecon": charte.get("zones_securite_lecon", charte["marges_carrousel"])}[format_]
         self.zone = (m["gauche"], m["haut"], self.largeur - m["droite"], self.hauteur - m["bas"])
-        self.c = {k: _rgb(v) for k, v in charte["couleurs"].items()}
+        # Palette : si la fiche nomme une palette existante dans charte["palettes"], l'utiliser ;
+        # sinon la palette par défaut « couleurs ». Un nom inconnu lève une alerte QC et retombe
+        # sur la palette par défaut, pour qu'un rendu ne soit jamais mystérieusement différent.
+        couleurs = dict(charte["couleurs"])
+        nom_palette = (getattr(fiche, "palette_video", "") or "").strip()
+        if nom_palette:
+            palettes = charte.get("palettes") or {}
+            if nom_palette in palettes:
+                couleurs.update(palettes[nom_palette])
+            else:
+                connues = ", ".join(sorted(palettes)) or "aucune"
+                self.alertes_charte = [f"palette_video « {nom_palette} » inconnue (palettes : {connues}) ; "
+                                       f"palette par défaut utilisée"]
+        self.c = {k: _rgb(v) for k, v in couleurs.items()}
         self.chemins_polices = {style: trouver_police(c) for style, c in charte["polices"].items()}
         self.alertes: list[str] = []  # débordements de texte etc. -> rapport QC
         self.tailles: dict[str, int] = {}  # plus petite taille de police par type de scène

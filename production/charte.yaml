@@ -59,6 +59,8 @@ logo:
     position: haut_droite
     largeur_px: 260
     marge_px: 0
+# Palette par défaut, utilisée par toutes les fiches qui ne demandent pas
+# explicitement une autre palette (champ fiche « palette_video »).
 couleurs:
   fond: "#0B1526"        # bleu nuit (haut de l'image)
   fond_bas: "#14284A"    # bas du dégradé
@@ -66,6 +68,34 @@ couleurs:
   accent: "#F2B134"      # jaune « chiffre »
   secondaire: "#8FA3BF"  # gris bleuté (sources, pied de page)
   barre: "#3E7CB1"
+
+# Palettes nommées. Une fiche peut déclarer « palette_video: <nom> » en
+# tête de son YAML pour en choisir une. Si le nom est absent ou inconnu,
+# la palette par défaut « couleurs » ci-dessus est utilisée.
+#
+# Règle éditoriale (décision de JG, 2026-11-14) :
+# - palette « classique » (celle par défaut) : pour toutes les vidéos de
+#   M0 (Fondamentaux maths) et S1 (Statistiques — les bases), jusqu'à
+#   S1-12 inclus ;
+# - palette « site » : pour toutes les nouvelles vidéos à partir du
+#   pilier A (Actuariat), donc A0-01 et au-delà, puis S2+ et MF1+.
+# La bascule tombe sur une frontière de pilier pour que la playlist
+# « Statistiques — les bases » reste cohérente de bout en bout.
+palettes:
+  classique:
+    fond: "#0B1526"
+    fond_bas: "#14284A"
+    texte: "#F5F3EE"
+    accent: "#F2B134"
+    secondaire: "#8FA3BF"
+    barre: "#3E7CB1"
+  site:
+    fond: "#0f2130"      # ink — bleu profond du site
+    fond_bas: "#1b3348"  # ink-2 — bas du dégradé
+    texte: "#f8f6ef"     # paper — ivoire éditorial
+    accent: "#c89046"    # gold mat — chiffres mis en avant
+    secondaire: "#8c98a3"  # muted-2 — sources, mentions
+    barre: "#1c7a84"     # teal-2 — barres de graphique
 # Accroches, titres de graphique et sources en capitales (police d'affichage).
 accroche_majuscules: true
 polices:

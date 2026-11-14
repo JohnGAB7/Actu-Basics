@@ -76,6 +76,7 @@ class Fiche:
     habillage_sonore: bool = False
     langues: tuple = ("fr", "en")   # langues produites ; une fiche peut être EN seule (parcours Actuariat)
     format_image_impose: str = ""   # « lecon » : déclinaison 16:9 YouTube d'une fiche verticale (--horizontal)
+    palette_video: str = ""         # nom d'une palette de charte.yaml → palettes ; vide = palette par défaut
 
     @property
     def pedagogique(self) -> bool:
@@ -203,6 +204,7 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
     habillage = brut.get("habillage_sonore", False)
     if not isinstance(habillage, bool):
         erreurs.append("habillage_sonore doit valoir true ou false")
+    palette_video = str(brut.get("palette_video") or "").strip()
     infos_pedago = pedagogie.valider_entete(brut, erreurs) if pedago else {}
     ident = _exiger(brut, "id", "fiche", erreurs)
     if ident is not None and not isinstance(ident, str):
@@ -356,4 +358,5 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
         perimetre=contexte["perimetre"], definition=contexte["definition"],
         sources=sources, donnees=donnees, editions=editions, brut=brut,
         type_fiche=type_fiche, famille=famille, format=format_, pedagogie=infos_pedago,
-        habillage_sonore=habillage is True, langues=langues_fiche)
+        habillage_sonore=habillage is True, langues=langues_fiche,
+        palette_video=palette_video)
