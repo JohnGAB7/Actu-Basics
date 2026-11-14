@@ -1119,7 +1119,7 @@ def _follow_links(lang: str) -> str:
         yt_label = "YouTube · Français"
         tk_label = "TikTok · Français"
     else:
-        yt = "https://www.youtube.com/channel/UC9AkR6xNGl9S9XHuFnbFCGg"
+        yt = "https://www.youtube.com/@actu_basics_en"
         tk = "https://www.tiktok.com/@actu_basics"
         yt_label = "YouTube · English"
         tk_label = "TikTok · English"
