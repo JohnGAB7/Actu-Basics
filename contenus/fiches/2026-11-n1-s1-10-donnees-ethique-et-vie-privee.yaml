@@ -43,6 +43,15 @@ sources:
     url: "https://dataprivacylab.org/projects/identifiability/paper1.pdf"
     date_consultation: "2026-11-08"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=-KQhrO1FL1Y
+    en: https://www.youtube.com/watch?v=S1m0Ri2W9HQ
+
 editions:
   fr:
     titre: "Des données « anonymes » peuvent-elles vous trahir ?"

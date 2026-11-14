@@ -539,6 +539,28 @@ def test_premium_foundations() -> None:
     if not embed or "youtube-nocookie.com/embed/" not in embed:
         F.add(name, "embed YouTube n'utilise pas youtube-nocookie.com")
 
+    # 18 leçons doivent désormais porter un iframe YouTube réel (nocookie).
+    expected = [
+        ("M0-01", "IPIHc2fXbP0", "JhF6tp6veYM"),
+        ("M0-02", "Uojf5Th5ZMk", "HS4VXdl--mk"),
+        ("M0-03", "ImeL7bQ8cP4", "E1M888X_W0M"),
+        ("S1-08", "WJYMf_XOrUE", "cU5bH5BV7d4"),
+        ("A0-01", "0Irj4FVdga0", "GEJvRrnJLk8"),
+        ("A1-01", "4wBBpu-km1o", "uJ_eQqqQB6s"),
+        ("A2-01", "cVLIwfH2U9s", "zVX2Oy68W5Y"),
+    ]
+    for code, fr_id, en_id in expected:
+        fr_page = ROOT / "docs" / "lecons" / code / "index.html"
+        en_page = ROOT / "docs" / "en" / "lessons" / code / "index.html"
+        if fr_page.exists():
+            t = fr_page.read_text(encoding="utf-8")
+            if f"youtube-nocookie.com/embed/{fr_id}" not in t:
+                F.add(name, f"{fr_page.relative_to(ROOT)} : iframe nocookie FR {fr_id} manquant")
+        if en_page.exists():
+            t = en_page.read_text(encoding="utf-8")
+            if f"youtube-nocookie.com/embed/{en_id}" not in t:
+                F.add(name, f"{en_page.relative_to(ROOT)} : iframe nocookie EN {en_id} manquant")
+
     # 8) Logo dark en mode sombre, et « Jeux de données / Datasets » dans la
     #    navigation horizontale (pas uniquement au footer).
     for pg in sample_pages:

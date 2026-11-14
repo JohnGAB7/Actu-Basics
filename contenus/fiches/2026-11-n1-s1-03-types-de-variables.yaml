@@ -30,6 +30,15 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
   valide_par: "JG"
   date: "2026-11-08"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=lW-e_0R6gag
+    en: https://www.youtube.com/watch?v=5FrA8g0rOD4
+
 editions:
   fr:
     titre: "Peut-on faire la moyenne de codes postaux ?"

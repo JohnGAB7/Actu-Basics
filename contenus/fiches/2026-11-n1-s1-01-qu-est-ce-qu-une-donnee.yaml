@@ -41,6 +41,15 @@ sources:
     url: "https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001"
     date_consultation: "2026-11-03"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=B9zfRifkKdY
+    en: https://www.youtube.com/watch?v=YA8A9IkSQDo
+
 editions:
   fr:
     titre: "Combien d'habitants à Paris ? Qu'est-ce qu'une donnée"

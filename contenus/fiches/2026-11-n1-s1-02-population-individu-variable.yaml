@@ -30,6 +30,15 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
   valide_par: "JG"
   date: "2026-11-08"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=BL8kCIliVIE
+    en: https://www.youtube.com/watch?v=557HMUKsEfw
+
 editions:
   fr:
     titre: "De qui parle ce chiffre ? Population, individu, variable"

@@ -51,6 +51,15 @@ donnees:
       fr: "Données fictives produites pour la leçon M0-03."
       en: "Fictional data produced for lesson M0-03."
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=ImeL7bQ8cP4
+    en: https://www.youtube.com/watch?v=E1M888X_W0M
+
 editions:
   fr:
     titre: "Que dit vraiment un point sur un graphique ?"

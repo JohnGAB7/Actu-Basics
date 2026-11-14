@@ -35,6 +35,15 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=Uojf5Th5ZMk
+    en: https://www.youtube.com/watch?v=HS4VXdl--mk
+
 editions:
   fr:
     titre: "Un milliard de secondes, c'est combien ? Ordres de grandeur"

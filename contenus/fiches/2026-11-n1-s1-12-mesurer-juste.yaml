@@ -45,6 +45,15 @@ sources:
     url: "https://dash.harvard.edu/handle/1/12016836"
     date_consultation: "2026-11-08"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=dI48OHQy01k
+    en: https://www.youtube.com/watch?v=JfWfD1VV0Jg
+
 editions:
   fr:
     titre: "Un million de mesures, et toujours faux ? Bruit et biais"

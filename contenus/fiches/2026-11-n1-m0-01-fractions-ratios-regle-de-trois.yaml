@@ -37,6 +37,15 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=IPIHc2fXbP0
+    en: https://www.youtube.com/watch?v=JhF6tp6veYM
+
 editions:
   fr:
     titre: "3 sur 12, c'est combien de pour cent ? Fractions et règle de trois"

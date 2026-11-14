@@ -41,6 +41,15 @@ validation:
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=cVLIwfH2U9s
+    en: https://www.youtube.com/watch?v=zVX2Oy68W5Y
+
 editions:
   fr:
     titre: "Pourquoi le coût moyen des sinistres est-il plus prévisible avec 10 000 contrats ?"

@@ -35,6 +35,15 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=uMwWWF9PVDo
+    en: https://www.youtube.com/watch?v=ejhRDdOd-P0
+
 editions:
   fr:
     titre: "+51 % de plaintes pour vol de vélo : les vols ont-ils augmenté ?"

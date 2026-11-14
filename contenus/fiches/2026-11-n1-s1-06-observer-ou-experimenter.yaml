@@ -37,6 +37,15 @@ validation:   # Validation de JG, carte de décision du 2026-11-08 (lot 1 valid�
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=cRBkSKd_7po
+    en: https://www.youtube.com/watch?v=4lJyXPXYLdU
+
 editions:
   fr:
     titre: "Pourquoi tire-t-on au sort dans les essais de médicaments ?"

@@ -36,6 +36,15 @@ validation:
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=Ir8OWV7QS-g
+    en: https://www.youtube.com/watch?v=eQatwLEzvQ4
+
 editions:
   fr:
     titre: "« Une chance sur dix », ça veut dire quoi ?"

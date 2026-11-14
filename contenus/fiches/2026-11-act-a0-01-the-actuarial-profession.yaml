@@ -39,6 +39,15 @@ validation:
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=0Irj4FVdga0
+    en: https://www.youtube.com/watch?v=GEJvRrnJLk8
+
 editions:
   fr:
     titre: "Actuaire : comment les maths aident à prendre des décisions face au risque"
