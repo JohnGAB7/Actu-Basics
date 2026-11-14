@@ -1,5 +1,6 @@
 # Rendus : trop lourds pour Git (artefacts GitHub Actions ou Drive)
 sortie/
+sortie-*/
 # Secrets : jamais dans Git
 .env
 *.env
