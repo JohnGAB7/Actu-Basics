@@ -38,6 +38,15 @@ validation:
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=4wBBpu-km1o
+    en: https://www.youtube.com/watch?v=uJ_eQqqQB6s
+
 editions:
   fr:
     titre: "1 000 € aujourd'hui ou dans 30 ans : est-ce vraiment la même somme ?"

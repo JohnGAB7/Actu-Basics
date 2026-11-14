@@ -50,6 +50,15 @@ sources:
     url: "https://www.insee.fr/fr/statistiques/4805248"
     date_consultation: "2026-11-07"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=e2X7BCDZ1gQ
+    en: https://www.youtube.com/watch?v=ThwJLgCSomc
+
 editions:
   fr:
     titre: "Combien de chômeurs ? D'où viennent les données"

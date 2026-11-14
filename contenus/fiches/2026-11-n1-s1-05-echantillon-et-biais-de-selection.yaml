@@ -49,6 +49,15 @@ sources:
     url: "https://www.gwern.net/doc/statistics/bias/2017-lohr.pdf"
     date_consultation: "2026-11-03"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=OvDD2yIfiKo
+    en: https://www.youtube.com/watch?v=emL8KeMX8Mg
+
 editions:
   fr:
     titre: "2,4 millions de réponses, et faux : le biais de sélection"

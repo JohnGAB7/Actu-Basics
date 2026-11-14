@@ -32,6 +32,15 @@ validation:   # Validation éditoriale de JG, commentaire du 2026-11-03 sur la P
   valide_par: "JG"
   date: "2026-11-03"
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=WJYMf_XOrUE
+    en: https://www.youtube.com/watch?v=cU5bH5BV7d4
+
 editions:
   fr:
     titre: "1 % ou 50 % ? Pourcentages et points"

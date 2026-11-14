@@ -33,6 +33,15 @@ validation:
 
 sources: []
 
+
+# Publication : URLs YouTube officielles de la vidéo correspondante
+# (FR et EN publiées en même temps). Vues comptées côté YouTube même
+# via l'embed nocookie utilisé par le site.
+publication:
+  youtube:
+    fr: https://www.youtube.com/watch?v=N4m6nDyAXgE
+    en: https://www.youtube.com/watch?v=9dH_hy4ogOo
+
 editions:
   fr:
     titre: "Le même chiffre, catastrophe ou détail ? Lire un graphique"
