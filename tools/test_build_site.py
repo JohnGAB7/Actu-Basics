@@ -349,6 +349,10 @@ def test_relative_links_resolve() -> None:
             else:
                 target_base = page.parent
                 rel = href
+            # Query string de cache-busting (?v=...) ou ancre (#...) : on les ignore pour la résolution de fichier.
+            rel = rel.split("?", 1)[0].split("#", 1)[0]
+            if not rel:
+                continue
             # Résoudre comme un chemin : si ça finit par /, cherche index.html.
             resolved = (target_base / rel).resolve()
             if resolved.is_dir() or rel.endswith("/"):
