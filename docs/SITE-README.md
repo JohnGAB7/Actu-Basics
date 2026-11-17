@@ -45,13 +45,13 @@ Les pages utilisent les logos officiels issus de `assets/brand/actu-basics/`. Ne
 
 ## Mise en ligne (action de JG)
 
-1. Ouvrir [Settings → Pages](https://github.com/JohnGAB7/le-monde-en-chiffres/settings/pages).
+1. Ouvrir [Settings → Pages](https://github.com/JohnGAB7/Actu-Basics/settings/pages).
 2. Choisir « Deploy from a branch ».
 3. Choisir la branche `main` et le dossier `/docs`.
 4. Enregistrer.
 
 Après fusion des changements et activation de Pages, l'adresse attendue est :
-`https://johngab7.github.io/le-monde-en-chiffres/`
+`https://johngab7.github.io/Actu-Basics/` (ancienne adresse `https://johngab7.github.io/le-monde-en-chiffres/` : plus servie après le renommage du dépôt, aucune redirection automatique)
 
 Le site n'est pas considéré comme publié avant vérification de son URL publique.
 

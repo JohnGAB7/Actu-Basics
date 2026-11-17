@@ -23,7 +23,7 @@ Le propriétaire du projet conserve la décision finale et valide les publicatio
 - surveille le budget et les risques.
 
 ## Source de vérité
-Le dépôt GitHub JohnGAB7/le-monde-en-chiffres est l'espace de référence pour les documents, décisions, tâches et livrables. La branche principale est main.
+Le dépôt GitHub JohnGAB7/Actu-Basics (anciennement le-monde-en-chiffres) est l'espace de référence pour les documents, décisions, tâches et livrables. La branche principale est main.
 
 ## Workflow de travail
 1. Créer une tâche avec un identifiant LMEC-AAAA-NNN.

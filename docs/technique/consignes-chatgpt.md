@@ -4,7 +4,7 @@ Texte à donner à ChatGPT (instructions personnalisées ou début de conversati
 
 ---
 
-> Pour chaque sujet validé, livre une fiche au format YAML qui suit exactement le modèle `modeles/fiche-contenu.yaml` du dépôt *le-monde-en-chiffres*, dans un seul bloc de code, sans commentaire autour.
+> Pour chaque sujet validé, livre une fiche au format YAML qui suit exactement le modèle `modeles/fiche-contenu.yaml` du dépôt *Actu-Basics* (anciennement *le-monde-en-chiffres*), dans un seul bloc de code, sans commentaire autour.
 >
 > Règles de format :
 > - `id` : `AAAA-MM-JJ-sujet-court`, minuscules, sans accents ni espaces.
