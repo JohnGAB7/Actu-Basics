@@ -1,21 +1,25 @@
 # Synthèse pour décision {#synthese}
 
 <div class="encadre statut" markdown="1">
-**Statut du document.** Version {{VERSION}}, construite le {{DATE}}. Proposition structurée par Claude (direction technique et production) en réponse au ticket n° 10. Elle intègre le cadrage de ChatGPT dans le ticket et les corrections de sa première revue de la version 1 (voir l'historique en fin de synthèse). La revue de ChatGPT se poursuit, puis JG valide. Rien n'est publié, rien n'est fusionné dans `main`. Les décisions à prendre sont rassemblées en section 10.
+**Statut du document.** Version {{VERSION}}, construite le {{DATE}}. La version 1.12 a été validée par JG le 2/11/2026 (PR #12). La version 1.13 répond à sa demande du 21/11/2026 : des vidéos longues, dont chacune aborde plusieurs notions cohérentes. Proposée par Claude, validée par JG le 22/11/2026 (PR #49) ; les titres des épisodes restent des titres de travail, relus par ChatGPT avant production. Rien n'est encore publié.
 </div>
 
 ## Ce que la chaîne enseignera
 
-ACTU-BASICS apprend à **raisonner avec des chiffres**. Le but n'est pas d'empiler des notions. Chaque vidéo part d'une question concrète, construit l'intuition, fait le raisonnement à l'écran, puis formalise. Elle se termine par une vérification que le spectateur peut faire seul. Le programme repose sur trois piliers et une série de soutien :
+ACTU-BASICS apprend à **raisonner avec des chiffres**. Le but n'est pas d'empiler des notions. Chaque vidéo part d'une question concrète, construit l'intuition, fait le raisonnement à l'écran, puis formalise. Elle se termine par une vérification que le spectateur peut faire seul. Le programme repose sur trois piliers et une série de soutien.
 
-| Pilier | Ce qu'il apporte | Vidéos | Durée cumulée |
+<div class="encadre" markdown="1">
+**Ce qui change en version 1.13.** Les {{NB_VIDEOS}} entrées du catalogue ne sont plus des vidéos séparées : ce sont les **chapitres** de **{{NB_EPISODES}} épisodes longs** (durée médiane {{EP_MEDIANE}} min, de {{EP_MIN}} à {{EP_MAX}} min). Un épisode regroupe les notions qui répondent à une même question, dans l'ordre des prérequis. YouTube devient le lieu où l'on se forme de façon complète. Les Shorts et TikTok ne servent plus qu'à renvoyer vers les épisodes : il n'y a plus de vidéo courte qui définit seule une notion. Chaque épisode renvoie aussi à son bloc de la plateforme Programme-B. Dans la suite du document, « vidéo » désigne une entrée du catalogue, c'est-à-dire un chapitre d'épisode.
+</div>
+
+| Pilier | Ce qu'il apporte | Chapitres | Durée cumulée |
 |---|---|---|---|
 | **1. Statistiques** | Un cursus complet, du débutant absolu aux méthodes avancées : 4 niveaux, 18 modules | {{NB_STATS}} | ≈ {{H_S}} h |
 | **2. Économétrie** | Une progression autonome, centrée sur la question « quand une régression mesure-t-elle un effet causal ? » | {{NB_ECO}} | ≈ {{H_E}} h |
 | **3. Quotidien et actualité** | Une sous-série intemporelle (déjà {{NB_QUOTIDIEN}} sujets) et une sous-série d'actualité, avec une méthode de sélection et de vérification, sans chiffres figés | {{NB_QUOTIDIEN}} + flux | ≈ {{H_Q}} h |
-| *Boîte à outils maths* | Des rappels courts (fractions, logarithmes, dérivées, matrices), à voir juste avant la vidéo qui en a besoin | {{NB_MATHS}} | ≈ {{H_M}} h |
+| *Boîte à outils maths* | Des rappels (fractions, logarithmes, dérivées, matrices) et, pour le niveau expert, de vrais cours : Taylor, intégrales, optimisation, algèbre linéaire de la régression, démonstrations, calcul numérique | {{NB_MATHS}} | ≈ {{H_M}} h |
 
-Au total, **{{NB_VIDEOS}} vidéos réparties en {{NB_MODULES}} modules, soit environ {{HEURES_TOTAL}} heures de contenu**. Chaque vidéo a une **entrée de syllabus** : question centrale, prérequis, objectifs observables, maîtrise visée, intuition, exemple, niveaux mathématiques, idées fausses à prévenir, exercice, durée et format.
+Au total, **{{NB_VIDEOS}} chapitres réunis en {{NB_EPISODES}} épisodes ({{NB_MODULES}} modules), soit environ {{HEURES_TOTAL}} heures de contenu**. C'est une estimation haute, car un épisode n'a qu'une ouverture et qu'une fin. Chaque chapitre a une **entrée de syllabus** : question centrale, prérequis, objectifs observables, maîtrise visée, intuition, exemple, niveaux mathématiques, idées fausses à prévenir, exercice, durée et format.
 
 <div class="encadre" markdown="1">
 **Entrée de syllabus ou fiche de conception.** Une entrée de syllabus dit *quoi* enseigner et *dans quel ordre*. Elle ne remplace pas la **fiche de conception** (section 6), qui détaille le déroulé, les formules expliquées, les calculs vérifiés, les sources précises, la correction et l'adaptation anglaise. Aujourd'hui, **une seule vidéo a une fiche complète** : le paradoxe des anniversaires (S4.06, vidéo de lancement). Les fiches de conception seront écrites vague par vague, juste avant la production.
@@ -32,6 +36,7 @@ L'économétrie démarre au niveau 2, avec les données économiques et la notio
 
 ## Comment les vidéos seront sélectionnées et produites
 
+- **Épisodes longs** : chaque épisode est produit en entier, en 16:9, avec ses chapitres YouTube horodatés. Un contrôle vérifie que chaque entrée appartient à un seul épisode, qu'aucun chapitre du cursus ne demande une notion vue plus loin, et que la durée reste entre 10 et 50 min.
 - **Tronc commun** : on produit dans l'ordre des prérequis, par vagues thématiques. Une vague ne commence que lorsque ses prérequis sont produits.
 - **Quotidien** : chaque sujet est relié à une notion du cursus. Il est rédigé pour être compris sans l'avoir suivi.
 - **Actualité** : une grille de sélection notée sur 18 points et un protocole de vérification. Les chiffres sont revérifiés le jour de la préparation et datés à l'écran. Ces vidéos seront produites au plus près du lancement.
@@ -41,10 +46,10 @@ L'économétrie démarre au niveau 2, avec les données économiques et la notio
 
 Deux vagues, sans publication avant que le stock soit suffisant :
 
-- **Vague 1 · « Lire un chiffre sans se faire avoir »** : {{NB_V1}} vidéos, environ {{H_V1}} h. Niveau 1 complet, premières notions de probabilités, premiers sujets du quotidien et d'économie.
-- **Vague 2 · « Le hasard apprivoisé »** : {{NB_V2}} vidéos, environ {{H_V2}} h. Niveau 2 complet, avec les rappels mathématiques nécessaires.
+- **Vague 1 · « Lire un chiffre sans se faire avoir »** : {{NB_V1}} épisodes ({{NB_V1_CHAP}} chapitres), environ {{H_V1}} h. Niveau 1 complet, calcul de base et quatre épisodes du quotidien.
+- **Vague 2 · « Le hasard apprivoisé »** : {{NB_V2}} épisodes ({{NB_V2_CHAP}} chapitres), environ {{H_V2}} h. Niveau 2 complet, avec les rappels mathématiques nécessaires, deux épisodes du quotidien et le premier épisode d'économétrie.
 
-Elles commencent par une **phase pilote interne de 5 vidéos**. Elle sert à mesurer le temps réel de travail humain et à tester la compréhension auprès de spectateurs débutants. Ce n'est pas une mini-série à publier dans cet ordre.
+Elles commencent par une **phase pilote interne de 2 épisodes** (section 7.2). Elle sert à mesurer le temps réel de travail humain sur un format long et à tester la compréhension auprès de spectateurs débutants.
 
 ## Ce que JG a décidé
 
@@ -55,7 +60,7 @@ Le 2/11/2026, JG a retenu **toutes les recommandations** de la section 10.2 (arb
 3. les vidéos d'actualité sont produites dans les semaines qui précèdent le lancement ;
 4. les leçons de plus de 10 minutes passent en 16:9, après un essai.
 
-**Validation** : JG a validé le programme le 2/11/2026 (PR #12). La version 1.12 traite ensuite les points laissés en suspens (section 10.13).
+**Validation** : JG a validé le programme le 2/11/2026 (PR #12). La version 1.12 traite ensuite les points laissés en suspens (section 10.13). Le 21/11/2026, JG a demandé des vidéos longues qui regroupent les notions (section 10.14). La version 1.13 le met en œuvre et attend sa validation.
 
 ## Historique des versions
 
@@ -74,6 +79,7 @@ Le 2/11/2026, JG a retenu **toutes les recommandations** de la section 10.2 (arb
 | 1.10 | Arbitrages rendus par JG : toutes les recommandations A1 à A11 retenues ; sujets non statistiques pertinents intégrés (nouveau module S19, 8 vidéos : réseaux profonds et convolutifs, modèles de langue, optimisation, modèles génératifs, mise en production, complexité, droit et éthique ; 8 calculs vérifiés de plus) ; feu vert pour les fiches des sujets sensibles |
 | 1.11 | Dernière revue de ChatGPT (section 10.12) : provenance alignée en section 6.1 ; Anderson-Rubin robuste à l'hétéroscédasticité en E5.03 ; tokens, embeddings et attention précisés en S19.03 ; conditions de l'incompatibilité des critères d'équité en S19.08 |
 | 1.12 | Après la validation de JG (PR #12) : corrections détaillées des 8 derniers exercices chiffrés (134 calculs vérifiés), première relecture des titres anglais, références de la liste fermée vérifiées, section 5 d'`ARCHITECTURE_EDITORIALE.md` mise à jour (arbitrage A2) |
+| 1.13 | Demande de JG du 21/11/2026 : les 320 entrées deviennent les chapitres de 89 épisodes longs (`catalogue/episodes.txt`, contrôle `episodes.py`) ; formats et structure d'épisode réécrits (sections 2.4, 2.5 et 2.9) ; Shorts réduits au rôle de bandes-annonces ; vagues et pilote recomptés en épisodes (section 7) ; renvoi de chaque épisode vers la plateforme Programme-B et état des sources par bloc ; le 22/11 : accueil, clôture et logo mobile (2.5), règle de complétude, site autonome, et 13 chapitres ajoutés pour le niveau expert, soit 93 épisodes (section 10.16) |
 
 ## Sommaire
 

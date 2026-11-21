@@ -37,8 +37,11 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.12 — validé par JG le 2/11/2026"
-NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf"
+VERSION = "1.13 — validée par JG le 22/11/2026"
+NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf"
+
+# Épisode long qui contient chaque entrée (rempli dans main à partir de catalogue/episodes.txt).
+EPISODE_DE: dict[str, str] = {}
 
 FICHIERS = [
     "boite-a-outils.txt",
@@ -226,6 +229,9 @@ VERIFICATIONS = [
     ("S9.01", "4.2 - 0.8 * 3", 1.8, "ordonnée à l'origine"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
+    ("S16.05", "7 / 8 * 1 - 1 / 8 * 7", 0, "espérance du gain, mise doublée, 3 parties au plus"),
+    ("S18.08", "(comb(10, 9) + comb(10, 10)) / 2 ** 10", 0.0107, "risque de première espèce, P(X ≥ 9) sous p = 0,5"),
+    ("S18.08", "comb(10, 9) * 0.8 ** 9 * 0.2 + 0.8 ** 10", 0.3758, "puissance, P(X ≥ 9) sous p = 0,8"),
 ]
 # Tolérances explicites quand le texte arrondit volontairement (« environ »).
 TOLERANCES = {("Q6.03", 4200): 50, ("Q1.02", 14): 0.5, ("S8.09", 64): 0.5}
@@ -411,21 +417,6 @@ def verifier_calculs(unites: dict[str, Unite]) -> tuple[list[str], list[tuple]]:
     return erreurs, lignes
 
 
-def ordre_production(unites: dict[str, Unite]) -> list[str]:
-    """Tri topologique stable : respecte les prérequis, puis l'ordre de lecture."""
-    restants = dict(unites)
-    fait: list[str] = []
-    vus: set[str] = set()
-    while restants:
-        prets = [u for u in restants.values() if all(p in vus or p not in unites for p in u.prerequis)]
-        prets.sort(key=lambda u: u.rang)
-        u = prets[0]
-        fait.append(u.id)
-        vus.add(u.id)
-        del restants[u.id]
-    return fait
-
-
 # ---------------------------------------------------------------- rendu HTML
 
 def e(t: str) -> str:
@@ -494,6 +485,8 @@ def carte_unite(u: Unite, unites: dict[str, Unite], successeurs: dict[str, list[
         f'<span class="chip">{e(FORMES[c["forme"]])}</span>',
         f'<span class="chip">{minutes(*u.duree)}</span>',
     ]
+    if u.id in EPISODE_DE:
+        chips.insert(0, f'<a class="chip etat-concue" href="#{e(EPISODE_DE[u.id])}">Épisode {e(EPISODE_DE[u.id])}</a>')
     if c.get("maths"):
         comp, app, demo = niveaux_maths(u)
         if comp == app == demo:
@@ -551,9 +544,9 @@ def bloc_module(m: Module, unites: dict[str, Unite], successeurs) -> str:
         f'<section class="module" id="{e(m.id)}"><div class="module-entete"><div class="module-tete">'
         f'<span class="mid">{e(m.id)}</span><div><h3>{e(c["titre"])}</h3><p class="en">EN · {e(c["titre_en"])}</p></div></div>'
         f'<p class="meta">Niveau {m.niveau} · {e(niv)} · Prérequis : {liens(pre, unites) if pre else "aucun"} · Mathématiques : {e(c["maths"])} · '
-        f'{len(m.unites)} vidéos · environ {round(total)} min</p>'
+        f'{len(m.unites)} chapitres · environ {round(total)} min</p>'
         f'<p class="but">{e(c["but"])}</p>'
-        f'<table class="sommaire"><thead><tr><th>N°</th><th>Vidéo</th><th>Format</th><th>Durée</th></tr></thead><tbody>{sommaire}</tbody></table></div>'
+        f'<table class="sommaire"><thead><tr><th>N°</th><th>Chapitre</th><th>Format</th><th>Durée</th></tr></thead><tbody>{sommaire}</tbody></table></div>'
         + "".join(carte_unite(u, unites, successeurs, m.niveau) for u in m.unites)
         + "</section>"
     )
@@ -688,41 +681,73 @@ def tableau_niveaux(modules, unites) -> str:
             + "".join(lignes) + "</tbody></table>")
 
 
-def premier_catalogue(unites: dict[str, Unite], ordre: list[str]) -> str:
-    """Les vidéos des vagues 1 et 2, dans l'ordre de production (voir section 7)."""
-    vagues = vagues_production(unites, ordre)
+# Révision 1.13 : les vagues se comptent en épisodes longs (voir sections/07-feuille-de-route.md).
+VAGUE_1_EPISODES = ["EP-M01", "EP-S1A", "EP-Q3", "EP-S1B", "EP-S1C", "EP-Q2", "EP-S2A", "EP-S2B", "EP-Q1",
+                    "EP-S3A", "EP-S3B", "EP-Q4A", "EP-S3C"]
+VAGUE_2_EPISODES = ["EP-M02", "EP-S4A", "EP-S4B", "EP-Q6", "EP-S4C", "EP-S5A", "EP-M03", "EP-S5B",
+                    "EP-Q4B", "EP-S5C", "EP-S5D", "EP-E1"]
+
+
+def vagues_episodes(episodes, unites):
+    """Les deux premières vagues, en épisodes, avec contrôle des prérequis du cursus."""
+    par_id = {ep.id: ep for ep in episodes}
+    vues: set[str] = set()
+    vagues = []
+    for nom, ids in (("Vague 1 · « Lire un chiffre sans se faire avoir »", VAGUE_1_EPISODES),
+                     ("Vague 2 · « Le hasard apprivoisé »", VAGUE_2_EPISODES)):
+        for i in ids:
+            if i not in par_id:
+                raise SystemExit(f"{nom} : épisode inconnu {i}")
+            for uid in par_id[i].contient:
+                for p in unites[uid].prerequis:
+                    if unites[uid].pilier in "SE" and p in unites and unites[p].pilier in "SE" and p not in vues:
+                        raise SystemExit(f"{nom} : {i} demande {p}, qui n'est pas produit avant")
+                vues.add(uid)
+        vagues.append((nom, [par_id[i] for i in ids]))
+    return vagues
+
+
+def duree_episode(ep, unites) -> tuple[float, float]:
+    us = [unites[x] for x in ep.contient]
+    return sum(u.duree[0] for u in us), sum(u.duree[1] for u in us)
+
+
+def catalogue_episodes(episodes, unites) -> str:
     out = []
-    for nom, ids in vagues:
-        mins = sum(sum(unites[i].duree) / 2 for i in ids)
-        rows = "".join(
-            f"<tr><td>{k}</td><td><a href='#{i}'>{i}</a></td><td>{e(unites[i].champs['titre'])}</td><td>{e(PILIERS[unites[i].pilier])}</td><td>{FORMATS[unites[i].champs['format']][0]}</td><td class='num'>{minutes(*unites[i].duree)}</td></tr>"
-            for k, i in enumerate(ids, 1)
-        )
-        out.append(f"<h3>{e(nom)} — {len(ids)} vidéos, environ {mins / 60:.1f} h</h3>".replace(".", ",")
-                   + f"<table class='donnees serre'><thead><tr><th>#</th><th>N°</th><th>Vidéo</th><th>Pilier</th><th>Format</th><th>Durée</th></tr></thead><tbody>{rows}</tbody></table>")
+    partie = None
+    lignes: list[str] = []
+
+    def fermer() -> None:
+        if lignes:
+            out.append("<table class='donnees serre'><thead><tr><th>Épisode</th><th>Titre</th><th>Chapitres</th><th>Durée</th><th>Programme-B</th></tr></thead><tbody>"
+                       + "".join(lignes) + "</tbody></table>")
+            lignes.clear()
+
+    for ep in episodes:
+        if ep.partie != partie:
+            fermer()
+            partie = ep.partie
+            out.append(f"<h3>{e(partie)}</h3>")
+        a, b = duree_episode(ep, unites)
+        chap = ", ".join(f"<a href='#{x}'>{x}</a>" for x in ep.contient)
+        pb = ", ".join(x.strip() for x in ep.champs["programme_b"].split("|"))
+        lignes.append(f"<tr id='{e(ep.id)}'><td>{e(ep.id)}</td><td>{e(ep.champs['titre'])}<br><span class='en'>EN · {e(ep.champs['titre_en'])}</span></td>"
+                      f"<td>{chap}</td><td class='num'>{minutes(a, b)}</td><td>{e(pb)}</td></tr>")
+    fermer()
     return "".join(out)
 
 
-# Composition proposée des deux premières vagues (voir sections/07-feuille-de-route.md).
-VAGUE_1_MODULES = {"S1", "S2", "S3"}
-VAGUE_1_EXTRA = ["M0.01", "M0.02", "M0.03", "S4.01", "S4.02", "S4.05", "E1.01", "E1.02",
-                 "Q1.01", "Q1.02", "Q1.03", "Q2.01", "Q2.04", "Q3.01", "Q3.02", "Q3.03", "Q4.02", "Q4.04"]
-VAGUE_2_MODULES = {"S4", "S5"}
-VAGUE_2_EXTRA = ["M1.01", "M1.02", "M1.03", "M1.04", "M1.05", "M2.01", "M2.02", "E1.03", "E1.04",
-                 "Q1.05", "Q2.02", "Q2.03", "Q2.05", "Q3.04", "Q4.01", "Q4.03", "Q6.03"]
-
-
-def vagues_production(unites, ordre):
-    v1 = [i for i in ordre if (unites[i].module in VAGUE_1_MODULES) or i in VAGUE_1_EXTRA]
-    v2 = [i for i in ordre if i not in v1 and ((unites[i].module in VAGUE_2_MODULES) or i in VAGUE_2_EXTRA)]
-    deja = set()
-    for nom, v in (("Vague 1", v1), ("Vague 2", v2)):
-        for i in v:
-            for p in unites[i].prerequis:
-                if p in unites and p not in deja and p not in v:
-                    raise SystemExit(f"{nom} : {i} demande {p}, qui n'est pas produit avant")
-            deja.add(i)
-    return [("Vague 1 · « Lire un chiffre sans se faire avoir »", v1), ("Vague 2 · « Le hasard apprivoisé »", v2)]
+def premier_catalogue_episodes(vagues, unites) -> str:
+    out = []
+    for nom, eps in vagues:
+        mins = sum(sum(duree_episode(ep, unites)) / 2 for ep in eps)
+        rows = "".join(
+            f"<tr><td>{k}</td><td><a href='#{ep.id}'>{ep.id}</a></td><td>{e(ep.champs['titre'])}</td><td>{len(ep.contient)}</td><td class='num'>{minutes(*duree_episode(ep, unites))}</td></tr>"
+            for k, ep in enumerate(eps, 1)
+        )
+        out.append(f"<h3>{e(nom)} — {len(eps)} épisodes, environ {mins / 60:.1f} h</h3>".replace(".", ",")
+                   + f"<table class='donnees serre'><thead><tr><th>#</th><th>Épisode</th><th>Titre</th><th>Chapitres</th><th>Durée</th></tr></thead><tbody>{rows}</tbody></table>")
+    return "".join(out)
 
 
 def rapport_controles(stats, lignes_calc, avertissements, notes) -> str:
@@ -766,7 +791,16 @@ def main() -> int:
         for x in erreurs:
             print("  ✘", x)
         return 1
-    ordre = ordre_production(unites)
+    import episodes as module_episodes  # import tardif : episodes.py importe ce module
+    liste_episodes, _, e4 = module_episodes.controler()
+    if e4:
+        print("ÉCHEC des contrôles des épisodes :")
+        for x in e4:
+            print("  ✘", x)
+        return 1
+    for ep in liste_episodes:
+        for uid in ep.contient:
+            EPISODE_DE[uid] = ep.id
     successeurs: dict[str, list[str]] = defaultdict(list)
     for u in unites.values():
         for p in u.prerequis:
@@ -801,18 +835,26 @@ def main() -> int:
         "SYLLABUS_ECO": syllabus("E", modules, unites, successeurs),
         "SYLLABUS_QUOTIDIEN": syllabus("Q", modules, unites, successeurs),
         "SYLLABUS_MATHS": syllabus("M", modules, unites, successeurs),
-        "PREMIER_CATALOGUE": premier_catalogue(unites, ordre),
         "RAPPORT_CONTROLES": rapport_controles(stats, lignes_calc, avertissements, notes),
     }
-    v = vagues_production(unites, ordre)
-    contexte["NB_V1"] = str(len(v[0][1]))
-    contexte["NB_V2"] = str(len(v[1][1]))
-    contexte["H_V1"] = f"{sum(sum(unites[i].duree) / 2 for i in v[0][1]) / 60:.0f}"
-    contexte["H_V2"] = f"{sum(sum(unites[i].duree) / 2 for i in v[1][1]) / 60:.0f}"
-    for k, (_, ids) in enumerate(v, 1):
+    durees_ep = sorted(sum(duree_episode(ep, unites)) / 2 for ep in liste_episodes)
+    contexte["NB_EPISODES"] = str(len(liste_episodes))
+    contexte["EP_MEDIANE"] = f"{durees_ep[len(durees_ep) // 2]:.0f}"
+    contexte["EP_MIN"] = f"{durees_ep[0]:.0f}"
+    contexte["EP_MAX"] = f"{durees_ep[-1]:.0f}"
+    contexte["CATALOGUE_EPISODES"] = catalogue_episodes(liste_episodes, unites)
+    for p in "SEQM":
+        contexte[f"EP_{p}"] = str(sum(1 for ep in liste_episodes if ep.contient[0][0] == p))
+    v = vagues_episodes(liste_episodes, unites)
+    contexte["PREMIER_CATALOGUE"] = premier_catalogue_episodes(v, unites)
+    for k, (_, eps) in enumerate(v, 1):
+        ids = [x for ep in eps for x in ep.contient]
+        contexte[f"NB_V{k}"] = str(len(eps))
+        contexte[f"NB_V{k}_CHAP"] = str(len(ids))
+        contexte[f"H_V{k}"] = f"{sum(sum(unites[i].duree) / 2 for i in ids) / 60:.0f}"
         for p in "SEQM":
             contexte[f"V{k}_{p}"] = str(sum(1 for i in ids if unites[i].pilier == p))
-    n1 = len(v[0][1])
+    n1 = int(contexte["NB_V1_CHAP"])
     contexte["CHARGE_V1"] = f"{n1 * 4.5:.0f} et {n1 * 9:.0f}"
     contexte["CHARGE_V1_JG"] = f"{n1 * 0.5:.0f} à {n1 * 1:.0f}"
     nt = len(unites)
@@ -830,7 +872,7 @@ def main() -> int:
     sortie = RACINE / "sortie"
     sortie.mkdir(exist_ok=True)
     (sortie / "programme.html").write_text(page, encoding="utf-8")
-    print(f"OK : {stats['unites']} vidéos, {stats['modules']} modules, {stats['liens']} liens de prérequis, {len(lignes_calc)} calculs vérifiés.")
+    print(f"OK : {len(liste_episodes)} épisodes, {stats['unites']} chapitres, {stats['modules']} modules, {stats['liens']} liens de prérequis, {len(lignes_calc)} calculs vérifiés.")
     for a in avertissements + notes:
         print("  ⚠", a)
     if "--pdf" in sys.argv:

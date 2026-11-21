@@ -35,8 +35,11 @@ editions:
 
     hashtags: []
     scenes:
-      - type: accroche                # question, paradoxe ou situation concrète
+      - type: accroche                # question, paradoxe ou situation concrète (jamais une salutation)
         texte: ""
+      - type: accueil                 # youtube_lesson seulement : saluer, remercier, annoncer ce que l'on saura faire
+        texte: ""                     # ex. « Bonjour, et merci d'être là. »
+        voix_off: ""                  # ex. « Bonjour, et merci d'être là. Dans cet épisode, vous allez apprendre à… »
       - type: exercice                # question posée au spectateur + compte à rebours
         texte: ""
         pause: 3                      # secondes de réflexion après la voix
@@ -64,6 +67,9 @@ editions:
         texte: ""
       - type: texte
         texte: ""
+      - type: cloture                 # youtube_lesson : suite + abonnement + like + partage (contrôle bloquant)
+        texte: ""                     # une ligne par invitation ; short / educational : renvoi vers l'épisode complet
+        voix_off: ""                  # modèles dans production/charte.yaml, parcours_spectateur.modeles
       - type: fin
         texte: ""
   en:

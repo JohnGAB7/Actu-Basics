@@ -16,9 +16,11 @@ import yaml
 
 LANGUES = ("fr", "en")
 TYPES_SCENE_ACTUALITE = ("accroche", "chiffre", "texte", "graphique", "source", "fin")
+# Parcours du spectateur (décision de JG, 21/11/2026) : accueil après l'ouverture, clôture avant la fin.
+TYPES_SCENE_PARCOURS = ("accueil", "cloture")
 # Scènes propres aux fiches pédagogiques (voir lmec/pedagogie.py).
 TYPES_SCENE_PEDAGOGIE = ("titre", "formule", "etapes", "courbe", "exercice", "correction", "animation")
-TYPES_SCENE = TYPES_SCENE_ACTUALITE + TYPES_SCENE_PEDAGOGIE
+TYPES_SCENE = TYPES_SCENE_ACTUALITE + TYPES_SCENE_PARCOURS + TYPES_SCENE_PEDAGOGIE
 TYPES_FICHE = ("actualite", "pedagogique")
 FAMILLES = ("comprendre_le_monde", "apprendre_les_statistiques", "comprendre_les_probabilites",
             "statistiques_en_pratique", "presentation")
@@ -316,7 +318,7 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
                 erreurs.append(f"{ctx}.scenes[{i}] doit être un bloc {{type: …, texte: …}}, pas {_nom_type(s)}")
                 continue
             t = s.get("type")
-            permis = TYPES_SCENE if pedago else TYPES_SCENE_ACTUALITE
+            permis = TYPES_SCENE if pedago else TYPES_SCENE_ACTUALITE + TYPES_SCENE_PARCOURS
             if t not in permis:
                 erreurs.append(f"{ctx}.scenes[{i}] : type « {t} » inconnu ({', '.join(permis)})"
                                + ("" if t not in TYPES_SCENE else " : réservé aux fiches pédagogiques"))

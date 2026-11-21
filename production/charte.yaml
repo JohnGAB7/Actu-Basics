@@ -59,6 +59,22 @@ logo:
     position: haut_droite
     largeur_px: 260
     marge_px: 0
+  # Logo mobile (décision de JG, 21/11/2026) : sur les vidéos, plus de marque FIXE à l'écran (nom
+  # « ACTU-BASICS » en haut de chaque image), que les plateformes peuvent traiter comme un filigrane
+  # statique. À la place, le logo officiel glisse lentement dans le bandeau du haut, aller-retour,
+  # sans jamais être déformé, recoloré ni recouvert (translation seule, zone de protection libre).
+  # La scène « fin » garde sa mise en page dédiée (le logo mobile s'efface pendant le fondu).
+  # actif: false -> aucune marque pendant la vidéo (le logo YouTube peut alors être ajouté par
+  # l'option « filigrane » de YouTube Studio).
+  mobile:
+    actif: true
+    formats: [video, lecon]
+    # Signature discrète, reconnaissable à son symbole : le nom et le slogan se lisent sur la scène de fin.
+    # 110 px en vertical (≈ 40 px sur téléphone, la taille d'un filigrane) : au-delà, le bandeau réservé
+    # réduit les formules et listes des scènes chargées (vidéo de lancement, scène 17).
+    largeur_px: {video: 110, lecon: 170}
+    periode_s: 40                 # durée d'un aller-retour complet le long du bandeau
+    sauf_scenes: [fin]
 couleurs:
   fond: "#0B1526"        # bleu nuit (haut de l'image)
   fond_bas: "#14284A"    # bas du dégradé
@@ -99,3 +115,33 @@ son:
   reperes: true              # tic du compte à rebours, carillon des révélations
   tic_db: -26
   revele_db: -20
+
+# Parcours du spectateur (décision de JG, 21/11/2026). Contrôlé par lmec/qc.py (controler_parcours).
+# - youtube_lesson (épisode long) : scène « accueil » parmi les 3 premières (APRÈS l'ouverture : la
+#   première image reste la question de l'épisode) et scène « cloture » juste avant « fin » ; la clôture
+#   doit orienter (épisode suivant ou autres vidéos) et inviter à s'abonner, aimer et partager. Bloquant.
+# - educational (extrait d'un épisode) et short (bande-annonce) : pas d'accueil (il ferait fuir dès les
+#   premières secondes) ; la clôture renvoie vers l'épisode complet. Avertissement.
+# Les mots-clés servent au contrôle (texte affiché + voix off, sans tenir compte de la casse).
+parcours_spectateur:
+  accueil_rang_max: 3
+  bloquant: [youtube_lesson]
+  accueil: {fr: [bonjour, bienvenue, merci], en: [hello, hi, welcome, thank]}
+  invitations:
+    suite: {fr: [épisode suivant, prochain épisode, autres vidéos, autre vidéo, playlist, la suite],
+            en: [next episode, next video, other videos, playlist, watch next, up next]}
+    abonnement: {fr: [abonne], en: [subscrib]}
+    like: {fr: [like, j'aime, pouce], en: [like, thumbs up]}
+    partage: {fr: [partag], en: [share]}
+  renvoi_episode: {fr: [épisode complet, vidéo complète, en entier], en: [full episode, full video, whole episode]}
+  # Textes types (à adapter à chaque épisode, jamais lus mot pour mot d'un épisode à l'autre) :
+  modeles:
+    accueil:
+      fr: "Bonjour, et merci d'être là. Dans cet épisode : {promesse}."
+      en: "Hi, and thanks for being here. In this episode: {promesse}."
+    cloture:
+      fr: "Si cet épisode vous a aidé, abonnez-vous, laissez un like et partagez-le à quelqu'un que ça aidera. Un exercice vous bloque ? Posez votre question en commentaire : on vous aide gratuitement. La suite : {suivant}."
+      en: "If this episode helped, subscribe, leave a like and share it with someone it will help. Stuck on an exercise? Ask in the comments and we'll help you for free. Up next: {suivant}."
+    renvoi_short:
+      fr: "L'épisode complet est sur la chaîne YouTube ACTU-BASICS."
+      en: "The full episode is on the ACTU-BASICS YouTube channel."

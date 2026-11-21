@@ -1,13 +1,16 @@
 # Programme éditorial et pédagogique ACTU-BASICS
 
 Réponse au ticket n° 10. Le livrable est le PDF
-[`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf),
-construit à partir des fichiers de ce dossier. **Statut : validé par JG le 2/11/2026 (PR #12). Les versions suivantes traitent les points laissés en suspens.**
+[`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf),
+construit à partir des fichiers de ce dossier. **Statut : version 1.13 (vidéos longues), validée par JG le 22/11/2026 (PR #49). La version 1.12, validée par JG le 2/11/2026 (PR #12), reste disponible : [`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf`](PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf).**
 
 ## Contenu
 
 | Chemin | Rôle |
 |---|---|
+| `REVISION-1.13.md` | Révision 1.13 (proposition) : les entrées regroupées en 93 épisodes longs |
+| `catalogue/episodes.txt` | Les épisodes longs : chaque entrée du catalogue y figure une fois, comme chapitre |
+| `episodes.py` | Contrôle les épisodes (couverture, ordre des prérequis, durées) et produit leur tableau |
 | `catalogue/*.txt` | Les entrées de syllabus (leur nombre est calculé à chaque construction) du programme, rangées en modules : une entrée par vidéo (pas encore la fiche de conception) |
 | `sections/*.md` | Les sections rédigées du document (synthèse, architecture, méthode d'actualité, feuille de route, glossaire, bibliographie, arbitrages) |
 | `construire.py` | Contrôle le programme et construit le HTML, puis le PDF |
@@ -35,5 +38,5 @@ et recalcul des réponses chiffrées (liste `VERIFICATIONS` de `construire.py`) 
 pip install -r programme/requirements.txt
 python programme/construire.py          # contrôles + HTML (programme/sortie/)
 python programme/construire.py --pdf    # + PDF (Node et Playwright requis)
-cp programme/sortie/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf programme/
+cp programme/sortie/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf programme/
 ```

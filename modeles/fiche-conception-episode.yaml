@@ -23,6 +23,11 @@ public:
   prerequis: []                 # identifiants du programme, ex. [S2.04, S2.03]
   niveau_maths: M0              # M0 à M4
   rappel_conseille: []          # ex. [M1.01]
+  # Complétude (règle 5, section 2.5 du programme) : TOUTES les notions utilisées, même « évidentes ».
+  # Chacune est soit enseignée avant (episode: EP-xxx), soit rappelée ici (rappel: "ce qui est rappelé").
+  # Une notion sans l'un ni l'autre bloque l'écriture du script.
+  notions_utilisees:
+    - {notion: "", episode: "", rappel: ""}
 
 objectifs:                      # verbes observables : calculer, distinguer, interpréter, repérer…
   fr: [""]

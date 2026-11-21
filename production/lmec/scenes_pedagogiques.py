@@ -140,9 +140,25 @@ class ScenesPedagogiques(Animations):
         return y + int(pt.size * 0.45)
 
     def _mesurer_etapes(self, etapes, largeur, hauteur, ctx):
-        """Taille commune, hauteur de chaque ligne, hauteur totale (lignes aérées, jamais étirées)."""
+        """Taille commune, hauteur de chaque ligne, hauteur totale (lignes aérées, jamais étirées).
+
+        Si la liste dépasse la hauteur disponible, on réduit le corps et l'interligne ;
+        si elle dépasse encore (corps minimal 34 px), une alerte est levée : la scène déborderait sur la note ou le pied de page."""
         n = max(len(etapes), 1)
-        taille = int(max(40, min(66, hauteur / n * 0.34)))
+        depart = int(max(40, min(66, hauteur / n * 0.34)))
+        n0 = len(self.alertes)
+        for taille in range(depart, 33, -2):   # 34 px : plus petit corps lisible sur téléphone
+            for serre in (0.9, 0.6, 0.4):
+                del self.alertes[n0:]   # seules comptent les alertes de l'essai retenu
+                m = self._mesurer_etapes_a(etapes, largeur, hauteur, ctx, taille, serre)
+                if m[3] <= hauteur:
+                    return m
+        self.alertes.append(f"Trop d'étapes pour la hauteur disponible ({len(etapes)} étapes, {ctx}) : "
+                            "les répartir sur deux scènes ou utiliser un tableau ou un graphique")
+        return m
+
+    def _mesurer_etapes_a(self, etapes, largeur, hauteur, ctx, taille, serre):
+        n = max(len(etapes), 1)
         # Une étape tient de préférence sur une ligne : on accepte de réduire jusqu'à 75 % pour cela.
         largeur_txt = largeur - int(taille * 1.25) - 34
         bruts = [typographie(e.replace("*", ""), self.langue) for e in etapes]
@@ -154,10 +170,11 @@ class ScenesPedagogiques(Animations):
         pastille = int(taille * 1.25)
         mesures = []
         for e in etapes:
-            pt, lt, pas_t, ht = self.ajuster_riche(e, "gras", largeur - pastille - 34, hauteur / n, taille, 34, 1.2, ctx)
+            pt, lt, pas_t, ht = self.ajuster_riche(e, "gras", largeur - pastille - 34, hauteur / n, taille,
+                                                   min(34, taille), 1.2, ctx)
             mesures.append((pt, lt, pas_t, ht))
         hauteurs = [max(ht, pastille) for *_, ht in mesures]
-        ecart = int(taille * 0.9)
+        ecart = int(taille * serre)
         return mesures, hauteurs, pastille, sum(hauteurs) + ecart * (n - 1), ecart
 
     def _lignes_etapes(self, d, etapes, debuts, g, y, largeur, hauteur, t, ctx, derniere_accent=False,

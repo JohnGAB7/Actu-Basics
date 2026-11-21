@@ -1909,3 +1909,91 @@ def test_chapitres_youtube():
                                      ("2:06", "3. Part 3")]
     assert chapitres(ed, [20, 3, 2, 3, 60, 3, 30]) == []            # un chapitre de moins de 10 s
     assert chapitres(Edition(langue="en", titre="t", legende="l", hashtags=[], scenes=sc[:3]), [20, 3, 40]) == []
+
+
+# --------------------------------------------------------------------------- parcours du spectateur et logo mobile
+def _lecon(scenes_fr, scenes_en=None):
+    """Fiche d'exemple passée en épisode long, avec les scènes données (type, texte, voix_off)."""
+    brut = valider(brut_exemple())
+    brut["format"] = "youtube_lesson"
+    for langue, scenes in (("fr", scenes_fr), ("en", scenes_en or scenes_fr)):
+        ed = brut["editions"][langue]
+        base = {s["type"]: s for s in ed["scenes"]}
+        ed["scenes"] = [dict(base.get(t, {}), type=t, texte=x, voix_off=v) for t, x, v in scenes]
+    return brut
+
+
+ACCROCHE = ("accroche", "Pourquoi attend-on plus longtemps ?", "")
+FIN = ("fin", "ACTU-BASICS", "")
+CLOTURE_FR = ("cloture", "Abonnez-vous, likez, partagez", "La suite : l'épisode suivant porte sur la variance.")
+CLOTURE_EN = ("cloture", "Subscribe, like, share", "Up next: the next episode is about variance.")
+
+
+def test_episode_long_sans_accueil_ni_cloture_bloque(tmp_path):
+    bloq, _ = constats(tmp_path, _lecon([ACCROCHE, ("texte", "Un texte", ""), FIN]))
+    assert any("accueil" in b for b in bloq)
+    assert any("cloture" in b for b in bloq)
+
+
+def test_episode_long_complet_accepte(tmp_path):
+    fr = [ACCROCHE, ("accueil", "Bonjour, et merci d'être là", ""), ("texte", "Un texte", ""), CLOTURE_FR, FIN]
+    en = [ACCROCHE, ("accueil", "Hi, and thanks for being here", ""), ("texte", "A text", ""), CLOTURE_EN, FIN]
+    bloq, _ = constats(tmp_path, _lecon(fr, en))
+    assert not [b for b in bloq if "accueil" in b.lower() or "clôture" in b.lower() or "cloture" in b]
+
+
+def test_cloture_incomplete_nomme_ce_qui_manque(tmp_path):
+    fr = [ACCROCHE, ("accueil", "Bonjour", ""), ("cloture", "Abonnez-vous", ""), FIN]
+    bloq, _ = constats(tmp_path, _lecon(fr))
+    msg = next(b for b in bloq if "Clôture incomplète" in b)
+    assert "suite" in msg and "like" in msg and "partage" in msg and "abonnement" not in msg
+
+
+def test_accueil_en_premiere_scene_signale(tmp_path):
+    fr = [("accueil", "Bonjour, et merci d'être là", ""), ACCROCHE, CLOTURE_FR, FIN]
+    _, avert = constats(tmp_path, _lecon(fr, [("accueil", "Hi, thanks", ""), ACCROCHE, CLOTURE_EN, FIN]))
+    assert any("commence par l'accueil" in a for a in avert)
+
+
+def test_short_renvoie_vers_l_episode_complet(tmp_path):
+    brut = valider(brut_exemple())
+    _, avert = constats(tmp_path, brut)
+    assert any("épisode complet" in a for a in avert)
+    brut["editions"]["fr"]["scenes"][-1]["texte"] = "L'épisode complet est sur la chaîne YouTube ACTU-BASICS."
+    brut["editions"]["en"]["scenes"][-1]["texte"] = "The full episode is on the ACTU-BASICS YouTube channel."
+    bloq, avert = constats(tmp_path, brut)
+    assert not any("épisode complet" in a for a in avert + bloq)
+
+
+def test_plus_de_nom_de_marque_fixe_en_video_et_logo_mobile():
+    from PIL import ImageChops
+    fiche = charger_fiche(EXEMPLE)
+    ed = fiche.editions["fr"]
+    for fmt in ("video", "lecon"):
+        sans = Rendu(fiche, "fr", _charte(logo__mobile__actif=False), fmt, False)
+        avec = Rendu(fiche, "fr", CHARTE, fmt, False)
+        scene = ed.scenes[0]
+        im = sans.dessiner(scene, 0, len(ed.scenes))
+        g, h, dr, _ = sans.zone
+        # Bandeau du haut vide : ni nom « ACTU-BASICS » ni logo quand le logo mobile est coupé.
+        assert ImageChops.difference(im.crop((g, h, dr, h + 120)), sans._fond.crop((g, h, dr, h + 120))).getbbox() is None
+        assert avec.mobile_prevu(scene) and not avec.mobile_prevu(ed.scenes[-1])   # jamais sur la fin
+        x0, y0 = avec.mobile_position(0)
+        x1, _ = avec.mobile_position(avec.conf_mobile()["periode_s"] / 2)
+        lg, hl, p = avec._mobile_taille()
+        assert x1 > x0 and g <= x0 - p and x1 + lg + p <= dr and y0 >= h   # il bouge, dans la zone
+        avec.mesurer_mobile(scene, 0, len(ed.scenes))
+        pose = avec.poses[("mobile", 0)]
+        assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT   # aucun texte sous le logo
+        assert pose.largeur == lg and pose.boite[3] - pose.boite[1] == hl   # proportions conservées
+
+
+def test_carrousel_garde_le_nom_de_marque():
+    from PIL import ImageChops
+    fiche = charger_fiche(EXEMPLE)
+    ed = fiche.editions["fr"]
+    r = Rendu(fiche, "fr", CHARTE, "carrousel", False)
+    im = r.dessiner(ed.scenes[1], 1, len(ed.scenes))
+    g, h, dr, _ = r.zone
+    assert ImageChops.difference(im.crop((g, h, g + 300, h + 40)), r._fond.crop((g, h, g + 300, h + 40))).getbbox()
+    assert not r.mobile_prevu(ed.scenes[1])

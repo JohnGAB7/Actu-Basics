@@ -261,3 +261,45 @@ JG a validé le programme et demandé de traiter tout ce qui restait en suspens 
 
 **Ce qui ne peut pas être traité dans le programme** : les fiches de conception elles-mêmes (une seule est complète), la relecture native de l'anglais et la double relecture des sujets sensibles se font vidéo par vidéo, pendant la préparation.
 
+
+## 10.14 Demande de JG du 21/11/2026 : des vidéos longues (version 1.13)
+
+Après le blocage de vidéos courtes sur TikTok (motif cité : contenu « de faible qualité, images fixes »), JG a demandé que le programme soit revu. Les vidéos seront longues, et chacune abordera plusieurs concepts quand c'est cohérent. Il n'y aura plus de vidéo courte qui définit seule une notion. YouTube devient le lieu où l'on se forme de façon complète, et les formats courts ne servent qu'à renvoyer vers les vidéos complètes. JG a aussi rappelé que la plateforme Programme-B, construite en parallèle, doit nourrir ce travail, et que tout doit être vérifiable et sourcé.
+
+| Point | Ce que fait la version 1.13 | État |
+|---|---|---|
+| Vidéos longues, plusieurs notions | 320 entrées regroupées en {{NB_EPISODES}} épisodes (section 2.9), contrôlés par `programme/episodes.py` | Proposé, à valider par JG |
+| Formats courts | Bandes-annonces uniquement (section 2.4) | Proposé |
+| Lien avec Programme-B | Champ `programme_b` sur chaque épisode, correspondance interne seulement (voir 10.15) | Fait |
+| Sources vérifiables | État des sources par bloc dans `programme/REVISION-1.13.md`. Les blocs B11 à B20 manquent de cours détaillés | En attente : registre de Programme-B en cours d'achèvement par ChatGPT, puis liste des ouvrages à fournir par JG |
+| Titres des épisodes | Titres de travail FR et EN | Relecture éditoriale (ChatGPT) |
+
+## 10.15 Demande de JG du 21/11/2026 : accueil, fin d'épisode et logo
+
+JG a relevé que les vidéos ne commençaient pas par une salutation qui remercie le spectateur et ne se terminaient pas par un message d'orientation ni par des invitations (autres vidéos, abonnement, like, partage). Il a aussi demandé de ne plus avoir de logo statique à l'écran, pour ne pas être limité par les plateformes, puis précisé : « à défaut de les retirer, les rendre mobiles ».
+
+| Point | Ce que fait la version 1.13 | État |
+|---|---|---|
+| Accueil | Scène `accueil` après l'ouverture (section 2.5), bloquante pour l'épisode long. Pas d'accueil dans les bandes-annonces, où il ferait partir le spectateur | Fait dans le moteur (PR dédiée) |
+| Fin d'épisode | Scène `cloture` avant la fin de marque : orientation, abonnement, like, partage. Le moteur bloque une clôture incomplète | Fait dans le moteur (PR dédiée) |
+| Logo et nom de marque fixes | Nom « ACTU-BASICS » retiré des images vidéo ; logo officiel mobile dans le bandeau du haut, réglable ou désactivable au profit du filigrane YouTube Studio | Fait dans le moteur (PR dédiée), à valider sur un aperçu |
+| Aide gratuite aux exercices | Ajoutée à la clôture (section 2.5) : aide à la méthode, pas de devoir noté fait à la place de l'étudiant | Canal décidé par JG le 22/11/2026 : commentaires YouTube |
+| Site autonome | Le site ACTU-BASICS contient le cours complet ; aucun lien vers les autres sites de JG (Programme-B compris), seulement vers les sources et références. Le champ `programme_b` reste une correspondance interne | Décision de JG du 22/11/2026 |
+| Comptes utilisateurs | Le site aura des comptes (progression, exercices). Base prévue : le projet Supabase existant de JG, à configurer dans une PR dédiée au site | Décision de JG du 22/11/2026 ; mise en œuvre à venir |
+| Voix | Voix actuelle conservée ; pas d'ElevenLabs pour l'instant | Décision de JG du 22/11/2026 |
+| Règle 6 du guide des logos | Le logo reste présent dans chaque vidéo (mobile pendant la vidéo, fixe sur la fin de marque), donc la règle reste respectée | Sans changement |
+
+## 10.16 Complétude jusqu'au niveau expert (22/11/2026)
+
+JG a laissé Claude juger si le programme est complet « pour atteindre un niveau érudit ». Verdict : les niveaux 1 à 3 et les branches statistiques sont complets ; la boîte à outils mathématique ne l'était pas. Elle avait été conçue comme une série de rappels courts, suffisants pour comprendre, insuffisants pour maîtriser la théorie des niveaux 4 et S18. Trois notions théoriques classiques manquaient aussi.
+
+| Ajout | Chapitres | Épisode | Pourquoi c'est indispensable |
+|---|---|---|---|
+| Analyse | M2.04 Taylor, M2.05 techniques d'intégration, M2.06 intégrales doubles et jacobien | EP-M03B (nouveau) | La méthode delta (S18.02) repose sur Taylor ; la loi d'une transformation de variables et les lois jointes reposent sur le jacobien |
+| Optimisation et calcul numérique | M2.07 convexité et Lagrange, M4.05 virgule flottante, conditionnement, Newton-Raphson | EP-M03C (nouveau) | Maximum de vraisemblance, régression pénalisée et apprentissage sont des problèmes d'optimisation résolus numériquement |
+| Algèbre linéaire | M3.04 systèmes, rang et inverse, M3.05 projections et moindres carrés, M3.06 matrices définies positives et SVD | EP-M04B (nouveau) | Régression multiple en écriture matricielle, colinéarité, loi normale multivariée et ACP |
+| Raisonnement et fondements | M4.03 lire et écrire une démonstration, M4.04 l'espérance comme intégrale de Lebesgue | EP-M05 (élargi) | Sans savoir lire une démonstration, le niveau expert reste une suite de recettes |
+| Théorie statistique | S18.07 exhaustivité et Rao-Blackwell, S18.08 lemme de Neyman-Pearson | EP-S18C (nouveau) | Ce sont, avec Cramér-Rao, les résultats qui disent ce qu'est un « meilleur » estimateur ou un « meilleur » test |
+| Processus | S16.05 martingales | EP-S16 (élargi) | Notion de base en finance et en actuariat, et clé de nombreux théorèmes limites |
+
+Résultat : 93 épisodes, 333 chapitres, environ 44 h. Les deux nouveaux exercices chiffrés (S16.05, S18.08) sont recalculés par `construire.py` (137 calculs vérifiés). La pratique informatique (R, Python) n'est pas ajoutée comme série à part. Décision de JG du 22/11/2026 : pas de programmation dans les débuts (niveaux 1 et 2, Quotidien) ; elle entre dans les cours avancés, avec les scripts reproductibles (arbitrage A9). Version 1.13 validée par JG le 22/11/2026.
