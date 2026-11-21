@@ -139,8 +139,8 @@ parcours_spectateur:
       fr: "Bonjour, et merci d'être là. Dans cet épisode : {promesse}."
       en: "Hi, and thanks for being here. In this episode: {promesse}."
     cloture:
-      fr: "Si cet épisode vous a aidé, abonnez-vous, laissez un like et partagez-le à quelqu'un que ça aidera. La suite : {suivant}."
-      en: "If this episode helped, subscribe, leave a like and share it with someone it will help. Up next: {suivant}."
+      fr: "Si cet épisode vous a aidé, abonnez-vous, laissez un like et partagez-le à quelqu'un que ça aidera. Un exercice vous bloque ? Posez votre question en commentaire : on vous aide gratuitement. La suite : {suivant}."
+      en: "If this episode helped, subscribe, leave a like and share it with someone it will help. Stuck on an exercise? Ask in the comments and we'll help you for free. Up next: {suivant}."
     renvoi_short:
       fr: "L'épisode complet est sur la chaîne YouTube ACTU-BASICS."
       en: "The full episode is on the ACTU-BASICS YouTube channel."

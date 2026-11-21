@@ -283,4 +283,5 @@ JG a relevé que les vidéos ne commençaient pas par une salutation qui remerci
 | Accueil | Scène `accueil` après l'ouverture (section 2.5), bloquante pour l'épisode long. Pas d'accueil dans les bandes-annonces, où il ferait partir le spectateur | Fait dans le moteur (PR dédiée) |
 | Fin d'épisode | Scène `cloture` avant la fin de marque : orientation, abonnement, like, partage. Le moteur bloque une clôture incomplète | Fait dans le moteur (PR dédiée) |
 | Logo et nom de marque fixes | Nom « ACTU-BASICS » retiré des images vidéo ; logo officiel mobile dans le bandeau du haut, réglable ou désactivable au profit du filigrane YouTube Studio | Fait dans le moteur (PR dédiée), à valider sur un aperçu |
+| Aide gratuite aux exercices | Ajoutée à la clôture (section 2.5) : canal à choisir par JG (commentaires ou adresse dédiée), aide à la méthode, pas de devoir noté fait à la place de l'étudiant | Proposé, canal à décider |
 | Règle 6 du guide des logos | Le logo reste présent dans chaque vidéo (mobile pendant la vidéo, fixe sur la fin de marque), donc la règle reste respectée | Sans changement |

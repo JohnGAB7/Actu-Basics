@@ -80,7 +80,8 @@ La durée d'un épisode découle de ce qu'il faut pour atteindre ses objectifs, 
     1. **orientation** : l'épisode suivant du parcours (titre dit et affiché), les autres épisodes utiles et l'unité Programme-B correspondante ;
     2. **abonnement** : s'abonner pour suivre le parcours dans l'ordre ;
     3. **like** : laisser un like si l'épisode a aidé ;
-    4. **partage** : partager l'épisode à quelqu'un à qui il servira.
+    4. **partage** : partager l'épisode à quelqu'un à qui il servira ;
+    5. **aide gratuite aux exercices** (proposition de JG du 21/11/2026) : un étudiant bloqué sur un exercice ou une notion de l'épisode peut poser sa question, et l'équipe l'aide gratuitement à le résoudre. Canal proposé : les commentaires de la vidéo, ou une adresse dédiée à créer (jamais une adresse personnelle). On aide à comprendre la méthode sur les exercices liés à l'épisode ; on ne fait pas un devoir noté ou un examen à la place de l'étudiant, et on ne demande aucune donnée personnelle.
 8. **Fin de marque** (3 à 5 s, scène `fin`) : logo officiel et slogan de la langue de l'édition (« Éveiller par les chiffres. » ou « Enlightening through numbers. »), avec l'écran de fin YouTube par-dessus (épisode suivant, abonnement).
 
 Les invitations restent sobres et une seule fois par épisode, en fin de parcours : pas de demande de like au début ni au milieu, et jamais de formule qui promet un résultat ou qui culpabilise. Le moteur de rendu bloque un épisode long sans accueil après l'ouverture, sans clôture juste avant la fin, ou dont la clôture oublie l'une des quatre invitations (`production/charte.yaml`, section `parcours_spectateur`).

@@ -35,7 +35,7 @@ Les 320 entrées, leurs prérequis et leurs contrôles. Les 4 niveaux, les 3 pil
 4. **Chaque chapitre** suit l'arc de la V1.12 : intuition, exemple minuscule, raisonnement à l'écran, formule expliquée, exercice avec pause, correction.
 5. **Synthèse** : comment les notions s'articulent, avec un schéma récapitulatif.
 6. **Exercice de synthèse**, puis sa correction.
-7. **Clôture (30 à 45 s)** : rappel en une phrase, puis orientation (épisode suivant, autres épisodes utiles, unité Programme-B) et invitations à s'abonner, liker et partager, une seule fois, sans formule qui culpabilise.
+7. **Clôture (30 à 45 s)** : rappel en une phrase, puis orientation (épisode suivant, autres épisodes utiles, unité Programme-B) et invitations à s'abonner, liker et partager, et offre d'aide gratuite aux exercices de l'épisode (commentaires ou adresse dédiée), une seule fois, sans formule qui culpabilise.
 8. **Fin de marque (3 à 5 s)** : logo officiel et slogan de la langue de l'édition, sous l'écran de fin YouTube.
 
 Le moteur bloque un épisode long sans accueil après l'ouverture ou sans clôture complète (`production/charte.yaml`, `parcours_spectateur`).
