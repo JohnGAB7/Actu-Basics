@@ -26,6 +26,7 @@ Les 320 entrées, leurs prérequis et leurs contrôles. Les 4 niveaux, les 3 pil
 3. **Ordre pédagogique contrôlé** : dans le cursus, aucun chapitre ne demande une notion traitée plus loin (script `episodes.py`).
 4. Durée cible de 20 à 45 min, bornes contrôlées entre 10 et 50 min. Au-delà, l'épisode est coupé en deux.
 5. Chaque chapitre garde son exercice. L'épisode se termine par un exercice de synthèse qui mobilise plusieurs chapitres.
+6. **Complétude** : chaque fiche de conception liste toutes les notions utilisées, et pour chacune l'épisode antérieur qui l'enseigne ou le rappel intégré. Sans l'un ni l'autre, pas de script (champ `notions_utilisees`).
 
 ## Structure d'un épisode
 
