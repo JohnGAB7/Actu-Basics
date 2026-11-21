@@ -1,0 +1,277 @@
+# Fiche de conception d'ÉPISODE LONG (pilote), programme 1.13. Modèle : modeles/fiche-conception-episode.yaml,
+# étendu au niveau de l'épisode (chapitres, laboratoires, synthèse, clôture). Écrite par Claude le 2026-11-21.
+# Les cinq chapitres reprennent les fiches déjà validées (S2.01 à S2.05) ; cette fiche ne réécrit que ce qui
+# est propre à l'épisode : ouverture, accueil, plan, transitions, laboratoires, synthèse, exercice de synthèse,
+# clôture. Aucun chiffre extérieur : toutes les données sont fictives et tous les calculs sont recalculés.
+id_programme: EP-S2A
+statut: revue_claude            # suivant : revue_chatgpt, puis valide_jg
+contient: [S2.01, S2.02, S2.03, S2.04, S2.05]
+fiches_chapitres:               # fiches de conception validées, reprises telles quelles sauf « changements » ci-dessous
+  S2.01: contenus/conception/S2.01.yaml
+  S2.02: contenus/conception/S2.02.yaml
+  S2.03: contenus/conception/S2.03.yaml
+  S2.04: contenus/conception/S2.04.yaml
+  S2.05: contenus/conception/S2.05.yaml
+fiche_production: "à créer après validation : contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml"
+
+titres:
+  fr: "Résumer des données : tableaux, histogrammes, moyenne et médiane"
+  en: "Summarizing data: tables, histograms, mean and median"
+  # Titre YouTube proposé (court, lisible sur téléphone), le titre long reste sur le site :
+  youtube_fr: "Moyenne, médiane, histogramme : résumer des données sans se faire avoir"
+  youtube_en: "Mean, median, histogram: summarizing data without being fooled"
+question_centrale:
+  fr: "Comment résumer vingt, mille ou un million de valeurs sans trahir ce qu'elles disent ?"
+  en: "How do you sum up twenty, a thousand or a million values without betraying what they say?"
+
+position: {pilier: statistiques, niveau: 1, module: S2, rang_dans_module: 1}
+
+public:
+  prerequis: [S1.03]            # via EP-S1A
+  niveau_maths: M0
+  rappel_conseille: [M0.01, M0.03, M1.01]   # via EP-M01
+  # Complétude (règle 5) : toutes les notions utilisées, même « évidentes ».
+  notions_utilisees:
+    - {notion: "Individu, population, variable", episode: EP-S1A, rappel: "Une phrase en ouverture : chaque salarié est un individu, le temps de trajet est une variable"}
+    - {notion: "Variable qualitative ou quantitative, ordonnée ou non", episode: EP-S1A, rappel: "Rappelé au chapitre 2, au moment de choisir barres ou histogramme"}
+    - {notion: "Fraction et pourcentage", episode: EP-M01, rappel: "8 sur 20, c'est 8 divisé par 20, soit 0,4, soit 40 % (montré une fois au chapitre 1)"}
+    - {notion: "Lire un graphique : axes, graduations", episode: EP-M01, rappel: "Les axes sont nommés à voix haute à la première courbe"}
+    - {notion: "Aire d'un rectangle", episode: "", rappel: "Largeur × hauteur, avec un rectangle dessiné, au chapitre 2 (classes inégales)"}
+    - {notion: "Ranger des nombres dans l'ordre croissant", episode: "", rappel: "Montré au chapitre 5 avant la médiane"}
+    - {notion: "Signe Σ (somme)", episode: EP-M01, rappel: "Présenté pas à pas au chapitre 4 ; jamais nécessaire pour suivre"}
+    - {notion: "Classe [a ; b[ : la borne gauche est incluse, la droite non", episode: "", rappel: "Dit une fois au chapitre 2 : un trajet de 20 minutes compte dans la classe 20 à 30"}
+    - {notion: "Arrondi au dixième", episode: "", rappel: "Annoncé quand on l'utilise (densité 0,67)"}
+    # Notions enseignées DANS l'épisode et réutilisées plus loin : effectif, fréquence, cumul (ch. 1) ;
+    # classe, densité (ch. 2) ; mode, symétrie, queue (ch. 3) ; moyenne simple et pondérée (ch. 4) ; médiane (ch. 5).
+
+objectifs:
+  fr:
+    - "Construire un tableau d'effectifs, de fréquences et de fréquences cumulées"
+    - "Choisir entre diagramme en barres et histogramme selon le type de variable"
+    - "Expliquer comment la largeur des classes change un histogramme, et lire une densité quand les classes sont inégales"
+    - "Décrire la forme d'une distribution : symétrie, queue, une ou deux bosses"
+    - "Calculer une moyenne simple et pondérée, et une médiane (nombre pair ou impair de valeurs)"
+    - "Choisir entre moyenne et médiane d'après la forme de la distribution et la question posée"
+  en:
+    - "Build a table of counts, relative frequencies and cumulative frequencies"
+    - "Choose between a bar chart and a histogram from the type of variable"
+    - "Explain how bin width changes a histogram, and read a density when bins are unequal"
+    - "Describe the shape of a distribution: symmetry, tail, one or two peaks"
+    - "Compute a simple and a weighted mean, and a median (odd or even number of values)"
+    - "Choose between mean and median from the shape of the distribution and the question asked"
+
+intuition: "Résumer, c'est choisir ce qu'on garde. Un tableau garde les proportions, un histogramme garde la silhouette, la moyenne garde le total, la médiane garde le milieu."
+exemple_fil_rouge: >-
+  Une entreprise fictive de 20 salariés, la même d'un bout à l'autre : leur mode de transport (ch. 1),
+  leur temps de trajet (ch. 2 et 3, puis au laboratoire et dans la synthèse). Les chapitres 4 et 5 gardent
+  leurs exemples validés (cagnotte, notes pondérées, café), et la synthèse revient à l'entreprise.
+  Ce n'est pas « JG's Holding », réservée au parcours Actuariat.
+exemple_reel:
+  description: "Aucun. Un exemple réel (distribution des salaires, Insee ou ONS) reste reporté comme dans S2.05, faute de fiche de provenance."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+# ------------------------------------------------------------------ données de l'épisode
+donnees_ou_simulation:
+  type: donnees_synthetiques
+  raison_du_choix: "Vingt valeurs qu'on peut toutes afficher et recompter : le spectateur vérifie chaque barre, chaque moyenne, chaque médiane."
+  donnees:
+    temps_trajet_min: [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
+    # Compatibles avec les effectifs déjà validés de S2.02 (3, 7, 6, 3, 1 en classes de 10 minutes).
+    # Somme 425, moyenne 21,25 min, médiane (19 + 21) / 2 = 20 min : légère queue à droite.
+    cafe_9_salaires: [1600, 1800, 1900, 2000, 2200, 2300, 2500, 2700, 2800]   # repris de S2.05
+    ages_visiteurs: {"0-20": 8, "20-30": 12, "30-60": 20}                      # repris de S2.02 (exercice)
+  source: {organisme: "", url: "", licence: "", population: "Fictive", variables: "temps de trajet (min), salaire (€/mois), âge (ans)", periode: "", limites: "Ne représente aucune population réelle"}
+  parametres_simulation: "Aucun tirage aléatoire : les laboratoires recalculent sur ces valeurs fixes, donc pas de graine à fixer."
+
+provenance:
+  - chiffre: "Temps de trajet, salaires, âges, valeurs de l'exercice de synthèse"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude", formule: "", transformations: ""}
+    definition: "Données construites pour l'épisode"
+    unite: "minutes ; euros par mois ; années"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Effectifs, fréquences, densités, moyennes, médianes, parts sous la moyenne"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Données ci-dessus", formule: "effectif / total ; effectif / largeur ; somme / n ; valeur de rang (n + 1) / 2", transformations: "arrondi au dixième pour 0,67"}
+    definition: "Statistiques descriptives élémentaires"
+    unite: "selon la variable"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : population complète"
+    comparabilite: ""
+
+affirmations_qualitatives:
+  - {affirmation: "Pour une distribution avec des valeurs extrêmes, la médiane décrit mieux le centre que la moyenne, car elle ne dépend pas de la valeur précise des extrêmes", statut: sourcee, source: "OpenStax, Introductory Statistics 2e, section 2.5", verification: "Lu le 21/11/2026"}
+  - {affirmation: "Le choix des classes d'un histogramme est arbitraire ou suit une règle ; on peut rapporter l'effectif à l'effectif total × largeur de classe pour que l'aire totale vaille 1", statut: sourcee, source: "NIST/SEMATECH e-Handbook of Statistical Methods, 1.3.3.14 Histogram", verification: "Lu le 21/11/2026"}
+  - {affirmation: "Les salaires ont souvent une longue queue à droite", statut: hypothese, source: "", verification: "Formulée comme exemple fictif, comme dans S2.05, tant qu'elle n'est pas sourcée"}
+
+cycle_enquete:
+  question: "Montrée : comment résumer les trajets des salariés ?"
+  population_et_mesure: "Montrée : 20 salariés, mode de transport (qualitatif) et temps de trajet en minutes (quantitatif)"
+  origine_des_donnees: "Montrée : données fictives, annoncées comme telles à l'écran"
+  exploration: "Montrée : tableau, puis histogramme, puis forme"
+  methode_et_raison: "Montrée : chaque résumé est choisi d'après la variable et la question"
+  hypotheses: "Montrée : nombres fictifs, population complète"
+  resultat_et_incertitude: "Pas d'incertitude : on décrit une population entière ; l'incertitude d'un échantillon vient en EP-S6"
+  interpretation_permise_et_interdite: "Montrée : « trajet typique » = médiane ; la moyenne sert au total (temps cumulé de toute l'équipe)"
+  reproductibilite: "Toutes les valeurs à l'écran, tous les calculs recalculés par le moteur et dans le laboratoire du site"
+
+hypotheses_et_limites:
+  - {hypothese: "Population complète, pas d'échantillon", intuition: "On décrit, on n'infère pas", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Avec un échantillon, chaque résumé aurait une marge d'erreur (EP-S6)"}
+  - {hypothese: "Moyenne et médiane ne disent rien de l'étalement", intuition: "Deux équipes peuvent avoir la même médiane et des trajets très différents", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "C'est l'objet de l'épisode suivant, EP-S2B"}
+
+reproductibilite: "Valeurs fixes publiées dans la description et sur la page de l'épisode ; le laboratoire du site les recalcule sous les yeux de l'apprenant."
+
+# ------------------------------------------------------------------ déroulé de l'épisode
+deroule_episode:
+  - bloc: ouverture
+    duree_s: 20
+    fr: "Vingt salariés. Une seule question : combien de temps mettent-ils pour venir travailler ? La moyenne dit un peu plus de 21 minutes. Pourtant, la moitié d'entre eux met 20 minutes ou moins. Et si un seul salarié déménage loin, la moyenne bondit… alors que presque rien n'a changé pour les autres. Qui dit vrai ?"
+    en: "Twenty employees. One question: how long does it take them to get to work? The mean says just over 21 minutes. Yet half of them take 20 minutes or less. And if just one employee moves far away, the mean jumps… while almost nothing changes for anyone else. Which number tells the truth?"
+    ecran: "Les 20 temps de trajet en pastilles ; « moyenne 21,25 min » et « médiane 20 min » apparaissent"
+  - bloc: accueil
+    duree_s: 15
+    fr: "Bonjour, et merci d'être là. Dans cet épisode, vous allez apprendre à résumer des données sans les trahir : les compter, les dessiner, puis choisir entre la moyenne et la médiane. Aucun prérequis, à part les pourcentages."
+    en: "Hi, and thanks for being here. In this episode, you'll learn to sum up data without betraying it: count it, draw it, then choose between the mean and the median. No prerequisites beyond percentages."
+  - bloc: plan
+    duree_s: 15
+    fr: "Cinq étapes : compter avec un tableau ; dessiner avec des barres ou un histogramme ; lire la forme d'une distribution ; comprendre la moyenne ; et enfin, moyenne ou médiane. Avec deux laboratoires en direct et un exercice de synthèse corrigé."
+    en: "Five steps: counting with a table; drawing with bars or a histogram; reading the shape of a distribution; understanding the mean; and finally, mean or median. With two live labs and a worked summary exercise."
+    ecran: "Plan en 5 lignes ; les chapitres YouTube reprennent ces titres"
+  - bloc: chapitre
+    id: S2.01
+    titre: {fr: "1. Compter : effectifs, fréquences, cumul", en: "1. Counting: counts, frequencies, cumulative"}
+    duree_min: [3, 4]
+    changements: "Exemple de la classe remplacé par les 20 salariés de l'entreprise (modes de transport : 8, 6, 4, 2), qui était l'exercice ; nouvel exercice ci-dessous. Le piège « comparer des effectifs » garde les deux classes de 25 et 40 élèves."
+    exercice_remplacant:
+      fr: "Un autre service compte 50 salariés : 15 en voiture, 20 en transports en commun, 10 à vélo, 5 à pied. Où la voiture pèse-t-elle le plus : ici ou dans notre entreprise de 20 ?"
+      en: "Another department has 50 employees: 15 by car, 20 by public transport, 10 by bike, 5 on foot. Where does the car weigh more: here or in our 20-person company?"
+      correction_fr: "Ici 15 / 50 = 30 %, contre 8 / 20 = 40 % dans l'entreprise. Il y a plus de voitures en nombre (15 contre 8), mais moins en proportion."
+      correction_en: "Here 15 / 50 = 30%, versus 8 / 20 = 40% in the company. More cars in number (15 versus 8), but fewer as a share."
+    transition: {fr: "Le mode de transport, ce sont des catégories. Le temps de trajet, ce sont des nombres : il faut un autre dessin.", en: "Mode of transport is a set of categories. Travel time is a number: it needs a different picture."}
+  - bloc: chapitre
+    id: S2.02
+    titre: {fr: "2. Dessiner : barres ou histogramme", en: "2. Drawing: bar chart or histogram"}
+    duree_min: [4, 5]
+    changements: "Aucun sur le fond ; la phrase « borne gauche incluse » est ajoutée à la première classe ; les classes de 5 minutes passent au laboratoire 1."
+    transition: {fr: "Avant de regarder la forme, essayons nous-mêmes de changer les classes.", en: "Before reading the shape, let's change the bins ourselves."}
+  - bloc: laboratoire
+    id: LAB-1
+    titre: {fr: "Laboratoire : la largeur des classes", en: "Lab: bin width"}
+    duree_s: 60
+    deroulement_fr: "Les 20 temps de trajet sont posés sur l'axe. Un curseur fait passer la largeur des classes de 20 à 10, puis à 5 minutes ; les barres se recalculent à l'écran. À 20 minutes : 10, 9, 1, le sommet disparaît. À 10 minutes : 3, 7, 6, 3, 1, une bosse nette. À 5 minutes : 1, 2, 3, 4, 2, 4, 1, 2, 1, et deux « sommets » apparaissent à 15–20 et 25–30 minutes, qui ne tiennent qu'à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent."
+    deroulement_en: "The 20 travel times sit on the axis. A slider moves the bin width from 20 to 10 to 5 minutes; the bars recompute on screen. At 20 minutes: 10, 9, 1, the peak disappears. At 10 minutes: 3, 7, 6, 3, 1, a clear hump. At 5 minutes: 1, 2, 3, 4, 2, 4, 1, 2, 1, and two 'peaks' appear at 15–20 and 25–30 minutes, resting on one or two employees. Too wide, bins hide; too narrow, they invent."
+    puis_classes_inegales_fr: "Second réglage : les âges de 40 visiteurs (0–20 : 8, 20–30 : 12, 30–60 : 20). Un bouton bascule la hauteur entre « effectif » et « densité ». En effectif, la classe 30–60 domine ; en densité (effectif ÷ largeur) : 0,4, 1,2 et environ 0,67 visiteur par année d'âge, et c'est 20–30 ans la plus dense."
+    puis_classes_inegales_en: "Second setting: the ages of 40 visitors (0–20: 8, 20–30: 12, 30–60: 20). A button switches the height between 'count' and 'density'. By count, the 30–60 bin dominates; by density (count ÷ width): 0.4, 1.2 and about 0.67 visitors per year of age, so 20–30 is the densest."
+    site: "Même laboratoire interactif sur la page de l'épisode (repris de « histogramme à classes inégales » du laboratoire B10 de Programme-B, recodé, sans lien vers Programme-B)."
+    moteur: "Nouveau type de scène à ajouter : « simulation » (curseur animé, barres recalculées image par image). En attendant, trois scènes « courbe » enchaînées en fondu."
+  - bloc: chapitre
+    id: S2.03
+    titre: {fr: "3. Lire la forme d'une distribution", en: "3. Reading the shape of a distribution"}
+    duree_min: [4, 5]
+    changements: "Ouvre sur l'histogramme des trajets en classes de 10 minutes : une bosse, une petite queue à droite (le salarié à 44 minutes). Le reste du chapitre est inchangé."
+    transition: {fr: "La forme se voit. Maintenant, mettons-la en un seul nombre. Le premier qui vient à l'esprit : la moyenne.", en: "We can see the shape. Now let's put it into a single number. The first that comes to mind: the mean."}
+  - bloc: chapitre
+    id: S2.04
+    titre: {fr: "4. Ce que dit vraiment la moyenne", en: "4. What the mean really says"}
+    duree_min: [4, 5]
+    changements: "Ajout d'une phrase à la fin : appliquée aux trajets, la moyenne vaut 425 ÷ 20 = 21,25 minutes, soit le temps qu'aurait chacun si l'on partageait également le temps total de l'équipe."
+    transition: {fr: "21,25 minutes. Est-ce le trajet d'un salarié typique ? Pas forcément.", en: "21.25 minutes. Is that a typical employee's trip? Not necessarily."}
+  - bloc: chapitre
+    id: S2.05
+    titre: {fr: "5. Moyenne ou médiane ?", en: "5. Mean or median?"}
+    duree_min: [5, 6]
+    changements: "Aucun sur le fond (fiche validée par JG le 3/11/2026). Exercice des sept salaires conservé."
+    transition: {fr: "Voyons-le en direct.", en: "Let's watch it happen live."}
+  - bloc: laboratoire
+    id: LAB-2
+    titre: {fr: "Laboratoire : une seule valeur extrême", en: "Lab: a single extreme value"}
+    duree_s: 60
+    deroulement_fr: "Deux réglages. D'abord le café : les neuf salaires, puis un dixième client dont un curseur fait monter le salaire de 2 300 à 200 000 €. La moyenne suit le curseur, de 2 210 € à 21 980 € ; la médiane reste à 2 250 €. Ensuite les trajets : le salarié à 44 minutes déménage et passe à 120 minutes. La moyenne passe de 21,25 à 25,05 minutes ; la médiane reste à 20 minutes. Un seul individu a bougé, et seule la moyenne l'a suivi."
+    deroulement_en: "Two settings. First the café: the nine salaries, then a tenth customer whose salary a slider raises from €2,300 to €200,000. The mean follows the slider, from €2,210 to €21,980; the median stays at €2,250. Then the trips: the employee at 44 minutes moves and now takes 120 minutes. The mean goes from 21.25 to 25.05 minutes; the median stays at 20 minutes. One individual moved, and only the mean followed."
+    site: "Repris de « influence d'une valeur extrême sur moyenne et médiane » du laboratoire B10 de Programme-B, recodé ; l'apprenant peut aussi déplacer n'importe quelle valeur."
+  - bloc: synthese
+    duree_s: 45
+    fr: "Ce qu'il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c'est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c'est peut-être deux groupes. Quatre : la moyenne, c'est le partage égal du total ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est au-dessus de la médiane. Choisissez celle qui répond à votre question."
+    en: "What to remember. One: count, then divide by the total; compare frequencies, not counts. Two: separate bars for categories, a histogram for numbers, and when bins are unequal, area is what counts. Three: look at the shape before any calculation; two peaks may mean two groups. Four: the mean is the equal share of the total; one extreme value moves it. Five: the median splits the data in half; with a right tail, the mean sits above the median. Pick the one that answers your question."
+  - bloc: exercice_de_synthese
+    pause_secondes: 15
+    fr: "À vous. Dix salariés d'une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ? Mettez la vidéo en pause."
+    en: "Your turn. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. Four: how many employees are below the mean, and which number would you report as the 'typical trip'? Pause the video."
+    correction_fr: "Un : 6 sur 10, soit 60 % (5, 8, 12, 15, 15 et 18). Deux : une queue à droite, due au trajet de 90 minutes. Trois : somme 240, moyenne 240 ÷ 10 = 24 minutes ; dix valeurs, donc la médiane est la moyenne des 5e et 6e : (15 + 18) ÷ 2 = 16,5 minutes. Quatre : 7 salariés sur 10 sont sous la moyenne ; le trajet typique, c'est la médiane, 16,5 minutes. Pour aller plus loin : si les 90 minutes étaient une erreur de saisie pour 35, la moyenne tomberait à 18,5 minutes et la médiane ne bougerait pas."
+    correction_en: "One: 6 out of 10, so 60% (5, 8, 12, 15, 15 and 18). Two: a right tail, caused by the 90-minute trip. Three: total 240, mean 240 ÷ 10 = 24 minutes; ten values, so the median is the average of the 5th and 6th: (15 + 18) ÷ 2 = 16.5 minutes. Four: 7 employees out of 10 are below the mean; the typical trip is the median, 16.5 minutes. Going further: if the 90 minutes were a typo for 35, the mean would drop to 18.5 minutes and the median would not move."
+  - bloc: cloture
+    duree_s: 25
+    fr: "Vous savez maintenant compter, dessiner et résumer des données, et choisir entre moyenne et médiane. Mais deux équipes peuvent avoir la même médiane et des trajets très différents : c'est l'objet de l'épisode suivant, « Mesurer les écarts : quartiles, variance, écart-type et score z ». Le laboratoire et l'exercice sont sur la page de l'épisode, sur le site. Si cet épisode vous a aidé, abonnez-vous, laissez un like et partagez-le à quelqu'un que ça aidera. Un exercice vous bloque ? Posez votre question en commentaire : on vous aide gratuitement."
+    en: "You can now count, draw and summarize data, and choose between the mean and the median. But two teams can share the same median and have very different trips: that's the next episode, 'Measuring spread: quartiles, variance, standard deviation and z-scores'. The lab and the exercise are on the episode page on the website. If this episode helped, subscribe, leave a like and share it with someone it will help. Stuck on an exercise? Ask in the comments and we'll help you for free."
+    controle_qc: "Contient « merci » à l'accueil (rang 2, après l'ouverture), et à la clôture « épisode suivant », « abonnez », « like », « partagez » : conforme à parcours_spectateur (charte.yaml)."
+  - bloc: fin
+    duree_s: 4
+    fr: "Fin de marque : logo officiel (variante selon le fond) et « Éveiller par les chiffres. »"
+    en: "Brand end card: official logo (variant for the background) and “Enlightening through numbers.”"
+
+formules:
+  - {formule: "fréquence = effectif / total", explication_symboles: "effectif d'une modalité ; total des individus", conditions: "somme des fréquences = 100 %"}
+  - {formule: "densité = effectif / largeur de la classe", explication_symboles: "largeur en unités de la variable", conditions: "obligatoire dès que les classes sont inégales"}
+  - {formule: "moyenne = Σ xᵢ / n ; moyenne pondérée = Σ nᵢ xᵢ / Σ nᵢ", explication_symboles: "xᵢ valeurs, nᵢ effectifs ou coefficients", conditions: "variable quantitative"}
+  - {formule: "position de la médiane = (n + 1) / 2", explication_symboles: "n valeurs rangées", conditions: "position non entière : moyenne des deux valeurs voisines"}
+
+calculs_a_verifier:             # recalculés par Claude le 21/11/2026 (Python) ; repris dans le bloc « verifier » de la fiche de production
+  - {expression: "4+7+9+11+12+14+15+16+18+19+21+23+25+26+27+29+32+35+38+44", attendu: 425, libelle: "Somme des 20 trajets"}
+  - {expression: "425 / 20", attendu: 21.25, libelle: "Moyenne des trajets"}
+  - {expression: "(19 + 21) / 2", attendu: 20, libelle: "Médiane des trajets (10e et 11e valeurs)"}
+  - {expression: "1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1", attendu: 20, libelle: "Laboratoire 1, classes de 5 minutes"}
+  - {expression: "12 / 10", attendu: 1.2, libelle: "Densité 20–30 ans"}
+  - {expression: "round(20 / 30, 2)", attendu: 0.67, libelle: "Densité 30–60 ans"}
+  - {expression: "(19800 + 2300) / 10", attendu: 2210, libelle: "Laboratoire 2, moyenne au départ du curseur"}
+  - {expression: "(425 - 44 + 120) / 20", attendu: 25.05, libelle: "Laboratoire 2, moyenne après le déménagement"}
+  - {expression: "15 / 50", attendu: 0.3, libelle: "Exercice du chapitre 1, autre service"}
+  - {expression: "5+8+12+15+15+18+22+25+30+90", attendu: 240, libelle: "Exercice de synthèse, somme"}
+  - {expression: "240 / 10", attendu: 24, libelle: "Exercice de synthèse, moyenne"}
+  - {expression: "(15 + 18) / 2", attendu: 16.5, libelle: "Exercice de synthèse, médiane"}
+  - {expression: "(240 - 90 + 35) / 10", attendu: 18.5, libelle: "Exercice de synthèse, moyenne corrigée"}
+  # Les calculs des chapitres restent ceux de leurs fiches validées (S2.01 à S2.05).
+
+idees_fausses:                  # celles des chapitres, plus une propre à l'épisode
+  - {idee: "Il existe un seul bon résumé des données", desamorcee_a_l_etape: "synthèse : chaque résumé garde une chose et en perd une autre"}
+  - {idee: "Les bosses d'un histogramme sont toujours réelles", desamorcee_a_l_etape: "laboratoire 1, classes de 5 minutes"}
+
+preuve_apprentissage:
+  tache: "Réussir l'exercice de synthèse sans revoir la vidéo"
+  question_de_transfert: "Une appli annonce « temps de livraison moyen : 35 minutes ». Quelle information manque pour savoir si votre livraison arrivera probablement en moins de 35 minutes ?"
+  diagnostic_d_erreur: "« Le trajet moyen a augmenté de 4 minutes, donc tout le monde met plus longtemps » : pourquoi est-ce faux ? (laboratoire 2)"
+  limite_a_enoncer: "Moyenne et médiane ne disent rien de l'étalement des valeurs (épisode suivant)"
+
+duree_estimee_min: [26, 32]     # chapitres resserrés (transitions communes, un seul rappel final) ; à mesurer après synthèse vocale
+format: youtube_lesson
+raison_du_format: "Épisode long du programme 1.13 : cinq notions qui se suivent, deux laboratoires, une synthèse et un exercice commun"
+chapitres_youtube: ["0:00 Ouverture", "Compter", "Dessiner", "Laboratoire : les classes", "La forme", "La moyenne", "Moyenne ou médiane", "Laboratoire : la valeur extrême", "Synthèse et exercice"]   # horodatages après rendu
+derives_short:                  # bandes-annonces, chacune renvoie à l'épisode complet
+  - "Le salarié qui déménage : la moyenne bondit, la médiane ne bouge pas (30 à 40 s)"
+  - "Même données, trois histogrammes : lequel croire ? (30 à 40 s)"
+
+adaptation_en: "Mêmes nombres et même raisonnement ; euros et minutes conservés. Séparateur décimal anglais (21.25) et de milliers (2,210). Textes écrits pour l'anglais, sans calque ; vouvoiement sans objet en anglais."
+langue_et_ton: "Vouvoiement (section 2.5 du programme). Pas de programmation (niveau 1)."
+licences: "Aucune donnée extérieure. Voix Kokoro (Apache 2.0, docs/voice-licenses.md). Habillage sonore synthétisé par le moteur. Sources lues citées en description : OpenStax (CC BY 4.0) et NIST e-Handbook (domaine public, gouvernement fédéral américain)."
+sources_lues:
+  - {ref: "OpenStax, Introductory Statistics 2e, section 2.5 « Measures of the Center of the Data »", url: "https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data", lu_le: "2026-11-21", sert_a: "médiane (n pair et impair), médiane meilleure en présence de valeurs extrêmes"}
+  - {ref: "NIST/SEMATECH, e-Handbook of Statistical Methods, 1.3.3.14 « Histogram »", url: "https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm", lu_le: "2026-11-21", sert_a: "choix des classes, histogramme relatif et normalisation par la largeur (densité)"}
+
+controle:
+  test_du_debutant: "À mesurer au pilote : réussir l'exercice de synthèse et la question de transfert"
+  relecture_definitions: "Claude, 21/11/2026 ; ChatGPT puis JG à faire"
+  controle_mobile: "Après rendu : sortie/EP-S2A/fr/inspection"
+  a_trancher_par_le_relecteur:
+    - "Durée 26 à 32 min : acceptable pour un épisode de niveau 1, ou faut-il couper le chapitre 3 en deux minutes ?"
+    - "Le chapitre 1 change d'exemple (entreprise au lieu de la classe) pour garder un fil rouge : d'accord ?"
