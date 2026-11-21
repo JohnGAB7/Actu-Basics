@@ -261,3 +261,15 @@ JG a validé le programme et demandé de traiter tout ce qui restait en suspens 
 
 **Ce qui ne peut pas être traité dans le programme** : les fiches de conception elles-mêmes (une seule est complète), la relecture native de l'anglais et la double relecture des sujets sensibles se font vidéo par vidéo, pendant la préparation.
 
+
+## 10.14 Demande de JG du 21/11/2026 : des vidéos longues (version 1.13)
+
+Après le blocage de vidéos courtes sur TikTok (motif cité : contenu « de faible qualité, images fixes »), JG a demandé que le programme soit revu. Les vidéos seront longues, et chacune abordera plusieurs concepts quand c'est cohérent. Il n'y aura plus de vidéo courte qui définit seule une notion. YouTube devient le lieu où l'on se forme de façon complète, et les formats courts ne servent qu'à renvoyer vers les vidéos complètes. JG a aussi rappelé que la plateforme Programme-B, construite en parallèle, doit nourrir ce travail, et que tout doit être vérifiable et sourcé.
+
+| Point | Ce que fait la version 1.13 | État |
+|---|---|---|
+| Vidéos longues, plusieurs notions | 320 entrées regroupées en {{NB_EPISODES}} épisodes (section 2.9), contrôlés par `programme/episodes.py` | Proposé, à valider par JG |
+| Formats courts | Bandes-annonces uniquement (section 2.4) | Proposé |
+| Lien avec Programme-B | Champ `programme_b` sur chaque épisode | Fait |
+| Sources vérifiables | État des sources par bloc dans `programme/REVISION-1.13.md`. Les blocs B11 à B20 manquent de cours détaillés | En attente : registre de Programme-B en cours d'achèvement par ChatGPT, puis liste des ouvrages à fournir par JG |
+| Titres des épisodes | Titres de travail FR et EN | Relecture éditoriale (ChatGPT) |

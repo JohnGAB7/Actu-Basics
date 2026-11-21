@@ -45,34 +45,43 @@ Pour chaque module, on vise trois seuils de maîtrise, comme le propose la revue
 
 Les objectifs de chaque vidéo sont écrits avec des verbes observables (calculer, distinguer, interpréter, repérer, expliquer pourquoi) pour que l'exercice final puisse les vérifier.
 
-## 2.4 Trois formats, choisis selon le besoin pédagogique
+## 2.4 Un format principal : l'épisode long
 
-| Format (clé moteur) | Image | Durée | Rôle dans le programme |
+| Format (clé moteur) | Image | Durée | Rôle dans le programme (version 1.13) |
 |---|---|---|---|
-| **SHORT** (`short`) | vertical 1080 × 1920 | 15–90 s | Accroche, paradoxe ou rappel d'une seule idée. Chaque leçon peut en produire un ou deux, qui renvoient vers elle. |
-| **EDUCATIONAL** (`educational`) | vertical 1080 × 1920 | 1 min 30–10 min | **Le format principal** du cursus : une notion expliquée pas à pas, avec exercice. |
-| **YOUTUBE_LESSON** (`youtube_lesson`) | horizontal 1920 × 1080 | 5–60 min | Démonstrations longues, études de cas, sujets qui demandent de la place à l'écran (régression multiple, ACP, MCMC). |
+| **YOUTUBE_LESSON** (`youtube_lesson`) | horizontal 1920 × 1080 | 10–50 min | **Le format principal** : un épisode qui traite plusieurs notions cohérentes, avec chapitres YouTube horodatés, exercices et synthèse. C'est là que l'on se forme de façon complète. |
+| **SHORT** (`short`) | vertical 1080 × 1920 | 30–60 s | **Bande-annonce** d'un épisode : son meilleur moment (paradoxe, résultat surprenant), qui renvoie toujours vers l'épisode complet. Jamais une définition isolée. |
+| **EDUCATIONAL** (`educational`) | vertical 1080 × 1920 | 1 min 30–10 min | Réservé aux extraits d'un épisode (un chapitre publié à part sur une plateforme verticale) ; plus produit comme vidéo autonome. |
 
-La durée de chaque vidéo découle de ce qu'il faut pour atteindre l'objectif, jamais d'un plafond arbitraire (constitution éditoriale, section 10). Les durées indiquées sont des **estimations de conception** : elles seront corrigées après l'écriture du script. Trois entrées du catalogue sont des SHORT autonomes (Q1.03, Q2.04, Q3.02) : ce sont des capsules de paradoxe d'une seule idée, sans exercice, qui renvoient vers la leçon qui les explique. Toutes les autres sont des leçons EDUCATIONAL ou YOUTUBE_LESSON, dont les SHORT dérivés ne figurent pas au catalogue.
+Les {{NB_VIDEOS}} entrées du catalogue gardent leur format d'origine dans les sections 3 à 5 : il indique la place que prend la notion à l'écran, et non plus une vidéo séparée. Leur durée s'additionne dans l'épisode. Les trois anciens SHORT autonomes (Q1.03, Q2.04, Q3.02) deviennent des chapitres courts de leurs épisodes et restent de bons candidats de bande-annonce.
+
+La durée d'un épisode découle de ce qu'il faut pour atteindre ses objectifs, jamais d'un plafond arbitraire (constitution éditoriale, section 10). Au-delà de 50 min, il est coupé en deux épisodes. Les durées sont des **estimations de conception**, corrigées après l'écriture du script.
+
+**Règles de regroupement.** (1) Un épisode regroupe des notions qui répondent à une même question. (2) Il reste dans un seul module, sauf exception justifiée dans le pilier Quotidien. (3) Dans le cursus, aucun chapitre ne demande une notion traitée plus loin. (4) Chaque chapitre garde son exercice, et l'épisode se termine par un exercice de synthèse. Les règles 1 et 2 relèvent de la relecture, les règles 3 et 4 sont contrôlées.
+
+**Plateformes.** Les contrôles hérités du diagnostic TikTok du 21/11/2026 s'appliquent à tous les formats : première image pleine, aucun plan figé de plus de 2 s, logo discret, étiquette « contenu généré par IA » pour la voix de synthèse, aucun lien dans les légendes, vocabulaire sensible cadré (jeux d'argent, argent, santé, poids, élections, mortalité).
 
 ## 2.5 La structure d'un épisode
 
-Toutes les vidéos pédagogiques suivent le même arc, déjà mis en œuvre dans le moteur et dans la vidéo de lancement :
-
-1. **Question** concrète, paradoxe ou situation familière ;
-2. **Intuition** : ce que l'on croit spontanément, avec une estimation demandée au spectateur ;
-3. **Données ou exemple minuscule**, que l'on peut suivre de tête ;
-4. **Raisonnement pas à pas**, montré à l'écran (« la voix raconte, l'image démontre ») ;
-5. **Formalisation** : la formule arrive après l'idée, et chaque symbole est expliqué ;
-6. **Exercice** avec un temps de réflexion, puis **correction** détaillée ;
-7. **Application** réelle et **limites** de la méthode ;
-8. **Rappel** mémorable, puis fin de marque (logo, signature).
+1. **Ouverture** (environ 1 min) : la question concrète de l'épisode, montrée et non seulement dite, avec du mouvement dès la première image.
+2. **Plan à l'écran** : les chapitres, qui deviennent les chapitres YouTube.
+3. **Chaque chapitre** suit l'arc déjà mis en œuvre dans le moteur et dans la vidéo de lancement :
+    1. **Question** concrète, paradoxe ou situation familière ;
+    2. **Intuition** : ce que l'on croit spontanément, avec une estimation demandée au spectateur ;
+    3. **Données ou exemple minuscule**, que l'on peut suivre de tête ;
+    4. **Raisonnement pas à pas**, montré à l'écran (« la voix raconte, l'image démontre ») ;
+    5. **Formalisation** : la formule arrive après l'idée, et chaque symbole est expliqué ;
+    6. **Exercice** avec un temps de réflexion, puis **correction** détaillée ;
+    7. **Application** réelle et **limites** de la méthode.
+4. **Synthèse** : comment les notions de l'épisode s'articulent, avec un schéma récapitulatif.
+5. **Exercice de synthèse**, qui mobilise plusieurs chapitres, puis sa correction.
+6. **Rappel mémorable**, renvoi vers l'unité Programme-B et vers l'épisode suivant, fin de marque (logo, signature).
 
 ## 2.6 Principes non négociables, traduits en règles de production
 
 | Principe (ticket n° 10) | Règle appliquée dans le programme |
 |---|---|
-| La compréhension prime sur la durée | Durée estimée par vidéo selon le contenu ; un sujet trop long est découpé en deux vidéos, pas comprimé. |
+| La compréhension prime sur la durée | Durée estimée par épisode selon le contenu ; un épisode de plus de 50 min est découpé en deux, pas comprimé. |
 | Intuition d'abord, formalisation ensuite | Champ « Intuition d'abord » obligatoire dans chaque fiche. |
 | Expliquer les formules | Toute formule a une voix off qui la lit et l'explique (contrôle bloquant du moteur). |
 | Pouvoir réutiliser la notion | Chaque fiche a un exercice ; un exercice sans correction bloque la production. |
@@ -101,3 +110,9 @@ Le rapport GAISE de l'American Statistical Association, révisé en 2025 et publ
 ## 2.8 Bilinguisme
 
 Chaque vidéo existe en deux éditions, française et anglaise, produites à partir de la **même fiche de conception**. Les scripts sont écrits séparément. Les exemples peuvent être adaptés à chaque public (Insee et Eurostat d'un côté, BLS, ONS ou Banque mondiale de l'autre), à condition que **le raisonnement et les nombres calculés restent identiques**. Le moteur signale déjà un écart de nombres entre les deux éditions. Les titres anglais suivent l'orthographe américaine (-ize, -er : *optimization*, *kilometer*), majoritaire dans le catalogue. Une première relecture des 320 titres anglais a été faite en version 1.12 (cohérence orthographique, titres ambigus corrigés). Ce sont encore des titres de travail : une relecture par un locuteur natif reste prévue avant les fiches bilingues, avec celle des scripts.
+
+## 2.9 Les {{NB_EPISODES}} épisodes
+
+Liste produite par `programme/episodes.py` à partir de `catalogue/episodes.txt`. Durée : somme des fourchettes des chapitres. La colonne Programme-B renvoie au bloc ou à l'unité de la plateforme qui approfondit l'épisode. Les titres sont des titres de travail, relus par l'éditorial avant production.
+
+{{CATALOGUE_EPISODES}}

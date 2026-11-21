@@ -70,7 +70,7 @@ Règle : aucun épisode marqué « lacune » ou « partiel » ne passe en fiche 
 - Valider les 89 épisodes et leurs titres (les titres restent des titres de travail, relus par ChatGPT).
 - L'ordre de publication. Proposition : alterner un épisode du cursus et un épisode du Quotidien.
 - Les 10 fiches du lot 5 déjà produites deviennent des extraits ou des Shorts des épisodes correspondants (EP-S2A, EP-S3B, EP-Q2, EP-Q3). Le pilier A (Actuariat) garde son parcours propre, hors de ces 89 épisodes, et suivra les mêmes règles.
-- La reconstruction du PDF V1.13 (sections 1, 2.4, 2.5 et 7 à réécrire), après la validation de JG.
+- Le PDF V1.13 est reconstruit (`PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf`) : synthèse, sections 2.4, 2.5, 2.9, 7 et 10.14 réécrites, épisode affiché sur chaque chapitre.
 
 ## Les 89 épisodes
 
