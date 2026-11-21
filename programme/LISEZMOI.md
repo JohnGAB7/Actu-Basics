@@ -8,6 +8,9 @@ construit à partir des fichiers de ce dossier. **Statut : validé par JG le 2/1
 
 | Chemin | Rôle |
 |---|---|
+| `REVISION-1.13.md` | Révision 1.13 (proposition) : les 320 entrées regroupées en 89 épisodes longs |
+| `catalogue/episodes.txt` | Les épisodes longs : chaque entrée du catalogue y figure une fois, comme chapitre |
+| `episodes.py` | Contrôle les épisodes (couverture, ordre des prérequis, durées) et produit leur tableau |
 | `catalogue/*.txt` | Les entrées de syllabus (leur nombre est calculé à chaque construction) du programme, rangées en modules : une entrée par vidéo (pas encore la fiche de conception) |
 | `sections/*.md` | Les sections rédigées du document (synthèse, architecture, méthode d'actualité, feuille de route, glossaire, bibliographie, arbitrages) |
 | `construire.py` | Contrôle le programme et construit le HTML, puis le PDF |

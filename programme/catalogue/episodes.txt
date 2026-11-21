@@ -1,0 +1,553 @@
+# Épisodes longs (révision 1.13, demande de JG du 21/11/2026)
+# Une vidéo longue regroupe plusieurs entrées du catalogue quand elles forment un tout cohérent.
+# Chaque entrée du catalogue appartient à exactement un épisode. Les entrées restent les chapitres de l'épisode.
+# « contient » liste les entrées dans l'ordre où l'épisode les traite. « programme_b » renvoie à l'unité de la plateforme.
+# Format : voir programme/LISEZMOI.md.
+
+# PARTIE Boîte à outils maths
+
+## EP-M01
+titre: Calculer de tête : fractions, puissances de 10, graphiques et Σ
+titre_en: Mental math for data: fractions, powers of 10, charts and Σ
+contient: M0.01 | M0.02 | M0.03 | M1.01
+programme_b: B01
+
+## EP-M02
+titre: L'algèbre qui sert vraiment : droites, puissances, exponentielle et logarithme
+titre_en: The algebra you actually need: lines, powers, exponentials and logs
+contient: M1.02 | M1.03 | M1.04 | M1.05
+programme_b: B01
+
+## EP-M03
+titre: Dérivées et intégrales, sans peur
+titre_en: Derivatives and integrals, without fear
+contient: M2.01 | M2.02 | M2.03
+programme_b: B04 | B05
+
+## EP-M04
+titre: Les matrices, ou comment ranger des données
+titre_en: Matrices, or how to organize data
+contient: M3.01 | M3.02 | M3.03
+programme_b: B03
+
+## EP-M05
+titre: Convergence et hasard formalisé
+titre_en: Convergence and formal probability
+contient: M4.01 | M4.02
+programme_b: B04 | B08
+
+# PARTIE Niveau 1 · Découverte
+
+## EP-S1A
+titre: D'où vient un chiffre ? Données, populations et variables
+titre_en: Where does a number come from? Data, populations and variables
+contient: S1.01 | S1.02 | S1.03 | S1.04
+programme_b: B10-T01
+
+## EP-S1B
+titre: Pourquoi un échantillon peut mentir
+titre_en: Why a sample can lie
+contient: S1.05 | S1.06 | S1.07 | S1.12
+programme_b: B10-T02 | B10-T03
+
+## EP-S1C
+titre: Pourcentages, graphiques et hasard : lire un chiffre sans se faire avoir
+titre_en: Percentages, charts and chance: reading numbers without being fooled
+contient: S1.08 | S1.09 | S1.10 | S1.11
+programme_b: B10-T07
+
+## EP-S2A
+titre: Résumer des données : tableaux, histogrammes, moyenne et médiane
+titre_en: Summarizing data: tables, histograms, mean and median
+contient: S2.01 | S2.02 | S2.03 | S2.04 | S2.05
+programme_b: B10-T05 | B10-T07
+
+## EP-S2B
+titre: Mesurer les écarts : quartiles, variance, écart-type et score z
+titre_en: Measuring spread: quartiles, variance, standard deviation and z-scores
+contient: S2.06 | S2.07 | S2.08 | S2.09 | S2.10
+programme_b: B10-T06
+
+## EP-S3A
+titre: Comparer sans se tromper : groupes, tableaux croisés, Simpson et évolutions
+titre_en: Comparing without mistakes: groups, crosstabs, Simpson and trends
+contient: S3.01 | S3.02 | S3.03 | S3.08
+programme_b: B10-T08
+
+## EP-S3B
+titre: Deux variables liées : nuage de points, corrélation, causalité et droite
+titre_en: Two linked variables: scatter plots, correlation, causation and a line
+contient: S3.04 | S3.05 | S3.06 | S3.07
+programme_b: B10-T08
+
+## EP-S3C
+titre: Explorer un jeu de données de A à Z
+titre_en: Exploring a dataset from A to Z
+contient: S3.09
+programme_b: B10-T10
+
+# PARTIE Niveau 2 · Fondamentaux
+
+## EP-S4A
+titre: Le hasard se calcule : probabilités, simulation et dénombrement
+titre_en: Chance can be calculated: probability, simulation and counting
+contient: S4.01 | S4.02 | S4.03 | S4.04
+programme_b: B08-P01
+
+## EP-S4B
+titre: Combiner des événements : du paradoxe des anniversaires au sophisme du joueur
+titre_en: Combining events: from the birthday paradox to the gambler's fallacy
+contient: S4.05 | S4.06 | S4.07 | S4.08
+programme_b: B08-P01 | B08-P02 | B08-P03
+
+## EP-S4C
+titre: Changer d'avis avec les chiffres : arbres, Bayes et Monty Hall
+titre_en: Changing your mind with numbers: trees, Bayes and Monty Hall
+contient: S4.09 | S4.10 | S4.11
+programme_b: B08-P02
+
+## EP-S5A
+titre: Variables aléatoires : espérance, variance et loi binomiale
+titre_en: Random variables: expectation, variance and the binomial
+contient: S5.01 | S5.02 | S5.03 | S5.04
+programme_b: B08-P04
+
+## EP-S5B
+titre: Attendre et compter : lois géométrique, de Poisson et exponentielle
+titre_en: Waiting and counting: geometric, Poisson and exponential laws
+contient: S5.05 | S5.06 | S5.07 | S5.08
+programme_b: B08-P04 | B08-P05
+
+## EP-S5C
+titre: La loi normale et ses cousines
+titre_en: The normal distribution and its cousins
+contient: S5.09 | S5.10 | S5.11 | S5.14
+programme_b: B08-P05 | B08-P06 | B08-P07
+
+## EP-S5D
+titre: Pourquoi les moyennes se stabilisent : grands nombres et théorème central limite
+titre_en: Why averages settle down: the law of large numbers and the central limit theorem
+contient: S5.12 | S5.13 | S5.15
+programme_b: B08-P08 | B08-P10
+
+# PARTIE Niveau 3 · Inférence et modèles
+
+## EP-S6A
+titre: De l'échantillon à la population : erreur standard et lois d'échantillonnage
+titre_en: From sample to population: standard error and sampling distributions
+contient: S6.01 | S6.02 | S6.03 | S6.06
+programme_b: B11
+
+## EP-S6B
+titre: Faire un bon sondage : plans, marge d'erreur, non-réponse et calage
+titre_en: Running a good survey: designs, margin of error, nonresponse and calibration
+contient: S6.04 | S6.05 | S6.07 | S6.08 | S6.09
+programme_b: B10-T03 | B10-T04
+
+## EP-S7A
+titre: Bien estimer : biais, variance et maximum de vraisemblance
+titre_en: Estimating well: bias, variance and maximum likelihood
+contient: S7.01 | S7.02 | S7.03 | S7.04 | S7.05
+programme_b: B11
+
+## EP-S7B
+titre: Intervalles de confiance et taille d'échantillon
+titre_en: Confidence intervals and sample size
+contient: S7.06 | S7.07 | S7.08 | S7.09
+programme_b: B11
+
+## EP-S8A
+titre: La logique d'un test : p-value, erreurs et puissance
+titre_en: How a test works: p-values, errors and power
+contient: S8.01 | S8.02 | S8.03 | S8.08
+programme_b: B11
+
+## EP-S8B
+titre: Les tests de tous les jours : t, données appariées, khi-deux et taille d'effet
+titre_en: Everyday tests: t, paired data, chi-square and effect size
+contient: S8.04 | S8.05 | S8.06 | S8.07
+programme_b: B11
+
+## EP-S8C
+titre: Quand les tests trompent : p-hacking, adéquation, méta-analyse et équivalence
+titre_en: When tests mislead: p-hacking, goodness of fit, meta-analysis and equivalence
+contient: S8.09 | S8.10 | S8.11 | S8.12
+programme_b: B11
+
+## EP-S9A
+titre: La régression linéaire simple, de la droite à l'inférence
+titre_en: Simple linear regression, from the line to inference
+contient: S9.01 | S9.02 | S9.03
+programme_b: B12
+
+## EP-S9B
+titre: Régression multiple : toutes choses égales par ailleurs
+titre_en: Multiple regression: all else being equal
+contient: S9.04 | S9.05 | S9.08
+programme_b: B12
+
+## EP-S9C
+titre: Un modèle fiable : diagnostics, transformations, choix et régression quantile
+titre_en: A model you can trust: diagnostics, transformations, selection and quantile regression
+contient: S9.06 | S9.07 | S9.11 | S9.12
+programme_b: B12
+
+## EP-S9D
+titre: ANOVA et plans d'expérience, jusqu'à l'essai randomisé
+titre_en: ANOVA and experimental design, up to the randomized trial
+contient: S9.09 | S9.10 | S9.13 | S9.14
+programme_b: B12 | B14
+
+## EP-S10A
+titre: Prédire un oui ou un non, et compter : logistique et Poisson
+titre_en: Predicting yes or no, and counting: logistic and Poisson regression
+contient: S10.01 | S10.02 | S10.03 | S10.04
+programme_b: B12
+
+## EP-S10B
+titre: Le cadre GLM : Gamma, Tweedie, modèles mixtes et excès de zéros
+titre_en: The GLM framework: Gamma, Tweedie, mixed models and excess zeros
+contient: S10.05 | S10.06 | S10.07 | S10.08
+programme_b: B12
+
+## EP-S11A
+titre: Calculer en simulant : Monte-Carlo, bootstrap et permutations
+titre_en: Computing by simulation: Monte Carlo, the bootstrap and permutations
+contient: S11.01 | S11.02 | S11.03 | S11.09
+programme_b: B11
+
+## EP-S11B
+titre: Valider et reproduire : validation croisée et bonnes pratiques
+titre_en: Validate and reproduce: cross-validation and good practice
+contient: S11.05 | S11.06
+programme_b: B17
+
+## EP-S11C
+titre: Sans hypothèses fortes : rangs, robustesse, lissage et multivers
+titre_en: Without strong assumptions: ranks, robustness, smoothing and multiverse analysis
+contient: S11.04 | S11.10 | S11.08 | S11.07 | S11.11
+programme_b: B11 | B12
+
+# PARTIE Niveau 4 · Branches avancées
+
+## EP-S16
+titre: Processus aléatoires : marche aléatoire, Markov, Poisson et brownien
+titre_en: Random processes: random walks, Markov chains, Poisson and Brownian motion
+contient: S16.01 | S16.02 | S16.03 | S16.04
+programme_b: B09
+
+## EP-S12A
+titre: Penser en bayésien : a priori, bêta-binomial et crédibilité
+titre_en: Thinking Bayesian: priors, the beta-binomial and credible intervals
+contient: S12.01 | S12.02 | S12.03
+programme_b: B11
+
+## EP-S12B
+titre: Bayésien en pratique : MCMC, modèles hiérarchiques et comparaison honnête
+titre_en: Bayesian in practice: MCMC, hierarchical models and an honest comparison
+contient: S12.04 | S12.05 | S12.06
+programme_b: B11
+
+## EP-S13A
+titre: Voir en p dimensions : nuage multivarié, loi normale multivariée et ACP
+titre_en: Seeing in p dimensions: multivariate clouds, the multivariate normal and PCA
+contient: S13.01 | S13.07 | S13.02
+programme_b: B13
+
+## EP-S13B
+titre: Variables cachées et proportions : AFC, ACM, analyse factorielle et compositions
+titre_en: Hidden variables and shares: correspondence analysis, factor analysis and compositions
+contient: S13.03 | S13.06 | S13.10
+programme_b: B13
+
+## EP-S13C
+titre: Classer : k-moyennes, classification hiérarchique et discriminante
+titre_en: Classifying: k-means, hierarchical clustering and discriminant analysis
+contient: S13.04 | S13.05
+programme_b: B13
+
+## EP-S13D
+titre: Dépendances et courbes : copules et données fonctionnelles
+titre_en: Dependence and curves: copulas and functional data
+contient: S13.08 | S13.09
+programme_b: B13
+
+## EP-S14A
+titre: Lire une série temporelle : tendance, saisonnalité, autocorrélation et lissage
+titre_en: Reading a time series: trend, seasonality, autocorrelation and smoothing
+contient: S14.01 | S14.02 | S14.03
+programme_b: B16
+
+## EP-S14B
+titre: Prévoir : ARIMA, incertitude et évaluation honnête
+titre_en: Forecasting: ARIMA, uncertainty and honest evaluation
+contient: S14.04 | S14.05 | S14.09
+programme_b: B16
+
+## EP-S14C
+titre: Cycles, états cachés et espace : spectre, Kalman et krigeage
+titre_en: Cycles, hidden states and space: spectra, Kalman and kriging
+contient: S14.06 | S14.07 | S14.08
+programme_b: B16
+
+## EP-S15
+titre: L'analyse de survie : censure, Kaplan-Meier et modèle de Cox
+titre_en: Survival analysis: censoring, Kaplan-Meier and the Cox model
+contient: S15.01 | S15.02 | S15.03 | S15.04
+programme_b: B18
+
+## EP-S17A
+titre: Expliquer ou prédire : biais-variance et évaluation d'un classifieur
+titre_en: Explain or predict: bias-variance and evaluating a classifier
+contient: S17.01 | S17.02 | S17.05
+programme_b: B15
+
+## EP-S17B
+titre: Beaucoup de variables : ridge, lasso et haute dimension
+titre_en: Many variables: ridge, lasso and high dimensions
+contient: S17.03 | S17.10
+programme_b: B15
+
+## EP-S17C
+titre: Arbres, forêts et boosting
+titre_en: Trees, forests and boosting
+contient: S17.04 | S17.07
+programme_b: B15
+
+## EP-S17D
+titre: Réseaux de neurones, prédiction conforme et frontières de la statistique
+titre_en: Neural networks, conformal prediction and the limits of statistics
+contient: S17.06 | S17.08 | S17.09
+programme_b: B15
+
+## EP-S18A
+titre: Les grands outils de la théorie : Fisher, Cramér-Rao, méthode delta et trois tests
+titre_en: Core theory tools: Fisher information, Cramér-Rao, the delta method and three tests
+contient: S18.01 | S18.02 | S18.04
+programme_b: B20
+
+## EP-S18B
+titre: Données cachées et événements extrêmes : imputation multiple, EM et valeurs extrêmes
+titre_en: Hidden data and extreme events: multiple imputation, EM and extreme values
+contient: S18.03 | S18.05 | S18.06
+programme_b: B20
+
+## EP-S19A
+titre: Comment apprend un réseau profond : couches, convolutions et gradient
+titre_en: How a deep network learns: layers, convolutions and gradients
+contient: S19.01 | S19.02 | S19.04
+programme_b: B15
+
+## EP-S19B
+titre: Modèles de langue et modèles génératifs
+titre_en: Language models and generative models
+contient: S19.03 | S19.05
+programme_b: B15
+
+## EP-S19C
+titre: Des modèles dans le monde réel : production, complexité, droit et éthique
+titre_en: Models in the real world: production, complexity, law and ethics
+contient: S19.06 | S19.07 | S19.08
+programme_b: B15 | B17
+
+# PARTIE Pilier 2 · Économétrie
+
+## EP-E1
+titre: Données économiques et questions causales
+titre_en: Economic data and causal questions
+contient: E1.01 | E1.02 | E1.03 | E1.04 | E1.05
+programme_b: B19
+
+## EP-E2
+titre: Les moindres carrés en économie : du modèle à Frisch-Waugh-Lovell
+titre_en: Least squares in economics: from the model to Frisch-Waugh-Lovell
+contient: E2.01 | E2.02 | E2.03 | E2.04
+programme_b: B19
+
+## EP-E3
+titre: Tester et diagnostiquer une régression : F, erreurs robustes et mauvais contrôles
+titre_en: Testing and checking a regression: F tests, robust errors and bad controls
+contient: E3.01 | E3.02 | E3.03 | E3.04
+programme_b: B19
+
+## EP-E4A
+titre: Quand la régression ment : variable omise, simultanéité et erreur de mesure
+titre_en: When regression lies: omitted variables, simultaneity and measurement error
+contient: E4.01 | E4.02 | E4.03
+programme_b: B19
+
+## EP-E4B
+titre: Sélection, facteurs cachés et bornes
+titre_en: Selection, hidden confounders and bounds
+contient: E4.04 | E4.05 | E4.06
+programme_b: B19
+
+## EP-E5A
+titre: Les variables instrumentales : idée, doubles moindres carrés et instruments faibles
+titre_en: Instrumental variables: the idea, two-stage least squares and weak instruments
+contient: E5.01 | E5.02 | E5.03
+programme_b: B19
+
+## EP-E5B
+titre: Au-delà des doubles moindres carrés : effet local, GMM et systèmes
+titre_en: Beyond 2SLS: local effects, GMM and simultaneous systems
+contient: E5.04 | E5.05 | E5.06
+programme_b: B19
+
+## EP-E6
+titre: Les données de panel : effets fixes, aléatoires, dynamiques et spatiaux
+titre_en: Panel data: fixed, random, dynamic and spatial effects
+contient: E6.01 | E6.02 | E6.03 | E6.04 | E6.05
+programme_b: B19
+
+## EP-E7A
+titre: Évaluer une politique : expériences, expériences naturelles et différences de différences
+titre_en: Evaluating a policy: experiments, natural experiments and difference-in-differences
+contient: E7.01 | E7.02 | E7.03 | E7.04
+programme_b: B14 | B19
+
+## EP-E7B
+titre: Discontinuités, contrôle synthétique, appariement et effets hétérogènes
+titre_en: Discontinuities, synthetic control, matching and heterogeneous effects
+contient: E7.05 | E7.06 | E7.07 | E7.08
+programme_b: B14 | B19
+
+## EP-E8A
+titre: Séries économiques : erreurs HAC, racines unitaires, cointégration et ruptures
+titre_en: Economic time series: HAC errors, unit roots, cointegration and breaks
+contient: E8.01 | E8.02 | E8.03 | E8.08
+programme_b: B16 | B19
+
+## EP-E8B
+titre: Réponses dans le temps : VAR, Granger, projections locales et effet d'un événement
+titre_en: Responses over time: VARs, Granger causality, local projections and event effects
+contient: E8.04 | E8.05 | E8.06 | E8.07
+programme_b: B16 | B19
+
+## EP-E9A
+titre: La volatilité qui change : de l'ARCH au GARCH, avec un cas complet
+titre_en: Changing volatility: from ARCH to GARCH, with a full case study
+contient: E9.01 | E9.02 | E9.03
+programme_b: B19
+
+## EP-E9B
+titre: Crises et risque : asymétries, VaR, Expected Shortfall et changements de régime
+titre_en: Crises and risk: asymmetry, VaR, Expected Shortfall and regime switching
+contient: E9.04 | E9.05 | E9.06
+programme_b: B19
+
+## EP-E9C
+titre: Volatilité avancée : stochastique, multivariée, réalisée et mémoire longue
+titre_en: Advanced volatility: stochastic, multivariate, realized and long memory
+contient: E9.07 | E9.08 | E9.09 | E9.10
+programme_b: B19
+
+## EP-E10A
+titre: Choix et comptages : probit, logit, comptage et choix discrets
+titre_en: Choices and counts: probit, logit, count models and discrete choice
+contient: E10.01 | E10.03 | E10.04 | E10.07
+programme_b: B19
+
+## EP-E10B
+titre: Sélection, demande, distributions et durées
+titre_en: Selection, demand, distributions and durations
+contient: E10.02 | E10.05 | E10.06 | E10.08
+programme_b: B19
+
+## EP-E11A
+titre: Étude de cas : que rapporte une année d'études ?
+titre_en: Case study: what is a year of school worth?
+contient: E11.01
+programme_b: B19
+
+## EP-E11B
+titre: Étude de cas : le salaire minimum et l'emploi
+titre_en: Case study: the minimum wage and jobs
+contient: E11.02
+programme_b: B19
+
+## EP-E11C
+titre: Étude de cas : l'élasticité-prix de la demande d'énergie
+titre_en: Case study: the price elasticity of energy demand
+contient: E11.03
+programme_b: B19
+
+## EP-E11D
+titre: Étude de cas : banques centrales, taux d'intérêt et inflation
+titre_en: Case study: central banks, interest rates and inflation
+contient: E11.04
+programme_b: B19
+
+# PARTIE Pilier 3 · Quotidien
+
+## EP-Q1
+titre: L'argent en chiffres : inflation, intérêts, crédit, soldes, loto et logement
+titre_en: Money in numbers: inflation, interest, loans, discounts, the lottery and housing
+contient: Q1.01 | Q1.02 | Q1.03 | Q1.04 | Q1.05 | Q9.01 | Q9.02
+programme_b: B10 | B08
+
+## EP-Q2
+titre: Comparer des risques : relatif ou absolu, avion ou voiture, tests et vélo
+titre_en: Comparing risks: relative or absolute, plane or car, tests and cycling
+contient: Q2.01 | Q2.02 | Q2.03 | Q2.04 | Q2.05 | Q2.06 | Q15.01
+programme_b: B08 | B10
+
+## EP-Q3
+titre: Les pièges de l'intuition : bus, amis, coïncidences, main chaude et bouchons
+titre_en: Intuition traps: buses, friends, coincidences, hot hands and traffic jams
+contient: Q3.01 | Q3.02 | Q3.03 | Q3.04 | Q3.05 | Q15.02
+programme_b: B08
+
+## EP-Q4A
+titre: Mesurer l'économie : PIB, chômage, inégalités et pauvreté
+titre_en: Measuring the economy: GDP, unemployment, inequality and poverty
+contient: Q4.01 | Q4.02 | Q4.03 | Q4.07
+programme_b: B10
+
+## EP-Q4B
+titre: Mesurer la société : espérance de vie, population, écart de salaire et mobilité
+titre_en: Measuring society: life expectancy, population, pay gap and mobility
+contient: Q4.04 | Q4.06 | Q4.08 | Q4.09
+programme_b: B10
+
+## EP-Q5
+titre: Les algorithmes en chiffres : tests A/B, recommandations et scores des IA
+titre_en: Algorithms in numbers: A/B tests, recommendations and AI scores
+contient: Q5.01 | Q5.02 | Q5.03 | Q5.04 | Q5.05
+programme_b: B15
+
+## EP-Q6
+titre: Le sport en chiffres : penalties, classements, collections et expected goals
+titre_en: Sport in numbers: penalties, rankings, collections and expected goals
+contient: Q6.01 | Q6.02 | Q6.03 | Q6.04 | Q6.05
+programme_b: B08 | B10
+
+## EP-Q7
+titre: Démographie : incidence, taux standardisés, fécondité et migrations
+titre_en: Demography: incidence, standardized rates, fertility and migration
+contient: Q7.01 | Q7.02 | Q7.03 | Q7.04
+programme_b: B10
+
+## EP-Q8
+titre: Énergie et climat : puissance, émissions, canicules et dépendance
+titre_en: Energy and climate: capacity, emissions, heatwaves and dependence
+contient: Q8.01 | Q8.02 | Q8.03 | Q8.04
+programme_b: B10
+
+## EP-Q10
+titre: Dette, déficit et commerce : stocks, flux et effet boule de neige
+titre_en: Debt, deficits and trade: stocks, flows and the snowball effect
+contient: Q10.01 | Q10.02 | Q10.03 | Q10.04
+programme_b: B10
+
+## EP-Q11
+titre: Classements, sondages et titres de presse : lire les chiffres des médias
+titre_en: Rankings, polls and headlines: reading the numbers in the news
+contient: Q4.05 | Q11.01 | Q11.02 | Q12.01 | Q12.02
+programme_b: B10 | B11
+
+## EP-Q13
+titre: Compter dans les crises : victimes, réfugiés, faim et prix alimentaires
+titre_en: Counting in crises: casualties, refugees, hunger and food prices
+contient: Q13.01 | Q13.02 | Q14.01 | Q14.02
+programme_b: B10
