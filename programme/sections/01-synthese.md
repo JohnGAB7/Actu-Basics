@@ -1,7 +1,7 @@
 # Synthèse pour décision {#synthese}
 
 <div class="encadre statut" markdown="1">
-**Statut du document.** Version {{VERSION}}, construite le {{DATE}}. La version 1.12 a été validée par JG le 2/11/2026 (PR #12). La version 1.13 répond à sa demande du 21/11/2026 : des vidéos longues, dont chacune aborde plusieurs notions cohérentes. Proposition de Claude, relecture éditoriale de ChatGPT, validation de JG. Rien n'est publié, rien n'est fusionné dans `main`.
+**Statut du document.** Version {{VERSION}}, construite le {{DATE}}. La version 1.12 a été validée par JG le 2/11/2026 (PR #12). La version 1.13 répond à sa demande du 21/11/2026 : des vidéos longues, dont chacune aborde plusieurs notions cohérentes. Proposée par Claude, validée par JG le 22/11/2026 (PR #49) ; les titres des épisodes restent des titres de travail, relus par ChatGPT avant production. Rien n'est encore publié.
 </div>
 
 ## Ce que la chaîne enseignera

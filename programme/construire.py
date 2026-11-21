@@ -37,7 +37,7 @@ DEPOT = RACINE.parent
 sys.path.insert(0, str(DEPOT / "production"))
 from lmec.pedagogie import evaluer, tolerance_par_defaut  # noqa: E402
 
-VERSION = "1.13 — proposition du 21/11/2026, à valider par JG"
+VERSION = "1.13 — validée par JG le 22/11/2026"
 NOM_PDF = "PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf"
 
 # Épisode long qui contient chaque entrée (rempli dans main à partir de catalogue/episodes.txt).
