@@ -41,6 +41,30 @@ Les 320 entrées, leurs prérequis et leurs contrôles. Les 4 niveaux, les 3 pil
 - Un Short se termine toujours par l'épisode complet : vidéo associée sur YouTube Shorts, « lien en bio » sur TikTok.
 - Contrôles anti-blocage conservés pour toutes les plateformes : première image pleine, aucun plan figé plus de 2 s, logo discret, étiquette « contenu généré par IA », pas de lien en légende, vocabulaire sensible cadré (voir le document de diagnostic TikTok du 21/11).
 
+## Sources : ce qui est couvert et ce qui manque
+
+Chaque épisode s'appuie sur le registre des sources de Programme-B (`docs/SOURCE-REGISTER.md`, version 1.0 du 21/11/2026), par l'intermédiaire de son champ `programme_b`. Une page de catalogue universitaire situe le niveau mais ne permet pas de vérifier un contenu : seuls les cours détaillés (notes, polycopiés, manuels ouverts) comptent comme sources de vérification.
+
+| Bloc Programme-B | Épisodes concernés | Cours détaillés déjà au registre | État |
+|---|---|---|---|
+| B01, B03, B04, B05 | EP-M01 à EP-M05 | OpenStax (S18 à S21, S31, S32), MIT 18.06, 18.065, 18.01SC, 18.02SC, 18.03SC, 18.100B, Strang, Axler | Couvert |
+| B08 Probabilités | EP-S4A à EP-S5D, une partie du Quotidien | Harvard Stat 110 (S03, S46), MIT 18.05 (S04, S48), MIT 6.041SC (S47) | Couvert |
+| B09 Processus | EP-S16 | MIT 18.445, 6.262, 15.070J (S50 à S53) | Couvert |
+| B10 Descriptif et sondage | EP-S1A à EP-S3C, EP-S6B | MIT 15.075J (S54), NIST e-Handbook (S55), Lohr (S56) | Couvert |
+| B11 Inférence | EP-S6A, EP-S7A à EP-S8C, EP-S11A, EP-S12A, EP-S12B | MIT 18.05 seulement (niveau introductif) | Partiel : manque un cours de statistique mathématique et un cours bayésien |
+| B12 Régression et modèles | EP-S9A à EP-S10B, EP-S11C | MIT 18.05 seulement | Partiel : manquent la régression multiple, les GLM et les modèles mixtes |
+| B13 Multivarié | EP-S13A à EP-S13D | MIT 18.065 et 18.657 | Partiel : manquent l'analyse des correspondances, les copules et les données fonctionnelles |
+| B14 Causalité et expériences | EP-S9D, EP-E7A, EP-E7B | Aucun | Lacune |
+| B15 Apprentissage | EP-S17A à EP-S17D, EP-S19A à EP-S19C, EP-Q5 | MIT 18.657 (théorie seulement) | Partiel : manquent les arbres, le boosting et les réseaux de neurones |
+| B16 Séries temporelles | EP-S14A à EP-S14C, EP-E8A, EP-E8B | Aucun | Lacune |
+| B17 Reproductibilité | EP-S11B, EP-S19C | Documentation technique seulement | Lacune |
+| B18 Actuariat et survie | EP-S15, pilier A | Aucun | Lacune |
+| B19 Économétrie | EP-E1 à EP-E11D | Aucun | Lacune |
+| B20 Théorie avancée | EP-S18A, EP-S18B | MIT 18.100B et 18.657 | Partiel |
+| Quotidien (chiffres réels) | EP-Q1 à EP-Q13 | Sans objet : sources statistiques officielles (Insee, Eurostat, OMS, etc.), vérifiées et datées à la préparation, selon le protocole V1.12 | Par fiche |
+
+Règle : aucun épisode marqué « lacune » ou « partiel » ne passe en fiche de conception avant que le registre contienne au moins un cours détaillé pour ses chapitres. JG fournit ou valide ces cours spécialisés.
+
 ## À décider ensuite
 
 - Valider les 89 épisodes et leurs titres (les titres restent des titres de travail, relus par ChatGPT).
