@@ -13,6 +13,7 @@ from __future__ import annotations
 import datetime as dt
 import re
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -433,12 +434,72 @@ def controler_fiche(fiche: Fiche, r: Rapport, aujourd_hui: dt.date | None = None
     controler_validation(fiche, r, aujourd_hui)
     controler_sources(fiche, r, aujourd_hui)
     controler_editions(fiche, r)
+    controler_parcours(fiche, r)
     if fiche.pedagogique:
         from .pedagogie import controler_pedagogie
         _coherence_textes(fiche, r)
         controler_pedagogie(fiche, r)
     else:
         controler_coherence(fiche, r)
+
+
+@lru_cache(maxsize=1)
+def _charte_parcours() -> dict:
+    import yaml
+    chemin = Path(__file__).resolve().parents[1] / "charte.yaml"
+    return (yaml.safe_load(chemin.read_text(encoding="utf-8")) or {}).get("parcours_spectateur") or {}
+
+
+def _contient(textes: list[str], mots: list[str]) -> bool:
+    bas = " ".join(textes).lower().replace("’", "'")
+    return any(m.lower() in bas for m in mots)
+
+
+def controler_parcours(fiche: Fiche, r: Rapport, conf: dict | None = None) -> None:
+    """Accueil et clôture (décision de JG, 21/11/2026 ; règles dans charte.yaml, parcours_spectateur).
+
+    Épisode long (youtube_lesson) : accueil qui salue et remercie, parmi les premières scènes mais après
+    l'ouverture ; clôture juste avant la fin, qui oriente (suite) et invite à s'abonner, aimer, partager.
+    Extrait et bande-annonce : pas d'accueil, la clôture renvoie vers l'épisode complet."""
+    conf = _charte_parcours() if conf is None else conf
+    ajouter = lambda niveau, message, langue: (r.bloquant if niveau == BLOQUANT else r.avertir)(message, langue)
+    if not conf:
+        return
+    niveau = BLOQUANT if fiche.format in (conf.get("bloquant") or []) else AVERTISSEMENT
+    for langue in fiche.langues:
+        ed = fiche.editions[langue]
+        types = [s.type for s in ed.scenes]
+        textes = lambda t: [x for s in ed.scenes if s.type == t for x in (s.texte, s.voix_off)]
+        if fiche.format == "youtube_lesson":
+            rang = int(conf.get("accueil_rang_max", 3))
+            if "accueil" not in types[:rang]:
+                ajouter(niveau, f"Épisode sans scène « accueil » parmi les {rang} premières (saluer, remercier, "
+                                  "annoncer ce que l'épisode apporte)", langue)
+            elif types[0] == "accueil":
+                r.avertir("L'épisode commence par l'accueil : ouvrir sur la question de l'épisode, puis saluer",
+                          langue)
+            elif not _contient(textes("accueil"), (conf.get("accueil") or {}).get(langue, [])):
+                ajouter(niveau, "L'accueil ne salue ni ne remercie le spectateur", langue)
+            else:
+                r.ok.append(f"[{langue}] Accueil présent après l'ouverture")
+            if "cloture" not in types or (types[-1] == "fin" and types[-2:-1] != ["cloture"]):
+                ajouter(niveau, "Épisode sans scène « cloture » juste avant la fin (orientation et invitations)",
+                          langue)
+            else:
+                manquants = [k for k, mots in (conf.get("invitations") or {}).items()
+                             if not _contient(textes("cloture"), mots.get(langue, []))]
+                if manquants:
+                    ajouter(niveau, f"Clôture incomplète, il manque : {', '.join(manquants)} "
+                                      "(suite = épisode suivant ou autres vidéos)", langue)
+                else:
+                    r.ok.append(f"[{langue}] Clôture complète : suite, abonnement, like, partage")
+        else:
+            if "accueil" in types:
+                r.avertir("Accueil dans un extrait ou une bande-annonce : il fait partir le spectateur dès les "
+                          "premières secondes, le garder pour l'épisode long", langue)
+            if not _contient(textes("cloture") + textes("fin"), (conf.get("renvoi_episode") or {}).get(langue, [])):
+                ajouter(niveau, "La fin ne renvoie pas vers l'épisode complet (scène « cloture » ou « fin »)",
+                          langue)
 
 
 # --------------------------------------------------------------------------- rendus
@@ -525,7 +586,8 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         return  # signalé avant le rendu par controler_marque
     r.verifier(logos.langue == langue, f"[{langue}] Logo de la bonne langue",
                f"[{langue}] Logo de la langue « {logos.langue} » utilisé pour la version {langue.upper()}", BLOQUANT)
-    noms = {"video": "vidéo", "lecon": "vidéo 16:9", "carrousel": "carrousel", "couverture": "couverture"}
+    noms = {"video": "vidéo", "lecon": "vidéo 16:9", "carrousel": "carrousel", "couverture": "couverture",
+            "mobile": "logo mobile"}
     horizontal = getattr(rendu, "format", "") == "lecon"   # cours 16:9 : pas d'interface d'application par-dessus
     zone_c = charte["marges_carrousel"]
     for support, index, type_ in attendus:
@@ -549,6 +611,10 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
             r.avertir(f"Logo agrandi au-delà de sa résolution ({pose.largeur} px pour un fichier de "
                       f"{pose.largeur_native} px, {lieu}) : risque de flou, fournir un fichier plus grand", langue)
         ecran_tel = 844 if horizontal else 390   # téléphone tenu à l'horizontale pour un cours 16:9
+        if support == "mobile":   # signature discrète en mouvement : taille et lisibilité jugées sur la fin
+            r.ok.append(f"[{langue}] Logo mobile {pose.variante} ({lieu}) : {pose.largeur} px, zone de protection "
+                        "libre sur toute sa course")
+            continue
         if pose.largeur * ecran_tel / w < _logo.LARGEUR_MOBILE_MIN:
             r.avertir(f"Logo petit sur téléphone ({round(pose.largeur * ecran_tel / w)} px à l'écran, {lieu})", langue)
         lis = (charte.get("logo") or {}).get("lisibilite") or {}

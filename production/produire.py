@@ -207,6 +207,10 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
             for a in rendu_v.alertes:
                 rapport.avertir(a, langue)
             attendus = [(format_v, i, s.type) for i, s in enumerate(edition.scenes) if rendu_v.logo_prevu(s)]
+            for i, s in enumerate(edition.scenes):   # logo mobile : pire position de sa course, par scène
+                if rendu_v.mobile_prevu(s):
+                    rendu_v.mesurer_mobile(s, i, len(edition.scenes))
+                    attendus.append(("mobile", i, s.type))
             if rendu_v.logo_prevu(edition.scenes[0], couverture=True):
                 attendus.append(("couverture", 0, edition.scenes[0].type))
             controler_logo(langue, rendu_v, attendus, charte, plateformes, rapport)

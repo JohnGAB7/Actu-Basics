@@ -24,7 +24,7 @@ DUREES_FORMAT = {            # (min, max) en secondes, avertissement seulement
 
 FORMATS_SCENES = {           # scènes possibles par format (au-delà : avertissement)
     "short": {"accroche", "chiffre", "texte", "graphique", "source", "fin", "formule", "etapes", "courbe",
-              "exercice", "correction", "animation"},
+              "exercice", "correction", "animation", "cloture"},
 }
 LIMITE_RANGE = 1_000_000
 LIMITE_FACTORIELLE = 5_000

@@ -13,7 +13,7 @@ from .rendu import Rendu
 
 FONDU_S = 0.25          # fondu enchaîné entre scènes
 HAUTEUR_BARRE = 10      # barre de progression (pixels)
-DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0,
+DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0, "accueil": 3.0, "cloture": 5.0,
               "titre": 2.5, "formule": 5.0, "etapes": 4.0, "courbe": 5.0, "exercice": 5.0, "correction": 4.0, "animation": 5.0}
 
 
@@ -63,6 +63,7 @@ def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: P
     n_total = round(total * fps)
     accent = rendu.c["accent"]
     image_globale = 0
+    mobile_precedent = False
     try:
         for i, (scene, duree) in enumerate(zip(edition.scenes, durees)):
             n_images = round(duree * fps)
@@ -73,12 +74,20 @@ def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: P
                 image = rendu.dessiner(scene, i, n_scenes, k / fps) if k < n_anim else statique.copy()
                 if k < n_fondu:
                     image = Image.blend(precedente, image, (k + 1) / (n_fondu + 1))
+                # Logo mobile, posé après le fondu : il glisse en continu d'une scène à l'autre et
+                # s'efface pendant le fondu vers une scène qui n'en porte pas (scène de fin).
+                temps = image_globale / fps
+                if rendu.mobile_prevu(scene):
+                    rendu.poser_mobile(image, temps, scene, i)
+                elif k < n_fondu and mobile_precedent:
+                    rendu.poser_mobile(image, temps, scene, i, opacite=1 - (k + 1) / (n_fondu + 1))
                 # Barre de progression en haut : incite à regarder jusqu'au bout.
                 image_globale += 1
                 ImageDraw.Draw(image).rectangle(
                     (0, 0, round(rendu.largeur * image_globale / n_total), HAUTEUR_BARRE), fill=accent)
                 proc.stdin.write(image.tobytes())
             precedente = statique
+            mobile_precedent = rendu.mobile_prevu(scene)
         proc.stdin.close()
     except BrokenPipeError:
         pass

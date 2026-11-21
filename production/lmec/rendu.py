@@ -1,6 +1,8 @@
 """Dessin des scènes (images) avec Pillow, communes à la vidéo et au carrousel."""
 from __future__ import annotations
 
+import math
+
 import os
 import re
 from functools import lru_cache
@@ -185,6 +187,59 @@ class Rendu(ScenesPedagogiques):
         zone = (g, h, d, b - 110) if position.startswith("bas") else self.zone
         x, y = _logo.boite_position(position, zone, largeur, hauteur, int(c.get("marge_px", 0)))
         return x, y, largeur, position
+
+    # ------------------------------------------------------------------ logo mobile
+    def conf_mobile(self) -> dict:
+        return (self.logos.conf or {}).get("mobile") or {}
+
+    def mobile_prevu(self, scene: Scene) -> bool:
+        """Le logo mobile accompagne-t-il cette scène ? (vidéo et cours 16:9, hors scène de fin)"""
+        c = self.conf_mobile()
+        if not (self.logos.actif and self.logos.images and c.get("actif")):
+            return False
+        if self.format not in (c.get("formats") or []):
+            return False
+        return scene.type not in (c.get("sauf_scenes") or ["fin"])
+
+    def _mobile_taille(self) -> tuple[int, int, int]:
+        """(largeur, hauteur, zone de protection) du logo mobile, en pixels."""
+        lg = self.conf_mobile().get("largeur_px", 160)
+        lg = int(lg.get(self.format, 160) if isinstance(lg, dict) else lg)
+        ref = next(iter(self.logos.images.values()))
+        return lg, round(ref.height * lg / ref.width), round(lg * float(self.logos.conf.get("zone_protection", 0.08)))
+
+    def mobile_position(self, temps: float) -> tuple[int, int]:
+        """Coin haut-gauche du logo mobile à `temps` secondes du début de la vidéo.
+
+        Aller-retour horizontal, doux (cosinus), dans le bandeau du haut de la zone de sécurité :
+        rien d'autre n'y est dessiné sur une vidéo, et l'espace sous le logo est réservé (dessiner)."""
+        g, h, dr, _ = self.zone
+        lg, _, p = self._mobile_taille()
+        periode = max(4.0, float(self.conf_mobile().get("periode_s", 40)))
+        course = max(0, dr - g - lg - 2 * p)
+        k = 0.5 - 0.5 * math.cos(2 * math.pi * temps / periode)
+        return g + p + round(course * k), h + p
+
+    def poser_mobile(self, image, temps: float, scene: Scene, index: int, opacite: float = 1.0,
+                     mesurer: bool = False):
+        x, y = self.mobile_position(temps)
+        lg, _, _ = self._mobile_taille()
+        return _logo.poser(image, self._fond, self.logos, x=x, y=y, largeur=lg,
+                           variante_demandee=self.logos.conf.get("variante", "auto"),
+                           protection=float(self.logos.conf.get("zone_protection", 0.08)),
+                           support="mobile", scene=scene.type, index=index, opacite=opacite, mesurer=mesurer)
+
+    def mesurer_mobile(self, scene: Scene, index: int, total: int) -> None:
+        """Contrôle qualité : pose le logo mobile aux deux extrémités et au milieu de sa course sur
+        l'image finale de la scène, et garde la pose la plus défavorable (recouvrement maximal)."""
+        if not self.mobile_prevu(scene):
+            return
+        statique = self.dessiner(scene, index, total, None)
+        periode = max(4.0, float(self.conf_mobile().get("periode_s", 40)))
+        poses = [self.poser_mobile(statique.copy(), periode * f, scene, index, mesurer=True) for f in (0, 0.25, 0.5)]
+        poses = [p for p in poses if p]
+        if poses:
+            self.poses[("mobile", index)] = max(poses, key=lambda p: p.recouvrement)
 
     def _poser_logo(self, image, x, y, largeur, scene, index, t, couverture, opacite=1.0):
         support = "couverture" if couverture else self.format
@@ -411,6 +466,8 @@ class Rendu(ScenesPedagogiques):
             "graphique": 0.4 + len(self.fiche.donnees["points"]) * 0.15 + 1.0 if self.fiche.donnees else 0,
             "source": 1.2,
             "fin": 0.1 + n * DECALAGE_MOT + 1.2,
+            "accueil": 0.1 + n * self._decalage_texte(scene) + ENTREE_MOT,
+            "cloture": 0.1 + n * self._decalage_texte(scene) + ENTREE_MOT,
         }[scene.type]
 
     def _decalage_texte(self, scene):
@@ -437,7 +494,14 @@ class Rendu(ScenesPedagogiques):
                 haut = max(haut, y + hl + p + 20)
             elif position.startswith("bas"):
                 bas = min(bas, y - p - 20)
-        self._cadre(d, index, total, nom_marque=not (coin and coin[3].startswith("haut")))
+        mobile = not couverture and self.mobile_prevu(scene)
+        if mobile:   # bandeau du haut réservé au logo mobile : le texte de la scène n'y passe jamais
+            _, hm, pm = self._mobile_taille()
+            haut = max(haut, h + hm + 2 * pm + 20)
+        # Plus de nom de marque fixe sur les vidéos (décision de JG, 21/11/2026) : seul le carrousel
+        # (images fixes) garde l'en-tête « ACTU-BASICS » quand le logo n'est pas en haut.
+        nom_marque = self.format == "carrousel" and not (coin and coin[3].startswith("haut"))
+        self._cadre(d, index, total, nom_marque=nom_marque)
         largeur = dr - g
         x_c = (g + dr) // 2
         ctx = f"{self.langue}/{self.format}/scène {index + 1} {scene.type}"
@@ -483,6 +547,15 @@ class Rendu(ScenesPedagogiques):
         p, lignes, pas, hh = self.ajuster_riche(scene.texte, "gras", largeur, bas - haut, 80, 42, 1.25, ctx)
         self.ecrire_riche(d, lignes, p, pas, haut + (bas - haut - hh) // 2, self.c["texte"], t, 0.1,
                           decalage=self._decalage_texte(scene))
+
+    def _scene_accueil(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
+        """Accueil : salutation et remerciement, puis ce que l'épisode va apporter (texte de la fiche)."""
+        self._scene_texte(d, scene, g, haut, dr, bas, largeur, x_c, t, ctx)
+
+    def _scene_cloture(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
+        """Clôture : récapitulatif, orientation (épisode suivant, autres vidéos), invitations à s'abonner,
+        aimer et partager. Une ligne par invitation dans la fiche (retours à la ligne)."""
+        self._scene_texte(d, scene, g, haut, dr, bas, largeur, x_c, t, ctx)
 
     def _scene_fin(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         if self.logo_prevu(scene, self._couverture) and self.logos.images:
