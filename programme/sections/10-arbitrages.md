@@ -288,3 +288,18 @@ JG a relevé que les vidéos ne commençaient pas par une salutation qui remerci
 | Comptes utilisateurs | Le site aura des comptes (progression, exercices). Base prévue : le projet Supabase existant de JG, à configurer dans une PR dédiée au site | Décision de JG du 22/11/2026 ; mise en œuvre à venir |
 | Voix | Voix actuelle conservée ; pas d'ElevenLabs pour l'instant | Décision de JG du 22/11/2026 |
 | Règle 6 du guide des logos | Le logo reste présent dans chaque vidéo (mobile pendant la vidéo, fixe sur la fin de marque), donc la règle reste respectée | Sans changement |
+
+## 10.16 Complétude jusqu'au niveau expert (22/11/2026)
+
+JG a laissé Claude juger si le programme est complet « pour atteindre un niveau érudit ». Verdict : les niveaux 1 à 3 et les branches statistiques sont complets ; la boîte à outils mathématique ne l'était pas. Elle avait été conçue comme une série de rappels courts, suffisants pour comprendre, insuffisants pour maîtriser la théorie des niveaux 4 et S18. Trois notions théoriques classiques manquaient aussi.
+
+| Ajout | Chapitres | Épisode | Pourquoi c'est indispensable |
+|---|---|---|---|
+| Analyse | M2.04 Taylor, M2.05 techniques d'intégration, M2.06 intégrales doubles et jacobien | EP-M03B (nouveau) | La méthode delta (S18.02) repose sur Taylor ; la loi d'une transformation de variables et les lois jointes reposent sur le jacobien |
+| Optimisation et calcul numérique | M2.07 convexité et Lagrange, M4.05 virgule flottante, conditionnement, Newton-Raphson | EP-M03C (nouveau) | Maximum de vraisemblance, régression pénalisée et apprentissage sont des problèmes d'optimisation résolus numériquement |
+| Algèbre linéaire | M3.04 systèmes, rang et inverse, M3.05 projections et moindres carrés, M3.06 matrices définies positives et SVD | EP-M04B (nouveau) | Régression multiple en écriture matricielle, colinéarité, loi normale multivariée et ACP |
+| Raisonnement et fondements | M4.03 lire et écrire une démonstration, M4.04 l'espérance comme intégrale de Lebesgue | EP-M05 (élargi) | Sans savoir lire une démonstration, le niveau expert reste une suite de recettes |
+| Théorie statistique | S18.07 exhaustivité et Rao-Blackwell, S18.08 lemme de Neyman-Pearson | EP-S18C (nouveau) | Ce sont, avec Cramér-Rao, les résultats qui disent ce qu'est un « meilleur » estimateur ou un « meilleur » test |
+| Processus | S16.05 martingales | EP-S16 (élargi) | Notion de base en finance et en actuariat, et clé de nombreux théorèmes limites |
+
+Résultat : 93 épisodes, 333 chapitres, environ 44 h. Les deux nouveaux exercices chiffrés (S16.05, S18.08) sont recalculés par `construire.py` (137 calculs vérifiés). La pratique informatique (R, Python) n'est pas ajoutée comme série à part : elle passe par les laboratoires et par les scripts reproductibles fournis avec chaque épisode (arbitrage A9).

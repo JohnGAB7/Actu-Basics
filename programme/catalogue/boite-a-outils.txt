@@ -137,6 +137,47 @@ duree: 6-8
 format: educational
 forme: rappel
 
+## M2.04
+titre: Approcher une fonction : développements de Taylor
+titre_en: Approximating a function: Taylor expansions
+question: Pourquoi peut-on remplacer une courbe compliquée par une droite ou une parabole, tant qu'on reste près d'un point ?
+pre: M2.01 | M1.04
+obj: Écrire le développement de Taylor d'ordre 1 et 2 | Approcher ln(1 + x) et e^x près de 0 et chiffrer l'erreur | Reconnaître Taylor dans la méthode delta et dans l'approximation de la vraisemblance
+duree: 8-10
+format: educational
+forme: lecon
+
+## M2.05
+titre: Calculer une intégrale : primitives, intégration par parties, changement de variable
+titre_en: Computing integrals: antiderivatives, integration by parts, substitution
+question: Comment calculer exactement une espérance ou une probabilité continue ?
+pre: M2.02 | M1.04
+obj: Calculer une primitive usuelle | Appliquer l'intégration par parties à l'espérance de la loi exponentielle | Faire un changement de variable simple
+duree: 8-10
+format: educational
+forme: lecon
+
+## M2.06
+titre: Intégrales doubles et changement de variables (jacobien)
+titre_en: Double integrals and change of variables (the Jacobian)
+question: Comment calculer une probabilité qui dépend de deux variables aléatoires à la fois ?
+pre: M2.03 | M2.05
+obj: Calculer une intégrale double sur un rectangle | Expliquer le rôle du jacobien | Trouver la loi d'une transformation de variables
+duree: 8-10
+format: educational
+forme: lecon
+
+## M2.07
+titre: Optimiser : convexité, minimum sous contrainte et multiplicateurs de Lagrange
+titre_en: Optimization: convexity, constrained minima and Lagrange multipliers
+question: Pourquoi certains problèmes ont-ils un seul minimum, facile à trouver, et d'autres non ?
+pre: M2.03
+obj: Reconnaître une fonction convexe | Trouver un minimum sous une contrainte d'égalité avec un multiplicateur de Lagrange | Relier ces outils au maximum de vraisemblance et à la régression pénalisée
+duree: 8-10
+format: educational
+forme: lecon
+
+
 # MODULE M3
 niveau: 4
 titre: Niveau M3 — Algèbre linéaire
@@ -175,13 +216,44 @@ duree: 8-10
 format: educational
 forme: rappel
 
+## M3.04
+titre: Systèmes linéaires, rang et matrice inverse
+titre_en: Linear systems, rank and the inverse matrix
+question: Quand un système d'équations a-t-il une solution unique ?
+pre: M3.02
+obj: Résoudre un système 2 × 2 et 3 × 3 | Interpréter le rang | Calculer l'inverse d'une matrice 2 × 2 et dire quand elle n'existe pas
+duree: 8-10
+format: educational
+forme: lecon
+
+## M3.05
+titre: Projections et moindres carrés
+titre_en: Projections and least squares
+question: Pourquoi la droite de régression est-elle une ombre portée ?
+pre: M3.04
+obj: Projeter un vecteur sur une droite puis sur un plan | Écrire les équations normales X'Xβ = X'y | Expliquer la colinéarité comme un rang déficient
+duree: 8-10
+format: educational
+forme: lecon
+
+## M3.06
+titre: Matrices symétriques, définies positives et décomposition en valeurs singulières
+titre_en: Symmetric and positive definite matrices, and the singular value decomposition
+question: Pourquoi une matrice de covariance a-t-elle toujours des valeurs propres positives ou nulles ?
+pre: M3.03 | M3.05
+obj: Reconnaître une matrice définie positive | Relier covariance, valeurs propres et ACP | Interpréter la SVD comme rotation, étirement, rotation
+duree: 8-10
+format: educational
+forme: lecon
+
+
 # MODULE M4
 niveau: 4
 titre: Niveau M4 — Fondements théoriques
 titre_en: Level M4 — Theoretical foundations
 pre: M3
 maths: M4
-but: Uniquement pour les branches théoriques (S18) : convergence, espaces probabilisés. Le parcours principal n'en a pas besoin.
+but: Pour les branches théoriques (S18) et le niveau expert : démonstrations, convergence, espaces probabilisés, intégrale de Lebesgue, calcul numérique. Le parcours principal n'en a pas besoin, le niveau expert si.
 
 ## M4.01
 titre: Suites, séries et convergence
@@ -202,3 +274,34 @@ obj: Énoncer les trois axiomes des probabilités | Dire quand ce cadre devient 
 duree: 8-10
 format: educational
 forme: rappel
+
+## M4.03
+titre: Lire et écrire une démonstration
+titre_en: Reading and writing a proof
+question: Comment être sûr qu'un résultat est vrai dans tous les cas, et pas seulement sur des exemples ?
+pre: M1.02
+obj: Distinguer hypothèse, conclusion et contre-exemple | Mener une démonstration directe, par l'absurde et par récurrence | Repérer une démonstration fausse
+duree: 8-10
+format: educational
+forme: lecon
+
+## M4.04
+titre: L'espérance comme intégrale : l'idée de Lebesgue
+titre_en: Expectation as an integral: Lebesgue's idea
+question: Comment une même définition de l'espérance couvre-t-elle à la fois les dés et les durées de vie ?
+pre: M4.02 | M2.02
+obj: Expliquer l'intégrale de Lebesgue par le rangement des valeurs plutôt que des abscisses | Relier somme discrète et intégrale continue dans une seule définition | Énoncer le théorème de convergence dominée en intuition
+duree: 8-10
+format: educational
+forme: lecon
+
+## M4.05
+titre: Calculer avec un ordinateur : virgule flottante, conditionnement et Newton-Raphson
+titre_en: Computing with a machine: floating point, conditioning and Newton-Raphson
+question: Pourquoi 0,1 + 0,2 ne fait-il pas exactement 0,3 pour un ordinateur, et pourquoi est-ce important en statistique ?
+pre: M2.04 | M3.04
+obj: Expliquer l'erreur d'arrondi en virgule flottante | Repérer un problème mal conditionné | Faire deux itérations de Newton-Raphson pour trouver un maximum de vraisemblance
+duree: 8-10
+format: educational
+forme: lecon
+

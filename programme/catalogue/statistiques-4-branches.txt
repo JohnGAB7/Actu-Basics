@@ -566,6 +566,23 @@ duree: 8-10
 format: educational
 forme: lecon
 
+## S16.05
+titre: Les martingales : le jeu équitable
+titre_en: Martingales: the fair game
+question: Peut-on battre un jeu équitable en changeant de mise au bon moment ?
+pre: S16.01 | S5.02
+obj: Définir une martingale comme un processus dont l'espérance conditionnelle du lendemain est la valeur d'aujourd'hui | Montrer qu'une stratégie de mise ne change pas l'espérance d'un jeu équitable | Citer les usages en finance et en actuariat
+intuition: Dans un jeu équitable, votre meilleure prévision de votre fortune de demain est votre fortune d'aujourd'hui, quelle que soit votre stratégie.
+exemple: La martingale du joueur qui double sa mise après chaque perte : elle gagne souvent un peu et perd rarement beaucoup.
+maths: M2.
+erreurs: Croire qu'une stratégie de mise peut transformer un jeu défavorable ou équitable en jeu gagnant.
+exercice: Pile ou face équitable, mise de 1 € doublée après chaque perte, au plus 3 parties. Quelle est l'espérance du gain ?
+correction: Gain de +1 € avec probabilité 1 − 1/8 = 7/8 ; perte de 1 + 2 + 4 = 7 € avec probabilité 1/8. Espérance : 7/8 × 1 − 1/8 × 7 = 0 €. La stratégie change la forme du risque, pas l'espérance.
+duree: 8-10
+format: educational
+forme: paradoxe
+
+
 # MODULE S17
 niveau: 4
 titre: Apprentissage statistique et passerelles vers le machine learning
@@ -834,6 +851,42 @@ erreurs: Croire qu'une crue centennale n'arrive qu'une fois par siècle ; ignore
 exercice: Une crue a une probabilité de 1 % par an. Quelle est la probabilité d'en connaître au moins une en 30 ans ?
 correction: 1 − 0,99³⁰ ≈ 26 %. Un événement « centennal » a plus d'une chance sur quatre d'arriver pendant un prêt immobilier.
 duree: 10-12
+format: youtube_lesson
+forme: lecon
+
+## S18.07
+titre: Exhaustivité et théorème de Rao-Blackwell
+titre_en: Sufficiency and the Rao-Blackwell theorem
+question: Peut-on résumer un échantillon sans perdre aucune information sur le paramètre ?
+pre: S18.01 | S7.04
+obj: Définir une statistique exhaustive avec le critère de factorisation | Montrer que le nombre de succès est exhaustif pour une proportion | Améliorer un estimateur par Rao-Blackwell
+intuition: Pour estimer la probabilité de succès, l'ordre des succès et des échecs ne dit rien de plus que leur nombre.
+exemple: Dix lancers d'une pièce : seul le nombre de « pile » compte pour estimer p.
+maths: M2-M4.
+maths_comprendre: M2
+maths_demontrer: M4
+erreurs: Croire qu'une statistique exhaustive est forcément un bon estimateur à elle seule.
+exercice: Pour un échantillon de Bernoulli X₁, …, Xₙ, l'estimateur X₁ est sans biais. Que donne Rao-Blackwell en conditionnant par la somme S = X₁ + … + Xₙ ?
+correction: E(X₁ | S) = S / n par symétrie : chaque observation a la même chance d'être un succès sachant S. On obtient la moyenne empirique, de variance p(1 − p)/n au lieu de p(1 − p).
+duree: 12-16
+format: youtube_lesson
+forme: lecon
+
+## S18.08
+titre: Le test le plus puissant : lemme de Neyman-Pearson
+titre_en: The most powerful test: the Neyman-Pearson lemma
+question: À risque d'erreur de première espèce fixé, existe-t-il un meilleur test possible ?
+pre: S8.03 | S7.04
+obj: Énoncer le lemme de Neyman-Pearson | Construire le test le plus puissant entre deux hypothèses simples par le rapport de vraisemblance | Calculer sa puissance sur un exemple
+intuition: On rejette l'hypothèse nulle là où les données sont beaucoup plus probables sous l'alternative que sous la nulle.
+exemple: Une pièce est-elle équilibrée (p = 0,5) ou truquée (p = 0,8) ? On rejette pour un grand nombre de « pile ».
+maths: M2-M4.
+maths_comprendre: M2
+maths_demontrer: M4
+erreurs: Croire que le test le plus puissant contre une alternative l'est contre toutes.
+exercice: Dix lancers ; H₀ : p = 0,5 contre H₁ : p = 0,8. On rejette H₀ si l'on obtient 9 ou 10 « pile ». Calculer le risque de première espèce et la puissance.
+correction: Sous H₀ : P(X ≥ 9) = (10 + 1) / 1 024 ≈ 0,0107. Sous H₁ : P(X ≥ 9) = 10 × 0,8⁹ × 0,2 + 0,8¹⁰ ≈ 0,2684 + 0,1074 = 0,3758. Le test garde un risque d'environ 1 % mais ne détecte la pièce truquée qu'une fois sur trois environ avec dix lancers.
+duree: 12-16
 format: youtube_lesson
 forme: lecon
 

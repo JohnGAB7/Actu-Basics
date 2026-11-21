@@ -229,6 +229,9 @@ VERIFICATIONS = [
     ("S9.01", "4.2 - 0.8 * 3", 1.8, "ordonnée à l'origine"),
     ("E9.05", "250 * 0.01", 2.5, "dépassements attendus sur 250 jours"),
     ("E9.05", "100 * (1 - sum(comb(250, k) * 0.01 ** k * 0.99 ** (250 - k) for k in range(7)))", 1.37, "P(au moins 7 dépassements), en %"),
+    ("S16.05", "7 / 8 * 1 - 1 / 8 * 7", 0, "espérance du gain, mise doublée, 3 parties au plus"),
+    ("S18.08", "(comb(10, 9) + comb(10, 10)) / 2 ** 10", 0.0107, "risque de première espèce, P(X ≥ 9) sous p = 0,5"),
+    ("S18.08", "comb(10, 9) * 0.8 ** 9 * 0.2 + 0.8 ** 10", 0.3758, "puissance, P(X ≥ 9) sous p = 0,8"),
 ]
 # Tolérances explicites quand le texte arrondit volontairement (« environ »).
 TOLERANCES = {("Q6.03", 4200): 50, ("Q1.02", 14): 0.5, ("S8.09", 64): 0.5}

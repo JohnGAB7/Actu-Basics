@@ -24,16 +24,34 @@ titre_en: Derivatives and integrals, without fear
 contient: M2.01 | M2.02 | M2.03
 programme_b: B04 | B05
 
+## EP-M03B
+titre: L'analyse au service des probabilités : Taylor, intégrales et changements de variables
+titre_en: Calculus for probability: Taylor, integrals and changes of variables
+contient: M2.04 | M2.05 | M2.06
+programme_b: B04 | B05
+
+## EP-M03C
+titre: Optimiser et calculer : convexité, Lagrange et méthodes numériques
+titre_en: Optimize and compute: convexity, Lagrange multipliers and numerical methods
+contient: M2.07 | M4.05
+programme_b: B06 | B07
+
 ## EP-M04
 titre: Les matrices, ou comment ranger des données
 titre_en: Matrices, or how to organize data
 contient: M3.01 | M3.02 | M3.03
 programme_b: B03
 
+## EP-M04B
+titre: L'algèbre linéaire de la régression : systèmes, projections et SVD
+titre_en: The linear algebra of regression: systems, projections and the SVD
+contient: M3.04 | M3.05 | M3.06
+programme_b: B03
+
 ## EP-M05
-titre: Convergence et hasard formalisé
-titre_en: Convergence and formal probability
-contient: M4.01 | M4.02
+titre: Raisonner et formaliser : démonstrations, convergence, hasard et intégrale de Lebesgue
+titre_en: Reasoning and formalizing: proofs, convergence, probability spaces and the Lebesgue integral
+contient: M4.03 | M4.01 | M4.02 | M4.04
 programme_b: B04 | B08
 
 # PARTIE Niveau 1 · Découverte
@@ -231,9 +249,9 @@ programme_b: B11 | B12
 # PARTIE Niveau 4 · Branches avancées
 
 ## EP-S16
-titre: Processus aléatoires : marche aléatoire, Markov, Poisson et brownien
-titre_en: Random processes: random walks, Markov chains, Poisson and Brownian motion
-contient: S16.01 | S16.02 | S16.03 | S16.04
+titre: Processus aléatoires : marche aléatoire, Markov, Poisson, brownien et martingales
+titre_en: Random processes: random walks, Markov chains, Poisson, Brownian motion and martingales
+contient: S16.01 | S16.02 | S16.03 | S16.04 | S16.05
 programme_b: B09
 
 ## EP-S12A
@@ -330,6 +348,12 @@ programme_b: B20
 titre: Données cachées et événements extrêmes : imputation multiple, EM et valeurs extrêmes
 titre_en: Hidden data and extreme events: multiple imputation, EM and extreme values
 contient: S18.03 | S18.05 | S18.06
+programme_b: B20
+
+## EP-S18C
+titre: Les meilleurs estimateurs et les meilleurs tests : exhaustivité, Rao-Blackwell et Neyman-Pearson
+titre_en: The best estimators and the best tests: sufficiency, Rao-Blackwell and Neyman-Pearson
+contient: S18.07 | S18.08
 programme_b: B20
 
 ## EP-S19A

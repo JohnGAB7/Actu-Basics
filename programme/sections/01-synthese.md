@@ -17,7 +17,7 @@ ACTU-BASICS apprend à **raisonner avec des chiffres**. Le but n'est pas d'empil
 | **1. Statistiques** | Un cursus complet, du débutant absolu aux méthodes avancées : 4 niveaux, 18 modules | {{NB_STATS}} | ≈ {{H_S}} h |
 | **2. Économétrie** | Une progression autonome, centrée sur la question « quand une régression mesure-t-elle un effet causal ? » | {{NB_ECO}} | ≈ {{H_E}} h |
 | **3. Quotidien et actualité** | Une sous-série intemporelle (déjà {{NB_QUOTIDIEN}} sujets) et une sous-série d'actualité, avec une méthode de sélection et de vérification, sans chiffres figés | {{NB_QUOTIDIEN}} + flux | ≈ {{H_Q}} h |
-| *Boîte à outils maths* | Des rappels courts (fractions, logarithmes, dérivées, matrices), à voir juste avant la vidéo qui en a besoin | {{NB_MATHS}} | ≈ {{H_M}} h |
+| *Boîte à outils maths* | Des rappels (fractions, logarithmes, dérivées, matrices) et, pour le niveau expert, de vrais cours : Taylor, intégrales, optimisation, algèbre linéaire de la régression, démonstrations, calcul numérique | {{NB_MATHS}} | ≈ {{H_M}} h |
 
 Au total, **{{NB_VIDEOS}} chapitres réunis en {{NB_EPISODES}} épisodes ({{NB_MODULES}} modules), soit environ {{HEURES_TOTAL}} heures de contenu**. C'est une estimation haute, car un épisode n'a qu'une ouverture et qu'une fin. Chaque chapitre a une **entrée de syllabus** : question centrale, prérequis, objectifs observables, maîtrise visée, intuition, exemple, niveaux mathématiques, idées fausses à prévenir, exercice, durée et format.
 
@@ -79,7 +79,7 @@ Le 2/11/2026, JG a retenu **toutes les recommandations** de la section 10.2 (arb
 | 1.10 | Arbitrages rendus par JG : toutes les recommandations A1 à A11 retenues ; sujets non statistiques pertinents intégrés (nouveau module S19, 8 vidéos : réseaux profonds et convolutifs, modèles de langue, optimisation, modèles génératifs, mise en production, complexité, droit et éthique ; 8 calculs vérifiés de plus) ; feu vert pour les fiches des sujets sensibles |
 | 1.11 | Dernière revue de ChatGPT (section 10.12) : provenance alignée en section 6.1 ; Anderson-Rubin robuste à l'hétéroscédasticité en E5.03 ; tokens, embeddings et attention précisés en S19.03 ; conditions de l'incompatibilité des critères d'équité en S19.08 |
 | 1.12 | Après la validation de JG (PR #12) : corrections détaillées des 8 derniers exercices chiffrés (134 calculs vérifiés), première relecture des titres anglais, références de la liste fermée vérifiées, section 5 d'`ARCHITECTURE_EDITORIALE.md` mise à jour (arbitrage A2) |
-| 1.13 | Demande de JG du 21/11/2026 : les 320 entrées deviennent les chapitres de 89 épisodes longs (`catalogue/episodes.txt`, contrôle `episodes.py`) ; formats et structure d'épisode réécrits (sections 2.4, 2.5 et 2.9) ; Shorts réduits au rôle de bandes-annonces ; vagues et pilote recomptés en épisodes (section 7) ; renvoi de chaque épisode vers la plateforme Programme-B et état des sources par bloc |
+| 1.13 | Demande de JG du 21/11/2026 : les 320 entrées deviennent les chapitres de 89 épisodes longs (`catalogue/episodes.txt`, contrôle `episodes.py`) ; formats et structure d'épisode réécrits (sections 2.4, 2.5 et 2.9) ; Shorts réduits au rôle de bandes-annonces ; vagues et pilote recomptés en épisodes (section 7) ; renvoi de chaque épisode vers la plateforme Programme-B et état des sources par bloc ; le 22/11 : accueil, clôture et logo mobile (2.5), règle de complétude, site autonome, et 13 chapitres ajoutés pour le niveau expert, soit 93 épisodes (section 10.16) |
 
 ## Sommaire
 
