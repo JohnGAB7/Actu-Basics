@@ -273,3 +273,14 @@ Après le blocage de vidéos courtes sur TikTok (motif cité : contenu « de fai
 | Lien avec Programme-B | Champ `programme_b` sur chaque épisode | Fait |
 | Sources vérifiables | État des sources par bloc dans `programme/REVISION-1.13.md`. Les blocs B11 à B20 manquent de cours détaillés | En attente : registre de Programme-B en cours d'achèvement par ChatGPT, puis liste des ouvrages à fournir par JG |
 | Titres des épisodes | Titres de travail FR et EN | Relecture éditoriale (ChatGPT) |
+
+## 10.15 Demande de JG du 21/11/2026 : accueil, fin d'épisode et logo
+
+JG a relevé que les vidéos ne commençaient pas par une salutation qui remercie le spectateur et ne se terminaient pas par un message d'orientation ni par des invitations (autres vidéos, abonnement, like, partage). Il a aussi demandé de ne plus avoir de logo statique à l'écran, pour ne pas être limité par les plateformes, puis précisé : « à défaut de les retirer, les rendre mobiles ».
+
+| Point | Ce que fait la version 1.13 | État |
+|---|---|---|
+| Accueil | Scène `accueil` après l'ouverture (section 2.5), bloquante pour l'épisode long. Pas d'accueil dans les bandes-annonces, où il ferait partir le spectateur | Fait dans le moteur (PR dédiée) |
+| Fin d'épisode | Scène `cloture` avant la fin de marque : orientation, abonnement, like, partage. Le moteur bloque une clôture incomplète | Fait dans le moteur (PR dédiée) |
+| Logo et nom de marque fixes | Nom « ACTU-BASICS » retiré des images vidéo ; logo officiel mobile dans le bandeau du haut, réglable ou désactivable au profit du filigrane YouTube Studio | Fait dans le moteur (PR dédiée), à valider sur un aperçu |
+| Règle 6 du guide des logos | Le logo reste présent dans chaque vidéo (mobile pendant la vidéo, fixe sur la fin de marque), donc la règle reste respectée | Sans changement |

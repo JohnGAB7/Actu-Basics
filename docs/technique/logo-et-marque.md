@@ -8,11 +8,12 @@ Chaque langue a son logo, qui porte son slogan : « ÉVEILLER PAR LES CHIFFRES �
 
 | Support | Emplacement | Taille | Slogan écrit en plus |
 |---|---|---|---|
-| Vidéo | Scène de fin seulement, centré sous l'appel à l'action | 400 px, soit environ 145 px sur un téléphone (réduit jusqu'à 320 px si le texte est long) | Non |
+| Vidéo et cours 16:9, pendant la vidéo | **Logo mobile** : glisse lentement dans le bandeau du haut (aller-retour en 40 s), jamais au-dessus d'un texte ; absent de la scène de fin | 150 px en vertical (≈ 54 px sur un téléphone : signature reconnaissable à son symbole, nom et slogan lus sur la fin), 170 px en 16:9 | Non |
+| Vidéo | Scène de fin, centré sous l'appel à l'action | 400 px, soit environ 145 px sur un téléphone (réduit jusqu'à 320 px si le texte est long) | Non |
 | Carrousel | Dernière diapositive (fin), même mise en page | 460 px (min. 360) | Non |
 | Couverture (`miniature.jpg`) | En haut à droite, dans la zone de sécurité | 260 px | Non |
 
-Conformément au guide de marque, le logo n'est pas répété sur chaque scène. Le nom « ACTU-BASICS » reste écrit en petit en haut de chaque image. Il est masqué quand le logo occupe déjà le haut de l'image.
+**Plus de marque fixe pendant la vidéo** (décision de JG, 21/11/2026). Le nom « ACTU-BASICS » n'est plus écrit en haut de chaque image vidéo : une incrustation immobile, présente d'un bout à l'autre, ressemble au filigrane d'un contenu repris, que les plateformes peuvent pénaliser. Le logo officiel reste présent mais bouge : simple translation, sans déformation, recoloration ni effet (règle 4 du guide). Le bandeau du haut lui est réservé, donc aucun texte ne passe dessous (règle 5). Réglage : `logo.mobile` dans la charte ; `actif: false` retire toute marque pendant la vidéo, et le logo peut alors être ajouté par le filigrane de YouTube Studio. Le carrousel, fait d'images fixes, garde le nom en petit en haut de chaque diapositive.
 
 ### Lisibilité sur téléphone
 

@@ -29,17 +29,24 @@ Les 320 entrées, leurs prérequis et leurs contrôles. Les 4 niveaux, les 3 pil
 
 ## Structure d'un épisode
 
-1. **Ouverture (1 min)** : la question concrète de l'épisode, montrée et non seulement dite, avec du mouvement dès la première image.
-2. **Plan à l'écran** : les chapitres, qui deviennent les chapitres YouTube.
-3. **Chaque chapitre** suit l'arc de la V1.12 : intuition, exemple minuscule, raisonnement à l'écran, formule expliquée, exercice avec pause, correction.
-4. **Synthèse** : comment les notions s'articulent, avec un schéma récapitulatif.
-5. **Exercice de synthèse**, puis renvoi vers l'unité Programme-B et vers l'épisode suivant.
+1. **Ouverture (15 à 30 s)** : la question concrète de l'épisode, montrée et non seulement dite, avec du mouvement dès la première image.
+2. **Accueil (10 à 20 s)** : saluer, remercier le spectateur d'être là, dire ce qu'il saura faire à la fin.
+3. **Plan à l'écran** : les chapitres, qui deviennent les chapitres YouTube.
+4. **Chaque chapitre** suit l'arc de la V1.12 : intuition, exemple minuscule, raisonnement à l'écran, formule expliquée, exercice avec pause, correction.
+5. **Synthèse** : comment les notions s'articulent, avec un schéma récapitulatif.
+6. **Exercice de synthèse**, puis sa correction.
+7. **Clôture (30 à 45 s)** : rappel en une phrase, puis orientation (épisode suivant, autres épisodes utiles, unité Programme-B) et invitations à s'abonner, liker et partager, une seule fois, sans formule qui culpabilise.
+8. **Fin de marque (3 à 5 s)** : logo officiel et slogan de la langue de l'édition, sous l'écran de fin YouTube.
+
+Le moteur bloque un épisode long sans accueil après l'ouverture ou sans clôture complète (`production/charte.yaml`, `parcours_spectateur`).
+
+**Logo mobile.** Plus de nom de marque ni de logo fixe pendant la vidéo : le logo officiel glisse lentement dans le bandeau du haut, sans déformation ni recoloration, et peut être coupé au profit du filigrane YouTube Studio (`logo.mobile` dans la charte).
 
 ## Formats courts : bandes-annonces seulement
 
 - Chaque épisode produit 1 à 3 Shorts de 30 à 60 s, extraits de son meilleur moment (un paradoxe, un résultat surprenant).
-- Un Short se termine toujours par l'épisode complet : vidéo associée sur YouTube Shorts, « lien en bio » sur TikTok.
-- Contrôles anti-blocage conservés pour toutes les plateformes : première image pleine, aucun plan figé plus de 2 s, logo discret, étiquette « contenu généré par IA », pas de lien en légende, vocabulaire sensible cadré (voir le document de diagnostic TikTok du 21/11).
+- Un Short ne commence jamais par un accueil et se termine toujours par l'épisode complet, cité par son titre : vidéo associée sur YouTube Shorts, « lien en bio » sur TikTok.
+- Contrôles anti-blocage conservés pour toutes les plateformes : première image pleine, aucun plan figé plus de 2 s, aucune marque fixe à l'écran (logo mobile), étiquette « contenu généré par IA », pas de lien en légende, vocabulaire sensible cadré (voir le document de diagnostic TikTok du 21/11).
 
 ## Sources : ce qui est couvert et ce qui manque
 

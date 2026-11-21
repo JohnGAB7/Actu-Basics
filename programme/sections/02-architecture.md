@@ -59,13 +59,14 @@ La durée d'un épisode découle de ce qu'il faut pour atteindre ses objectifs, 
 
 **Règles de regroupement.** (1) Un épisode regroupe des notions qui répondent à une même question. (2) Il reste dans un seul module, sauf exception justifiée dans le pilier Quotidien. (3) Dans le cursus, aucun chapitre ne demande une notion traitée plus loin. (4) Chaque chapitre garde son exercice, et l'épisode se termine par un exercice de synthèse. Les règles 1 et 2 relèvent de la relecture, les règles 3 et 4 sont contrôlées.
 
-**Plateformes.** Les contrôles hérités du diagnostic TikTok du 21/11/2026 s'appliquent à tous les formats : première image pleine, aucun plan figé de plus de 2 s, logo discret, étiquette « contenu généré par IA » pour la voix de synthèse, aucun lien dans les légendes, vocabulaire sensible cadré (jeux d'argent, argent, santé, poids, élections, mortalité).
+**Plateformes.** Les contrôles hérités du diagnostic TikTok du 21/11/2026 s'appliquent à tous les formats : première image pleine, aucun plan figé de plus de 2 s, aucun logo ni nom de marque fixe à l'écran (logo mobile, voir 2.5), étiquette « contenu généré par IA » pour la voix de synthèse, aucun lien dans les légendes, vocabulaire sensible cadré (jeux d'argent, argent, santé, poids, élections, mortalité).
 
 ## 2.5 La structure d'un épisode
 
-1. **Ouverture** (environ 1 min) : la question concrète de l'épisode, montrée et non seulement dite, avec du mouvement dès la première image.
-2. **Plan à l'écran** : les chapitres, qui deviennent les chapitres YouTube.
-3. **Chaque chapitre** suit l'arc déjà mis en œuvre dans le moteur et dans la vidéo de lancement :
+1. **Ouverture** (15 à 30 s) : la question concrète de l'épisode, montrée et non seulement dite, avec du mouvement dès la première image. On ne commence pas par saluer : les premières secondes décident si le spectateur reste.
+2. **Accueil** (10 à 20 s, scène `accueil`) : on salue le spectateur, on le remercie d'être là et on dit ce qu'il saura faire à la fin de l'épisode. Exemple : « Bonjour, et merci d'être là. Dans cet épisode, vous allez apprendre à… ».
+3. **Plan à l'écran** : les chapitres, qui deviennent les chapitres YouTube.
+4. **Chaque chapitre** suit l'arc déjà mis en œuvre dans le moteur et dans la vidéo de lancement :
     1. **Question** concrète, paradoxe ou situation familière ;
     2. **Intuition** : ce que l'on croit spontanément, avec une estimation demandée au spectateur ;
     3. **Données ou exemple minuscule**, que l'on peut suivre de tête ;
@@ -73,9 +74,20 @@ La durée d'un épisode découle de ce qu'il faut pour atteindre ses objectifs, 
     5. **Formalisation** : la formule arrive après l'idée, et chaque symbole est expliqué ;
     6. **Exercice** avec un temps de réflexion, puis **correction** détaillée ;
     7. **Application** réelle et **limites** de la méthode.
-4. **Synthèse** : comment les notions de l'épisode s'articulent, avec un schéma récapitulatif.
-5. **Exercice de synthèse**, qui mobilise plusieurs chapitres, puis sa correction.
-6. **Rappel mémorable**, renvoi vers l'unité Programme-B et vers l'épisode suivant, fin de marque (logo, signature).
+5. **Synthèse** : comment les notions de l'épisode s'articulent, avec un schéma récapitulatif.
+6. **Exercice de synthèse**, qui mobilise plusieurs chapitres, puis sa correction.
+7. **Clôture** (30 à 45 s, scène `cloture`) : le rappel mémorable en une phrase, puis l'orientation et les invitations, dans cet ordre :
+    1. **orientation** : l'épisode suivant du parcours (titre dit et affiché), les autres épisodes utiles et l'unité Programme-B correspondante ;
+    2. **abonnement** : s'abonner pour suivre le parcours dans l'ordre ;
+    3. **like** : laisser un like si l'épisode a aidé ;
+    4. **partage** : partager l'épisode à quelqu'un à qui il servira.
+8. **Fin de marque** (3 à 5 s, scène `fin`) : logo officiel et slogan de la langue de l'édition (« Éveiller par les chiffres. » ou « Enlightening through numbers. »), avec l'écran de fin YouTube par-dessus (épisode suivant, abonnement).
+
+Les invitations restent sobres et une seule fois par épisode, en fin de parcours : pas de demande de like au début ni au milieu, et jamais de formule qui promet un résultat ou qui culpabilise. Le moteur de rendu bloque un épisode long sans accueil après l'ouverture, sans clôture juste avant la fin, ou dont la clôture oublie l'une des quatre invitations (`production/charte.yaml`, section `parcours_spectateur`).
+
+**Bandes-annonces (SHORT) et extraits.** Pas d'accueil, qui ferait partir le spectateur dès la première seconde. La dernière scène renvoie vers l'épisode complet par son titre (« L'épisode complet est sur la chaîne YouTube ACTU-BASICS »), sans lien dans la légende. Le moteur le signale s'il manque.
+
+**Logo.** Plus de marque fixe pendant la vidéo : le nom « ACTU-BASICS » posé en haut de chaque image disparaît, car une incrustation statique peut être traitée par les plateformes comme un filigrane de contenu repris. Le logo officiel reste présent mais **mobile** : il glisse lentement dans le bandeau du haut (un aller-retour toutes les 40 s), sans être déformé, recoloré ni recouvert, et s'efface avant la fin de marque. Le réglage se fait dans `production/charte.yaml` (`logo.mobile`) ; on peut le couper et utiliser à la place le filigrane de YouTube Studio.
 
 ## 2.6 Principes non négociables, traduits en règles de production
 
