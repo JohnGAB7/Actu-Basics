@@ -218,7 +218,7 @@ class Rendu(ScenesPedagogiques):
         periode = max(4.0, float(self.conf_mobile().get("periode_s", 40)))
         course = max(0, dr - g - lg - 2 * p)
         k = 0.5 - 0.5 * math.cos(2 * math.pi * temps / periode)
-        return g + p + round(course * k), h + p
+        return g + p + round(course * k), h   # zone de protection au-dessus : marge de sécurité, toujours vide
 
     def poser_mobile(self, image, temps: float, scene: Scene, index: int, opacite: float = 1.0,
                      mesurer: bool = False):
@@ -497,7 +497,7 @@ class Rendu(ScenesPedagogiques):
         mobile = not couverture and self.mobile_prevu(scene)
         if mobile:   # bandeau du haut réservé au logo mobile : le texte de la scène n'y passe jamais
             _, hm, pm = self._mobile_taille()
-            haut = max(haut, h + hm + 2 * pm + 20)
+            haut = max(haut, h + hm + pm + 20)
         # Plus de nom de marque fixe sur les vidéos (décision de JG, 21/11/2026) : seul le carrousel
         # (images fixes) garde l'en-tête « ACTU-BASICS » quand le logo n'est pas en haut.
         nom_marque = self.format == "carrousel" and not (coin and coin[3].startswith("haut"))

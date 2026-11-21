@@ -8,7 +8,7 @@ Chaque langue a son logo, qui porte son slogan : « ÉVEILLER PAR LES CHIFFRES �
 
 | Support | Emplacement | Taille | Slogan écrit en plus |
 |---|---|---|---|
-| Vidéo et cours 16:9, pendant la vidéo | **Logo mobile** : glisse lentement dans le bandeau du haut (aller-retour en 40 s), jamais au-dessus d'un texte ; absent de la scène de fin | 150 px en vertical (≈ 54 px sur un téléphone : signature reconnaissable à son symbole, nom et slogan lus sur la fin), 170 px en 16:9 | Non |
+| Vidéo et cours 16:9, pendant la vidéo | **Logo mobile** : glisse lentement dans le bandeau du haut (aller-retour en 40 s), jamais au-dessus d'un texte ; absent de la scène de fin | 110 px en vertical (≈ 40 px sur un téléphone, la taille d'un filigrane : signature reconnaissable à son symbole, nom et slogan lus sur la fin), 170 px en 16:9 | Non |
 | Vidéo | Scène de fin, centré sous l'appel à l'action | 400 px, soit environ 145 px sur un téléphone (réduit jusqu'à 320 px si le texte est long) | Non |
 | Carrousel | Dernière diapositive (fin), même mise en page | 460 px (min. 360) | Non |
 | Couverture (`miniature.jpg`) | En haut à droite, dans la zone de sécurité | 260 px | Non |

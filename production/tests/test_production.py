@@ -1981,7 +1981,7 @@ def test_plus_de_nom_de_marque_fixe_en_video_et_logo_mobile():
         x0, y0 = avec.mobile_position(0)
         x1, _ = avec.mobile_position(avec.conf_mobile()["periode_s"] / 2)
         lg, hl, p = avec._mobile_taille()
-        assert x1 > x0 and g <= x0 - p and x1 + lg + p <= dr and y0 - p >= h   # il bouge, dans la zone
+        assert x1 > x0 and g <= x0 - p and x1 + lg + p <= dr and y0 >= h   # il bouge, dans la zone
         avec.mesurer_mobile(scene, 0, len(ed.scenes))
         pose = avec.poses[("mobile", 0)]
         assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT   # aucun texte sous le logo

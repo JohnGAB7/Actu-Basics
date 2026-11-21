@@ -70,8 +70,9 @@ logo:
     actif: true
     formats: [video, lecon]
     # Signature discrète, reconnaissable à son symbole : le nom et le slogan se lisent sur la scène de fin.
-    # 150 px en vertical (≈ 54 px sur téléphone) : au-delà, le bandeau réservé fait déborder les scènes chargées.
-    largeur_px: {video: 150, lecon: 170}
+    # 110 px en vertical (≈ 40 px sur téléphone, la taille d'un filigrane) : au-delà, le bandeau réservé
+    # réduit les formules et listes des scènes chargées (vidéo de lancement, scène 17).
+    largeur_px: {video: 110, lecon: 170}
     periode_s: 40                 # durée d'un aller-retour complet le long du bandeau
     sauf_scenes: [fin]
 couleurs:
