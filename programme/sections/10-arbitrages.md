@@ -270,7 +270,7 @@ Après le blocage de vidéos courtes sur TikTok (motif cité : contenu « de fai
 |---|---|---|
 | Vidéos longues, plusieurs notions | 320 entrées regroupées en {{NB_EPISODES}} épisodes (section 2.9), contrôlés par `programme/episodes.py` | Proposé, à valider par JG |
 | Formats courts | Bandes-annonces uniquement (section 2.4) | Proposé |
-| Lien avec Programme-B | Champ `programme_b` sur chaque épisode | Fait |
+| Lien avec Programme-B | Champ `programme_b` sur chaque épisode, correspondance interne seulement (voir 10.15) | Fait |
 | Sources vérifiables | État des sources par bloc dans `programme/REVISION-1.13.md`. Les blocs B11 à B20 manquent de cours détaillés | En attente : registre de Programme-B en cours d'achèvement par ChatGPT, puis liste des ouvrages à fournir par JG |
 | Titres des épisodes | Titres de travail FR et EN | Relecture éditoriale (ChatGPT) |
 
@@ -283,5 +283,8 @@ JG a relevé que les vidéos ne commençaient pas par une salutation qui remerci
 | Accueil | Scène `accueil` après l'ouverture (section 2.5), bloquante pour l'épisode long. Pas d'accueil dans les bandes-annonces, où il ferait partir le spectateur | Fait dans le moteur (PR dédiée) |
 | Fin d'épisode | Scène `cloture` avant la fin de marque : orientation, abonnement, like, partage. Le moteur bloque une clôture incomplète | Fait dans le moteur (PR dédiée) |
 | Logo et nom de marque fixes | Nom « ACTU-BASICS » retiré des images vidéo ; logo officiel mobile dans le bandeau du haut, réglable ou désactivable au profit du filigrane YouTube Studio | Fait dans le moteur (PR dédiée), à valider sur un aperçu |
-| Aide gratuite aux exercices | Ajoutée à la clôture (section 2.5) : canal à choisir par JG (commentaires ou adresse dédiée), aide à la méthode, pas de devoir noté fait à la place de l'étudiant | Proposé, canal à décider |
+| Aide gratuite aux exercices | Ajoutée à la clôture (section 2.5) : aide à la méthode, pas de devoir noté fait à la place de l'étudiant | Canal décidé par JG le 22/11/2026 : commentaires YouTube |
+| Site autonome | Le site ACTU-BASICS contient le cours complet ; aucun lien vers les autres sites de JG (Programme-B compris), seulement vers les sources et références. Le champ `programme_b` reste une correspondance interne | Décision de JG du 22/11/2026 |
+| Comptes utilisateurs | Le site aura des comptes (progression, exercices). Base prévue : le projet Supabase existant de JG, à configurer dans une PR dédiée au site | Décision de JG du 22/11/2026 ; mise en œuvre à venir |
+| Voix | Voix actuelle conservée ; pas d'ElevenLabs pour l'instant | Décision de JG du 22/11/2026 |
 | Règle 6 du guide des logos | Le logo reste présent dans chaque vidéo (mobile pendant la vidéo, fixe sur la fin de marque), donc la règle reste respectée | Sans changement |

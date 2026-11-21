@@ -77,11 +77,11 @@ La durée d'un épisode découle de ce qu'il faut pour atteindre ses objectifs, 
 5. **Synthèse** : comment les notions de l'épisode s'articulent, avec un schéma récapitulatif.
 6. **Exercice de synthèse**, qui mobilise plusieurs chapitres, puis sa correction.
 7. **Clôture** (30 à 45 s, scène `cloture`) : le rappel mémorable en une phrase, puis l'orientation et les invitations, dans cet ordre :
-    1. **orientation** : l'épisode suivant du parcours (titre dit et affiché), les autres épisodes utiles et l'unité Programme-B correspondante ;
+    1. **orientation** : l'épisode suivant du parcours (titre dit et affiché), les autres épisodes utiles et la page de l'épisode sur le site ACTU-BASICS, qui contient le cours écrit complet ;
     2. **abonnement** : s'abonner pour suivre le parcours dans l'ordre ;
     3. **like** : laisser un like si l'épisode a aidé ;
     4. **partage** : partager l'épisode à quelqu'un à qui il servira ;
-    5. **aide gratuite aux exercices** (proposition de JG du 21/11/2026) : un étudiant bloqué sur un exercice ou une notion de l'épisode peut poser sa question, et l'équipe l'aide gratuitement à le résoudre. Canal proposé : les commentaires de la vidéo, ou une adresse dédiée à créer (jamais une adresse personnelle). On aide à comprendre la méthode sur les exercices liés à l'épisode ; on ne fait pas un devoir noté ou un examen à la place de l'étudiant, et on ne demande aucune donnée personnelle.
+    5. **aide gratuite aux exercices** (proposition de JG du 21/11/2026, canal décidé le 22/11/2026) : un étudiant bloqué sur un exercice ou une notion de l'épisode pose sa question **en commentaire sous la vidéo YouTube**, et l'équipe l'aide gratuitement. On aide à comprendre la méthode sur les exercices liés à l'épisode ; on ne fait pas un devoir noté ou un examen à la place de l'étudiant, et on ne demande aucune donnée personnelle.
 8. **Fin de marque** (3 à 5 s, scène `fin`) : logo officiel et slogan de la langue de l'édition (« Éveiller par les chiffres. » ou « Enlightening through numbers. »), avec l'écran de fin YouTube par-dessus (épisode suivant, abonnement).
 
 Les invitations restent sobres et une seule fois par épisode, en fin de parcours : pas de demande de like au début ni au milieu, et jamais de formule qui promet un résultat ou qui culpabilise. Le moteur de rendu bloque un épisode long sans accueil après l'ouverture, sans clôture juste avant la fin, ou dont la clôture oublie l'une des quatre invitations (`production/charte.yaml`, section `parcours_spectateur`).
@@ -126,6 +126,6 @@ Chaque vidéo existe en deux éditions, française et anglaise, produites à par
 
 ## 2.9 Les {{NB_EPISODES}} épisodes
 
-Liste produite par `programme/episodes.py` à partir de `catalogue/episodes.txt`. Durée : somme des fourchettes des chapitres. La colonne Programme-B renvoie au bloc ou à l'unité de la plateforme qui approfondit l'épisode. Les titres sont des titres de travail, relus par l'éditorial avant production.
+Liste produite par `programme/episodes.py` à partir de `catalogue/episodes.txt`. Durée : somme des fourchettes des chapitres. La colonne Programme-B est une correspondance interne : elle indique le bloc dont le registre des sources et la carte des notions servent à vérifier l'épisode. Elle n'est jamais un lien public (décision de JG du 22/11/2026 : le site ACTU-BASICS se suffit à lui-même). Les titres sont des titres de travail, relus par l'éditorial avant production.
 
 {{CATALOGUE_EPISODES}}
