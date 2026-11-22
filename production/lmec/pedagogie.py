@@ -226,6 +226,46 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             erreurs.append(f"{ctx}.animation.valeur : part du premier événement, entre 0 et 1 (ex. 0.493)")
         else:
             conf["valeur"] = float(v)
+    if modele in ("pastilles", "curseur"):
+        v = a.get("valeurs")
+        if not isinstance(v, list) or not 2 <= len(v) <= 60 or not all(_nombre(x) for x in v):
+            erreurs.append(f"{ctx}.animation.valeurs : liste de 2 à 60 nombres (une pastille par individu)")
+            conf["valeurs"] = None
+        else:
+            conf["valeurs"] = [float(x) for x in v]
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+    if modele == "pastilles":
+        lc, origine = a.get("largeur_classe"), a.get("origine", 0)
+        if not _nombre(lc) or lc <= 0 or not _nombre(origine):
+            erreurs.append(f"{ctx}.animation : « largeur_classe » positive (et « origine » numérique)")
+            conf["largeur_classe"] = None
+        else:
+            conf["largeur_classe"], conf["origine"] = float(lc), float(origine)
+            if conf.get("valeurs"):
+                from .laboratoires import classes_regulieres
+                try:
+                    if len(classes_regulieres(conf["valeurs"], lc, origine)) > 16:
+                        erreurs.append(f"{ctx}.animation : plus de 16 classes, élargir « largeur_classe »")
+                except ValueError as exc:
+                    erreurs.append(f"{ctx}.animation : {exc}")
+    if modele == "curseur":
+        if not _nombre(a.get("vers")):
+            erreurs.append(f"{ctx}.animation.vers : valeur d'arrivée du curseur (nombre)")
+            conf["vers"] = None
+        else:
+            conf["vers"] = float(a["vers"])
+        if a.get("indice") is not None:
+            n_v = len(conf.get("valeurs") or []) or 1
+            conf["indice"] = entier("indice", 0, n_v - 1)
+        dec = entier("decimales", 0, 3, requis=False)
+        conf["decimales"] = 0 if dec is None else dec
+        if a.get("axe_max") is not None:
+            if not _nombre(a["axe_max"]) or a["axe_max"] <= 0:
+                erreurs.append(f"{ctx}.animation.axe_max : nombre positif")
+                conf["axe_max"] = None
+            else:
+                conf["axe_max"] = float(a["axe_max"])
     phases = a.get("phases")
     if phases is not None:
         if not isinstance(phases, list) or not phases or any(p not in PHASES[modele] for p in phases):

@@ -75,18 +75,40 @@ logo:
     largeur_px: {video: 110, lecon: 170}
     periode_s: 40                 # durée d'un aller-retour complet le long du bandeau
     sauf_scenes: [fin]
+# Décor en mouvement (lmec/decor.py ; demandes de JG, 22/11/2026 : les plateformes n'aiment pas les images
+# figées, et le mouvement garde l'attention). Ondes de données qui glissent au bas de l'image, chacune à sa
+# vitesse ; peintes seulement sur le fond libre, adoucies à `ecart_px` du contenu, jamais dans le bandeau
+# du logo mobile ni sur la scène de fin (logo et slogan).
+decor:
+  actif: true
+  formats: [video, lecon]
+  sauf_scenes: [fin]
+  ecart_px: 28
+  # niveau, amplitude : parts de la hauteur ; longueur : part de la largeur ; vitesse : px/s (signe = sens).
+  ondes:
+    - {couleur: barre, opacite: 0.07, amplitude: 0.035, longueur: 0.75, niveau: 0.78, vitesse: 22}
+    - {couleur: barre, opacite: 0.045, amplitude: 0.05, longueur: 1.05, niveau: 0.85, vitesse: -14}
+    - {couleur: accent, opacite: 0.06, amplitude: 0.025, longueur: 0.6, niveau: 0.92, vitesse: 30}
 couleurs:
-  fond: "#0B1526"        # bleu nuit (haut de l'image)
-  fond_bas: "#14284A"    # bas du dégradé
-  texte: "#F5F3EE"       # blanc cassé
-  accent: "#F2B134"      # jaune « chiffre »
-  secondaire: "#8FA3BF"  # gris bleuté (sources, pied de page)
-  barre: "#3E7CB1"
+  # Version claire « ivoire », celle du site et du logo officiel (demande de JG, 22/11/2026) : fond
+  # ivoire du logo clair, encre bleu profond du site, bleu des données et orange de la marque
+  # (00_STRATEGY/BRAND_IDENTITY.md, docs/assets/css/main.css). Contrastes sur l'ivoire (WCAG) :
+  # texte 14,6:1 ; secondaire 4,8:1 ; accent 3,3:1 (gros texte et formes) ; barres 3,7:1.
+  fond: "#FEF8EC"          # ivoire (fond du logo clair) : le disque du logo se fond dans l'image
+  fond_bas: "#F6EDDA"      # ivoire un peu plus soutenu en bas du dégradé
+  texte: "#102638"         # encre bleu profond du site
+  accent: "#D96A00"        # orange de la marque, assombri pour rester lisible sur l'ivoire
+  progression: "#FF8500"   # orange vif de la marque : barre de progression
+  encre_accent: "#102638"  # texte posé sur une forme orange (4,9:1)
+  secondaire: "#607180"    # gris bleuté du site (sources, pied de page, axes)
+  barre: "#1685D5"         # bleu de la marque : données, courbes, barres
+  halo: "#FDEBCB"          # halo chaud, discret, en haut à droite
 # Accroches, titres de graphique et sources en capitales (police d'affichage).
-accroche_majuscules: true
+accroche_majuscules: false   # ton doux et sobre (JG, 22/11/2026) : casse normale
 polices:
   # Police d'affichage condensée et très grasse : accroches, chiffre clé, titres.
-  affichage: ["Anton-Regular.ttf", "Inter-Black.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
+  # Inter Display demi-gras (doux, net, « tech ») plutôt qu'Anton, jugé trop massif (JG, 22/11/2026).
+  affichage: ["InterDisplay-SemiBold.otf", "InterDisplay-SemiBold.ttf", "Anton-Regular.ttf", "Inter-Black.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
   # Recherche dans l'ordre : production/polices/, puis polices système.
   # Inter (licence libre OFL) : https://rsms.me/inter/ — paquet Linux « fonts-inter ».
   regulier: ["Inter-Regular.otf", "Inter-Regular.ttf", "DejaVuSans.ttf", "Arial.ttf"]

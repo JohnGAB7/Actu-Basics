@@ -17,6 +17,12 @@ Modèles :
                 quatre petits carrés (doubler hauteur et largeur multiplie l'aire par 4) ;
 - grille      : n cases (combinaisons) ; « personnes » réparties au hasard (graine fixe) ;
                 « isoles » met en couleur les cases qui ne contiennent qu'une seule personne ;
+- pastilles   : une pastille par valeur (« valeurs », « largeur_classe », « origine », « unite ») ;
+                « points » les pose sur l'axe, « tri » les range en piles par classe, « barres » fait
+                monter l'histogramme derrière les piles avec les effectifs ;
+- curseur     : la série en pastilles ; « mediane » et « moyenne » les marquent sous l'axe ; « curseur »
+                fait glisser la valeur « indice » (la plus grande par défaut) jusqu'à « vers » : la moyenne
+                suit, la médiane bouge à peine (laboratoire LAB-2) ;
 - selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
                 celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
                 des données observées, « filtre » trace la flèche « sélection par la survie ».
@@ -28,7 +34,8 @@ import random
 
 from .formatage import formater_nombre
 
-MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille")
+MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille",
+           "pastilles", "curseur")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
@@ -38,6 +45,8 @@ PHASES = {
     "selection": ("depart", "selection", "echantillon", "filtre"),
     "surface": ("petit", "grand", "decoupe"),
     "grille": ("cases", "remplissage", "isoles"),
+    "pastilles": ("points", "tri", "barres"),
+    "curseur": ("serie", "mediane", "moyenne", "curseur"),
 }
 PHASES_DEFAUT = {
     "foule": ["apparition"],
@@ -48,6 +57,8 @@ PHASES_DEFAUT = {
     "selection": ["depart", "selection", "echantillon", "filtre"],
     "surface": ["petit", "grand", "decoupe"],
     "grille": ["cases", "remplissage", "isoles"],
+    "pastilles": ["points", "tri", "barres"],
+    "curseur": ["serie", "mediane", "moyenne", "curseur"],
 }
 LIBELLES = {
     "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents",
@@ -124,7 +135,8 @@ class Animations:
                       "gauche": 1.2, "droite": 1.2, "total": 0.8,
                       "depart": 1.6, "selection": 1.4, "echantillon": 1.4, "filtre": 1.0,
                       "petit": 1.0, "grand": 1.4, "decoupe": 1.4, "cases": 1.2, "remplissage": 2.4,
-                      "isoles": 1.2}
+                      "isoles": 1.2, "points": 2.4, "tri": 1.8, "barres": 1.2,
+                      "serie": 1.8, "mediane": 1.0, "moyenne": 1.0, "curseur": 4.0}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -450,7 +462,7 @@ class Animations:
         p_pct = self.police("affichage", 110 if not self.colonnes else 100)
         x_sep = g + (dr - g) * v
         for nom, x_a, x_b, couleur, encre in (("gauche", g, x_sep, self.c["texte"], self.c["fond"]),
-                                              ("droite", x_sep, dr, self.c["accent"], self.c["fond"])):
+                                              ("droite", x_sep, dr, self.c["accent"], self.c["encre_accent"])):
             p = par_nature.get(nom)
             if not p:
                 continue
@@ -664,3 +676,158 @@ class _AnimationsAires:
 
 Animations._anim_surface = _AnimationsAires._anim_surface
 Animations._anim_grille = _AnimationsAires._anim_grille
+
+
+# ---------------------------------------------------------------------- données : pastilles et curseur
+class AnimationsDonnees:
+    """Modèles qui montrent les données elles-mêmes (une pastille par individu), calculés par
+    lmec/laboratoires.py : la vidéo et le laboratoire du site affichent les mêmes nombres."""
+
+    def _axe(self, d, g, dr, y, mini, maxi, graduations, unite, fond, k=1.0):
+        from .rendu import _melange
+        p = self.police("regulier", 34)
+        d.line((g, y, dr, y), fill=_melange(fond, self.c["secondaire"], 0.8 * k), width=3)
+        x_de = lambda v: g + (v - mini) / (maxi - mini) * (dr - g)
+        for v in graduations:
+            x = x_de(v)
+            d.line((x, y, x, y + 14), fill=_melange(fond, self.c["secondaire"], k), width=3)
+            lib = formater_nombre(v, self.langue)
+            d.text((x - p.getlength(lib) / 2, y + 22), lib, font=p, fill=_melange(fond, self.c["secondaire"], k))
+        if unite:   # sous le début de l'axe : la droite reste libre pour les repères et les flèches
+            d.text((g, y + 66), unite, font=p, fill=_melange(fond, self.c["secondaire"], k))
+        return x_de
+
+    def _anim_pastilles(self, d, scene, plan, zone, t, ctx):
+        """Une pastille par individu : posée sur l'axe à sa valeur, puis rangée dans sa classe ; les
+        barres de l'histogramme montent derrière les piles et chaque effectif s'affiche."""
+        from .laboratoires import classes_regulieres
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        valeurs = conf["valeurs"]
+        classes = classes_regulieres(valeurs, conf["largeur_classe"], conf.get("origine", 0.0))
+        g, haut, dr, bas = zone
+        y_axe = bas - 110
+        mini, maxi = classes[0].debut, classes[-1].fin
+        fond = self._fond.getpixel((int(g), int(min(y_axe, self.hauteur - 1))))
+        x_de = self._axe(d, g, dr, y_axe, mini, maxi, [c.debut for c in classes] + [maxi],
+                         conf.get("unite", ""), fond)
+        n_max = max(c.effectif for c in classes)
+        larg_px = (dr - g) / len(classes)
+        # Piles sur une ou plusieurs colonnes : on garde le choix qui donne les plus grosses pastilles.
+        h_dispo = y_axe - haut - 70
+        r, cols = max(((min((larg_px - 12) / (c * 2.25 + 0.3), h_dispo / (math.ceil(n_max / c) * 2.25 + 0.6), 30.0), c)
+                       for c in range(1, 5)), key=lambda rc: rc[0])
+        r = max(7.0, r)
+        par_nature = {p["nature"]: p for p in plan}
+        k_tri = _ease(self._avancee(par_nature["tri"], t)) if "tri" in par_nature else 0.0
+        k_bar = _ease(self._avancee(par_nature["barres"], t)) if "barres" in par_nature else 0.0
+        p_pts = par_nature.get("points")
+        # Barres derrière les piles.
+        if k_bar > 0:
+            pe = self.police("gras", 40)
+            for c in classes:
+                x0, x1 = x_de(c.debut) + 6, x_de(c.fin) - 6
+                h = (math.ceil(c.effectif / cols) * 2.25 * r + r * 0.5) * k_bar
+                if c.effectif:
+                    d.rounded_rectangle((x0, y_axe - h, x1, y_axe - 2), radius=12,
+                                        fill=_melange(fond, self.c["barre"], 0.22 * k_bar + 0.0))
+                lib = str(c.effectif)
+                d.text(((x0 + x1) / 2 - pe.getlength(lib) / 2, y_axe - h - 58), lib, font=pe,
+                       fill=_melange(fond, self.c["texte"], k_bar))
+        # Pastilles : position sur l'axe (rang alterné pour ne pas se cacher) puis dans la pile.
+        rangs = {}
+        ordre = sorted(range(len(valeurs)), key=lambda i: valeurs[i])
+        for i in ordre:
+            v = valeurs[i]
+            ci = next(j for j, c in enumerate(classes) if c.debut <= v < c.fin)
+            rangs[i] = (ci, sum(1 for j in rangs if rangs[j][0] == ci))
+        n = len(valeurs)
+        for i, v in enumerate(valeurs):
+            a = 1.0 if (t is None or not p_pts) else _ease((t - p_pts["debut"] - i * p_pts["duree"] / n) / 0.4)
+            if a <= 0:
+                continue
+            ci, j = rangs[i]
+            xa, ya = x_de(v), y_axe - r * 1.3 - (i % 3) * r * 0.9
+            n_ci = classes[ci].effectif
+            dans_rang = min(cols, n_ci - (j // cols) * cols)      # pastilles de ce rang (dernier rang centré)
+            xb = (x_de(classes[ci].debut) + x_de(classes[ci].fin)) / 2 + ((j % cols) - (dans_rang - 1) / 2) * 2.25 * r
+            yb = y_axe - r * 1.25 - (j // cols) * 2.25 * r
+            k = _ease(min(1.0, max(0.0, k_tri * 1.25 - 0.25 * (i / n)))) if k_tri < 1 else 1.0
+            x, y = xa + (xb - xa) * k, ya + (yb - ya) * k - (1 - a) * 80
+            couleur = self.c["barre"] if k < 1 or k_bar <= 0 else _melange(self.c["barre"], self.c["texte"], 0.25 * k_bar)
+            d.ellipse((x - r, y - r, x + r, y + r), fill=_melange(fond, couleur, a))
+
+    def _anim_curseur(self, d, scene, plan, zone, t, ctx):
+        """Une série en pastilles ; la médiane (bleu) et la moyenne (orange) marquées sous l'axe. Puis une
+        valeur glisse : la moyenne la suit, la médiane bouge à peine. Hors de l'axe, une flèche et la valeur."""
+        from .laboratoires import mediane, moyenne, remplacer
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        valeurs = conf["valeurs"]
+        indice = conf.get("indice", max(range(len(valeurs)), key=lambda i: valeurs[i]))
+        g, haut, dr, bas = zone
+        par_nature = {p["nature"]: p for p in plan}
+        k_c = _ease(self._avancee(par_nature["curseur"], t)) if "curseur" in par_nature else 0.0
+        courante = valeurs[indice] + (conf["vers"] - valeurs[indice]) * k_c
+        serie = remplacer(valeurs, indice, courante)
+        mini = min(0.0, min(valeurs))
+        autres = [v for i, v in enumerate(valeurs) if i != indice]
+        maxi = conf.get("axe_max") or max(max(autres), valeurs[indice]) * 1.15
+        y_axe = haut + (bas - haut) * 0.42
+        fond = self._fond.getpixel((int(g), int(min(y_axe, self.hauteur - 1))))
+        pas_grad = _pas_rond((maxi - mini) / 5)
+        grads = [mini + k * pas_grad for k in range(int((maxi - mini) / pas_grad) + 1)]
+        dr_axe = dr - 150   # place pour la flèche « hors de l'axe »
+        x_de = self._axe(d, g, dr_axe, y_axe, mini, maxi, grads, conf.get("unite", ""), fond)
+        x_lim = lambda v: min(x_de(v), dr_axe + 40)
+        r = 19
+        p_pts = par_nature.get("serie")
+        n = len(serie)
+        pv = self.police("gras", 38)
+        for i, v in enumerate(serie):
+            a = 1.0 if (t is None or not p_pts) else _ease((t - p_pts["debut"] - i * p_pts["duree"] / n) / 0.4)
+            if a <= 0:
+                continue
+            x, y = x_lim(v), y_axe - r * 1.5 - (i % 3) * r * 1.7 - (1 - a) * 60
+            moving = i == indice and k_c > 0
+            couleur = self.c["accent"] if moving else self.c["barre"]
+            d.ellipse((x - r, y - r, x + r, y + r), fill=_melange(fond, couleur, a))
+            if moving:
+                lib = formater_nombre(round(v), self.langue)
+                if x_de(v) > dr_axe + 40:   # hors de l'axe : flèche et valeur
+                    d.line((dr_axe + 60, y, dr - 10, y), fill=self.c["accent"], width=5)
+                    d.polygon(((dr, y), (dr - 22, y - 14), (dr - 22, y + 14)), fill=self.c["accent"])
+                d.text((min(x, dr - pv.getlength(lib)) - pv.getlength(lib) / 2, y - r - 56), lib, font=pv,
+                       fill=self.c["accent"])
+        # Repères sous l'axe : médiane puis moyenne (étiquettes décalées pour ne pas se chevaucher).
+        lib = LIBELLES_DONNEES[self.langue]
+        pl = self.police("gras", 36)
+        for nom, valeur, couleur, dy in (("mediane", mediane(serie), self.c["barre"], 110),
+                                         ("moyenne", moyenne(serie), self.c["accent"], 175)):
+            p = par_nature.get(nom)
+            if not p:
+                continue
+            k = _ease(self._avancee(p, t))
+            if k <= 0:
+                continue
+            x = x_lim(valeur)
+            yt = y_axe + dy
+            d.polygon(((x, y_axe + 8), (x - 16, y_axe + 36), (x + 16, y_axe + 36)), fill=_melange(fond, couleur, k))
+            d.line((x, y_axe + 36, x, yt - 6), fill=_melange(fond, couleur, k), width=3)
+            dec = conf.get("decimales", 0)
+            v = round(valeur, dec)
+            texte = f"{lib[nom]} {formater_nombre(v, self.langue, 0 if float(v).is_integer() else dec)}"
+            xt = max(g, min(x - pl.getlength(texte) / 2, dr - pl.getlength(texte)))
+            d.text((xt, yt), texte, font=pl, fill=_melange(fond, couleur, k))
+
+
+LIBELLES_DONNEES = {"fr": {"mediane": "médiane", "moyenne": "moyenne"},
+                    "en": {"mediane": "median", "moyenne": "mean"}}
+
+
+def _pas_rond(brut: float) -> float:
+    """Pas de graduation « rond » (1, 2 ou 5 × 10^k) proche de `brut`."""
+    if brut <= 0:
+        return 1.0
+    e = 10 ** math.floor(math.log10(brut))
+    return next(m * e for m in (1, 2, 5, 10) if m * e >= brut)

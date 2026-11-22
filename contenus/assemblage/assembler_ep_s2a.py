@@ -27,6 +27,29 @@ def S(type_, texte, voix, **extra):
     return s
 
 
+TRAJETS = [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
+CAFE = [1600, 1800, 1900, 2000, 2200, 2300, 2500, 2700, 2800]
+
+
+def pastilles(texte, voix, largeur, l, etapes=None, verifier=None):
+    """Les 20 salariés en pastilles : posées sur l'axe, rangées par classe, puis l'histogramme."""
+    s = {"type": "animation", "texte": texte,
+         "animation": {"modele": "pastilles", "valeurs": TRAJETS, "largeur_classe": largeur, "unite": "minutes"}}
+    if etapes:
+        s["etapes"] = etapes
+    s["voix_off"] = voix
+    if verifier:
+        s["verifier"] = verifier
+    return s
+
+
+def curseur(texte, voix, valeurs, indice, vers, axe_max, unite, etapes, verifier, decimales=0):
+    return {"type": "animation", "texte": texte,
+            "animation": {"modele": "curseur", "valeurs": valeurs, "indice": indice, "vers": vers,
+                          "axe_max": axe_max, "unite": unite, "decimales": decimales},
+            "etapes": etapes, "voix_off": voix, "verifier": verifier}
+
+
 def histo(texte, points, largeur, voix, axe_x, axe_y, y_max, note=None, verifier=None, decimales=None):
     c = {"style": "histogramme", "points": points, "largeur_classe": largeur, "valeurs": decimales is None,
          "y_min": 0, "y_max": y_max, "axe_x": axe_x, "axe_y": axe_y}
@@ -87,13 +110,13 @@ def modifier(k, scenes, l):
             garde.append(s)
         scenes[:] = garde
         # ouverture du chapitre sur les trajets de l'entreprise
-        scenes.insert(1, histo(
+        scenes.insert(1, pastilles(
             "Nos *20 salariés* : une bosse, une petite queue à droite" if fr else "Our *20 employees*: one hump, a small right tail",
-            [[0, 3], [10, 7], [20, 6], [30, 3], [40, 1]], 10,
             ("Revenons à nos vingt salariés. Leur histogramme a une bosse, entre dix et trente minutes, et une petite queue à droite : le salarié qui met quarante-quatre minutes. C'est une propriété de ces données fictives, pas une loi des trajets réels."
              if fr else "Back to our twenty employees. Their histogram has one hump, between ten and thirty minutes, and a small right tail: the employee who takes forty-four minutes. That's a property of these made-up data, not a law of real commutes."),
-            "Temps de trajet (minutes)" if fr else "Commuting time (minutes)",
-            "Effectif (salariés)" if fr else "Count (employees)", 12,
+            10, l,
+            etapes=(["Un point par salarié", "Une *bosse* entre 10 et 30 minutes", "Une petite *queue* à droite : 44 minutes"] if fr
+                    else ["One dot per employee", "A *hump* between 10 and 30 minutes", "A small right *tail*: 44 minutes"]),
             verifier=[{"expression": "3 + 7 + 6 + 3 + 1", "attendu": 20, "libelle": "Total des salariés"}]))
         # pas de moyenne avant le chapitre 4 dans la scène des tailles
         for s in scenes:
@@ -147,17 +170,16 @@ def lab1(l):
         S("titre", "Laboratoire : la largeur des classes" if fr else "Lab: bin width",
           "Laboratoire. Prenons les vingt temps de trajet et changeons nous-mêmes la largeur des classes." if fr
           else "Lab time. Let's take the twenty travel times and change the bin width ourselves.", numero="2.4"),
-        histo("Classes de *20 minutes*" if fr else "*20-minute* bins", [[0, 10], [20, 9], [40, 1]], 20,
-              "Classes de vingt minutes : dix, neuf, un. Le sommet a disparu." if fr else "Twenty-minute bins: ten, nine, one. The peak has gone.",
-              ax, ay, 12, verifier=[{"expression": "3 + 7", "attendu": 10, "libelle": "0 à 20 minutes"}]),
-        histo("Classes de *10 minutes*" if fr else "*10-minute* bins", [[0, 3], [10, 7], [20, 6], [30, 3], [40, 1]], 10,
-              "Classes de dix minutes : trois, sept, six, trois, un. Une bosse nette." if fr else "Ten-minute bins: three, seven, six, three, one. A clear hump.",
-              ax, ay, 12),
-        histo("Classes de *5 minutes* : deux « sommets » ?" if fr else "*5-minute* bins: two 'peaks'?",
-              [[0, 1], [5, 2], [10, 3], [15, 4], [20, 2], [25, 4], [30, 1], [35, 2], [40, 1]], 5,
-              ("Classes de cinq minutes. Le trajet de quinze minutes est compté dans la classe de quinze à vingt : la borne gauche est incluse. Deux sommets apparaissent, à quinze et à vingt-cinq minutes. Ils ne tiennent qu'à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent."
-               if fr else "Five-minute bins. The fifteen-minute trip counts in the fifteen-to-twenty bin: the left edge is included. Two peaks appear, at fifteen and at twenty-five minutes. They rest on one or two employees. Too wide, bins hide; too narrow, they invent."),
-              ax, ay, 8, verifier=[{"expression": "1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1", "attendu": 20, "libelle": "Classes de 5 minutes"}]),
+        pastilles("Classes de *20 minutes*" if fr else "*20-minute* bins",
+                  "Classes de vingt minutes : dix, neuf, un. Le sommet a disparu." if fr else "Twenty-minute bins: ten, nine, one. The peak has gone.",
+                  20, l, verifier=[{"expression": "3 + 7", "attendu": 10, "libelle": "0 à 20 minutes"}]),
+        pastilles("Classes de *10 minutes*" if fr else "*10-minute* bins",
+                  "Classes de dix minutes : trois, sept, six, trois, un. Une bosse nette." if fr else "Ten-minute bins: three, seven, six, three, one. A clear hump.",
+                  10, l),
+        pastilles("Classes de *5 minutes* : deux « sommets » ?" if fr else "*5-minute* bins: two 'peaks'?",
+                  ("Classes de cinq minutes. Le trajet de quinze minutes est compté dans la classe de quinze à vingt : la borne gauche est incluse. Deux sommets apparaissent, à quinze et à vingt-cinq minutes. Ils ne tiennent qu'à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent."
+                   if fr else "Five-minute bins. The fifteen-minute trip counts in the fifteen-to-twenty bin: the left edge is included. Two peaks appear, at fifteen and at twenty-five minutes. They rest on one or two employees. Too wide, bins hide; too narrow, they invent."),
+                  5, l, verifier=[{"expression": "1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1", "attendu": 20, "libelle": "Classes de 5 minutes"}]),
         histo("Âges de 40 visiteurs : *hauteur = effectif*" if fr else "Ages of 40 visitors: *height = count*",
               [[0, 8], [20, 12], [30, 20]], 30,
               ("Second réglage : les âges de quarante visiteurs, en classes inégales. Avec l'effectif comme hauteur, les trente à soixante ans dominent."
@@ -183,23 +205,28 @@ def lab2(l):
         S("titre", "Laboratoire : une seule valeur extrême" if fr else "Lab: a single extreme value",
           "Deuxième laboratoire. Faisons bouger une seule valeur, et regardons qui suit." if fr
           else "Second lab. Let's move a single value and watch who follows.", numero="5.4"),
-        S("etapes", "Le dixième client : *curseur* de 2 300 à 200 000 €" if fr else "The tenth customer: *slider* from €2,300 to €200,000",
-          ("Les neuf salaires du café, et un dixième client dont on fait monter le salaire. À chaque position, on range à nouveau les dix salaires et on recalcule. À deux mille trois cents euros : moyenne deux mille deux cent dix, médiane deux mille deux cent cinquante. À cinquante mille : moyenne six mille neuf cent quatre-vingts, médiane toujours deux mille deux cent cinquante. À deux cent mille : moyenne vingt et un mille neuf cent quatre-vingts. La médiane ne bouge pas : dès deux mille trois cents euros, le dixième client se range après le sixième salaire, et les deux valeurs du milieu restent deux mille deux cents et deux mille trois cents."
+        curseur("Le dixième client : *curseur* de 2 300 à 200 000 €" if fr else "The tenth customer: *slider* from €2,300 to €200,000",
+                ("Les neuf salaires du café, et un dixième client dont on fait monter le salaire. À chaque position, on range à nouveau les dix salaires et on recalcule. À deux mille trois cents euros : moyenne deux mille deux cent dix, médiane deux mille deux cent cinquante. À cinquante mille : moyenne six mille neuf cent quatre-vingts, médiane toujours deux mille deux cent cinquante. À deux cent mille : moyenne vingt et un mille neuf cent quatre-vingts. La médiane ne bouge pas : dès deux mille trois cents euros, le dixième client se range après le sixième salaire, et les deux valeurs du milieu restent deux mille deux cents et deux mille trois cents."
            if fr else "The café's nine salaries, and a tenth customer whose salary we raise. At each position, we sort the ten salaries again and recompute. At two thousand three hundred euros: mean two thousand two hundred and ten, median two thousand two hundred and fifty. At fifty thousand: mean six thousand nine hundred and eighty, median still two thousand two hundred and fifty. At two hundred thousand: mean twenty-one thousand nine hundred and eighty. The median doesn't move: from two thousand three hundred up, the tenth customer sorts after the sixth salary, so the two middle values stay two thousand two hundred and two thousand three hundred."),
-          etapes=[f"{e(2300)} € → moyenne *{e(2210)} €*, médiane *{e(2250)} €*" if fr else f"€{e(2300)} → mean *€{e(2210)}*, median *€{e(2250)}*",
-                  f"{e(50000)} € → moyenne *{e(6980)} €*, médiane *{e(2250)} €*" if fr else f"€{e(50000)} → mean *€{e(6980)}*, median *€{e(2250)}*",
-                  f"{e(200000)} € → moyenne *{e(21980)} €*, médiane *{e(2250)} €*" if fr else f"€{e(200000)} → mean *€{e(21980)}*, median *€{e(2250)}*"],
-          verifier=[{"expression": "(19800 + 2300) / 10", "attendu": 2210, "libelle": "Moyenne à 2 300 €"},
-                    {"expression": "(19800 + 50000) / 10", "attendu": 6980, "libelle": "Moyenne à 50 000 €"},
-                    {"expression": "(19800 + 200000) / 10", "attendu": 21980, "libelle": "Moyenne à 200 000 €"},
-                    {"expression": "(2200 + 2300) / 2", "attendu": 2250, "libelle": "Médiane dès 2 300 €"}]),
-        S("etapes", "Un salarié *déménage* : 44 → 120 minutes" if fr else "One employee *moves*: 44 → 120 minutes",
-          ("Retour à l'entreprise. On n'ajoute personne : le salarié qui mettait quarante-quatre minutes déménage et en met cent vingt. Ce sont toujours les mêmes vingt salariés. La moyenne passe de vingt et une minutes et quart à vingt-cinq minutes et cinq centièmes. La médiane reste à vingt minutes. Un seul individu a bougé, et seule la moyenne l'a suivi."
+                CAFE + [2300], 9, 200000, 3600, "€",
+                (["Neuf salaires, et un *dixième client* à 2 300 €", f"Médiane : *{e(2250)} €*", f"Moyenne : *{e(2210)} €*",
+                  "Le dixième monte à 200 000 € : la moyenne *s'envole*, la médiane *reste*"] if fr else
+                 ["Nine salaries, and a *tenth customer* at €2,300", f"Median: *€{e(2250)}*", f"Mean: *€{e(2210)}*",
+                  "The tenth climbs to €200,000: the mean *flies off*, the median *stays*"]),
+                [{"expression": "(19800 + 2300) / 10", "attendu": 2210, "libelle": "Moyenne à 2 300 €"},
+                 {"expression": "(19800 + 50000) / 10", "attendu": 6980, "libelle": "Moyenne à 50 000 €"},
+                 {"expression": "(19800 + 200000) / 10", "attendu": 21980, "libelle": "Moyenne à 200 000 €"},
+                 {"expression": "(2200 + 2300) / 2", "attendu": 2250, "libelle": "Médiane dès 2 300 €"}]),
+        curseur("Un salarié *déménage* : 44 → 120 minutes" if fr else "One employee *moves*: 44 → 120 minutes",
+                ("Retour à l'entreprise. On n'ajoute personne : le salarié qui mettait quarante-quatre minutes déménage et en met cent vingt. Ce sont toujours les mêmes vingt salariés. La moyenne passe de vingt et une minutes et quart à vingt-cinq minutes et cinq centièmes. La médiane reste à vingt minutes. Un seul individu a bougé, et seule la moyenne l'a suivi."
            if fr else "Back to the company. No one is added: the employee who took forty-four minutes moves and now takes one hundred and twenty. Still the same twenty employees. The mean goes from twenty-one and a quarter to twenty-five point zero five minutes. The median stays at twenty minutes. One individual moved, and only the mean followed."),
-          etapes=["Avant : moyenne *21,25 min*, médiane *20 min*" if fr else "Before: mean *21.25 min*, median *20 min*",
-                  "Après : moyenne *25,05 min*, médiane *20 min*" if fr else "After: mean *25.05 min*, median *20 min*"],
-          verifier=[{"expression": "(425 - 44 + 120) / 20", "attendu": 25.05, "libelle": "Moyenne après le déménagement"},
-                    {"expression": "(19 + 21) / 2", "attendu": 20, "libelle": "Médiane des trajets"}]),
+                TRAJETS, 19, 120, 55, "minutes",
+                (["Les mêmes *20 salariés*", "Médiane : *20 min*", "Moyenne : *21,25 min*",
+                  "44 → 120 minutes : moyenne *25,05 min*, médiane *20 min*"] if fr else
+                 ["The same *20 employees*", "Median: *20 min*", "Mean: *21.25 min*",
+                  "44 → 120 minutes: mean *25.05 min*, median *20 min*"]),
+                [{"expression": "(425 - 44 + 120) / 20", "attendu": 25.05, "libelle": "Moyenne après le déménagement"},
+                 {"expression": "(19 + 21) / 2", "attendu": 20, "libelle": "Médiane des trajets"}], decimales=2),
     ]
 
 
@@ -208,7 +235,7 @@ def episode(l):
     b = blocs
     sc = [S("accroche", "Vingt salariés. *Qui dit vrai* : la moyenne ou la médiane ?" if fr else "Twenty employees. *Which tells the truth*: the mean or the median?",
             b["ouverture"][l]),
-          S("accueil", "Bonjour, et *merci* d'être là" if fr else "Hi, and *thanks* for being here", b["accueil"][l]),
+          S("accueil", "Bonjour, et *bienvenue* !" if fr else "Hi, and *welcome*!", b["accueil"][l]),
           S("etapes", "Au programme" if fr else "In this episode", b["plan"][l],
             etapes=[c["titre"][l] for c in conc["deroule_episode"] if c["bloc"] == "chapitre"])]
     for k, d in enumerate(chap, 1):
@@ -249,8 +276,8 @@ def episode(l):
     sc.append(S("etapes", "Correction (suite)" if fr else "Answer (continued)", suite, etapes=et + [
         "Si 90 était une erreur pour 35 : moyenne *18,5 min*, médiane inchangée" if fr
         else "If 90 were a typo for 35: mean *18.5 min*, median unchanged"], verifier=v[4:]))
-    sc.append(S("cloture", ("La suite : *Mesurer les écarts*. Une question ? *En commentaire*" if fr
-                            else "Up next: *Measuring spread*. A question? *Ask in the comments*"), b["cloture"][l]))
+    sc.append(S("cloture", ("Prochain épisode : *les écarts*. Une question ? *En commentaire*" if fr
+                            else "Next episode: *spread*. A question? *Ask in the comments*"), b["cloture"][l]))
     sc.append(S("fin", "Éveiller par les chiffres." if fr else "Enlightening through numbers.",
                 "ACTU-BASICS. Éveiller par les chiffres." if fr else "ACTU-BASICS. Enlightening through numbers."))
     return sc

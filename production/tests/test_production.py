@@ -739,7 +739,7 @@ def test_video_avec_voix_de_test(tmp_path):
     for f in ("planche-video.png", "apercu-mobile.png", "zones-tiktok.png", "logo-mobile.png"):
         assert (d / "inspection" / f).exists()
     rapport = (tmp_path / "exemple-fictif/rapport-qc.md").read_text(encoding="utf-8")
-    assert "Logo sombre (vidéo, scène 6 (fin))" in rapport and "Logo sombre (couverture" in rapport
+    assert "Logo clair (vidéo, scène 6 (fin))" in rapport and "Logo clair (couverture" in rapport
 
 
 

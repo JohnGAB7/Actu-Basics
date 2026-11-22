@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import math
 
-from .animations import Animations
+from .animations import Animations, AnimationsDonnees
 from .formatage import formater_nombre, typographie
 
 LIBELLES_PEDAGOGIE = {
@@ -28,7 +28,7 @@ def _ease(t: float) -> float:
     return 1 - (1 - t) ** 3
 
 
-class ScenesPedagogiques(Animations):
+class ScenesPedagogiques(Animations, AnimationsDonnees):
     """Mélangé à Rendu : utilise ses polices, couleurs, zone et fonctions d'écriture."""
 
     TYPES_PEDAGOGIQUES = ("titre", "formule", "etapes", "courbe", "animation", "exercice", "correction")
@@ -118,7 +118,7 @@ class ScenesPedagogiques(Animations):
         w = p.getlength(texte) + 56
         fond = self._fond.getpixel((int(min(max(x, 0), self.largeur - 1)), int(min(y, self.hauteur - 1))))
         d.rounded_rectangle((x, y, x + w, y + 76), radius=38, fill=_melange(fond, self.c["accent"], a))
-        d.text((x + 28, y + 12), texte, font=p, fill=_melange(fond, self.c["fond"], a))
+        d.text((x + 28, y + 12), texte, font=p, fill=_melange(fond, self.c["encre_accent"], a))
         return y + 76
 
     def _mesurer_titre(self, texte, largeur, hauteur_max, taille, ctx):
@@ -134,9 +134,10 @@ class ScenesPedagogiques(Animations):
                                                 taille if not self.colonnes else 110, ctx)
         y0 = haut if not self.colonnes else haut + (bas - haut - ht) // 2
         y, _ = self.ecrire_riche(d, lt, pt, pas_t, y0, self.c["texte"], t, 0.0, centre=False, x_gauche=g)
-        if self.colonnes:   # filet d'accent sous le titre, rappel de la carte de chapitre
+        if self.colonnes:   # trait fin sous le titre, rappel de la carte de chapitre
             s = 1.0 if t is None else _ease((t - 0.2) / 0.6)
-            d.rectangle((g, y + 20, g + 120 * s, y + 30), fill=self.c["accent"])
+            d.line((g, y + 26, g + 120 * s, y + 26), fill=self.c["barre"], width=4)
+            d.ellipse((g + 120 * s - 7, y + 19, g + 120 * s + 7, y + 33), fill=self.c["accent"])
         return y + int(pt.size * 0.45)
 
     def _mesurer_etapes(self, etapes, largeur, hauteur, ctx):
@@ -194,7 +195,7 @@ class ScenesPedagogiques(Animations):
                 pn = self.police("noir", int(pastille * 0.55))
                 num = str(i + 1)
                 d.text((g + dx + (pastille - pn.getlength(num)) / 2, yy + pastille * 0.18), num, font=pn,
-                       fill=_melange(fond, self.c["fond"], a))
+                       fill=_melange(fond, self.c["encre_accent"], a))
                 couleur = self.c["accent"] if derniere_accent and i == len(etapes) - 1 else self.c["texte"]
                 self.ecrire_riche(d, lt, pt, pas_t, yy + max(0, (pastille - ht) / 2), couleur,
                                   None if a >= 1 else t, debut, centre=False, x_gauche=x_txt, decalage=0.02)
@@ -245,39 +246,71 @@ class ScenesPedagogiques(Animations):
                               centre=False, x_gauche=zone_txt[0], decalage=0.02)
 
     # ------------------------------------------------------------------ scènes
+    def _chapitres(self) -> list[str]:
+        """Numéros des chapitres de l'édition (titres numérotés sans sous-partie : « 1 », « 2 »…)."""
+        if getattr(self, "_liste_chapitres", None) is None:
+            ed = self.fiche.editions.get(self.langue)
+            nums = [s.extra.get("numero") for s in (ed.scenes if ed else []) if s.type == "titre"]
+            self._liste_chapitres = [n for n in dict.fromkeys(nums) if n and "." not in n]
+        return self._liste_chapitres
+
+    def _pastille_texte(self, d, x, y, texte, police, k, fond):
+        """Étiquette arrondie (fond d'accent, encre lisible) qui glisse depuis la gauche. Retourne sa largeur."""
+        from .rendu import _melange
+        w = police.getlength(texte) + 44
+        h = police.size + 26
+        dx = (1 - k) * -30
+        d.rounded_rectangle((x + dx, y, x + dx + w, y + h), radius=h // 2, fill=_melange(fond, self.c["accent"], k))
+        d.text((x + dx + 22, y + 11), texte, font=police, fill=_melange(fond, self.c["encre_accent"], k))
+        return w
+
     def _scene_titre(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
+        """Carte de chapitre sobre : étiquette « Chapitre 2 », points de progression, titre, trait animé.
+
+        Plus de numéro géant (jugé pompeux par JG, 22/11/2026) : le rang se lit dans l'étiquette et dans
+        les points (un par chapitre de l'épisode : passés en bleu, actuel en orange, à venir en contour)."""
         from .rendu import _melange
         lib = LIBELLES_PEDAGOGIE[self.langue]
         numero = scene.extra.get("numero")
-        a = 1.0 if t is None else _ease(t / 0.5)
-        pn = self.police("affichage", 300 if not self.colonnes else 420)
-        pl = self.police("noir", 38)
-        if self.colonnes and numero:   # numéro géant à gauche, titre à droite
-            (gg, hh, dg, bg), (gc, hc, dc, bc) = self._zones(g, haut, dr, bas)
-            fond = self._fond.getpixel((gg, int(hh)))
-            yn = hh + (bg - hh - pn.size) // 2
-            d.text((gg, yn - 40), lib["chapitre"], font=pl, fill=_melange(fond, self.c["secondaire"], a))
-            d.text((gg, yn + (1 - a) * 30), numero, font=pn, fill=_melange(fond, self.c["accent"], a))
-            pt, lt, pas_t, ht = self._mesurer_titre(scene.texte, dc - gc, bc - hc, 140, ctx)
-            y = hc + (bc - hc - ht) // 2
-            s = 1.0 if t is None else _ease((t - 0.2) / 0.6)
-            d.rectangle((gc, y - 50, gc + 160 * s, y - 36), fill=self.c["accent"])
-            self.ecrire_riche(d, lt, pt, pas_t, y, self.c["texte"], t, 0.3, centre=False, x_gauche=gc)
-            return
-        pt, lt, pas_t, ht = self._mesurer_titre(scene.texte, largeur, (bas - haut) // 2, 150, ctx)
-        # Hauteur réelle du numéro (bas du glyphe), pas la taille nominale de la police : sinon la
-        # barre d'accent mordait sur le bas du grand chiffre.
-        bas_numero = d.textbbox((0, 0), numero, font=pn)[3] if numero else 0
-        hn = 50 + bas_numero + 48 if numero else 0
-        y = haut + (bas - haut - ht - hn - 64) // 2
+        k_etiq = 1.0 if t is None else _ease(t / 0.5)
+        pl = self.police("gras", 34)
+        hauteur_titre = (bas - haut) // 2
+        pt, lt, pas_t, ht = self._mesurer_titre(scene.texte, min(largeur, round(largeur * 0.82)), hauteur_titre,
+                                                128 if self.colonnes else 140, ctx)
+        h_etiq = pl.size + 26 if numero else 0
+        y = haut + (bas - haut - ht - h_etiq - 70 - 40) // 2
+        fond = self._fond.getpixel((g, int(min(y, self.hauteur - 1))))
         if numero:
-            fond = self._fond.getpixel((g, int(y)))
-            d.text((g, y), lib["chapitre"], font=pl, fill=_melange(fond, self.c["secondaire"], a))
-            d.text((g, y + 50 + (1 - a) * 30), numero, font=pn, fill=_melange(fond, self.c["accent"], a))
-            y += hn
-        s = 1.0 if t is None else _ease((t - 0.2) / 0.6)
-        d.rectangle((g, y, g + 160 * s, y + 14), fill=self.c["accent"])
-        self.ecrire_riche(d, lt, pt, pas_t, y + 50, self.c["texte"], t, 0.3, centre=False, x_gauche=g)
+            texte = f"{lib['chapitre'].capitalize()} {numero}"
+            w = self._pastille_texte(d, g, y, texte, pl, k_etiq, fond)
+            chapitres = self._chapitres()
+            principal = numero.split(".")[0]
+            if principal in chapitres and len(chapitres) > 1:
+                rang = chapitres.index(principal)
+                r, pas = 9, 34
+                xd, yd = g + w + 40, y + h_etiq / 2
+                for i in range(len(chapitres)):
+                    k = 1.0 if t is None else _ease((t - 0.25 - 0.08 * i) / 0.35)
+                    if k <= 0:
+                        continue
+                    cx = xd + i * pas
+                    if i == rang:
+                        rr = r * 1.35
+                        d.ellipse((cx - rr, yd - rr, cx + rr, yd + rr), fill=_melange(fond, self.c["accent"], k))
+                    elif i < rang:
+                        d.ellipse((cx - r, yd - r, cx + r, yd + r), fill=_melange(fond, self.c["barre"], k))
+                    else:
+                        d.ellipse((cx - r, yd - r, cx + r, yd + r), outline=_melange(fond, self.c["secondaire"], k),
+                                  width=3)
+            y += h_etiq + 40
+        self.ecrire_riche(d, lt, pt, pas_t, y, self.c["texte"], t, 0.3, centre=False, x_gauche=g)
+        # Trait fin qui se dessine sous le titre, avec un point d'accent qui le parcourt.
+        yl = y + ht + 50
+        s = 1.0 if t is None else _ease((t - 0.5) / 0.9)
+        if s > 0:
+            long = min(largeur, 620) * s
+            d.line((g, yl, g + long, yl), fill=_melange(fond, self.c["barre"], 0.85), width=4)
+            d.ellipse((g + long - 9, yl - 9, g + long + 9, yl + 9), fill=self.c["accent"])
 
     def _scene_formule(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         """Lignes de formule à la même taille, qui apparaissent une à une ; le résultat en couleur d'accent."""
@@ -440,7 +473,7 @@ class ScenesPedagogiques(Animations):
                 for j, (mot, _, colle) in enumerate(ligne):
                     if colle and j:
                         x -= pr.getlength(" ")
-                    d.text((x, y_txt), mot, font=pr, fill=_melange(fond, self.c["fond"], k))
+                    d.text((x, y_txt), mot, font=pr, fill=_melange(fond, self.c["encre_accent"], k))
                     x += pr.getlength(mot) + pr.getlength(" ")
                 y_txt += pas_r
 
@@ -589,7 +622,7 @@ class ScenesPedagogiques(Animations):
                     continue
                 x0, x1 = (X(n_b - 0.32), X(n_b + 0.32)) if style == "barres" else (X(x), X(bornes[n_b + 1]))
                 y_haut = Y(ymin + (v_b - ymin) * kb)
-                couleur = self.c["accent"] if (n_b in avant or not avant) else self.c["barre"]
+                couleur = self.c["accent"] if n_b in avant else self.c["barre"]   # données en bleu, mise en avant en orange
                 d.rectangle((x0, y_haut, x1, bas_g), fill=couleur,
                             outline=fond if style == "histogramme" else None, width=3 if style == "histogramme" else 0)
                 if c.get("valeurs") and kb >= 1.0:
@@ -608,7 +641,7 @@ class ScenesPedagogiques(Animations):
                 if kb <= 0:
                     continue
                 mn, q1, me, q3, mx = (float(z) for z in b["valeurs"])
-                couleur = self.c["accent"] if (n_b in avant or not avant) else self.c["barre"]
+                couleur = self.c["accent"] if n_b in avant else self.c["barre"]   # données en bleu, mise en avant en orange
                 trait = _melange(fond, couleur, kb)
                 xc, x0, x1 = X(n_b), X(n_b - demi), X(n_b + demi)
                 xm0, xm1 = X(n_b - demi / 2), X(n_b + demi / 2)
@@ -640,7 +673,7 @@ class ScenesPedagogiques(Animations):
             avant = set(c.get("mis_en_avant") or [])
             rangs = [n_p for n_p, (x, _) in enumerate(pts) if x <= x_lim + 1e-9]
             for n_p, (px, py) in zip(rangs, trace):
-                couleur = self.c["accent"] if (n_p in avant or not avant) else self.c["barre"]
+                couleur = self.c["accent"] if n_p in avant else self.c["barre"]
                 d.ellipse((px - 14, py - 14, px + 14, py + 14), fill=couleur)
         elif len(trace) >= 2:
             d.line(trace, fill=self.c["accent"], width=10, joint="curve")

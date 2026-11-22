@@ -56,8 +56,8 @@ editions:
       texte: 'Vingt salariés. *Qui dit vrai* : la moyenne ou la médiane ?'
       voix_off: 'Vingt salariés. Une seule question : combien de temps mettent-ils pour venir travailler ? La moyenne dit un peu plus de 21 minutes. Pourtant, la moitié d''entre eux met 20 minutes ou moins. Et si un seul salarié déménage loin, la moyenne bondit… alors que presque rien n''a changé pour les autres. Qui dit vrai ?'
     - type: accueil
-      texte: Bonjour, et *merci* d'être là
-      voix_off: 'Bonjour, et merci d''être là. Dans cet épisode, vous allez apprendre à résumer des données sans les trahir : les compter, les dessiner, puis choisir entre la moyenne et la médiane. Aucun prérequis, à part les pourcentages.'
+      texte: Bonjour, et *bienvenue* !
+      voix_off: 'Bonjour, et bienvenue ! Merci d''être là. Salaires, notes, temps de trajet : on résume tout avec une moyenne. Dans cet épisode, on voit quand elle dit vrai, quand elle trompe, et par quoi la remplacer.'
     - type: etapes
       texte: Au programme
       etapes:
@@ -411,79 +411,53 @@ editions:
       texte: 'Laboratoire : la largeur des classes'
       numero: '2.4'
       voix_off: Laboratoire. Prenons les vingt temps de trajet et changeons nous-mêmes la largeur des classes.
-    - type: courbe
+    - type: animation
       texte: Classes de *20 minutes*
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 10
-        - - 20
-          - 9
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: &id001
+        - 4
+        - 7
+        - 9
+        - 11
+        - 12
+        - 14
+        - 15
+        - 16
+        - 18
+        - 19
+        - 21
+        - 23
+        - 25
+        - 26
+        - 27
+        - 29
+        - 32
+        - 35
+        - 38
+        - 44
         largeur_classe: 20
-        valeurs: true
-        y_min: 0
-        y_max: 12
-        axe_x: Temps de trajet (minutes)
-        axe_y: Effectif (salariés)
+        unite: minutes
       voix_off: 'Classes de vingt minutes : dix, neuf, un. Le sommet a disparu.'
       verifier:
       - expression: 3 + 7
         attendu: 10
         libelle: 0 à 20 minutes
-    - type: courbe
+    - type: animation
       texte: Classes de *10 minutes*
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 3
-        - - 10
-          - 7
-        - - 20
-          - 6
-        - - 30
-          - 3
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 10
-        valeurs: true
-        y_min: 0
-        y_max: 12
-        axe_x: Temps de trajet (minutes)
-        axe_y: Effectif (salariés)
+        unite: minutes
       voix_off: 'Classes de dix minutes : trois, sept, six, trois, un. Une bosse nette.'
-    - type: courbe
+    - type: animation
       texte: 'Classes de *5 minutes* : deux « sommets » ?'
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 1
-        - - 5
-          - 2
-        - - 10
-          - 3
-        - - 15
-          - 4
-        - - 20
-          - 2
-        - - 25
-          - 4
-        - - 30
-          - 1
-        - - 35
-          - 2
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 5
-        valeurs: true
-        y_min: 0
-        y_max: 8
-        axe_x: Temps de trajet (minutes)
-        axe_y: Effectif (salariés)
+        unite: minutes
       voix_off: 'Classes de cinq minutes. Le trajet de quinze minutes est compté dans la classe de quinze à vingt : la borne gauche est incluse. Deux sommets apparaissent, à quinze et à vingt-cinq minutes. Ils ne tiennent qu''à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent.'
       verifier:
       - expression: 1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1
@@ -538,27 +512,17 @@ editions:
       numero: '3'
       texte: Lire la forme d'une distribution
       voix_off: Avant de calculer quoi que ce soit, regardez la silhouette d'un histogramme. Elle en dit déjà beaucoup.
-    - type: courbe
+    - type: animation
       texte: 'Nos *20 salariés* : une bosse, une petite queue à droite'
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 3
-        - - 10
-          - 7
-        - - 20
-          - 6
-        - - 30
-          - 3
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 10
-        valeurs: true
-        y_min: 0
-        y_max: 12
-        axe_x: Temps de trajet (minutes)
-        axe_y: Effectif (salariés)
+        unite: minutes
+      etapes:
+      - Un point par salarié
+      - Une *bosse* entre 10 et 30 minutes
+      - 'Une petite *queue* à droite : 44 minutes'
       voix_off: 'Revenons à nos vingt salariés. Leur histogramme a une bosse, entre dix et trente minutes, et une petite queue à droite : le salarié qui met quarante-quatre minutes. C''est une propriété de ces données fictives, pas une loi des trajets réels.'
       verifier:
       - expression: 3 + 7 + 6 + 3 + 1
@@ -1117,12 +1081,32 @@ editions:
       texte: 'Laboratoire : une seule valeur extrême'
       numero: '5.4'
       voix_off: Deuxième laboratoire. Faisons bouger une seule valeur, et regardons qui suit.
-    - type: etapes
+    - type: animation
       texte: 'Le dixième client : *curseur* de 2 300 à 200 000 €'
+      animation:
+        modele: curseur
+        valeurs:
+        - 1600
+        - 1800
+        - 1900
+        - 2000
+        - 2200
+        - 2300
+        - 2500
+        - 2700
+        - 2800
+        - 2300
+        indice: 9
+        vers: 200000
+        axe_max: 3600
+        unite: €
+        decimales: 0
       etapes:
-      - 2 300 € → moyenne *2 210 €*, médiane *2 250 €*
-      - 50 000 € → moyenne *6 980 €*, médiane *2 250 €*
-      - 200 000 € → moyenne *21 980 €*, médiane *2 250 €*
+      - Neuf salaires, et un *dixième client* à 2 300 €
+      - 'Médiane : *2 250 €*'
+      - 'Moyenne : *2 210 €*'
+      - 'Le dixième monte à 200 000 € : la moyenne *s''envole*, la médiane *reste*'
+      voix_off: 'Les neuf salaires du café, et un dixième client dont on fait monter le salaire. À chaque position, on range à nouveau les dix salaires et on recalcule. À deux mille trois cents euros : moyenne deux mille deux cent dix, médiane deux mille deux cent cinquante. À cinquante mille : moyenne six mille neuf cent quatre-vingts, médiane toujours deux mille deux cent cinquante. À deux cent mille : moyenne vingt et un mille neuf cent quatre-vingts. La médiane ne bouge pas : dès deux mille trois cents euros, le dixième client se range après le sixième salaire, et les deux valeurs du milieu restent deux mille deux cents et deux mille trois cents.'
       verifier:
       - expression: (19800 + 2300) / 10
         attendu: 2210
@@ -1136,12 +1120,22 @@ editions:
       - expression: (2200 + 2300) / 2
         attendu: 2250
         libelle: Médiane dès 2 300 €
-      voix_off: 'Les neuf salaires du café, et un dixième client dont on fait monter le salaire. À chaque position, on range à nouveau les dix salaires et on recalcule. À deux mille trois cents euros : moyenne deux mille deux cent dix, médiane deux mille deux cent cinquante. À cinquante mille : moyenne six mille neuf cent quatre-vingts, médiane toujours deux mille deux cent cinquante. À deux cent mille : moyenne vingt et un mille neuf cent quatre-vingts. La médiane ne bouge pas : dès deux mille trois cents euros, le dixième client se range après le sixième salaire, et les deux valeurs du milieu restent deux mille deux cents et deux mille trois cents.'
-    - type: etapes
+    - type: animation
       texte: 'Un salarié *déménage* : 44 → 120 minutes'
+      animation:
+        modele: curseur
+        valeurs: *id001
+        indice: 19
+        vers: 120
+        axe_max: 55
+        unite: minutes
+        decimales: 2
       etapes:
-      - 'Avant : moyenne *21,25 min*, médiane *20 min*'
-      - 'Après : moyenne *25,05 min*, médiane *20 min*'
+      - Les mêmes *20 salariés*
+      - 'Médiane : *20 min*'
+      - 'Moyenne : *21,25 min*'
+      - '44 → 120 minutes : moyenne *25,05 min*, médiane *20 min*'
+      voix_off: 'Retour à l''entreprise. On n''ajoute personne : le salarié qui mettait quarante-quatre minutes déménage et en met cent vingt. Ce sont toujours les mêmes vingt salariés. La moyenne passe de vingt et une minutes et quart à vingt-cinq minutes et cinq centièmes. La médiane reste à vingt minutes. Un seul individu a bougé, et seule la moyenne l''a suivi.'
       verifier:
       - expression: (425 - 44 + 120) / 20
         attendu: 25.05
@@ -1149,7 +1143,6 @@ editions:
       - expression: (19 + 21) / 2
         attendu: 20
         libelle: Médiane des trajets
-      voix_off: 'Retour à l''entreprise. On n''ajoute personne : le salarié qui mettait quarante-quatre minutes déménage et en met cent vingt. Ce sont toujours les mêmes vingt salariés. La moyenne passe de vingt et une minutes et quart à vingt-cinq minutes et cinq centièmes. La médiane reste à vingt minutes. Un seul individu a bougé, et seule la moyenne l''a suivi.'
     - type: etapes
       texte: À retenir
       etapes:
@@ -1194,8 +1187,8 @@ editions:
         libelle: Moyenne si 90 était 35
       voix_off: 'Quatre : 7 salariés sur 10 sont sous la moyenne ; le trajet typique, c''est la médiane, 16,5 minutes. Pour aller plus loin : si les 90 minutes étaient une erreur de saisie pour 35, la moyenne tomberait à 18,5 minutes et la médiane ne bougerait pas.'
     - type: cloture
-      texte: 'La suite : *Mesurer les écarts*. Une question ? *En commentaire*'
-      voix_off: 'Vous savez maintenant compter, dessiner et résumer des données, et choisir entre moyenne et médiane. Mais deux équipes peuvent avoir la même médiane et des trajets très différents : c''est l''objet de l''épisode suivant, « Mesurer les écarts : quartiles, variance, écart-type et score z ». Le laboratoire et l''exercice sont sur la page de l''épisode, sur le site. Si cet épisode vous a aidé, abonnez-vous, laissez un like et partagez-le à quelqu''un que ça aidera. Un exercice vous bloque ? Posez votre question en commentaire : on vous aide gratuitement.'
+      texte: 'Prochain épisode : *les écarts*. Une question ? *En commentaire*'
+      voix_off: 'Voilà : la prochaine fois qu''on vous annonce un salaire moyen ou un temps d''attente moyen, vous saurez quelle question poser. Mais deux équipes peuvent avoir la même médiane et des trajets très différents : c''est tout l''enjeu du prochain épisode, sur les écarts. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu''un à qui elle servira. Et si un exercice vous résiste, écrivez-nous en commentaire : on vous aide, gratuitement. Merci d''avoir regardé, et à très vite !'
     - type: fin
       texte: Éveiller par les chiffres.
       voix_off: ACTU-BASICS. Éveiller par les chiffres.
@@ -1214,8 +1207,8 @@ editions:
       texte: 'Twenty employees. *Which tells the truth*: the mean or the median?'
       voix_off: 'Twenty employees. One question: how long does it take them to get to work? The mean says just over 21 minutes. Yet half of them take 20 minutes or less. And if just one employee moves far away, the mean jumps… while almost nothing changes for anyone else. Which number tells the truth?'
     - type: accueil
-      texte: Hi, and *thanks* for being here
-      voix_off: 'Hi, and thanks for being here. In this episode, you''ll learn to sum up data without betraying it: count it, draw it, then choose between the mean and the median. No prerequisites beyond percentages.'
+      texte: Hi, and *welcome*!
+      voix_off: 'Hi, and welcome! Thanks for being here. Salaries, grades, commuting times: we sum everything up with an average. In this episode, we''ll see when it tells the truth, when it misleads, and what to use instead.'
     - type: etapes
       texte: In this episode
       etapes:
@@ -1569,79 +1562,33 @@ editions:
       texte: 'Lab: bin width'
       numero: '2.4'
       voix_off: Lab time. Let's take the twenty travel times and change the bin width ourselves.
-    - type: courbe
+    - type: animation
       texte: '*20-minute* bins'
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 10
-        - - 20
-          - 9
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 20
-        valeurs: true
-        y_min: 0
-        y_max: 12
-        axe_x: Commuting time (minutes)
-        axe_y: Count (employees)
+        unite: minutes
       voix_off: 'Twenty-minute bins: ten, nine, one. The peak has gone.'
       verifier:
       - expression: 3 + 7
         attendu: 10
         libelle: 0 à 20 minutes
-    - type: courbe
+    - type: animation
       texte: '*10-minute* bins'
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 3
-        - - 10
-          - 7
-        - - 20
-          - 6
-        - - 30
-          - 3
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 10
-        valeurs: true
-        y_min: 0
-        y_max: 12
-        axe_x: Commuting time (minutes)
-        axe_y: Count (employees)
+        unite: minutes
       voix_off: 'Ten-minute bins: three, seven, six, three, one. A clear hump.'
-    - type: courbe
+    - type: animation
       texte: '*5-minute* bins: two ''peaks''?'
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 1
-        - - 5
-          - 2
-        - - 10
-          - 3
-        - - 15
-          - 4
-        - - 20
-          - 2
-        - - 25
-          - 4
-        - - 30
-          - 1
-        - - 35
-          - 2
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 5
-        valeurs: true
-        y_min: 0
-        y_max: 8
-        axe_x: Commuting time (minutes)
-        axe_y: Count (employees)
+        unite: minutes
       voix_off: 'Five-minute bins. The fifteen-minute trip counts in the fifteen-to-twenty bin: the left edge is included. Two peaks appear, at fifteen and at twenty-five minutes. They rest on one or two employees. Too wide, bins hide; too narrow, they invent.'
       verifier:
       - expression: 1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1
@@ -1696,27 +1643,17 @@ editions:
       numero: '3'
       texte: Reading the shape of a distribution
       voix_off: Before you calculate anything, look at the shape of a histogram. It already tells you a lot.
-    - type: courbe
+    - type: animation
       texte: 'Our *20 employees*: one hump, a small right tail'
-      courbe:
-        style: histogramme
-        points:
-        - - 0
-          - 3
-        - - 10
-          - 7
-        - - 20
-          - 6
-        - - 30
-          - 3
-        - - 40
-          - 1
+      animation:
+        modele: pastilles
+        valeurs: *id001
         largeur_classe: 10
-        valeurs: true
-        y_min: 0
-        y_max: 12
-        axe_x: Commuting time (minutes)
-        axe_y: Count (employees)
+        unite: minutes
+      etapes:
+      - One dot per employee
+      - A *hump* between 10 and 30 minutes
+      - 'A small right *tail*: 44 minutes'
       voix_off: 'Back to our twenty employees. Their histogram has one hump, between ten and thirty minutes, and a small right tail: the employee who takes forty-four minutes. That''s a property of these made-up data, not a law of real commutes.'
       verifier:
       - expression: 3 + 7 + 6 + 3 + 1
@@ -2275,12 +2212,32 @@ editions:
       texte: 'Lab: a single extreme value'
       numero: '5.4'
       voix_off: Second lab. Let's move a single value and watch who follows.
-    - type: etapes
+    - type: animation
       texte: 'The tenth customer: *slider* from €2,300 to €200,000'
+      animation:
+        modele: curseur
+        valeurs:
+        - 1600
+        - 1800
+        - 1900
+        - 2000
+        - 2200
+        - 2300
+        - 2500
+        - 2700
+        - 2800
+        - 2300
+        indice: 9
+        vers: 200000
+        axe_max: 3600
+        unite: €
+        decimales: 0
       etapes:
-      - €2,300 → mean *€2,210*, median *€2,250*
-      - €50,000 → mean *€6,980*, median *€2,250*
-      - €200,000 → mean *€21,980*, median *€2,250*
+      - Nine salaries, and a *tenth customer* at €2,300
+      - 'Median: *€2,250*'
+      - 'Mean: *€2,210*'
+      - 'The tenth climbs to €200,000: the mean *flies off*, the median *stays*'
+      voix_off: 'The café''s nine salaries, and a tenth customer whose salary we raise. At each position, we sort the ten salaries again and recompute. At two thousand three hundred euros: mean two thousand two hundred and ten, median two thousand two hundred and fifty. At fifty thousand: mean six thousand nine hundred and eighty, median still two thousand two hundred and fifty. At two hundred thousand: mean twenty-one thousand nine hundred and eighty. The median doesn''t move: from two thousand three hundred up, the tenth customer sorts after the sixth salary, so the two middle values stay two thousand two hundred and two thousand three hundred.'
       verifier:
       - expression: (19800 + 2300) / 10
         attendu: 2210
@@ -2294,12 +2251,22 @@ editions:
       - expression: (2200 + 2300) / 2
         attendu: 2250
         libelle: Médiane dès 2 300 €
-      voix_off: 'The café''s nine salaries, and a tenth customer whose salary we raise. At each position, we sort the ten salaries again and recompute. At two thousand three hundred euros: mean two thousand two hundred and ten, median two thousand two hundred and fifty. At fifty thousand: mean six thousand nine hundred and eighty, median still two thousand two hundred and fifty. At two hundred thousand: mean twenty-one thousand nine hundred and eighty. The median doesn''t move: from two thousand three hundred up, the tenth customer sorts after the sixth salary, so the two middle values stay two thousand two hundred and two thousand three hundred.'
-    - type: etapes
+    - type: animation
       texte: 'One employee *moves*: 44 → 120 minutes'
+      animation:
+        modele: curseur
+        valeurs: *id001
+        indice: 19
+        vers: 120
+        axe_max: 55
+        unite: minutes
+        decimales: 2
       etapes:
-      - 'Before: mean *21.25 min*, median *20 min*'
-      - 'After: mean *25.05 min*, median *20 min*'
+      - The same *20 employees*
+      - 'Median: *20 min*'
+      - 'Mean: *21.25 min*'
+      - '44 → 120 minutes: mean *25.05 min*, median *20 min*'
+      voix_off: 'Back to the company. No one is added: the employee who took forty-four minutes moves and now takes one hundred and twenty. Still the same twenty employees. The mean goes from twenty-one and a quarter to twenty-five point zero five minutes. The median stays at twenty minutes. One individual moved, and only the mean followed.'
       verifier:
       - expression: (425 - 44 + 120) / 20
         attendu: 25.05
@@ -2307,7 +2274,6 @@ editions:
       - expression: (19 + 21) / 2
         attendu: 20
         libelle: Médiane des trajets
-      voix_off: 'Back to the company. No one is added: the employee who took forty-four minutes moves and now takes one hundred and twenty. Still the same twenty employees. The mean goes from twenty-one and a quarter to twenty-five point zero five minutes. The median stays at twenty minutes. One individual moved, and only the mean followed.'
     - type: etapes
       texte: Key takeaways
       etapes:
@@ -2352,8 +2318,8 @@ editions:
         libelle: Moyenne si 90 était 35
       voix_off: 'Four: 7 employees out of 10 are below the mean; the typical trip is the median, 16.5 minutes. Going further: if the 90 minutes were a typo for 35, the mean would drop to 18.5 minutes and the median would not move.'
     - type: cloture
-      texte: 'Up next: *Measuring spread*. A question? *Ask in the comments*'
-      voix_off: 'You can now count, draw and summarize data, and choose between the mean and the median. But two teams can share the same median and have very different trips: that''s the next episode, ''Measuring spread: quartiles, variance, standard deviation and z-scores''. The lab and the exercise are on the episode page on the website. If this episode helped, subscribe, leave a like and share it with someone it will help. Stuck on an exercise? Ask in the comments and we''ll help you for free.'
+      texte: 'Next episode: *spread*. A question? *Ask in the comments*'
+      voix_off: 'That''s it: next time someone quotes an average salary or an average waiting time, you''ll know which question to ask. But two teams can share the same median and have very different trips: that''s what the next episode, on spread, is all about. If this video was useful, subscribe, leave a like and share it with someone it will help. And if an exercise gets the better of you, write to us in the comments: we''ll help you, for free. Thanks for watching, see you very soon!'
     - type: fin
       texte: Enlightening through numbers.
       voix_off: ACTU-BASICS. Enlightening through numbers.

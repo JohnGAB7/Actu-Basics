@@ -141,6 +141,9 @@ class Rendu(ScenesPedagogiques):
              "lecon": charte.get("zones_securite_lecon", charte["marges_carrousel"])}[format_]
         self.zone = (m["gauche"], m["haut"], self.largeur - m["droite"], self.hauteur - m["bas"])
         self.c = {k: _rgb(v) for k, v in charte["couleurs"].items()}
+        self.c.setdefault("encre_accent", self.c["fond"])     # texte posé sur une forme d'accent
+        self.c.setdefault("halo", self.c["barre"])
+        self.c.setdefault("progression", self.c["accent"])
         self.chemins_polices = {style: trouver_police(c) for style, c in charte["polices"].items()}
         self.alertes: list[str] = []  # débordements de texte etc. -> rapport QC
         self.tailles: dict[str, int] = {}  # plus petite taille de police par type de scène
@@ -191,6 +194,24 @@ class Rendu(ScenesPedagogiques):
     # ------------------------------------------------------------------ logo mobile
     def conf_mobile(self) -> dict:
         return (self.logos.conf or {}).get("mobile") or {}
+
+    # ------------------------------------------------------------------ décor en mouvement
+    def decor_prevu(self, scene: Scene) -> bool:
+        """Le décor en mouvement (lmec/decor.py) passe-t-il derrière cette scène ?"""
+        c = self.charte.get("decor") or {}
+        return bool(c.get("actif")) and self.format in (c.get("formats") or []) \
+            and scene.type not in (c.get("sauf_scenes") or ["fin"])
+
+    @property
+    def decor(self):
+        if getattr(self, "_decor", None) is None:
+            from .decor import Decor
+            bandeau = 0
+            if self.logos.actif and self.logos.images and self.conf_mobile().get("actif"):
+                _, h, p = self._mobile_taille()
+                bandeau = self.zone[1] + h + 2 * p    # bandeau du logo mobile, zone de protection comprise
+            self._decor = Decor(self._fond, self.c, self.charte.get("decor") or {}, bandeau)
+        return self._decor
 
     def mobile_prevu(self, scene: Scene) -> bool:
         """Le logo mobile accompagne-t-il cette scène ? (vidéo et cours 16:9, hors scène de fin)"""
@@ -271,7 +292,7 @@ class Rendu(ScenesPedagogiques):
                                                                         Image.BILINEAR)
         from PIL import ImageFilter
         halo = halo.filter(ImageFilter.GaussianBlur(60))
-        couleur = Image.new("RGB", (self.largeur, self.hauteur), self.c["barre"])
+        couleur = Image.new("RGB", (self.largeur, self.hauteur), self.c["halo"])
         return Image.composite(couleur, fond, halo)
 
     def _couper(self, texte: str, police, largeur_max: int) -> list[str]:
@@ -386,7 +407,7 @@ class Rendu(ScenesPedagogiques):
                         haut_b = y + police.size * 0.12
                         d.rectangle((x - marge, haut_b + dy, x + w + marge, haut_b + police.size * 1.02 + dy),
                                     fill=_melange(fond, self.c["accent"], a))
-                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, self.c["fond"], a))
+                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, self.c["encre_accent"], a))
                     else:
                         c = self.c["accent"] if fort else couleur
                         d.text((x, y + dy), mot, font=police, fill=_melange(fond, c, a))
