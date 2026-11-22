@@ -13,6 +13,9 @@ production/polices/*
 !production/polices/LISEZMOI.md
 !production/polices/Anton-Regular.ttf
 !production/polices/OFL-Anton.txt
+!production/polices/SourceSerifPro-Regular.ttf
+!production/polices/SourceSerifPro-Semibold.ttf
+!production/polices/OFL-SourceSerifPro.txt
 # Modèles de voix (lourds) et cache de synthèse
 production/voix/
 .cache-tts/
