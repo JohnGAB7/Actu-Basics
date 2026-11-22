@@ -1,48 +1,152 @@
-# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
-# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur. Deux largeurs de classes au lieu des trois du catalogue.
+# Fiche de conception, niveau 1, chapitre 2 de l'épisode EP-S2A. Modèle : modeles/fiche-conception-episode.yaml
+# Contenu validé par JG le 8/11/2026 ; mise à niveau dans la structure d'épisode long le 22/11/2026
+# (demande de JG). Deux largeurs de classes au lieu des trois du catalogue : la troisième (5 minutes)
+# passe au laboratoire 1 de l'épisode. Convention de densité alignée sur la revue ChatGPT (PR #50).
 id_programme: S2.02
-statut: valide
+episode: EP-S2A
+rang_dans_episode: 2
+statut: revue_claude            # mise à niveau à relire ; contenu validé le 8/11/2026
 fiche_production: contenus/fiches/2026-11-n1-s2-02-diagrammes-en-barres-et-histogrammes.yaml
+
+titres:
+  fr: "Diagrammes en barres et histogrammes"
+  en: "Bar charts and histograms"
 question_centrale:
-  fr: Pourquoi un histogramme n'est-il pas un diagramme en barres ?
-  en: Why is a histogram not a bar chart?
-position:
-  pilier: statistiques
-  niveau: 1
-  module: S2
-  rang_dans_module: 2
+  fr: "Pourquoi un histogramme n'est-il pas un diagramme en barres ?"
+  en: "Why is a histogram not a bar chart?"
+
+position: {pilier: statistiques, niveau: 1, module: S2, rang_dans_module: 2}
+
 public:
-  prerequis:
-  - S2.01
+  prerequis: [S2.01]
   niveau_maths: M0
-  rappel_conseille: []
-intuition: Dans un histogramme, c'est la surface qui compte, pas la hauteur.
-exemple_fil_rouge: Temps de trajet fictifs de 20 salariés, en classes de 10 puis 20 minutes, puis classes inégales.
-exemple_reel: null
+  rappel_conseille: [M0.03]
+  notions_utilisees:
+    - {notion: "Effectif, total", episode: "EP-S2A, chapitre 1", rappel: ""}
+    - {notion: "Variable qualitative ou quantitative continue", episode: EP-S1A, rappel: "Catégories (mode de transport) contre nombres qui se suivent sans trou (minutes)"}
+    - {notion: "Lire un graphique : axes, graduations", episode: EP-M01, rappel: "Axes nommés à voix haute"}
+    - {notion: "Aire d'un rectangle", episode: "", rappel: "Largeur × hauteur, rectangle dessiné et mesuré (0,7 × 10 = 7)"}
+    - {notion: "Classe [a ; b[", episode: "", rappel: "Chaque classe contient sa borne gauche et pas sa borne droite ; la dernière classe se termine au-dessus du maximum"}
+    - {notion: "Division et arrondi au centième", episode: EP-M01, rappel: "10 ÷ 30 ≈ 0,33, annoncé comme arrondi"}
+
+objectifs:
+  fr:
+    - "Choisir le diagramme en barres pour des catégories et l'histogramme pour une variable numérique groupée en classes"
+    - "Montrer que la largeur des classes change la silhouette d'un histogramme"
+    - "Calculer une densité d'effectif (effectif ÷ largeur) et lire l'effectif comme l'aire d'un rectangle"
+  en:
+    - "Use a bar chart for categories and a histogram for a numeric variable grouped into bins"
+    - "Show that bin width changes the shape of a histogram"
+    - "Compute a count density (count ÷ width) and read the count as the area of a rectangle"
+
+intuition: "Dans un histogramme, c'est la surface qui compte, pas la hauteur."
+exemple_fil_rouge: "Les 20 salariés de l'entreprise fictive : mode de transport (barres), puis temps de trajet en classes de 10 et 20 minutes, puis classes inégales 0–10, 10–20, 20–50."
+exemple_reel:
+  description: "Aucun : données fictives annoncées comme telles."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "Modes de transport (8, 6, 4, 2), effectifs des temps de trajet, âges des 40 visiteurs"
+    support: graphique
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude ; trajets individuels dans contenus/conception/EP-S2A.yaml", formule: "", transformations: ""}
+    definition: "Mode de transport ; temps de trajet domicile-travail ; âge"
+    unite: "salariés ; minutes ; années"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Regroupements (10, 9, 1), densités (0,3 ; 0,7 ; 0,33 ; 0,4 ; 1,2 ; 0,67), aires (7, 10)"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Effectifs ci-dessus", formule: "effectif / largeur ; densité × largeur", transformations: "arrondi au centième"}
+    definition: "Densité d'effectif : individus par unité de la variable"
+    unite: "salariés par minute ; visiteurs par année d'âge"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: ""
+
+affirmations_qualitatives:
+  - {affirmation: "Le choix des classes est arbitraire ou suit une règle ; il change l'histogramme", statut: sourcee, source: "NIST/SEMATECH e-Handbook of Statistical Methods, 1.3.3.14 Histogram", verification: "Lu le 21/11/2026"}
+  - {affirmation: "Diviser l'effectif par N × largeur donne une aire totale de 1", statut: sourcee, source: "NIST/SEMATECH e-Handbook, 1.3.3.14", verification: "Mentionné seulement ; la vidéo utilise la densité d'effectif (aire totale N)"}
+
+cycle_enquete:
+  question: "Montrée : comment dessiner des trajets ?"
+  population_et_mesure: "Montrée : 20 salariés, temps en minutes"
+  origine_des_donnees: "Montrée : exemple fictif"
+  exploration: "Montrée : deux largeurs de classes, puis classes inégales"
+  methode_et_raison: "Montrée : barres pour des catégories, histogramme pour des nombres, densité si classes inégales"
+  hypotheses: "Montrée : nombres fictifs"
+  resultat_et_incertitude: "Pas d'incertitude : population complète"
+  interpretation_permise_et_interdite: "Montrée : comparer des surfaces, pas des hauteurs, quand les classes sont inégales"
+  reproductibilite: "Calculs à l'écran ; fonctions testées dans production/lmec/laboratoires.py"
+
+donnees_ou_simulation:
+  type: donnees_synthetiques
+  raison_du_choix: "Vingt valeurs qu'on recompte barre par barre"
+  source: {organisme: "", url: "", licence: "", population: "Fictive", variables: "mode de transport, temps de trajet", periode: "", limites: ""}
+  parametres_simulation: "Aucun tirage aléatoire"
+
+hypotheses_et_limites:
+  - {hypothese: "Classes choisies à la main", intuition: "Il n'y a pas une seule bonne largeur", testable: "", non_testable: "", diagnostic: "Comparer plusieurs largeurs (laboratoire 1)", si_elle_echoue: "Des règles de choix de largeur existent (Scott, cité par le NIST) : niveau avancé, S11.08 (de l'histogramme aux noyaux)"}
+
+reproductibilite: "Calculs entièrement à l'écran ; blocs verifier de la fiche de production ; module de calcul des laboratoires"
+
+deroule:
+  - {etape: question, contenu: "Des barres qui se touchent, ou non : ça change tout"}
+  - {etape: donnees, contenu: "Diagramme en barres du mode de transport des 20 salariés (tableau du chapitre 1)"}
+  - {etape: raisonnement, contenu: "Histogramme des temps de trajet, classes de 10 minutes (3, 7, 6, 3, 1), borne gauche incluse ; barres jointives"}
+  - {etape: raisonnement, contenu: "Mêmes données en classes de 20 minutes (10, 9, 1) : le sommet disparaît"}
+  - {etape: limites, contenu: "Classes inégales 0–10, 10–20, 20–50 : en effectif, la grande classe écrase tout"}
+  - {etape: formalisation, contenu: "Densité d'effectif = effectif ÷ largeur ; aire = effectif ; 0,3, 0,7, 0,33 salarié par minute"}
+  - {etape: exercice, contenu: "40 visiteurs : 0–20 : 8, 20–30 : 12, 30–60 : 20 ; classe la plus dense ?"}
+  - {etape: correction, contenu: "0,4, 1,2 et environ 0,67 visiteur par année : 20–30 ans"}
+  - {etape: application, contenu: "Dans l'épisode : laboratoire 1 (largeur des classes et bascule effectif / densité)"}
+
+formules:
+  - {formule: "densité d'effectif = effectif / largeur de la classe", explication_symboles: "largeur en unités de la variable", conditions: "indispensable dès que les classes sont inégales"}
+  - {formule: "aire du rectangle = densité × largeur = effectif", explication_symboles: "", conditions: "aire totale = effectif total N"}
+
+calculs_a_verifier:
+  - {expression: "8 + 6 + 4 + 2", attendu: 20, libelle: "Total des salariés"}
+  - {expression: "3 + 7 + 6 + 3 + 1", attendu: 20, libelle: "Total, classes de 10 minutes"}
+  - {expression: "6 + 3 + 1", attendu: 10, libelle: "Classe 20 à 50 minutes"}
+  - {expression: "round(10 / 30, 2)", attendu: 0.33, libelle: "Densité de la classe 20 à 50 minutes"}
+  - {expression: "0.7 * 10", attendu: 7, libelle: "Surface de la classe 10 à 20 minutes"}
+  - {expression: "12 / 10", attendu: 1.2, libelle: "Densité 20 à 30 ans"}
+  - {expression: "round(20 / 30, 2)", attendu: 0.67, libelle: "Densité 30 à 60 ans"}
+
 idees_fausses:
-- idee: Espaces entre les barres d'un histogramme
-  desamorcee_a_l_etape: 'L''histogramme : des nombres en classes'
-- idee: Classes de largeurs inégales sans corriger les hauteurs
-  desamorcee_a_l_etape: 'Classes inégales : la surface compte'
+  - {idee: "Espaces entre les barres d'un histogramme", desamorcee_a_l_etape: "L'histogramme : des nombres en classes"}
+  - {idee: "Classes de largeurs inégales sans corriger les hauteurs", desamorcee_a_l_etape: "Classes inégales : la surface compte"}
+
 exercice:
-  question: 'Âges de 40 visiteurs : 0–20 : 8, 20–30 : 12, 30–60 : 20. Quelle classe est la plus dense ?'
-  correction: 20–30 ans (1,2 par an), l'histogramme en effectifs trompe
+  question: "Âges de 40 visiteurs : 0–20 : 8, 20–30 : 12, 30–60 : 20. Quelle classe est la plus dense ?"
+  correction: "Densités d'effectif : 8 ÷ 20 = 0,4, 12 ÷ 10 = 1,2, 20 ÷ 30 ≈ 0,67 visiteur par année d'âge. La plus dense est 20–30 ans ; l'histogramme en effectifs ferait croire que c'est 30–60 ans."
   pause_secondes: 8
+
 preuve_apprentissage:
-  tache: Répondre à la question de transfert sans aide
-  question_de_transfert: Un histogramme des revenus regroupe « 5 000 € et plus » en une seule barre très haute. Que conclure
-    ?
-  diagnostic_d_erreur: '« La barre la plus haute est la classe la plus peuplée par unité » : vrai si les classes sont inégales
-    ?'
-duree_estimee_min:
-- 4
-- 6
+  tache: "Calculer sans aide les densités de l'exercice et désigner la classe la plus dense"
+  question_de_transfert: "Un histogramme des revenus regroupe « 5 000 € et plus » en une seule barre très haute. Que conclure ?"
+  diagnostic_d_erreur: "« La barre la plus haute est la classe la plus peuplée par unité » : vrai si les classes sont inégales ?"
+  limite_a_enoncer: "Un histogramme dépend du choix des classes : toujours regarder leur largeur"
+
+duree_estimee_min: [4, 5]
 format: educational
-declinaisons:
-- vertical_9_16
-- youtube_16_9
-licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+raison_du_format: "Chapitre 2 de l'épisode long EP-S2A ; reste publiable seul comme extrait"
+derives_short: ["Mêmes données, trois histogrammes : lequel croire ? (bande-annonce de l'épisode)"]
+
+adaptation_en: "Mêmes nombres ; « count density » ; séparateur décimal anglais."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
 controle:
-  test_du_debutant: À mesurer
-  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
-  controle_mobile: Après rendu (inspection)
+  test_du_debutant: "Au pilote de l'épisode EP-S2A (3 à 5 débutants), dont la lecture d'un histogramme à classes inégales"
+  relecture_definitions: "Contenu : Claude, ChatGPT et JG, 8/11/2026. Mise à niveau : Claude, 22/11/2026 ; ChatGPT puis JG à faire"
+  controle_mobile: "Après rendu (inspection)"

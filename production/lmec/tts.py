@@ -96,6 +96,27 @@ class Fournisseur:
         """Lève ErreurTTS si le fournisseur n'est pas utilisable (clé absente, modèle manquant…)."""
 
 
+_EMPREINTES: dict[tuple[str, int, int], str] = {}
+
+
+def empreinte_fichier(chemin: Path) -> str:
+    """SHA-256 du contenu d'un fichier (modèle ou voix), calculé une fois par processus.
+
+    Nom et taille ne suffisent pas : deux fichiers différents de même taille réutiliseraient
+    le même cache audio (revue ChatGPT, PR #50, issue #53). Le résultat est mémorisé tant que
+    taille et date de modification ne changent pas, pour ne pas relire 300 Mo à chaque phrase.
+    """
+    st = chemin.stat()
+    cle = (str(chemin.resolve()), st.st_size, st.st_mtime_ns)
+    if cle not in _EMPREINTES:
+        h = hashlib.sha256()
+        with open(chemin, "rb") as f:
+            for bloc in iter(lambda: f.read(1 << 20), b""):
+                h.update(bloc)
+        _EMPREINTES[cle] = "sha256-" + h.hexdigest()
+    return _EMPREINTES[cle]
+
+
 class Piper(Fournisseur):
     nom = "piper"
 
@@ -109,12 +130,12 @@ class Piper(Fournisseur):
         return chemin
 
     def empreinte_modele(self) -> str:
-        # Nom + taille du fichier .onnx : un modèle remplacé sous le même nom invalide le cache.
+        # Nom + SHA-256 du contenu du .onnx : un modèle remplacé, même de taille identique, invalide le cache.
         try:
             chemin = self._modele()
         except ErreurTTS:
             return "absent"
-        return f"{chemin.name}:{chemin.stat().st_size}"
+        return f"{chemin.name}:{empreinte_fichier(chemin)}"
 
     def verifier(self) -> None:
         try:
@@ -193,7 +214,7 @@ class Kokoro(Fournisseur):
             modele, voix = self._fichiers()
         except ErreurTTS:
             return "absent"
-        return f"{modele.name}:{modele.stat().st_size}|{voix.name}:{voix.stat().st_size}"
+        return f"{modele.name}:{empreinte_fichier(modele)}|{voix.name}:{empreinte_fichier(voix)}"
 
     def verifier(self) -> None:
         try:

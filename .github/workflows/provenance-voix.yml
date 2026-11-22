@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Dépendances
-        run: pip install -r production/requirements.txt kokoro-onnx==0.5.0 onnx
+        run: pip install -r production/requirements.txt kokoro-onnx==0.5.0 onnx -c production/contraintes.txt
       - name: Fichier de voix utilisé (vérifié par SHA-256)
         run: |
           mkdir -p production/voix

@@ -1,45 +1,149 @@
-# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
-# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur. Notation Σ présentée pas à pas (M1).
+# Fiche de conception, niveau 1, chapitre 4 de l'épisode EP-S2A. Modèle : modeles/fiche-conception-episode.yaml
+# Contenu validé par JG le 8/11/2026 ; mise à niveau dans la structure d'épisode long le 22/11/2026
+# (demande de JG). Notation Σ présentée pas à pas (M1). Reçoit du chapitre 3 la scène des tailles.
 id_programme: S2.04
-statut: valide
+episode: EP-S2A
+rang_dans_episode: 4
+statut: revue_claude            # mise à niveau à relire ; contenu validé le 8/11/2026
 fiche_production: contenus/fiches/2026-11-n1-s2-04-ce-que-dit-vraiment-la-moyenne.yaml
+
+titres:
+  fr: "La moyenne, ce qu'elle dit vraiment"
+  en: "What the mean really tells you"
 question_centrale:
-  fr: Que veut dire « en moyenne » ?
-  en: What does “on average” mean?
-position:
-  pilier: statistiques
-  niveau: 1
-  module: S2
-  rang_dans_module: 4
+  fr: "Que veut dire « en moyenne » ?"
+  en: "What does “on average” mean?"
+
+position: {pilier: statistiques, niveau: 1, module: S2, rang_dans_module: 4}
+
 public:
-  prerequis:
-  - S2.01
+  prerequis: [S2.01]
   niveau_maths: M0
-  rappel_conseille: []
-intuition: La moyenne, c'est ce que chacun aurait si l'on mettait tout en commun et qu'on partageait à parts égales.
-exemple_fil_rouge: Cagnotte de quatre amis (5, 10, 15, 30 €) ; note pondérée par les coefficients.
-exemple_reel: null
+  rappel_conseille: [M1.01]
+  notions_utilisees:
+    - {notion: "Effectif", episode: "EP-S2A, chapitre 1", rappel: ""}
+    - {notion: "Signe Σ (somme)", episode: EP-M01, rappel: "Présenté pas à pas ; jamais nécessaire pour suivre"}
+    - {notion: "Nombres négatifs (écarts sous la moyenne)", episode: EP-M01, rappel: "5 − 15 = −10 : la valeur est 10 sous la moyenne"}
+    - {notion: "Centre de classe", episode: "", rappel: "Au rappel des tailles : le milieu d'une classe (150–155 → 152,5) remplace les valeurs qu'on ne connaît pas ; le résultat est approché"}
+    - {notion: "Deux bosses", episode: "EP-S2A, chapitre 3", rappel: ""}
+
+objectifs:
+  fr:
+    - "Calculer une moyenne simple (somme ÷ nombre) et la lire comme un partage égal du total"
+    - "Vérifier que les écarts à la moyenne se compensent (point d'équilibre)"
+    - "Calculer une moyenne pondérée et la moyenne de deux groupes de tailles différentes"
+  en:
+    - "Compute a simple mean (sum ÷ count) and read it as an equal share of the total"
+    - "Check that deviations from the mean cancel out (balance point)"
+    - "Compute a weighted mean and the mean of two groups of different sizes"
+
+intuition: "La moyenne, c'est ce que chacun aurait si l'on mettait tout en commun et qu'on partageait à parts égales."
+exemple_fil_rouge: "Cagnotte de quatre amis (5, 10, 15, 30 €) ; notes pondérées (14 coefficient 3, 10 coefficient 1) ; puis, dans l'épisode, la moyenne des trajets des 20 salariés (425 ÷ 20 = 21,25 min) et celle des tailles à deux bosses."
+exemple_reel:
+  description: "Aucun : données fictives annoncées comme telles."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "Cagnotte, notes et coefficients, classes de 10 et 30 élèves, trajets, tailles"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude", formule: "", transformations: ""}
+    definition: "Montants, notes, temps de trajet, tailles"
+    unite: "euros ; points sur 20 ; minutes ; centimètres"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Moyennes 15, 13, 12, 9, 10, 21,25 et environ 170 ; somme des écarts 0"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Données ci-dessus", formule: "Σ xᵢ / n ; Σ nᵢ xᵢ / Σ nᵢ", transformations: "tailles : centres de classes, arrondi à l'unité"}
+    definition: "Moyenne arithmétique simple et pondérée"
+    unite: "selon la variable"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Tailles : moyenne approchée (valeurs individuelles inconnues)"
+    comparabilite: ""
+
+affirmations_qualitatives:
+  - {affirmation: "La somme des écarts à la moyenne vaut toujours 0", statut: sourcee, source: "Propriété algébrique : Σ (xᵢ − x̄) = Σ xᵢ − n x̄ = 0", verification: "Vérifiée sur la cagnotte"}
+
+cycle_enquete:
+  question: "Montrée : que veut dire « en moyenne » ?"
+  population_et_mesure: "Montrée : chaque exemple nomme sa population"
+  origine_des_donnees: "Montrée : exemples fictifs"
+  exploration: "Supposée : les valeurs sont à l'écran"
+  methode_et_raison: "Montrée : partage égal, équilibre, pondération"
+  hypotheses: "Montrée : nombres fictifs"
+  resultat_et_incertitude: "Tailles : approximation par centres de classes, dite à l'écran"
+  interpretation_permise_et_interdite: "Montrée : la moyenne garde le total ; elle ne dit pas ce que vit un individu typique (tailles dans le creux)"
+  reproductibilite: "Calculs à l'écran, recalculés par le moteur"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Petits nombres qu'on additionne de tête"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Variable quantitative où additionner a un sens", intuition: "On ne fait pas la moyenne de codes postaux", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Utiliser des fréquences (chapitre 1)"}
+  - {hypothese: "Une moyenne peut ne décrire personne", intuition: "Les tailles : la moyenne tombe dans le creux", testable: "", non_testable: "", diagnostic: "Regarder la forme d'abord (chapitre 3)", si_elle_echoue: "Séparer les groupes, ou donner aussi la médiane (chapitre 5)"}
+
+reproductibilite: "Calculs entièrement à l'écran ; blocs verifier de la fiche de production"
+
+deroule:
+  - {etape: question, contenu: "« En moyenne » : ça veut dire quoi ?"}
+  - {etape: intuition, contenu: "Cagnotte : 60 € partagés entre 4, 15 € chacun"}
+  - {etape: formalisation, contenu: "Moyenne = somme ÷ nombre ; notation Σ pas à pas"}
+  - {etape: raisonnement, contenu: "Point d'équilibre : −10, −5, 0, +15, somme 0"}
+  - {etape: formalisation, contenu: "Moyenne pondérée : (14 × 3 + 10 × 1) ÷ 4 = 13, contre 12 sans coefficients"}
+  - {etape: exercice, contenu: "Classes de 10 et 30 élèves, moyennes 12 et 8"}
+  - {etape: correction, contenu: "(120 + 240) ÷ 40 = 9, et non 10"}
+  - {etape: application, contenu: "Dans l'épisode : trajets 425 ÷ 20 = 21,25 min, ce qu'aurait chacun si le total des durées individuelles était partagé également (et non un temps passé ensemble)"}
+  - {etape: limites, contenu: "Dans l'épisode : tailles à deux bosses, moyenne approchée par centres de classes ≈ 170 cm, dans le creux"}
+
+formules:
+  - {formule: "moyenne = Σ xᵢ / n", explication_symboles: "xᵢ les valeurs, n leur nombre", conditions: "variable quantitative"}
+  - {formule: "moyenne pondérée = Σ nᵢ xᵢ / Σ nᵢ", explication_symboles: "nᵢ coefficients ou effectifs", conditions: "moyenne de groupes : pondérer par la taille des groupes"}
+
+calculs_a_verifier:
+  - {expression: "(5 + 10 + 15 + 30) / 4", attendu: 15, libelle: "Moyenne de la cagnotte"}
+  - {expression: "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)", attendu: 0, libelle: "Somme des écarts à la moyenne"}
+  - {expression: "(14 * 3 + 10 * 1) / (3 + 1)", attendu: 13, libelle: "Moyenne pondérée"}
+  - {expression: "(10 * 12 + 30 * 8) / 40", attendu: 9, libelle: "Moyenne générale"}
+  - {expression: "425 / 20", attendu: 21.25, libelle: "Moyenne des trajets (épisode)"}
+  - {expression: "round((152.5*2 + 157.5*6 + 162.5*9 + 167.5*5 + 172.5*6 + 177.5*9 + 182.5*5 + 187.5*2) / 44)", attendu: 170, libelle: "Moyenne approchée des tailles, en cm (169,8)"}
+
 idees_fausses:
-- idee: Moyenne de moyennes de groupes de tailles différentes
-  desamorcee_a_l_etape: 'Exercice : deux classes'
+  - {idee: "Moyenne de moyennes de groupes de tailles différentes", desamorcee_a_l_etape: "Exercice : deux classes"}
+  - {idee: "La moyenne est la valeur la plus courante", desamorcee_a_l_etape: "Tailles : la moyenne tombe dans le creux"}
+
 exercice:
-  question: 'Classes de 10 et 30 élèves, moyennes 12 et 8 : moyenne générale ?'
-  correction: 9, et non 10
+  question: "Classes de 10 et 30 élèves, moyennes 12 et 8 : moyenne générale ?"
+  correction: "(10 × 12 + 30 × 8) ÷ 40 = 360 ÷ 40 = 9, et non (12 + 8) ÷ 2 = 10 : la grande classe pèse trois fois plus"
   pause_secondes: 8
+
 preuve_apprentissage:
-  tache: Répondre à la question de transfert sans aide
-  question_de_transfert: Deux magasins vendent 100 et 900 articles avec une satisfaction de 90 % et 70 %. Satisfaction globale
-    ?
-  diagnostic_d_erreur: '« La moyenne des deux classes est (12 + 8) / 2 = 10 » : qu''est-ce qui manque ?'
-duree_estimee_min:
-- 4
-- 6
+  tache: "Calculer sans aide une moyenne pondérée de deux groupes"
+  question_de_transfert: "Deux magasins vendent 100 et 900 articles avec une satisfaction de 90 % et 70 %. Satisfaction globale ?"
+  diagnostic_d_erreur: "« La moyenne des deux classes est (12 + 8) / 2 = 10 » : qu'est-ce qui manque ?"
+  limite_a_enoncer: "Une moyenne peut ne correspondre à aucun individu"
+
+duree_estimee_min: [4, 5]
 format: educational
-declinaisons:
-- vertical_9_16
-- youtube_16_9
-licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+raison_du_format: "Chapitre 4 de l'épisode long EP-S2A ; reste publiable seul comme extrait"
+derives_short: []
+
+adaptation_en: "Mêmes nombres ; « weighted mean » ; séparateur décimal anglais (21.25)."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
 controle:
-  test_du_debutant: À mesurer
-  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
-  controle_mobile: Après rendu (inspection)
+  test_du_debutant: "Au pilote de l'épisode EP-S2A (3 à 5 débutants)"
+  relecture_definitions: "Contenu : Claude, ChatGPT et JG, 8/11/2026. Mise à niveau : Claude, 22/11/2026 ; ChatGPT puis JG à faire"
+  controle_mobile: "Après rendu (inspection)"

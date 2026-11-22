@@ -1,6 +1,10 @@
-# Fiche de conception, phase pilote. Modèle : modeles/fiche-conception-episode.yaml
+# Fiche de conception, chapitre 5 de l'épisode EP-S2A. Modèle : modeles/fiche-conception-episode.yaml
+# Contenu validé par JG le 3/11/2026 (PR #15) ; mise à niveau dans la structure d'épisode long le
+# 22/11/2026 (demande de JG) : notions utilisées, place dans l'épisode, laboratoire 2. Fond inchangé.
 id_programme: S2.05
-statut: valide_jg   # 2026-11-03, PR #15
+episode: EP-S2A
+rang_dans_episode: 5
+statut: revue_claude   # mise à niveau à relire ; contenu validé par JG le 3/11/2026 (PR #15)
 fiche_production: contenus/fiches/2026-11-pilote-s2-05-moyenne-ou-mediane.yaml
 
 titres:
@@ -16,6 +20,12 @@ public:
   prerequis: [S2.04, S2.03]
   niveau_maths: M0
   rappel_conseille: [M0.01]
+  notions_utilisees:
+    - {notion: "Moyenne", episode: "EP-S2A, chapitre 4", rappel: ""}
+    - {notion: "Forme : queue à droite, symétrie", episode: "EP-S2A, chapitre 3", rappel: ""}
+    - {notion: "Ranger des nombres dans l'ordre croissant", episode: "", rappel: "Montré avant la médiane, valeurs alignées à l'écran"}
+    - {notion: "Rang, position (n + 1) / 2", episode: "", rappel: "Enseigné ici ; position non entière : moyenne des deux voisines"}
+    - {notion: "Pourcentage (90 % sous la moyenne)", episode: EP-M01, rappel: "9 sur 10 = 90 %"}
 
 objectifs:
   fr:
@@ -98,7 +108,8 @@ deroule:
   - {etape: correction, contenu: "1 800 / 1 800, puis 4 075 / 1 850"}
   - {etape: application, contenu: "Quel indicateur pour quelle question"}
   - {etape: limites, contenu: "La médiane ignore l'ampleur des écarts"}
-  - {etape: rappel, contenu: "Trois points à retenir"}
+  - {etape: rappel, contenu: "Dans l'épisode : remplacé par la synthèse commune, après le laboratoire 2"}
+  - {etape: application, contenu: "Dans l'épisode : laboratoire 2 (curseur sur le dixième salaire, médiane recalculée après tri à chaque position ; déménagement d'un salarié, 44 → 120 min)"}
 
 formules:
   - {formule: "moyenne = somme / nombre", explication_symboles: "somme des valeurs, nombre de valeurs", conditions: "variable quantitative"}
@@ -136,5 +147,5 @@ licences: "Aucune donnée extérieure. Voix Kokoro (licence Apache 2.0, voir doc
 
 controle:
   test_du_debutant: "À mesurer au pilote : le testeur réussit la question de transfert et énonce la limite de la médiane"
-  relecture_definitions: "Claude, 3/11/2026 ; ChatGPT puis JG à faire"
+  relecture_definitions: "Contenu : Claude 3/11/2026, validé par JG le 3/11/2026 (PR #15). Mise à niveau : Claude, 22/11/2026 ; ChatGPT puis JG à faire"
   controle_mobile: "Voir sortie/<id>/fr/inspection après rendu"

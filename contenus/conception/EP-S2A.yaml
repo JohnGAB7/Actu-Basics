@@ -40,6 +40,7 @@ public:
     - {notion: "Ranger des nombres dans l'ordre croissant", episode: "", rappel: "Montré au chapitre 5 avant la médiane"}
     - {notion: "Signe Σ (somme)", episode: EP-M01, rappel: "Présenté pas à pas au chapitre 4 ; jamais nécessaire pour suivre"}
     - {notion: "Classe [a ; b[ : la borne gauche est incluse, la droite non", episode: "", rappel: "Dit au chapitre 2 et rappelé au laboratoire : chaque classe contient sa borne gauche, pas sa borne droite ; un trajet de 15 minutes compte dans 15–20 (classes de 5), un trajet de 20 minutes dans 20–30. La dernière classe se termine strictement au-dessus du maximum (44 min : dernière classe 40–50 ou 40–60), donc aucune valeur ne tombe sur sa borne droite"}
+    - {notion: "Moyenne approchée par les centres de classes (tailles groupées)", episode: "", rappel: "Chapitre 4, au rappel des tailles : quand on ne connaît que les classes, on prend le milieu de chaque classe comme valeur de ses individus ; le résultat est une approximation"}
     - {notion: "Arrondi au dixième", episode: "", rappel: "Annoncé quand on l'utilise (densité 0,67)"}
     # Notions enseignées DANS l'épisode et réutilisées plus loin : effectif, fréquence, cumul (ch. 1) ;
     # classe, densité (ch. 2) ; mode, symétrie, queue (ch. 3) ; moyenne simple et pondérée (ch. 4) ; médiane (ch. 5).
@@ -155,18 +156,13 @@ deroule_episode:
     id: S2.01
     titre: {fr: "1. Compter : effectifs, fréquences, cumul", en: "1. Counting: counts, frequencies, cumulative"}
     duree_min: [3, 4]
-    changements: "Exemple de la classe remplacé par les 20 salariés de l'entreprise (modes de transport : 8, 6, 4, 2), qui était l'exercice ; nouvel exercice ci-dessous. Le piège « comparer des effectifs » garde les deux classes de 25 et 40 élèves."
-    exercice_remplacant:
-      fr: "Un autre service compte 50 salariés : 15 en voiture, 20 en transports en commun, 10 à vélo, 5 à pied. Où la voiture pèse-t-elle le plus : ici ou dans notre entreprise de 20 ?"
-      en: "Another department has 50 employees: 15 by car, 20 by public transport, 10 by bike, 5 on foot. Where does the car weigh more: here or in our 20-person company?"
-      correction_fr: "Ici 15 / 50 = 30 %, contre 8 / 20 = 40 % dans l'entreprise. Il y a plus de voitures en nombre (15 contre 8), mais moins en proportion."
-      correction_en: "Here 15 / 50 = 30%, versus 8 / 20 = 40% in the company. More cars in number (15 versus 8), but fewer as a share."
-    transition: {fr: "Le mode de transport, ce sont des catégories. Le temps de trajet, ce sont des nombres : il faut un autre dessin.", en: "Mode of transport is a set of categories. Travel time is a number: it needs a different picture."}
+    changements: "Exemple validé conservé (frères et sœurs d'une classe de 25 élèves) : variable numérique ordonnée, donc le cumul « au plus deux » a un sens, ce qui n'est pas le cas d'un mode de transport. L'exercice validé (8 voiture, 6 transports en commun, 4 vélo, 2 marche) présente les 20 salariés de l'entreprise fictive : ils deviennent le fil rouge de l'épisode. Le cumul de l'exercice est dit « dans l'ordre choisi », la variable n'étant pas ordonnée (correction du catalogue)."
+    transition: {fr: "Gardez ces vingt salariés en tête : nous allons les suivre jusqu'à la fin de l'épisode. D'abord, dessinons leurs réponses.", en: "Keep these twenty employees in mind: we'll follow them to the end of the episode. First, let's draw their answers."}
   - bloc: chapitre
     id: S2.02
     titre: {fr: "2. Dessiner : barres ou histogramme", en: "2. Drawing: bar chart or histogram"}
     duree_min: [4, 5]
-    changements: "Aucun sur le fond ; la phrase « borne gauche incluse » est ajoutée à la première classe ; les classes de 5 minutes passent au laboratoire 1."
+    changements: "Le diagramme en barres reprend le tableau de l'exercice du chapitre 1 (même entreprise). La phrase « chaque classe contient sa borne gauche, pas sa borne droite » est ajoutée à la première classe. Les classes inégales du chapitre (0–10 : 3, 10–20 : 7, 20–50 : 10, densités 0,3, 0,7 et environ 0,33 salarié par minute) suivent déjà la densité d'effectif retenue pour l'épisode. Les classes de 5 minutes passent au laboratoire 1."
     transition: {fr: "Avant de regarder la forme, essayons nous-mêmes de changer les classes.", en: "Before reading the shape, let's change the bins ourselves."}
   - bloc: laboratoire
     id: LAB-1
@@ -183,13 +179,13 @@ deroule_episode:
     id: S2.03
     titre: {fr: "3. Lire la forme d'une distribution", en: "3. Reading the shape of a distribution"}
     duree_min: [4, 5]
-    changements: "Ouvre sur l'histogramme des trajets en classes de 10 minutes : une bosse, une petite queue à droite (le salarié à 44 minutes), dite comme une propriété de ces 20 valeurs fictives, pas des trajets réels. Le reste du chapitre est inchangé."
+    changements: "Complétude : la fiche validée dit que, pour les tailles, « la moyenne tombe dans le creux » avant que la moyenne soit enseignée (chapitre 4). Cette phrase est déplacée à la fin du chapitre 4, en rappel des deux bosses ; ici, on dit seulement qu'un seul nombre « central » ne décrirait personne. La question de transfert sur les urgences (elle porte sur la moyenne) passe après le chapitre 5. Ouvre sur l'histogramme des trajets en classes de 10 minutes : une bosse, une petite queue à droite (le salarié à 44 minutes), dite comme une propriété de ces 20 valeurs fictives, pas des trajets réels. Le reste du chapitre est inchangé."
     transition: {fr: "La forme se voit. Maintenant, mettons-la en un seul nombre. Le premier qui vient à l'esprit : la moyenne.", en: "We can see the shape. Now let's put it into a single number. The first that comes to mind: the mean."}
   - bloc: chapitre
     id: S2.04
     titre: {fr: "4. Ce que dit vraiment la moyenne", en: "4. What the mean really says"}
     duree_min: [4, 5]
-    changements: "Ajout d'une phrase à la fin : appliquée aux trajets, la moyenne vaut 425 ÷ 20 = 21,25 minutes, soit le temps qu'aurait chacun si l'on partageait également le temps total de l'équipe."
+    changements: "Ajout du rappel venu du chapitre 3 : pour les 44 tailles à deux bosses, la moyenne vaut environ 170 cm et tombe dans le creux, là où il y a peu d'adultes. Ajout d'une phrase à la fin : appliquée aux trajets, la moyenne vaut 425 ÷ 20 = 21,25 minutes, soit le temps qu'aurait chacun si l'on partageait également le temps total de l'équipe."
     transition: {fr: "21,25 minutes. Est-ce le trajet d'un salarié typique ? Pas forcément.", en: "21.25 minutes. Is that a typical employee's trip? Not necessarily."}
   - bloc: chapitre
     id: S2.05
@@ -244,7 +240,6 @@ calculs_a_verifier:             # recalculés par Claude le 21/11/2026 (Python) 
   - {expression: "1.2 * 10", attendu: 12, libelle: "Laboratoire 1, aire du rectangle 20–30 ans = 1,2 × 10"}
   - {expression: "0.4 * 20 + 1.2 * 10 + (20 / 30) * 30", attendu: 40, libelle: "Laboratoire 1, aire totale = nombre de visiteurs"}
   - {expression: "(425 - 44 + 120) / 20", attendu: 25.05, libelle: "Laboratoire 2, moyenne après le déménagement"}
-  - {expression: "15 / 50", attendu: 0.3, libelle: "Exercice du chapitre 1, autre service"}
   - {expression: "5+8+12+15+15+18+22+25+30+90", attendu: 240, libelle: "Exercice de synthèse, somme"}
   - {expression: "240 / 10", attendu: 24, libelle: "Exercice de synthèse, moyenne"}
   - {expression: "(15 + 18) / 2", attendu: 16.5, libelle: "Exercice de synthèse, médiane"}
@@ -282,4 +277,4 @@ controle:
   controle_mobile: "Après rendu : sortie/EP-S2A/fr/inspection"
   a_trancher_par_le_relecteur:
     - "Durée 26 à 32 min : acceptable pour un épisode de niveau 1, ou faut-il couper le chapitre 3 en deux minutes ?"
-    - "Le chapitre 1 change d'exemple (entreprise au lieu de la classe) pour garder un fil rouge : d'accord ?"
+    - "Réglé par Claude le 22/11 : le chapitre 1 garde l'exemple validé (meilleur pour le cumul) et l'exercice présente l'entreprise du fil rouge."

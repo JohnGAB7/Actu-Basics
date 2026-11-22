@@ -1,0 +1,33 @@
+# PROGRAMME — contrôle du catalogue à chaque modification du dossier programme/.
+# Prérequis, appartenance des chapitres aux épisodes, durées, calculs recalculés et nombre
+# d'épisodes annoncé dans LISEZMOI.md (doit être celui du catalogue). Pas de PDF ici.
+name: Programme
+
+on:
+  pull_request:
+    paths: ["programme/**", ".github/workflows/programme.yml"]
+  push:
+    branches: [main]
+    paths: ["programme/**", ".github/workflows/programme.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  controle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r programme/requirements.txt
+      - name: Épisodes et compteurs
+        run: python programme/episodes.py
+      - name: Catalogue, prérequis et calculs (deux constructions identiques)
+        run: |
+          python programme/construire.py
+          cp -r programme/sortie /tmp/sortie-1
+          python programme/construire.py
+          diff -r /tmp/sortie-1 programme/sortie
