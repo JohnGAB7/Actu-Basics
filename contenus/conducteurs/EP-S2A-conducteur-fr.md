@@ -1,6 +1,6 @@
-# Conducteur EP-S2A (FR) : « Moyenne, médiane, histogramme : résumer des données sans se faire avoir »
+# Conducteur 2026-12-ep-s2a-resumer-des-donnees (FR) : « Moyenne, médiane, histogramme : résumer des données sans se faire avoir »
 
-Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 scènes, données fictives). Pour chaque scène : type, univers visuel, texte à l'écran, animation, légendes successives, puis la voix off.
+Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 scènes, données fictives). Pour chaque scène : type, univers visuel, texte à l'écran, animation, légendes successives, puis la voix off. Les calculs écrits à l'écran apparaissent terme à terme pendant que la voix les dit.
 
 ### 1. accroche
 - Écran : Vingt salariés. *Qui dit vrai* : la moyenne ou la médiane ?
@@ -10,14 +10,10 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 - Écran : Bonjour, et *bienvenue* !
 - Voix : Bonjour, et bienvenue ! Merci d'être là. Salaires, notes, temps de trajet : on résume tout avec une moyenne. Dans cet épisode, on voit quand elle dit vrai, quand elle trompe, et par quoi la remplacer.
 
-### 3. etapes
-- Écran : Au programme
-  - 1. Compter : effectifs, fréquences, cumul
-  - 2. Dessiner : barres ou histogramme
-  - 3. Lire la forme d'une distribution
-  - 4. Ce que dit vraiment la moyenne
-  - 5. Moyenne ou médiane ?
-- Voix : Cinq étapes : compter avec un tableau ; dessiner avec des barres ou un histogramme ; lire la forme d'une distribution ; comprendre la moyenne ; et enfin, moyenne ou médiane. Avec deux laboratoires en direct et un exercice de synthèse corrigé.
+### 3. animation
+- Écran : Ce que vous allez *apprendre*
+- Animation « apercu » : cartes=[{'icone': 'tableau', 'texte': 'Construire un *tableau* de fréquences'}, {'icone': 'histogramme', 'texte': 'Choisir et lire un *histogramme*'}, {'icone': 'forme', 'texte': "Reconnaître la *forme* d'une distribution"}, {'icone': 'equilibre', 'texte': 'Calculer une *moyenne*'}, {'icone': 'mediane', 'texte': 'Trouver la *médiane*'}, {'icone': 'laboratoire', 'texte': "Tester en *laboratoire*, puis s'exercer"}]
+- Voix : À la fin, vous saurez résumer un jeu de données, lire sa distribution et choisir entre moyenne et médiane. Concrètement : construire un tableau de fréquences ; choisir et lire un histogramme ; reconnaître la forme d'une distribution ; calculer une moyenne, et voir pourquoi c'est un point d'équilibre ; trouver une médiane ; et tout vérifier vous-même, avec deux laboratoires et un exercice corrigé.
 
 ### 4. titre 1
 - Écran : Compter : effectifs, fréquences, cumul
@@ -30,6 +26,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 6. courbe
 - Écran : Combien de *frères et sœurs* ? Classe de 25 élèves
 - Graphique barres : points [[0, 5], [1, 10], [2, 6], [3, 4]]
+- Note à l'écran : Autre exemple, pour la méthode : une classe fictive de 25 élèves.
 - Voix : On demande à vingt-cinq élèves combien ils ont de frères et sœurs. Cinq n'en ont aucun, dix en ont un, six en ont deux et quatre en ont trois. Ces nombres s'appellent des effectifs.
 
 ### 7. texte
@@ -72,6 +69,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 14. chiffre
 - Écran : des élèves ont *au plus deux* frères et sœurs
 - Chiffre clé : 84
+- Note à l'écran : Le cumul suit l'ordre des valeurs : il a un sens ici parce que 0, 1, 2, 3 sont rangés.
 - Voix : Une seule phrase résume alors la classe : quatre-vingt-quatre pour cent des élèves ont au plus deux frères et sœurs. Le cumul a un sens ici parce que les valeurs sont rangées dans l'ordre.
 
 ### 15. titre 1.4
@@ -89,14 +87,15 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 - Voix : Douze est plus grand que dix. Mais rapporté à la taille de la classe, c'est moins. Pour comparer deux groupes de tailles différentes, on compare des fréquences, pas des effectifs.
 
 ### 18. exercice
-- Écran : 20 salariés : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*. Fréquences et cumul ?
-- Voix : À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences, puis les fréquences cumulées.
+- Écran : 20 salariés : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*. Fréquences ? Un cumul a-t-il un sens ?
+- Voix : À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences. Puis demandez-vous : un cumul aurait-il un sens ici ?
 
 ### 19. correction
   - Voiture 8 ÷ 20 = *40 %*, transports 6 ÷ 20 = *30 %*
   - Vélo 4 ÷ 20 = *20 %*, marche 2 ÷ 20 = *10 %*
-  - Cumul, de la voiture à la marche : 40, 70, 90, 100 %
-- Voix : Correction. Voiture : huit divisé par vingt, quarante pour cent ; transports en commun : trente pour cent. Vélo : vingt pour cent ; marche : dix pour cent. En cumulant dans cet ordre : quarante, soixante-dix, quatre-vingt-dix, puis cent pour cent. Attention : les modes de transport n'ont pas d'ordre naturel. Le cumul dépend de l'ordre choisi, ici du plus fréquent au moins fréquent.
+  - Cumul : *pas de sens*, ces catégories n'ont pas d'ordre
+- Réponse : Total 100 % ; pas de cumul sans ordre
+- Voix : Correction. Voiture : huit divisé par vingt, quarante pour cent ; transports en commun : trente pour cent. Vélo : vingt pour cent ; marche : dix pour cent. Et le cumul ? Il n'a pas de sens ici : les modes de transport n'ont pas d'ordre naturel. Le total fait bien cent pour cent, et l'on ne cumule que des valeurs rangées, comme un nombre de frères et sœurs ou des durées.
 
 ### 20. texte
 - Écran : Gardez ces *20 salariés* en tête
@@ -113,6 +112,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 23. courbe
 - Écran : Mode de transport de *20 salariés*
 - Graphique barres : points [[0, 8], [1, 6], [2, 4], [3, 2]]
+- Note à l'écran : Entreprise fictive de 20 salariés (exercice du chapitre 1).
 - Voix : Voici les vingt salariés de l'exercice du chapitre 1. Une barre par mode de transport : voiture, transports en commun, vélo, marche. Les barres sont séparées, parce que ce sont des catégories distinctes. On pourrait les ranger dans un autre ordre sans rien changer au sens.
 
 ### 24. titre 2.2
@@ -122,6 +122,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 25. courbe
 - Écran : Temps de trajet, *classes de 10 minutes*
 - Graphique histogramme : points [[0, 3], [10, 7], [20, 6], [30, 3], [40, 1]]
+- Note à l'écran : Temps de trajet fictifs des 20 mêmes salariés.
 - Voix : On range les temps de trajet en classes de dix minutes. Trois salariés mettent moins de dix minutes, sept entre dix et vingt, six entre vingt et trente, trois entre trente et quarante, un seul entre quarante et cinquante. Cette fois, les barres se touchent : les minutes forment une suite continue, sans trou entre les classes. Chaque classe contient sa borne gauche, pas sa borne droite : un trajet de vingt minutes compte dans la classe de vingt à trente.
 
 ### 26. courbe
@@ -163,6 +164,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
   - 0–20 ans : 8 ÷ 20 = *0,4* visiteur par année d'âge
   - 20–30 ans : 12 ÷ 10 = *1,2* visiteur par année d'âge
   - 30–60 ans : 20 ÷ 30 ≈ *0,67* visiteur par année d'âge
+- Réponse : Les 20–30 ans : la classe la plus dense
 - Voix : Divisons chaque effectif par la largeur de sa classe. De zéro à vingt ans : huit divisé par vingt, zéro virgule quatre visiteur par année d'âge. De vingt à trente ans : douze divisé par dix, un virgule deux. De trente à soixante ans : vingt divisé par trente, environ zéro virgule soixante-sept. La classe la plus dense est celle des vingt à trente ans : l'histogramme en effectifs était trompeur.
 
 ### 34. texte
@@ -196,6 +198,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 40. courbe
 - Écran : Hauteur = *densité d'effectif*
 - Graphique histogramme : points [[0, 0.4], [20, 1.2], [30, 0.6667]]
+- Note à l'écran : Aires : 0,4 × 20 = 8 ; 1,2 × 10 = 12 ; ⅔ × 30 = 20 ; total 40 (hauteur 0,67 arrondie).
 - Voix : On bascule sur la densité d'effectif : l'effectif divisé par la largeur, en visiteurs par année d'âge. Zéro virgule quatre, un virgule deux, environ zéro virgule soixante-sept. La classe la plus dense est vingt à trente ans. Et l'aire de chaque rectangle redonne son effectif : un virgule deux fois dix ans, douze visiteurs. L'aire totale vaut quarante, le nombre de visiteurs.
 
 ### 41. titre 3
@@ -217,6 +220,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 44. courbe
 - Écran : Notes de *20 élèves*, sur 20
 - Graphique histogramme : points [[0, 1], [4, 4], [8, 10], [12, 4], [16, 1]]
+- Note à l'écran : Notes fictives de 20 élèves.
 - Voix : Voici les notes fictives de vingt élèves. Une bosse au milieu, entre huit et douze, et deux côtés qui se ressemblent comme dans un miroir. Dans cet exemple, la distribution est à peu près symétrique. Ici, le milieu résume bien le groupe.
 
 ### 45. titre 3.2
@@ -226,6 +230,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 46. courbe
 - Écran : Revenus mensuels de *25 personnes*
 - Graphique histogramme : points [[0, 2], [1000, 9], [2000, 6], [3000, 3], [4000, 2], [5000, 1], [6000, 1], [7000, 1]]
+- Note à l'écran : Revenus fictifs de 25 personnes, classes de 1 000 €.
 - Voix : Voici des revenus mensuels fictifs. La plupart des gens sont à gauche, entre mille et trois mille euros. Puis une longue queue s'étire vers la droite : quelques revenus très élevés. On parle d'asymétrie à droite.
 
 ### 47. etapes
@@ -241,11 +246,12 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 49. courbe
 - Écran : Tailles de *44 adultes*
 - Graphique histogramme : points [[150, 2], [155, 6], [160, 9], [165, 5], [170, 6], [175, 9], [180, 5], [185, 2]]
-- Voix : Voici les tailles fictives de quarante-quatre adultes. Deux bosses : l'une autour de cent soixante centimètres, l'autre autour de cent soixante-quinze. On dit que la distribution est bimodale. Une explication possible : on a mélangé deux groupes de tailles moyennes différentes, ici des femmes et des hommes.
+- Note à l'écran : Tailles fictives de 44 adultes, femmes et hommes mélangés.
+- Voix : Voici les tailles fictives de quarante-quatre adultes. Deux bosses : l'une autour de cent soixante centimètres, l'autre autour de cent soixante-quinze. On dit que la distribution est bimodale. Une explication possible : un mélange de deux groupes de tailles moyennes différentes, par exemple des femmes et des hommes. L'histogramme seul ne le prouve pas : il faut d'autres informations.
 
 ### 50. texte
 - Écran : Deux bosses ? Cherchez si *plusieurs groupes* se mélangent
-- Voix : Un seul nombre « central » ne décrirait ni les femmes, ni les hommes de ce groupe. Retenez ce réflexe : deux bosses signalent souvent plusieurs groupes mélangés. Avant de résumer, séparez-les.
+- Voix : Si deux groupes se mélangent, un seul nombre « central » ne décrirait ni l'un ni l'autre. Retenez ce réflexe : deux bosses peuvent signaler un mélange de groupes. Vérifiez-le avec d'autres informations, puis séparez-les avant de résumer.
 
 ### 51. courbe
 - Écran : Forme *A*
@@ -276,7 +282,8 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
   - Revenus : *D*, queue à droite
   - Âge au décès : *A*, queue à gauche
   - Tailles d'adultes : *C*, deux bosses
-- Voix : Voici la correction. Les notes, forme B : souvent à peu près symétriques. Les revenus, forme D : une queue à droite, à cause de quelques revenus très élevés. L'âge au décès, forme A : là où la plupart des décès surviennent à un âge avancé, une queue vers les âges jeunes. Les tailles d'adultes, forme C : deux bosses, femmes et hommes. Derrière chaque forme, il y a une explication.
+- Réponse : Chaque forme a une explication
+- Voix : Voici la correction. Les notes, forme B : souvent à peu près symétriques. Les revenus, forme D : une queue à droite, à cause de quelques revenus très élevés. L'âge au décès, forme A : là où la plupart des décès surviennent à un âge avancé, une queue vers les âges jeunes. Les tailles d'adultes, forme C : deux bosses, sans doute un mélange de femmes et d'hommes. Derrière chaque forme, il y a une explication.
 
 ### 57. texte
 - Écran : Un seul nombre pour résumer : *la moyenne* ?
@@ -295,6 +302,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
   - Ils ont 5, 10, 15 et 30 €
   - Tout dans la cagnotte : *60 €*
   - Partagé en quatre : *15 € chacun*
+- Note à l'écran : Autre exemple : quatre amis (fictif).
 - Voix : Quatre amis mettent leur argent en commun. Ils ont cinq, dix, quinze et trente euros. Dans la cagnotte, cela fait soixante euros. Partagés à parts égales entre les quatre, cela fait quinze euros chacun : c'est la moyenne.
 
 ### 61. formule
@@ -343,16 +351,19 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 70. correction
   - 10 × 12 = 120 points et 30 × 8 = 240 points
   - (120 + 240) ÷ 40 = *9*
+- Réponse : 9, et non 10
 - Voix : Faisons le calcul. La première classe totalise dix fois douze, cent vingt points ; la seconde, trente fois huit, deux cent quarante points. Trois cent soixante points pour quarante élèves : neuf de moyenne. Pas dix, qui serait la moyenne des deux moyennes : la grande classe pèse trois fois plus.
 
 ### 71. chiffre
 - Écran : la moyenne tombe *dans le creux*, entre les deux bosses
 - Chiffre clé : 170
+- Note à l'écran : Moyenne approchée par les centres de classes : environ 169,8 cm.
 - Voix : Souvenez-vous des tailles à deux bosses. On ne connaît que les classes : on prend le milieu de chaque classe, par exemple cent cinquante-deux et demi pour la classe de cent cinquante à cent cinquante-cinq, comme valeur de ses adultes. On obtient une moyenne approchée d'environ cent soixante-dix centimètres. Elle tombe dans le creux, là où il y a peu de monde : une moyenne peut ne décrire personne.
 
 ### 72. chiffre
 - Écran : le trajet moyen de nos *20 salariés*
 - Chiffre clé : 21.25
+- Note à l'écran : Total des 20 trajets : 425 minutes ; 425 ÷ 20 = 21,25.
 - Voix : Et nos vingt salariés ? Leurs trajets font quatre cent vingt-cinq minutes au total. Divisé par vingt, cela donne vingt et une minutes et quart. C'est ce qu'aurait chacun si l'on partageait également le total des durées individuelles. Ce total additionne des trajets séparés : ce n'est pas un temps passé ensemble.
 
 ### 73. texte
@@ -373,11 +384,13 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 
 ### 77. texte
 - Écran : Neuf clients dans un café gagnent de *1 600 €* à *2 800 €* par mois
+- Note à l'écran : 1 600 · 1 800 · 1 900 · 2 000 · 2 200 · 2 300 · 2 500 · 2 700 · 2 800 €
 - Voix : Neuf clients sont assis dans un café. Ils gagnent entre mille six cents et deux mille huit cents euros par mois.
 
 ### 78. formule
 - Écran : Leur salaire *moyen*
 - Formule : ['\\mathrm{moyenne}=\\dfrac{\\mathrm{somme}}{\\mathrm{nombre}}', '=\\dfrac{19\\,800}{9}=2\\,200']
+- Note à l'écran : En euros par mois.
 - Voix : La moyenne, c'est la somme divisée par le nombre de personnes. Leurs salaires font au total dix-neuf mille huit cents euros. Divisé par neuf : deux mille deux cents euros.
 
 ### 79. texte
@@ -392,6 +405,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 81. chiffre
 - Écran : des clients gagnent désormais *moins que la moyenne*
 - Chiffre clé : 90
+- Note à l'écran : 9 clients sur 10.
 - Voix : Neuf clients sur dix gagnent maintenant moins que la moyenne. Personne n'a changé de salaire : une seule valeur extrême a tiré la moyenne vers le haut.
 
 ### 82. titre 5.2
@@ -424,14 +438,15 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 ### 86. courbe
 - Écran : Les dix salaires, *du plus bas au plus haut*
 - Graphique points : points [[1, 1600], [2, 1800], [3, 1900], [4, 2000], [5, 2200], [6, 2300], [7, 2500], [8, 2700], [9, 2800], [10, 200000]]
+- Note à l'écran : Neuf salaires groupés en bas, un seul tout en haut.
 - Voix : Rangeons les dix salaires, du plus bas au plus haut : neuf restent groupés, la médiane avec eux, à deux mille deux cent cinquante euros. Le dixième, deux cent mille euros, tire à lui seul la moyenne jusqu'à vingt et un mille neuf cent quatre-vingts euros, au-dessus de neuf salaires sur dix.
 
 ### 87. etapes
 - Écran : Moyenne et médiane selon la *forme* de la distribution
-  - Longue traîne vers le haut : moyenne *au-dessus* de la médiane
+  - Longue traîne vers le haut : moyenne *souvent au-dessus* de la médiane
   - Distribution symétrique : moyenne *proche* de la médiane
-  - Longue traîne vers le bas : moyenne *en dessous* de la médiane
-- Voix : C'est une règle générale, qui dépend de la forme de la distribution. Quand quelques valeurs très grandes forment une longue traîne vers le haut, comme souvent les salaires ou les patrimoines, la moyenne passe au-dessus de la médiane. Quand la distribution est symétrique, les deux sont proches. Et quand la traîne part vers le bas, la moyenne passe en dessous.
+  - Longue traîne vers le bas : moyenne *souvent en dessous* de la médiane
+- Voix : C'est une tendance fréquente, pas une loi : tout dépend de la forme de la distribution. Quand quelques valeurs très grandes forment une longue traîne vers le haut, comme souvent les salaires ou les patrimoines, la moyenne passe souvent au-dessus de la médiane. Quand la distribution est parfaitement symétrique, elles coïncident ; à peu près symétrique, elles sont proches. Et quand la traîne part vers le bas, la moyenne passe souvent en dessous.
 
 ### 88. texte
 - Écran : Moyenne au-dessus de la médiane : *au moins la moitié* des valeurs sont inférieures à la moyenne
@@ -445,6 +460,7 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
   - Avant : 12 600 ÷ 7 = *1 800 €* ; médiane *1 800 €*
   - Après : 32 600 ÷ 8 = *4 075 €*
   - Médiane : (1 800 + 1 900) ÷ 2 = *1 850 €*
+- Réponse : La moyenne fait plus que doubler, la médiane gagne 50 €
 - Voix : Voici la correction. Avant, la somme vaut douze mille six cents euros : divisée par sept, la moyenne est de mille huit cents euros, comme la médiane, la quatrième valeur. Après, la somme passe à trente-deux mille six cents euros, divisée par huit : quatre mille soixante-quinze euros. Avec huit valeurs, la médiane est la moyenne de la quatrième et de la cinquième : mille huit cent cinquante euros. La moyenne a plus que doublé, la médiane n'a gagné que cinquante euros.
 
 ### 91. titre 5.3
@@ -460,7 +476,8 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
 
 ### 93. texte
 - Écran : La médiane a sa limite : elle ignore *l'ampleur* des écarts
-- Voix : La médiane a aussi sa limite : elle ignore l'ampleur des écarts. Que le client riche gagne deux cent mille euros ou deux millions, la médiane du café reste la même. Elle ne voit pas l'inégalité.
+- Note à l'écran : Avec un client à 2 millions € par mois, la médiane du café resterait 2 250 €.
+- Voix : La médiane a aussi sa limite : elle ignore l'ampleur des écarts. Que le client riche gagne deux cent mille euros ou deux millions, la médiane du café reste la même. Elle indique le centre, mais pas à quel point les valeurs sont dispersées : deux groupes peuvent avoir la même médiane et des inégalités très différentes.
 
 ### 94. titre 5.4 · univers immersif (fond sombre)
 - Écran : Laboratoire : une seule valeur extrême
@@ -490,8 +507,8 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (102 
   - Classes inégales : la *surface* compte
   - Regarder la *forme* avant tout calcul
   - Moyenne : *partage égal* du total
-  - Médiane : coupe en *deux* ; queue à droite, moyenne au-dessus
-- Voix : Ce qu'il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c'est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c'est peut-être deux groupes. Quatre : la moyenne, c'est le total divisé par le nombre, ce qu'aurait chacun si l'on partageait également ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est au-dessus de la médiane. Choisissez celle qui répond à votre question.
+  - Médiane : coupe en *deux* ; queue à droite, moyenne souvent au-dessus
+- Voix : Ce qu'il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c'est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c'est peut-être deux groupes. Quatre : la moyenne, c'est le total divisé par le nombre, ce qu'aurait chacun si l'on partageait également ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est souvent au-dessus de la médiane. Choisissez celle qui répond à votre question.
 
 ### 98. exercice
 - Écran : 10 trajets : 5, 8, 12, 15, 15, 18, 22, 25, 30, *90* min. Part sous 20 min, forme, moyenne, médiane ?

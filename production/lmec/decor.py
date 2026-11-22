@@ -39,6 +39,7 @@ class Decor:
     def __init__(self, fond: Image.Image, couleurs: dict, conf: dict, bandeau_px: int = 0):
         self.fond = fond
         self.largeur, self.hauteur = fond.size
+        self._fond_reduit = fond.reduce(REDUCTION)
         self.ecart = max(0, int(conf.get("ecart_px", 32)))
         self.bandeau = max(0, int(bandeau_px))
         c = conf.get("courant") or {}
@@ -90,11 +91,13 @@ class Decor:
     # ------------------------------------------------------------------ par image
     def masque_libre(self, image: Image.Image) -> Image.Image:
         """255 là où le décor peut passer (fond intact), adouci à l'approche du contenu."""
-        petit = (max(1, self.largeur // REDUCTION), max(1, self.hauteur // REDUCTION))
-        ecart = ImageChops.difference(image, self.fond).convert("L").resize(petit, Image.BOX)
-        contenu = ecart.point(lambda v: 255 if v > 0 else 0)
+        # Réduction d'abord (rapide), puis écart au fond réduit ; dilatation par flou de boîte + seuil, bien
+        # moins coûteuse qu'un MaxFilter de 17 × 17 (le rendu d'un épisode long dépassait 2 h sur la CI).
+        ecart = ImageChops.difference(image.reduce(REDUCTION), self._fond_reduit).convert("L")
+        contenu = ecart.point(lambda v: 255 if v > 1 else 0)
         r = max(1, round(self.ecart / REDUCTION))
-        contenu = contenu.filter(ImageFilter.MaxFilter(1 + 2 * r)).filter(ImageFilter.GaussianBlur(r / 2))
+        contenu = contenu.filter(ImageFilter.BoxBlur(r)).point(lambda v: 255 if v > 0 else 0)
+        contenu = contenu.filter(ImageFilter.GaussianBlur(r / 2))
         libre = ImageChops.invert(contenu).resize(image.size, Image.BILINEAR)
         if self.bandeau:
             ImageDraw.Draw(libre).rectangle((0, 0, self.largeur, self.bandeau), fill=0)
@@ -122,5 +125,9 @@ class Decor:
         x, y = self._position_lumiere(temps)
         halo = Image.new("L", image.size, 0)
         halo.paste(self.lumiere, (x, y))
+        if self.couleur_lumiere.getpixel((0, 0)) == self.couleur_points.getpixel((0, 0)):
+            # Même couleur (cas de la charte) : une seule composition, deux fois moins coûteuse.
+            alpha = ImageChops.multiply(ImageChops.add(halo, self._points(temps)), libre)
+            return Image.composite(self.couleur_points, image, alpha)
         sortie = Image.composite(self.couleur_lumiere, image, ImageChops.multiply(halo, libre))
         return Image.composite(self.couleur_points, sortie, ImageChops.multiply(self._points(temps), libre))

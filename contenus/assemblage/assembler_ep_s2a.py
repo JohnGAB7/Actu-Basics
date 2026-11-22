@@ -325,16 +325,19 @@ def visuels(sc, l):
 
 
 def apercu(l):
-    """Bande-annonce illustrée et promesse de l'épisode (retours de JG du 22/11/2026) : six cartes dessinées,
-    une par compétence, chacune annoncée par la voix. Remplace la liste « Au programme »."""
+    """Bande-annonce illustrée et promesse de l'épisode (retours de JG du 22/11/2026, version à six cartes
+    retenue par JG ; phrase de promesse reprise de la revue ChatGPT) : chaque carte apparaît quand la voix
+    l'annonce (une proposition par carte, après la promesse)."""
     fr = l == "fr"
-    voix = ("Voici ce que vous saurez faire à la fin de cet épisode : construire un tableau de fréquences ; "
-            "choisir et lire un histogramme ; reconnaître la forme d'une distribution ; calculer une moyenne, et voir pourquoi c'est un point d'équilibre ; "
-            "trouver une médiane ; et tout vérifier vous-même, avec deux laboratoires et un exercice corrigé."
+    voix = ("À la fin, vous saurez résumer un jeu de données, lire sa distribution et choisir entre moyenne et médiane. Concrètement : "
+            "construire un tableau de fréquences ; choisir et lire un histogramme ; reconnaître la forme d'une distribution ; "
+            "calculer une moyenne, et voir pourquoi c'est un point d'équilibre ; trouver une médiane ; "
+            "et tout vérifier vous-même, avec deux laboratoires et un exercice corrigé."
             if fr else
-            "Here's what you'll be able to do by the end of this episode: build a frequency table; "
-            "choose and read a histogram; recognise the shape of a distribution; compute a mean, and see why it's a balance point; "
-            "find a median; and check it all yourself, with two labs and a worked exercise.")
+            "By the end, you'll be able to summarize a data set, read its distribution and choose between mean and median. In practice: "
+            "build a frequency table; choose and read a histogram; recognise the shape of a distribution; "
+            "compute a mean, and see why it's a balance point; find a median; "
+            "and check it all yourself, with two labs and a worked exercise.")
     textes = (["Construire un *tableau* de fréquences", "Choisir et lire un *histogramme*",
                "Reconnaître la *forme* d'une distribution", "Calculer une *moyenne*", "Trouver la *médiane*",
                "Tester en *laboratoire*, puis s'exercer"] if fr else
@@ -343,6 +346,81 @@ def apercu(l):
     icones = ["tableau", "histogramme", "forme", "equilibre", "mediane", "laboratoire"]
     return anim("Ce que vous allez *apprendre*" if fr else "What you'll *learn*", voix,
                 {"modele": "apercu", "cartes": [{"icone": i, "texte": t} for i, t in zip(icones, textes)]}, None)
+
+
+def _remplacer(s, cle, avant, apres):
+    if avant not in s.get(cle, ""):
+        raise SystemExit(f"Texte introuvable ({cle}) : {avant[:60]}")
+    s[cle] = s[cle].replace(avant, apres)
+
+
+def nuances(sc, l):
+    """Revue pédagogique de ChatGPT (PR #56, 22/11/2026), transmise par JG : pas de cumul sur une variable
+    nominale, tendances présentées comme tendances, bimodalité comme hypothèse, limite de la médiane
+    précisée, mini-exemples annoncés comme tels (le fil rouge reste les 20 salariés)."""
+    fr = l == "fr"
+    for i, s in enumerate(sc):
+        t, v = s.get("texte", ""), s.get("voix_off", "")
+        if s["type"] == "exercice" and ("*8 voiture*" in t or "*8 car*" in t):
+            s["texte"] = ("20 salariés : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*. Fréquences ? Un cumul a-t-il un sens ?"
+                          if fr else "20 employees: *8 car*, *6 public transport*, *4 bike*, *2 walk*. Frequencies? Does a cumulative total make sense?")
+            s["voix_off"] = ("À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences. Puis demandez-vous : un cumul aurait-il un sens ici ?"
+                             if fr else "Your turn. Twenty employees say how they get to work: eight by car, six by public transport, four by bike and two on foot. Work out the frequencies. Then ask yourself: would a cumulative total make sense here?")
+            c = sc[i + 1]
+            c["etapes"] = c["etapes"][:2] + (["Cumul : *pas de sens*, ces catégories n'ont pas d'ordre"] if fr
+                                             else ["Cumulative: *no meaning*, these categories have no order"])
+            c["reponse"] = "Total 100 % ; pas de cumul sans ordre" if fr else "Total 100%; no cumulative without an order"
+            c["voix_off"] = ("Correction. Voiture : huit divisé par vingt, quarante pour cent ; transports en commun : trente pour cent. Vélo : vingt pour cent ; marche : dix pour cent. "
+                             "Et le cumul ? Il n'a pas de sens ici : les modes de transport n'ont pas d'ordre naturel. "
+                             "Le total fait bien cent pour cent, et l'on ne cumule que des valeurs rangées, comme un nombre de frères et sœurs ou des durées."
+                             if fr else
+                             "Here's the answer. Car: eight divided by twenty, forty percent; public transport: thirty percent. Bike: twenty percent; walking: ten percent. "
+                             "And the cumulative total? It has no meaning here: ways of getting to work have no natural order. "
+                             "The total is one hundred percent, and we only accumulate values that can be ranked, like a number of siblings or durations.")
+            c["verifier"] = [x for x in c["verifier"] if x["expression"] != "40 + 30 + 20"] + [
+                {"expression": "8 + 6 + 4 + 2", "attendu": 20, "libelle": "Total des salariés" if fr else "Total employees"}]
+        if s["type"] == "etapes" and ("selon la *forme*" in t or "depend on the *shape*" in t):
+            _remplacer(s, "voix_off", "C'est une règle générale, qui dépend de la forme de la distribution." if fr
+                       else "This is a general rule, and it depends on the shape of the distribution.",
+                       "C'est une tendance fréquente, pas une loi : tout dépend de la forme de la distribution." if fr
+                       else "This is a common tendency, not a law: it all depends on the shape of the distribution.")
+            _remplacer(s, "voix_off", "Quand la distribution est symétrique, les deux sont proches." if fr
+                       else "When the distribution is symmetric, the two are close.",
+                       "Quand la distribution est parfaitement symétrique, elles coïncident ; à peu près symétrique, elles sont proches." if fr
+                       else "When the distribution is perfectly symmetric, they coincide; when it is roughly symmetric, they are close.")
+            s["voix_off"] = s["voix_off"].replace("la moyenne passe au-dessus", "la moyenne passe souvent au-dessus").replace(
+                "la moyenne passe en dessous", "la moyenne passe souvent en dessous").replace(
+                "the mean ends up above", "the mean often ends up above").replace("the mean falls below", "the mean often falls below")
+            s["etapes"] = [e.replace("*au-dessus*", "*souvent au-dessus*").replace("*en dessous*", "*souvent en dessous*")
+                           .replace("*above*", "*often above*").replace("*below*", "*often below*") for e in s["etapes"]]
+        if s["type"] == "courbe" and ("*44 adultes*" in t or "*44 adults*" in t):
+            _remplacer(s, "voix_off", "Une explication possible : on a mélangé deux groupes de tailles moyennes différentes, ici des femmes et des hommes." if fr
+                       else "One possible explanation: two groups with different average heights have been mixed, here women and men.",
+                       "Une explication possible : un mélange de deux groupes de tailles moyennes différentes, par exemple des femmes et des hommes. L'histogramme seul ne le prouve pas : il faut d'autres informations." if fr
+                       else "One possible explanation: a mix of two groups with different average heights, for example women and men. The histogram alone doesn't prove it: you need other information.")
+        if s["type"] == "texte" and ("*plusieurs groupes*" in t or "*several groups*" in t):
+            s["voix_off"] = ("Si deux groupes se mélangent, un seul nombre « central » ne décrirait ni l'un ni l'autre. Retenez ce réflexe : deux bosses peuvent signaler un mélange de groupes. Vérifiez-le avec d'autres informations, puis séparez-les avant de résumer."
+                             if fr else "If two groups are mixed, a single 'central' number would describe neither. Remember this reflex: two peaks can signal a mix of groups. Check it with other information, then separate them before summarizing.")
+        if s["type"] == "correction" and ("deux bosses, femmes et hommes" in v or "two peaks, women and men" in v):
+            s["voix_off"] = v.replace("deux bosses, femmes et hommes", "deux bosses, sans doute un mélange de femmes et d'hommes").replace(
+                "two peaks, women and men", "two peaks, probably a mix of women and men")
+        if s["type"] == "texte" and ("*l'ampleur*" in t or "*how big*" in t):
+            _remplacer(s, "voix_off", "Elle ne voit pas l'inégalité." if fr else "It doesn't see inequality.",
+                       "Elle indique le centre, mais pas à quel point les valeurs sont dispersées : deux groupes peuvent avoir la même médiane et des inégalités très différentes." if fr
+                       else "It shows the centre, but not how spread out the values are: two groups can share the same median and have very different inequality.")
+        # Mini-exemples annoncés comme tels : le fil rouge reste les 20 salariés.
+        if s.get("note") in ("Classe fictive de 25 élèves.", "Fictional class of 25 pupils."):
+            s["note"] = ("Autre exemple, pour la méthode : une classe fictive de 25 élèves." if fr
+                         else "Another example, to learn the method: a fictional class of 25 pupils.")
+        if s["type"] == "etapes" and ("*une cagnotte*" in t or "*a kitty*" in t) and not s.get("note"):
+            s["note"] = "Autre exemple : quatre amis (fictif)." if fr else "Another example: four friends (fictional)."
+        if s["type"] == "texte" and ("*1 600 €*" in t or "*€1,600*" in t) and not s.get("note"):
+            s["note"] = "Autre exemple : un café (fictif)." if fr else "Another example: a café (fictional)."
+        if s["type"] == "etapes" and s.get("etapes") and any("queue à droite, moyenne au-dessus" in e or "right tail, mean above" in e for e in s["etapes"]):
+            s["etapes"] = [e.replace("moyenne au-dessus", "moyenne souvent au-dessus").replace("mean above", "mean often above") for e in s["etapes"]]
+            s["voix_off"] = s["voix_off"].replace("la moyenne est au-dessus de la médiane", "la moyenne est souvent au-dessus de la médiane").replace(
+                "the mean sits above the median", "the mean usually sits above the median")
+    return sc
 
 
 def episode(l):
@@ -391,6 +469,7 @@ def episode(l):
     sc.append(S("etapes", "Correction (suite)" if fr else "Answer (continued)", suite, etapes=et + [
         "Si 90 était une erreur pour 35 : moyenne *18,5 min*, médiane inchangée" if fr
         else "If 90 were a typo for 35: mean *18.5 min*, median unchanged"], verifier=v[4:]))
+    sc = nuances(sc, l)
     sc.append(S("cloture", ("Prochain épisode : *les écarts*. Une question ? *En commentaire*" if fr
                             else "Next episode: *spread*. A question? *Ask in the comments*"), b["cloture"][l]))
     sc.append(S("fin", "Éveiller par les chiffres." if fr else "Enlightening through numbers.",
@@ -431,7 +510,10 @@ for l in ("fr", "en"):
 entete = ("# Épisode long EP-S2A « Résumer des données : tableaux, histogrammes, moyenne et médiane » (YOUTUBE_LESSON).\n"
           "# Assemblé le 22/11/2026 à partir des cinq fiches de chapitre validées (S2.01 à S2.05) et de la fiche de\n"
           "# conception contenus/conception/EP-S2A.yaml (validée par JG le 22/11/2026, PR #50), changements compris.\n"
-          "# Données fictives, aucun chiffre réel. Statut : brouillon, en attente de relecture et de validation par JG.\n")
+          "# Données fictives, aucun chiffre réel. Statut : brouillon, en attente de relecture et de validation par JG.\n"
+          "# Références de méthode (citées dans la description, pas en pied d'image) : OpenStax, Introductory Statistics 2e,\n"
+          "# « Frequency, Frequency Tables, and Levels of Measurement » et « Measures of the Center of the Data » ;\n"
+          "# NIST/SEMATECH e-Handbook of Statistical Methods, « Histogram » (classes, densité).\n")
 out = R / "contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml"
 out.write_text(entete + yaml.safe_dump(fiche, allow_unicode=True, sort_keys=False, width=1000), encoding="utf-8")
 print(out, sum(1 for _ in fiche["editions"]["fr"]["scenes"]), "scènes FR")

@@ -172,7 +172,8 @@ class Animations:
         if scene.extra["animation"]["modele"] == "apercu" and morceaux:
             # Une carte par proposition annoncée (« … : construire un tableau ; choisir… ; … ») :
             # la première proposition est l'annonce, les suivantes les cartes.
-            debuts = [m[0] for m in morceaux[1:1 + len(plan)]]
+            debuts = [m[0] for m in morceaux[-len(plan):]] if len(morceaux) > len(plan) else \
+                [m[0] for m in morceaux[1:1 + len(plan)]]   # les dernières propositions : une par carte
             dernier = morceaux[-1][1]
             while len(debuts) < len(plan):
                 debuts.append(min(dernier, (debuts[-1] if debuts else 0.6) + 1.2))
