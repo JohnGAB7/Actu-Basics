@@ -29,7 +29,10 @@ logo:
   # bas_gauche | bas_centre | bas_droite. marge_px : retrait supplémentaire DANS la zone de sécurité.
   # La scène « fin » a une mise en page dédiée (texte, logo, slogan) : position ignorée.
   video:
-    scenes: [fin]                 # discret : en fin de vidéo seulement
+    scenes: [accroche, fin]       # au début et à la fin seulement (JG, 22/11/2026)
+    position: haut_centre
+    largeur_autres_px: 170
+    marge_px: 0
     largeur_px: 400               # ≈ 145 px sur un téléphone : nom lisible, slogan lisible (≥ 4 px)
     largeur_min_px: 320
     slogan: false                 # chaque logo porte déjà le slogan de sa langue
@@ -50,7 +53,11 @@ logo:
     nom_min_px: 8                 # « ACTU-BASICS » reconnaissable
     slogan_min_px: 4              # slogan du logo lisible (fin de vidéo et de carrousel)
   lecon:                          # cours YouTube 16:9 (format youtube_lesson)
-    scenes: [fin]
+    # Au début (première scène) et à la fin seulement (JG, 22/11/2026) ; le filigrane YouTube fait le reste.
+    scenes: [accroche, fin]
+    position: haut_centre
+    largeur_autres_px: 190
+    marge_px: 0
     largeur_px: 380
     largeur_min_px: 300
     slogan: false
@@ -67,7 +74,7 @@ logo:
   # actif: false -> aucune marque pendant la vidéo (le logo YouTube peut alors être ajouté par
   # l'option « filigrane » de YouTube Studio).
   mobile:
-    actif: true
+    actif: false                  # JG, 22/11/2026 : le logo ne défile plus ; filigrane ajouté dans YouTube Studio
     formats: [video, lecon]
     # Signature discrète, reconnaissable à son symbole : le nom et le slogan se lisent sur la scène de fin.
     # 110 px en vertical (≈ 40 px sur téléphone, la taille d'un filigrane) : au-delà, le bandeau réservé
@@ -90,30 +97,31 @@ decor:
     - {couleur: barre, opacite: 0.045, amplitude: 0.05, longueur: 1.05, niveau: 0.85, vitesse: -14}
     - {couleur: accent, opacite: 0.06, amplitude: 0.025, longueur: 0.6, niveau: 0.92, vitesse: 30}
 couleurs:
-  # Version claire « ivoire », celle du site et du logo officiel (demande de JG, 22/11/2026) : fond
-  # ivoire du logo clair, encre bleu profond du site, bleu des données et orange de la marque
-  # (00_STRATEGY/BRAND_IDENTITY.md, docs/assets/css/main.css). Contrastes sur l'ivoire (WCAG) :
-  # texte 14,6:1 ; secondaire 4,8:1 ; accent 3,3:1 (gros texte et formes) ; barres 3,7:1.
-  fond: "#FEF8EC"          # ivoire (fond du logo clair) : le disque du logo se fond dans l'image
-  fond_bas: "#F6EDDA"      # ivoire un peu plus soutenu en bas du dégradé
+  # Version claire du site (demandes de JG, 22/11/2026) : fond blanc cassé #F8F6EF, encre bleu profond,
+  # sarcelle et or du site et des logos officiels redessinés le 14/11/2026 (docs/assets/css). Contrastes
+  # sur le fond (WCAG) : texte 14,3:1 ; données 5,8:1 ; secondaire 4,7:1 ; accent 3,4:1 (gros texte et
+  # formes) ; encre sur l'accent 4,3:1.
+  fond: "#F8F6EF"          # blanc cassé
+  fond_bas: "#F4F1E8"      # à peine plus soutenu en bas du dégradé
   texte: "#102638"         # encre bleu profond du site
-  accent: "#D96A00"        # orange de la marque, assombri pour rester lisible sur l'ivoire
-  progression: "#FF8500"   # orange vif de la marque : barre de progression
-  encre_accent: "#102638"  # texte posé sur une forme orange (4,9:1)
+  accent: "#B7791F"        # or du site, assombri pour rester lisible sur le blanc cassé
+  progression: "#E9A323"   # or du site : barre de progression
+  encre_accent: "#102638"  # texte posé sur une forme dorée
   secondaire: "#607180"    # gris bleuté du site (sources, pied de page, axes)
-  barre: "#1685D5"         # bleu de la marque : données, courbes, barres
-  halo: "#FDEBCB"          # halo chaud, discret, en haut à droite
+  barre: "#176B70"         # sarcelle du site et du logo : données, courbes, barres
+  halo: "#FBF1DC"          # halo doré très discret en haut à droite
 # Accroches, titres de graphique et sources en capitales (police d'affichage).
 accroche_majuscules: false   # ton doux et sobre (JG, 22/11/2026) : casse normale
 polices:
   # Police d'affichage condensée et très grasse : accroches, chiffre clé, titres.
   # Inter Display demi-gras (doux, net, « tech ») plutôt qu'Anton, jugé trop massif (JG, 22/11/2026).
-  affichage: ["InterDisplay-SemiBold.otf", "InterDisplay-SemiBold.ttf", "Anton-Regular.ttf", "Inter-Black.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
+  affichage: ["InterDisplay-Medium.otf", "InterDisplay-Medium.ttf", "InterDisplay-SemiBold.otf", "Anton-Regular.ttf", "Inter-Black.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
   # Recherche dans l'ordre : production/polices/, puis polices système.
   # Inter (licence libre OFL) : https://rsms.me/inter/ — paquet Linux « fonts-inter ».
   regulier: ["Inter-Regular.otf", "Inter-Regular.ttf", "DejaVuSans.ttf", "Arial.ttf"]
-  gras: ["Inter-Bold.otf", "Inter-Bold.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"]
-  noir: ["Inter-Black.otf", "Inter-Black.ttf", "Inter-Bold.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
+  # Graisses allégées (écriture « plus soft », JG, 22/11/2026) : demi-gras pour « gras », gras pour « noir ».
+  gras: ["Inter-SemiBold.otf", "Inter-SemiBold.ttf", "Inter-Bold.otf", "Inter-Bold.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"]
+  noir: ["Inter-Bold.otf", "Inter-Bold.ttf", "Inter-Black.otf", "Inter-Black.ttf", "Inter-Bold.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
 formats:
   video: {largeur: 1080, hauteur: 1920, fps: 30}
   carrousel: {largeur: 1080, hauteur: 1350}

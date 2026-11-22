@@ -792,13 +792,19 @@ def test_fichiers_logo_officiels_presents():
     assert len(noms) == 4                                   # un fichier distinct par langue et par fond
 
 
+# La charte par défaut est en version claire (ivoire) depuis le 22/11/2026 : les cas « fond sombre »
+# utilisent une charte sombre explicite (ancienne palette bleu nuit).
+SOMBRE = dict(couleurs__fond="#0B1526", couleurs__fond_bas="#14284A", couleurs__barre="#3E7CB1",
+              couleurs__texte="#F5F3EE", couleurs__halo="#3E7CB1", couleurs__encre_accent="#0B1526")
+
+
 def test_logo_choisi_selon_la_langue_et_le_fond():
     clair = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
                  couleurs__texte="#06152B")
     attendu = {("fr", "sombre"): "logo-dark.png", ("fr", "clair"): "logo-light.png",
                ("en", "sombre"): "logo-dark-en.png", ("en", "clair"): "logo-light-en.png"}
     for langue in ("fr", "en"):
-        for fond, ch in (("sombre", CHARTE), ("clair", _charte(**clair))):
+        for fond, ch in (("sombre", _charte(**SOMBRE)), ("clair", _charte(**clair))):
             r, _, ed = _rendu_fin(ch, "carrousel", langue)
             pose = r.poses[("carrousel", len(ed.scenes) - 1)]
             assert pose.variante == fond
@@ -866,8 +872,9 @@ def test_slogans_et_marque_officiels():
 
 def test_logo_sur_fond_sombre_proportions_et_original_intact():
     avant = _empreintes()
+    sombre = _charte(**SOMBRE)
     for fmt in ("video", "carrousel"):
-        r, im, ed = _rendu_fin(CHARTE, fmt)
+        r, im, ed = _rendu_fin(sombre, fmt)
         pose = r.poses[(fmt, len(ed.scenes) - 1)]
         assert pose.variante == "sombre" and pose.luminance_fond < 0.5
         x0, y0, x1, y1 = pose.boite
@@ -876,7 +883,7 @@ def test_logo_sur_fond_sombre_proportions_et_original_intact():
         assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT                       # rien dans sa zone
         assert pose.largeur <= pose.largeur_native                                    # jamais agrandi
         rap = Rapport()
-        controler_logo("fr", r, [(fmt, len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+        controler_logo("fr", r, [(fmt, len(ed.scenes) - 1, "fin")], sombre, PLATEFORMES, rap)
         assert not rap.bloquants and not rap.avertissements, [str(c) for c in rap.constats]
     assert _empreintes() == avant                                                     # fichiers d'origine intacts
 
@@ -890,7 +897,7 @@ def test_logo_clair_sur_fond_clair():
 
 
 def test_variante_forcee_contraire_au_fond_bloque():
-    ch = _charte(logo__variante="clair")
+    ch = _charte(logo__variante="clair", **SOMBRE)
     r, _, ed = _rendu_fin(ch)
     rap = Rapport()
     controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
@@ -2074,3 +2081,37 @@ def test_manifeste_de_rendu(tmp_path, monkeypatch):
     assert m["autorisation"]["lance_par"] == "relecteur"
     assert m["fiche"]["sha256"] == manifeste.sha256(fiche) and len(m["moteur_sha256"]) == 64
     assert list(m["rapports_qc_sha256"]) == ["x/fr/rapport-qc.md"]
+
+
+def test_decor_ondes_bougent_sans_toucher_au_contenu():
+    from PIL import Image, ImageChops, ImageDraw
+    from lmec.decor import Decor
+    fond = Image.new("RGB", (640, 360), (254, 248, 236))
+    image = fond.copy()
+    ImageDraw.Draw(image).rectangle((100, 250, 300, 330), fill=(16, 38, 56))   # contenu dans la bande des ondes
+    couleurs = {"barre": (22, 133, 213), "accent": (217, 106, 0)}
+    d = Decor(fond, couleurs, CHARTE["decor"], bandeau_px=60)
+    a, b = d.appliquer(image, 0.0), d.appliquer(image, 3.0)
+    assert ImageChops.difference(a, b).getbbox()                        # le décor bouge
+    assert a.crop((100, 250, 300, 330)) == image.crop((100, 250, 300, 330))   # contenu intact
+    assert a.crop((0, 0, 640, 60)) == image.crop((0, 0, 640, 60))       # bandeau du logo libre
+    libre = d.masque_libre(image)
+    assert d.appliquer(image, 3.0, libre) == b                          # masque réutilisable (images fixes)
+
+
+def test_animations_pastilles_et_curseur_valides_et_dessinees():
+    from lmec.pedagogie import _valider_animation
+    trajets = [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
+    for anim in ({"modele": "pastilles", "valeurs": trajets, "largeur_classe": 10, "unite": "minutes"},
+                 {"modele": "curseur", "valeurs": trajets, "indice": 19, "vers": 120, "axe_max": 55,
+                  "decimales": 2}):
+        erreurs, extra = [], {}
+        _valider_animation({"animation": anim}, "s", erreurs, extra)
+        assert not erreurs and extra["animation"]["modele"] == anim["modele"]
+    erreurs = []
+    _valider_animation({"animation": {"modele": "pastilles", "valeurs": trajets, "largeur_classe": 1}},
+                       "s", erreurs, {})
+    assert any("16 classes" in e for e in erreurs)
+    erreurs = []
+    _valider_animation({"animation": {"modele": "curseur", "valeurs": trajets}}, "s", erreurs, {})
+    assert any("vers" in e for e in erreurs)

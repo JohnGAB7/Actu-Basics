@@ -403,11 +403,14 @@ class Rendu(ScenesPedagogiques):
                     dy = (1 - a) * police.size * 0.35
                     fond = self._fond.getpixel((int(min(x, self.largeur - 1)), int(min(y, self.hauteur - 1))))
                     if fort and style_fort == "surligne":
-                        marge = police.size * 0.10
-                        haut_b = y + police.size * 0.12
-                        d.rectangle((x - marge, haut_b + dy, x + w + marge, haut_b + police.size * 1.02 + dy),
-                                    fill=_melange(fond, self.c["accent"], a))
-                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, self.c["encre_accent"], a))
+                        # Surligneur doux : bande claire dans la moitié basse du mot, mot en couleur d'accent
+                        # (plus de pavé plein, jugé trop lourd par JG le 22/11/2026).
+                        marge = police.size * 0.06
+                        haut_b = y + police.size * 0.62
+                        d.rounded_rectangle((x - marge, haut_b + dy, x + w + marge, y + police.size * 1.08 + dy),
+                                            radius=max(2, round(police.size * 0.08)),
+                                            fill=_melange(fond, self.c["accent"], 0.22 * a))
+                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, self.c["accent"], a))
                     else:
                         c = self.c["accent"] if fort else couleur
                         d.text((x, y + dy), mot, font=police, fill=_melange(fond, c, a))
