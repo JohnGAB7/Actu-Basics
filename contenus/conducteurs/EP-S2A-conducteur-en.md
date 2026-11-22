@@ -94,7 +94,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Twelve is more than ten. But relative to the size of the class, it is less. To compare groups of different sizes, compare frequencies, not counts.
 
 ### 19. exercice
-- Écran : 20 employees: *8 car*, *6 public transport*, *4 bike*, *2 walk*. Frequencies? Does a cumulative total make sense?
+- Écran : 20 employees and how they get to work: *8 car*, *6 public transport*, *4 bike*, *2 walk*.
+  1. Work out the frequency of each way of getting to work.
+  2. Would a cumulative total make sense here?
 - Voix : Your turn. Twenty employees say how they get to work: eight by car, six by public transport, four by bike and two on foot. Work out the frequencies. Then ask yourself: would a cumulative total make sense here?
 
 ### 20. correction
@@ -167,7 +169,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Back to the misleading build: with the count as the height, the big twenty-to-fifty-minute bin crushes everything. Let's switch to density: the bars rise or fall, and the dots, one per employee, take the same spacing everywhere; the ten-to-twenty-minute bin is the densest again. Each bar's area gives back its count: zero point three times ten, three; zero point seven times ten, seven; a third times thirty, ten.
 
 ### 33. exercice
-- Écran : 40 visitors: *aged 0–20: 8*, *20–30: 12*, *30–60: 20*. Which class is densest?
+- Écran : 40 museum visitors: *aged 0–20: 8*; *20–30: 12*; *30–60: 20*.
+  1. A histogram using counts highlights the 30–60 group. Is it right?
+  2. Which class is the densest?
 - Voix : Your turn. Forty visitors to a fictional museum: eight are aged zero to twenty, twelve are twenty to thirty, twenty are thirty to sixty. A histogram that uses the count as height highlights the thirty to sixty group. Is it right? Which class is the densest?
 
 ### 34. correction
@@ -287,7 +291,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Shape D: a tail to the right.
 
 ### 56. exercice
-- Écran : Shapes *A*, *B*, *C*, *D*: age at death, income, exam marks, heights?
+- Écran : Four shapes, *A*, *B*, *C* and *D*. Four variables: age at death, income, exam marks, adult heights.
+  1. Match each variable to its shape.
+- Formes à l'écran : A, B, C, D
 - Voix : Your turn. Here are four shapes, A, B, C and D. And four variables: age at death, income, exam marks, adult heights. Match each variable to its shape.
 
 ### 57. correction
@@ -362,7 +368,8 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Let's show the two marks as dots: fourteen and ten, whose simple mean is twelve. A weight of three makes the fourteen count three times: three dots of fourteen, just one of ten. The mean then slides from twelve to thirteen: the weighted mean gives more weight to what matters most, here maths.
 
 ### 70. exercice
-- Écran : Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8. Overall mean?
+- Écran : Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8.
+  1. What is the overall mean of the 40 pupils?
 - Voix : Your turn. A class of ten pupils has a mean mark of twelve. A class of thirty pupils has a mean of eight. What is the overall mean of the forty pupils?
 
 ### 71. correction
@@ -471,7 +478,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : That answers the challenge. By definition, at least half of the values are less than or equal to the median. So if the mean is above the median, at least half of the values are below the mean. For salaries, that means at least half of workers, and often many more.
 
 ### 90. exercice
-- Écran : Seven salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000, 2,100. Mean and median, before and after a *€20,000* salary joins?
+- Écran : Seven monthly salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000 and 2,100.
+  1. Work out the mean and the median.
+  2. A *€20,000* salary joins: work out the mean and the median again.
 - Voix : Your turn. Seven monthly salaries: one thousand five hundred, one thousand six hundred, one thousand seven hundred, one thousand eight hundred, one thousand nine hundred, two thousand, and two thousand one hundred euros. Work out the mean and the median. Then do it again after a salary of twenty thousand euros joins the group.
 
 ### 91. correction
@@ -530,8 +539,12 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : What to remember. One: count, then divide by the total; compare frequencies, not counts. Two: separate bars for categories, a histogram for numbers, and when bins are unequal, area is what counts. Three: look at the shape before any calculation; two peaks may mean two groups. Four: the mean is the total divided by the count, what each would get with an equal share; one extreme value moves it. Five: the median splits the data in half; with a right tail, the mean usually sits above the median. Pick the one that answers your question.
 
 ### 99. exercice
-- Écran : 10 trips: 5, 8, 12, 15, 15, 18, 22, 25, 30, *90* min. Share under 20 min, shape, mean, median?
-- Voix : Your turn. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. Four: how many employees are below the mean, and which number would you report as the 'typical trip'? Pause the video.
+- Écran : Ten employees, commuting times in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and *90*.
+  1. What share takes under 20 minutes?
+  2. What shape is this distribution?
+  3. Compute the mean and the median.
+  4. How many employees are below the mean? Which 'typical trip' would you report?
+- Voix : Your turn, and pause the video to answer. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. Four: how many employees are below the mean, and which number would you report as the 'typical trip'?
 
 ### 100. correction
   - Under 20 min: 6 out of 10, *60%*

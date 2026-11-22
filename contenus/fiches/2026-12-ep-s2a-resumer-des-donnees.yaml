@@ -221,9 +221,12 @@ editions:
       texte: 12 est plus grand que 10, mais *30 % est plus petit que 40 %*
       voix_off: Douze est plus grand que dix. Mais rapporté à la taille de la classe, c'est moins. Pour comparer deux groupes de tailles différentes, on compare des fréquences, pas des effectifs.
     - type: exercice
-      texte: '20 salariés : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*. Fréquences ? Un cumul a-t-il un sens ?'
+      texte: '20 salariés et leur mode de transport : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*.'
       pause: 8
       voix_off: 'À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences. Puis demandez-vous : un cumul aurait-il un sens ici ?'
+      questions:
+      - Calculez la fréquence de chaque mode de transport.
+      - Un cumul aurait-il un sens ici ?
     - type: correction
       etapes:
       - Voiture 8 ÷ 20 = *40 %*, transports 6 ÷ 20 = *30 %*
@@ -446,9 +449,12 @@ editions:
         attendu: 10
         libelle: Surface de la classe 20 à 50 minutes
     - type: exercice
-      texte: '40 visiteurs : *0–20 ans : 8*, *20–30 ans : 12*, *30–60 ans : 20*. Quelle classe est la plus dense ?'
+      texte: '40 visiteurs d''un musée : *0–20 ans : 8* ; *20–30 ans : 12* ; *30–60 ans : 20*.'
       pause: 8
       voix_off: 'À vous. Quarante visiteurs d''un musée fictif : huit ont entre zéro et vingt ans, douze entre vingt et trente ans, vingt entre trente et soixante ans. Un histogramme qui prend l''effectif comme hauteur met en avant les trente à soixante ans. A-t-il raison ? Quelle classe est la plus dense ?'
+      questions:
+      - Un histogramme en effectifs met en avant les 30–60 ans. A-t-il raison ?
+      - Quelle classe est la plus dense ?
     - type: correction
       etapes:
       - '0–20 ans : 8 ÷ 20 = *0,4* visiteur par année d''âge'
@@ -796,9 +802,52 @@ editions:
         axe_x: Valeur (sans unité)
       voix_off: 'Forme D : une queue vers la droite.'
     - type: exercice
-      texte: 'Formes *A*, *B*, *C*, *D* : âge au décès, revenus, notes, tailles ?'
+      texte: 'Quatre formes, *A*, *B*, *C* et *D*. Quatre variables : âge au décès, revenus, notes à un examen, tailles d''adultes.'
       pause: 8
       voix_off: 'À vous. Voici quatre formes, A, B, C et D. Et quatre variables : l''âge au décès, les revenus, les notes à un examen, les tailles d''adultes. Associez chaque variable à sa forme.'
+      questions:
+      - Associez chaque variable à sa forme.
+      formes:
+      - nom: A
+        valeurs:
+        - 1
+        - 1
+        - 2
+        - 3
+        - 5
+        - 8
+        - 10
+        - 6
+      - nom: B
+        valeurs:
+        - 1
+        - 3
+        - 6
+        - 9
+        - 9
+        - 6
+        - 3
+        - 1
+      - nom: C
+        valeurs:
+        - 2
+        - 7
+        - 9
+        - 4
+        - 4
+        - 9
+        - 7
+        - 2
+      - nom: D
+        valeurs:
+        - 6
+        - 10
+        - 8
+        - 5
+        - 3
+        - 2
+        - 1
+        - 1
     - type: correction
       etapes:
       - 'Notes : *B*, à peu près symétrique'
@@ -925,9 +974,11 @@ editions:
         attendu: 13
         libelle: Moyenne pondérée, pastille par pastille
     - type: exercice
-      texte: 'Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8. Moyenne générale ?'
+      texte: 'Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8 de moyenne.'
       pause: 8
       voix_off: À vous. Une classe de dix élèves a douze de moyenne. Une classe de trente élèves a huit de moyenne. Quelle est la moyenne générale des quarante élèves ?
+      questions:
+      - Quelle est la moyenne générale des 40 élèves ?
     - type: correction
       etapes:
       - 10 × 12 = 120 points et 30 × 8 = 240 points
@@ -1135,9 +1186,12 @@ editions:
       texte: 'Moyenne au-dessus de la médiane : *au moins la moitié* des valeurs sont inférieures à la moyenne'
       voix_off: Voilà la réponse au défi. Par définition, au moins la moitié des valeurs sont inférieures ou égales à la médiane. Si la moyenne est au-dessus de la médiane, au moins la moitié des valeurs sont donc inférieures à la moyenne. Pour des salaires, cela fait au moins la moitié des salariés, et souvent bien plus.
     - type: exercice
-      texte: 'Sept salaires : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000, 2 100 €. Moyenne et médiane, avant puis après l''arrivée d''un salaire de *20 000 €* ?'
+      texte: 'Sept salaires mensuels : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000 et 2 100 €.'
       pause: 8
       voix_off: 'À vous. Sept salaires mensuels : mille cinq cents, mille six cents, mille sept cents, mille huit cents, mille neuf cents, deux mille et deux mille cent euros. Calculez la moyenne et la médiane. Puis recommencez après l''arrivée d''un salaire de vingt mille euros.'
+      questions:
+      - Calculez la moyenne et la médiane.
+      - 'Un salaire de *20 000 €* arrive : recalculez la moyenne et la médiane.'
     - type: correction
       etapes:
       - 'Avant : 12 600 ÷ 7 = *1 800 €* ; médiane *1 800 €*'
@@ -1261,9 +1315,14 @@ editions:
       - 'Médiane : coupe en *deux* ; queue à droite, moyenne souvent au-dessus'
       voix_off: 'Ce qu''il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c''est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c''est peut-être deux groupes. Quatre : la moyenne, c''est le total divisé par le nombre, ce qu''aurait chacun si l''on partageait également ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est souvent au-dessus de la médiane. Choisissez celle qui répond à votre question.'
     - type: exercice
-      texte: '10 trajets : 5, 8, 12, 15, 15, 18, 22, 25, 30, *90* min. Part sous 20 min, forme, moyenne, médiane ?'
+      texte: 'Dix salariés, temps de trajet en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et *90*.'
       pause: 15
-      voix_off: 'À vous. Dix salariés d''une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ? Mettez la vidéo en pause.'
+      voix_off: 'À vous, et mettez la vidéo en pause pour répondre. Dix salariés d''une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ?'
+      questions:
+      - Quelle part met moins de 20 minutes ?
+      - Quelle forme a cette distribution ?
+      - Calculez la moyenne et la médiane.
+      - Combien de salariés sont sous la moyenne ? Quel « trajet typique » annonceriez-vous ?
     - type: correction
       etapes:
       - 'Moins de 20 min : 6 sur 10, *60 %*'
@@ -1477,9 +1536,12 @@ editions:
       texte: 12 is more than 10, but *30% is less than 40%*
       voix_off: Twelve is more than ten. But relative to the size of the class, it is less. To compare groups of different sizes, compare frequencies, not counts.
     - type: exercice
-      texte: '20 employees: *8 car*, *6 public transport*, *4 bike*, *2 walk*. Frequencies? Does a cumulative total make sense?'
+      texte: '20 employees and how they get to work: *8 car*, *6 public transport*, *4 bike*, *2 walk*.'
       pause: 8
       voix_off: 'Your turn. Twenty employees say how they get to work: eight by car, six by public transport, four by bike and two on foot. Work out the frequencies. Then ask yourself: would a cumulative total make sense here?'
+      questions:
+      - Work out the frequency of each way of getting to work.
+      - Would a cumulative total make sense here?
     - type: correction
       etapes:
       - Car 8 ÷ 20 = *40%*, public transport 6 ÷ 20 = *30%*
@@ -1682,9 +1744,12 @@ editions:
         attendu: 10
         libelle: Area of class 20 to 50 minutes
     - type: exercice
-      texte: '40 visitors: *aged 0–20: 8*, *20–30: 12*, *30–60: 20*. Which class is densest?'
+      texte: '40 museum visitors: *aged 0–20: 8*; *20–30: 12*; *30–60: 20*.'
       pause: 8
       voix_off: 'Your turn. Forty visitors to a fictional museum: eight are aged zero to twenty, twelve are twenty to thirty, twenty are thirty to sixty. A histogram that uses the count as height highlights the thirty to sixty group. Is it right? Which class is the densest?'
+      questions:
+      - A histogram using counts highlights the 30–60 group. Is it right?
+      - Which class is the densest?
     - type: correction
       etapes:
       - 'Aged 0–20: 8 ÷ 20 = *0.4* visitor per year of age'
@@ -2032,9 +2097,52 @@ editions:
         axe_x: Value (no unit)
       voix_off: 'Shape D: a tail to the right.'
     - type: exercice
-      texte: 'Shapes *A*, *B*, *C*, *D*: age at death, income, exam marks, heights?'
+      texte: 'Four shapes, *A*, *B*, *C* and *D*. Four variables: age at death, income, exam marks, adult heights.'
       pause: 8
       voix_off: 'Your turn. Here are four shapes, A, B, C and D. And four variables: age at death, income, exam marks, adult heights. Match each variable to its shape.'
+      questions:
+      - Match each variable to its shape.
+      formes:
+      - nom: A
+        valeurs:
+        - 1
+        - 1
+        - 2
+        - 3
+        - 5
+        - 8
+        - 10
+        - 6
+      - nom: B
+        valeurs:
+        - 1
+        - 3
+        - 6
+        - 9
+        - 9
+        - 6
+        - 3
+        - 1
+      - nom: C
+        valeurs:
+        - 2
+        - 7
+        - 9
+        - 4
+        - 4
+        - 9
+        - 7
+        - 2
+      - nom: D
+        valeurs:
+        - 6
+        - 10
+        - 8
+        - 5
+        - 3
+        - 2
+        - 1
+        - 1
     - type: correction
       etapes:
       - 'Exam marks: *B*, roughly symmetric'
@@ -2160,9 +2268,11 @@ editions:
         attendu: 13
         libelle: Moyenne pondérée, pastille par pastille
     - type: exercice
-      texte: 'Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8. Overall mean?'
+      texte: 'Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8.'
       pause: 8
       voix_off: Your turn. A class of ten pupils has a mean mark of twelve. A class of thirty pupils has a mean of eight. What is the overall mean of the forty pupils?
+      questions:
+      - What is the overall mean of the 40 pupils?
     - type: correction
       etapes:
       - 10 × 12 = 120 points and 30 × 8 = 240 points
@@ -2361,9 +2471,12 @@ editions:
       texte: 'Mean above the median: *at least half* of the values are below the mean'
       voix_off: That answers the challenge. By definition, at least half of the values are less than or equal to the median. So if the mean is above the median, at least half of the values are below the mean. For salaries, that means at least half of workers, and often many more.
     - type: exercice
-      texte: 'Seven salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000, 2,100. Mean and median, before and after a *€20,000* salary joins?'
+      texte: 'Seven monthly salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000 and 2,100.'
       pause: 8
       voix_off: 'Your turn. Seven monthly salaries: one thousand five hundred, one thousand six hundred, one thousand seven hundred, one thousand eight hundred, one thousand nine hundred, two thousand, and two thousand one hundred euros. Work out the mean and the median. Then do it again after a salary of twenty thousand euros joins the group.'
+      questions:
+      - Work out the mean and the median.
+      - 'A *€20,000* salary joins: work out the mean and the median again.'
     - type: correction
       etapes:
       - 'Before: 12,600 ÷ 7 = *€1,800*; median *€1,800*'
@@ -2487,9 +2600,14 @@ editions:
       - 'Median: splits in *two*; right tail, mean often above'
       voix_off: 'What to remember. One: count, then divide by the total; compare frequencies, not counts. Two: separate bars for categories, a histogram for numbers, and when bins are unequal, area is what counts. Three: look at the shape before any calculation; two peaks may mean two groups. Four: the mean is the total divided by the count, what each would get with an equal share; one extreme value moves it. Five: the median splits the data in half; with a right tail, the mean usually sits above the median. Pick the one that answers your question.'
     - type: exercice
-      texte: '10 trips: 5, 8, 12, 15, 15, 18, 22, 25, 30, *90* min. Share under 20 min, shape, mean, median?'
+      texte: 'Ten employees, commuting times in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and *90*.'
       pause: 15
-      voix_off: 'Your turn. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. Four: how many employees are below the mean, and which number would you report as the ''typical trip''? Pause the video.'
+      voix_off: 'Your turn, and pause the video to answer. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. Four: how many employees are below the mean, and which number would you report as the ''typical trip''?'
+      questions:
+      - What share takes under 20 minutes?
+      - What shape is this distribution?
+      - Compute the mean and the median.
+      - How many employees are below the mean? Which 'typical trip' would you report?
     - type: correction
       etapes:
       - 'Under 20 min: 6 out of 10, *60%*'

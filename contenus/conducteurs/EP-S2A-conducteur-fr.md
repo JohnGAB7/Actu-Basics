@@ -94,7 +94,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Douze est plus grand que dix. Mais rapporté à la taille de la classe, c'est moins. Pour comparer deux groupes de tailles différentes, on compare des fréquences, pas des effectifs.
 
 ### 19. exercice
-- Écran : 20 salariés : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*. Fréquences ? Un cumul a-t-il un sens ?
+- Écran : 20 salariés et leur mode de transport : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*.
+  1. Calculez la fréquence de chaque mode de transport.
+  2. Un cumul aurait-il un sens ici ?
 - Voix : À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences. Puis demandez-vous : un cumul aurait-il un sens ici ?
 
 ### 20. correction
@@ -167,7 +169,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Reprenons la construction trompeuse : avec l'effectif comme hauteur, la grande classe de vingt à cinquante minutes écrase tout. Passons à la densité : les barres montent ou descendent, et les pastilles, une par salarié, prennent le même espacement partout ; la classe de dix à vingt minutes redevient la plus dense. La surface de chaque barre redonne son effectif : zéro virgule trois fois dix, trois ; zéro virgule sept fois dix, sept ; un tiers fois trente, dix.
 
 ### 33. exercice
-- Écran : 40 visiteurs : *0–20 ans : 8*, *20–30 ans : 12*, *30–60 ans : 20*. Quelle classe est la plus dense ?
+- Écran : 40 visiteurs d'un musée : *0–20 ans : 8* ; *20–30 ans : 12* ; *30–60 ans : 20*.
+  1. Un histogramme en effectifs met en avant les 30–60 ans. A-t-il raison ?
+  2. Quelle classe est la plus dense ?
 - Voix : À vous. Quarante visiteurs d'un musée fictif : huit ont entre zéro et vingt ans, douze entre vingt et trente ans, vingt entre trente et soixante ans. Un histogramme qui prend l'effectif comme hauteur met en avant les trente à soixante ans. A-t-il raison ? Quelle classe est la plus dense ?
 
 ### 34. correction
@@ -287,7 +291,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Forme D : une queue vers la droite.
 
 ### 56. exercice
-- Écran : Formes *A*, *B*, *C*, *D* : âge au décès, revenus, notes, tailles ?
+- Écran : Quatre formes, *A*, *B*, *C* et *D*. Quatre variables : âge au décès, revenus, notes à un examen, tailles d'adultes.
+  1. Associez chaque variable à sa forme.
+- Formes à l'écran : A, B, C, D
 - Voix : À vous. Voici quatre formes, A, B, C et D. Et quatre variables : l'âge au décès, les revenus, les notes à un examen, les tailles d'adultes. Associez chaque variable à sa forme.
 
 ### 57. correction
@@ -363,7 +369,8 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Représentons les deux notes par des pastilles : quatorze et dix, dont la moyenne simple vaut douze. Le coefficient trois fait compter le quatorze trois fois : trois pastilles de quatorze, une seule de dix. La moyenne glisse alors de douze à treize : la moyenne pondérée donne plus de poids à ce qui compte le plus, ici les mathématiques.
 
 ### 70. exercice
-- Écran : Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8. Moyenne générale ?
+- Écran : Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8 de moyenne.
+  1. Quelle est la moyenne générale des 40 élèves ?
 - Voix : À vous. Une classe de dix élèves a douze de moyenne. Une classe de trente élèves a huit de moyenne. Quelle est la moyenne générale des quarante élèves ?
 
 ### 71. correction
@@ -472,7 +479,9 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Voilà la réponse au défi. Par définition, au moins la moitié des valeurs sont inférieures ou égales à la médiane. Si la moyenne est au-dessus de la médiane, au moins la moitié des valeurs sont donc inférieures à la moyenne. Pour des salaires, cela fait au moins la moitié des salariés, et souvent bien plus.
 
 ### 90. exercice
-- Écran : Sept salaires : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000, 2 100 €. Moyenne et médiane, avant puis après l'arrivée d'un salaire de *20 000 €* ?
+- Écran : Sept salaires mensuels : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000 et 2 100 €.
+  1. Calculez la moyenne et la médiane.
+  2. Un salaire de *20 000 €* arrive : recalculez la moyenne et la médiane.
 - Voix : À vous. Sept salaires mensuels : mille cinq cents, mille six cents, mille sept cents, mille huit cents, mille neuf cents, deux mille et deux mille cent euros. Calculez la moyenne et la médiane. Puis recommencez après l'arrivée d'un salaire de vingt mille euros.
 
 ### 91. correction
@@ -531,8 +540,12 @@ Généré depuis `contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml` (103 
 - Voix : Ce qu'il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c'est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c'est peut-être deux groupes. Quatre : la moyenne, c'est le total divisé par le nombre, ce qu'aurait chacun si l'on partageait également ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est souvent au-dessus de la médiane. Choisissez celle qui répond à votre question.
 
 ### 99. exercice
-- Écran : 10 trajets : 5, 8, 12, 15, 15, 18, 22, 25, 30, *90* min. Part sous 20 min, forme, moyenne, médiane ?
-- Voix : À vous. Dix salariés d'une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ? Mettez la vidéo en pause.
+- Écran : Dix salariés, temps de trajet en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et *90*.
+  1. Quelle part met moins de 20 minutes ?
+  2. Quelle forme a cette distribution ?
+  3. Calculez la moyenne et la médiane.
+  4. Combien de salariés sont sous la moyenne ? Quel « trajet typique » annonceriez-vous ?
+- Voix : À vous, et mettez la vidéo en pause pour répondre. Dix salariés d'une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ?
 
 ### 100. correction
   - Moins de 20 min : 6 sur 10, *60 %*

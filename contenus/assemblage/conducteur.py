@@ -26,6 +26,10 @@ for i, s in enumerate(sc, 1):
         L.append(f"- Formule : {s['formule']}")
     if s.get("valeur") is not None:
         L.append(f"- Chiffre clé : {s['valeur']}")
+    for k, q in enumerate(s.get("questions") or [], 1):
+        L.append(f"  {k}. {q}")
+    if s.get("formes"):
+        L.append("- Formes à l'écran : " + ", ".join(f["nom"] for f in s["formes"]))
     for e in s.get("etapes") or []:
         L.append(f"  - {e}")
     if s.get("reponse"):

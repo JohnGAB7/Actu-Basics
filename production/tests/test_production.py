@@ -2185,6 +2185,27 @@ def test_animations_de_la_revue_validees():
     assert valider({"modele": "questions", "questions": [q, dict(q, icone="inconnue")]})[0]
 
 
+def test_exercices_questions_ecrites_a_l_ecran():
+    """Chaque question des exercices est écrite à l'écran, numérotée, quand la voix la pose (JG, 22/11/2026) ;
+    l'exercice des formes montre les quatre formes sur le même écran."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml")
+    for langue in ("fr", "en"):
+        scenes = fiche.editions[langue].scenes
+        exos = [s for s in scenes if s.type == "exercice" and s.extra.get("etiquette") is None]
+        assert exos and all(s.extra.get("questions") for s in exos)
+        assert any(len(s.extra.get("formes") or []) == 4 for s in exos)
+        for fmt in ("lecon", "video"):
+            r = Rendu(fiche, langue, CHARTE, fmt, False)
+            r.reperes = {id(s): [0.5, 2.0, 4.0, 6.0, 8.0, 10.0] for s in exos}
+            for s in exos:
+                i = scenes.index(s)
+                debuts = r._debuts_questions(s, len(s.extra["questions"]))
+                assert debuts == sorted(debuts) and len(debuts) == len(s.extra["questions"])
+                for t in (0.0, debuts[0] + 0.1, 30.0, None):
+                    r.dessiner(s, i, len(scenes), t)
+            assert not [a for a in r.alertes if "exercice" in a]
+
+
 def test_calcul_apparait_terme_a_terme():
     """« 5 + 10 + 6 + 4 = 25 » : chaque terme a son instant, dans l'ordre ; une ligne sans calcul n'en a pas."""
     from lmec.formatage import typographie

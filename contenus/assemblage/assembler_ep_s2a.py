@@ -532,6 +532,66 @@ def propositions(sc, l):
     return out
 
 
+def enonces(sc, l):
+    """Exercices lisibles à l'arrêt sur image (JG, 22/11/2026) : l'énoncé ne garde que les données, chaque
+    question est écrite à l'écran, numérotée, quand la voix la pose (les dernières phrases de la voix)."""
+    fr = l == "fr"
+    formes = [{"nom": s["texte"].replace("*", "").split()[-1], "valeurs": [p[1] for p in s["courbe"]["points"]]}
+              for s in sc if s["type"] == "courbe" and s["texte"] in (
+                  ["Forme *A*", "Forme *B*", "Forme *C*", "Forme *D*"] if fr else ["Shape *A*", "Shape *B*", "Shape *C*", "Shape *D*"])]
+    for s in sc:
+        if s["type"] != "exercice":
+            continue
+        t = s["texte"]
+        if "*8 voiture*" in t or "*8 car*" in t:
+            s["texte"] = ("20 salariés et leur mode de transport : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*." if fr
+                          else "20 employees and how they get to work: *8 car*, *6 public transport*, *4 bike*, *2 walk*.")
+            s["questions"] = (["Calculez la fréquence de chaque mode de transport.", "Un cumul aurait-il un sens ici ?"] if fr
+                              else ["Work out the frequency of each way of getting to work.", "Would a cumulative total make sense here?"])
+        elif t.startswith("40 visit"):
+            s["texte"] = ("40 visiteurs d'un musée : *0–20 ans : 8* ; *20–30 ans : 12* ; *30–60 ans : 20*." if fr
+                          else "40 museum visitors: *aged 0–20: 8*; *20–30: 12*; *30–60: 20*.")
+            s["questions"] = (["Un histogramme en effectifs met en avant les 30–60 ans. A-t-il raison ?",
+                               "Quelle classe est la plus dense ?"] if fr else
+                              ["A histogram using counts highlights the 30–60 group. Is it right?",
+                               "Which class is the densest?"])
+        elif t.startswith(("Formes *A*", "Shapes *A*")):
+            s["texte"] = ("Quatre formes, *A*, *B*, *C* et *D*. Quatre variables : âge au décès, revenus, notes à un examen, tailles d'adultes."
+                          if fr else "Four shapes, *A*, *B*, *C* and *D*. Four variables: age at death, income, exam marks, adult heights.")
+            s["questions"] = ["Associez chaque variable à sa forme."] if fr else ["Match each variable to its shape."]
+            if len(formes) == 4:
+                s["formes"] = formes
+        elif t.startswith(("Classe de *10", "Class of *10")):
+            s["texte"] = ("Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8 de moyenne." if fr
+                          else "Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8.")
+            s["questions"] = (["Quelle est la moyenne générale des 40 élèves ?"] if fr
+                              else ["What is the overall mean of the 40 pupils?"])
+        elif t.startswith(("Sept salaires", "Seven salaries")):
+            s["texte"] = ("Sept salaires mensuels : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000 et 2 100 €." if fr
+                          else "Seven monthly salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000 and 2,100.")
+            s["questions"] = (["Calculez la moyenne et la médiane.",
+                               "Un salaire de *20 000 €* arrive : recalculez la moyenne et la médiane."] if fr else
+                              ["Work out the mean and the median.",
+                               "A *€20,000* salary joins: work out the mean and the median again."])
+        elif t.startswith(("10 trajets", "10 trips")):
+            s["texte"] = ("Dix salariés, temps de trajet en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et *90*." if fr
+                          else "Ten employees, commuting times in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and *90*.")
+            s["questions"] = (["Quelle part met moins de 20 minutes ?", "Quelle forme a cette distribution ?",
+                               "Calculez la moyenne et la médiane.",
+                               "Combien de salariés sont sous la moyenne ? Quel « trajet typique » annonceriez-vous ?"] if fr else
+                              ["What share takes under 20 minutes?", "What shape is this distribution?",
+                               "Compute the mean and the median.",
+                               "How many employees are below the mean? Which 'typical trip' would you report?"])
+            s["voix_off"] = ("À vous, et mettez la vidéo en pause pour répondre. Dix salariés d'une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. "
+                             "Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. "
+                             "Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ?"
+                             if fr else
+                             "Your turn, and pause the video to answer. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. "
+                             "One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. "
+                             "Four: how many employees are below the mean, and which number would you report as the 'typical trip'?")
+    return sc
+
+
 def episode(l):
     fr = l == "fr"
     b = blocs
@@ -580,6 +640,7 @@ def episode(l):
         else "If 90 were a typo for 35: mean *18.5 min*, median unchanged"], verifier=v[4:]))
     sc = nuances(sc, l)
     sc = propositions(sc, l)
+    sc = enonces(sc, l)
     sc.append(S("cloture", ("Prochain épisode : *les écarts*. Une question ? *En commentaire*" if fr
                             else "Next episode: *spread*. A question? *Ask in the comments*"), b["cloture"][l]))
     sc.append(S("fin", "Éveiller par les chiffres." if fr else "Enlightening through numbers.",

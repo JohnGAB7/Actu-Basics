@@ -443,6 +443,21 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
         extra["pause"] = float(pause)
         if s.get("etiquette") is not None:
             extra["etiquette"] = str(s["etiquette"])
+        if s.get("questions") is not None:
+            q = _liste_textes(s.get("questions"), f"{ctx}.questions", erreurs)
+            if len(q) > 5:
+                erreurs.append(f"{ctx}.questions : 1 à 5 questions, une par ligne à l'écran")
+            elif q:
+                extra["questions"] = q
+        if s.get("formes") is not None:
+            fo = s["formes"]
+            if (not isinstance(fo, list) or not 2 <= len(fo) <= 4
+                    or not all(isinstance(f, dict) and str(f.get("nom") or "").strip() and isinstance(f.get("valeurs"), list)
+                               and 3 <= len(f["valeurs"]) <= 16 and all(_nombre(v) and v >= 0 for v in f["valeurs"])
+                               for f in fo)):
+                erreurs.append(f"{ctx}.formes : 2 à 4 formes {{nom, valeurs (3 à 16 hauteurs)}}, montrées avec les questions")
+            else:
+                extra["formes"] = [{"nom": str(f["nom"]), "valeurs": [float(v) for v in f["valeurs"]]} for f in fo]
     if type_ == "animation":
         _valider_animation(s, ctx, erreurs, extra)
     if type_ == "etapes" and s.get("disposition") is not None:

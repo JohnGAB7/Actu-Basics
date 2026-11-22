@@ -390,6 +390,8 @@ class ScenesPedagogiques(Animations, AnimationsDonnees):
     def _scene_exercice(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         lib = LIBELLES_PEDAGOGIE[self.langue]
         a = 1.0 if t is None else _ease(t / 0.4)
+        if scene.extra.get("questions"):
+            return self._exercice_questions(d, scene, g, haut, dr, bas, x_c, t, ctx, a)
         zt, zc = self._zones(g, haut, dr, bas)
         anneau = 240 if not self.colonnes else 340
         if self.colonnes:   # 16:9 : la question prend les deux tiers de la largeur, le compte à rebours le reste
@@ -423,6 +425,104 @@ class ScenesPedagogiques(Animations, AnimationsDonnees):
         pn = self.police("affichage", int(anneau * 0.5))
         num = str(math.ceil(pause - ecoule)) if reste > 0 else "?"
         d.text((cx - pn.getlength(num) / 2, cy - pn.size * 0.62), num, font=pn, fill=self.c["texte"])
+
+    def _debuts_questions(self, scene, n):
+        """Chaque question apparaît quand la voix la pose : les n dernières phrases de la voix."""
+        reperes = self.reperes.get(id(scene))
+        if reperes and len(reperes) > n:
+            return reperes[-n:]
+        return [0.8 + 0.5 * k for k in range(n)]
+
+    def _exercice_questions(self, d, scene, g, haut, dr, bas, x_c, t, ctx, a):
+        """Exercice lisible à l'arrêt sur image (JG, 22/11/2026) : l'énoncé (les données), puis chaque question
+        numérotée, écrite à l'écran au moment où la voix la pose ; en option, les formes à comparer."""
+        from .rendu import _melange
+        lib = LIBELLES_PEDAGOGIE[self.langue]
+        questions = scene.extra["questions"]
+        formes = scene.extra.get("formes") or []
+        anneau = 160 if not self.colonnes else 300
+        if self.colonnes:
+            l = dr - g
+            zt, zc = (g, haut, g + int(l * 0.70), bas), (g + int(l * 0.75), haut, dr, bas)
+        else:
+            zt, zc = (g, haut, dr, bas), None
+        W = zt[2] - zt[0]
+        h_formes = (200 if self.colonnes else 220) if formes else 0
+        budget = bas - haut - 70 - 40 - (h_formes + 40 if formes else 0) - (0 if self.colonnes else anneau + 50)
+        # Énoncé et questions à des tailles liées (énoncé un peu plus grand), réduites ensemble jusqu'à tenir.
+        retrait = 76
+        n_alertes = len(self.alertes)
+        for taille in range(56 if self.colonnes else 54, 27, -2):
+            del self.alertes[n_alertes:]          # seule la taille retenue peut lever une alerte
+            te = int(taille * 1.15)
+            pe, le, pas_e, he = self.ajuster_riche(scene.texte, "gras", W, 10 ** 4, te, te, 1.18, ctx)
+            mes = [self.ajuster_riche(q, "regulier", W - retrait, 10 ** 4, taille, taille, 1.18, ctx) for q in questions]
+            hq = sum(m[3] for m in mes) + 26 * (len(mes) - 1)
+            if he + 44 + hq <= budget and len(self.alertes) == n_alertes:
+                break
+        bloc = 70 + 40 + he + 44 + hq + (h_formes + 40 if formes else 0)
+        y0 = haut + max(0, (bas - haut - bloc - (0 if self.colonnes else anneau + 50)) // 2)
+        y = self._badge(d, zt[0], y0, scene.extra.get("etiquette") or lib["exercice"], a) + 40
+        self.ecrire_riche(d, le, pe, pas_e, y, self.c["texte"], t, 0.3, centre=False, x_gauche=zt[0], decalage=0.05)
+        y += he + 44
+        debuts = self._debuts_questions(scene, len(questions))
+        fond = self._fond.getpixel((int(zt[0]), int(min(y, self.hauteur - 1))))
+        for k, ((p_q, l_q, pas_q, h_q), dq) in enumerate(zip(mes, debuts)):
+            k_a = 1.0 if t is None else _ease((t - dq) / 0.4)
+            if k_a > 0:
+                r = 26
+                cx, cy = zt[0] + r, y + pas_q * 0.5
+                d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=_melange(fond, self.c["or"], k_a))
+                pn = self.police("gras", 32)
+                num = str(k + 1)
+                d.text((cx - pn.getlength(num) / 2, cy - 21), num, font=pn, fill=_melange(fond, (255, 255, 255), k_a))
+                self.ecrire_riche(d, l_q, p_q, pas_q, y, self.c["texte"], t, dq, centre=False,
+                                  x_gauche=zt[0] + retrait, decalage=0.03)
+            y += h_q + 26
+        if formes:
+            self._mini_formes(d, formes, (zt[0], y + 14, zt[2], y + 14 + h_formes), t, fond)
+            y += h_formes + 40
+        # Compte à rebours, à droite en 16:9, dessous en vertical.
+        pause = scene.extra.get("pause", 3)
+        depart = self._debut_compte(scene)
+        if pause <= 0 or (t is not None and t < depart):
+            return
+        ecoule = pause if t is None else min(pause, t - depart)
+        reste = max(0.0, 1 - ecoule / pause)
+        if self.colonnes:
+            cx, cy = (zc[0] + zc[2]) / 2, (haut + bas) / 2
+        else:
+            cx, cy = x_c, y + 10 + anneau / 2
+        boite = (cx - anneau / 2, cy - anneau / 2, cx + anneau / 2, cy + anneau / 2)
+        epaisseur = 14 if not self.colonnes else 22
+        d.ellipse(boite, outline=self.c["barre"], width=epaisseur)
+        if reste > 0:
+            d.arc(boite, -90, -90 + 360 * reste, fill=self.c["accent"], width=epaisseur)
+        pn = self.police("affichage", int(anneau * 0.5))
+        num = str(math.ceil(pause - ecoule)) if reste > 0 else "?"
+        d.text((cx - pn.getlength(num) / 2, cy - pn.size * 0.62), num, font=pn, fill=self.c["texte"])
+
+    def _mini_formes(self, d, formes, boite, t, fond):
+        """Petits histogrammes côte à côte (A, B, C, D) : tout l'exercice tient sur un seul écran."""
+        from .rendu import _melange
+        x0, y0, x1, y1 = boite
+        n = len(formes)
+        gap = 36
+        w = (x1 - x0 - (n - 1) * gap) / n
+        y_max = max(v for f in formes for v in f["valeurs"]) or 1
+        pl = self.police("affichage", 44)
+        for i, f in enumerate(formes):
+            gx = x0 + i * (w + gap)
+            d.text((gx, y0), f["nom"], font=pl, fill=self.c["accent"])
+            base = y1 - 4
+            h_dispo = y1 - y0 - 60
+            bw = (w - 10) / len(f["valeurs"])
+            for j, v in enumerate(f["valeurs"]):
+                h = v / y_max * h_dispo
+                if h > 2:
+                    d.rectangle((gx + 5 + j * bw + 1, base - h, gx + 5 + (j + 1) * bw - 1, base),
+                                fill=_melange(fond, self.c["barre"], 0.8))
+            d.line((gx, base, gx + w, base), fill=_melange(fond, self.c["secondaire"], 0.8), width=3)
 
     def _scene_correction(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         """Badge, phrase d'introduction, étapes, puis la réponse dans un encadré mesuré sur son texte."""
