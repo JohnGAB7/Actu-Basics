@@ -809,17 +809,6 @@ editions:
       numero: '4.3'
       texte: Le point d'équilibre
       voix_off: 'Deuxième façon de voir la moyenne : un point d''équilibre.'
-    - type: etapes
-      texte: Les écarts *à la moyenne*
-      etapes:
-      - 5 − 15 = −10 et 10 − 15 = −5
-      - 15 − 15 = 0 et 30 − 15 = +15
-      - 'Somme des écarts : *0*'
-      voix_off: Calculons l'écart de chaque valeur à la moyenne. Cinq moins quinze, moins dix ; dix moins quinze, moins cinq. Quinze moins quinze, zéro ; trente moins quinze, plus quinze. Additionnés, ces écarts font exactement zéro.
-      verifier:
-      - expression: (5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)
-        attendu: 0
-        libelle: Somme des écarts à la moyenne
     - type: animation
       texte: La moyenne, *point d'équilibre*
       animation:
@@ -1976,17 +1965,6 @@ editions:
       numero: '4.3'
       texte: The balance point
       voix_off: 'A second way to see the mean: a balance point.'
-    - type: etapes
-      texte: Deviations *from the mean*
-      etapes:
-      - 5 − 15 = −10 and 10 − 15 = −5
-      - 15 − 15 = 0 and 30 − 15 = +15
-      - 'Sum of deviations: *0*'
-      voix_off: Let's work out how far each value is from the mean. Five minus fifteen, minus ten; ten minus fifteen, minus five. Fifteen minus fifteen, zero; thirty minus fifteen, plus fifteen. Added together, these deviations come to exactly zero.
-      verifier:
-      - expression: (5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)
-        attendu: 0
-        libelle: Sum of deviations from the mean
     - type: animation
       texte: The mean, a *balance point*
       animation:

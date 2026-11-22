@@ -313,6 +313,9 @@ def visuels(sc, l):
                           {"expression": "(10 + 1) / 2", "attendu": 5.5, "libelle": "Position du milieu, 10 valeurs"},
                           {"expression": "(2200 + 2300) / 2", "attendu": 2250, "libelle": "Médiane des 10 salaires"}]))
             continue
+        if (s["type"] == "etapes" and "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)" in _exprs(s)
+                and i + 1 < len(sc) and sc[i + 1]["type"] == "texte"):
+            continue        # « Les écarts à la moyenne » : tracés par l'animation d'équilibre qui suit
         if s["type"] == "etapes" and "(2200 + 2300) / 2" in _exprs(s) and out and out[-1]["type"] == "animation":
             continue        # « La médiane du café » : montrée par l'élimination
         out.append(s)
