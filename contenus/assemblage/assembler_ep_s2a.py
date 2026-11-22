@@ -232,6 +232,93 @@ def lab2(l):
     ]
 
 
+def anim(texte, voix, conf, etapes, verifier=None, note=None, univers=None):
+    s = {"type": "animation", "texte": texte, "animation": conf, "etapes": etapes}
+    if univers:
+        s["univers"] = univers
+    if note:
+        s["note"] = note
+    s["voix_off"] = voix
+    if verifier:
+        s["verifier"] = verifier
+    return s
+
+
+def _exprs(s):
+    return [v["expression"] for v in s.get("verifier", [])]
+
+
+def visuels(sc, l):
+    """Trois scènes trop textuelles deviennent des animations (revue ChatGPT du 22/11/2026, retenue par JG) :
+    densité des classes inégales, point d'équilibre de la moyenne, médiane par élimination."""
+    fr = l == "fr"
+    out = []
+    for i, s in enumerate(sc):
+        if s["type"] == "courbe" and s["courbe"].get("points") == [[0, 0.3], [10, 0.7], [20, 0.3333]]:
+            out.append(anim(
+                s["texte"],
+                ("Reprenons la construction trompeuse : avec l'effectif comme hauteur, la grande classe de vingt à cinquante minutes écrase tout. "
+                 "Passons à la densité : les barres montent ou descendent, et les pastilles, une par salarié, prennent le même espacement partout ; la classe de dix à vingt minutes redevient la plus dense. "
+                 "La surface de chaque barre redonne son effectif : zéro virgule trois fois dix, trois ; zéro virgule sept fois dix, sept ; un tiers fois trente, dix."
+                 if fr else
+                 "Back to the misleading build: with the count as the height, the big twenty-to-fifty-minute bin crushes everything. "
+                 "Let's switch to density: the bars rise or fall, and the dots, one per employee, take the same spacing everywhere; the ten-to-twenty-minute bin is the densest again. "
+                 "Each bar's area gives back its count: zero point three times ten, three; zero point seven times ten, seven; a third times thirty, ten."),
+                {"modele": "densite", "bornes": [0, 10, 20, 50], "effectifs": [3, 7, 10], "unite": "minutes"},
+                (["Hauteur = effectif : la grande classe *écrase tout*", "Hauteur = *densité* : le même espacement partout",
+                  "Surface = densité × largeur = *effectif*"] if fr else
+                 ["Height = count: the wide bin *crushes everything*", "Height = *density*: the same spacing everywhere",
+                  "Area = density × width = *count*"]),
+                verifier=s.get("verifier")))   # note inutile : les surfaces sont écrites sur les barres
+            continue
+        if s["type"] == "texte" and i and "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)" in _exprs(sc[i - 1]):
+            out.append(anim(
+                "La moyenne, *point d'équilibre*" if fr else "The mean, a *balance point*",
+                ("Posons les quatre montants de la cagnotte sur une planche : cinq, dix, quinze et trente euros. "
+                 "Pour que la planche tienne à l'horizontale, l'appui doit se placer exactement à la moyenne, quinze euros. "
+                 "Là, les écarts se compensent : moins dix et moins cinq d'un côté, plus quinze de l'autre, zéro au total ; c'est toujours vrai pour la moyenne, et une seule valeur très loin suffit à déplacer l'équilibre."
+                 if fr else
+                 "Let's put the four amounts from the kitty on a plank: five, ten, fifteen and thirty euros. "
+                 "For the plank to stay level, the pivot must sit exactly at the mean, fifteen euros. "
+                 "There, the deviations cancel out: minus ten and minus five on one side, plus fifteen on the other, zero in total; that's always true for the mean, and a single value far away is enough to shift the balance."),
+                {"modele": "equilibre", "valeurs": [5, 10, 15, 30], "unite": "€"},
+                (["Quatre amis : *5, 10, 15 et 30 €*", "L'appui à *15 €* : la planche s'équilibre",
+                  "Les écarts se *compensent* : leur somme vaut 0"] if fr else
+                 ["Four friends: *€5, €10, €15 and €30*", "Pivot at *€15*: the plank balances",
+                  "The deviations *cancel out*: they sum to 0"]),
+                verifier=[{"expression": "(5 + 10 + 15 + 30) / 4", "attendu": 15, "libelle": "Moyenne de la cagnotte"},
+                          {"expression": "(5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)", "attendu": 0,
+                           "libelle": "Somme des écarts à la moyenne"}]))
+            continue
+        if s["type"] == "formule" and "(9 + 1) / 2" in _exprs(s):
+            out.append(anim(
+                "La médiane *par élimination*" if fr else "The median *by elimination*",
+                ("Revenons au café et rangeons ses neuf premiers salaires, du plus bas au plus haut. "
+                 "Barrons le plus bas et le plus haut, puis recommençons, deux par deux. "
+                 "Il reste la cinquième valeur, deux mille deux cents euros : c'est la médiane, à la position n plus un sur deux. "
+                 "Le client riche entre, avec deux cent mille euros : il y a maintenant dix salaires. "
+                 "On barre à nouveau deux par deux, et il en reste deux, la cinquième et la sixième : la médiane est leur moyenne, deux mille deux cent cinquante euros."
+                 if fr else
+                 "Back to the café: let's sort its first nine salaries, from lowest to highest. "
+                 "Cross out the lowest and the highest, then again, two by two. "
+                 "The fifth value is left, two thousand two hundred euros: that's the median, at position n plus one over two. "
+                 "The rich customer walks in, with two hundred thousand euros: there are now ten salaries. "
+                 "Cross out two by two again, and two are left, the fifth and the sixth: the median is their mean, two thousand two hundred and fifty euros."),
+                {"modele": "elimination", "valeurs": CAFE, "ajout": 200000, "unite": "€"},
+                (["Neuf salaires, *rangés*", "On barre le plus *bas* et le plus *haut*", "Il reste le *milieu* : la 5e valeur",
+                  "Le client à *200 000 €* entre", "Dix valeurs : la moyenne des *deux du milieu*"] if fr else
+                 ["Nine salaries, *sorted*", "Cross out the *lowest* and the *highest*", "The *middle* is left: the 5th value",
+                  "The *€200,000* customer walks in", "Ten values: the mean of the *two middle ones*"]),
+                verifier=[{"expression": "(9 + 1) / 2", "attendu": 5, "libelle": "Position du milieu, 9 valeurs"},
+                          {"expression": "(10 + 1) / 2", "attendu": 5.5, "libelle": "Position du milieu, 10 valeurs"},
+                          {"expression": "(2200 + 2300) / 2", "attendu": 2250, "libelle": "Médiane des 10 salaires"}]))
+            continue
+        if s["type"] == "etapes" and "(2200 + 2300) / 2" in _exprs(s) and out and out[-1]["type"] == "animation":
+            continue        # « La médiane du café » : montrée par l'élimination
+        out.append(s)
+    return out
+
+
 def episode(l):
     fr = l == "fr"
     b = blocs
@@ -248,6 +335,7 @@ def episode(l):
             sc += lab1(l)
         if k == 5:
             sc += lab2(l)
+    sc = visuels(sc, l)
     sy = b["synthese"][l]
     sc.append(S("etapes", "À retenir" if fr else "Key takeaways", sy,
                 etapes=(["Comparer des *fréquences*, pas des effectifs", "Classes inégales : la *surface* compte",

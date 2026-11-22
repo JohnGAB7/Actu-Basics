@@ -226,10 +226,11 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             erreurs.append(f"{ctx}.animation.valeur : part du premier événement, entre 0 et 1 (ex. 0.493)")
         else:
             conf["valeur"] = float(v)
-    if modele in ("pastilles", "curseur"):
+    if modele in ("pastilles", "curseur", "equilibre", "elimination"):
         v = a.get("valeurs")
-        if not isinstance(v, list) or not 2 <= len(v) <= 60 or not all(_nombre(x) for x in v):
-            erreurs.append(f"{ctx}.animation.valeurs : liste de 2 à 60 nombres (une pastille par individu)")
+        n_min, n_max = {"equilibre": (2, 8), "elimination": (3, 12)}.get(modele, (2, 60))
+        if not isinstance(v, list) or not n_min <= len(v) <= n_max or not all(_nombre(x) for x in v):
+            erreurs.append(f"{ctx}.animation.valeurs : liste de {n_min} à {n_max} nombres (une pastille par individu)")
             conf["valeurs"] = None
         else:
             conf["valeurs"] = [float(x) for x in v]
@@ -266,6 +267,34 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
                 conf["axe_max"] = None
             else:
                 conf["axe_max"] = float(a["axe_max"])
+    if modele in ("equilibre", "elimination"):
+        dec = entier("decimales", 0, 3, requis=False)
+        conf["decimales"] = 0 if dec is None else dec
+    if modele == "equilibre" and a.get("appui_depart") is not None:
+        if not _nombre(a["appui_depart"]):
+            erreurs.append(f"{ctx}.animation.appui_depart : position de départ du point d'appui (nombre)")
+        else:
+            conf["appui_depart"] = float(a["appui_depart"])
+    if modele == "elimination":
+        if a.get("ajout") is not None:
+            if not _nombre(a["ajout"]) or len(conf.get("valeurs") or []) >= 12:
+                erreurs.append(f"{ctx}.animation.ajout : valeur ajoutée (nombre), 11 valeurs au plus avant l'ajout")
+            else:
+                conf["ajout"] = float(a["ajout"])
+        if a.get("phases") and {"ajout", "pair"} & set(a["phases"]) and "ajout" not in conf:
+            erreurs.append(f"{ctx}.animation : les phases « ajout » et « pair » demandent une valeur « ajout »")
+    if modele == "densite":
+        bornes, eff = a.get("bornes"), a.get("effectifs")
+        if (not isinstance(bornes, list) or not 3 <= len(bornes) <= 9 or not all(_nombre(b) for b in bornes)
+                or any(b2 <= b1 for b1, b2 in zip(bornes, bornes[1:]))):
+            erreurs.append(f"{ctx}.animation.bornes : 3 à 9 bornes croissantes (2 à 8 classes)")
+        elif (not isinstance(eff, list) or len(eff) != len(bornes) - 1
+              or not all(isinstance(e, int) and not isinstance(e, bool) and 0 <= e <= 40 for e in eff)):
+            erreurs.append(f"{ctx}.animation.effectifs : un effectif entier (0 à 40) par classe")
+        else:
+            conf["bornes"], conf["effectifs"] = [float(b) for b in bornes], list(eff)
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
     phases = a.get("phases")
     if phases is not None:
         if not isinstance(phases, list) or not phases or any(p not in PHASES[modele] for p in phases):
@@ -278,6 +307,8 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             erreurs.append(f"{ctx}.animation.phases : plus de phases « personne » que de personnes")
             phases = None
         conf["phases"] = phases
+    if modele == "elimination" and not conf.get("phases") and "ajout" not in conf:
+        conf["phases"] = ["rangement", "elimination", "milieu"]     # sans valeur ajoutée
     n_phases = len(conf.get("phases") or PHASES_DEFAUT[modele])
     legendes = s.get("etapes")
     if isinstance(legendes, list) and legendes and len(legendes) != n_phases:

@@ -2121,3 +2121,43 @@ def test_animations_pastilles_et_curseur_valides_et_dessinees():
     erreurs = []
     _valider_animation({"animation": {"modele": "curseur", "valeurs": trajets}}, "s", erreurs, {})
     assert any("vers" in e for e in erreurs)
+
+
+def test_animations_equilibre_elimination_densite_validees():
+    from lmec.pedagogie import _valider_animation
+    bons = ({"modele": "equilibre", "valeurs": [5, 10, 15, 30], "unite": "€"},
+            {"modele": "elimination", "valeurs": [1600, 1800, 1900, 2000, 2200], "ajout": 200000, "unite": "€"},
+            {"modele": "densite", "bornes": [0, 10, 20, 50], "effectifs": [3, 7, 10], "unite": "minutes"})
+    for anim in bons:
+        erreurs, extra = [], {}
+        _valider_animation({"animation": anim}, "s", erreurs, extra)
+        assert not erreurs and extra["animation"]["modele"] == anim["modele"], erreurs
+    erreurs, extra = [], {}
+    _valider_animation({"animation": {"modele": "elimination", "valeurs": [1, 2, 3]}}, "s", erreurs, extra)
+    assert not erreurs and extra["animation"]["phases"] == ["rangement", "elimination", "milieu"]
+    for faux, motif in (({"modele": "equilibre", "valeurs": list(range(9))}, "2 à 8"),
+                        ({"modele": "elimination", "valeurs": [1, 2, 3], "phases": ["ajout"]}, "ajout"),
+                        ({"modele": "densite", "bornes": [0, 10, 5], "effectifs": [1, 2]}, "croissantes"),
+                        ({"modele": "densite", "bornes": [0, 10, 20], "effectifs": [1]}, "par classe")):
+        erreurs = []
+        _valider_animation({"animation": faux}, "s", erreurs, {})
+        assert any(motif in e for e in erreurs), (faux, erreurs)
+
+
+def test_episode_s2a_animations_dessinees_a_chaque_phase():
+    """Les trois nouvelles animations de l'épisode se dessinent à chaque phase, en FR et en EN."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml")
+    for langue in ("fr", "en"):
+        r = Rendu(fiche, langue, CHARTE, "lecon", False)
+        scenes = fiche.editions[langue].scenes
+        vus = set()
+        for i, s in enumerate(scenes):
+            m = (s.extra.get("animation") or {}).get("modele")
+            if m not in ("equilibre", "elimination", "densite"):
+                continue
+            vus.add(m)
+            for p in r._plan_animation(s):
+                for t in (p["debut"] + p["duree"] / 2, p["debut"] + p["duree"] + 0.2):
+                    r.dessiner(s, i, len(scenes), t)
+            r.dessiner(s, i, len(scenes), None)
+        assert vus == {"equilibre", "elimination", "densite"}
