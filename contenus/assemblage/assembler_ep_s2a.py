@@ -21,6 +21,7 @@ T = T[1:]
 
 
 def S(type_, texte, voix, **extra):
+    # univers « immersif » (fond sombre) : laboratoires et transformations de données, 3 à 6 séquences.
     s = {"type": type_, "texte": texte}
     s.update(extra)
     s["voix_off"] = voix
@@ -33,7 +34,7 @@ CAFE = [1600, 1800, 1900, 2000, 2200, 2300, 2500, 2700, 2800]
 
 def pastilles(texte, voix, largeur, l, etapes=None, verifier=None):
     """Les 20 salariés en pastilles : posées sur l'axe, rangées par classe, puis l'histogramme."""
-    s = {"type": "animation", "texte": texte,
+    s = {"type": "animation", "texte": texte, "univers": "immersif",
          "animation": {"modele": "pastilles", "valeurs": TRAJETS, "largeur_classe": largeur, "unite": "minutes"}}
     if etapes:
         s["etapes"] = etapes
@@ -44,7 +45,7 @@ def pastilles(texte, voix, largeur, l, etapes=None, verifier=None):
 
 
 def curseur(texte, voix, valeurs, indice, vers, axe_max, unite, etapes, verifier, decimales=0):
-    return {"type": "animation", "texte": texte,
+    return {"type": "animation", "texte": texte, "univers": "immersif",
             "animation": {"modele": "curseur", "valeurs": valeurs, "indice": indice, "vers": vers,
                           "axe_max": axe_max, "unite": unite, "decimales": decimales},
             "etapes": etapes, "voix_off": voix, "verifier": verifier}
@@ -169,7 +170,8 @@ def lab1(l):
     return [
         S("titre", "Laboratoire : la largeur des classes" if fr else "Lab: bin width",
           "Laboratoire. Prenons les vingt temps de trajet et changeons nous-mêmes la largeur des classes." if fr
-          else "Lab time. Let's take the twenty travel times and change the bin width ourselves.", numero="2.4"),
+          else "Lab time. Let's take the twenty travel times and change the bin width ourselves.", numero="2.4",
+          univers="immersif"),
         pastilles("Classes de *20 minutes*" if fr else "*20-minute* bins",
                   "Classes de vingt minutes : dix, neuf, un. Le sommet a disparu." if fr else "Twenty-minute bins: ten, nine, one. The peak has gone.",
                   20, l, verifier=[{"expression": "3 + 7", "attendu": 10, "libelle": "0 à 20 minutes"}]),
@@ -204,7 +206,7 @@ def lab2(l):
     return [
         S("titre", "Laboratoire : une seule valeur extrême" if fr else "Lab: a single extreme value",
           "Deuxième laboratoire. Faisons bouger une seule valeur, et regardons qui suit." if fr
-          else "Second lab. Let's move a single value and watch who follows.", numero="5.4"),
+          else "Second lab. Let's move a single value and watch who follows.", numero="5.4", univers="immersif"),
         curseur("Le dixième client : *curseur* de 2 300 à 200 000 €" if fr else "The tenth customer: *slider* from €2,300 to €200,000",
                 ("Les neuf salaires du café, et un dixième client dont on fait monter le salaire. À chaque position, on range à nouveau les dix salaires et on recalcule. À deux mille trois cents euros : moyenne deux mille deux cent dix, médiane deux mille deux cent cinquante. À cinquante mille : moyenne six mille neuf cent quatre-vingts, médiane toujours deux mille deux cent cinquante. À deux cent mille : moyenne vingt et un mille neuf cent quatre-vingts. La médiane ne bouge pas : dès deux mille trois cents euros, le dixième client se range après le sixième salaire, et les deux valeurs du milieu restent deux mille deux cents et deux mille trois cents."
            if fr else "The café's nine salaries, and a tenth customer whose salary we raise. At each position, we sort the ten salaries again and recompute. At two thousand three hundred euros: mean two thousand two hundred and ten, median two thousand two hundred and fifty. At fifty thousand: mean six thousand nine hundred and eighty, median still two thousand two hundred and fifty. At two hundred thousand: mean twenty-one thousand nine hundred and eighty. The median doesn't move: from two thousand three hundred up, the tenth customer sorts after the sixth salary, so the two middle values stay two thousand two hundred and two thousand three hundred."),

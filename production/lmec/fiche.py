@@ -336,6 +336,12 @@ def _construire(chemin: Path, brut: dict) -> Fiche:
                 erreurs.append(f"{ctx}.scenes[{i}].duree doit être un nombre de secondes entre 0,5 et 120")
                 duree = None
             extra = pedagogie.valider_scene(t, s, f"{ctx}.scenes[{i}]", erreurs) if pedago else {}
+            univers = s.get("univers")
+            if univers is not None:   # univers visuel de la scène (charte.yaml, « univers »)
+                if univers not in ("editorial", "immersif"):
+                    erreurs.append(f"{ctx}.scenes[{i}].univers : « editorial » (défaut) ou « immersif »")
+                else:
+                    extra["univers"] = univers
             scenes.append(Scene(type=t, texte=str(texte or "").strip(), voix_off=str(voix or "").strip(),
                                 duree=duree, extra=extra))
         editions[langue] = Edition(

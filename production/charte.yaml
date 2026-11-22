@@ -82,46 +82,78 @@ logo:
     largeur_px: {video: 110, lecon: 170}
     periode_s: 40                 # durée d'un aller-retour complet le long du bandeau
     sauf_scenes: [fin]
-# Décor en mouvement (lmec/decor.py ; demandes de JG, 22/11/2026 : les plateformes n'aiment pas les images
-# figées, et le mouvement garde l'attention). Ondes de données qui glissent au bas de l'image, chacune à sa
-# vitesse ; peintes seulement sur le fond libre, adoucies à `ecart_px` du contenu, jamais dans le bandeau
-# du logo mobile ni sur la scène de fin (logo et slogan).
+# Mouvement d'ambiance (lmec/decor.py) : presque imperceptible, jamais sur le contenu (masque de 32 px),
+# jamais sur la scène de fin. Trois couches : grain fixe, courant de points en parallaxe, lumière diffuse.
 decor:
   actif: true
   formats: [video, lecon]
   sauf_scenes: [fin]
-  ecart_px: 28
-  # niveau, amplitude : parts de la hauteur ; longueur : part de la largeur ; vitesse : px/s (signe = sens).
-  ondes:
-    - {couleur: barre, opacite: 0.07, amplitude: 0.035, longueur: 0.75, niveau: 0.78, vitesse: 22}
-    - {couleur: barre, opacite: 0.045, amplitude: 0.05, longueur: 1.05, niveau: 0.85, vitesse: -14}
-    - {couleur: accent, opacite: 0.06, amplitude: 0.025, longueur: 0.6, niveau: 0.92, vitesse: 30}
+  ecart_px: 32
+  grain: 0.015             # couche 1 : grain lumineux, 1,5 %
+  courant:                 # couche 2 : points de 2 à 4 px, deux plans (px/s horizontal, vertical)
+    couleur: barre
+    opacite: 0.045
+    periode_px: 360
+    plans:
+      - {vitesse: [8, 1.5], points: 5, rayon: [2, 3]}
+      - {vitesse: [12, 2.5], points: 3, rayon: [3, 4]}
+  lumiere: {couleur: barre, opacite: 0.025, rayon: 0.33, cycle_s: 50}   # couche 3 : lumière diffuse
+  par_univers:             # l'univers immersif peut être plus expressif (lueurs de 8 à 15 %)
+    immersif:
+      courant:
+        couleur: barre
+        opacite: 0.10
+        periode_px: 300
+        plans:
+          - {vitesse: [10, 2], points: 6, rayon: [2, 3]}
+          - {vitesse: [16, 3], points: 4, rayon: [3, 5]}
+      lumiere: {couleur: barre, opacite: 0.09, rayon: 0.38, cycle_s: 40}
+# Grille typographique (px, 1920 × 1080) : tailles maximales par style. Les scènes réduisent si besoin,
+# jamais sous 34 px. Titres 52 à 76 px, texte 40 à 44 px, listes 36 à 48 px.
+typographie:
+  lecon: {affichage: 76, gras: 48, noir: 48, regulier: 44}
 couleurs:
-  # Version claire du site (demandes de JG, 22/11/2026) : fond blanc cassé #F8F6EF, encre bleu profond,
-  # sarcelle et or du site et des logos officiels redessinés le 14/11/2026 (docs/assets/css). Contrastes
-  # sur le fond (WCAG) : texte 14,3:1 ; données 5,8:1 ; secondaire 4,7:1 ; accent 3,4:1 (gros texte et
-  # formes) ; encre sur l'accent 4,3:1.
-  fond: "#F8F6EF"          # blanc cassé
+  # Univers « éditorial » (défaut), direction artistique du 22/11/2026 (revue ChatGPT retenue par JG) :
+  # ivoire = fond ; encre = texte, axes ; sarcelle = données ; or = point d'attention du moment (une seule
+  # priorité par scène) ; gris = annotations. L'or #E9A323 sert aux surfaces et repères (« or ») ; pour du
+  # texte doré on prend l'or foncé du site #8A5A00 (« accent », 5,5:1 sur l'ivoire). Contrastes WCAG :
+  # texte 14,3:1 ; données 5,8:1 ; secondaire 4,7:1 ; encre sur l'or 7,2:1.
+  fond: "#F8F6EF"          # ivoire
   fond_bas: "#F4F1E8"      # à peine plus soutenu en bas du dégradé
-  texte: "#102638"         # encre bleu profond du site
-  accent: "#B7791F"        # or du site, assombri pour rester lisible sur le blanc cassé
-  progression: "#E9A323"   # or du site : barre de progression
-  encre_accent: "#102638"  # texte posé sur une forme dorée
-  secondaire: "#607180"    # gris bleuté du site (sources, pied de page, axes)
-  barre: "#176B70"         # sarcelle du site et du logo : données, courbes, barres
+  texte: "#102638"         # encre
+  accent: "#8A5A00"        # or foncé du site : mots et nombres mis en avant
+  or: "#E9A323"            # or de la marque : surfaces, repères, curseur actif (jamais du texte courant)
+  progression: "#E9A323"   # barre de progression
+  encre_accent: "#102638"  # texte posé sur une surface dorée
+  secondaire: "#607180"    # gris : axes secondaires, annotations, sources
+  barre: "#176B70"         # sarcelle : données, courbes, séries
   halo: "#FBF1DC"          # halo doré très discret en haut à droite
+# Univers « immersif » (fond sombre) : démonstrations, transformations de données, révélations. Un
+# événement visuel, 3 à 6 séquences par épisode (scène : « univers: immersif »). Mêmes rôles de couleurs.
+univers:
+  immersif:
+    fond: "#102638"        # encre profonde
+    fond_bas: "#091722"    # variante immersive
+    texte: "#F8F6EF"
+    accent: "#E9A323"      # l'or se lit très bien sur le sombre (8:1)
+    or: "#E9A323"
+    progression: "#E9A323"
+    encre_accent: "#102638"
+    secondaire: "#A8B6BE"
+    barre: "#42A5A0"       # sarcelle lumineuse
+    halo: "#1C4A5C"
 # Accroches, titres de graphique et sources en capitales (police d'affichage).
 accroche_majuscules: false   # ton doux et sobre (JG, 22/11/2026) : casse normale
 polices:
-  # Police d'affichage condensée et très grasse : accroches, chiffre clé, titres.
-  # Inter Display demi-gras (doux, net, « tech ») plutôt qu'Anton, jugé trop massif (JG, 22/11/2026).
-  affichage: ["InterDisplay-Medium.otf", "InterDisplay-Medium.ttf", "InterDisplay-SemiBold.otf", "Anton-Regular.ttf", "Inter-Black.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
+  # Titres : Source Serif, la serif du site (choix de JG, 22/11/2026), licence OFL, production/polices/.
+  # Texte : Inter, Medium comme graisse de référence, SemiBold pour souligner. Plus d'Anton ni d'Inter
+  # Black en secours : un environnement incomplet ne doit pas produire un style massif.
+  affichage: ["SourceSerifPro-Regular.ttf", "InterDisplay-Medium.otf", "Inter-Medium.otf", "DejaVuSerif.ttf"]
   # Recherche dans l'ordre : production/polices/, puis polices système.
   # Inter (licence libre OFL) : https://rsms.me/inter/ — paquet Linux « fonts-inter ».
   regulier: ["Inter-Regular.otf", "Inter-Regular.ttf", "DejaVuSans.ttf", "Arial.ttf"]
-  # Graisses allégées (écriture « plus soft », JG, 22/11/2026) : demi-gras pour « gras », gras pour « noir ».
-  gras: ["Inter-SemiBold.otf", "Inter-SemiBold.ttf", "Inter-Bold.otf", "Inter-Bold.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"]
-  noir: ["Inter-Bold.otf", "Inter-Bold.ttf", "Inter-Black.otf", "Inter-Black.ttf", "Inter-Bold.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
+  gras: ["Inter-Medium.otf", "Inter-Medium.ttf", "Inter-Regular.otf", "DejaVuSans.ttf", "Arial.ttf"]
+  noir: ["Inter-SemiBold.otf", "Inter-SemiBold.ttf", "Inter-Medium.otf", "DejaVuSans-Bold.ttf", "arialbd.ttf"]
 formats:
   video: {largeur: 1080, hauteur: 1920, fps: 30}
   carrousel: {largeur: 1080, hauteur: 1350}

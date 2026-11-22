@@ -1,94 +1,126 @@
-"""Décor en mouvement : des ondes de données qui glissent lentement au bas de l'image, derrière le contenu.
+"""Mouvement d'ambiance : un fond qui respire, presque imperceptible, derrière le contenu.
 
-Les plateformes pénalisent les images figées, et un fond qui respire garde l'œil attentif. Ce décor
-anime chaque image, même pendant une explication posée, sans jamais toucher au contenu (texte,
-formules, graphiques, logo) :
-- il n'est peint que là où l'image montre encore le fond, et s'estompe en douceur à l'approche du
-  contenu (masque adouci, marge `ecart_px`) ;
-- il ne passe jamais dans le bandeau du logo mobile (zone de protection du logo libre) ;
-- ses couleurs sont celles de la charte, à faible opacité.
+Direction artistique du 22/11/2026 (revue ChatGPT retenue par JG) : le meilleur mouvement reste celui
+des données ; le décor ne doit jamais leur faire concurrence. Trois couches :
+1. grain lumineux : grain très fin et fixe, mêlé au fond (Rendu._degrade), opacité 1 à 2 % ;
+2. courant de données : quelques points de 2 à 4 px qui dérivent lentement dans les zones vides, sur
+   deux plans à vitesses différentes (parallaxe), opacité 3 à 5 % ;
+3. accent de profondeur : une lumière diffuse sarcelle qui se déplace très lentement, opacité 2 à 3 %.
 
-Chaque onde est une couche périodique (sa longueur d'onde) calculée une fois : à chaque image, un simple
-recadrage la fait glisser, chacune à sa vitesse, ce qui donne l'impression de profondeur. Seule la bande
-du bas où passent les ondes est recomposée ; le masque du contenu est calculé à quart de définition
-et réutilisé tel quel pour les images fixes d'une scène.
+Règles tenues par construction :
+- rien n'est peint sur le contenu : masque d'exclusion de `ecart_px` autour des textes et graphiques,
+  adouci pour qu'aucun bord ne se voie ;
+- rien dans le bandeau réservé en haut (`bandeau_px`) ;
+- aucun clignotement : positions continues, couleurs fixes, cycles de 35 à 60 s.
+
+Coût : motifs périodiques calculés une fois ; par image, deux recadrages et deux compositions. Le masque
+est calculé à quart de définition et réutilisé tel quel pour les images fixes d'une scène.
 """
 from __future__ import annotations
 
 import math
+import random
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 REDUCTION = 4   # le masque du contenu est calculé sur une image 4 fois plus petite
 
-ONDES_DEFAUT = [
-    {"couleur": "barre", "opacite": 0.10, "amplitude": 0.035, "longueur": 0.75, "niveau": 0.76, "vitesse": 22},
-    {"couleur": "barre", "opacite": 0.07, "amplitude": 0.05, "longueur": 1.05, "niveau": 0.83, "vitesse": -14},
-    {"couleur": "accent", "opacite": 0.07, "amplitude": 0.025, "longueur": 0.6, "niveau": 0.9, "vitesse": 30},
-]
 
-
-class Onde:
-    """Une couche : surface sous une courbe périodique, avec une crête un peu plus marquée."""
-
-    def __init__(self, conf: dict, couleurs: dict, largeur: int, hauteur: int, haut_bande: int):
-        self.longueur = max(200, round(float(conf.get("longueur", 0.8)) * largeur))
-        self.vitesse = float(conf.get("vitesse", 20))
-        couleur = conf.get("couleur", "barre")
-        rgb = couleurs.get(couleur, couleurs["barre"]) if isinstance(couleur, str) else tuple(couleur)
-        self.couleur = rgb
-        opacite = max(0.0, min(0.5, float(conf.get("opacite", 0.08))))
-        amplitude = float(conf.get("amplitude", 0.04)) * hauteur
-        niveau = float(conf.get("niveau", 0.8)) * hauteur - haut_bande
-        h_bande = hauteur - haut_bande
-        w = largeur + self.longueur
-        k = 2 * math.pi / self.longueur
-        crete = [(x, niveau + amplitude * math.sin(k * x) + 0.35 * amplitude * math.sin(2 * k * x + 1.3))
-                 for x in range(0, w + 1, 6)]
-        alpha = Image.new("L", (w, h_bande), 0)
-        d = ImageDraw.Draw(alpha)
-        d.polygon(crete + [(w, h_bande), (0, h_bande)], fill=round(255 * opacite))
-        d.line(crete, fill=round(255 * min(0.6, opacite * 2.6)), width=3)   # trait de crête, net
-        self.alpha = alpha
-
-    def decalage(self, temps: float) -> int:
-        return int(temps * self.vitesse) % self.longueur
+def grain(taille: tuple[int, int], opacite: float, graine: int = 3) -> Image.Image:
+    """Grain fin (L, centré sur 128) à mêler au fond : ±opacité × 255 au plus."""
+    hasard = random.Random(graine)
+    petit = (max(1, taille[0] // 2), max(1, taille[1] // 2))
+    amplitude = 255 * max(0.0, min(0.05, opacite))
+    donnees = bytes(int(128 + amplitude * (hasard.random() * 2 - 1)) for _ in range(petit[0] * petit[1]))
+    return Image.frombytes("L", petit, donnees).resize(taille, Image.NEAREST)
 
 
 class Decor:
     def __init__(self, fond: Image.Image, couleurs: dict, conf: dict, bandeau_px: int = 0):
         self.fond = fond
         self.largeur, self.hauteur = fond.size
-        self.ecart = max(0, int(conf.get("ecart_px", 24)))
+        self.ecart = max(0, int(conf.get("ecart_px", 32)))
         self.bandeau = max(0, int(bandeau_px))
-        ondes = conf.get("ondes") or ONDES_DEFAUT
-        # Haut de la bande animée : au-dessus de la plus haute crête, jamais dans le bandeau du logo.
-        haut = min(float(o.get("niveau", 0.8)) - 1.4 * float(o.get("amplitude", 0.04)) for o in ondes)
-        self.haut_bande = max(self.bandeau, int(haut * self.hauteur))
-        self.ondes = [Onde(o, couleurs, self.largeur, self.hauteur, self.haut_bande) for o in ondes]
-        self.fond_bande = fond.crop((0, self.haut_bande, self.largeur, self.hauteur))
-        self._unis = {o.couleur: Image.new("RGB", self.fond_bande.size, o.couleur) for o in self.ondes}
+        c = conf.get("courant") or {}
+        self.periode = max(120, int(c.get("periode_px", 360)))
+        opacite = max(0.0, min(0.2, float(c.get("opacite", 0.045))))
+        self.plans = []
+        for k, plan in enumerate(c.get("plans") or [{"vitesse": [8, 1.5], "points": 5, "rayon": [2, 3]},
+                                                     {"vitesse": [12, 2.5], "points": 3, "rayon": [3, 4]}]):
+            self.plans.append((tuple(plan["vitesse"]), self._motif(plan, opacite, 11 + k)))
+        self.couleur_points = Image.new("RGB", fond.size, couleurs.get(c.get("couleur", "barre"), couleurs["barre"]))
+        lum = conf.get("lumiere") or {}
+        self.cycle = max(10.0, float(lum.get("cycle_s", 50)))
+        self.rayon_lumiere = int(float(lum.get("rayon", 0.33)) * self.largeur)
+        self.lumiere = self._lumiere(max(0.0, min(0.1, float(lum.get("opacite", 0.025)))))
+        self.couleur_lumiere = Image.new("RGB", fond.size, couleurs.get(lum.get("couleur", "barre"), couleurs["barre"]))
 
+    # ------------------------------------------------------------------ motifs (calculés une fois)
+    def _motif(self, plan: dict, opacite: float, graine: int) -> Image.Image:
+        """Points sur une tuile périodique, répétée sur l'image plus une période (dérive sans couture)."""
+        p = self.periode
+        tuile = Image.new("L", (p, p), 0)
+        d = ImageDraw.Draw(tuile)
+        hasard = random.Random(graine)
+        r_min, r_max = plan.get("rayon", [2, 4])
+        for _ in range(int(plan.get("points", 4))):
+            x, y = hasard.uniform(0, p), hasard.uniform(0, p)
+            r = hasard.uniform(r_min, r_max)
+            a = round(255 * opacite * 6 * hasard.uniform(0.6, 1.0))   # cœur du point ; le flou l'adoucit
+            for dx in (-p, 0, p):
+                for dy in (-p, 0, p):
+                    d.ellipse((x + dx - r, y + dy - r, x + dx + r, y + dy + r), fill=min(255, a))
+        tuile = tuile.filter(ImageFilter.GaussianBlur(0.8))
+        motif = Image.new("L", (self.largeur + p, self.hauteur + p), 0)
+        for x in range(0, self.largeur + p, p):
+            for y in range(0, self.hauteur + p, p):
+                motif.paste(tuile, (x, y))
+        return motif
+
+    def _lumiere(self, opacite: float) -> Image.Image:
+        """Halo diffus (gaussien), plus grand que l'image pour pouvoir glisser."""
+        r = self.rayon_lumiere
+        cote = 2 * r
+        petit = Image.new("L", (cote // 8, cote // 8), 0)
+        ImageDraw.Draw(petit).ellipse((cote // 32, cote // 32, cote // 8 - cote // 32, cote // 8 - cote // 32),
+                                      fill=round(255 * opacite))
+        petit = petit.filter(ImageFilter.GaussianBlur(cote // 64))
+        return petit.resize((cote, cote), Image.BILINEAR)
+
+    # ------------------------------------------------------------------ par image
     def masque_libre(self, image: Image.Image) -> Image.Image:
-        """Bande du bas : 255 là où le décor peut passer (fond intact), adouci à l'approche du contenu."""
-        bande = image.crop((0, self.haut_bande, self.largeur, self.hauteur))
-        petit = (max(1, bande.width // REDUCTION), max(1, bande.height // REDUCTION))
-        ecart = ImageChops.difference(bande, self.fond_bande).convert("L").resize(petit, Image.BOX)
+        """255 là où le décor peut passer (fond intact), adouci à l'approche du contenu."""
+        petit = (max(1, self.largeur // REDUCTION), max(1, self.hauteur // REDUCTION))
+        ecart = ImageChops.difference(image, self.fond).convert("L").resize(petit, Image.BOX)
         contenu = ecart.point(lambda v: 255 if v > 0 else 0)
         r = max(1, round(self.ecart / REDUCTION))
-        contenu = contenu.filter(ImageFilter.MaxFilter(1 + 2 * r)).filter(ImageFilter.GaussianBlur(r))
-        return ImageChops.invert(contenu).resize(bande.size, Image.BILINEAR)
+        contenu = contenu.filter(ImageFilter.MaxFilter(1 + 2 * r)).filter(ImageFilter.GaussianBlur(r / 2))
+        libre = ImageChops.invert(contenu).resize(image.size, Image.BILINEAR)
+        if self.bandeau:
+            ImageDraw.Draw(libre).rectangle((0, 0, self.largeur, self.bandeau), fill=0)
+        return libre
+
+    def _points(self, temps: float) -> Image.Image:
+        alpha = None
+        for (vx, vy), motif in self.plans:
+            dx, dy = int(temps * vx) % self.periode, int(temps * vy) % self.periode
+            couche = motif.crop((dx, dy, dx + self.largeur, dy + self.hauteur))
+            alpha = couche if alpha is None else ImageChops.lighter(alpha, couche)
+        return alpha
+
+    def _position_lumiere(self, temps: float) -> tuple[int, int]:
+        """Trajet lent et fermé (courbe de Lissajous) : jamais d'à-coup, retour au départ en `cycle` s."""
+        w = 2 * math.pi * temps / self.cycle
+        cx = self.largeur * (0.5 + 0.32 * math.sin(w))
+        cy = self.hauteur * (0.5 + 0.22 * math.sin(2 * w + 0.7))
+        return round(cx - self.rayon_lumiere), round(cy - self.rayon_lumiere)
 
     def appliquer(self, image: Image.Image, temps: float, libre: Image.Image | None = None) -> Image.Image:
-        """Nouvelle image : `image` avec les ondes à `temps` secondes (temps global de la vidéo)."""
+        """Nouvelle image : `image` avec le décor à `temps` secondes (temps global de la vidéo)."""
         if libre is None:
             libre = self.masque_libre(image)
-        bande = image.crop((0, self.haut_bande, self.largeur, self.hauteur))
-        w, h = bande.size
-        for o in self.ondes:
-            dx = o.decalage(temps)
-            a = ImageChops.multiply(o.alpha.crop((dx, 0, dx + w, h)), libre)
-            bande = Image.composite(self._unis[o.couleur], bande, a)
-        sortie = image.copy()
-        sortie.paste(bande, (0, self.haut_bande))
-        return sortie
+        x, y = self._position_lumiere(temps)
+        halo = Image.new("L", image.size, 0)
+        halo.paste(self.lumiere, (x, y))
+        sortie = Image.composite(self.couleur_lumiere, image, ImageChops.multiply(halo, libre))
+        return Image.composite(self.couleur_points, sortie, ImageChops.multiply(self._points(temps), libre))

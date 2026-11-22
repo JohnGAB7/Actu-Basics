@@ -1627,10 +1627,9 @@ def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
             for i, type_, t, txt, ecart, _ in _occurrences_barres(fiche, langue, fmt):
                 vus += 1
                 assert ecart >= 10, (chemin.name, langue, fmt, f"scène {i + 1} {type_}", t, txt, ecart)
-    # Une capsule sans chapitre ni chiffre (Q2.04) n'a aucun grand chiffre : rien à vérifier.
-    a_des_grands_chiffres = not fiche.pedagogique or any(
-        s.type in ("titre", "chiffre") for e in fiche.editions.values() for s in e.scenes)
-    if a_des_grands_chiffres:
+    # Depuis le 22/11/2026, les fiches pédagogiques n'ont plus de grands numéros de chapitre (titre soft :
+    # surtitre « Chapitre N » et points de progression) : seule la capsule d'actualité en garde.
+    if not fiche.pedagogique:
         assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
 
 

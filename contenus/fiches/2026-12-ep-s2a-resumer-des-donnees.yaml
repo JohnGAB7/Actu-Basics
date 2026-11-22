@@ -410,9 +410,11 @@ editions:
     - type: titre
       texte: 'Laboratoire : la largeur des classes'
       numero: '2.4'
+      univers: immersif
       voix_off: Laboratoire. Prenons les vingt temps de trajet et changeons nous-mêmes la largeur des classes.
     - type: animation
       texte: Classes de *20 minutes*
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: &id001
@@ -445,6 +447,7 @@ editions:
         libelle: 0 à 20 minutes
     - type: animation
       texte: Classes de *10 minutes*
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -453,6 +456,7 @@ editions:
       voix_off: 'Classes de dix minutes : trois, sept, six, trois, un. Une bosse nette.'
     - type: animation
       texte: 'Classes de *5 minutes* : deux « sommets » ?'
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -514,6 +518,7 @@ editions:
       voix_off: Avant de calculer quoi que ce soit, regardez la silhouette d'un histogramme. Elle en dit déjà beaucoup.
     - type: animation
       texte: 'Nos *20 salariés* : une bosse, une petite queue à droite'
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -1080,9 +1085,11 @@ editions:
     - type: titre
       texte: 'Laboratoire : une seule valeur extrême'
       numero: '5.4'
+      univers: immersif
       voix_off: Deuxième laboratoire. Faisons bouger une seule valeur, et regardons qui suit.
     - type: animation
       texte: 'Le dixième client : *curseur* de 2 300 à 200 000 €'
+      univers: immersif
       animation:
         modele: curseur
         valeurs:
@@ -1122,6 +1129,7 @@ editions:
         libelle: Médiane dès 2 300 €
     - type: animation
       texte: 'Un salarié *déménage* : 44 → 120 minutes'
+      univers: immersif
       animation:
         modele: curseur
         valeurs: *id001
@@ -1561,9 +1569,11 @@ editions:
     - type: titre
       texte: 'Lab: bin width'
       numero: '2.4'
+      univers: immersif
       voix_off: Lab time. Let's take the twenty travel times and change the bin width ourselves.
     - type: animation
       texte: '*20-minute* bins'
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -1576,6 +1586,7 @@ editions:
         libelle: 0 à 20 minutes
     - type: animation
       texte: '*10-minute* bins'
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -1584,6 +1595,7 @@ editions:
       voix_off: 'Ten-minute bins: three, seven, six, three, one. A clear hump.'
     - type: animation
       texte: '*5-minute* bins: two ''peaks''?'
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -1645,6 +1657,7 @@ editions:
       voix_off: Before you calculate anything, look at the shape of a histogram. It already tells you a lot.
     - type: animation
       texte: 'Our *20 employees*: one hump, a small right tail'
+      univers: immersif
       animation:
         modele: pastilles
         valeurs: *id001
@@ -2211,9 +2224,11 @@ editions:
     - type: titre
       texte: 'Lab: a single extreme value'
       numero: '5.4'
+      univers: immersif
       voix_off: Second lab. Let's move a single value and watch who follows.
     - type: animation
       texte: 'The tenth customer: *slider* from €2,300 to €200,000'
+      univers: immersif
       animation:
         modele: curseur
         valeurs:
@@ -2253,6 +2268,7 @@ editions:
         libelle: Médiane dès 2 300 €
     - type: animation
       texte: 'One employee *moves*: 44 → 120 minutes'
+      univers: immersif
       animation:
         modele: curseur
         valeurs: *id001

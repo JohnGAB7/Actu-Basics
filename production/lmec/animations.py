@@ -683,7 +683,8 @@ class AnimationsDonnees:
     """Modèles qui montrent les données elles-mêmes (une pastille par individu), calculés par
     lmec/laboratoires.py : la vidéo et le laboratoire du site affichent les mêmes nombres."""
 
-    def _axe(self, d, g, dr, y, mini, maxi, graduations, unite, fond, k=1.0):
+    def _axe(self, d, g, dr, y, mini, maxi, graduations, unite, fond, k=1.0, eviter=()):
+        """Axe gradué ; pas de libellé de graduation à moins de 45 px d'un repère `eviter` (valeurs)."""
         from .rendu import _melange
         p = self.police("regulier", 34)
         d.line((g, y, dr, y), fill=_melange(fond, self.c["secondaire"], 0.8 * k), width=3)
@@ -692,6 +693,8 @@ class AnimationsDonnees:
             x = x_de(v)
             d.line((x, y, x, y + 14), fill=_melange(fond, self.c["secondaire"], k), width=3)
             lib = formater_nombre(v, self.langue)
+            if any(abs(x - x_de(e)) < 45 for e in eviter):
+                continue
             d.text((x - p.getlength(lib) / 2, y + 22), lib, font=p, fill=_melange(fond, self.c["secondaire"], k))
         if unite:   # sous le début de l'axe : la droite reste libre pour les repères et les flèches
             d.text((g, y + 66), unite, font=p, fill=_melange(fond, self.c["secondaire"], k))
@@ -778,7 +781,10 @@ class AnimationsDonnees:
         pas_grad = _pas_rond((maxi - mini) / 5)
         grads = [mini + k * pas_grad for k in range(int((maxi - mini) / pas_grad) + 1)]
         dr_axe = dr - 150   # place pour la flèche « hors de l'axe »
-        x_de = self._axe(d, g, dr_axe, y_axe, mini, maxi, grads, conf.get("unite", ""), fond)
+        reperes = [f(serie) for nom, f in (("mediane", mediane), ("moyenne", moyenne))
+                   if nom in par_nature and self._avancee(par_nature[nom], t) > 0]
+        x_de = self._axe(d, g, dr_axe, y_axe, mini, maxi, grads, conf.get("unite", ""), fond,
+                         eviter=[min(v, maxi) for v in reperes])
         x_lim = lambda v: min(x_de(v), dr_axe + 40)
         r = 19
         p_pts = par_nature.get("serie")
@@ -790,20 +796,20 @@ class AnimationsDonnees:
                 continue
             x, y = x_lim(v), y_axe - r * 1.5 - (i % 3) * r * 1.7 - (1 - a) * 60
             moving = i == indice and k_c > 0
-            couleur = self.c["accent"] if moving else self.c["barre"]
+            couleur = self.c["or"] if moving else self.c["barre"]
             d.ellipse((x - r, y - r, x + r, y + r), fill=_melange(fond, couleur, a))
             if moving:
                 lib = formater_nombre(round(v), self.langue)
                 if x_de(v) > dr_axe + 40:   # hors de l'axe : flèche et valeur
-                    d.line((dr_axe + 60, y, dr - 10, y), fill=self.c["accent"], width=5)
-                    d.polygon(((dr, y), (dr - 22, y - 14), (dr - 22, y + 14)), fill=self.c["accent"])
+                    d.line((dr_axe + 60, y, dr - 10, y), fill=self.c["or"], width=4)
+                    d.polygon(((dr, y), (dr - 22, y - 14), (dr - 22, y + 14)), fill=self.c["or"])
                 d.text((min(x, dr - pv.getlength(lib)) - pv.getlength(lib) / 2, y - r - 56), lib, font=pv,
                        fill=self.c["accent"])
         # Repères sous l'axe : médiane puis moyenne (étiquettes décalées pour ne pas se chevaucher).
         lib = LIBELLES_DONNEES[self.langue]
         pl = self.police("gras", 36)
         for nom, valeur, couleur, dy in (("mediane", mediane(serie), self.c["barre"], 110),
-                                         ("moyenne", moyenne(serie), self.c["accent"], 175)):
+                                         ("moyenne", moyenne(serie), self.c["or"], 175)):
             p = par_nature.get(nom)
             if not p:
                 continue
@@ -818,7 +824,8 @@ class AnimationsDonnees:
             v = round(valeur, dec)
             texte = f"{lib[nom]} {formater_nombre(v, self.langue, 0 if float(v).is_integer() else dec)}"
             xt = max(g, min(x - pl.getlength(texte) / 2, dr - pl.getlength(texte)))
-            d.text((xt, yt), texte, font=pl, fill=_melange(fond, couleur, k))
+            encre = self.c["accent"] if nom == "moyenne" else couleur   # texte doré : or foncé lisible
+            d.text((xt, yt), texte, font=pl, fill=_melange(fond, encre, k))
 
 
 LIBELLES_DONNEES = {"fr": {"mediane": "médiane", "moyenne": "moyenne"},
