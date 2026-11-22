@@ -4,7 +4,7 @@
 # est propre à l'épisode : ouverture, accueil, plan, transitions, laboratoires, synthèse, exercice de synthèse,
 # clôture. Aucun chiffre extérieur : toutes les données sont fictives et tous les calculs sont recalculés.
 id_programme: EP-S2A
-statut: revue_claude            # suivant : revue_chatgpt, puis valide_jg
+statut: revue_chatgpt           # revue ChatGPT reçue le 22/11/2026 (PR #50, issue #55), corrections faites ; suivant : valide_jg
 contient: [S2.01, S2.02, S2.03, S2.04, S2.05]
 fiches_chapitres:               # fiches de conception validées, reprises telles quelles sauf « changements » ci-dessous
   S2.01: contenus/conception/S2.01.yaml
@@ -39,7 +39,7 @@ public:
     - {notion: "Aire d'un rectangle", episode: "", rappel: "Largeur × hauteur, avec un rectangle dessiné, au chapitre 2 (classes inégales)"}
     - {notion: "Ranger des nombres dans l'ordre croissant", episode: "", rappel: "Montré au chapitre 5 avant la médiane"}
     - {notion: "Signe Σ (somme)", episode: EP-M01, rappel: "Présenté pas à pas au chapitre 4 ; jamais nécessaire pour suivre"}
-    - {notion: "Classe [a ; b[ : la borne gauche est incluse, la droite non", episode: "", rappel: "Dit une fois au chapitre 2 : un trajet de 20 minutes compte dans la classe 20 à 30"}
+    - {notion: "Classe [a ; b[ : la borne gauche est incluse, la droite non", episode: "", rappel: "Dit au chapitre 2 et rappelé au laboratoire : chaque classe contient sa borne gauche, pas sa borne droite ; un trajet de 15 minutes compte dans 15–20 (classes de 5), un trajet de 20 minutes dans 20–30. La dernière classe se termine strictement au-dessus du maximum (44 min : dernière classe 40–50 ou 40–60), donc aucune valeur ne tombe sur sa borne droite"}
     - {notion: "Arrondi au dixième", episode: "", rappel: "Annoncé quand on l'utilise (densité 0,67)"}
     # Notions enseignées DANS l'épisode et réutilisées plus loin : effectif, fréquence, cumul (ch. 1) ;
     # classe, densité (ch. 2) ; mode, symétrie, queue (ch. 3) ; moyenne simple et pondérée (ch. 4) ; médiane (ch. 5).
@@ -77,7 +77,9 @@ donnees_ou_simulation:
   donnees:
     temps_trajet_min: [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
     # Compatibles avec les effectifs déjà validés de S2.02 (3, 7, 6, 3, 1 en classes de 10 minutes).
-    # Somme 425, moyenne 21,25 min, médiane (19 + 21) / 2 = 20 min : légère queue à droite.
+    # Somme 425, moyenne 21,25 min, médiane (19 + 21) / 2 = 20 min : ces 20 valeurs fictives ont une légère queue à droite
+    # (propriété construite de l'exemple, jamais présentée comme un résultat sur les trajets réels).
+    # Valeurs exactement sur une borne : 15, 25 et 35 (classes de 5 minutes) ; aucune sur 10, 20, 30, 40.
     cafe_9_salaires: [1600, 1800, 1900, 2000, 2200, 2300, 2500, 2700, 2800]   # repris de S2.05
     ages_visiteurs: {"0-20": 8, "20-30": 12, "30-60": 20}                      # repris de S2.02 (exercice)
   source: {organisme: "", url: "", licence: "", population: "Fictive", variables: "temps de trajet (min), salaire (€/mois), âge (ans)", periode: "", limites: "Ne représente aucune population réelle"}
@@ -113,7 +115,7 @@ provenance:
 
 affirmations_qualitatives:
   - {affirmation: "Pour une distribution avec des valeurs extrêmes, la médiane décrit mieux le centre que la moyenne, car elle ne dépend pas de la valeur précise des extrêmes", statut: sourcee, source: "OpenStax, Introductory Statistics 2e, section 2.5", verification: "Lu le 21/11/2026"}
-  - {affirmation: "Le choix des classes d'un histogramme est arbitraire ou suit une règle ; on peut rapporter l'effectif à l'effectif total × largeur de classe pour que l'aire totale vaille 1", statut: sourcee, source: "NIST/SEMATECH e-Handbook of Statistical Methods, 1.3.3.14 Histogram", verification: "Lu le 21/11/2026"}
+  - {affirmation: "Le choix des classes d'un histogramme est arbitraire ou suit une règle ; on peut aussi diviser l'effectif par l'effectif total × la largeur de classe, et l'aire totale vaut alors 1 (densité de fréquence). L'épisode utilise l'autre normalisation, effectif ÷ largeur (densité d'effectif, aire totale N)", statut: sourcee, source: "NIST/SEMATECH e-Handbook of Statistical Methods, 1.3.3.14 Histogram", verification: "Lu le 21/11/2026"}
   - {affirmation: "Les salaires ont souvent une longue queue à droite", statut: hypothese, source: "", verification: "Formulée comme exemple fictif, comme dans S2.05, tant qu'elle n'est pas sourcée"}
 
 cycle_enquete:
@@ -124,7 +126,7 @@ cycle_enquete:
   methode_et_raison: "Montrée : chaque résumé est choisi d'après la variable et la question"
   hypotheses: "Montrée : nombres fictifs, population complète"
   resultat_et_incertitude: "Pas d'incertitude : on décrit une population entière ; l'incertitude d'un échantillon vient en EP-S6"
-  interpretation_permise_et_interdite: "Montrée : « trajet typique » = médiane ; la moyenne sert au total (temps cumulé de toute l'équipe)"
+  interpretation_permise_et_interdite: "Montrée : « trajet typique » = médiane ; la moyenne est le total divisé par le nombre de salariés, c'est-à-dire le temps qu'aurait chacun si le total des durées individuelles était partagé également ; ce total additionne des trajets individuels et ne mesure pas un temps passé ensemble"
   reproductibilite: "Toutes les valeurs à l'écran, tous les calculs recalculés par le moteur et dans le laboratoire du site"
 
 hypotheses_et_limites:
@@ -139,7 +141,7 @@ deroule_episode:
     duree_s: 20
     fr: "Vingt salariés. Une seule question : combien de temps mettent-ils pour venir travailler ? La moyenne dit un peu plus de 21 minutes. Pourtant, la moitié d'entre eux met 20 minutes ou moins. Et si un seul salarié déménage loin, la moyenne bondit… alors que presque rien n'a changé pour les autres. Qui dit vrai ?"
     en: "Twenty employees. One question: how long does it take them to get to work? The mean says just over 21 minutes. Yet half of them take 20 minutes or less. And if just one employee moves far away, the mean jumps… while almost nothing changes for anyone else. Which number tells the truth?"
-    ecran: "Les 20 temps de trajet en pastilles ; « moyenne 21,25 min » et « médiane 20 min » apparaissent"
+    ecran: "Bandeau « données fictives » ; les 20 temps de trajet en pastilles ; « moyenne 21,25 min » et « médiane 20 min » apparaissent"
   - bloc: accueil
     duree_s: 15
     fr: "Bonjour, et merci d'être là. Dans cet épisode, vous allez apprendre à résumer des données sans les trahir : les compter, les dessiner, puis choisir entre la moyenne et la médiane. Aucun prérequis, à part les pourcentages."
@@ -168,19 +170,20 @@ deroule_episode:
     transition: {fr: "Avant de regarder la forme, essayons nous-mêmes de changer les classes.", en: "Before reading the shape, let's change the bins ourselves."}
   - bloc: laboratoire
     id: LAB-1
+    statut_realisation: {storyboard: fait, calcul_teste: a_faire, interface_site: a_faire, animation_video: a_faire, livre: non}
     titre: {fr: "Laboratoire : la largeur des classes", en: "Lab: bin width"}
     duree_s: 60
-    deroulement_fr: "Les 20 temps de trajet sont posés sur l'axe. Un curseur fait passer la largeur des classes de 20 à 10, puis à 5 minutes ; les barres se recalculent à l'écran. À 20 minutes : 10, 9, 1, le sommet disparaît. À 10 minutes : 3, 7, 6, 3, 1, une bosse nette. À 5 minutes : 1, 2, 3, 4, 2, 4, 1, 2, 1, et deux « sommets » apparaissent à 15–20 et 25–30 minutes, qui ne tiennent qu'à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent."
-    deroulement_en: "The 20 travel times sit on the axis. A slider moves the bin width from 20 to 10 to 5 minutes; the bars recompute on screen. At 20 minutes: 10, 9, 1, the peak disappears. At 10 minutes: 3, 7, 6, 3, 1, a clear hump. At 5 minutes: 1, 2, 3, 4, 2, 4, 1, 2, 1, and two 'peaks' appear at 15–20 and 25–30 minutes, resting on one or two employees. Too wide, bins hide; too narrow, they invent."
-    puis_classes_inegales_fr: "Second réglage : les âges de 40 visiteurs (0–20 : 8, 20–30 : 12, 30–60 : 20). Un bouton bascule la hauteur entre « effectif » et « densité ». En effectif, la classe 30–60 domine ; en densité (effectif ÷ largeur) : 0,4, 1,2 et environ 0,67 visiteur par année d'âge, et c'est 20–30 ans la plus dense."
-    puis_classes_inegales_en: "Second setting: the ages of 40 visitors (0–20: 8, 20–30: 12, 30–60: 20). A button switches the height between 'count' and 'density'. By count, the 30–60 bin dominates; by density (count ÷ width): 0.4, 1.2 and about 0.67 visitors per year of age, so 20–30 is the densest."
+    deroulement_fr: "Les 20 temps de trajet sont posés sur l'axe. Un curseur fait passer la largeur des classes de 20 à 10, puis à 5 minutes ; les barres se recalculent à l'écran, chaque classe contenant sa borne gauche (le trajet de 15 minutes est compté dans 15–20). À 20 minutes : 10, 9, 1, le sommet disparaît. À 10 minutes : 3, 7, 6, 3, 1, une bosse nette. À 5 minutes : 1, 2, 3, 4, 2, 4, 1, 2, 1, et deux « sommets » apparaissent à 15–20 et 25–30 minutes, qui ne tiennent qu'à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent."
+    deroulement_en: "The 20 travel times sit on the axis. A slider moves the bin width from 20 to 10 to 5 minutes; the bars recompute on screen, each bin including its left edge (the 15-minute trip counts in 15–20). At 20 minutes: 10, 9, 1, the peak disappears. At 10 minutes: 3, 7, 6, 3, 1, a clear hump. At 5 minutes: 1, 2, 3, 4, 2, 4, 1, 2, 1, and two 'peaks' appear at 15–20 and 25–30 minutes, resting on one or two employees. Too wide, bins hide; too narrow, they invent."
+    puis_classes_inegales_fr: "Second réglage : les âges de 40 visiteurs (0–20 : 8, 20–30 : 12, 30–60 : 20). Un bouton bascule la hauteur entre « effectif » et « densité ». En effectif, la classe 30–60 domine. En densité d'effectif (effectif ÷ largeur, en visiteurs par année d'âge) : 0,4, 1,2 et environ 0,67, et c'est 20–30 ans la plus dense. Un rectangle est alors tracé en entier et mesuré : 1,2 × 10 ans = 12 visiteurs. L'aire de chaque rectangle vaut son effectif, et l'aire totale vaut 40, le nombre de visiteurs. (Diviser encore par 40 donnerait la densité de fréquence, d'aire totale 1 : elle n'est pas utilisée au niveau 1, et elle est présentée en EP-S5B (S5.07, variables continues et densité).)"
+    puis_classes_inegales_en: "Second setting: the ages of 40 visitors (0–20: 8, 20–30: 12, 30–60: 20). A button switches the height between 'count' and 'density'. By count, the 30–60 bin dominates. By count density (count ÷ width, in visitors per year of age): 0.4, 1.2 and about 0.67, so 20–30 is the densest. One rectangle is then drawn in full and measured: 1.2 × 10 years = 12 visitors. Each rectangle's area equals its count, and the total area is 40, the number of visitors. (Dividing again by 40 would give the frequency density, with total area 1: not used at level 1, it comes in EP-S5B (S5.07, continuous variables and density).)"
     site: "Même laboratoire interactif sur la page de l'épisode (repris de « histogramme à classes inégales » du laboratoire B10 de Programme-B, recodé, sans lien vers Programme-B)."
     moteur: "Nouveau type de scène à ajouter : « simulation » (curseur animé, barres recalculées image par image). En attendant, trois scènes « courbe » enchaînées en fondu."
   - bloc: chapitre
     id: S2.03
     titre: {fr: "3. Lire la forme d'une distribution", en: "3. Reading the shape of a distribution"}
     duree_min: [4, 5]
-    changements: "Ouvre sur l'histogramme des trajets en classes de 10 minutes : une bosse, une petite queue à droite (le salarié à 44 minutes). Le reste du chapitre est inchangé."
+    changements: "Ouvre sur l'histogramme des trajets en classes de 10 minutes : une bosse, une petite queue à droite (le salarié à 44 minutes), dite comme une propriété de ces 20 valeurs fictives, pas des trajets réels. Le reste du chapitre est inchangé."
     transition: {fr: "La forme se voit. Maintenant, mettons-la en un seul nombre. Le premier qui vient à l'esprit : la moyenne.", en: "We can see the shape. Now let's put it into a single number. The first that comes to mind: the mean."}
   - bloc: chapitre
     id: S2.04
@@ -196,15 +199,16 @@ deroule_episode:
     transition: {fr: "Voyons-le en direct.", en: "Let's watch it happen live."}
   - bloc: laboratoire
     id: LAB-2
+    statut_realisation: {storyboard: fait, calcul_teste: a_faire, interface_site: a_faire, animation_video: a_faire, livre: non}
     titre: {fr: "Laboratoire : une seule valeur extrême", en: "Lab: a single extreme value"}
     duree_s: 60
-    deroulement_fr: "Deux réglages. D'abord le café : les neuf salaires, puis un dixième client dont un curseur fait monter le salaire de 2 300 à 200 000 €. La moyenne suit le curseur, de 2 210 € à 21 980 € ; la médiane reste à 2 250 €. Ensuite les trajets : le salarié à 44 minutes déménage et passe à 120 minutes. La moyenne passe de 21,25 à 25,05 minutes ; la médiane reste à 20 minutes. Un seul individu a bougé, et seule la moyenne l'a suivi."
-    deroulement_en: "Two settings. First the café: the nine salaries, then a tenth customer whose salary a slider raises from €2,300 to €200,000. The mean follows the slider, from €2,210 to €21,980; the median stays at €2,250. Then the trips: the employee at 44 minutes moves and now takes 120 minutes. The mean goes from 21.25 to 25.05 minutes; the median stays at 20 minutes. One individual moved, and only the mean followed."
-    site: "Repris de « influence d'une valeur extrême sur moyenne et médiane » du laboratoire B10 de Programme-B, recodé ; l'apprenant peut aussi déplacer n'importe quelle valeur."
+    deroulement_fr: "Deux réglages. D'abord le café : les neuf salaires, puis un dixième client dont un curseur fait monter le salaire de 2 300 à 200 000 €. À chaque position, la série des dix salaires est rangée à nouveau et l'écran affiche la valeur courante du dixième salaire, la moyenne et la médiane recalculées. La moyenne suit le curseur, de 2 210 € à 21 980 €. La médiane reste à 2 250 € sur toute la course, et l'on dit pourquoi : dès 2 300 €, le dixième client se range après le sixième salaire, si bien que les deux valeurs du milieu restent 2 200 et 2 300 €. Ensuite les trajets : on ne rajoute personne, on remplace une valeur ; la population reste les mêmes 20 salariés, et celui qui mettait 44 minutes déménage et en met 120. La moyenne passe de 21,25 à 25,05 minutes ; la médiane reste à 20 minutes. Un seul individu a bougé, et seule la moyenne l'a suivi."
+    deroulement_en: "Two settings. First the café: the nine salaries, then a tenth customer whose salary a slider raises from €2,300 to €200,000. At each position, the ten salaries are sorted again and the screen shows the current tenth salary, the recalculated mean and the recalculated median. The mean follows the slider, from €2,210 to €21,980. The median stays at €2,250 all the way, and we say why: from €2,300 up, the tenth customer sorts after the sixth salary, so the two middle values remain €2,200 and €2,300. Then the trips: no one is added, one value is replaced; the population is still the same 20 employees, and the one who took 44 minutes moves and now takes 120. The mean goes from 21.25 to 25.05 minutes; the median stays at 20 minutes. One individual moved, and only the mean followed."
+    site: "Repris de « influence d'une valeur extrême sur moyenne et médiane » du laboratoire B10 de Programme-B, recodé ; l'apprenant peut aussi descendre le dixième salaire sous 2 300 € : il s'intercale alors dans la série et la médiane change (par exemple 1 000 € : série 1 000, 1 600, 1 800, 1 900, 2 000, 2 200…, médiane (2 000 + 2 200) / 2 = 2 100 €). Tri et calcul refaits à chaque position, jamais de valeur figée."
   - bloc: synthese
     duree_s: 45
-    fr: "Ce qu'il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c'est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c'est peut-être deux groupes. Quatre : la moyenne, c'est le partage égal du total ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est au-dessus de la médiane. Choisissez celle qui répond à votre question."
-    en: "What to remember. One: count, then divide by the total; compare frequencies, not counts. Two: separate bars for categories, a histogram for numbers, and when bins are unequal, area is what counts. Three: look at the shape before any calculation; two peaks may mean two groups. Four: the mean is the equal share of the total; one extreme value moves it. Five: the median splits the data in half; with a right tail, the mean sits above the median. Pick the one that answers your question."
+    fr: "Ce qu'il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c'est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c'est peut-être deux groupes. Quatre : la moyenne, c'est le total divisé par le nombre, ce qu'aurait chacun si l'on partageait également ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est au-dessus de la médiane. Choisissez celle qui répond à votre question."
+    en: "What to remember. One: count, then divide by the total; compare frequencies, not counts. Two: separate bars for categories, a histogram for numbers, and when bins are unequal, area is what counts. Three: look at the shape before any calculation; two peaks may mean two groups. Four: the mean is the total divided by the count, what each would get with an equal share; one extreme value moves it. Five: the median splits the data in half; with a right tail, the mean sits above the median. Pick the one that answers your question."
   - bloc: exercice_de_synthese
     pause_secondes: 15
     fr: "À vous. Dix salariés d'une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ? Mettez la vidéo en pause."
@@ -223,7 +227,7 @@ deroule_episode:
 
 formules:
   - {formule: "fréquence = effectif / total", explication_symboles: "effectif d'une modalité ; total des individus", conditions: "somme des fréquences = 100 %"}
-  - {formule: "densité = effectif / largeur de la classe", explication_symboles: "largeur en unités de la variable", conditions: "obligatoire dès que les classes sont inégales"}
+  - {formule: "densité d'effectif = effectif / largeur de la classe ; aire du rectangle = densité × largeur = effectif", explication_symboles: "largeur en unités de la variable ; unité de la densité : individus par unité (visiteurs par année d'âge) ; aire totale = effectif total N, et non 1", conditions: "obligatoire dès que les classes sont inégales"}
   - {formule: "moyenne = Σ xᵢ / n ; moyenne pondérée = Σ nᵢ xᵢ / Σ nᵢ", explication_symboles: "xᵢ valeurs, nᵢ effectifs ou coefficients", conditions: "variable quantitative"}
   - {formule: "position de la médiane = (n + 1) / 2", explication_symboles: "n valeurs rangées", conditions: "position non entière : moyenne des deux valeurs voisines"}
 
@@ -235,6 +239,10 @@ calculs_a_verifier:             # recalculés par Claude le 21/11/2026 (Python) 
   - {expression: "12 / 10", attendu: 1.2, libelle: "Densité 20–30 ans"}
   - {expression: "round(20 / 30, 2)", attendu: 0.67, libelle: "Densité 30–60 ans"}
   - {expression: "(19800 + 2300) / 10", attendu: 2210, libelle: "Laboratoire 2, moyenne au départ du curseur"}
+  - {expression: "(2200 + 2300) / 2", attendu: 2250, libelle: "Laboratoire 2, médiane pour tout dixième salaire d'au moins 2 300 €"}
+  - {expression: "(2000 + 2200) / 2", attendu: 2100, libelle: "Laboratoire 2 (site), médiane avec un dixième salaire de 1 000 €"}
+  - {expression: "1.2 * 10", attendu: 12, libelle: "Laboratoire 1, aire du rectangle 20–30 ans = 1,2 × 10"}
+  - {expression: "0.4 * 20 + 1.2 * 10 + (20 / 30) * 30", attendu: 40, libelle: "Laboratoire 1, aire totale = nombre de visiteurs"}
   - {expression: "(425 - 44 + 120) / 20", attendu: 25.05, libelle: "Laboratoire 2, moyenne après le déménagement"}
   - {expression: "15 / 50", attendu: 0.3, libelle: "Exercice du chapitre 1, autre service"}
   - {expression: "5+8+12+15+15+18+22+25+30+90", attendu: 240, libelle: "Exercice de synthèse, somme"}
@@ -269,7 +277,7 @@ sources_lues:
   - {ref: "NIST/SEMATECH, e-Handbook of Statistical Methods, 1.3.3.14 « Histogram »", url: "https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm", lu_le: "2026-11-21", sert_a: "choix des classes, histogramme relatif et normalisation par la largeur (densité)"}
 
 controle:
-  test_du_debutant: "À mesurer au pilote : réussir l'exercice de synthèse et la question de transfert"
+  test_du_debutant: "Pilote avec 3 à 5 débutants avant validation finale : questionnaire avant et après, exercice de synthèse, question de transfert, lecture d'un histogramme à classes inégales, effet d'une valeur extrême ; noter aussi les passages où ils décrochent (durée). La réussite du moteur ou des calculs ne prouve pas l'apprentissage"
   relecture_definitions: "Claude, 21/11/2026 ; ChatGPT puis JG à faire"
   controle_mobile: "Après rendu : sortie/EP-S2A/fr/inspection"
   a_trancher_par_le_relecteur:
