@@ -1462,24 +1462,8 @@ def test_prononciation_de_la_marque_dans_la_voix_seulement():
     assert "ACTU-BASICS" in preparer_pour_voix("Welcome to ACTU-BASICS.", "en", lex)   # bien lu en anglais
 
 
-def test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas():
-    """La barre d'accent doit passer sous le bas réel du chiffre, avec un espace net."""
-    import numpy as np
-    fiche = charger_fiche(LANCEMENT)
-    for langue in ("fr", "en"):
-        r = Rendu(fiche, langue, CHARTE, "video", False)
-        ed = fiche.editions[langue]
-        for i, s in enumerate(ed.scenes):
-            if s.type != "titre" or not s.extra.get("numero"):
-                continue
-            px = np.array(r.dessiner(s, i, len(ed.scenes)).convert("RGB")).astype(int)
-            accent = np.array(r.c["accent"][:3])
-            g = r.zone[0]
-            colonne = np.abs(px[:, g + 20:g + 30] - accent).sum(axis=2).min(axis=1) < 40
-            lignes = np.flatnonzero(colonne)
-            blocs = np.split(lignes, np.flatnonzero(np.diff(lignes) > 1) + 1)
-            numero, barre = blocs[-2], blocs[-1]     # le chiffre, puis la barre en dessous
-            assert barre[0] - numero[-1] >= 20, (langue, i, numero[-1], barre[0])
+# test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas : retiré le 22/11/2026, les titres de
+# chapitre n'ont plus de grand numéro (surtitre « Chapitre N » et points de progression).
 
 
 def test_soulignement_du_chiffre_cle_sous_la_virgule():
@@ -1628,6 +1612,8 @@ def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
     scène), la barre reste sous le glyphe entier avec une marge nette, à chaque instant de l'animation,
     en français et en anglais, en vertical comme en 16:9."""
     fiche = charger_fiche(chemin)
+    if fiche.pedagogique:   # plus de grand chiffre dans les fiches pédagogiques : rien à mesurer (et 15 min de CI)
+        return
     vus = 0
     for langue in fiche.editions:
         for fmt in ("video", "lecon", "carrousel"):
@@ -1984,9 +1970,12 @@ def test_plus_de_nom_de_marque_fixe_en_video_et_logo_mobile():
     ed = fiche.editions["fr"]
     for fmt in ("video", "lecon"):
         sans = Rendu(fiche, "fr", _charte(logo__mobile__actif=False), fmt, False)
-        avec = Rendu(fiche, "fr", CHARTE, fmt, False)
-        scene = ed.scenes[0]
-        im = sans.dessiner(scene, 0, len(ed.scenes))
+        avec = Rendu(fiche, "fr", _charte(logo__mobile__actif=True), fmt, False)
+        # Le logo fixe n'est posé qu'au début et à la fin (charte) : on regarde une scène du milieu.
+        scenes_logo = (CHARTE["logo"].get(fmt) or {}).get("scenes") or []
+        idx = next(i for i, s in enumerate(ed.scenes[:-1]) if s.type not in scenes_logo)
+        scene = ed.scenes[idx]
+        im = sans.dessiner(scene, idx, len(ed.scenes))
         g, h, dr, _ = sans.zone
         # Bandeau du haut vide : ni nom « ACTU-BASICS » ni logo quand le logo mobile est coupé.
         assert ImageChops.difference(im.crop((g, h, dr, h + 120)), sans._fond.crop((g, h, dr, h + 120))).getbbox() is None
@@ -1995,8 +1984,8 @@ def test_plus_de_nom_de_marque_fixe_en_video_et_logo_mobile():
         x1, _ = avec.mobile_position(avec.conf_mobile()["periode_s"] / 2)
         lg, hl, p = avec._mobile_taille()
         assert x1 > x0 and g <= x0 - p and x1 + lg + p <= dr and y0 >= h   # il bouge, dans la zone
-        avec.mesurer_mobile(scene, 0, len(ed.scenes))
-        pose = avec.poses[("mobile", 0)]
+        avec.mesurer_mobile(scene, idx, len(ed.scenes))
+        pose = avec.poses[("mobile", idx)]
         assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT   # aucun texte sous le logo
         assert pose.largeur == lg and pose.boite[3] - pose.boite[1] == hl   # proportions conservées
 
