@@ -2066,6 +2066,7 @@ def test_manifeste_de_rendu(tmp_path, monkeypatch):
     (sortie / "x" / "fr" / "rapport-qc.md").write_text("ok", encoding="utf-8")
     monkeypatch.setenv("GITHUB_SHA", "abc123")
     monkeypatch.setenv("GITHUB_ACTOR", "relecteur")
+    monkeypatch.delenv("GITHUB_TRIGGERING_ACTOR", raising=False)   # défini sur le runner GitHub
     monkeypatch.setenv("ENVIRONNEMENT_GITHUB", "production")
     assert manifeste.main([str(fiche), "--sortie", str(sortie), "--voix", "kokoro"]) == 0
     m = json.loads((sortie / "manifeste.json").read_text(encoding="utf-8"))
