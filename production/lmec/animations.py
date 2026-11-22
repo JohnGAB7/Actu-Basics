@@ -32,6 +32,8 @@ Modèles :
 - densite     : classes inégales (« bornes », « effectifs ») ; « effectif » monte les barres à hauteur
                 d'effectif, « densite » les ramène à la densité (les pastilles prennent le même
                 espacement partout), « surface » affiche densité × largeur = effectif ;
+- apercu      : bande-annonce de l'épisode ; une carte par compétence (« cartes » : icone, texte), qui
+                apparaît quand la voix l'annonce (une proposition par carte, après l'annonce) ;
 - selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
                 celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
                 des données observées, « filtre » trace la flèche « sélection par la survie ».
@@ -45,7 +47,7 @@ from fractions import Fraction
 from .formatage import formater_nombre
 
 MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille",
-           "pastilles", "curseur", "equilibre", "elimination", "densite")
+           "pastilles", "curseur", "equilibre", "elimination", "densite", "apercu")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
@@ -60,7 +62,9 @@ PHASES = {
     "equilibre": ("serie", "appui", "ecarts"),
     "elimination": ("rangement", "elimination", "milieu", "ajout", "pair"),
     "densite": ("effectif", "densite", "surface"),
+    "apercu": ("carte",),
 }
+ICONES_APERCU = ("tableau", "histogramme", "forme", "equilibre", "mediane", "laboratoire")
 PHASES_DEFAUT = {
     "foule": ["apparition"],
     "paires": ["apparition", "reste", "total"],
@@ -75,6 +79,7 @@ PHASES_DEFAUT = {
     "equilibre": ["serie", "appui", "ecarts"],
     "elimination": ["rangement", "elimination", "milieu", "ajout", "pair"],
     "densite": ["effectif", "densite", "surface"],
+    "apercu": ["carte"],
 }
 LIBELLES = {
     "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents",
@@ -154,7 +159,8 @@ class Animations:
                       "isoles": 1.2, "points": 2.4, "tri": 1.8, "barres": 1.2,
                       "serie": 1.8, "mediane": 1.0, "moyenne": 1.0, "curseur": 4.0,
                       "appui": 2.4, "ecarts": 2.4, "rangement": 1.6, "elimination": 3.0, "milieu": 1.0,
-                      "ajout": 1.6, "pair": 3.4, "effectif": 1.6, "densite": 2.4, "surface": 1.4}
+                      "ajout": 1.6, "pair": 3.4, "effectif": 1.6, "densite": 2.4, "surface": 1.4,
+                      "carte": 0.9}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -162,6 +168,15 @@ class Animations:
         return plan
 
     def _debuts_phases(self, scene, plan) -> list[float]:
+        morceaux = getattr(self, "morceaux_voix", {}).get(id(scene))
+        if scene.extra["animation"]["modele"] == "apercu" and morceaux:
+            # Une carte par proposition annoncée (« … : construire un tableau ; choisir… ; … ») :
+            # la première proposition est l'annonce, les suivantes les cartes.
+            debuts = [m[0] for m in morceaux[1:1 + len(plan)]]
+            dernier = morceaux[-1][1]
+            while len(debuts) < len(plan):
+                debuts.append(min(dernier, (debuts[-1] if debuts else 0.6) + 1.2))
+            return debuts
         if self.reperes.get(id(scene)):
             debuts = self._debuts_etapes(scene, len(plan))
         else:
@@ -1140,6 +1155,128 @@ class AnimationsDonnees:
                     y = y_axe - h - 56 - (len(lignes) - 1 - n_l) * (taille + 8)
                     d.text(((x0 + x1) / 2 - p.getlength(ligne) / 2, y), ligne, font=p, fill=_melange(fond, couleur, k))
 
+    # ------------------------------------------------------------------ aperçu de l'épisode
+    def _anim_apercu(self, d, scene, plan, zone, t, ctx):
+        """Bande-annonce de l'épisode : une carte par compétence (vignette dessinée et phrase courte), qui
+        apparaît quand la voix l'annonce. Prépare le spectateur à ce qu'il va voir (JG, 22/11/2026)."""
+        from .rendu import _melange
+        cartes = scene.extra["animation"]["cartes"]
+        g, haut, dr, bas = zone
+        n = len(cartes)
+        cols = 3 if n > 4 else n if n <= 3 else 2
+        rangs = math.ceil(n / cols)
+        gap = 26
+        w = (dr - g - (cols - 1) * gap) / cols
+        h = min(330.0, (bas - haut - (rangs - 1) * gap) / rangs)
+        y0 = haut + (bas - haut - (rangs * h + (rangs - 1) * gap)) / 2
+        fond = self._fond.getpixel((int(g), int(min(y0, self.hauteur - 1))))
+        carte_fond = _melange(fond, (255, 255, 255), 0.75) if sum(fond) > 380 else _melange(fond, self.c["barre"], 0.12)
+        pt = self.police("gras", 34)
+        pn = self.police("affichage", 30)
+        actuelle = self._phase_courante(plan, t)
+        for i, c in enumerate(cartes):
+            p = plan[i] if i < len(plan) else None
+            k = _ease(self._avancee(p, t)) if p else 1.0
+            if k <= 0:
+                continue
+            x = g + (i % cols) * (w + gap)
+            y = y0 + (i // cols) * (h + gap) + (1 - k) * 30
+            vive = t is None or i == actuelle
+            contour = _melange(fond, self.c["or"] if vive and t is not None else self.c["barre"], (0.9 if vive else 0.45) * k)
+            d.rounded_rectangle((x, y, x + w, y + h), radius=22, fill=_melange(fond, carte_fond, k), outline=contour,
+                                width=3 if vive and t is not None else 2)
+            # Numéro discret en haut à gauche.
+            num = str(i + 1)
+            d.text((x + 20, y + 12), num, font=pn, fill=_melange(fond, self.c["accent"], k))
+            # Vignette dessinée dans la moitié haute.
+            vx0, vy0, vx1, vy1 = x + 36, y + 30, x + w - 36, y + h * 0.60
+            self._vignette(d, c["icone"], (vx0, vy0, vx1, vy1), k, fond)
+            # Phrase courte, centrée, deux lignes au plus.
+            p_t, lignes, pas, hh = self.ajuster_riche(c["texte"], "gras", w - 36, h * 0.34, 34, 24, 1.15, ctx,
+                                                      equilibre=True)
+            yt = y + h * 0.62 + (h * 0.36 - hh) / 2
+            for ligne in lignes:
+                lw = self._largeur_ligne(ligne, p_t)
+                self.ecrire_riche(d, [ligne], p_t, pas, yt, self.c["texte"], None if k >= 1 else t,
+                                  p["debut"] if p else 0.0, centre=False, x_gauche=x + w / 2 - lw / 2)
+                yt += pas
+
+    def _vignette(self, d, icone, boite, k, fond):
+        """Petits dessins des notions de l'épisode, tracés à mesure que k va de 0 à 1."""
+        from .rendu import _melange
+        x0, y0, x1, y1 = boite
+        w, h = x1 - x0, y1 - y0
+        barre, orr, encre = self.c["barre"], self.c["or"], self.c["secondaire"]
+        trait = _melange(fond, encre, 0.7 * k)
+        if icone == "tableau":
+            cols, rangs = 3, 4
+            cw, rh = w / cols, h / rangs
+            d.rounded_rectangle((x0, y0, x1, y0 + rh), radius=6, fill=_melange(fond, barre, 0.25 * k))
+            for r in range(rangs):
+                if r / rangs > k:
+                    break
+                yy = y0 + r * rh
+                for c in range(cols):
+                    lx = x0 + c * cw + cw * 0.2
+                    lg = cw * (0.6 if c else 0.35)
+                    d.rounded_rectangle((lx, yy + rh * 0.38, lx + lg, yy + rh * 0.62), radius=4,
+                                        fill=_melange(fond, orr if (c == 2 and r) else encre, 0.8 * k))
+            d.line((x0, y1, x1, y1), fill=trait, width=2)
+        elif icone == "histogramme":
+            hauteurs = [0.3, 0.75, 0.6, 0.35, 0.15]
+            bw = w / len(hauteurs)
+            for i, hh in enumerate(hauteurs):
+                bh = h * hh * k
+                if bh > 3:
+                    d.rounded_rectangle((x0 + i * bw + 3, y1 - bh, x0 + (i + 1) * bw - 3, y1), radius=5,
+                                        fill=_melange(fond, orr if i == 1 else barre, 0.85))
+            d.line((x0, y1, x1, y1), fill=trait, width=3)
+        elif icone == "forme":
+            pts = []
+            n = 40
+            for j in range(int(n * k) + 1):
+                u = j / n
+                v = (u * 6) ** 1.6 * math.exp(-u * 6) / 1.25   # bosse à gauche, longue queue à droite
+                pts.append((x0 + u * w, y1 - v * h * 0.95))
+            if len(pts) > 1:
+                d.polygon(pts + [(pts[-1][0], y1), (x0, y1)], fill=_melange(fond, barre, 0.22))
+                d.line(pts, fill=barre, width=4)
+            d.line((x0, y1, x1, y1), fill=trait, width=3)
+        elif icone == "equilibre":
+            yb = y0 + h * 0.62
+            xa = x0 + w * 0.42
+            d.polygon(((xa, yb + 4), (xa - 18, y1), (xa + 18, y1)), fill=_melange(fond, orr, k))
+            d.line((x0, yb, x1, yb), fill=_melange(fond, self.c["texte"], 0.8 * k), width=5)
+            for u in (0.08, 0.25, 0.42, 0.85):
+                if u <= k + 0.05:
+                    cx = x0 + u * w
+                    d.ellipse((cx - 11, yb - 25, cx + 11, yb - 3), fill=_melange(fond, barre, k))
+        elif icone == "mediane":
+            n = 5
+            tw = (w - (n - 1) * 8) / n
+            th = min(h * 0.6, tw * 1.1)
+            yy = y0 + (h - th) / 2
+            for i in range(n):
+                xx = x0 + i * (tw + 8)
+                milieu = i == n // 2
+                d.rounded_rectangle((xx, yy, xx + tw, yy + th), radius=6,
+                                    fill=_melange(fond, orr if milieu else barre, (0.55 if milieu else 0.2) * k),
+                                    outline=_melange(fond, orr if milieu else barre, 0.8 * k), width=2)
+                barre_k = max(0.0, min(1.0, k * 3 - (1 if i in (0, n - 1) else 2)))
+                if not milieu and barre_k > 0:
+                    d.line((xx + 5, yy + th - 5, xx + 5 + (tw - 10) * barre_k, yy + th - 5 - (th - 10) * barre_k),
+                           fill=_melange(fond, encre, 0.9), width=3)
+        elif icone == "laboratoire":
+            ya = y0 + h * 0.7
+            d.line((x0, ya, x1 - 30, ya), fill=trait, width=3)
+            for u in (0.08, 0.16, 0.22, 0.3, 0.37, 0.45):
+                cx = x0 + u * w
+                d.ellipse((cx - 9, ya - 22, cx + 9, ya - 4), fill=_melange(fond, barre, k))
+            cx = x0 + (0.5 + 0.38 * k) * w
+            d.ellipse((cx - 11, ya - 26, cx + 11, ya - 4), fill=orr)
+            d.line((cx - w * 0.38 * k, ya - 15, cx - 14, ya - 15), fill=_melange(fond, orr, 0.6), width=3)
+            xm = x0 + 0.27 * w
+            d.polygon(((xm, ya + 6), (xm - 9, ya + 22), (xm + 9, ya + 22)), fill=barre)
 
 FRACTIONS = {(1, 2): "½", (1, 3): "⅓", (2, 3): "⅔", (1, 4): "¼", (3, 4): "¾", (1, 5): "⅕", (1, 6): "⅙",
              (1, 8): "⅛"}

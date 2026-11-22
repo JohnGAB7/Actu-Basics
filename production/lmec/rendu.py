@@ -76,6 +76,9 @@ def _melange(a: tuple, b: tuple, k: float) -> tuple[int, int, int]:
 
 
 MARQUEUR = re.compile(r"\*([^*]+)\*")
+OPERATEURS = {"+", "−", "-", "×", "÷", "x"}
+UNITES_CALCUL = {"%", "€", "min", "minutes", "ans", "cm", "pts", "points"}
+TERME_CALCUL = re.compile(r"^[(\[]*[−\-+]?(\d[\d\u00a0\u202f\s,.]*|[½⅓⅔¼¾⅕⅙⅛])[)\]]*[%€]?[,;:.)]*$")
 _BLANCS = re.compile(r"[ \t\n]+")
 
 
@@ -168,6 +171,10 @@ class Rendu(ScenesPedagogiques):
         # les étapes apparaissent quand la voix les annonce. Renseigné après la narration (produire.py).
         self.reperes: dict[int, list[float]] = {}
         self.fins_voix: dict[int, float] = {}
+        # Morceaux de voix (début, fin) : phrases ET propositions (la synthèse coupe aussi sur « : » et « ; »).
+        # Sert à faire apparaître un calcul terme à terme pendant qu'il est dit.
+        self.morceaux_voix: dict[int, list[tuple[float, float]]] = {}
+        self._scene_courante = None
 
     # ------------------------------------------------------------------ logo
     def conf_logo(self, couverture: bool = False) -> dict:
@@ -436,13 +443,27 @@ class Rendu(ScenesPedagogiques):
         for n_ligne, ligne in enumerate(lignes):
             largeur = self._largeur_ligne(ligne, police)
             x = x_c - largeur / 2 if centre else x_gauche
+            temps_calc = self._temps_calcul(ligne, depart + n_ligne * max(0.18, decalage * 5))
             for j, (mot, fort, colle) in enumerate(ligne):
                 if colle and j > 0:
                     x -= espace
                 # Par groupes de sens (une ligne à la fois), plus mot à mot (direction artistique 22/11).
+                # Un calcul (« 5 + 10 + 6 + 4 = 25 ») apparaît terme à terme, au rythme de la voix (JG, 22/11).
                 a = self._visibilite(t, depart, n_ligne, max(0.18, decalage * 5))
                 n += 1
                 w = police.getlength(mot)
+                if j in temps_calc:   # morceau par morceau, chacun à son instant
+                    xp = x
+                    for piece, t0 in temps_calc[j]:
+                        ap = a if t0 is None else self._visibilite(t, t0, 0, 0, ENTREE_MOT)
+                        if ap > 0:
+                            fond = self._fond.getpixel((int(min(xp, self.largeur - 1)), int(min(y, self.hauteur - 1))))
+                            c = self.c["accent"] if fort else couleur
+                            d.text((xp, y + (1 - ap) * police.size * 0.35), piece.rstrip("\u00a0\u202f"),
+                                   font=police, fill=_melange(fond, c, ap))
+                        xp += police.getlength(piece)
+                    x += w + espace
+                    continue
                 if a > 0:
                     dy = (1 - a) * police.size * 0.35
                     fond = self._fond.getpixel((int(min(x, self.largeur - 1)), int(min(y, self.hauteur - 1))))
@@ -461,6 +482,49 @@ class Rendu(ScenesPedagogiques):
                 x += w + espace
             y += pas
         return y, n
+
+    def _temps_calcul(self, ligne, debut_ligne) -> dict[int, list[tuple[str, float | None]]]:
+        """Calcul de la ligne (« 5 + 10 + 6 + 4 = 25 ») : pour chaque mot concerné, ses morceaux (séparés
+        par les espaces insécables de la typographie) et l'instant d'apparition de chacun. Vide si la ligne
+        ne contient pas de calcul (un opérateur et un « = »). Les termes s'étalent sur le morceau de voix en
+        cours quand la ligne apparaît (sinon sur 1,8 s) ; ce qui précède le calcul suit la ligne."""
+        decoupe = [re.split(r"([\u00a0\u202f])", m) for m, _, _ in ligne]
+        pieces = [p for parts in decoupe for p in parts[::2]]
+        if not any(p in OPERATEURS for p in pieces) or not any(p in ("=", "≈") for p in pieces):
+            return {}
+        calc = lambda p: p in OPERATEURS or p in ("=", "≈") or bool(TERME_CALCUL.match(p))
+        ordre, vu_terme = [], False          # (mot, indice du morceau) des termes, dans l'ordre
+        for j, parts in enumerate(decoupe):
+            for k in range(0, len(parts), 2):
+                p = parts[k]
+                if TERME_CALCUL.match(p):
+                    vu_terme = True
+                if vu_terme and (calc(p) or (p in UNITES_CALCUL and ordre)):
+                    ordre.append((j, k, p in UNITES_CALCUL))
+        if sum(1 for *_, u in ordre if not u) < 3:
+            return {}
+        fin = debut_ligne + 1.8
+        scene = self._scene_courante
+        morceaux = self.morceaux_voix.get(id(scene)) if scene is not None else None
+        if morceaux:
+            en_cours = [m for m in morceaux if m[1] > debut_ligne + 0.1]
+            if en_cours:
+                d0, f0 = en_cours[0]
+                fin = max(debut_ligne + 0.8, f0 - 0.15)
+                debut_ligne = max(debut_ligne, d0)
+        n_termes = sum(1 for *_, u in ordre if not u)
+        pas = (fin - debut_ligne) / max(1, n_termes)
+        instants, k_terme = {}, -1
+        for j, k, unite in ordre:
+            if not unite:
+                k_terme += 1
+            instants[(j, k)] = debut_ligne + max(0, k_terme) * pas
+        sortie = {}
+        for j in {j for j, _, _ in ordre}:
+            parts = decoupe[j]
+            sortie[j] = [(parts[k] + (parts[k + 1] if k + 1 < len(parts) else ""), instants.get((j, k)))
+                         for k in range(0, len(parts), 2)]
+        return sortie
 
     def _ecrire_gauche(self, d, x, y, lignes, police, pas, couleur, a=1.0):
         for ligne in lignes:
@@ -549,6 +613,7 @@ class Rendu(ScenesPedagogiques):
         self.basculer(self.univers_de(scene))
         image = self._fond.copy()
         self._image = image
+        self._scene_courante = scene
         d = ImageDraw.Draw(image)
         g, h, dr, b = self.zone
         haut, bas = h + 130, b - 110  # sous l'en-tête, au-dessus du pied de page

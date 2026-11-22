@@ -295,6 +295,18 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             conf["bornes"], conf["effectifs"] = [float(b) for b in bornes], list(eff)
         if a.get("unite") is not None:
             conf["unite"] = str(a["unite"])
+    if modele == "apercu":
+        from .animations import ICONES_APERCU
+        cartes = a.get("cartes")
+        if (not isinstance(cartes, list) or not 2 <= len(cartes) <= 6
+                or not all(isinstance(c, dict) and c.get("icone") in ICONES_APERCU and str(c.get("texte") or "").strip()
+                           for c in cartes)):
+            erreurs.append(f"{ctx}.animation.cartes : 2 à 6 cartes {{icone, texte}}, icone parmi "
+                           f"{', '.join(ICONES_APERCU)}")
+            conf["cartes"] = None
+        else:
+            conf["cartes"] = [{"icone": c["icone"], "texte": str(c["texte"])} for c in cartes]
+            conf["phases"] = ["carte"] * len(cartes)
     phases = a.get("phases")
     if phases is not None:
         if not isinstance(phases, list) or not phases or any(p not in PHASES[modele] for p in phases):

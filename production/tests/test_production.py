@@ -2151,4 +2151,28 @@ def test_episode_s2a_animations_dessinees_a_chaque_phase():
                           p["debut"] + p["duree"] + 0.2):
                     r.dessiner(s, i, len(scenes), t)
             r.dessiner(s, i, len(scenes), None)
-        assert {"equilibre", "elimination", "densite", "pastilles", "curseur"} <= vus
+        assert {"equilibre", "elimination", "densite", "pastilles", "curseur", "apercu"} <= vus
+
+
+def test_calcul_apparait_terme_a_terme():
+    """« 5 + 10 + 6 + 4 = 25 » : chaque terme a son instant, dans l'ordre ; une ligne sans calcul n'en a pas."""
+    from lmec.formatage import typographie
+    fiche = charger_fiche(EXEMPLE)
+    r = Rendu(fiche, "fr", CHARTE, "lecon", False)
+    ligne = mots_riches(typographie("Toujours vérifier le *total* : 5 + 10 + 6 + 4 = 25", "fr"))
+    temps = r._temps_calcul(ligne, 1.0)
+    instants = [t0 for j in sorted(temps) for _, t0 in temps[j] if t0 is not None]
+    assert len(instants) >= 9 and instants == sorted(instants) and instants[0] >= 1.0 and instants[-1] > 2.0
+    assert not r._temps_calcul(mots_riches("Les fréquences font toujours *100 %*"), 1.0)
+
+
+def test_apercu_valide_et_cale_sur_les_propositions():
+    from lmec.pedagogie import _valider_animation
+    cartes = [{"icone": i, "texte": "Un *mot*"} for i in ("tableau", "histogramme", "forme")]
+    erreurs, extra = [], {}
+    _valider_animation({"animation": {"modele": "apercu", "cartes": cartes}}, "s", erreurs, extra)
+    assert not erreurs and extra["animation"]["phases"] == ["carte"] * 3
+    erreurs = []
+    _valider_animation({"animation": {"modele": "apercu", "cartes": [{"icone": "inconnue", "texte": "x"}] * 2}},
+                       "s", erreurs, {})
+    assert any("icone" in e for e in erreurs)

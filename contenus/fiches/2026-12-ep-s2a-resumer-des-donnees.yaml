@@ -58,15 +58,24 @@ editions:
     - type: accueil
       texte: Bonjour, et *bienvenue* !
       voix_off: 'Bonjour, et bienvenue ! Merci d''être là. Salaires, notes, temps de trajet : on résume tout avec une moyenne. Dans cet épisode, on voit quand elle dit vrai, quand elle trompe, et par quoi la remplacer.'
-    - type: etapes
-      texte: Au programme
-      etapes:
-      - '1. Compter : effectifs, fréquences, cumul'
-      - '2. Dessiner : barres ou histogramme'
-      - 3. Lire la forme d'une distribution
-      - 4. Ce que dit vraiment la moyenne
-      - 5. Moyenne ou médiane ?
-      voix_off: 'Cinq étapes : compter avec un tableau ; dessiner avec des barres ou un histogramme ; lire la forme d''une distribution ; comprendre la moyenne ; et enfin, moyenne ou médiane. Avec deux laboratoires en direct et un exercice de synthèse corrigé.'
+    - type: animation
+      texte: Ce que vous allez *apprendre*
+      animation:
+        modele: apercu
+        cartes:
+        - icone: tableau
+          texte: Construire un *tableau* de fréquences
+        - icone: histogramme
+          texte: Choisir et lire un *histogramme*
+        - icone: forme
+          texte: Reconnaître la *forme* d'une distribution
+        - icone: equilibre
+          texte: Calculer une *moyenne*
+        - icone: mediane
+          texte: Trouver la *médiane*
+        - icone: laboratoire
+          texte: Tester en *laboratoire*, puis s'exercer
+      voix_off: 'Voici ce que vous saurez faire à la fin de cet épisode : construire un tableau de fréquences ; choisir et lire un histogramme ; reconnaître la forme d''une distribution ; calculer une moyenne, et voir pourquoi c''est un point d''équilibre ; trouver une médiane ; et tout vérifier vous-même, avec deux laboratoires et un exercice corrigé.'
     - type: titre
       numero: '1'
       texte: 'Compter : effectifs, fréquences, cumul'
@@ -1234,15 +1243,24 @@ editions:
     - type: accueil
       texte: Hi, and *welcome*!
       voix_off: 'Hi, and welcome! Thanks for being here. Salaries, grades, commuting times: we sum everything up with an average. In this episode, we''ll see when it tells the truth, when it misleads, and what to use instead.'
-    - type: etapes
-      texte: In this episode
-      etapes:
-      - '1. Counting: counts, frequencies, cumulative'
-      - '2. Drawing: bar chart or histogram'
-      - 3. Reading the shape of a distribution
-      - 4. What the mean really says
-      - 5. Mean or median?
-      voix_off: 'Five steps: counting with a table; drawing with bars or a histogram; reading the shape of a distribution; understanding the mean; and finally, mean or median. With two live labs and a worked summary exercise.'
+    - type: animation
+      texte: What you'll *learn*
+      animation:
+        modele: apercu
+        cartes:
+        - icone: tableau
+          texte: Build a frequency *table*
+        - icone: histogramme
+          texte: Choose and read a *histogram*
+        - icone: forme
+          texte: Recognise a distribution's *shape*
+        - icone: equilibre
+          texte: Compute a *mean*
+        - icone: mediane
+          texte: Find the *median*
+        - icone: laboratoire
+          texte: Test it in the *lab*, then practise
+      voix_off: 'Here''s what you''ll be able to do by the end of this episode: build a frequency table; choose and read a histogram; recognise the shape of a distribution; compute a mean, and see why it''s a balance point; find a median; and check it all yourself, with two labs and a worked exercise.'
     - type: titre
       numero: '1'
       texte: 'Counting: counts, frequencies, cumulative'

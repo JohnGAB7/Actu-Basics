@@ -233,7 +233,9 @@ def lab2(l):
 
 
 def anim(texte, voix, conf, etapes, verifier=None, note=None, univers=None):
-    s = {"type": "animation", "texte": texte, "animation": conf, "etapes": etapes}
+    s = {"type": "animation", "texte": texte, "animation": conf}
+    if etapes:
+        s["etapes"] = etapes
     if univers:
         s["univers"] = univers
     if note:
@@ -322,14 +324,34 @@ def visuels(sc, l):
     return out
 
 
+def apercu(l):
+    """Bande-annonce illustrée et promesse de l'épisode (retours de JG du 22/11/2026) : six cartes dessinées,
+    une par compétence, chacune annoncée par la voix. Remplace la liste « Au programme »."""
+    fr = l == "fr"
+    voix = ("Voici ce que vous saurez faire à la fin de cet épisode : construire un tableau de fréquences ; "
+            "choisir et lire un histogramme ; reconnaître la forme d'une distribution ; calculer une moyenne, et voir pourquoi c'est un point d'équilibre ; "
+            "trouver une médiane ; et tout vérifier vous-même, avec deux laboratoires et un exercice corrigé."
+            if fr else
+            "Here's what you'll be able to do by the end of this episode: build a frequency table; "
+            "choose and read a histogram; recognise the shape of a distribution; compute a mean, and see why it's a balance point; "
+            "find a median; and check it all yourself, with two labs and a worked exercise.")
+    textes = (["Construire un *tableau* de fréquences", "Choisir et lire un *histogramme*",
+               "Reconnaître la *forme* d'une distribution", "Calculer une *moyenne*", "Trouver la *médiane*",
+               "Tester en *laboratoire*, puis s'exercer"] if fr else
+              ["Build a frequency *table*", "Choose and read a *histogram*", "Recognise a distribution's *shape*",
+               "Compute a *mean*", "Find the *median*", "Test it in the *lab*, then practise"])
+    icones = ["tableau", "histogramme", "forme", "equilibre", "mediane", "laboratoire"]
+    return anim("Ce que vous allez *apprendre*" if fr else "What you'll *learn*", voix,
+                {"modele": "apercu", "cartes": [{"icone": i, "texte": t} for i, t in zip(icones, textes)]}, None)
+
+
 def episode(l):
     fr = l == "fr"
     b = blocs
     sc = [S("accroche", "Vingt salariés. *Qui dit vrai* : la moyenne ou la médiane ?" if fr else "Twenty employees. *Which tells the truth*: the mean or the median?",
             b["ouverture"][l]),
           S("accueil", "Bonjour, et *bienvenue* !" if fr else "Hi, and *welcome*!", b["accueil"][l]),
-          S("etapes", "Au programme" if fr else "In this episode", b["plan"][l],
-            etapes=[c["titre"][l] for c in conc["deroule_episode"] if c["bloc"] == "chapitre"])]
+          apercu(l)]
     for k, d in enumerate(chap, 1):
         sc += modifier(k, chapitre(k, d, l), l)
         if k < 5:

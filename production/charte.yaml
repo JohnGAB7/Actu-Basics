@@ -174,7 +174,7 @@ son:
   signature_debut: true      # deux notes au tout début
   signature_fin: true        # signature complète sur la scène de fin (logo)
   signature_db: -12
-  nappe: true                # accord tenu très doux sous la voix
+  nappe: false               # accord tenu sous la voix : retiré (JG, 22/11/2026, « bruit de fond »)
   nappe_db: -30              # niveau sans voix
   nappe_sous_voix_db: -38    # niveau quand la voix parle
   reperes: true              # tic du compte à rebours, carillon des révélations
