@@ -279,6 +279,7 @@ class Rendu(ScenesPedagogiques):
         lg, _, _ = self._mobile_taille()
         return _logo.poser(image, self._fond, self.logos, x=x, y=y, largeur=lg,
                            variante_demandee=self.logos.conf.get("variante", "auto"),
+                           sur_fond_clair=self.logos.conf.get("sur_fond_clair", "clair"),
                            protection=float(self.logos.conf.get("zone_protection", 0.08)),
                            support="mobile", scene=scene.type, index=index, opacite=opacite, mesurer=mesurer)
 
@@ -298,6 +299,7 @@ class Rendu(ScenesPedagogiques):
         support = "couverture" if couverture else self.format
         pose = _logo.poser(image, self._fond, self.logos, x=x, y=y, largeur=largeur,
                            variante_demandee=self.logos.conf.get("variante", "auto"),
+                           sur_fond_clair=self.logos.conf.get("sur_fond_clair", "clair"),
                            protection=float(self.logos.conf.get("zone_protection", 0.08)),
                            support=support, scene=scene.type, index=index, opacite=opacite,
                            mesurer=t is None)

@@ -739,7 +739,7 @@ def test_video_avec_voix_de_test(tmp_path):
     for f in ("planche-video.png", "apercu-mobile.png", "zones-tiktok.png", "logo-mobile.png"):
         assert (d / "inspection" / f).exists()
     rapport = (tmp_path / "exemple-fictif/rapport-qc.md").read_text(encoding="utf-8")
-    assert "Logo clair (vidéo, scène 6 (fin))" in rapport and "Logo clair (couverture" in rapport
+    assert "Logo sombre (vidéo, scène 6 (fin))" in rapport and "Logo sombre (couverture" in rapport
 
 
 
@@ -800,7 +800,7 @@ SOMBRE = dict(couleurs__fond="#0B1526", couleurs__fond_bas="#14284A", couleurs__
 
 def test_logo_choisi_selon_la_langue_et_le_fond():
     clair = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
-                 couleurs__texte="#06152B")
+                 couleurs__texte="#06152B", logo__sur_fond_clair="clair")
     attendu = {("fr", "sombre"): "logo-dark.png", ("fr", "clair"): "logo-light.png",
                ("en", "sombre"): "logo-dark-en.png", ("en", "clair"): "logo-light-en.png"}
     for langue in ("fr", "en"):
@@ -888,12 +888,19 @@ def test_logo_sur_fond_sombre_proportions_et_original_intact():
     assert _empreintes() == avant                                                     # fichiers d'origine intacts
 
 
-def test_logo_clair_sur_fond_clair():
-    ch = _charte(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
-                 couleurs__texte="#06152B")
-    r, _, ed = _rendu_fin(ch, "carrousel")
-    pose = r.poses[("carrousel", len(ed.scenes) - 1)]
-    assert pose.variante == "clair" and pose.luminance_fond >= 0.5
+def test_logo_sur_fond_clair_selon_la_charte():
+    """Par défaut (JG, 22/11/2026) : disque sombre sur fond clair ; `sur_fond_clair: clair` reste possible,
+    et le contrôle qualité suit la charte dans les deux cas."""
+    base = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
+                couleurs__texte="#06152B")
+    for voulu in ("sombre", "clair"):
+        ch = _charte(logo__sur_fond_clair=voulu, **base)
+        r, _, ed = _rendu_fin(ch, "carrousel")
+        pose = r.poses[("carrousel", len(ed.scenes) - 1)]
+        assert pose.variante == voulu and pose.luminance_fond >= 0.5
+        rap = Rapport()
+        controler_logo("fr", r, [("carrousel", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+        assert not any("variante" in str(c) for c in rap.bloquants)
 
 
 def test_variante_forcee_contraire_au_fond_bloque():

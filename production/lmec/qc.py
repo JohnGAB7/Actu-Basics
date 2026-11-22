@@ -600,7 +600,8 @@ def controler_logo(langue: str, rendu, attendus: list[tuple[str, int, str]], cha
         w, h = rendu.largeur, rendu.hauteur
         if x0 < 0 or y0 < 0 or x1 > w or y1 > h:
             r.bloquant(f"Logo coupé par le bord de l'image ({lieu})", langue)
-        attendue = _logo.choisir_variante(pose.luminance_fond)
+        attendue = _logo.choisir_variante(pose.luminance_fond,
+                                          sur_fond_clair=(charte.get("logo") or {}).get("sur_fond_clair", "clair"))
         if pose.variante != attendue:
             r.bloquant(f"Logo {pose.variante} sur un fond {'clair' if attendue == 'clair' else 'sombre'} "
                        f"({lieu}) : utiliser la variante {attendue}", langue)
