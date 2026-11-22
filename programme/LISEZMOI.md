@@ -8,7 +8,7 @@ construit à partir des fichiers de ce dossier. **Statut : version 1.13 (vidéos
 
 | Chemin | Rôle |
 |---|---|
-| `REVISION-1.13.md` | Révision 1.13 (proposition) : les entrées regroupées en 93 épisodes longs |
+| `REVISION-1.13.md` | Révision 1.13 (validée par JG le 22/11/2026) : les entrées regroupées en 93 épisodes longs |
 | `catalogue/episodes.txt` | Les épisodes longs : chaque entrée du catalogue y figure une fois, comme chapitre |
 | `episodes.py` | Contrôle les épisodes (couverture, ordre des prérequis, durées) et produit leur tableau |
 | `catalogue/*.txt` | Les entrées de syllabus (leur nombre est calculé à chaque construction) du programme, rangées en modules : une entrée par vidéo (pas encore la fiche de conception) |

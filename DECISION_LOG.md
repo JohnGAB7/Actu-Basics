@@ -1,8 +1,22 @@
 # Journal des décisions
 
-| Date | ID | Décision | Motif | Responsable |
-|---|---|---|---|---|
-| 2026-11-01 | LMEC-DEC-001 | Marque bilingue : Le Monde en chiffres / The World in Numbers | Construire une marque internationale avec deux éditions adaptées | Propriétaire |
-| 2026-11-01 | LMEC-DEC-002 | ChatGPT pilote l'éditorial ; Claude pilote la technique et la production | Séparer clairement les responsabilités et organiser la revue croisée | Propriétaire |
-| 2026-11-01 | LMEC-DEC-003 | Validation humaine obligatoire avant publication au lancement | Protéger la fiabilité et la réputation du média | Propriétaire |
-| 2026-11-01 | LMEC-DEC-004 | Style vidéo : police d'affichage Anton, texte animé mot à mot, mots clés mis en valeur, barre de progression | Retour du propriétaire : la première police manquait d'impact pour retenir l'attention | Propriétaire (demande) / Claude (mise en œuvre) |
+Statut : **adoptée** (en vigueur), **remplacée** (voir la décision citée), **proposée** (en attente de JG). Une décision n'est adoptée que si JG l'a prise ou validée.
+
+| Date | ID | Décision | Motif | Responsable | Statut | Appliquée dans |
+|---|---|---|---|---|---|---|
+| 2026-11-01 | LMEC-DEC-001 | Marque bilingue : Le Monde en chiffres / The World in Numbers | Construire une marque internationale avec deux éditions adaptées | Propriétaire | remplacée par DEC-005 | — |
+| 2026-11-01 | LMEC-DEC-002 | ChatGPT pilote l'éditorial ; Claude pilote la technique et la production | Séparer clairement les responsabilités et organiser la revue croisée | Propriétaire | adoptée | `00_STRATEGY/AI_COLLABORATION_PROTOCOL.md` |
+| 2026-11-01 | LMEC-DEC-003 | Validation humaine obligatoire avant publication au lancement | Protéger la fiabilité et la réputation du média | Propriétaire | adoptée, renforcée par DEC-016 | `.github/workflows/validation-finale.yml` |
+| 2026-11-01 | LMEC-DEC-004 | Style vidéo : police d'affichage Anton, texte animé mot à mot, mots clés mis en valeur, barre de progression | La première police manquait d'impact | Propriétaire (demande) / Claude (mise en œuvre) | adoptée | `production/charte.yaml` |
+| 2026-11-01 | LMEC-DEC-005 | Marque ACTU-BASICS ; slogans « Éveiller par les chiffres. » et « Enlightening through numbers. » ; logos officiels seulement, jamais redessinés | Identité de marque définitive | JG | adoptée | `CLAUDE.md`, `00_STRATEGY/BRAND_IDENTITY.md`, `assets/brand/actu-basics/` |
+| 2026-11-02 | LMEC-DEC-006 | Programme éditorial 1.12 | Base des cours et de l'ordre des notions | JG (PR #12) | remplacée par DEC-009 | `programme/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-12.pdf` |
+| 2026-11-03 | LMEC-DEC-007 | Pas de filigrane sur les aperçus ; l'état se lit dans le rapport QC | Lisibilité des aperçus | JG | adoptée | `.github/workflows/apercu.yml` |
+| 2026-11-11 | LMEC-DEC-008 | Parcours Actuariat : entreprise fictive « JG's Holding », toujours annoncée comme fictive ; vidéos FR et EN publiées en même temps (remplace « anglais d'abord ») | Demande de JG | JG | adoptée | `CLAUDE.md` |
+| 2026-11-21 | LMEC-DEC-009 | Vidéos longues : chaque épisode couvre plusieurs notions liées ; les Shorts ne servent que de bandes-annonces vers l'épisode complet | Profondeur des cours, cohérence du parcours | JG | adoptée (programme 1.13, PR #49) | `programme/sections/02-architecture.md`, `programme/catalogue/episodes.txt` |
+| 2026-11-21 | LMEC-DEC-010 | Accueil (merci) en début d'épisode et clôture avec orientation, abonnement, like, partage ; aide gratuite aux exercices dans les commentaires YouTube | Parcours du spectateur | JG | adoptée (PR #49) | `production/charte.yaml` (`parcours_spectateur`), `production/lmec/qc.py` |
+| 2026-11-21 | LMEC-DEC-011 | Logo mobile plutôt que fixe dans les vidéos ; aucun nom de marque fixe | Demande de JG | JG | adoptée (PR #49) | `production/charte.yaml` (`logo.mobile`), `production/lmec/rendu.py` |
+| 2026-11-21 | LMEC-DEC-012 | Site autonome (aucun lien vers les autres sites de JG, seulement vers les sources) ; comptes utilisateurs via le projet Supabase existant ; voix actuelle conservée | Demande de JG | JG | adoptée | `programme/sections/10-arbitrages.md` (10.15) |
+| 2026-11-21 | LMEC-DEC-013 | Vouvoiement ; pas de programmation aux niveaux 1 et 2, R ou Python dans les cours avancés ; laboratoires dans chaque cours qui en a besoin ; pages structurées en sections repliables | Choix délégués à Claude puis validés par JG | Claude / JG | adoptée (PR #49) | `programme/sections/02-architecture.md` (2.5) |
+| 2026-11-22 | LMEC-DEC-014 | Programme 1.13 validé : 93 épisodes, complété jusqu'au niveau expert (section 10.16) | Décision de JG | JG (PR #49) | adoptée | `programme/PROGRAMME_EDITORIAL_ACTU-BASICS_v1-13.pdf` |
+| 2026-11-22 | LMEC-DEC-015 | Les chapitres déjà validés sont mis à niveau dans la nouvelle structure d'épisode | Demande de JG | JG | adoptée | `contenus/conception/S2.0*.yaml`, `contenus/conception/EP-S2A.yaml` |
+| 2026-11-22 | LMEC-DEC-016 | Rendu final seulement depuis `main`, après approbation de l'environnement GitHub `production` ; manifeste de rendu avec commit et empreintes ; `valide_par` reste une métadonnée | Revue ChatGPT (PR #50, issue #51) | Claude (proposée), JG (réglage du relecteur) | adoptée (JG, 22/11/2026, PR #50) | `.github/workflows/validation-finale.yml`, `production/manifeste.py` |

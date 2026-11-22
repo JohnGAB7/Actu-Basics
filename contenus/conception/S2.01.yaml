@@ -1,48 +1,146 @@
-# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
-# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+# Fiche de conception, niveau 1, chapitre 1 de l'épisode EP-S2A. Modèle : modeles/fiche-conception-episode.yaml
+# Contenu validé par JG le 8/11/2026 ; mise à niveau dans la structure d'épisode long le 22/11/2026
+# (demande de JG) : objectifs, notions utilisées, provenance, déroulé, calculs. Fond inchangé.
 id_programme: S2.01
-statut: valide
+episode: EP-S2A
+rang_dans_episode: 1
+statut: valide_jg               # mise à niveau validée par JG le 22/11/2026 (PR #50)
 fiche_production: contenus/fiches/2026-11-n1-s2-01-frequences-et-tableaux.yaml
+
+titres:
+  fr: "Fréquences et tableaux"
+  en: "Counts, frequencies and tables"
 question_centrale:
-  fr: Comment résumer 1 000 réponses sans les lire une par une ?
-  en: How do you sum up 1,000 answers without reading them one by one?
-position:
-  pilier: statistiques
-  niveau: 1
-  module: S2
-  rang_dans_module: 1
+  fr: "Comment résumer 1 000 réponses sans les lire une par une ?"
+  en: "How do you sum up 1,000 answers without reading them one by one?"
+
+position: {pilier: statistiques, niveau: 1, module: S2, rang_dans_module: 1}
+
 public:
-  prerequis:
-  - S1.03
+  prerequis: [S1.03]
   niveau_maths: M0
-  rappel_conseille: []
-intuition: 'Compter, puis rapporter au total : c''est déjà de la statistique.'
-exemple_fil_rouge: Frères et sœurs dans une classe fictive de 25 élèves ; deux classes de 25 et 40 élèves.
-exemple_reel: null
+  rappel_conseille: [M0.01]
+  notions_utilisees:
+    - {notion: "Individu, population, variable", episode: EP-S1A, rappel: "Chaque élève est un individu ; « nombre de frères et sœurs » est la variable"}
+    - {notion: "Variable ordonnée ou non", episode: EP-S1A, rappel: "Dit au cumul : on peut cumuler « au plus deux » parce que les nombres sont rangés ; pour un mode de transport, l'ordre est choisi"}
+    - {notion: "Fraction et pourcentage", episode: EP-M01, rappel: "10 sur 25, c'est 10 ÷ 25 = 0,4, soit 40 %"}
+    - {notion: "Lire un graphique : axes", episode: EP-M01, rappel: "Axes nommés à voix haute au premier diagramme"}
+
+objectifs:
+  fr:
+    - "Construire un tableau d'effectifs et de fréquences, et vérifier les totaux (effectif total, 100 %)"
+    - "Calculer et interpréter une fréquence cumulée (« au plus deux »)"
+    - "Comparer deux groupes de tailles différentes par leurs fréquences, pas leurs effectifs"
+  en:
+    - "Build a table of counts and frequencies, and check the totals (total count, 100%)"
+    - "Compute and interpret a cumulative frequency (“at most two”)"
+    - "Compare two groups of different sizes by their frequencies, not their counts"
+
+intuition: "Compter, puis rapporter au total : c'est déjà de la statistique."
+exemple_fil_rouge: "Frères et sœurs dans une classe fictive de 25 élèves (0 : 5, 1 : 10, 2 : 6, 3 : 4) ; deux classes de 25 et 40 élèves. L'exercice présente les 20 salariés de l'entreprise fictive suivie dans tout l'épisode."
+exemple_reel:
+  description: "Aucun : données fictives annoncées comme telles."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "Effectifs des frères et sœurs, des deux classes et des 20 salariés"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude", formule: "", transformations: ""}
+    definition: "Nombre de frères et sœurs ; mode de transport domicile-travail"
+    unite: "élèves ; salariés"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Fréquences (20, 40, 24, 16 %), cumuls (60, 84 %), 30 % et 40 %, fréquences de l'exercice"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Effectifs ci-dessus", formule: "effectif / total × 100 ; somme des fréquences précédentes", transformations: "aucune"}
+    definition: "Fréquence et fréquence cumulée"
+    unite: "pourcentage"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: ""
+
+affirmations_qualitatives:
+  - {affirmation: "Comparer des effectifs de groupes de tailles différentes est une erreur fréquente", statut: hypothese, source: "", verification: "À mesurer au pilote (diagnostic d'erreur)"}
+
+cycle_enquete:
+  question: "Montrée : comment résumer les réponses d'une classe ?"
+  population_et_mesure: "Montrée : 25 élèves, nombre de frères et sœurs"
+  origine_des_donnees: "Montrée : exemple fictif"
+  exploration: "Montrée : diagramme des effectifs"
+  methode_et_raison: "Montrée : effectifs, puis fréquences pour comparer"
+  hypotheses: "Montrée : nombres fictifs"
+  resultat_et_incertitude: "Pas d'incertitude : population complète"
+  interpretation_permise_et_interdite: "Montrée : comparer des fréquences, pas des effectifs"
+  reproductibilite: "Tous les calculs à l'écran, recalculés par le moteur"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Petits effectifs ronds, qu'on recompte de tête"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Population complète", intuition: "On décrit la classe, on ne généralise pas", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Sur un échantillon, une fréquence a une marge d'erreur (EP-S6)"}
+
+reproductibilite: "Calculs entièrement à l'écran ; blocs verifier de la fiche de production"
+
+deroule:
+  - {etape: question, contenu: "Mille réponses : comment les résumer ? On part de 25 élèves"}
+  - {etape: donnees, contenu: "Frères et sœurs : 5, 10, 6, 4 ; vérifier le total 25"}
+  - {etape: formalisation, contenu: "Fréquence = effectif ÷ total ; tableau 20, 40, 24, 16 % ; total 100 %"}
+  - {etape: raisonnement, contenu: "Fréquences cumulées : 20, 60, 84, 100 % ; 84 % ont au plus deux frères et sœurs"}
+  - {etape: limites, contenu: "Le piège : classes de 25 et 40 élèves, 10 contre 12, mais 40 % contre 30 %"}
+  - {etape: exercice, contenu: "20 salariés : 8 voiture, 6 transports en commun, 4 vélo, 2 marche"}
+  - {etape: correction, contenu: "40, 30, 20, 10 % ; cumul dans l'ordre choisi 40, 70, 90, 100 %"}
+  - {etape: rappel, contenu: "Dans l'épisode, remplacé par la synthèse commune ; transition vers le chapitre 2"}
+
+formules:
+  - {formule: "fréquence = effectif / total", explication_symboles: "effectif d'une modalité ; total des individus", conditions: "somme des fréquences = 100 %"}
+  - {formule: "fréquence cumulée = somme des fréquences jusqu'à la modalité", explication_symboles: "", conditions: "modalités rangées dans un ordre ; naturel si la variable est ordonnée, choisi sinon"}
+
+calculs_a_verifier:
+  - {expression: "5 + 10 + 6 + 4", attendu: 25, libelle: "Total des effectifs"}
+  - {expression: "10 / 25 * 100", attendu: 40, libelle: "Fréquence de « 1 », en %"}
+  - {expression: "20 + 40 + 24", attendu: 84, libelle: "Cumul jusqu'à 2"}
+  - {expression: "12 / 40 * 100", attendu: 30, libelle: "Classe B, en %"}
+  - {expression: "8 / 20 * 100", attendu: 40, libelle: "Voiture, en %"}
+  - {expression: "40 + 30 + 20", attendu: 90, libelle: "Cumul jusqu'au vélo"}
+
 idees_fausses:
-- idee: Oublier le total
-  desamorcee_a_l_etape: 'Compter : les effectifs'
-- idee: Comparer des effectifs de groupes de tailles différentes
-  desamorcee_a_l_etape: 'Le piège : comparer des effectifs'
+  - {idee: "Oublier le total", desamorcee_a_l_etape: "Compter : les effectifs"}
+  - {idee: "Comparer des effectifs de groupes de tailles différentes", desamorcee_a_l_etape: "Le piège : comparer des effectifs"}
+
 exercice:
-  question: '20 salariés : 8 voiture, 6 transports, 4 vélo, 2 marche. Fréquences et cumul ?'
-  correction: 40, 30, 20, 10 % ; cumul 40, 70, 90, 100 %
+  question: "20 salariés : 8 voiture, 6 transports en commun, 4 vélo, 2 marche. Fréquences et cumul ?"
+  correction: "8/20 = 40 %, 6/20 = 30 %, 4/20 = 20 %, 2/20 = 10 % ; cumul dans cet ordre 40, 70, 90, 100 %. La variable n'étant pas ordonnée, le cumul dépend de l'ordre choisi (ici du plus fréquent au moins fréquent)."
   pause_secondes: 8
+
 preuve_apprentissage:
-  tache: Répondre à la question de transfert sans aide
-  question_de_transfert: 'Ville A : 300 cyclistes sur 2 000 habitants ; ville B : 400 sur 5 000. Où fait-on le plus de vélo
-    ?'
-  diagnostic_d_erreur: '« 12 élèves, c''est plus que 10, donc la classe B a plus d''enfants uniques » : qu''est-ce qui manque
-    ?'
-duree_estimee_min:
-- 3
-- 5
+  tache: "Construire sans aide le tableau d'effectifs et de fréquences de l'exercice"
+  question_de_transfert: "Ville A : 300 cyclistes sur 2 000 habitants ; ville B : 400 sur 5 000. Où fait-on le plus de vélo ?"
+  diagnostic_d_erreur: "« 12 élèves, c'est plus que 10, donc la classe B a plus d'élèves avec un frère ou une sœur » : qu'est-ce qui manque ?"
+  limite_a_enoncer: "Une fréquence ne dit rien du nombre d'individus : 40 % de 25 ou de 25 000 n'ont pas le même poids"
+
+duree_estimee_min: [3, 4]       # dans l'épisode : sans accroche ni rappel propres
 format: educational
-declinaisons:
-- vertical_9_16
-- youtube_16_9
-licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+raison_du_format: "Chapitre 1 de l'épisode long EP-S2A ; reste publiable seul comme extrait"
+derives_short: []
+
+adaptation_en: "Mêmes nombres et même raisonnement ; séparateur décimal et de milliers anglais. Textes écrits pour l'anglais."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
 controle:
-  test_du_debutant: À mesurer
-  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
-  controle_mobile: Après rendu (inspection)
+  test_du_debutant: "Au pilote de l'épisode EP-S2A (3 à 5 débutants)"
+  relecture_definitions: "Contenu : Claude, ChatGPT et JG, 8/11/2026. Mise à niveau : Claude, 22/11/2026 ; validée par JG le 22/11/2026"
+  controle_mobile: "Après rendu (inspection)"

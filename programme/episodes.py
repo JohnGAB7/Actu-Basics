@@ -97,7 +97,26 @@ def controler() -> tuple[list[Episode], dict, list[str]]:
         milieu = (a + b) / 2
         if not DUREE_MIN <= milieu <= DUREE_MAX:
             erreurs.append(f"{ep.id} : durée estimée {milieu:.0f} min hors des bornes {DUREE_MIN}-{DUREE_MAX}")
+    erreurs += controler_compteurs(len(episodes))
     return episodes, unites, erreurs
+
+
+# Fichiers qui annoncent l'état ACTUEL du programme : le nombre d'épisodes qu'ils citent doit être
+# celui du catalogue (revue ChatGPT, PR #50, issue #54). Les historiques (REVISION, tableau des
+# versions de 01-synthese.md) citent d'anciens nombres à dessein et ne sont pas contrôlés.
+FICHIERS_ETAT = ["LISEZMOI.md"]
+
+
+def controler_compteurs(n_episodes: int) -> list[str]:
+    import re
+    erreurs = []
+    dossier = Path(__file__).resolve().parent
+    for nom in FICHIERS_ETAT:
+        texte = (dossier / nom).read_text(encoding="utf-8")
+        for m in re.finditer(r"(\d+) épisodes longs", texte):
+            if int(m.group(1)) != n_episodes:
+                erreurs.append(f"{nom} annonce {m.group(1)} épisodes longs, le catalogue en compte {n_episodes}")
+    return erreurs
 
 
 def duree(ep: Episode, unites: dict) -> tuple[float, float]:

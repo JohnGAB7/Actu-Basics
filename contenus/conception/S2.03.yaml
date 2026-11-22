@@ -1,44 +1,142 @@
-# Fiche de conception, niveau 1, vague 1, lot 2. Modèle : modeles/fiche-conception-episode.yaml
-# Script écrit le 2026-11-08, à valider avant tout rendu (JG). Sources : Aucun chiffre extérieur.
+# Fiche de conception, niveau 1, chapitre 3 de l'épisode EP-S2A. Modèle : modeles/fiche-conception-episode.yaml
+# Contenu validé par JG le 8/11/2026 ; mise à niveau dans la structure d'épisode long le 22/11/2026
+# (demande de JG). Complétude : la fiche validée parlait de la moyenne avant qu'elle soit enseignée
+# (chapitre 4) ; ces passages sont déplacés ou annoncés, voir « changements_dans_l_episode ».
 id_programme: S2.03
-statut: valide
+episode: EP-S2A
+rang_dans_episode: 3
+statut: valide_jg               # mise à niveau validée par JG le 22/11/2026 (PR #50)
 fiche_production: contenus/fiches/2026-11-n1-s2-03-la-forme-d-une-distribution.yaml
+
+titres:
+  fr: "La forme d'une distribution"
+  en: "The shape of a distribution"
 question_centrale:
-  fr: Que nous apprend la silhouette d'un histogramme avant tout calcul ?
-  en: What does a histogram's shape tell us before any calculation?
-position:
-  pilier: statistiques
-  niveau: 1
-  module: S2
-  rang_dans_module: 3
+  fr: "Que nous apprend la silhouette d'un histogramme avant tout calcul ?"
+  en: "What does a histogram's shape tell us before any calculation?"
+
+position: {pilier: statistiques, niveau: 1, module: S2, rang_dans_module: 3}
+
 public:
-  prerequis:
-  - S2.02
+  prerequis: [S2.02]
   niveau_maths: M0
   rappel_conseille: []
-intuition: Deux bosses signalent souvent deux populations mélangées.
-exemple_fil_rouge: Notes fictives (symétrique), revenus fictifs (queue à droite), tailles fictives d'adultes (deux bosses).
-exemple_reel: null
+  notions_utilisees:
+    - {notion: "Histogramme, classe, effectif", episode: "EP-S2A, chapitre 2", rappel: ""}
+    - {notion: "Distribution (comment les valeurs se répartissent)", episode: "", rappel: "Défini en une phrase à l'ouverture du chapitre"}
+    - {notion: "Moyenne", episode: "EP-S2A, chapitre 4 (après)", rappel: "Pas utilisée ici : les deux passages qui la citaient sont déplacés au chapitre 4 ou annoncés pour le chapitre 5"}
+
+objectifs:
+  fr:
+    - "Décrire une distribution : symétrique, queue à droite, queue à gauche, une ou deux bosses (mode)"
+    - "Relier une forme à une explication plausible (deux groupes mélangés, quelques valeurs extrêmes)"
+  en:
+    - "Describe a distribution: symmetric, right tail, left tail, one or two peaks (mode)"
+    - "Link a shape to a plausible explanation (two mixed groups, a few extreme values)"
+
+intuition: "Deux bosses signalent souvent deux populations mélangées."
+exemple_fil_rouge: "Ouverture sur les trajets des 20 salariés (une bosse, petite queue à droite, propriété de ces valeurs fictives). Puis notes fictives de 20 élèves (symétrique), revenus fictifs de 25 personnes (queue à droite), tailles fictives de 44 adultes (deux bosses)."
+exemple_reel:
+  description: "Aucun : formes construites. Les associations de l'exercice (revenus, âge au décès…) sont des formes typiques présentées comme plausibles, pas comme des mesures."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "Effectifs des notes, revenus, tailles et des formes A à D"
+    support: graphique
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude", formule: "", transformations: ""}
+    definition: "Distributions construites pour illustrer une forme"
+    unite: "élèves ; personnes ; adultes"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Totaux (20, 25, 44)"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Effectifs ci-dessus", formule: "somme", transformations: "aucune"}
+    definition: ""
+    unite: ""
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: ""
+
+affirmations_qualitatives:
+  - {affirmation: "Les revenus ont souvent une queue à droite ; l'âge au décès une queue à gauche ; les tailles d'adultes, hommes et femmes mélangés, peuvent montrer deux bosses", statut: hypothese, source: "", verification: "Présentées comme formes plausibles des exemples fictifs ; à sourcer (Insee, ONS) avant d'en faire des affirmations sur des populations réelles"}
+
+cycle_enquete:
+  question: "Montrée : que dit la forme avant tout calcul ?"
+  population_et_mesure: "Montrée : chaque exemple nomme sa population et sa variable"
+  origine_des_donnees: "Montrée : exemples fictifs"
+  exploration: "Montrée : c'est l'objet du chapitre"
+  methode_et_raison: "Montrée : lire symétrie, queue, nombre de bosses"
+  hypotheses: "Montrée : formes construites"
+  resultat_et_incertitude: "Pas d'incertitude : description"
+  interpretation_permise_et_interdite: "Montrée : deux bosses suggèrent deux groupes, sans le prouver ; il faut une variable qui les sépare"
+  reproductibilite: "Effectifs affichés"
+
+donnees_ou_simulation:
+  type: donnees_synthetiques
+  raison_du_choix: "Des formes nettes, sans bruit, pour apprendre à les reconnaître"
+  source: {organisme: "", url: "", licence: "", population: "Fictive", variables: "", periode: "", limites: "Les vraies distributions sont moins nettes"}
+  parametres_simulation: "Aucun tirage aléatoire"
+
+hypotheses_et_limites:
+  - {hypothese: "Une forme suggère une explication, elle ne la démontre pas", intuition: "Deux bosses peuvent venir d'autre chose que deux groupes (classes mal choisies)", testable: "Séparer par une variable (sexe) et revoir les histogrammes", non_testable: "", diagnostic: "Changer la largeur des classes (laboratoire 1)", si_elle_echoue: "La bosse était un artefact des classes"}
+
+reproductibilite: "Effectifs à l'écran ; blocs verifier de la fiche de production"
+
+deroule:
+  - {etape: question, contenu: "Avant tout calcul, regardez la silhouette ; ouverture sur les trajets des 20 salariés"}
+  - {etape: donnees, contenu: "Symétrique : notes de 20 élèves"}
+  - {etape: donnees, contenu: "Asymétrique : revenus de 25 personnes, longue queue à droite"}
+  - {etape: raisonnement, contenu: "Une queue d'un côté ou de l'autre ; ce qu'elle fait à la moyenne : annoncé pour le chapitre 5"}
+  - {etape: raisonnement, contenu: "Deux bosses : tailles de 44 adultes ; un seul nombre « central » ne décrirait personne (la moyenne dans le creux passe au chapitre 4)"}
+  - {etape: exercice, contenu: "Associer les formes A, B, C, D à âge au décès, notes, tailles, revenus"}
+  - {etape: correction, contenu: "A âge au décès, B notes, C tailles, D revenus"}
+
+changements_dans_l_episode:
+  - "Scène « la queue tire la moyenne » : remplacée par « ce qu'une queue fait à la moyenne, on le verra au chapitre 5 »."
+  - "Scène « la moyenne tombe dans le creux » (environ 170 cm, calculée par les centres de classes) : déplacée à la fin du chapitre 4, avec le rappel du calcul par centres de classes."
+  - "Question de transfert (moyenne des temps d'attente aux urgences) : posée après le chapitre 5."
+
+formules: []
+
+calculs_a_verifier:
+  - {expression: "1 + 4 + 10 + 4 + 1", attendu: 20, libelle: "Total des élèves"}
+  - {expression: "2 + 9 + 6 + 3 + 2 + 1 + 1 + 1", attendu: 25, libelle: "Total des personnes"}
+  - {expression: "2 + 6 + 9 + 5 + 6 + 9 + 5 + 2", attendu: 44, libelle: "Total des adultes"}
+
 idees_fausses:
-- idee: Résumer une distribution à deux bosses par un seul chiffre
-  desamorcee_a_l_etape: 'Deux bosses : deux groupes ?'
+  - {idee: "Résumer une distribution à deux bosses par un seul chiffre", desamorcee_a_l_etape: "Deux bosses : deux groupes ?"}
+
 exercice:
-  question: Associer symétrique, queue à droite, queue à gauche, deux bosses à âge au décès, revenus, notes, tailles
-  correction: Notes, revenus, âge au décès, tailles
+  question: "Associer symétrique, queue à droite, queue à gauche, deux bosses à âge au décès, revenus, notes, tailles"
+  correction: "Âge au décès : queue à gauche (A) ; notes : symétrique (B) ; tailles : deux bosses (C) ; revenus : queue à droite (D)"
   pause_secondes: 8
+
 preuve_apprentissage:
-  tache: Répondre à la question de transfert sans aide
-  question_de_transfert: Les temps d'attente aux urgences ont une longue queue à droite. Que dire de leur moyenne ?
-  diagnostic_d_erreur: '« La taille moyenne est 170 cm, donc la plupart des adultes mesurent 170 cm » : où est l''erreur ?'
-duree_estimee_min:
-- 4
-- 6
+  tache: "Décrire sans aide la forme d'un histogramme inconnu (symétrie, queue, bosses)"
+  question_de_transfert: "Après le chapitre 5 : les temps d'attente aux urgences ont une longue queue à droite. Que dire de leur moyenne par rapport à leur médiane ?"
+  diagnostic_d_erreur: "Après le chapitre 4 : « La taille moyenne est 170 cm, donc la plupart des adultes mesurent 170 cm » : où est l'erreur ?"
+  limite_a_enoncer: "Une forme suggère une explication, elle ne la prouve pas"
+
+duree_estimee_min: [4, 5]
 format: educational
-declinaisons:
-- vertical_9_16
-- youtube_16_9
-licences: Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur.
+raison_du_format: "Chapitre 3 de l'épisode long EP-S2A ; publiable seul comme extrait après les ajustements ci-dessus"
+derives_short: []
+
+adaptation_en: "Mêmes nombres ; « right-skewed / left-skewed », « bimodal » glosés."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+
 controle:
-  test_du_debutant: À mesurer
-  relecture_definitions: Claude, 8/11/2026 ; ChatGPT 8/11/2026 ; validé par JG le 8/11/2026
-  controle_mobile: Après rendu (inspection)
+  test_du_debutant: "Au pilote de l'épisode EP-S2A (3 à 5 débutants)"
+  relecture_definitions: "Contenu : Claude, ChatGPT et JG, 8/11/2026. Mise à niveau : Claude, 22/11/2026 ; validée par JG le 22/11/2026"
+  controle_mobile: "Après rendu (inspection)"

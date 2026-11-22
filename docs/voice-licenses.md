@@ -25,10 +25,10 @@
 | Conversion ONNX du modèle | `kokoro-v1.0.onnx` (float32, « optimized f32 version from taylorchu/kokoro-onnx ») | https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0 (conversion faite par https://github.com/taylorchu/kokoro-onnx, publication v0.2.0) | SHA-256 `7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5`, 325 532 387 octets |
 | Fichier des voix | `voices-v1.0.bin` (vecteurs de style au format npz, 54 voix dont `ff_siwis` et `af_heart`) | https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0 | SHA-256 `bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d`, 28 214 398 octets |
 | Code d'inférence | `kokoro-onnx` 0.5.0 | PyPI (https://github.com/thewh1teagle/kokoro-onnx) | épinglé dans `production/requirements-voix.txt` |
-| Moteur ONNX | `onnxruntime` 1.29.0 en local, 1.31.1 dans GitHub Actions (non épinglé) | PyPI | dépendance de kokoro-onnx (≥ 1.20.1) |
+| Moteur ONNX | `onnxruntime` 1.32.0 dans GitHub Actions, épinglé depuis le 22/11/2026 (`production/contraintes.txt`) | PyPI | dépendance de kokoro-onnx (≥ 1.20.1) |
 | Phonémisation | `phonemizer-fork` 3.3.2 | PyPI | dépendance de kokoro-onnx |
 | Bibliothèque espeak-ng | `espeakng-loader` 0.2.4, qui embarque `libespeak-ng.so.1.52.0` | PyPI (https://github.com/thewh1teagle/espeakng-loader) | dépendance de kokoro-onnx |
-| Calcul | `numpy` 2.5.3 | PyPI | — |
+| Calcul | `numpy` 2.5.5 dans GitHub Actions, épinglé (`production/contraintes.txt`) | PyPI | — |
 | Secours : Piper | `piper-tts` 1.8.0, voix `fr-siwis-medium` et `en-us-libritts-high` (publication `rhasspy/piper` v0.0.2) | PyPI, GitHub | inchangé |
 
 `python production/telecharger_voix.py` télécharge les deux fichiers Kokoro depuis GitHub et **refuse** un fichier dont l'empreinte SHA-256 diffère de celle de `production/tts.yaml`. Les fichiers sont rangés dans `production/voix/`, exclu de Git.

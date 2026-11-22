@@ -1997,3 +1997,80 @@ def test_carrousel_garde_le_nom_de_marque():
     g, h, dr, _ = r.zone
     assert ImageChops.difference(im.crop((g, h, g + 300, h + 40)), r._fond.crop((g, h, g + 300, h + 40))).getbbox()
     assert not r.mobile_prevu(ed.scenes[1])
+
+
+# ---------------------------------------------------------------- revue ChatGPT de la PR #50
+
+def test_empreinte_modele_depend_du_contenu_pas_de_la_taille(tmp_path):
+    """Deux modèles différents de même nom et même taille ne partagent pas le cache audio (issue #53)."""
+    from lmec.tts import empreinte_fichier
+    a, b = tmp_path / "a" / "voix.onnx", tmp_path / "b" / "voix.onnx"
+    a.parent.mkdir(); b.parent.mkdir()
+    a.write_bytes(b"\x00" * 1000); b.write_bytes(b"\x00" * 999 + b"\x01")
+    assert a.stat().st_size == b.stat().st_size
+    assert empreinte_fichier(a) != empreinte_fichier(b)
+    assert empreinte_fichier(a) == empreinte_fichier(a).strip() and empreinte_fichier(a).startswith("sha256-")
+    piper_a = Piper({"modele": str(a)}, "fr")
+    piper_b = Piper({"modele": str(b)}, "fr")
+    assert piper_a.signature() != piper_b.signature()
+
+
+def test_laboratoire_trajets_ep_s2a():
+    """Les nombres annoncés dans contenus/conception/EP-S2A.yaml sortent du module de calcul (issue #55)."""
+    from lmec import laboratoires as lab
+    t = [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
+    assert lab.moyenne(t) == 21.25 and lab.mediane(t) == 20
+    assert [c.effectif for c in lab.classes_regulieres(t, 10)] == [3, 7, 6, 3, 1]
+    assert [c.effectif for c in lab.classes_regulieres(t, 20)] == [10, 9, 1]
+    cinq = lab.classes_regulieres(t, 5)
+    assert [c.effectif for c in cinq] == [1, 2, 3, 4, 2, 4, 1, 2, 1]
+    assert cinq[-1].fin == 45 and max(t) < cinq[-1].fin          # la dernière classe dépasse le maximum
+    # Borne gauche incluse, droite exclue : 15 va dans [15 ; 20[, 20 dans [20 ; 30[.
+    assert lab.classes_regulieres([15], 5)[-1].debut == 15
+    assert lab.classes_regulieres([0, 20], 10)[-1] == lab.Classe(20, 30, 1)
+    demenage = lab.remplacer(t, t.index(44), 120)
+    assert len(demenage) == 20 and lab.moyenne(demenage) == pytest.approx(25.05) and lab.mediane(demenage) == 20
+
+
+def test_laboratoire_classes_inegales_et_normalisations():
+    from lmec import laboratoires as lab
+    ages = lab.classes_depuis_effectifs([0, 20, 30, 60], [8, 12, 20])
+    assert [round(c.densite_effectif(), 2) for c in ages] == [0.4, 1.2, 0.67]
+    assert ages[1].densite_effectif() * ages[1].largeur == 12                 # aire = effectif
+    assert lab.aire_totale(ages, "effectif") == pytest.approx(40)             # aire totale = N
+    assert lab.aire_totale(ages, "frequence") == pytest.approx(1)             # densité de fréquence
+    with pytest.raises(ValueError):
+        lab.classes_inegales([5, 60], [0, 20, 30, 60])                         # 60 hors de [0 ; 60[
+
+
+def test_laboratoire_curseur_recalcule_la_mediane_apres_tri():
+    from lmec import laboratoires as lab
+    cafe = [1600, 1800, 1900, 2000, 2200, 2300, 2500, 2700, 2800, 2300]
+    etats = lab.balayage(cafe, 9, [2300, 2800, 50000, 200000])
+    assert [e["mediane"] for e in etats] == [2250] * 4                        # dès 2 300 € : 2 250 €
+    assert etats[0]["moyenne"] == 2210 and etats[-1]["moyenne"] == 21980
+    assert etats[-1]["serie_triee"][-1] == 200000
+    bas = lab.balayage(cafe, 9, [1000, 2250])
+    assert [e["mediane"] for e in bas] == [2100, 2225]                       # sous 2 300 € la médiane bouge
+    assert lab.part_sous([5, 8, 12, 15, 15, 18, 22, 25, 30, 90], 24) == 0.7
+
+
+def test_manifeste_de_rendu(tmp_path, monkeypatch):
+    """Commit, empreintes et autorisation consignés (issue #51)."""
+    sys.path.insert(0, str(RACINE / "production"))
+    import manifeste
+    fiche = tmp_path / "fiche.yaml"
+    fiche.write_text("id: x\n", encoding="utf-8")
+    sortie = tmp_path / "sortie"
+    (sortie / "x" / "fr").mkdir(parents=True)
+    (sortie / "x" / "fr" / "rapport-qc.md").write_text("ok", encoding="utf-8")
+    monkeypatch.setenv("GITHUB_SHA", "abc123")
+    monkeypatch.setenv("GITHUB_ACTOR", "relecteur")
+    monkeypatch.delenv("GITHUB_TRIGGERING_ACTOR", raising=False)   # défini sur le runner GitHub
+    monkeypatch.setenv("ENVIRONNEMENT_GITHUB", "production")
+    assert manifeste.main([str(fiche), "--sortie", str(sortie), "--voix", "kokoro"]) == 0
+    m = json.loads((sortie / "manifeste.json").read_text(encoding="utf-8"))
+    assert m["commit"] == "abc123" and m["autorisation"]["environnement"] == "production"
+    assert m["autorisation"]["lance_par"] == "relecteur"
+    assert m["fiche"]["sha256"] == manifeste.sha256(fiche) and len(m["moteur_sha256"]) == 64
+    assert list(m["rapports_qc_sha256"]) == ["x/fr/rapport-qc.md"]

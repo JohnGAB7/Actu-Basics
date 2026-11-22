@@ -1,6 +1,10 @@
 # VALIDATION FINALE — lancée à la main : onglet Actions → « Validation finale » → Run workflow.
 # Refuse toute fiche non validée ou avec une erreur bloquante, y compris une voix absente
 # ou de test. Seuls les fichiers produits ici sont prêts à publier (publication toujours manuelle).
+# Autorisation : le job attend l'approbation de l'environnement GitHub « production » (relecteur
+# requis : JG). C'est cette approbation, liée à ce run donc à ce commit, qui autorise le rendu ;
+# « valide_par » dans la fiche n'est qu'une métadonnée. Le manifeste (sortie/manifeste.json)
+# consigne commit, empreintes et acteur. Rendu final depuis main seulement (contenu fusionné).
 name: Validation finale
 
 on:
@@ -21,15 +25,24 @@ permissions:
 jobs:
   final:
     runs-on: ubuntu-latest
+    environment: production   # Settings → Environments → production → Required reviewers : JG
     timeout-minutes: 120   # vertical 9:16 puis déclinaison 16:9 YouTube
     steps:
+      - name: Rendu final depuis main seulement
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Le rendu final se lance depuis main (contenu relu et fusionné), pas depuis ${{ github.ref }}." >&2
+          exit 1
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: production/requirements*.txt
+          cache-dependency-path: |
+            production/requirements*.txt
+            production/contraintes.txt
 
       - name: Outils système (ffmpeg, police Inter)
         run: |
@@ -37,7 +50,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg fonts-inter
 
       - name: Dépendances Python
-        run: pip install -r production/requirements.txt -r production/requirements-voix.txt pytest
+        run: pip install -r production/requirements.txt -r production/requirements-voix.txt pytest -c production/contraintes.txt
 
       - name: Tests
         run: python -m pytest production/tests -q
@@ -84,6 +97,13 @@ jobs:
           shopt -s nullglob
           for d in sortie-16x9/*-16x9; do cp -r "$d" sortie/; done
           cat sortie-16x9/resume.md >> sortie/resume.md
+
+      - name: Manifeste du rendu (commit, empreintes, autorisation)
+        env:
+          FICHE: ${{ github.event.inputs.fiche }}
+          VOIX: ${{ github.event.inputs.voix }}
+          ENVIRONNEMENT_GITHUB: production
+        run: python production/manifeste.py "$FICHE" --sortie sortie --voix "$VOIX"
 
       # Sauvegardé même en cas de refus : une voix payée n'est jamais perdue.
       - name: Cache des voix déjà synthétisées (sauvegarde)
