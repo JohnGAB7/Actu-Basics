@@ -34,6 +34,19 @@ Modèles :
                 espacement partout), « surface » affiche densité × largeur = effectif ;
 - apercu      : bande-annonce de l'épisode ; une carte par compétence (« cartes » : icone, texte), qui
                 apparaît quand la voix l'annonce (une proposition par carte, après l'annonce) ;
+- cumul       : fréquences cumulées ; une barre de 100 % qui se remplit catégorie par catégorie
+                (« categories », « frequences » en %), le cumul écrit à chaque palier ;
+- partage     : la moyenne comme partage égal ; « montants » en briques, versés dans la « cagnotte »,
+                puis « partage » en parts égales ;
+- ponderee    : moyenne pondérée ; « notes » (valeur, coef, libelle) en pastilles, « poids » ajoute une
+                pastille par point de coefficient, « ponderee » fait glisser la moyenne simple vers la pondérée ;
+- decoupages  : les mêmes « valeurs » en histogrammes côte à côte, une « largeur » de classes par panneau ;
+- asymetrie   : trois distributions (traîne à droite, symétrique, traîne à gauche), médiane et moyenne
+                calculées sur les courbes ; présenté comme une tendance fréquente, pas une loi ;
+- melange     : un histogramme à deux bosses (« groupes » : deux listes d'effectifs), puis deux
+                sous-distributions colorées, à titre d'hypothèse (« prudence » : l'histogramme ne le prouve pas) ;
+- questions   : deux questions côte à côte (question, reponse, icone), chacune mène à son indicateur ; « deux »
+                les relie ;
 - selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
                 celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
                 des données observées, « filtre » trace la flèche « sélection par la survie ».
@@ -47,7 +60,8 @@ from fractions import Fraction
 from .formatage import formater_nombre
 
 MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille",
-           "pastilles", "curseur", "equilibre", "elimination", "densite", "apercu")
+           "pastilles", "curseur", "equilibre", "elimination", "densite", "apercu",
+           "cumul", "partage", "ponderee", "decoupages", "asymetrie", "melange", "questions")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
@@ -63,6 +77,13 @@ PHASES = {
     "elimination": ("rangement", "elimination", "milieu", "ajout", "pair"),
     "densite": ("effectif", "densite", "surface"),
     "apercu": ("carte",),
+    "cumul": ("palier",),
+    "partage": ("montants", "cagnotte", "partage"),
+    "ponderee": ("notes", "poids", "ponderee"),
+    "decoupages": ("decoupage",),
+    "asymetrie": ("queue_droite", "symetrique", "queue_gauche"),
+    "melange": ("global", "hypothese", "prudence"),
+    "questions": ("question", "deux"),
 }
 ICONES_APERCU = ("tableau", "histogramme", "forme", "equilibre", "mediane", "laboratoire")
 PHASES_DEFAUT = {
@@ -80,6 +101,13 @@ PHASES_DEFAUT = {
     "elimination": ["rangement", "elimination", "milieu", "ajout", "pair"],
     "densite": ["effectif", "densite", "surface"],
     "apercu": ["carte"],
+    "cumul": ["palier"],
+    "partage": ["montants", "cagnotte", "partage"],
+    "ponderee": ["notes", "poids", "ponderee"],
+    "decoupages": ["decoupage", "decoupage"],
+    "asymetrie": ["queue_droite", "symetrique", "queue_gauche"],
+    "melange": ["global", "hypothese", "prudence"],
+    "questions": ["question", "question", "deux"],
 }
 LIBELLES = {
     "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents",
@@ -160,7 +188,10 @@ class Animations:
                       "serie": 1.8, "mediane": 1.0, "moyenne": 1.0, "curseur": 4.0,
                       "appui": 2.4, "ecarts": 2.4, "rangement": 1.6, "elimination": 3.0, "milieu": 1.0,
                       "ajout": 1.6, "pair": 3.4, "effectif": 1.6, "densite": 2.4, "surface": 1.4,
-                      "carte": 0.9}
+                      "carte": 0.9, "palier": 1.0, "montants": 1.4, "cagnotte": 1.8, "partage": 1.8,
+                      "notes": 1.2, "poids": 1.6, "ponderee": 1.6, "decoupage": 1.6, "queue_droite": 2.0,
+                      "symetrique": 2.0, "queue_gauche": 2.0, "global": 1.6, "hypothese": 2.0, "prudence": 1.0,
+                      "question": 1.2, "deux": 0.8}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -1279,6 +1310,423 @@ class AnimationsDonnees:
             xm = x0 + 0.27 * w
             d.polygon(((xm, ya + 6), (xm - 9, ya + 22), (xm + 9, ya + 22)), fill=barre)
 
+    # ------------------------------------------------------------------ revue du 22/11/2026 : sept modèles
+    def _fond_a(self, x, y):
+        return self._fond.getpixel((int(max(0, min(x, self.largeur - 1))), int(max(0, min(y, self.hauteur - 1)))))
+
+    def _pct(self, v):
+        return formater_nombre(round(v, 1), self.langue) + (" %" if self.langue == "fr" else "%")
+
+    def _texte_centre(self, d, txt, police, cx, y, couleur, g=None, dr=None):
+        w = police.getlength(txt)
+        x = cx - w / 2
+        if g is not None:
+            x = max(g, min(x, dr - w))
+        d.text((x, y), txt, font=police, fill=couleur)
+
+    def _panneaux(self, zone, n, gap=48):
+        """n sous-zones côte à côte si la zone est large, empilées sinon."""
+        g, haut, dr, bas = zone
+        if (dr - g) >= 1.25 * (bas - haut) or n == 1:
+            w = (dr - g - (n - 1) * gap) / n
+            return [(g + i * (w + gap), haut, g + i * (w + gap) + w, bas) for i in range(n)]
+        h = (bas - haut - (n - 1) * gap * 0.6) / n
+        return [(g, haut + i * (h + gap * 0.6), dr, haut + i * (h + gap * 0.6) + h) for i in range(n)]
+
+    def _anim_cumul(self, d, scene, plan, zone, t, ctx):
+        """Fréquences cumulées : une barre de 100 % qui se remplit catégorie après catégorie ; le cumul
+        s'inscrit à chaque palier (20 %, 60 %, 84 %, 100 %)."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        cats, freqs = conf["categories"], conf["frequences"]
+        g, haut, dr, bas = zone
+        hb = min(170.0, (bas - haut) * 0.26)
+        yb = haut + (bas - haut) * 0.36
+        fond = self._fond_a(g, yb)
+        x_de = lambda p: g + (dr - g) * p / 100
+        d.rounded_rectangle((g, yb, dr, yb + hb), radius=14, outline=_melange(fond, self.c["secondaire"], 0.6), width=3)
+        pc, pf, pk = self.police("gras", 42), self.police("regulier", 34), self.police("gras", 46)
+        courante = self._phase_courante(plan, t)
+        cumul = 0.0
+        paliers = []
+        for i, (c, f) in enumerate(zip(cats, freqs)):
+            p = plan[i] if i < len(plan) else None
+            k = _ease(self._avancee(p, t)) if p else 1.0
+            if k <= 0:
+                break
+            x0, x1 = x_de(cumul), x_de(cumul + f * k)
+            vive = t is not None and i == courante
+            if x1 - x0 > 6:
+                couleur = self.c["or"] if vive else self.c["barre"]
+                d.rectangle((x0 + 3, yb + 5, x1 - 3, yb + hb - 5),
+                            fill=_melange(fond, couleur, 0.85 if vive else (0.55 if i % 2 == 0 else 0.38)))
+            cx = (x_de(cumul) + x_de(cumul + f)) / 2
+            encre = _melange(fond, self.c["texte"], k)
+            self._texte_centre(d, c, pc, cx, yb + hb + 18, encre, g, dr)
+            self._texte_centre(d, "+" + self._pct(f) if i else self._pct(f), pf, cx, yb + hb + 72,
+                               _melange(fond, self.c["secondaire"], k), g, dr)
+            cumul += f
+            # Palier : le cumul au-dessus de la frontière.
+            xk = x_de(cumul)
+            a = k * (1.0 if (vive or t is None or i == len(cats) - 1) else 0.55)
+            txt = self._pct(cumul)
+            w_t = pk.getlength(txt)
+            x_t = max(g, min(xk - w_t / 2, dr - w_t))
+            monte = bool(paliers) and x_t < paliers[-1][0] + paliers[-1][1] + 16 and not paliers[-1][2]
+            paliers.append((x_t, w_t, monte))
+            y_t = yb - 80 - (58 if monte else 0)
+            d.line((xk, y_t + 54, xk, yb + hb + 4), fill=_melange(fond, self.c["or"], a), width=4)
+            d.text((x_t, y_t), txt, font=pk,
+                   fill=_melange(fond, self.c["accent"] if vive or t is None else self.c["texte"], a))
+
+    def _anim_partage(self, d, scene, plan, zone, t, ctx):
+        """La moyenne, un partage égal : chaque montant en briques, toutes versées dans la cagnotte, puis
+        redistribuées en parts égales (la cagnotte a déjà la forme du partage)."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        valeurs, unite = [int(v) for v in conf["valeurs"]], conf.get("unite", "")
+        n = len(valeurs)
+        total = sum(valeurs)
+        moy = total // n
+        bloc = math.gcd(*valeurs, moy)
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom, defaut=0.0: (self._avancee(par[nom], t) if nom in par else defaut)
+        a_mo, a_ca, a_pa = av("montants", 1.0), av("cagnotte"), av("partage")
+        pile_max = max(max(valeurs), moy) // bloc
+        y_base = bas - 120
+        h_pot = moy // bloc
+        dispo = y_base - haut - 120
+        hb = min(46.0, dispo / (pile_max + h_pot + 2.2))
+        pas_x = (dr - g) / n
+        wb = min(130.0, pas_x * 0.5)
+        xs = [g + pas_x * (i + 0.5) for i in range(n)]
+        y_pot = haut + 90 + h_pot * hb               # base de la cagnotte
+        fond = self._fond_a(g, y_base)
+        # Briques : propriétaire, position de départ, dans la cagnotte, à l'arrivée.
+        briques = []
+        j = 0
+        for i, v in enumerate(valeurs):
+            for niveau in range(v // bloc):
+                briques.append((i, niveau, j))
+                j += 1
+        n_b = len(briques)
+        w_pot = n * (wb + 6)
+        x_pot0 = (g + dr) / 2 - w_pot / 2
+        if a_ca > 0:
+            ka = _ease(min(1.0, a_ca * 1.6))
+            d.rounded_rectangle((x_pot0 - 18, y_pot - h_pot * hb - 14, x_pot0 + w_pot + 12, y_pot + 10), radius=16,
+                                outline=_melange(fond, self.c["or"], 0.8 * ka), width=3)
+        for i, niveau, j in briques:
+            k_ap = _ease((a_mo * (pile_max + 1) - niveau) / 1.0) if t is not None and "montants" in par else 1.0
+            if k_ap <= 0:
+                continue
+            xa, ya = xs[i] - wb / 2, y_base - (niveau + 1) * hb
+            xp, yp = x_pot0 + (j % n) * (wb + 6), y_pot - (j // n + 1) * hb
+            xf, yf = xs[j % n] - wb / 2, y_base - (j // n + 1) * hb
+            d_ca = _ease((a_ca * 1.5 - 0.5 * j / max(1, n_b - 1)))
+            d_pa = _ease((a_pa * 1.5 - 0.5 * (j % n) / max(1, n - 1)))
+            x, y = xa + (xp - xa) * d_ca, ya + (yp - ya) * d_ca
+            x, y = x + (xf - x) * d_pa, y + (yf - y) * d_pa
+            y += (1 - k_ap) * 40
+            teinte = _melange(self.c["barre"], self.c["or"], i / max(1, n - 1))
+            d.rounded_rectangle((x, y + 2, x + wb, y + hb - 2), radius=6, fill=_melange(fond, teinte, k_ap))
+        # Personnes et montants.
+        pm, pg = self.police("gras", 40), self.police("affichage", 54)
+        for i, v in enumerate(valeurs):
+            self._personne(d, xs[i], y_base + 58, 34, _melange(fond, self.c["secondaire"], 0.8))
+            for txt, k, couleur in ((self._montant(v, unite), (1 - _ease(a_ca * 2)) if a_mo > 0 else 0, self.c["texte"]),
+                                    (self._montant(moy, unite), _ease((a_pa - 0.6) / 0.4), self.c["accent"])):
+                if k > 0.02:
+                    h_pile = (v if couleur == self.c["texte"] else moy) // bloc * hb
+                    self._texte_centre(d, txt, pm, xs[i], y_base - h_pile - 56, _melange(fond, couleur, k))
+        if a_ca > 0:
+            k = _ease((a_ca - 0.5) / 0.5) * (1 - 0.5 * _ease(a_pa))
+            lib = LIBELLES_DONNEES[self.langue]["cagnotte"]
+            self._texte_centre(d, f"{lib} {self._montant(total, unite)}", pg, (g + dr) / 2, haut + 4,
+                               _melange(fond, self.c["accent"], k))
+
+    def _anim_ponderee(self, d, scene, plan, zone, t, ctx):
+        """Moyenne pondérée : une pastille par note, puis autant de pastilles que le coefficient ; le repère
+        de la moyenne glisse de la moyenne simple à la moyenne pondérée."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        notes = conf["notes"]
+        g, haut, dr, bas = zone
+        vals = [n_["valeur"] for n_ in notes]
+        simple = sum(vals) / len(vals)
+        pond = sum(n_["valeur"] * n_["coef"] for n_ in notes) / sum(n_["coef"] for n_ in notes)
+        mini, maxi = math.floor(min(vals) - 2), math.ceil(max(vals) + 2)
+        pas = _pas_rond((maxi - mini) / 8)
+        mini, maxi = math.floor(mini / pas) * pas, math.ceil(maxi / pas) * pas
+        grads = [mini + k * pas for k in range(int(round((maxi - mini) / pas)) + 1)]
+        y_axe = haut + (bas - haut) * 0.74
+        fond = self._fond_a(g, y_axe)
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom, defaut=0.0: (_ease(self._avancee(par[nom], t)) if nom in par else defaut)
+        k_no, k_po, k_mo = av("notes", 1.0), av("poids"), av("ponderee")
+        x_de = self._axe(d, g, dr, y_axe, mini, maxi, grads, "", fond, eviter=[simple, pond] if k_no >= 1 else [])
+        r = max(14.0, min(40.0, (y_axe - haut - 130) / (2.1 * max(n_["coef"] for n_ in notes))))
+        pv, pl = self.police("gras", int(r * 0.95)), self.police("gras", 34)
+        for n_ in notes:
+            x = x_de(n_["valeur"])
+            hauteur = 1
+            for c in range(n_["coef"]):
+                k = k_no if c == 0 else _ease((k_po * n_["coef"] - (c - 1)) / 1.0) if n_["coef"] > 1 else 0
+                if k <= 0:
+                    continue
+                hauteur = c + 1
+                y = y_axe - 12 - r - c * 2.1 * r + (1 - k) * 40
+                d.ellipse((x - r, y - r, x + r, y + r), fill=_melange(fond, self.c["or"] if c else self.c["barre"], k))
+                txt = formater_nombre(n_["valeur"], self.langue)
+                self._texte_centre(d, txt, pv, x, y - r * 0.62, _melange(fond, (255, 255, 255), k))
+            y_lib = y_axe - 12 - (2.1 * hauteur - 0.1) * r - 48
+            lib = n_.get("libelle", "")
+            coef = f"× {n_['coef']}"
+            txt = f"{lib} {coef}" if (lib and k_po > 0.5) else (lib or "")
+            if k_po > 0.5 and not lib:
+                txt = coef
+            if txt:
+                self._texte_centre(d, txt, pl, x, y_lib, _melange(fond, self.c["texte"], k_no), g, dr)
+        lib = LIBELLES_DONNEES[self.langue]
+        k_s = _ease((self._avancee(par["notes"], t) - 0.7) / 0.3) if (t is not None and "notes" in par) else 1.0
+        if k_s > 0:
+            xs_ = x_de(simple)
+            d.line((xs_, y_axe + 4, xs_, y_axe + 58), fill=_melange(fond, self.c["secondaire"], k_s), width=3)
+            self._texte_centre(d, f"{lib['moyenne_simple']} {self._montant(simple, '', 1)}", pl, xs_, y_axe + 60,
+                               _melange(fond, self.c["secondaire"], k_s * (1 - 0.4 * k_mo)), g, dr)
+        if k_mo > 0:
+            xm = x_de(simple + (pond - simple) * k_mo)
+            d.line((xm, y_axe - 8, xm, y_axe + 100), fill=_melange(fond, self.c["or"], 1.0), width=5)
+            self._texte_centre(d, f"{lib['moyenne_ponderee']} {self._montant(pond, '', 1)}", pl, xm, y_axe + 102,
+                               _melange(fond, self.c["accent"], k_mo), g, dr)
+            termes = " + ".join(formater_nombre(n_["valeur"], self.langue) for n_ in notes for _ in range(n_["coef"]))
+            calc = f"({termes}) ÷ {sum(n_['coef'] for n_ in notes)} = {self._montant(pond, '', 1)}"
+            self._texte_centre(d, calc, self.police("gras", 44), (g + dr) / 2, haut,
+                               _melange(fond, self.c["texte"], _ease((k_mo - 0.5) / 0.5)), g, dr)
+
+    def _anim_decoupages(self, d, scene, plan, zone, t, ctx):
+        """Les mêmes valeurs, deux largeurs de classes côte à côte : la silhouette change."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        valeurs, largeurs, unite = conf["valeurs"], conf["largeurs"], conf.get("unite", "")
+        maxi = max(math.ceil((max(valeurs) + 1e-9) / w) * w for w in largeurs)
+        comptes = [[sum(1 for v in valeurs if k * w <= v < (k + 1) * w) for k in range(int(round(maxi / w)))]
+                   for w in largeurs]
+        c_max = max(max(c) for c in comptes) or 1
+        lib = LIBELLES_DONNEES[self.langue]
+        courante = self._phase_courante(plan, t)
+        for i, (w, cs, panneau) in enumerate(zip(largeurs, comptes, self._panneaux(zone, len(largeurs), gap=90))):
+            p = plan[i] if i < len(plan) else None
+            k = _ease(self._avancee(p, t)) if p else 1.0
+            if k <= 0 and t is not None and (not p or t < p["debut"]):
+                continue
+            g, haut, dr, bas = panneau
+            y_axe = bas - 110
+            fond = self._fond_a(g, y_axe)
+            vive = t is not None and i == courante
+            titre = lib["classes_de"].format(formater_nombre(w, self.langue), unite)
+            self._texte_centre(d, titre, self.police("gras", 42), (g + dr) / 2, haut,
+                               _melange(fond, self.c["accent"] if vive else self.c["texte"], max(k, 0.3)))
+            x_de = self._axe(d, g, dr, y_axe, 0, maxi, [j * w for j in range(len(cs) + 1)],
+                             unite if i == 0 else "", fond, k=max(k, 0.3))
+            h_max = y_axe - haut - 140
+            pn = self.police("gras", 38)
+            for j, c in enumerate(cs):
+                h = c / c_max * h_max * k
+                x0, x1 = x_de(j * w) + 3, x_de((j + 1) * w) - 3
+                if c and h > 4:
+                    d.rectangle((x0, y_axe - h, x1, y_axe - 2),
+                                fill=_melange(fond, self.c["or"] if vive else self.c["barre"], 0.75))
+                if c and k > 0.6:
+                    self._texte_centre(d, str(c), pn, (x0 + x1) / 2, y_axe - h - 50,
+                                       _melange(fond, self.c["texte"], (k - 0.6) / 0.4))
+
+    @staticmethod
+    def _courbe_forme(forme, u):
+        """Densités de démonstration sur [0, 1] : traîne à droite (log-normale), symétrique, traîne à gauche."""
+        if forme == "symetrique":
+            return math.exp(-((u - 0.5) / 0.15) ** 2 / 2)
+        if forme == "queue_gauche":
+            u = 1 - u
+        x = max(u * 4.0, 1e-6)
+        return math.exp(-(math.log(x / 0.95)) ** 2 / (2 * 0.85 ** 2)) / x
+
+    def _anim_asymetrie(self, d, scene, plan, zone, t, ctx):
+        """Moyenne et médiane selon la forme : trois distributions ; la médiane se place, la moyenne part du même
+        point et glisse vers la traîne. Calculées sur les courbes elles-mêmes. Une tendance fréquente, pas une loi."""
+        from .rendu import _melange
+        g0, haut0, dr0, bas0 = zone
+        lib = LIBELLES_DONNEES[self.langue]
+        fond0 = self._fond_a(g0, haut0)
+        self._texte_centre(d, lib["tendance"], self.police("regulier", 34), (g0 + dr0) / 2, haut0,
+                           _melange(fond0, self.c["secondaire"], 1.0))
+        courante = self._phase_courante(plan, t)
+        formes = ("queue_droite", "symetrique", "queue_gauche")
+        for i, (forme, panneau) in enumerate(zip(formes, self._panneaux((g0, haut0 + 60, dr0, bas0), 3))):
+            p = plan[i] if i < len(plan) else None
+            k = self._avancee(p, t) if p else 1.0
+            if t is not None and p and t < p["debut"]:
+                continue
+            g, haut, dr, bas = panneau
+            y_axe = bas - 120
+            fond = self._fond_a(g, y_axe)
+            vive = t is None or i == courante
+            n = 160
+            ys = [self._courbe_forme(forme, (j + 0.5) / n) for j in range(n)]
+            tot = sum(ys)
+            moy = sum(y * (j + 0.5) / n for j, y in enumerate(ys)) / tot
+            acc, med = 0.0, 0.5
+            for j, y in enumerate(ys):
+                acc += y
+                if acc >= tot / 2:
+                    med = (j + 0.5) / n
+                    break
+            y_top = max(ys)
+            h = y_axe - haut - 80
+            x_de = lambda u: g + u * (dr - g)
+            k_c = _ease(min(1.0, k / 0.45))
+            pts = [(x_de(j / n), y_axe - ys[j] / y_top * h) for j in range(int(n * k_c))]
+            d.line((g, y_axe, dr, y_axe), fill=_melange(fond, self.c["secondaire"], 0.8), width=3)
+            if len(pts) > 1:
+                d.polygon(pts + [(pts[-1][0], y_axe), (pts[0][0], y_axe)],
+                          fill=_melange(fond, self.c["barre"], 0.22 if vive else 0.12))
+                d.line(pts, fill=_melange(fond, self.c["barre"], 1.0 if vive else 0.6), width=4)
+            titre = lib[forme]
+            self._texte_centre(d, titre, self.police("gras", 38), (g + dr) / 2, haut,
+                               _melange(fond, self.c["accent"] if vive and t is not None else self.c["texte"], 1.0))
+            k_m = _ease((k - 0.45) / 0.55) if t is not None else 1.0
+            if k_m <= 0:
+                continue
+            pl = self.police("gras", 32)
+            xm, xa = x_de(med), x_de(med + (moy - med) * k_m)
+            d.line((xm, haut + 70, xm, y_axe + 8), fill=_melange(fond, self.c["texte"], min(1.0, k_m * 2)), width=3)
+            d.line((xa, haut + 70, xa, y_axe + 8), fill=_melange(fond, self.c["or"], 1.0), width=5)
+            if abs(moy - med) < 0.01:
+                self._texte_centre(d, lib["egales"], pl, xm, y_axe + 18, _melange(fond, self.c["accent"], k_m), g, dr)
+                continue
+            gauche = moy < med
+            for txt, x, y, couleur in ((lib["mediane"], xm, y_axe + 18, self.c["texte"]),
+                                       (lib["moyenne"], xa, y_axe + 58, self.c["accent"])):
+                w = pl.getlength(txt)
+                # La moyenne s'écrit du côté de la traîne, la médiane de l'autre.
+                cote = (couleur == self.c["accent"]) != gauche
+                xt = x + 6 if cote else x - w - 6
+                d.text((max(g, min(xt, dr - w)), y), txt, font=pl, fill=_melange(fond, couleur, k_m))
+
+    def _anim_melange(self, d, scene, plan, zone, t, ctx):
+        """Deux bosses : l'histogramme global, puis, à titre d'hypothèse, deux sous-distributions colorées qui
+        pourraient l'expliquer ; l'histogramme seul ne le prouve pas."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        o, w, groupes = conf["origine"], conf["largeur_classe"], conf["groupes"]
+        noms = conf.get("noms") or ["?", "?"]
+        unite = conf.get("unite", "")
+        totaux = [a + b for a, b in zip(*groupes)]
+        g, haut, dr, bas = zone
+        y_axe = bas - 110
+        fond = self._fond_a(g, y_axe)
+        n = len(totaux)
+        x_de = self._axe(d, g, dr, y_axe, o, o + n * w, [o + j * w for j in range(n + 1)], unite, fond)
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom, defaut=0.0: (_ease(self._avancee(par[nom], t)) if nom in par else defaut)
+        k_gl, k_hy, k_pr = av("global", 1.0), av("hypothese"), av("prudence")
+        h_max = y_axe - haut - 120
+        e_max = max(totaux) or 1
+        pn = self.police("gras", 36)
+        for j, c in enumerate(totaux):
+            h = c / e_max * h_max * k_gl
+            x0, x1 = x_de(o + j * w) + 3, x_de(o + (j + 1) * w) - 3
+            if h > 4:
+                d.rectangle((x0, y_axe - h, x1, y_axe - 2), fill=_melange(fond, self.c["barre"], 0.55 * (1 - 0.7 * k_hy)),
+                            outline=_melange(fond, self.c["barre"], 0.9), width=2)
+            if k_gl > 0.6 and c and k_hy < 0.5:
+                self._texte_centre(d, str(c), pn, (x0 + x1) / 2, y_axe - h - 46,
+                                   _melange(fond, self.c["texte"], ((k_gl - 0.6) / 0.4) * (1 - 2 * k_hy)))
+        if k_hy <= 0:
+            return
+        alpha = k_hy * (1 - 0.45 * k_pr)
+        couleurs = (self.c["barre"], self.c["or"])
+        pl = self.police("gras", 38)
+        for gi, (eff, couleur) in enumerate(zip(groupes, couleurs)):
+            pts = []
+            for j, c in enumerate(eff):
+                x0, x1 = x_de(o + j * w), x_de(o + (j + 1) * w)
+                y = y_axe - c / e_max * h_max * k_hy
+                pts += [(x0, y), (x1, y)]
+            pts = [(pts[0][0], y_axe)] + pts + [(pts[-1][0], y_axe)]
+            d.polygon(pts, fill=_melange(fond, couleur, 0.35 * alpha))
+            d.line(pts, fill=_melange(fond, couleur, alpha), width=5)
+            pic = max(range(n), key=lambda j: eff[j])
+            xp = (x_de(o + pic * w) + x_de(o + (pic + 1) * w)) / 2
+            yp = y_axe - eff[pic] / e_max * h_max - 60
+            self._texte_centre(d, noms[gi], pl, xp, yp, _melange(fond, self.c["accent"] if gi else self.c["texte"], alpha),
+                               g, dr)
+        if k_pr > 0:
+            self._texte_centre(d, "?", self.police("affichage", 120), dr - 50, haut - 10,
+                               _melange(fond, self.c["accent"], k_pr))
+
+    def _anim_questions(self, d, scene, plan, zone, t, ctx):
+        """Choisir l'indicateur : deux questions côte à côte, chacune mène à son indicateur ; puis les deux."""
+        from .rendu import _melange
+        qs = scene.extra["animation"]["questions"]
+        par = [p for p in plan if p["nature"] == "question"]
+        p_deux = next((p for p in plan if p["nature"] == "deux"), None)
+        k_d = _ease(self._avancee(p_deux, t)) if p_deux else 0.0
+        panneaux = self._panneaux(zone, len(qs), gap=110)
+        courante = self._phase_courante(plan, t)
+        for i, (q, (g, haut, dr, bas)) in enumerate(zip(qs, panneaux)):
+            p = par[i] if i < len(par) else None
+            k = _ease(self._avancee(p, t)) if p else 1.0
+            if k <= 0:
+                continue
+            fond = self._fond_a(g, haut)
+            carte = _melange(fond, (255, 255, 255), 0.75) if sum(fond) > 380 else _melange(fond, self.c["barre"], 0.12)
+            vive = t is None or plan.index(p) == courante if p else True
+            orr = vive or k_d > 0
+            y = haut + (1 - k) * 30
+            d.rounded_rectangle((g, y, dr, bas), radius=24, fill=_melange(fond, carte, k),
+                                outline=_melange(fond, self.c["or"] if orr and t is not None else self.c["barre"],
+                                                 (0.9 if orr else 0.45) * k), width=3)
+            hq = (bas - haut) * 0.30
+            p_t, lignes, pas_, hh = self.ajuster_riche(q["question"], "gras", dr - g - 60, hq, 50, 30, 1.15, ctx,
+                                                       equilibre=True)
+            yt = y + 30 + (hq - hh) / 2
+            for ligne in lignes:
+                lw = self._largeur_ligne(ligne, p_t)
+                self.ecrire_riche(d, [ligne], p_t, pas_, yt, self.c["texte"], None if k >= 1 else t,
+                                  p["debut"] if p else 0.0, centre=False, x_gauche=(g + dr) / 2 - lw / 2)
+                yt += pas_
+            y_ic = y + 40 + hq
+            h_ic = (bas - haut) * 0.30
+            self._vignette(d, q["icone"], ((g + dr) / 2 - h_ic * 0.9, y_ic, (g + dr) / 2 + h_ic * 0.9, y_ic + h_ic), k,
+                           fond)
+            k_r = _ease((self._avancee(p, t) - 0.5) / 0.5) if (p and t is not None) else 1.0
+            if k_r > 0:
+                cx, y_f = (g + dr) / 2, y_ic + h_ic + 16
+                d.line((cx, y_f, cx, y_f + 40), fill=_melange(fond, self.c["or"], k_r), width=4)
+                d.polygon(((cx, y_f + 54), (cx - 12, y_f + 36), (cx + 12, y_f + 36)), fill=_melange(fond, self.c["or"], k_r))
+                p_r, lr, pas_r, _ = self.ajuster_riche(q["reponse"], "gras", dr - g - 60, bas - y_f - 80, 52, 30, 1.1,
+                                                       ctx, equilibre=True)
+                yr = y_f + 68
+                for ligne in lr:
+                    lw = self._largeur_ligne(ligne, p_r)
+                    self.ecrire_riche(d, [ligne], p_r, pas_r, yr, self.c["accent"], None, 0.0, centre=False,
+                                      x_gauche=cx - lw / 2)
+                    yr += pas_r
+        if k_d > 0 and len(panneaux) == 2:
+            (g1, h1, d1, b1), (g2, h2, d2, b2) = panneaux
+            fond = self._fond_a(d1, h1)
+            if g2 > d1:      # côte à côte
+                cx, cy = (d1 + g2) / 2, (h1 + b1) / 2
+            else:
+                cx, cy = (g1 + d1) / 2, (b1 + h2) / 2
+            r = 40 * k_d
+            d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=self.c["or"])
+            pp = self.police("affichage", int(64 * k_d) + 1)
+            self._texte_centre(d, "+", pp, cx, cy - 64 * k_d * 0.66, _melange(self.c["or"], (255, 255, 255), 1.0))
+
+
 FRACTIONS = {(1, 2): "½", (1, 3): "⅓", (2, 3): "⅔", (1, 4): "¼", (3, 4): "¾", (1, 5): "⅕", (1, 6): "⅙",
              (1, 8): "⅛"}
 
@@ -1288,9 +1736,17 @@ def _ordinal_en(n: int) -> str:
 
 
 LIBELLES_DONNEES = {"fr": {"mediane": "médiane", "moyenne": "moyenne", "hauteur_effectif": "Hauteur = effectif",
-                           "hauteur_densite": "Hauteur = densité (effectif ÷ largeur)"},
+                           "hauteur_densite": "Hauteur = densité (effectif ÷ largeur)", "cagnotte": "Cagnotte :",
+                           "moyenne_simple": "moyenne simple", "moyenne_ponderee": "moyenne pondérée",
+                           "classes_de": "Classes de {} {}", "tendance": "Tendance fréquente, pas une loi",
+                           "queue_droite": "Traîne à droite", "symetrique": "Symétrique",
+                           "queue_gauche": "Traîne à gauche", "egales": "moyenne = médiane"},
                     "en": {"mediane": "median", "moyenne": "mean", "hauteur_effectif": "Height = count",
-                           "hauteur_densite": "Height = density (count ÷ width)"}}
+                           "hauteur_densite": "Height = density (count ÷ width)", "cagnotte": "Kitty:",
+                           "moyenne_simple": "simple mean", "moyenne_ponderee": "weighted mean",
+                           "classes_de": "{}-{} bins", "tendance": "A common tendency, not a law",
+                           "queue_droite": "Right tail", "symetrique": "Symmetric",
+                           "queue_gauche": "Left tail", "egales": "mean = median"}}
 
 
 def _pas_rond(brut: float) -> float:

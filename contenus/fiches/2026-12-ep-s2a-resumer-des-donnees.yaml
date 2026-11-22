@@ -82,7 +82,14 @@ editions:
     - type: titre
       numero: '1'
       texte: 'Compter : effectifs, fréquences, cumul'
-      voix_off: 'Mille réponses à un questionnaire : personne ne va les lire une par une. Pour comprendre la méthode, partons d''une petite classe de vingt-cinq élèves. Comment résumer leurs réponses ?'
+      voix_off: 'Mille réponses à un questionnaire : personne ne va les lire une par une. Comment les résumer ?'
+    - type: animation
+      texte: '*20 salariés* : notre fil rouge'
+      animation:
+        modele: foule
+        n: 20
+      note: Entreprise fictive de 20 salariés.
+      voix_off: 'Notre fil rouge, ce sont vingt salariés et leurs temps de trajet : nous les suivrons jusqu''à la fin de l''épisode. Pour bien voir la méthode, échauffons-nous d''abord sur une petite classe de vingt-cinq élèves.'
     - type: titre
       numero: '1.1'
       texte: 'Compter : les effectifs'
@@ -161,8 +168,20 @@ editions:
       numero: '1.3'
       texte: 'Additionner : les fréquences cumulées'
       voix_off: 'Troisième étape : les fréquences cumulées.'
-    - type: etapes
+    - type: animation
       texte: '*Au plus* tant de frères et sœurs'
+      animation:
+        modele: cumul
+        categories:
+        - '0'
+        - '1'
+        - '2'
+        - '3'
+        frequences:
+        - 20
+        - 40
+        - 24
+        - 16
       etapes:
       - 'Au plus 0 : *20 %*'
       - 'Au plus 1 : 20 + 40 = *60 %*'
@@ -230,7 +249,7 @@ editions:
         libelle: Total des salariés
     - type: texte
       texte: Gardez ces *20 salariés* en tête
-      voix_off: 'Gardez ces vingt salariés en tête : nous allons les suivre jusqu''à la fin de l''épisode. D''abord, dessinons leurs réponses.'
+      voix_off: 'Retrouvons nos vingt salariés, notre fil rouge : gardez-les en tête. D''abord, dessinons leurs réponses.'
     - type: titre
       numero: '2'
       texte: 'Dessiner : barres ou histogramme'
@@ -271,7 +290,7 @@ editions:
     - type: titre
       numero: '2.2'
       texte: 'L''histogramme : des nombres en classes'
-      voix_off: 'Passons maintenant à une variable numérique : le temps de trajet, en minutes.'
+      voix_off: 'Passons maintenant à une variable numérique : le temps de trajet, en minutes. Un histogramme regroupe ces valeurs en intervalles. Pour une variable numérique discrète, comme un nombre de frères et sœurs, des barres séparées restent possibles, une par valeur.'
     - type: courbe
       texte: Temps de trajet, *classes de 10 minutes*
       courbe:
@@ -324,9 +343,40 @@ editions:
       - expression: 6 + 3
         attendu: 9
         libelle: Classe 20 à 40 minutes
-    - type: texte
+    - type: animation
       texte: Le choix des classes *change la silhouette*
-      voix_off: Le choix des classes change la silhouette. Trop larges, elles cachent les détails. Trop étroites, elles font apparaître des bosses dues au hasard. Devant un histogramme, regardez toujours la largeur des classes.
+      animation:
+        modele: decoupages
+        valeurs: &id001
+        - 4
+        - 7
+        - 9
+        - 11
+        - 12
+        - 14
+        - 15
+        - 16
+        - 18
+        - 19
+        - 21
+        - 23
+        - 25
+        - 26
+        - 27
+        - 29
+        - 32
+        - 35
+        - 38
+        - 44
+        largeurs:
+        - 10
+        - 20
+        unite: min
+      etapes:
+      - '*Une bosse* nette entre 10 et 20 minutes'
+      - Le même sommet *disparaît*
+      univers: immersif
+      voix_off: 'Mettons côte à côte les mêmes vingt temps de trajet. En classes de dix minutes, une bosse nette apparaît, entre dix et vingt minutes. En classes de vingt minutes, ce sommet disparaît : trop larges, les classes cachent les détails ; trop étroites, elles inventent des bosses dues au hasard ; regardez toujours leur largeur.'
     - type: titre
       numero: '2.3'
       texte: 'Classes inégales : la surface compte'
@@ -429,27 +479,7 @@ editions:
       univers: immersif
       animation:
         modele: pastilles
-        valeurs: &id001
-        - 4
-        - 7
-        - 9
-        - 11
-        - 12
-        - 14
-        - 15
-        - 16
-        - 18
-        - 19
-        - 21
-        - 23
-        - 25
-        - 26
-        - 27
-        - 29
-        - 32
-        - 35
-        - 38
-        - 44
+        valeurs: *id001
         largeur_classe: 20
         unite: minutes
       voix_off: 'Classes de vingt minutes : dix, neuf, un. Le sommet a disparu.'
@@ -621,34 +651,39 @@ editions:
       numero: '3.3'
       texte: 'Deux bosses : deux groupes ?'
       voix_off: Troisième forme, la plus surprenante.
-    - type: courbe
+    - type: animation
       texte: Tailles de *44 adultes*
-      courbe:
-        style: histogramme
-        points:
-        - - 150
-          - 2
-        - - 155
-          - 6
-        - - 160
-          - 9
-        - - 165
-          - 5
-        - - 170
-          - 6
-        - - 175
-          - 9
-        - - 180
-          - 5
-        - - 185
-          - 2
+      animation:
+        modele: melange
+        origine: 150
         largeur_classe: 5
-        y_min: 0
-        y_max: 12
-        axe_x: Taille (cm)
-        axe_y: Adultes
-      note: Tailles fictives de 44 adultes, femmes et hommes mélangés.
-      voix_off: 'Voici les tailles fictives de quarante-quatre adultes. Deux bosses : l''une autour de cent soixante centimètres, l''autre autour de cent soixante-quinze. On dit que la distribution est bimodale. Une explication possible : un mélange de deux groupes de tailles moyennes différentes, par exemple des femmes et des hommes. L''histogramme seul ne le prouve pas : il faut d''autres informations.'
+        unite: cm
+        groupes:
+        - - 2
+          - 6
+          - 8
+          - 4
+          - 2
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 1
+          - 4
+          - 9
+          - 5
+          - 2
+        noms:
+        - Femmes ?
+        - Hommes ?
+      etapes:
+      - 'Deux bosses : une distribution *bimodale*'
+      - '*Une explication possible* : deux groupes mélangés'
+      - L'histogramme seul *ne le prouve pas*
+      note: Tailles fictives ; la décomposition en deux groupes est une hypothèse d'illustration.
+      voix_off: 'Voici les tailles fictives de quarante-quatre adultes : deux bosses, l''une autour de cent soixante centimètres, l''autre autour de cent soixante-quinze ; on dit que la distribution est bimodale. Une explication possible : le mélange de deux groupes aux tailles moyennes différentes, par exemple des femmes et des hommes. Mais l''histogramme seul ne le prouve pas : il faut d''autres informations pour l''établir.'
       verifier:
       - expression: 2 + 6 + 9 + 5 + 6 + 9 + 5 + 2
         attendu: 44
@@ -783,12 +818,21 @@ editions:
       numero: '4.1'
       texte: La moyenne, un partage égal
       voix_off: 'Commençons par une image simple : un partage.'
-    - type: etapes
+    - type: animation
       texte: Quatre amis, *une cagnotte*
+      animation:
+        modele: partage
+        valeurs:
+        - 5
+        - 10
+        - 15
+        - 30
+        unite: €
       etapes:
       - Ils ont 5, 10, 15 et 30 €
       - 'Tout dans la cagnotte : *60 €*'
       - 'Partagé en quatre : *15 € chacun*'
+      note: 'Autre exemple : quatre amis (fictif).'
       voix_off: 'Quatre amis mettent leur argent en commun. Ils ont cinq, dix, quinze et trente euros. Dans la cagnotte, cela fait soixante euros. Partagés à parts égales entre les quatre, cela fait quinze euros chacun : c''est la moyenne.'
       verifier:
       - expression: 5 + 10 + 15 + 30
@@ -797,7 +841,6 @@ editions:
       - expression: 60 / 4
         attendu: 15
         libelle: Part de chacun
-      note: 'Autre exemple : quatre amis (fictif).'
     - type: formule
       texte: Moyenne = *somme ÷ nombre*
       formule:
@@ -858,13 +901,29 @@ editions:
       - expression: (14 * 3 + 10 * 1) / (3 + 1)
         attendu: 13
         libelle: Moyenne pondérée
-    - type: texte
+    - type: animation
       texte: 'Sans coefficients : 12. Avec : *13*'
-      voix_off: 'Sans les coefficients, on aurait trouvé douze. La moyenne pondérée donne plus de poids à ce qui compte le plus : ici, les mathématiques.'
+      animation:
+        modele: ponderee
+        notes:
+        - valeur: 14
+          coef: 3
+          libelle: Maths
+        - valeur: 10
+          coef: 1
+          libelle: Français
+      etapes:
+      - 'Sans coefficients : moyenne *12*'
+      - 'Coefficient 3 : le 14 compte *trois fois*'
+      - 'Avec coefficients : moyenne *13*'
+      voix_off: 'Représentons les deux notes par des pastilles : quatorze et dix, dont la moyenne simple vaut douze. Le coefficient trois fait compter le quatorze trois fois : trois pastilles de quatorze, une seule de dix. La moyenne glisse alors de douze à treize : la moyenne pondérée donne plus de poids à ce qui compte le plus, ici les mathématiques.'
       verifier:
       - expression: (14 + 10) / 2
         attendu: 12
         libelle: Moyenne simple des deux notes
+      - expression: (14 + 14 + 14 + 10) / 4
+        attendu: 13
+        libelle: Moyenne pondérée, pastille par pastille
     - type: exercice
       texte: 'Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8. Moyenne générale ?'
       pause: 8
@@ -1063,8 +1122,10 @@ editions:
       - expression: (1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10
         attendu: 21980
         libelle: Moyenne des dix salaires du graphique
-    - type: etapes
+    - type: animation
       texte: Moyenne et médiane selon la *forme* de la distribution
+      animation:
+        modele: asymetrie
       etapes:
       - 'Longue traîne vers le haut : moyenne *souvent au-dessus* de la médiane'
       - 'Distribution symétrique : moyenne *proche* de la médiane'
@@ -1101,8 +1162,17 @@ editions:
       numero: '5.3'
       texte: Laquelle choisir ?
       voix_off: 'La moyenne est sensible aux valeurs extrêmes : une seule valeur très élevée peut la tirer vers le haut. La médiane, elle, dépend de la position centrale des valeurs ordonnées. Cela ne signifie pas qu''elle est toujours meilleure : le bon indicateur dépend de la question que l''on cherche à éclairer.'
-    - type: etapes
+    - type: animation
       texte: Chaque indicateur répond à *sa* question
+      animation:
+        modele: questions
+        questions:
+        - question: Que gagne un salarié *typique* ?
+          reponse: la *médiane*
+          icone: mediane
+        - question: Combien coûtent *tous* les salaires ?
+          reponse: la *moyenne* × l'effectif
+          icone: equilibre
       etapes:
       - « Que gagne un salarié typique ? » → la *médiane*
       - « Combien coûtent tous les salaires ? » → la *moyenne*, × l'effectif
@@ -1268,7 +1338,14 @@ editions:
     - type: titre
       numero: '1'
       texte: 'Counting: counts, frequencies, cumulative'
-      voix_off: 'A thousand answers to a survey: nobody is going to read them one by one. To learn the method, let''s start with a small class of twenty-five pupils. How do you sum up their answers?'
+      voix_off: 'A thousand answers to a survey: nobody is going to read them one by one. How do you sum them up?'
+    - type: animation
+      texte: '*20 employees*: our common thread'
+      animation:
+        modele: foule
+        n: 20
+      note: Fictional company with 20 employees.
+      voix_off: 'Our common thread is twenty employees and their commuting times: we''ll follow them to the end of the episode. To see the method clearly, let''s warm up first with a small class of twenty-five pupils.'
     - type: titre
       numero: '1.1'
       texte: 'Counting: the counts'
@@ -1347,8 +1424,20 @@ editions:
       numero: '1.3'
       texte: 'Adding up: cumulative frequencies'
       voix_off: 'Step three: cumulative frequencies.'
-    - type: etapes
+    - type: animation
       texte: '*At most* so many brothers and sisters'
+      animation:
+        modele: cumul
+        categories:
+        - '0'
+        - '1'
+        - '2'
+        - '3'
+        frequences:
+        - 20
+        - 40
+        - 24
+        - 16
       etapes:
       - 'At most 0: *20%*'
       - 'At most 1: 20 + 40 = *60%*'
@@ -1416,7 +1505,7 @@ editions:
         libelle: Total employees
     - type: texte
       texte: Keep these *20 employees* in mind
-      voix_off: 'Keep these twenty employees in mind: we''ll follow them to the end of the episode. First, let''s draw their answers.'
+      voix_off: 'Back to our twenty employees, our common thread: keep them in mind. First, let''s draw their answers.'
     - type: titre
       numero: '2'
       texte: 'Drawing: bar chart or histogram'
@@ -1457,7 +1546,7 @@ editions:
     - type: titre
       numero: '2.2'
       texte: 'The histogram: numbers in classes'
-      voix_off: 'Now let''s take a numerical variable: commuting time, in minutes.'
+      voix_off: 'Now let''s take a numerical variable: commuting time, in minutes. A histogram groups these values into intervals. For a discrete numerical variable, like a number of siblings, separate bars are still fine, one per value.'
     - type: courbe
       texte: Commuting time, *10-minute classes*
       courbe:
@@ -1510,9 +1599,20 @@ editions:
       - expression: 6 + 3
         attendu: 9
         libelle: Class 20 to 40 minutes
-    - type: texte
+    - type: animation
       texte: The choice of classes *changes the shape*
-      voix_off: The choice of classes changes the shape. Too wide, and they hide the details. Too narrow, and they show bumps that are just chance. When you see a histogram, always check the width of the classes.
+      animation:
+        modele: decoupages
+        valeurs: *id001
+        largeurs:
+        - 10
+        - 20
+        unite: min
+      etapes:
+      - A clear *hump* between 10 and 20 minutes
+      - The same peak *disappears*
+      univers: immersif
+      voix_off: 'Let''s put the same twenty commuting times side by side. With ten-minute classes, a clear hump appears, between ten and twenty minutes. With twenty-minute classes, that peak disappears: too wide, classes hide the details; too narrow, they invent bumps that are just chance; always check their width.'
     - type: titre
       numero: '2.3'
       texte: 'Unequal widths: area = count'
@@ -1787,34 +1887,39 @@ editions:
       numero: '3.3'
       texte: 'Two peaks: two groups?'
       voix_off: Third shape, the most surprising one.
-    - type: courbe
+    - type: animation
       texte: Heights of *44 adults*
-      courbe:
-        style: histogramme
-        points:
-        - - 150
-          - 2
-        - - 155
-          - 6
-        - - 160
-          - 9
-        - - 165
-          - 5
-        - - 170
-          - 6
-        - - 175
-          - 9
-        - - 180
-          - 5
-        - - 185
-          - 2
+      animation:
+        modele: melange
+        origine: 150
         largeur_classe: 5
-        y_min: 0
-        y_max: 12
-        axe_x: Height (cm)
-        axe_y: Adults
-      note: Fictional heights of 44 adults, women and men mixed.
-      voix_off: 'Here are the fictional heights of forty-four adults. Two peaks: one around one hundred and sixty centimetres, the other around one hundred and seventy-five. We call this distribution bimodal. One possible explanation: a mix of two groups with different average heights, for example women and men. The histogram alone doesn''t prove it: you need other information.'
+        unite: cm
+        groupes:
+        - - 2
+          - 6
+          - 8
+          - 4
+          - 2
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 1
+          - 4
+          - 9
+          - 5
+          - 2
+        noms:
+        - Women?
+        - Men?
+      etapes:
+      - 'Two peaks: a *bimodal* distribution'
+      - '*One possible explanation*: two groups mixed'
+      - The histogram alone *doesn't prove it*
+      note: Fictional heights; the split into two groups is an illustrative hypothesis.
+      voix_off: 'Here are the fictional heights of forty-four adults: two peaks, one around one hundred and sixty centimetres, the other around one hundred and seventy-five; we call this distribution bimodal. One possible explanation: a mix of two groups with different average heights, for example women and men. But the histogram alone doesn''t prove it: you need other information to establish it.'
       verifier:
       - expression: 2 + 6 + 9 + 5 + 6 + 9 + 5 + 2
         attendu: 44
@@ -1949,8 +2054,16 @@ editions:
       numero: '4.1'
       texte: The mean, an equal share
       voix_off: 'Let''s start with a simple picture: sharing.'
-    - type: etapes
+    - type: animation
       texte: Four friends, *one shared pot*
+      animation:
+        modele: partage
+        valeurs:
+        - 5
+        - 10
+        - 15
+        - 30
+        unite: €
       etapes:
       - They have €5, €10, €15 and €30
       - 'All in the pot: *€60*'
@@ -2023,13 +2136,29 @@ editions:
       - expression: (14 * 3 + 10 * 1) / (3 + 1)
         attendu: 13
         libelle: Weighted mean
-    - type: texte
+    - type: animation
       texte: 'Without weights: 12. With them: *13*'
-      voix_off: 'Without the weights, we would have found twelve. The weighted mean gives more weight to what matters most: here, maths.'
+      animation:
+        modele: ponderee
+        notes:
+        - valeur: 14
+          coef: 3
+          libelle: Maths
+        - valeur: 10
+          coef: 1
+          libelle: French
+      etapes:
+      - 'Without weights: mean *12*'
+      - 'Weight 3: the 14 counts *three times*'
+      - 'With weights: mean *13*'
+      voix_off: 'Let''s show the two marks as dots: fourteen and ten, whose simple mean is twelve. A weight of three makes the fourteen count three times: three dots of fourteen, just one of ten. The mean then slides from twelve to thirteen: the weighted mean gives more weight to what matters most, here maths.'
       verifier:
       - expression: (14 + 10) / 2
         attendu: 12
         libelle: Simple mean of the two marks
+      - expression: (14 + 14 + 14 + 10) / 4
+        attendu: 13
+        libelle: Moyenne pondérée, pastille par pastille
     - type: exercice
       texte: 'Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8. Overall mean?'
       pause: 8
@@ -2219,8 +2348,10 @@ editions:
       - expression: (1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10
         attendu: 21980
         libelle: Mean of the ten salaries in the chart
-    - type: etapes
+    - type: animation
       texte: Mean and median depend on the *shape* of the distribution
+      animation:
+        modele: asymetrie
       etapes:
       - 'Long tail toward high values: mean *often above* the median'
       - 'Symmetric distribution: mean *close to* the median'
@@ -2257,13 +2388,22 @@ editions:
       numero: '5.3'
       texte: Which one should you use?
       voix_off: 'The mean is sensitive to extreme values: a single very large value can pull it upwards. The median, by contrast, is determined by the middle position in the ordered data. That does not make it universally better: the right measure depends on the question we want to answer.'
-    - type: etapes
+    - type: animation
       texte: Each summary answers *its own* question
+      animation:
+        modele: questions
+        questions:
+        - question: What does a *typical* worker earn?
+          reponse: the *median*
+          icone: mediane
+        - question: What do *all* the salaries cost?
+          reponse: the *mean* × headcount
+          icone: equilibre
       etapes:
       - '"What does a typical worker earn?" → the *median*'
       - '"What do all the salaries cost?" → the *mean*, × headcount'
       - 'The most honest choice: report *both*'
-      voix_off: Each summary answers its own question. To know what a typical worker earns, the median is the right answer. To know what all the salaries cost together, you need the mean, multiplied by the number of workers. The median can't tell you that. The most honest choice is often to report both, because the gap between them tells you on its own whether the distribution is skewed.
+      voix_off: Each summary answers its own question. To know what a typical worker earns, the median is the right answer. To know what all the salaries cost together, you need the mean, multiplied by the number of workers; the median can't tell you that. The most honest choice is often to report both, because the gap between them tells you on its own whether the distribution is skewed.
     - type: texte
       texte: 'The median has a blind spot: it ignores *how big* the gaps are'
       note: If the customer earned €2 million a month, the café's median would still be €2,250.

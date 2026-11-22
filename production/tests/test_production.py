@@ -2151,7 +2151,38 @@ def test_episode_s2a_animations_dessinees_a_chaque_phase():
                           p["debut"] + p["duree"] + 0.2):
                     r.dessiner(s, i, len(scenes), t)
             r.dessiner(s, i, len(scenes), None)
-        assert {"equilibre", "elimination", "densite", "pastilles", "curseur", "apercu"} <= vus
+        assert {"equilibre", "elimination", "densite", "pastilles", "curseur", "apercu", "cumul", "partage",
+                "ponderee", "decoupages", "asymetrie", "melange", "questions", "foule"} <= vus
+
+
+def test_animations_de_la_revue_validees():
+    """Les sept modèles de la revue (22/11/2026) : entrées vérifiées, une légende par phase."""
+    from lmec.pedagogie import _valider_animation
+    def valider(a, etapes=None):
+        erreurs, extra = [], {}
+        s = {"animation": a}
+        if etapes:
+            s["etapes"] = etapes
+        _valider_animation(s, "s", erreurs, extra)
+        return erreurs, extra.get("animation")
+    e, c = valider({"modele": "cumul", "categories": ["0", "1", "2"], "frequences": [20, 50, 30]}, ["a", "b", "c"])
+    assert not e and c["phases"] == ["palier"] * 3
+    assert valider({"modele": "cumul", "categories": ["0", "1"], "frequences": [20, 50]})[0]       # total ≠ 100
+    assert not valider({"modele": "partage", "valeurs": [5, 10, 15, 30], "unite": "€"})[0]
+    assert valider({"modele": "partage", "valeurs": [5, 10, 16]})[0]                               # moyenne non entière
+    assert not valider({"modele": "ponderee", "notes": [{"valeur": 14, "coef": 3}, {"valeur": 10, "coef": 1}]})[0]
+    assert valider({"modele": "ponderee", "notes": [{"valeur": 14, "coef": 0}, {"valeur": 10, "coef": 1}]})[0]
+    e, c = valider({"modele": "decoupages", "valeurs": [4, 12, 25], "largeurs": [10, 20]})
+    assert not e and c["phases"] == ["decoupage", "decoupage"]
+    assert valider({"modele": "decoupages", "valeurs": [4, 400], "largeurs": [10, 20]})[0]       # trop de classes
+    assert not valider({"modele": "asymetrie"}, ["a", "b", "c"])[0]
+    assert valider({"modele": "asymetrie"}, ["a", "b"])[0]
+    assert not valider({"modele": "melange", "origine": 150, "largeur_classe": 5,
+                        "groupes": [[1, 2, 0], [0, 1, 3]], "noms": ["A ?", "B ?"]})[0]
+    assert valider({"modele": "melange", "largeur_classe": 5, "groupes": [[1, 2, 0], [0, 1]]})[0]
+    q = {"question": "Q ?", "reponse": "R", "icone": "mediane"}
+    assert not valider({"modele": "questions", "questions": [q, q]}, ["a", "b", "c"])[0]
+    assert valider({"modele": "questions", "questions": [q, dict(q, icone="inconnue")]})[0]
 
 
 def test_calcul_apparait_terme_a_terme():

@@ -423,6 +423,115 @@ def nuances(sc, l):
     return sc
 
 
+def propositions(sc, l):
+    """Seconde passe sur la revue de ChatGPT (PR #56), demandée par JG le 22/11/2026 : les 20 salariés annoncés
+    comme fil rouge dès le chapitre 1, la nuance barres / histogramme pour une variable discrète, et sept
+    animations (cumul, deux découpages, asymétrie, deux bosses, partage égal, moyenne pondérée, deux questions)."""
+    fr = l == "fr"
+    out = []
+    for i, s in enumerate(sc):
+        prec = sc[i - 1] if i else {}
+        if s["type"] == "titre" and s.get("numero") == "1":
+            s["voix_off"] = ("Mille réponses à un questionnaire : personne ne va les lire une par une. Comment les résumer ?"
+                             if fr else "A thousand answers to a survey: nobody is going to read them one by one. How do you sum them up?")
+            out += [s, anim(
+                "*20 salariés* : notre fil rouge" if fr else "*20 employees*: our common thread",
+                ("Notre fil rouge, ce sont vingt salariés et leurs temps de trajet : nous les suivrons jusqu'à la fin de l'épisode. "
+                 "Pour bien voir la méthode, échauffons-nous d'abord sur une petite classe de vingt-cinq élèves."
+                 if fr else
+                 "Our common thread is twenty employees and their commuting times: we'll follow them to the end of the episode. "
+                 "To see the method clearly, let's warm up first with a small class of twenty-five pupils."),
+                {"modele": "foule", "n": 20}, None,
+                note=("Entreprise fictive de 20 salariés." if fr else "Fictional company with 20 employees."))]
+            continue
+        if s["type"] == "etapes" and "20 + 40 + 24" in _exprs(s):
+            out.append(anim(s["texte"], s["voix_off"],
+                            {"modele": "cumul", "categories": ["0", "1", "2", "3"], "frequences": [20, 40, 24, 16]},
+                            s["etapes"], verifier=s.get("verifier")))
+            continue
+        if s["type"] == "texte" and sc[i + 1]["type"] == "titre" and sc[i + 1].get("numero") == "2":
+            s["voix_off"] = ("Retrouvons nos vingt salariés, notre fil rouge : gardez-les en tête. D'abord, dessinons leurs réponses."
+                             if fr else "Back to our twenty employees, our common thread: keep them in mind. First, let's draw their answers.")
+        if s["type"] == "titre" and s.get("numero") == "2.2":
+            s["voix_off"] += (" Un histogramme regroupe ces valeurs en intervalles. Pour une variable numérique discrète, comme un nombre de frères et sœurs, des barres séparées restent possibles, une par valeur."
+                              if fr else " A histogram groups these values into intervals. For a discrete numerical variable, like a number of siblings, separate bars are still fine, one per value.")
+        if s["type"] == "texte" and prec.get("type") == "courbe" and prec["courbe"].get("points") == [[0, 10], [20, 9], [40, 1]]:
+            out.append(anim(
+                s["texte"],
+                ("Mettons côte à côte les mêmes vingt temps de trajet. "
+                 "En classes de dix minutes, une bosse nette apparaît, entre dix et vingt minutes. "
+                 "En classes de vingt minutes, ce sommet disparaît : trop larges, les classes cachent les détails ; trop étroites, elles inventent des bosses dues au hasard ; regardez toujours leur largeur."
+                 if fr else
+                 "Let's put the same twenty commuting times side by side. "
+                 "With ten-minute classes, a clear hump appears, between ten and twenty minutes. "
+                 "With twenty-minute classes, that peak disappears: too wide, classes hide the details; too narrow, they invent bumps that are just chance; always check their width."),
+                {"modele": "decoupages", "valeurs": TRAJETS, "largeurs": [10, 20], "unite": "min"},
+                (["*Une bosse* nette entre 10 et 20 minutes", "Le même sommet *disparaît*"] if fr else
+                 ["A clear *hump* between 10 and 20 minutes", "The same peak *disappears*"]),
+                univers="immersif"))
+            continue
+        if s["type"] == "courbe" and s["courbe"].get("points") == [[150, 2], [155, 6], [160, 9], [165, 5], [170, 6], [175, 9], [180, 5], [185, 2]]:
+            out.append(anim(
+                s["texte"],
+                ("Voici les tailles fictives de quarante-quatre adultes : deux bosses, l'une autour de cent soixante centimètres, l'autre autour de cent soixante-quinze ; on dit que la distribution est bimodale. "
+                 "Une explication possible : le mélange de deux groupes aux tailles moyennes différentes, par exemple des femmes et des hommes. "
+                 "Mais l'histogramme seul ne le prouve pas : il faut d'autres informations pour l'établir."
+                 if fr else
+                 "Here are the fictional heights of forty-four adults: two peaks, one around one hundred and sixty centimetres, the other around one hundred and seventy-five; we call this distribution bimodal. "
+                 "One possible explanation: a mix of two groups with different average heights, for example women and men. "
+                 "But the histogram alone doesn't prove it: you need other information to establish it."),
+                {"modele": "melange", "origine": 150, "largeur_classe": 5, "unite": "cm",
+                 "groupes": [[2, 6, 8, 4, 2, 0, 0, 0], [0, 0, 1, 1, 4, 9, 5, 2]],
+                 "noms": ["Femmes ?", "Hommes ?"] if fr else ["Women?", "Men?"]},
+                (["Deux bosses : une distribution *bimodale*", "*Une explication possible* : deux groupes mélangés",
+                  "L'histogramme seul *ne le prouve pas*"] if fr else
+                 ["Two peaks: a *bimodal* distribution", "*One possible explanation*: two groups mixed",
+                  "The histogram alone *doesn't prove it*"]),
+                verifier=s.get("verifier"),
+                note=("Tailles fictives ; la décomposition en deux groupes est une hypothèse d'illustration." if fr
+                      else "Fictional heights; the split into two groups is an illustrative hypothesis.")))
+            continue
+        if s["type"] == "etapes" and "5 + 10 + 15 + 30" in _exprs(s):
+            out.append(anim(s["texte"], s["voix_off"], {"modele": "partage", "valeurs": [5, 10, 15, 30], "unite": "€"},
+                            s["etapes"], verifier=s.get("verifier"), note=s.get("note")))
+            continue
+        if s["type"] == "texte" and "(14 + 10) / 2" in _exprs(s):
+            out.append(anim(
+                s["texte"],
+                ("Représentons les deux notes par des pastilles : quatorze et dix, dont la moyenne simple vaut douze. "
+                 "Le coefficient trois fait compter le quatorze trois fois : trois pastilles de quatorze, une seule de dix. "
+                 "La moyenne glisse alors de douze à treize : la moyenne pondérée donne plus de poids à ce qui compte le plus, ici les mathématiques."
+                 if fr else
+                 "Let's show the two marks as dots: fourteen and ten, whose simple mean is twelve. "
+                 "A weight of three makes the fourteen count three times: three dots of fourteen, just one of ten. "
+                 "The mean then slides from twelve to thirteen: the weighted mean gives more weight to what matters most, here maths."),
+                {"modele": "ponderee", "notes": [{"valeur": 14, "coef": 3, "libelle": "Maths"},
+                                                 {"valeur": 10, "coef": 1, "libelle": "Français" if fr else "French"}]},
+                (["Sans coefficients : moyenne *12*", "Coefficient 3 : le 14 compte *trois fois*", "Avec coefficients : moyenne *13*"]
+                 if fr else
+                 ["Without weights: mean *12*", "Weight 3: the 14 counts *three times*", "With weights: mean *13*"]),
+                verifier=s.get("verifier", []) + [{"expression": "(14 + 14 + 14 + 10) / 4", "attendu": 13,
+                                                   "libelle": "Moyenne pondérée, pastille par pastille"}]))
+            continue
+        if s["type"] == "etapes" and prec.get("type") == "courbe" and prec["courbe"].get("seuils") and len(s["etapes"]) == 3:
+            out.append(anim(s["texte"], s["voix_off"], {"modele": "asymetrie"}, s["etapes"]))
+            continue
+        if s["type"] == "etapes" and prec.get("type") == "titre" and prec.get("numero") == "5.3":
+            voix = s["voix_off"] if fr else s["voix_off"].replace(
+                "multiplied by the number of workers. The median can't tell you that.",
+                "multiplied by the number of workers; the median can't tell you that.")
+            out.append(anim(s["texte"], voix, {"modele": "questions", "questions": (
+                [{"question": "Que gagne un salarié *typique* ?", "reponse": "la *médiane*", "icone": "mediane"},
+                 {"question": "Combien coûtent *tous* les salaires ?", "reponse": "la *moyenne* × l'effectif", "icone": "equilibre"}]
+                if fr else
+                [{"question": "What does a *typical* worker earn?", "reponse": "the *median*", "icone": "mediane"},
+                 {"question": "What do *all* the salaries cost?", "reponse": "the *mean* × headcount", "icone": "equilibre"}])},
+                s["etapes"]))
+            continue
+        out.append(s)
+    return out
+
+
 def episode(l):
     fr = l == "fr"
     b = blocs
@@ -470,6 +579,7 @@ def episode(l):
         "Si 90 était une erreur pour 35 : moyenne *18,5 min*, médiane inchangée" if fr
         else "If 90 were a typo for 35: mean *18.5 min*, median unchanged"], verifier=v[4:]))
     sc = nuances(sc, l)
+    sc = propositions(sc, l)
     sc.append(S("cloture", ("Prochain épisode : *les écarts*. Une question ? *En commentaire*" if fr
                             else "Next episode: *spread*. A question? *Ask in the comments*"), b["cloture"][l]))
     sc.append(S("fin", "Éveiller par les chiffres." if fr else "Enlightening through numbers.",
