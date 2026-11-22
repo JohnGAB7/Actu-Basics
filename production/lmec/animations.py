@@ -1104,7 +1104,7 @@ class AnimationsDonnees:
             h_e = c.effectif / e_max * h_max
             h_d = c.densite_effectif() / d_max * h_max
             h = (h_e + (h_d - h_e) * k_de) * k_ef
-            if c.effectif:
+            if c.effectif and h > 4:          # début de croissance : rien à dessiner
                 fill = _melange(fond, self.c["or"] if k_su > 0 else self.c["barre"], 0.20 + 0.06 * k_su)
                 d.rounded_rectangle((x0, y_axe - h, x1, y_axe - 2), radius=10, fill=fill,
                                     outline=_melange(fond, self.c["barre"], 0.6 * k_ef), width=2)

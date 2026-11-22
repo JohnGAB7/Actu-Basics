@@ -2145,10 +2145,11 @@ def test_animations_equilibre_elimination_densite_validees():
 
 
 def test_episode_s2a_animations_dessinees_a_chaque_phase():
-    """Les trois nouvelles animations de l'épisode se dessinent à chaque phase, en FR et en EN."""
+    """Les trois nouvelles animations de l'épisode se dessinent à tout instant, en FR et en EN, en 16:9
+    comme en vertical (une barre de hauteur nulle au départ faisait échouer le rendu)."""
     fiche = charger_fiche(RACINE / "contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml")
-    for langue in ("fr", "en"):
-        r = Rendu(fiche, langue, CHARTE, "lecon", False)
+    for langue, fmt in [(l, f) for l in ("fr", "en") for f in ("lecon", "video")]:
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
         scenes = fiche.editions[langue].scenes
         vus = set()
         for i, s in enumerate(scenes):
@@ -2157,7 +2158,8 @@ def test_episode_s2a_animations_dessinees_a_chaque_phase():
                 continue
             vus.add(m)
             for p in r._plan_animation(s):
-                for t in (p["debut"] + p["duree"] / 2, p["debut"] + p["duree"] + 0.2):
+                for t in (0.0, p["debut"], p["debut"] + 0.02, p["debut"] + p["duree"] / 2,
+                          p["debut"] + p["duree"] + 0.2):
                     r.dessiner(s, i, len(scenes), t)
             r.dessiner(s, i, len(scenes), None)
         assert vus == {"equilibre", "elimination", "densite"}
