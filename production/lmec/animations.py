@@ -749,7 +749,7 @@ class AnimationsDonnees:
             for c in classes:
                 x0, x1 = x_de(c.debut) + 6, x_de(c.fin) - 6
                 h = (math.ceil(c.effectif / cols) * 2.25 * r + r * 0.5) * k_bar
-                if c.effectif:
+                if c.effectif and h > 4:      # début de la montée : rien à dessiner
                     d.rounded_rectangle((x0, y_axe - h, x1, y_axe - 2), radius=12,
                                         fill=_melange(fond, self.c["barre"], 0.22 * k_bar + 0.0))
                 lib = str(c.effectif)
