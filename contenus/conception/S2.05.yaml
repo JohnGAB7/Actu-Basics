@@ -4,7 +4,7 @@
 id_programme: S2.05
 episode: EP-S2A
 rang_dans_episode: 5
-statut: revue_claude   # mise à niveau à relire ; contenu validé par JG le 3/11/2026 (PR #15)
+statut: valide_jg               # mise à niveau validée par JG le 22/11/2026 (PR #50)
 fiche_production: contenus/fiches/2026-11-pilote-s2-05-moyenne-ou-mediane.yaml
 
 titres:
@@ -147,5 +147,5 @@ licences: "Aucune donnée extérieure. Voix Kokoro (licence Apache 2.0, voir doc
 
 controle:
   test_du_debutant: "À mesurer au pilote : le testeur réussit la question de transfert et énonce la limite de la médiane"
-  relecture_definitions: "Contenu : Claude 3/11/2026, validé par JG le 3/11/2026 (PR #15). Mise à niveau : Claude, 22/11/2026 ; ChatGPT puis JG à faire"
+  relecture_definitions: "Contenu : Claude 3/11/2026, validé par JG le 3/11/2026 (PR #15). Mise à niveau : Claude, 22/11/2026 ; validée par JG le 22/11/2026"
   controle_mobile: "Voir sortie/<id>/fr/inspection après rendu"

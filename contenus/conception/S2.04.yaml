@@ -4,7 +4,7 @@
 id_programme: S2.04
 episode: EP-S2A
 rang_dans_episode: 4
-statut: revue_claude            # mise à niveau à relire ; contenu validé le 8/11/2026
+statut: valide_jg               # mise à niveau validée par JG le 22/11/2026 (PR #50)
 fiche_production: contenus/fiches/2026-11-n1-s2-04-ce-que-dit-vraiment-la-moyenne.yaml
 
 titres:
@@ -145,5 +145,5 @@ licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md). Hab
 
 controle:
   test_du_debutant: "Au pilote de l'épisode EP-S2A (3 à 5 débutants)"
-  relecture_definitions: "Contenu : Claude, ChatGPT et JG, 8/11/2026. Mise à niveau : Claude, 22/11/2026 ; ChatGPT puis JG à faire"
+  relecture_definitions: "Contenu : Claude, ChatGPT et JG, 8/11/2026. Mise à niveau : Claude, 22/11/2026 ; validée par JG le 22/11/2026"
   controle_mobile: "Après rendu (inspection)"

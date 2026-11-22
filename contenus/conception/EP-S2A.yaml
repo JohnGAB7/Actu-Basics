@@ -4,7 +4,7 @@
 # est propre à l'épisode : ouverture, accueil, plan, transitions, laboratoires, synthèse, exercice de synthèse,
 # clôture. Aucun chiffre extérieur : toutes les données sont fictives et tous les calculs sont recalculés.
 id_programme: EP-S2A
-statut: revue_chatgpt           # revue ChatGPT reçue le 22/11/2026 (PR #50, issue #55), corrections faites ; suivant : valide_jg
+statut: valide_jg               # validée par JG le 22/11/2026 (PR #50), après revue ChatGPT du 22/11 et corrections
 contient: [S2.01, S2.02, S2.03, S2.04, S2.05]
 fiches_chapitres:               # fiches de conception validées, reprises telles quelles sauf « changements » ci-dessous
   S2.01: contenus/conception/S2.01.yaml
@@ -273,7 +273,7 @@ sources_lues:
 
 controle:
   test_du_debutant: "Pilote avec 3 à 5 débutants avant validation finale : questionnaire avant et après, exercice de synthèse, question de transfert, lecture d'un histogramme à classes inégales, effet d'une valeur extrême ; noter aussi les passages où ils décrochent (durée). La réussite du moteur ou des calculs ne prouve pas l'apprentissage"
-  relecture_definitions: "Claude, 21/11/2026 ; ChatGPT puis JG à faire"
+  relecture_definitions: "Claude, 21/11/2026 ; ChatGPT, 22/11/2026 (revue PR #50) ; validée par JG le 22/11/2026"
   controle_mobile: "Après rendu : sortie/EP-S2A/fr/inspection"
   a_trancher_par_le_relecteur:
     - "Durée 26 à 32 min : acceptable pour un épisode de niveau 1, ou faut-il couper le chapitre 3 en deux minutes ?"
