@@ -1,7 +1,7 @@
 # Épisode long EP-S2A « Résumer des données : tableaux, histogrammes, moyenne et médiane » (YOUTUBE_LESSON).
 # Assemblé le 22/11/2026 à partir des cinq fiches de chapitre validées (S2.01 à S2.05) et de la fiche de
 # conception contenus/conception/EP-S2A.yaml (validée par JG le 22/11/2026, PR #50), changements compris.
-# Données fictives, aucun chiffre réel. Statut : brouillon, en attente de relecture et de validation par JG.
+# Données fictives, aucun chiffre réel. Statut : validée par JG le 23/11/2026 (aperçu FR et EN du 22/11/2026).
 # Références de méthode (citées dans la description, pas en pied d'image) : OpenStax, Introductory Statistics 2e,
 # « Frequency, Frequency Tables, and Levels of Measurement » et « Measures of the Center of the Data » ;
 # NIST/SEMATECH e-Handbook of Statistical Methods, « Histogram » (classes, densité).
@@ -39,9 +39,9 @@ pedagogie:
     fr: 'Données fictives : 20 salariés d''une entreprise imaginaire, une classe, un café, des visiteurs. Aucun chiffre réel.'
     en: 'Made-up data: 20 employees of an imaginary company, a class, a café, visitors. No real numbers.'
 validation:
-  statut: brouillon
-  valide_par: ''
-  date: ''
+  statut: valide
+  valide_par: JG
+  date: '2026-11-23'
 sources: []
 editions:
   fr:

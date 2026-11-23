@@ -664,7 +664,7 @@ fiche = {
         "hypotheses": {"fr": "Données fictives : 20 salariés d'une entreprise imaginaire, une classe, un café, des visiteurs. Aucun chiffre réel.",
                        "en": "Made-up data: 20 employees of an imaginary company, a class, a café, visitors. No real numbers."},
     },
-    "validation": {"statut": "brouillon", "valide_par": "", "date": ""},
+    "validation": {"statut": "valide", "valide_par": "JG", "date": "2026-11-23"},   # vidéo FR et EN validée par JG
     "sources": [],
     "editions": {},
 }
@@ -681,7 +681,7 @@ for l in ("fr", "en"):
 entete = ("# Épisode long EP-S2A « Résumer des données : tableaux, histogrammes, moyenne et médiane » (YOUTUBE_LESSON).\n"
           "# Assemblé le 22/11/2026 à partir des cinq fiches de chapitre validées (S2.01 à S2.05) et de la fiche de\n"
           "# conception contenus/conception/EP-S2A.yaml (validée par JG le 22/11/2026, PR #50), changements compris.\n"
-          "# Données fictives, aucun chiffre réel. Statut : brouillon, en attente de relecture et de validation par JG.\n"
+          "# Données fictives, aucun chiffre réel. Statut : validée par JG le 23/11/2026 (aperçu FR et EN du 22/11/2026).\n"
           "# Références de méthode (citées dans la description, pas en pied d'image) : OpenStax, Introductory Statistics 2e,\n"
           "# « Frequency, Frequency Tables, and Levels of Measurement » et « Measures of the Center of the Data » ;\n"
           "# NIST/SEMATECH e-Handbook of Statistical Methods, « Histogram » (classes, densité).\n")
