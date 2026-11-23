@@ -1,10 +1,10 @@
 # Fiche de conception, pilier A (Actuariat), module A1, leçon 3. Modèle : modeles/fiche-conception-episode.yaml
 # Plan du module : docs/actuariat/A1-PLAN.md. BROUILLON : à relire (ChatGPT), puis à valider par JG.
-# Aucun fait extérieur : montants et taux fictifs, annoncés comme tels.
+# Aucun fait extérieur : montants fictifs ; taux fictif de 2,5 % repris de la séance a1/s01 du parcours actuariel.
 id_programme: A1.03
 statut: brouillon
 fiche_production: ""
-source_seance: ""
+source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml"
 
 titres:
   fr: "La valeur actuelle de plusieurs paiements"
@@ -36,13 +36,13 @@ objectifs:
     - "Explain why the answer depends on the interest rate"
 
 intuition: "On ne compare pas des euros de dates différentes : on les ramène tous à aujourd'hui, puis on additionne."
-exemple_fil_rouge: "JG's Holding (fictive) doit indemniser un client après un sinistre. Elle propose 2 900 € tout de suite, ou 1 000 € à la fin de chacune des trois prochaines années. Taux fictif de 3 %."
+exemple_fil_rouge: "JG's Holding (fictive) doit indemniser un client après un sinistre. Elle propose 2 900 € tout de suite, ou 1 000 € à la fin de chacune des trois prochaines années. Taux fictif de 2,5 % (celui de la séance a1/s01)."
 exemple_reel:
   description: "Aucun : indemnité et taux fictifs, annoncés comme tels."
   source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
 
 provenance:
-  - chiffre: "2 900 € ; 3 × 1 000 € ; 3 % ; 6 % ; exercice 500 € et 1 500 € à 4 %"
+  - chiffre: "2 900 € ; 3 × 1 000 € ; 2,5 % ; 6 % ; exercice 500 € et 1 500 €"
     support: ecran
     nature: parametre_simulation
     calcul: {entrees: "Choisis pour l'exemple", formule: "", transformations: ""}
@@ -55,7 +55,7 @@ provenance:
     source_primaire: {organisme: "", url: "", consulte_le: ""}
     incertitude: "Paramètres fictifs"
     comparabilite: "Ne représentent aucun contrat réel"
-  - chiffre: "970,87 € ; 942,60 € ; 915,14 € ; 2 828,61 € ; 2 673,01 € ; exercice 1 867,60 € et 1 904,59 €"
+  - chiffre: "975,61 € ; 951,81 € ; 928,60 € ; 2 856,02 € (= 1 000 × a₃ de la séance, 2,8560) ; 2 673,01 € ; exercice 1 915,53 € et 1 939,32 €"
     support: ecran
     nature: calcul_derive
     calcul: {entrees: "Montants et taux ci-dessus", formule: "Σ Cₖ ÷ (1 + i)ᵏ", transformations: "arrondi au centime"}
@@ -79,7 +79,7 @@ cycle_enquete:
   exploration: "Montrée : frise des paiements"
   methode_et_raison: "Montrée : actualiser chaque paiement, additionner"
   hypotheses: "Montrée : paiements certains, taux constant"
-  resultat_et_incertitude: "Montrée : 2 828,61 € contre 2 900 € à 3 % ; l'ordre s'inverse à 0 %"
+  resultat_et_incertitude: "Montrée : 2 856,02 € contre 2 900 € à 2,5 % ; l'ordre s'inverse à 0 %"
   interpretation_permise_et_interdite: "Montrée : comparer à la même date ; ne pas additionner des euros de dates différentes"
   reproductibilite: "Calculs recalculés par le moteur ; formule de tableur VAN à l'écran"
 
@@ -91,19 +91,19 @@ donnees_ou_simulation:
 
 hypotheses_et_limites:
   - {hypothese: "Paiements certains", intuition: "Ici, chaque paiement aura lieu", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Paiements incertains : on pondère par leur probabilité (A3.02)"}
-  - {hypothese: "Même taux pour toutes les échéances", intuition: "Un seul taux de 3 %", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Un taux par échéance : la courbe des taux (A1.05)"}
+  - {hypothese: "Même taux pour toutes les échéances", intuition: "Un seul taux de 2,5 %", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Un taux par échéance : la courbe des taux (A1.05)"}
 
-reproductibilite: "Formule à l'écran ; tableur : =VAN(3%;1000;1000;1000) (EN : =NPV(3%,1000,1000,1000))"
+reproductibilite: "Formule à l'écran ; tableur : =VAN(2,5%;1000;1000;1000) (EN : =NPV(2.5%,1000,1000,1000))"
 
 deroule:
   - {etape: question, contenu: "2 900 € tout de suite, ou 1 000 € par an pendant 3 ans ?"}
   - {etape: intuition, contenu: "3 000 € > 2 900 € : on prend les trois paiements ?"}
   - {etape: donnees, contenu: "Frise : 1 000 € à la fin des années 1, 2 et 3"}
-  - {etape: raisonnement, contenu: "À 3 % : 970,87 € + 942,60 € + 915,14 € = 2 828,61 €, moins que 2 900 €"}
+  - {etape: raisonnement, contenu: "À 2,5 % : 975,61 € + 951,81 € + 928,60 € = 2 856,02 €, moins que 2 900 €"}
   - {etape: formalisation, contenu: "VA = Σ Cₖ ÷ (1 + i)ᵏ"}
   - {etape: raisonnement, contenu: "Le taux décide : à 0 %, 3 000 € ; à 6 %, 2 673,01 €"}
-  - {etape: exercice, contenu: "À 4 % : 500 € dans 1 an puis 1 500 € dans 2 ans, ou l'inverse ?"}
-  - {etape: correction, contenu: "480,77 + 1 386,83 = 1 867,60 € ; 1 442,31 + 462,28 = 1 904,59 € : l'argent reçu tôt vaut plus"}
+  - {etape: exercice, contenu: "À 2,5 % : 500 € dans 1 an puis 1 500 € dans 2 ans, ou l'inverse ?"}
+  - {etape: correction, contenu: "487,80 + 1 427,72 = 1 915,53 € ; 1 463,41 + 475,91 = 1 939,32 € : l'argent reçu tôt vaut plus"}
   - {etape: application, contenu: "Un assureur compare ainsi des règlements, des primes et des prestations étalées dans le temps"}
   - {etape: limites, contenu: "Paiements certains et taux unique : deux hypothèses levées plus loin"}
   - {etape: rappel, contenu: "La suite : une formule pour les paiements réguliers, l'annuité (A1.04)"}
@@ -112,21 +112,21 @@ formules:
   - {formule: "VA = \\sum_{k=1}^{n} C_k / (1 + i)^k", explication_symboles: "Cₖ paiement à la fin de l'année k ; i taux annuel", conditions: "paiements certains, taux constant"}
 
 calculs_a_verifier:
-  - {expression: "1000 / 1.03", attendu: 970.87, libelle: "Paiement de l'année 1"}
-  - {expression: "1000 / 1.03**2", attendu: 942.60, libelle: "Paiement de l'année 2"}
-  - {expression: "1000 / 1.03**3", attendu: 915.14, libelle: "Paiement de l'année 3"}
-  - {expression: "1000 / 1.03 + 1000 / 1.03**2 + 1000 / 1.03**3", attendu: 2828.61, libelle: "VA des trois paiements à 3 %"}
+  - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Paiement de l'année 1"}
+  - {expression: "1000 / 1.025**2", attendu: 951.81, libelle: "Paiement de l'année 2"}
+  - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Paiement de l'année 3"}
+  - {expression: "1000 / 1.025 + 1000 / 1.025**2 + 1000 / 1.025**3", attendu: 2856.02, libelle: "VA des trois paiements à 2,5 %"}
   - {expression: "1000 / 1.06 + 1000 / 1.06**2 + 1000 / 1.06**3", attendu: 2673.01, libelle: "VA à 6 %"}
-  - {expression: "500 / 1.04 + 1500 / 1.04**2", attendu: 1867.60, libelle: "Exercice : 500 puis 1 500"}
-  - {expression: "1500 / 1.04 + 500 / 1.04**2", attendu: 1904.59, libelle: "Exercice : 1 500 puis 500"}
+  - {expression: "500 / 1.025 + 1500 / 1.025**2", attendu: 1915.53, libelle: "Exercice : 500 puis 1 500"}
+  - {expression: "1500 / 1.025 + 500 / 1.025**2", attendu: 1939.32, libelle: "Exercice : 1 500 puis 500"}
 
 idees_fausses:
   - {idee: "Additionner les montants sans les actualiser", desamorcee_a_l_etape: "raisonnement"}
   - {idee: "La meilleure offre est la même quel que soit le taux", desamorcee_a_l_etape: "raisonnement"}
 
 exercice:
-  question: "À 4 % par an, que vaut le plus aujourd'hui : 500 € dans 1 an puis 1 500 € dans 2 ans, ou 1 500 € dans 1 an puis 500 € dans 2 ans ?"
-  correction: "Premier échéancier : 500 ÷ 1,04 + 1 500 ÷ 1,04² ≈ 480,77 + 1 386,83 = 1 867,60 €. Second : 1 500 ÷ 1,04 + 500 ÷ 1,04² ≈ 1 442,31 + 462,28 = 1 904,59 €. Même total de 2 000 €, mais le second vaut plus : l'argent reçu plus tôt."
+  question: "À 2,5 % par an, que vaut le plus aujourd'hui : 500 € dans 1 an puis 1 500 € dans 2 ans, ou 1 500 € dans 1 an puis 500 € dans 2 ans ?"
+  correction: "Premier échéancier : 500 ÷ 1,025 + 1 500 ÷ 1,025² ≈ 487,80 + 1 427,72 = 1 915,53 €. Second : 1 500 ÷ 1,025 + 500 ÷ 1,025² ≈ 1 463,41 + 475,91 = 1 939,32 €. Même total de 2 000 €, mais le second vaut plus : l'argent reçu plus tôt."
   pause_secondes: 12
 
 preuve_apprentissage:

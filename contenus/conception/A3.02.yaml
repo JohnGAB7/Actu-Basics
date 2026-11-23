@@ -1,10 +1,10 @@
 # Fiche de conception, pilier A (Actuariat), module A3, leçon 2. Modèle : modeles/fiche-conception-episode.yaml
 # Plan du module : docs/actuariat/A3-PLAN.md. BROUILLON : à relire (ChatGPT), puis à valider par JG.
-# Aucun fait extérieur : table MK (même source que A3.01, vérification en cours) et taux fictif de 2 %.
+# Aucun fait extérieur : table MK (même source que A3.01, vérification en cours) et taux fictif de 2,5 % (ceux de la séance a3/s02 du parcours actuariel).
 id_programme: A3.02
 statut: brouillon
 fiche_production: ""
-source_seance: ""               # séance du parcours actuariel à rattacher quand elle existera
+source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a3/s02.yaml"
 
 titres:
   fr: "Le capital différé"
@@ -20,7 +20,7 @@ public:
   niveau_maths: M0
   rappel_conseille: []
   notions_utilisees:
-    - {notion: "Actualisation", episode: A1.01, rappel: "10 000 € dans 5 ans à 2 % valent 10 000 ÷ 1,02⁵ ≈ 9 057 € aujourd'hui"}
+    - {notion: "Actualisation", episode: A1.01, rappel: "10 000 € dans 5 ans à 2,5 % valent 10 000 ÷ 1,025⁵ ≈ 8 839 € aujourd'hui"}
     - {notion: "Probabilité de survie ₙpₓ", episode: A3.01, rappel: "₅p₆₀ = l₆₅ ÷ l₆₀ ≈ 0,894 avec la table MK"}
     - {notion: "Espérance d'un gain aléatoire", episode: A2.01, rappel: "Montant × probabilité de le recevoir, quand l'autre cas rapporte 0"}
     - {notion: "JG's Holding", episode: "", rappel: "Assureur fictif, toujours annoncé comme tel"}
@@ -36,7 +36,7 @@ objectifs:
     - "Read the result as a break-even price for a large group of policyholders, not for one person"
 
 intuition: "Deux remises s'ajoutent : le temps (l'argent attend) et la survie (une partie des assurés ne sera plus là pour recevoir)."
-exemple_fil_rouge: "JG's Holding (fictive) promet 10 000 € à un client de 60 ans s'il est en vie à 65 ans. Taux technique fictif de 2 %, table MK."
+exemple_fil_rouge: "JG's Holding (fictive) promet 10 000 € à un client de 60 ans s'il est en vie à 65 ans. Taux technique fictif de 2,5 %, table MK (comme la séance a3/s02)."
 exemple_reel:
   description: "Aucun : produit et taux fictifs, annoncés comme tels."
   source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
@@ -55,7 +55,7 @@ provenance:
     source_primaire: {organisme: "Voir A3.01 (vérification Perplexity en cours)", url: "", consulte_le: ""}
     incertitude: "Aucune pour le calcul"
     comparabilite: "Table de tarification, pas la population"
-  - chiffre: "Taux technique 2 %"
+  - chiffre: "Taux technique 2,5 %"
     support: ecran
     nature: parametre_simulation
     calcul: {entrees: "Choisi pour l'exemple", formule: "", transformations: ""}
@@ -68,10 +68,10 @@ provenance:
     source_primaire: {organisme: "", url: "", consulte_le: ""}
     incertitude: "Paramètre fictif"
     comparabilite: "Ne représente aucun taux réglementaire"
-  - chiffre: "9 057 € ; 0,894 ; 8 096 € ; exercice 9 518 €"
+  - chiffre: "8 839 € ; 0,894 ; 7 901 € ; exercice 9 472 €"
     support: ecran
     nature: calcul_derive
-    calcul: {entrees: "lₓ MK, taux 2 %", formule: "10 000 · 1,02⁻ⁿ · ₙpₓ", transformations: "arrondi à l'euro"}
+    calcul: {entrees: "lₓ MK, taux 2,5 %", formule: "10 000 · 1,025⁻ⁿ · ₙpₓ", transformations: "arrondi à l'euro"}
     definition: "Valeur actuelle, probabilité de survie, valeur actuelle probable"
     unite: "€ (FR), $ (EN)"
     population: ""
@@ -92,7 +92,7 @@ cycle_enquete:
   exploration: "Montrée : 801 043 personnes à 60 ans, 716 046 à 65 ans"
   methode_et_raison: "Montrée : actualiser, puis pondérer par la survie"
   hypotheses: "Montrée : taux constant, table juste, grand nombre d'assurés"
-  resultat_et_incertitude: "Montrée : 8 096 € par assuré, en moyenne sur le groupe"
+  resultat_et_incertitude: "Montrée : 7 901 € par assuré, en moyenne sur le groupe"
   interpretation_permise_et_interdite: "Montrée : prix d'équilibre d'un grand groupe ; ne dit rien d'un client donné"
   reproductibilite: "Calculs recalculés par le moteur"
 
@@ -103,19 +103,19 @@ donnees_ou_simulation:
   parametres_simulation: ""
 
 hypotheses_et_limites:
-  - {hypothese: "Taux constant de 2 %", intuition: "L'argent rapporte 2 % chaque année", testable: "", non_testable: "Taux futurs", diagnostic: "", si_elle_echoue: "Courbe des taux (A1)"}
+  - {hypothese: "Taux constant de 2,5 %", intuition: "L'argent rapporte 2,5 % chaque année", testable: "", non_testable: "Taux futurs", diagnostic: "", si_elle_echoue: "Courbe des taux (A1)"}
   - {hypothese: "Grand groupe d'assurés", intuition: "La moyenne n'est juste que sur beaucoup de contrats", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Mutualisation (A2.01)"}
 
 reproductibilite: "Formule ₙEₓ = vⁿ · lₓ₊ₙ / lₓ ; paramètres MK en note"
 
 deroule:
   - {etape: question, contenu: "10 000 € dans 5 ans, si vous êtes en vie : combien JG's Holding doit-elle avoir aujourd'hui ?"}
-  - {etape: intuition, contenu: "On pense à l'actualisation seule : 9 057 €"}
+  - {etape: intuition, contenu: "On pense à l'actualisation seule : 8 839 €"}
   - {etape: donnees, contenu: "Rappel A3.01 : sur 801 043 personnes de 60 ans, 716 046 atteignent 65 ans"}
-  - {etape: raisonnement, contenu: "Groupe de 801 043 clients : l'assureur paiera 716 046 × 10 000 € dans 5 ans ; aujourd'hui, il lui faut 716 046 × 9 057 € ; par client : 8 096 €"}
-  - {etape: formalisation, contenu: "ₙEₓ = vⁿ · ₙpₓ, avec v = 1 ÷ 1,02"}
+  - {etape: raisonnement, contenu: "Groupe de 801 043 clients : l'assureur paiera 716 046 × 10 000 € dans 5 ans ; aujourd'hui, il lui faut 716 046 × 8 839 € ; par client : 7 901 €"}
+  - {etape: formalisation, contenu: "ₙEₓ = vⁿ · ₙpₓ, avec v = 1 ÷ 1,025"}
   - {etape: exercice, contenu: "Client de 65 ans, 10 000 € dans un an s'il est en vie ?"}
-  - {etape: correction, contenu: "10 000 × 695 175 ÷ 716 046 ÷ 1,02 ≈ 9 518 €"}
+  - {etape: correction, contenu: "10 000 × 695 175 ÷ 716 046 ÷ 1,025 ≈ 9 472 €"}
   - {etape: application, contenu: "La brique de base : une rente viagère est une somme de capitaux différés (A3.04)"}
   - {etape: limites, contenu: "Un prix moyen sur un grand groupe ; un client qui décède ne reçoit rien, un survivant reçoit tout"}
   - {etape: rappel, contenu: "La suite : payer en cas de décès (A3.03)"}
@@ -125,30 +125,30 @@ formules:
   - {formule: "{}_nE_x = v^n \\cdot {}_np_x", explication_symboles: "valeur actuelle probable de 1 versé à l'âge x + n en cas de vie", conditions: ""}
 
 calculs_a_verifier:
-  - {expression: "10000 / 1.02**5", attendu: 9057, libelle: "Actualisation seule"}
+  - {expression: "10000 / 1.025**5", attendu: 8839, libelle: "Actualisation seule"}
   - {expression: "716046 / 801043", attendu: 0.894, libelle: "5p60 MK"}
-  - {expression: "10000 / 1.02**5 * 716046 / 801043", attendu: 8096, libelle: "Capital différé 5E60 × 10 000"}
-  - {expression: "10000 / 1.02 * 695175 / 716046", attendu: 9518, libelle: "Exercice : 1E65 × 10 000"}
+  - {expression: "10000 / 1.025**5 * 716046 / 801043", attendu: 7901, libelle: "Capital différé 5E60 × 10 000"}
+  - {expression: "10000 / 1.025 * 695175 / 716046", attendu: 9472, libelle: "Exercice : 1E65 × 10 000"}
 
 idees_fausses:
   - {idee: "Le prix est 10 000 € × 0,894, sans actualiser", desamorcee_a_l_etape: "raisonnement"}
   - {idee: "Le client qui survit « récupère » sa mise plus des intérêts", desamorcee_a_l_etape: "limites"}
 
 exercice:
-  question: "Un client de 65 ans recevra 10 000 € dans un an s'il est en vie. Table MK (l₆₅ = 716 046, l₆₆ = 695 175), taux 2 %. Valeur actuelle probable ?"
-  correction: "₁E₆₅ = (695 175 ÷ 716 046) ÷ 1,02 ≈ 0,9518, donc environ 9 518 €."
+  question: "Un client de 65 ans recevra 10 000 € dans un an s'il est en vie. Table MK (l₆₅ = 716 046, l₆₆ = 695 175), taux 2,5 %. Valeur actuelle probable ?"
+  correction: "₁E₆₅ = (695 175 ÷ 716 046) ÷ 1,025 ≈ 0,9472, donc environ 9 472 €."
   pause_secondes: 10
 
 preuve_apprentissage:
   tache: "Calculer un capital différé à partir de deux lignes de la table et d'un taux"
   question_de_transfert: "Même client de 60 ans, mais taux de 0 % : que devient le prix, et pourquoi ?"
-  diagnostic_d_erreur: "« 8 096 €, c'est ce que chaque client récupérera » : pourquoi est-ce faux ?"
+  diagnostic_d_erreur: "« 7 901 €, c'est ce que chaque client récupérera » : pourquoi est-ce faux ?"
   limite_a_enoncer: "Le prix n'est juste qu'en moyenne, sur un grand groupe, si la table et le taux sont justes"
 
 duree_estimee_min: [6, 8]
 format: youtube_lesson
 raison_du_format: "Leçon longue du pilier A (6 à 12 min, v3.3)"
-derives_short: ["A3.02-x1 · Pourquoi 10 000 € dans 5 ans valent 8 096 € pour un assureur"]
+derives_short: ["A3.02-x1 · Pourquoi 10 000 € dans 5 ans valent 7 901 € pour un assureur"]
 
 adaptation_en: "Mêmes nombres ; $ au lieu de € ; séparateurs anglais. Textes écrits pour l'anglais."
 licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."

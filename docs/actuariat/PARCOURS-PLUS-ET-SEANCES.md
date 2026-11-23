@@ -6,9 +6,10 @@ Demande de JG (2026-11-23) : le parcours de remise à niveau en actuariat (dép�
 
 ## 1. Le principe
 
-- **Une séance du parcours = une vidéo Actu-Basics** (ou un chapitre d'une leçon), FR et EN en même temps, comme toute la chaîne.
+- **Un module du parcours = un épisode long Actu-Basics** (règle LMEC-DEC-009 : un épisode couvre plusieurs notions liées), dont les chapitres sont les leçons du module (A1.01 à A1.05…). Chaque séance pointe le chapitre qui la concerne. FR et EN en même temps, comme toute la chaîne.
+- **Mise à jour du 2026-11-23 (dépôt du parcours, PR #2 à #4)** : l'entrée d'Actu-Basics n'est plus la séance seule mais le fichier `a-produire/<module>.md`, déposé dans le parcours quand JG maîtrise le module (notions, exercices corrigés, pièges, vocabulaire anglais, notes pour la vidéo). Les chiffres des vidéos viennent des séances : **taux fictif de 2,5 %** et table MK.
 - **Niveau** : la vidéo vise un débutant (intuition, exemple chiffré, exercice simple). La séance garde le niveau examen (formes continues, code, IAS 19). Règle reprise de `docs/ACTU-BASICS.md` du parcours : la vidéo prend le premier tiers de la séance.
-- **Ordre de production** : l'ordre du parcours, **en commençant par A1** (demande de JG, 2026-11-23) : A1.02 à A1.05 (`A1-PLAN.md`), puis A2, A2b, A3. A1.01 et A2.01 existent déjà (pilote) et servent tout de suite aux séances A1 et A2. A3.01 à A3.03 ont un brouillon, en attente (`A3-PLAN.md`).
+- **Ordre de production** : l'ordre du parcours, **en commençant par A1** (demande de JG, 2026-11-23). Les brouillons de fiches sont préparés à partir des séances déjà écrites (a1/s01, puis a3/s01 et a3/s02) ; ils sont finalisés et rendus quand `a-produire/<module>.md` arrive. A1.01 et A2.01 existent déjà (pilote) et servent tout de suite aux séances A1 et A2.
 - **Aucun échange direct entre projets** : le lien passe par les dépôts (section 4).
 - **Règles inchangées** : JG's Holding toujours annoncée comme fictive ; chaque nombre passe par `verifier` ; aucun chiffre réel sans source datée ; supports de cours et CV de JG jamais sur un dépôt ; rien de fusionné ni publié sans l'accord de JG.
 
@@ -87,14 +88,26 @@ Pour O1 à O3, la vidéo montre l'idée et le résultat ; l'écriture du code re
 
 ## 4. Le lien entre les deux dépôts
 
-1. Une séance est écrite et fusionnée dans `parcours-actuariel` (`contenus/<module>/sNN.yaml`).
-2. Actu-Basics ouvre une PR avec la fiche de conception de la leçon (`contenus/conception/A3.01.yaml`), qui cite la séance et son commit dans un champ `source_seance`.
-3. Circuit habituel : Claude structure, ChatGPT relit, Perplexity vérifie les faits, JG valide, puis le moteur rend la vidéo (9:16 et 16:9).
-4. Le registre [`videos-seances.yaml`](videos-seances.yaml) de ce dépôt donne, pour chaque séance, la leçon, l'état et, une fois publiées, les URL FR et EN avec le début et la fin du chapitre. C'est le seul fichier que le parcours a besoin de lire.
+Circuit défini par le parcours (`a-produire/README.md` et `docs/ACTU-BASICS.md` de son dépôt, état du 2026-11-23) :
 
-**Durée dans la séance.** L'étape « Vidéo » d'une séance prévoit environ 3 minutes ; une leçon Actu-Basics dure 6 à 12 minutes. Je propose que la séance pointe le **chapitre** utile de la leçon (lien horodaté, champs `debut` et `fin` du registre), avec la leçon complète en lien « pour aller plus loin ». Les chapitres YouTube existent déjà dans le moteur (`chapitres.txt` en 16:9).
+1. Les séances du module sont écrites dans `parcours-actuariel` (`contenus/<module>/sNN.yaml`), et JG les travaille jusqu'à maîtriser le module.
+2. Un fichier `a-produire/<module>.md` y est alors déposé, par PR, après accord de JG : c'est **l'entrée** d'Actu-Basics.
+3. Côté Actu-Basics : Claude écrit ou finalise les fiches de conception du module à partir de ce fichier (champ `source_seance` : séances et commit), ChatGPT relit, Perplexity vérifie les faits extérieurs, JG valide, puis le moteur rend l'épisode (9:16 et 16:9, chapitres YouTube).
+4. Le registre [`videos-seances.yaml`](videos-seances.yaml) de ce dépôt donne, pour chaque séance, le chapitre, l'état et, une fois publiées, les URL FR et EN avec le début et la fin du chapitre. C'est le seul fichier que le parcours a besoin de lire pour remplir son étape « Vidéo ».
 
-**Côté parcours** (à faire dans l'autre dépôt, pas ici) : son étape `video` affiche aujourd'hui « Vidéo en préparation ». Il lui suffira de lire `video_fr`, `debut` et `fin` dans le registre, ou de les recopier dans le bloc `actu_basics` de la séance.
+**Préparer sans attendre.** Rien n'empêche de préparer les brouillons dès qu'une séance existe : ils reprennent ses chiffres et sont recalés sur `a-produire/<module>.md` à son arrivée. Aucun rendu final avant ce fichier et l'accord de JG.
+
+**Durée dans la séance.** L'étape « Vidéo » d'une séance prévoit environ 3 minutes ; un épisode de module dure bien plus. La séance pointe le **chapitre** utile (lien horodaté, champs `debut` et `fin` du registre), avec l'épisode complet en lien « pour aller plus loin ». Les chapitres YouTube existent déjà dans le moteur (`chapitres.txt` en 16:9).
+
+**Côté parcours** (à faire dans l'autre dépôt, pas ici) : son étape `video` affiche aujourd'hui « Vidéo en préparation ». Il lui suffira de lire `video_fr`, `debut` et `fin` dans le registre.
+
+**Correspondance des séances écrites (2026-11-23)**
+
+| Séance du parcours | Contenu | Chapitres Actu-Basics |
+| --- | --- | --- |
+| a1/s01 · Intérêt composé et annuités certaines (2,5 %) | i, v, d, δ, aₙ, äₙ, valeur actuelle d'une suite de flux | A1.01 (rendue) et A1.04 ; A1.03 pour la somme de flux. d et δ restent dans la séance (niveau examen) |
+| a3/s01 · Force de mortalité et espérance de vie (MK) | lₓ, ₜpₓ, μₓ, eₓ | A3.01 ; μₓ dans A3+.01 |
+| a3/s02 · Valeur actuelle d'une assurance (MK, 2,5 %) | A¹ₓ:ₙ, ₙEₓ, mixte Aₓ:ₙ | A3.02 et A3.03 ; la mixte comme application de A3.03 |
 
 ## 5. Décisions à prendre par JG
 

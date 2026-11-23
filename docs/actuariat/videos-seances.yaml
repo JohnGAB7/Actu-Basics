@@ -1,23 +1,59 @@
 # Registre des vidéos Actu-Basics utilisées à l'étape 1 « Vidéo » des séances du parcours actuariel
 # (https://github.com/JohnGAB7/parcours-actuariel). Voir docs/actuariat/PARCOURS-PLUS-ET-SEANCES.md.
 #
-# Une entrée par séance. Champs :
-#   seance         identifiant de la séance dans le parcours (contenus/<module>/sNN.yaml)
-#   source_seance  commit de la séance dont la fiche est tirée
-#   lecon          leçon Actu-Basics (fiche de conception contenus/conception/<lecon>.yaml)
-#   etat           a_proposer | proposition | fiche_ecrite | relue | validee_jg | rendue | publiee
+# Circuit (état du 2026-11-23) : un module du parcours = un épisode long Actu-Basics ; chaque séance pointe son chapitre.
+# L'entrée d'Actu-Basics est a-produire/<module>.md, déposé dans le parcours quand JG maîtrise le module.
+#
+# Champs d'un module :
+#   module         identifiant du module dans le parcours
+#   episode        épisode Actu-Basics du module
+#   entree         fichier a-produire attendu dans le parcours (absent tant que le module n'est pas maîtrisé)
+#   entree_recue   commit du fichier a-produire une fois déposé (null avant)
+# Champs d'une séance :
+#   seance         identifiant de la séance (contenus/<module>/sNN.yaml)
+#   source_seance  commit de la séance dont les brouillons reprennent les chiffres
+#   chapitres      leçons Actu-Basics (fiches contenus/conception/<lecon>.yaml) qui servent la séance
+#   etat           a_preparer | brouillon | attend_a_produire | relue | validee_jg | rendue | publiee
 #   video_fr, video_en   URL publiques, une fois publiées (vides avant)
-#   debut, fin     chapitre utile dans la leçon, en secondes (vides si la leçon entière sert)
+#   debut, fin     chapitre utile dans l'épisode, en secondes (vides avant le rendu)
 # Rien n'est publié sans l'accord de JG : une URL n'apparaît ici qu'après publication.
-version: 1
-seances:
-  - seance: a3/s01
-    titre: "Force de mortalité et espérance de vie"
-    source_seance: "JohnGAB7/parcours-actuariel@41bbd7e:contenus/a3/s01.yaml"
-    lecon: A3.01
-    titre_lecon: {fr: "Lire une table de mortalité", en: "Reading a life table"}
-    etat: fiche_ecrite       # brouillon contenus/conception/A3.01.yaml (option C, JG 23/11/2026) ; en attente : production dans l'ordre du parcours, A1 d'abord (JG, 23/11/2026)
-    video_fr: null
-    video_en: null
-    debut: null
-    fin: null
+version: 2
+modules:
+  - module: a1
+    episode: EP-A1
+    entree: a-produire/A1.md
+    entree_recue: null
+    seances:
+      - seance: a1/s01
+        titre: "Intérêt composé et annuités certaines"
+        source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml"
+        chapitres: [A1.01, A1.03, A1.04]
+        etat: brouillon        # A1.01 rendue (pilote, à recaler sur 2,5 % ?) ; A1.03 et A1.04 en brouillon, à recaler sur 2,5 %
+        video_fr: null
+        video_en: null
+        debut: null
+        fin: null
+
+  - module: a3
+    episode: EP-A3
+    entree: a-produire/A3.md
+    entree_recue: null
+    seances:
+      - seance: a3/s01
+        titre: "Force de mortalité et espérance de vie"
+        source_seance: "JohnGAB7/parcours-actuariel@41bbd7e:contenus/a3/s01.yaml"
+        chapitres: [A3.01]
+        etat: brouillon        # option C (JG, 23/11/2026) ; sources INSEE, SSA et MK attendues (Perplexity)
+        video_fr: null
+        video_en: null
+        debut: null
+        fin: null
+      - seance: a3/s02
+        titre: "Valeur actuelle d'une assurance"
+        source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a3/s02.yaml"
+        chapitres: [A3.02, A3.03]
+        etat: brouillon        # à recaler sur 2,5 %
+        video_fr: null
+        video_en: null
+        debut: null
+        fin: null
