@@ -541,11 +541,13 @@ class Rendu(ScenesPedagogiques):
         if nom_marque:  # inutile quand le logo est déjà en haut de l'image
             d.rectangle((g, h + 4, g + 14, h + 34), fill=self.c["accent"])
             d.text((g + 30, h), marque, font=p, fill=self.c["texte"])
-        noms = ", ".join(_texte_langue(s["nom"], self.langue) for s in self.fiche.sources)
+        # « court » (facultatif) : nom bref pour le pied de page, quand une fiche cite plusieurs pages d'un même site.
+        noms_l = list(dict.fromkeys(_texte_langue(s.get("court") or s["nom"], self.langue) for s in self.fiche.sources))
+        noms = ", ".join(noms_l)
         if not noms:   # fiche pédagogique sans source : pas de pied de page
             return self._cadre_numero(d, index, total)
-        pied = typographie(f"{self.lib['source']} : {noms}" if self.langue == "fr"
-                           else f"{self.lib['source']}: {noms}", self.langue)
+        lib = self.lib["sources" if len(noms_l) > 1 else "source"]
+        pied = typographie(f"{lib} : {noms}" if self.langue == "fr" else f"{lib}: {noms}", self.langue)
         pp = self.police("regulier", 26)
         lignes = self._couper(pied, pp, dr - g - (110 if self.format == "carrousel" else 0))[:2]
         y = b - 34 * len(lignes)

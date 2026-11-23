@@ -1840,7 +1840,7 @@ class AnimationsDonnees:
         y_top_s = y_axe - h_cap - c0 * i * n * echelle
         if k_s > 0 and k_k < 1:
             self._texte_centre(d, self._somme_txt(c0 * (1 + i * n), unite), pv, xc, y_top_s - 54,
-                               _melange(fond, self.c["texte"], k_s * (1 - k_k)), g, dr)
+                               _melange(fond, self.c["texte"], k_s * (1 - min(1.0, k_k * 4))), g, dr)
         if k_k > 0:
             y_top = y_top_s - c0 * ((1 + i) ** n - 1 - i * n) * echelle
             self._texte_centre(d, self._somme_txt(c0 * (1 + i) ** n, unite), pv, xc, y_top - 54,
@@ -1900,7 +1900,7 @@ class AnimationsDonnees:
             y_bas = ya + (yb - ya) * ka
             h = h0 + (h1 - h0) * ka
             couleur = _melange(self.c["barre"], self.c["or"], ka)
-            if ka > 0:      # fantôme du versement à sa date : on voit ce qu'il est devenu
+            if ka > 0 and a > 0:      # fantôme du versement à sa date : on voit ce qu'il est devenu
                 d.rounded_rectangle((xa, ya - h0, xa + wb, ya - 2), radius=8,
                                     outline=_melange(fond, self.c["barre"], 0.6 * ka), width=3)
                 if etiquettes:
@@ -1915,7 +1915,7 @@ class AnimationsDonnees:
                 self._texte_centre(d, self._somme_txt(m, unite, 0 if float(m).is_integer() else dec), pv,
                                    x + wb / 2, y_bas - h - 48, _melange(fond, self.c["texte"], kf * (1 - ka)), g, dr)
             if ka > 0.95 and etiquettes:
-                txt = f"{self._somme_txt(p, unite, dec)}"
+                txt = self._somme_txt(p, unite, 0 if abs(p - round(p)) < 1e-9 else dec)
                 d.text((x - 16 - pv.getlength(txt), y_bas - h / 2 - 22), txt, font=pv,
                        fill=_melange(fond, self.c["accent"], 1.0))
             if ka > 0:

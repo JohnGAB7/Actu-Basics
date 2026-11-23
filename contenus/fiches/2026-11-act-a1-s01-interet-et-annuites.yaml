@@ -44,18 +44,23 @@ validation:
 
 sources:
   - nom: {fr: "Service-public.fr, « Livret A » (calcul par quinzaines, intérêts ajoutés au capital au 31 décembre, taux de 1,7 %)", en: "Service-public.fr, “Livret A” (interest by half-months, added to the balance on 31 December, 1.7% rate)"}
+    court: "service-public.fr"
     url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F2365"
     date_consultation: "2026-11-23"
   - nom: {fr: "Service-public.fr, taux du Livret A au 1er août 2026", en: "Service-public.fr, Livret A rate from 1 August 2026"}
+    court: "service-public.fr"
     url: "https://www.service-public.gouv.fr/particuliers/actualites/A18000"
     date_consultation: "2026-11-23"
   - nom: {fr: "TreasuryDirect, « Understanding Pricing and Interest Rates » (bons du Trésor vendus avec un escompte)", en: "TreasuryDirect, “Understanding Pricing and Interest Rates” (Treasury bills sold at a discount)"}
+    court: "TreasuryDirect"
     url: "https://www.treasurydirect.gov/marketable-securities/understanding-pricing/"
     date_consultation: "2026-11-23"
   - nom: {fr: "Service-public.fr, « Qu'est-ce que le TAEG ? »", en: "Service-public.fr, “What is the APR (TAEG)?”"}
+    court: "service-public.fr"
     url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F2456"
     date_consultation: "2026-11-23"
   - nom: {fr: "Powerball, « Ticket in California Wins $1.765 Billion Powerball Jackpot » (11 octobre 2023)", en: "Powerball, “Ticket in California Wins $1.765 Billion Powerball Jackpot” (11 October 2023)"}
+    court: "powerball.com"
     url: "https://www.powerball.com/ticket-in-california-wins-1.765-billion-powerball-jackpot"
     date_consultation: "2026-11-23"
 
@@ -79,7 +84,7 @@ editions:
         etapes:
           - "Intérêt *simple* et *composé*"
           - "*Actualiser* avec v"
-          - "Le taux d'*escompte* d"
+          - "Le taux d'*escompte*"
           - "Les taux *équivalents*"
           - "Les *annuités* certaines"
           - "Un *exercice* corrigé"
@@ -424,7 +429,7 @@ editions:
         etapes:
           - "*Simple* and *compound* interest"
           - "*Discounting* with v"
-          - "The rate of *discount* d"
+          - "The rate of *discount*"
           - "*Equivalent* rates"
           - "*Annuities* certain"
           - "A worked *exercise*"
