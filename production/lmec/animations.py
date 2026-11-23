@@ -1908,8 +1908,9 @@ class AnimationsDonnees:
                                        xa + wb / 2, ya - h0 - 48, _melange(fond, self.c["texte"], 0.55 * ka), g, dr)
                     self._texte_centre(d, f"× v{_exposant(a)}", pv, xa + wb / 2, ya - h0 - 96,
                                        _melange(fond, self.c["or"], ka), g, dr)
-            d.rounded_rectangle((x, y_bas - h * kf, x + wb, y_bas - 2), radius=8,
-                                fill=_melange(fond, couleur, 0.85 * kf + 0.1))
+            if h * kf > 6:
+                d.rounded_rectangle((x, y_bas - h * kf, x + wb, y_bas - 2), radius=min(8, int(h * kf / 3)),
+                                    fill=_melange(fond, couleur, 0.85 * kf + 0.1))
             if ka < 0.95 and (etiquettes or j in (0, n - 1)):
                 self._texte_centre(d, self._somme_txt(m, unite, 0 if float(m).is_integer() else dec), pv,
                                    x + wb / 2, y_bas - h - 48, _melange(fond, self.c["texte"], kf * (1 - ka)), g, dr)

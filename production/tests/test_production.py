@@ -2260,8 +2260,9 @@ def test_animations_finance():
             if m not in ("capitalisation", "echeancier", "escompte", "frequences"):
                 continue
             vus.add(m)
-            for p in r._plan_animation(s):
-                for t in (0.0, p["debut"] + p["duree"] / 2, p["debut"] + p["duree"] + 0.2):
-                    r.dessiner(s, i, len(scenes), t)
+            plan = r._plan_animation(s)
+            fin = max(p["debut"] + p["duree"] for p in plan) + 0.5
+            for k in range(int(fin * 8) + 1):          # 8 images par seconde : toutes les étapes d'apparition
+                r.dessiner(s, i, len(scenes), k / 8)
             r.dessiner(s, i, len(scenes), None)
         assert vus == {"capitalisation", "echeancier", "escompte", "frequences"}
