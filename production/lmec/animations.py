@@ -1759,6 +1759,11 @@ class AnimationsDonnees:
             return "$" + txt
         return txt + (" " + unite if unite else "")
 
+    @staticmethod
+    def _dec_taux(v):
+        """One decimal when it is exact (2.5%), two otherwise (6.17%)."""
+        return 1 if abs(round(100 * v, 1) - round(100 * v, 2)) < 1e-9 else 2
+
     def _taux_txt(self, v, dec=2):
         txt = formater_nombre(round(100 * v, dec), self.langue, dec)
         return txt + (" %" if self.langue == "fr" else "%")
@@ -2031,7 +2036,7 @@ class AnimationsDonnees:
                 ks = (k_a - 0.8) / 0.2
                 d.line((dx, y_de(c0), dx, y_de(c0) + (y_de(v_max) - y_de(c0)) * ks), fill=coul, width=7)
             if k_e < 0.98:
-                d.text((g, haut + 44), lib["une_fois"].format(self._taux_txt(i, 1)), font=pl,
+                d.text((g, haut + 44), lib["une_fois"].format(self._taux_txt(i, self._dec_taux(i))), font=pl,
                        fill=_melange(fond, self.c["secondaire"], 0.9 * (1 - k_e)))
         # Mensuel : m marches au taux j.
         if k_m > 0:
@@ -2053,7 +2058,7 @@ class AnimationsDonnees:
         if k_e > 0:
             txt = lib["meme_arrivee"].format(self._somme_txt(v_max, unite, 0 if float(v_max).is_integer() else 2))
             d.text((g, haut), txt, font=pv, fill=_melange(fond, self.c["accent"], k_e))
-            txt = lib["proportionnel"].format(m, self._taux_txt(j, 4), self._taux_txt(m * j, 4), self._taux_txt(i, 1))
+            txt = lib["proportionnel"].format(m, self._taux_txt(j, 4), self._taux_txt(m * j, 4), self._taux_txt(i, self._dec_taux(i)))
             d.text((g, haut + 48), txt, font=pl, fill=_melange(fond, self.c["texte"], k_e))
 
 

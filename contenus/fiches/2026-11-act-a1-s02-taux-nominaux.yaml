@@ -70,7 +70,7 @@ editions:
         disposition: cartes
         etapes:
           - "Taux *nominal* et taux *effectif*"
-          - "Le taux d'*escompte* nominal"
+          - "L'*escompte* nominal"
           - "Le taux *continu* et le nombre *e*"
           - "Les annuités *mensuelles*"
           - "Le contrat de *Léa*"
@@ -107,7 +107,7 @@ editions:
         etapes:
           - "Une fois par an : *+ 6,17 %* en fin d'année"
           - "Douze fois par an : *+ 0,5 %* chaque mois"
-          - "Même arrivée : *1 061,68 €*, mais 12 × 0,5 % = *6 %* seulement"
+          - "Le nominal : 12 × 0,5 % = *6 %*"
         voix_off: "Regardons-le en mouvement. En haut, un seul saut en fin d'année, au taux effectif de six virgule dix-sept pour cent. En dessous, douze petits sauts de zéro virgule cinq pour cent, un par mois. Chaque saut part un peu plus haut que le précédent, parce qu'il inclut les intérêts déjà gagnés. Les deux chemins arrivent exactement au même endroit, mille soixante et un euros et soixante-huit centimes : ces deux taux sont équivalents. Le taux nominal, lui, se contente d'additionner les douze morceaux : six pour cent."
         verifier:
           - {expression: "100 * (1.0616778**(1/12) - 1)", attendu: 0.5, libelle: "Taux mensuel équivalent, en %"}
@@ -140,7 +140,7 @@ editions:
         etapes:
           - "Sur un an : *+ 24,8 %* de dette"
           - "Chaque mois : 22,36 % ÷ 12 = *+ 1,863 %*"
-          - "Le taux affiché n'est que le *nominal* : 12 × 1,863 % = *22,36 %*"
+          - "Affiché : le *nominal*, 12 × 1,863 %"
         note: "Federal Reserve, G.19 : 22,36 % au 3e trimestre 2026. Calcul illustratif avec des intérêts ajoutés chaque mois."
         voix_off: "Revenons à nos cartes de crédit américaines. Le taux annoncé, vingt-deux virgule trente-six pour cent, est un taux nominal annuel. Supposons que les intérêts s'ajoutent à la dette chaque mois : chaque mois, la dette grossit de un virgule huit six trois pour cent, et le mois suivant, on paie des intérêts sur ces intérêts. Mille dollars non remboursés deviennent mille deux cent quarante-huit dollars en un an : un coût réel de vingt-quatre virgule huit pour cent. C'est pour cela que la loi impose, en Europe comme aux États-Unis, d'afficher un taux annuel calculé selon une méthode commune."
         verifier:
@@ -398,7 +398,7 @@ editions:
         etapes:
           - "Once a year: *+ 6.17%* at year end"
           - "Twelve times a year: *+ 0.5%* each month"
-          - "Same arrival: *€1,061.68*, but 12 × 0.5% = only *6%*"
+          - "The nominal: 12 × 0.5% = *6%*"
         voix_off: "Let's watch it move. At the top, a single jump at year end, at the effective rate of six point one seven percent. Below, twelve small jumps of zero point five percent, one a month. Each jump starts a little higher than the one before, because it includes the interest already earned. Both paths arrive at exactly the same place, one thousand and sixty-one euros sixty-eight: these two rates are equivalent. The nominal rate simply adds up the twelve pieces: six percent."
         verifier:
           - {expression: "100 * (1.0616778**(1/12) - 1)", attendu: 0.5, libelle: "Equivalent monthly rate, %"}
@@ -431,7 +431,7 @@ editions:
         etapes:
           - "Over a year: *+ 24.8%* of debt"
           - "Each month: 22.36% ÷ 12 = *+ 1.863%*"
-          - "The quoted rate is only the *nominal*: 12 × 1.863% = *22.36%*"
+          - "Quoted: the *nominal*, 12 × 1.863%"
         note: "Federal Reserve, G.19: 22.36% in Q3 2026. Illustrative calculation with interest added monthly."
         voix_off: "Back to American credit cards. The quoted rate, twenty-two point three six percent, is a nominal annual rate. Suppose the interest is added to the debt every month: each month, the debt grows by one point eight six three percent, and the next month, you pay interest on that interest. One thousand dollars left unpaid becomes one thousand two hundred and forty-eight dollars in a year: a real cost of twenty-four point eight percent. That is why the law, in Europe as in the United States, requires lenders to show an annual rate computed with a common method."
         verifier:
