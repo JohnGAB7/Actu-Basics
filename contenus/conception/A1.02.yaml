@@ -1,0 +1,151 @@
+# Fiche de conception, pilier A (Actuariat), module A1, leçon 2. Modèle : modeles/fiche-conception-episode.yaml
+# Plan du module : docs/actuariat/A1-PLAN.md. BROUILLON : à relire (ChatGPT), puis à valider par JG.
+# Aucun fait extérieur : taux fictifs choisis pour l'exemple, annoncés comme tels.
+id_programme: A1.02
+statut: brouillon
+fiche_production: ""
+source_seance: ""               # séance A1 du parcours actuariel à rattacher quand elle existera
+
+titres:
+  fr: "Taux nominal, taux effectif"
+  en: "Nominal and effective rates"
+question_centrale:
+  fr: "1 % par mois, est-ce 12 % par an ?"
+  en: "Is 1% a month the same as 12% a year?"
+
+position: {pilier: actuariat, niveau: 3, module: A1, rang_dans_module: 2}
+
+public:
+  prerequis: [A1.01]
+  niveau_maths: M0
+  rappel_conseille: []
+  notions_utilisees:
+    - {notion: "Intérêts composés", episode: A1.01, rappel: "Chaque période, le capital est multiplié par (1 + taux) : les intérêts rapportent des intérêts"}
+    - {notion: "Puissance", episode: "", rappel: "1,01¹² = 1,01 multiplié douze fois par lui-même ; à la calculatrice : touche ^"}
+    - {notion: "Racine n-ième", episode: "", rappel: "Pour la réciproque : 1,05^(1/12), touche ^ avec l'exposant 1 ÷ 12"}
+    - {notion: "Pourcentage", episode: EP-M01, rappel: "0,1268 = 12,68 %"}
+    - {notion: "JG's Holding", episode: "", rappel: "Assureur fictif, toujours annoncé comme tel"}
+
+objectifs:
+  fr:
+    - "Calculer le taux effectif annuel d'un taux périodique : (1 + j)ᵐ − 1"
+    - "Distinguer taux nominal annuel (j × m) et taux effectif annuel"
+    - "Calculer le taux périodique équivalent à un taux annuel donné"
+  en:
+    - "Compute the effective annual rate of a periodic rate: (1 + j)ᵐ − 1"
+    - "Tell the nominal annual rate (j × m) from the effective annual rate"
+    - "Compute the periodic rate equivalent to a given annual rate"
+
+intuition: "Plus on capitalise souvent, plus les intérêts ont le temps de rapporter des intérêts : 12 fois 1 % donne plus que 12 %."
+exemple_fil_rouge: "JG's Holding (fictive) propose à ses clients de payer leur prime en 12 mensualités, avec un coût de 1 % par mois. Est-ce un coût de 12 % par an ?"
+exemple_reel:
+  description: "Aucun : taux fictifs, annoncés comme tels. Pas de taux de crédit réel ni de mention réglementaire (TAEG) sans source."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "1 % par mois ; 1,5 % par mois ; 6 % capitalisés par trimestre ; 5 % par an"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Choisis pour l'exemple", formule: "", transformations: ""}
+    definition: "Taux périodiques ou annuels"
+    unite: "%"
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Paramètres fictifs"
+    comparabilite: "Ne représentent aucun produit réel"
+  - chiffre: "1 120 € ; 1 126,83 € ; 12,68 % ; 19,56 % ; 0,4074 % ; exercice 6,14 %"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Taux ci-dessus", formule: "(1 + j)ᵐ − 1 ; (1 + i)^(1/m) − 1", transformations: "arrondi à deux décimales (quatre pour 0,4074 %)"}
+    definition: "Taux effectif annuel ; taux mensuel équivalent"
+    unite: "% ; € (FR), $ (EN)"
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: "Mêmes nombres en FR et EN"
+
+affirmations_qualitatives:
+  - {affirmation: "Comparer deux taux n'a de sens que sur la même période de capitalisation", statut: hypothese, source: "", verification: "Raisonnement montré à l'écran"}
+
+cycle_enquete:
+  question: "Montrée : 1 % par mois, est-ce 12 % par an ?"
+  population_et_mesure: "Montrée : 1 000 € placés ou dus pendant un an"
+  origine_des_donnees: "Montrée : taux fictifs"
+  exploration: "Montrée : le capital mois par mois"
+  methode_et_raison: "Montrée : capitaliser m fois, comparer au taux annuel"
+  hypotheses: "Montrée : taux constant sur l'année"
+  resultat_et_incertitude: "Montrée : 12,68 % effectifs, pas 12 %"
+  interpretation_permise_et_interdite: "Montrée : comparer des taux effectifs ; ne pas additionner des taux mensuels"
+  reproductibilite: "Calculs recalculés par le moteur ; formule de tableur à l'écran"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Nombres simples, refaits à la calculatrice"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Taux constant toute l'année", intuition: "Le même 1 % chaque mois", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Taux variables : on multiplie les facteurs mois par mois"}
+
+reproductibilite: "Formules à l'écran ; tableur : =(1+1%)^12-1"
+
+deroule:
+  - {etape: question, contenu: "1 % par mois sur une prime payée en mensualités : est-ce 12 % par an ?"}
+  - {etape: intuition, contenu: "On multiplie par 12 : 12 %. C'est le taux nominal"}
+  - {etape: donnees, contenu: "1 000 € à 1 % par mois : 1 010 € ; 1 020,10 € ; … ; 1 126,83 € après 12 mois, contre 1 120 € à 12 % simples"}
+  - {etape: formalisation, contenu: "Taux effectif annuel = (1 + j)ᵐ − 1 ; nominal = j × m"}
+  - {etape: raisonnement, contenu: "1,5 % par mois : 18 % nominal, 19,56 % effectif ; l'écart grandit avec le taux"}
+  - {etape: raisonnement, contenu: "Dans l'autre sens : 5 % par an équivaut à 0,4074 % par mois, pas 5 ÷ 12 = 0,4167 %"}
+  - {etape: exercice, contenu: "6 % par an, capitalisés chaque trimestre : quel taux effectif annuel ?"}
+  - {etape: correction, contenu: "1,5 % par trimestre ; 1,015⁴ − 1 ≈ 6,14 %"}
+  - {etape: application, contenu: "Un actuaire convertit toujours les taux sur la même période avant de comparer ou d'actualiser"}
+  - {etape: limites, contenu: "Capitaliser à chaque instant mène au taux continu : la séance du parcours va plus loin"}
+  - {etape: rappel, contenu: "La suite : la valeur actuelle de plusieurs paiements (A1.03)"}
+
+formules:
+  - {formule: "i = (1 + j)^m - 1", explication_symboles: "j taux par période ; m périodes par an ; i taux effectif annuel", conditions: "taux constant"}
+  - {formule: "j = (1 + i)^{1/m} - 1", explication_symboles: "taux périodique équivalent", conditions: ""}
+  - {formule: "i^{(m)} = m \\cdot j", explication_symboles: "taux nominal annuel", conditions: "à ne pas confondre avec i"}
+
+calculs_a_verifier:
+  - {expression: "1000 * 1.12", attendu: 1120, libelle: "12 % simples sur un an"}
+  - {expression: "1000 * 1.01**12", attendu: 1126.83, libelle: "1 % par mois pendant 12 mois"}
+  - {expression: "100 * (1.01**12 - 1)", attendu: 12.68, libelle: "Taux effectif de 1 % par mois, en %"}
+  - {expression: "100 * (1.015**12 - 1)", attendu: 19.56, libelle: "Taux effectif de 1,5 % par mois, en %"}
+  - {expression: "100 * (1.05**(1/12) - 1)", attendu: 0.4074, libelle: "Mensuel équivalent à 5 % par an, en %"}
+  - {expression: "100 * 0.05 / 12", attendu: 0.4167, libelle: "5 ÷ 12, en %"}
+  - {expression: "100 * (1.015**4 - 1)", attendu: 6.14, libelle: "Exercice : 6 % trimestriels, en %"}
+
+idees_fausses:
+  - {idee: "Un taux mensuel × 12 donne le taux annuel", desamorcee_a_l_etape: "donnees"}
+  - {idee: "Un taux annuel ÷ 12 donne le taux mensuel équivalent", desamorcee_a_l_etape: "raisonnement"}
+
+exercice:
+  question: "JG's Holding place sa trésorerie à 6 % par an, capitalisés chaque trimestre. Quel est le taux effectif annuel ?"
+  correction: "Taux trimestriel : 6 % ÷ 4 = 1,5 %. Taux effectif : 1,015⁴ − 1 ≈ 0,0614, soit 6,14 % par an, un peu plus que 6 %."
+  pause_secondes: 10
+
+preuve_apprentissage:
+  tache: "Convertir un taux périodique en taux effectif annuel, et inversement"
+  question_de_transfert: "2 % par semestre ou 4 % par an : lequel rapporte le plus ?"
+  diagnostic_d_erreur: "« 1 % par mois = 12 % par an » : quel effet est oublié ?"
+  limite_a_enoncer: "Les formules supposent un taux constant sur l'année"
+
+duree_estimee_min: [6, 8]
+format: youtube_lesson
+raison_du_format: "Leçon longue du pilier A (6 à 12 min, v3.3)"
+derives_short: ["A1.02-x1 · 1 % par mois, ce n'est pas 12 % par an"]
+
+adaptation_en: "Mêmes nombres ; $ au lieu de € ; « APR » non utilisé sans source réglementaire. Textes écrits pour l'anglais."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."
+
+controle:
+  test_du_debutant: "Le spectateur refait l'exercice et explique pourquoi 12,68 % > 12 %"
+  relecture_definitions: "Claude, 23/11/2026 (brouillon) ; à relire par ChatGPT, validation JG"
+  controle_mobile: "Après rendu (inspection)"

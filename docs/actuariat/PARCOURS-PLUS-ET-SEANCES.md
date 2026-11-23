@@ -8,7 +8,7 @@ Demande de JG (2026-11-23) : le parcours de remise à niveau en actuariat (dép�
 
 - **Une séance du parcours = une vidéo Actu-Basics** (ou un chapitre d'une leçon), FR et EN en même temps, comme toute la chaîne.
 - **Niveau** : la vidéo vise un débutant (intuition, exemple chiffré, exercice simple). La séance garde le niveau examen (formes continues, code, IAS 19). Règle reprise de `docs/ACTU-BASICS.md` du parcours : la vidéo prend le premier tiers de la séance.
-- **Ordre de production** : l'ordre des séances du parcours, en commençant par A3. A1.01 et A2.01 existent déjà (pilote) et servent tout de suite aux séances A1 et A2.
+- **Ordre de production** : l'ordre du parcours, **en commençant par A1** (demande de JG, 2026-11-23) : A1.02 à A1.05 (`A1-PLAN.md`), puis A2, A2b, A3. A1.01 et A2.01 existent déjà (pilote) et servent tout de suite aux séances A1 et A2. A3.01 à A3.03 ont un brouillon, en attente (`A3-PLAN.md`).
 - **Aucun échange direct entre projets** : le lien passe par les dépôts (section 4).
 - **Règles inchangées** : JG's Holding toujours annoncée comme fictive ; chaque nombre passe par `verifier` ; aucun chiffre réel sans source datée ; supports de cours et CV de JG jamais sur un dépôt ; rien de fusionné ni publié sans l'accord de JG.
 

@@ -1,0 +1,149 @@
+# Fiche de conception, pilier A (Actuariat), module A3, leçon 3. Modèle : modeles/fiche-conception-episode.yaml
+# Plan du module : docs/actuariat/A3-PLAN.md. BROUILLON : à relire (ChatGPT), puis à valider par JG.
+# Aucun fait extérieur : table MK (même source que A3.01, vérification en cours) et taux fictif de 2 %.
+id_programme: A3.03
+statut: brouillon
+fiche_production: ""
+source_seance: ""
+
+titres:
+  fr: "Le capital décès"
+  en: "Paying on death"
+question_centrale:
+  fr: "Combien coûte une garantie de 100 000 € en cas de décès dans les 5 ans ?"
+  en: "What does $100,000 of cover against death within 5 years cost?"
+
+position: {pilier: actuariat, niveau: 3, module: A3, rang_dans_module: 3}
+
+public:
+  prerequis: [A3.02]
+  niveau_maths: M0
+  rappel_conseille: []
+  notions_utilisees:
+    - {notion: "dₓ et lₓ", episode: A3.01, rappel: "Décès de l'année : dₓ = lₓ − lₓ₊₁"}
+    - {notion: "Actualisation", episode: A1.01, rappel: "Un paiement dans k ans se divise par 1,02ᵏ"}
+    - {notion: "Valeur actuelle probable", episode: A3.02, rappel: "Montant × actualisation × probabilité"}
+    - {notion: "Somme de plusieurs termes", episode: "", rappel: "On additionne une ligne par année"}
+    - {notion: "JG's Holding", episode: "", rappel: "Assureur fictif, toujours annoncé comme tel"}
+
+objectifs:
+  fr:
+    - "Calculer la valeur actuelle probable d'un capital versé en cas de décès, année par année"
+    - "Expliquer l'hypothèse de paiement en fin d'année du décès"
+    - "Comparer le coût d'un capital décès et celui d'un capital en cas de vie"
+  en:
+    - "Compute the expected present value of a death benefit, year by year"
+    - "Explain the assumption that the benefit is paid at the end of the year of death"
+    - "Compare the cost of a death benefit with that of a survival benefit"
+
+intuition: "On dresse un tableau : chaque année, combien de clients meurent, combien l'assureur paie, et combien cela vaut aujourd'hui."
+exemple_fil_rouge: "JG's Holding (fictive) assure un client de 60 ans : 100 000 € versés à ses proches s'il décède avant 65 ans. Table MK, taux fictif de 2 %."
+exemple_reel:
+  description: "Aucun : produit et taux fictifs, annoncés comme tels."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "l₆₀ à l₆₅ (MK) : 801 043 ; 786 437 ; 770 696 ; 753 756 ; 735 557 ; 716 046"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Paramètres MK (voir A3.01)", formule: "lₓ = k · sˣ · g^(cˣ)", transformations: "arrondi à l'unité"}
+    definition: "Survivants à l'âge x"
+    unite: "personnes"
+    population: "Table MK"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "Voir A3.01 (vérification Perplexity en cours)", url: "", consulte_le: ""}
+    incertitude: "Aucune pour le calcul"
+    comparabilite: "Table de tarification décès : prudente pour ce produit"
+  - chiffre: "q₆₀ ≈ 0,0182 ; 10,6 % de décès en 5 ans ; A¹₆₀:₅ ≈ 0,0997, soit 9 974 € ; exercice 2 858 €"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "lₓ MK, taux 2 %", formule: "Σ v^(k+1) · d₆₀₊ₖ / l₆₀, k = 0 … 4", transformations: "arrondi à l'euro"}
+    definition: "Valeur actuelle probable d'une temporaire décès de 5 ans"
+    unite: "€ (FR), $ (EN)"
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: "Mêmes nombres en FR et EN"
+
+affirmations_qualitatives:
+  - {affirmation: "Pour un capital décès, une table qui surestime la mortalité est prudente ; pour une rente, c'est l'inverse", statut: hypothese, source: "", verification: "Raisonnement montré à l'écran ; relecture ChatGPT"}
+
+cycle_enquete:
+  question: "Montrée : combien coûte une promesse payée au décès ?"
+  population_et_mesure: "Montrée : 801 043 clients de 60 ans de la table"
+  origine_des_donnees: "Montrée : table MK, taux fictif"
+  exploration: "Montrée : tableau des décès année par année"
+  methode_et_raison: "Montrée : une ligne par année, actualisée à la fin de l'année du décès"
+  hypotheses: "Montrée : paiement en fin d'année, taux constant, table juste"
+  resultat_et_incertitude: "Montrée : 9 974 € par client, en moyenne"
+  interpretation_permise_et_interdite: "Montrée : prix d'équilibre du groupe ; pas une probabilité de décès personnelle"
+  reproductibilite: "Calculs recalculés par le moteur"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Même table que A3.01 et A3.02"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Paiement en fin d'année du décès", intuition: "Simplifie le calcul ; en réalité on paie plus tôt", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Paiement immédiat : âges fractionnaires (A3+.02)"}
+  - {hypothese: "Table MK juste pour ces clients", intuition: "Une table prudente pour le décès surestime la mortalité", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Expérience propre de l'assureur"}
+
+reproductibilite: "Tableau de cinq lignes affiché ; paramètres MK en note"
+
+deroule:
+  - {etape: question, contenu: "100 000 € si décès avant 65 ans : combien JG's Holding doit-elle demander aujourd'hui ?"}
+  - {etape: intuition, contenu: "10,6 % des clients meurent en 5 ans : 10 600 € ? Presque, mais le temps compte"}
+  - {etape: donnees, contenu: "Tableau : décès de chaque année (14 606 ; 15 741 ; 16 940 ; 18 199 ; 19 511)"}
+  - {etape: raisonnement, contenu: "Chaque ligne : décès × 100 000 € ÷ 1,02^(année) ; somme ÷ 801 043 = 9 974 € par client"}
+  - {etape: formalisation, contenu: "A¹ₓ:ₙ = Σ v^(k+1) · dₓ₊ₖ / lₓ"}
+  - {etape: exercice, contenu: "Client de 65 ans, 100 000 € s'il décède dans l'année ?"}
+  - {etape: correction, contenu: "(716 046 − 695 175) ÷ 716 046 × 100 000 ÷ 1,02 ≈ 2 858 €"}
+  - {etape: application, contenu: "Capital décès et capital différé : deux produits, deux tables prudentes en sens opposés"}
+  - {etape: limites, contenu: "Paiement en fin d'année, table de tarification, grand groupe"}
+  - {etape: rappel, contenu: "La suite : la rente viagère (A3.04)"}
+
+formules:
+  - {formule: "d_x = l_x - l_{x+1}", explication_symboles: "décès entre x et x + 1", conditions: ""}
+  - {formule: "A^1_{x:n} = \\sum_{k=0}^{n-1} v^{k+1} \\cdot d_{x+k} / l_x", explication_symboles: "valeur actuelle probable de 1 versé en fin d'année du décès, si décès avant x + n", conditions: "paiement en fin d'année"}
+
+calculs_a_verifier:
+  - {expression: "(801043 - 786437) / 801043", attendu: 0.0182, libelle: "q60 MK"}
+  - {expression: "100 * (1 - 716046 / 801043)", attendu: 10.6, libelle: "Décès en 5 ans, en %"}
+  - {expression: "801043 - 786437", attendu: 14606, libelle: "d60"}
+  - {expression: "735557 - 716046", attendu: 19511, libelle: "d64"}
+  - {expression: "100000 * ((801043 - 786437) / 1.02 + (786437 - 770696) / 1.02**2 + (770696 - 753756) / 1.02**3 + (753756 - 735557) / 1.02**4 + (735557 - 716046) / 1.02**5) / 801043", attendu: 9974, libelle: "Temporaire 5 ans × 100 000"}
+  - {expression: "100000 * (716046 - 695175) / 716046 / 1.02", attendu: 2858, libelle: "Exercice : temporaire 1 an à 65 ans"}
+
+idees_fausses:
+  - {idee: "Le prix est 100 000 € × 10,6 %, sans actualiser", desamorcee_a_l_etape: "raisonnement"}
+  - {idee: "Une table prudente est prudente pour tous les produits", desamorcee_a_l_etape: "application"}
+
+exercice:
+  question: "Client de 65 ans : 100 000 € versés en fin d'année s'il décède dans l'année. Table MK (l₆₅ = 716 046, l₆₆ = 695 175), taux 2 %. Valeur actuelle probable ?"
+  correction: "q₆₅ = 20 871 ÷ 716 046 ≈ 0,0291 ; 100 000 × 0,0291 ÷ 1,02 ≈ 2 858 €."
+  pause_secondes: 10
+
+preuve_apprentissage:
+  tache: "Calculer une temporaire décès d'un an sans aide"
+  question_de_transfert: "Même garantie à 60 ans : plus ou moins chère qu'à 65 ans, et pourquoi ?"
+  diagnostic_d_erreur: "« 9 974 €, c'est 10 % de chances de toucher 100 000 € » : qu'est-ce qui manque ?"
+  limite_a_enoncer: "Prix moyen d'un grand groupe, avec une table de tarification"
+
+duree_estimee_min: [7, 9]
+format: youtube_lesson
+raison_du_format: "Leçon longue du pilier A (6 à 12 min, v3.3)"
+derives_short: ["A3.03-x1 · 100 000 € de capital décès : combien ça coûte ?"]
+
+adaptation_en: "Mêmes nombres ; $ au lieu de € ; « term insurance » ; séparateurs anglais. Textes écrits pour l'anglais."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."
+
+controle:
+  test_du_debutant: "Le spectateur refait la temporaire d'un an et explique l'actualisation en fin d'année"
+  relecture_definitions: "Claude, 23/11/2026 (brouillon) ; à relire par ChatGPT, validation JG"
+  controle_mobile: "Après rendu (inspection)"
