@@ -100,4 +100,4 @@ Pour O1 à O3, la vidéo montre l'idée et le résultat ; l'écriture du code re
 
 1. Valider l'extension (29 leçons, modules A3+, A4+, A4R, A6+, A7+, A8+, O1 à O3) ou indiquer ce qui doit changer.
 2. Valider le lien par chapitre horodaté (section 4) ou préférer une vidéo courte dédiée à chaque séance.
-3. A3.01 : choisir la table de l'exemple (voir `A3-01-PROPOSITION.md`, section 14).
+3. ~~A3.01 : choisir la table de l'exemple~~ : option C choisie par JG le 2026-11-23 (`A3-01-PROPOSITION.md`, section 14).

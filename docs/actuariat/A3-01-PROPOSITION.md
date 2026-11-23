@@ -151,4 +151,4 @@ La vidéo A3.01 servira à l'étape 1 de la séance `a3/s01` « Force de mortali
 - **Scène 9** : la comparaison des deux e₆₅ (MK contre table observée) montre pourquoi on ne mélange jamais les deux familles.
 - Sources à vérifier par Perplexity : le texte réglementaire belge qui définit MK et ses paramètres, la table INSEE et la table SSA les plus récentes.
 
-Décision 1 de la section 12 : options A, B ou C. Les décisions 2 et 3 restent ouvertes ; l'ordre des séances du parcours plaide pour A3.01 comme prochaine leçon.
+**Décision 1 de la section 12 : option C choisie par JG le 2026-11-23.** Brouillon de la fiche : `contenus/conception/A3.01.yaml`. Les décisions 2 et 3 restent ouvertes ; l'ordre des séances du parcours plaide pour A3.01 comme prochaine leçon.

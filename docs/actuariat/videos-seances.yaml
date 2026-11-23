@@ -16,7 +16,7 @@ seances:
     source_seance: "JohnGAB7/parcours-actuariel@41bbd7e:contenus/a3/s01.yaml"
     lecon: A3.01
     titre_lecon: {fr: "Lire une table de mortalité", en: "Reading a life table"}
-    etat: proposition        # docs/actuariat/A3-01-PROPOSITION.md, en attente de JG
+    etat: fiche_ecrite       # brouillon contenus/conception/A3.01.yaml (option C, JG 23/11/2026) ; relecture à venir
     video_fr: null
     video_en: null
     debut: null

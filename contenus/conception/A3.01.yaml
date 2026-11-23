@@ -1,0 +1,169 @@
+# Fiche de conception, pilier A (Actuariat), module A3, leçon 1. Modèle : modeles/fiche-conception-episode.yaml
+# Proposition : docs/actuariat/A3-01-PROPOSITION.md (option C choisie par JG le 23/11/2026).
+# Sert aussi à l'étape 1 « Vidéo » de la séance a3/s01 du parcours actuariel
+# (docs/actuariat/PARCOURS-PLUS-ET-SEANCES.md, registre docs/actuariat/videos-seances.yaml).
+# BROUILLON : les chiffres des tables observées (INSEE, SSA) sont à relever à la source ; aucun n'est écrit ici.
+id_programme: A3.01
+statut: brouillon               # brouillon -> revue_chatgpt (langue, pédagogie) + Perplexity (sources) -> valide_jg
+fiche_production: ""            # contenus/fiches/2026-11-act-a3-01-reading-a-life-table.yaml, écrite après validation
+source_seance: "JohnGAB7/parcours-actuariel@41bbd7e:contenus/a3/s01.yaml"
+
+titres:
+  fr: "Lire une table de mortalité"
+  en: "Reading a life table"
+question_centrale:
+  fr: "À 65 ans, combien d'années vous reste-t-il, en moyenne ?"
+  en: "At 65, how many years do you have left, on average?"
+
+position: {pilier: actuariat, niveau: 3, module: A3, rang_dans_module: 1}   # pilier A : parcours propre (programme 1.13, REVISION-1.13.md)
+
+public:
+  prerequis: [A2.01]
+  niveau_maths: M0
+  rappel_conseille: []
+  notions_utilisees:
+    - {notion: "Fraction et pourcentage", episode: EP-M01, rappel: "716 046 sur 801 043, c'est 716 046 ÷ 801 043 ≈ 0,894, soit 89,4 %"}
+    - {notion: "Probabilité d'un événement", episode: "", rappel: "Une probabilité est une proportion de cas : sur 100 personnes de 60 ans, environ 89 atteignent 65 ans"}
+    - {notion: "Probabilité conditionnelle", episode: "", rappel: "Rappel intégré (scène « Rappel probabilités ») : qₓ se lit « sachant qu'on a atteint l'âge x »"}
+    - {notion: "Moyenne", episode: EP-S2A, rappel: "L'espérance de vie est une moyenne : la moitié des personnes ne vivent pas exactement ce nombre d'années"}
+    - {notion: "JG's Holding", episode: "", rappel: "Assureur fictif, toujours annoncé comme tel"}
+
+objectifs:
+  fr:
+    - "Lire une table de mortalité : âge x, survivants lₓ, décès dₓ, probabilités qₓ et pₓ, espérance de vie eₓ"
+    - "Calculer une probabilité de survie sur plusieurs années comme un rapport de survivants (l₆₅ ÷ l₆₀)"
+    - "Distinguer une table observée (ce qui s'est passé) d'une table de tarification (ce qu'un assureur suppose)"
+    - "Citer les éléments d'identité d'une table : organisme, population, période, usage, date"
+  en:
+    - "Read a life table: age x, survivors lₓ, deaths dₓ, probabilities qₓ and pₓ, life expectancy eₓ"
+    - "Compute a multi-year survival probability as a ratio of survivors (l₆₅ ÷ l₆₀)"
+    - "Tell an observed table (what happened) from a pricing table (what an insurer assumes)"
+    - "Name the identity of a table: issuer, population, period, use, date"
+
+intuition: "Une table de mortalité suit une cohorte de 1 000 000 de personnes, âge après âge : tout se lit comme un rapport de survivants."
+exemple_fil_rouge: "JG's Holding (fictive) vend un capital décès et une rente viagère. Elle doit choisir une table : la même question (« combien d'années à 65 ans ? ») donne deux réponses selon la table."
+exemple_reel:
+  description: "Espérance de vie à 65 ans observée : INSEE (édition FR), SSA Period Life Table (édition EN). Valeurs à relever à la source au moment de l'écriture."
+  source: {organisme: "INSEE / US Social Security Administration", titre: "à relever", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "l₆₀ = 801 043, l₆₅ = 716 046, l₆₆ = 695 175 (table MK, arrondis à l'unité)"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Paramètres de Makeham de la table MK : k = 1 000 450,59 ; s = 0,999106875782 ; g = 0,999549614043 ; c = 1,103798111448", formule: "lₓ = k · sˣ · g^(cˣ)", transformations: "arrondi à l'unité"}
+    definition: "Nombre de survivants à l'âge exact x sur une cohorte de départ"
+    unite: "personnes"
+    population: "Table réglementaire belge MK (hommes), usage tarification"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "Texte réglementaire belge définissant les tables MK/FK (à identifier et vérifier par Perplexity)", url: "", consulte_le: ""}
+    incertitude: "Aucune pour le calcul ; la table est une hypothèse prudente, pas une mesure"
+    comparabilite: "Ne pas comparer à une table observée sans le dire : usages différents (c'est l'objet de la scène 9)"
+  - chiffre: "₅p₆₀ ≈ 0,894 ; q₆₅ ≈ 0,029 ; e₆₅ (MK) ≈ 12,3 ans"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "lₓ MK ci-dessus", formule: "₅p₆₀ = l₆₅ / l₆₀ ; q₆₅ = (l₆₅ − l₆₆) / l₆₅ ; e₆₅ = Σₖ l₆₅₊ₖ / l₆₅ (k = 1 … 51)", transformations: "arrondis"}
+    definition: "Probabilité de survie, probabilité de décès dans l'année, espérance de vie abrégée"
+    unite: "probabilité ; années"
+    population: "Table MK"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune pour le calcul"
+    comparabilite: "Mêmes valeurs que la séance a3/s01 du parcours (recalculées par ses tests)"
+  - chiffre: "e₆₅ observée (FR : INSEE ; EN : SSA)"
+    support: ecran
+    nature: source
+    calcul: {entrees: "", formule: "", transformations: ""}
+    definition: "Espérance de vie à 65 ans du moment (table du moment, ou période)"
+    unite: "années"
+    population: "France (INSEE) ; États-Unis (SSA) ; préciser sexe ou ensemble"
+    periode: "à relever"
+    couverture: ""
+    revisions: "provisoire ou définitif : à relever"
+    source_primaire: {organisme: "INSEE ; SSA", url: "à relever", consulte_le: ""}
+    incertitude: ""
+    comparabilite: "Les deux éditions n'affichent pas le même chiffre observé ; le raisonnement est identique"
+
+affirmations_qualitatives:
+  - {affirmation: "Un assureur vie utilise une table différente pour un capital décès et pour une rente", statut: hypothese, source: "", verification: "Perplexity : exemples de tables réglementaires (TGH/TGF 05 en France, CPM2014 au Canada)"}
+  - {affirmation: "Une table de tarification pour le risque décès surestime la mortalité par prudence", statut: hypothese, source: "", verification: "Perplexity, à partir du texte réglementaire MK"}
+
+cycle_enquete:
+  question: "Montrée : combien d'années reste-t-il à 65 ans ?"
+  population_et_mesure: "Montrée : cohorte d'une table, survivants à chaque âge"
+  origine_des_donnees: "Montrée : table MK (paramètres réglementaires) et table observée sourcée"
+  exploration: "Montrée : extrait de six lignes"
+  methode_et_raison: "Montrée : rapport de survivants"
+  hypotheses: "Montrée : la table est une hypothèse, sauf une table observée qui décrit le passé"
+  resultat_et_incertitude: "Montrée : deux réponses selon la table"
+  interpretation_permise_et_interdite: "Montrée : une table ne prédit pas la vie d'une personne ; une table de tarif n'est pas une mesure de la population"
+  reproductibilite: "Paramètres affichés en note ; calculs recalculés par le moteur"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Mêmes nombres en FR et EN, et mêmes nombres que la séance a3/s01 du parcours"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "La mortalité future ressemble à celle de la table", intuition: "La table est une photo, la vie dure des décennies", testable: "", non_testable: "Évolution future de la mortalité", diagnostic: "", si_elle_echoue: "Tables prospectives (A3+.04)"}
+  - {hypothese: "Population homogène", intuition: "Tout le monde n'a pas la même mortalité", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Sélection des assurés, tables par sexe ou par produit"}
+
+reproductibilite: "Formule de Makeham et paramètres MK ; tableur A3 prévu par la v3.3 quand l'hébergement sera choisi"
+
+deroule:
+  - {etape: question, contenu: "À 65 ans, combien d'années vous reste-t-il, en moyenne ?"}
+  - {etape: intuition, contenu: "On imagine un âge moyen de décès ; l'actuaire lit une table"}
+  - {etape: donnees, contenu: "Les colonnes d'une table : x, lₓ, dₓ, qₓ, pₓ, eₓ (une étape par colonne)"}
+  - {etape: donnees, contenu: "Extrait MK : x = 0, 20, 40, 60, 80, 100 (1 000 000 ; 979 545 ; 942 996 ; 801 043 ; 276 150 ; 143)"}
+  - {etape: formalisation, contenu: "lₓ₊₁ = lₓ − dₓ ; qₓ = dₓ / lₓ ; pₓ = 1 − qₓ ; ₜpₓ = lₓ₊ₜ / lₓ"}
+  - {etape: raisonnement, contenu: "Rappel probabilités : qₓ est la probabilité de décéder avant x + 1, sachant qu'on a atteint x"}
+  - {etape: exercice, contenu: "À 60 ans, probabilité d'atteindre 65 ans avec la table MK ?"}
+  - {etape: correction, contenu: "716 046 ÷ 801 043 ≈ 0,894, soit environ 89 sur 100"}
+  - {etape: application, contenu: "Deux familles de tables : MK donne e₆₅ ≈ 12,3 ans, la table observée donne bien plus (valeur sourcée) ; pourquoi l'écart est voulu"}
+  - {etape: limites, contenu: "Ce que la table ne dit pas : l'avenir, les différences entre personnes, la sélection des assurés"}
+  - {etape: rappel, contenu: "La suite : la force de mortalité (A3+.01) et la rente viagère (A3)"}
+
+formules:
+  - {formule: "l_{x+1} = l_x - d_x", explication_symboles: "lₓ survivants à l'âge x ; dₓ décès entre x et x + 1", conditions: ""}
+  - {formule: "q_x = d_x / l_x ;  p_x = 1 - q_x", explication_symboles: "qₓ probabilité de décès dans l'année ; pₓ de survie", conditions: "sachant que l'âge x est atteint"}
+  - {formule: "{}_tp_x = l_{x+t} / l_x", explication_symboles: "probabilité de survivre t années à partir de x", conditions: ""}
+
+calculs_a_verifier:
+  - {expression: "1000450.59 * 0.999106875782**60 * 0.999549614043**(1.103798111448**60)", attendu: 801043, tolerance: 1, libelle: "l60 MK"}
+  - {expression: "1000450.59 * 0.999106875782**65 * 0.999549614043**(1.103798111448**65)", attendu: 716046, tolerance: 1, libelle: "l65 MK"}
+  - {expression: "716046 / 801043", attendu: 0.894, libelle: "5p60 MK"}
+  - {expression: "(716046 - 695175) / 716046", attendu: 0.029, libelle: "q65 MK"}
+  - {expression: "sum(exp(k * log(0.999106875782) + log(0.999549614043) * (1.103798111448**(65 + k) - 1.103798111448**65)) for k in range(1, 52))", attendu: 12.3, libelle: "e65 abrégée MK"}
+
+idees_fausses:
+  - {idee: "L'espérance de vie à 65 ans, c'est l'espérance de vie à la naissance moins 65", desamorcee_a_l_etape: "application"}
+  - {idee: "Toutes les tables se valent", desamorcee_a_l_etape: "application"}
+  - {idee: "qₓ est la probabilité de mourir à l'âge x, sans condition", desamorcee_a_l_etape: "raisonnement"}
+
+exercice:
+  question: "Table MK : l₆₀ = 801 043 et l₆₅ = 716 046. Quelle est la probabilité qu'une personne de 60 ans atteigne 65 ans ?"
+  correction: "₅p₆₀ = l₆₅ ÷ l₆₀ = 716 046 ÷ 801 043 ≈ 0,894. Sur 100 personnes de 60 ans, environ 89 atteignent 65 ans selon cette table, qui est une hypothèse de tarification, pas une mesure de la population."
+  pause_secondes: 10
+
+preuve_apprentissage:
+  tache: "Calculer ₅p₆₀ sans aide à partir de deux lignes de la table"
+  question_de_transfert: "Avec l₆₅ = 716 046 et l₇₅ = ?, calculer ₁₀p₆₅ (valeur à fixer à l'écriture)"
+  diagnostic_d_erreur: "« e₆₅ = 12 ans, donc on meurt à 77 ans » : pourquoi est-ce faux deux fois (moyenne, et table de tarif) ?"
+  limite_a_enoncer: "Une table de tarification n'est pas l'espérance de vie de la population"
+
+duree_estimee_min: [7, 9]
+format: youtube_lesson
+raison_du_format: "Leçon longue du pilier A (6 à 12 min, v3.3) ; le chapitre « lire une table » sert à l'étape Vidéo de la séance a3/s01"
+derives_short: ["A3.01-x1 · Combien d'années à 65 ans ?", "A3.01-x2 · Table observée ou table de tarif ?"]
+
+adaptation_en: "Mêmes nombres MK et même raisonnement ; la table observée est la SSA (États-Unis) au lieu de l'INSEE. Séparateurs anglais. Textes écrits pour l'anglais."
+licences: "Données publiques (INSEE, SSA) : conditions à relever. Voix Kokoro (docs/voice-licenses.md)."
+
+controle:
+  test_du_debutant: "Le spectateur refait ₅p₆₀ et explique pourquoi deux tables donnent deux réponses"
+  relecture_definitions: "Claude, 23/11/2026 (brouillon) ; à relire par ChatGPT, sources par Perplexity, validation JG"
+  controle_mobile: "Après rendu (inspection)"
