@@ -28,7 +28,8 @@ modules:
         titre: "Intérêt composé et annuités certaines"
         source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml"
         chapitres: [A1.01, A1.03, A1.04]
-        etat: brouillon        # A1.01 rendue (pilote, à recaler sur 2,5 % ?) ; A1.03 et A1.04 en brouillon, à recaler sur 2,5 %
+        capsule: A1-C1         # « La valeur du temps », 3 min, faite pour l'étape « Vidéo » (fiche contenus/fiches/2026-11-act-a1-c01-la-valeur-du-temps.yaml)
+        etat: rendue           # aperçu FR et EN, 9:16 et 16:9, rendu le 23/11/2026 ; à valider par JG avant publication
         video_fr: null
         video_en: null
         debut: null
