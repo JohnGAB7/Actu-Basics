@@ -8,7 +8,7 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 from .fiche import Fiche, Scene
 from . import logo as _logo
@@ -76,6 +76,9 @@ def _melange(a: tuple, b: tuple, k: float) -> tuple[int, int, int]:
 
 
 MARQUEUR = re.compile(r"\*([^*]+)\*")
+OPERATEURS = {"+", "−", "-", "×", "÷", "x"}
+UNITES_CALCUL = {"%", "€", "min", "minutes", "ans", "cm", "pts", "points"}
+TERME_CALCUL = re.compile(r"^[(\[]*[−\-+]?(\d[\d\u00a0\u202f\s,.]*|[½⅓⅔¼¾⅕⅙⅛])[)\]]*[%€]?[,;:.)]*$")
 _BLANCS = re.compile(r"[ \t\n]+")
 
 
@@ -140,7 +143,14 @@ class Rendu(ScenesPedagogiques):
         m = {"video": charte["zones_securite_video"], "carrousel": charte["marges_carrousel"],
              "lecon": charte.get("zones_securite_lecon", charte["marges_carrousel"])}[format_]
         self.zone = (m["gauche"], m["haut"], self.largeur - m["droite"], self.hauteur - m["bas"])
-        self.c = {k: _rgb(v) for k, v in charte["couleurs"].items()}
+        self.c = self._palette(charte["couleurs"])
+        # Univers visuels (direction artistique du 22/11/2026) : « editorial » (couleurs de base) et
+        # « immersif » (fond sombre pour les démonstrations et les transformations de données). Chaque
+        # scène choisit le sien (champ « univers ») ; Rendu bascule couleurs, fond et décor à la volée.
+        self._palettes = {"editorial": self.c}
+        for nom, couleurs in (charte.get("univers") or {}).items():
+            self._palettes[nom] = self._palette({**charte["couleurs"], **couleurs})
+        self._univers = "editorial"
         self.chemins_polices = {style: trouver_police(c) for style, c in charte["polices"].items()}
         self.alertes: list[str] = []  # débordements de texte etc. -> rapport QC
         self.tailles: dict[str, int] = {}  # plus petite taille de police par type de scène
@@ -153,6 +163,7 @@ class Rendu(ScenesPedagogiques):
         self.chiffre = ch
         self.majuscules = bool(charte.get("accroche_majuscules", True))
         self._fond = self._degrade()
+        self._fonds = {"editorial": self._fond}
         self.logos = _logo.charger_logos(charte.get("logo"), langue)
         self.poses: dict[tuple, _logo.Pose] = {}   # logos posés sur les images finales -> contrôle qualité
         self._image: Image.Image | None = None
@@ -160,6 +171,10 @@ class Rendu(ScenesPedagogiques):
         # les étapes apparaissent quand la voix les annonce. Renseigné après la narration (produire.py).
         self.reperes: dict[int, list[float]] = {}
         self.fins_voix: dict[int, float] = {}
+        # Morceaux de voix (début, fin) : phrases ET propositions (la synthèse coupe aussi sur « : » et « ; »).
+        # Sert à faire apparaître un calcul terme à terme pendant qu'il est dit.
+        self.morceaux_voix: dict[int, list[tuple[float, float]]] = {}
+        self._scene_courante = None
 
     # ------------------------------------------------------------------ logo
     def conf_logo(self, couverture: bool = False) -> dict:
@@ -191,6 +206,51 @@ class Rendu(ScenesPedagogiques):
     # ------------------------------------------------------------------ logo mobile
     def conf_mobile(self) -> dict:
         return (self.logos.conf or {}).get("mobile") or {}
+
+    @staticmethod
+    def _palette(couleurs: dict) -> dict:
+        c = {k: _rgb(v) for k, v in couleurs.items() if isinstance(v, str) and v.startswith("#")}
+        c.setdefault("encre_accent", c["fond"])     # texte posé sur une forme d'accent
+        c.setdefault("halo", c["barre"])
+        c.setdefault("progression", c["accent"])
+        c.setdefault("or", c["accent"])              # surfaces et repères dorés (jamais du texte courant)
+        return c
+
+    def univers_de(self, scene: Scene) -> str:
+        u = scene.extra.get("univers", "editorial")
+        return u if u in self._palettes else "editorial"
+
+    def basculer(self, univers: str) -> None:
+        """Couleurs et fond de l'univers demandé (les fonds sont calculés une fois)."""
+        if univers == self._univers:
+            return
+        self._univers = univers
+        self.c = self._palettes[univers]
+        if univers not in self._fonds:
+            self._fonds[univers] = self._degrade()
+        self._fond = self._fonds[univers]
+
+    # ------------------------------------------------------------------ décor en mouvement
+    def decor_prevu(self, scene: Scene) -> bool:
+        """Le décor en mouvement (lmec/decor.py) passe-t-il derrière cette scène ?"""
+        c = self.charte.get("decor") or {}
+        return bool(c.get("actif")) and self.format in (c.get("formats") or []) \
+            and scene.type not in (c.get("sauf_scenes") or ["fin"])
+
+    @property
+    def decor(self):
+        """Décor de l'univers courant (un par univers, calculé une fois)."""
+        decors = self.__dict__.setdefault("_decors", {})
+        if self._univers not in decors:
+            from .decor import Decor
+            bandeau = 0
+            if self.logos.actif and self.logos.images and self.conf_mobile().get("actif"):
+                _, h, p = self._mobile_taille()
+                bandeau = self.zone[1] + h + 2 * p    # bandeau du logo mobile, zone de protection comprise
+            conf = dict(self.charte.get("decor") or {})
+            conf.update((conf.get("par_univers") or {}).get(self._univers) or {})
+            decors[self._univers] = Decor(self._fond, self.c, conf, bandeau)
+        return decors[self._univers]
 
     def mobile_prevu(self, scene: Scene) -> bool:
         """Le logo mobile accompagne-t-il cette scène ? (vidéo et cours 16:9, hors scène de fin)"""
@@ -226,6 +286,7 @@ class Rendu(ScenesPedagogiques):
         lg, _, _ = self._mobile_taille()
         return _logo.poser(image, self._fond, self.logos, x=x, y=y, largeur=lg,
                            variante_demandee=self.logos.conf.get("variante", "auto"),
+                           sur_fond_clair=self.logos.conf.get("sur_fond_clair", "clair"),
                            protection=float(self.logos.conf.get("zone_protection", 0.08)),
                            support="mobile", scene=scene.type, index=index, opacite=opacite, mesurer=mesurer)
 
@@ -245,6 +306,7 @@ class Rendu(ScenesPedagogiques):
         support = "couverture" if couverture else self.format
         pose = _logo.poser(image, self._fond, self.logos, x=x, y=y, largeur=largeur,
                            variante_demandee=self.logos.conf.get("variante", "auto"),
+                           sur_fond_clair=self.logos.conf.get("sur_fond_clair", "clair"),
                            protection=float(self.logos.conf.get("zone_protection", 0.08)),
                            support=support, scene=scene.type, index=index, opacite=opacite,
                            mesurer=t is None)
@@ -271,8 +333,13 @@ class Rendu(ScenesPedagogiques):
                                                                         Image.BILINEAR)
         from PIL import ImageFilter
         halo = halo.filter(ImageFilter.GaussianBlur(60))
-        couleur = Image.new("RGB", (self.largeur, self.hauteur), self.c["barre"])
-        return Image.composite(couleur, fond, halo)
+        couleur = Image.new("RGB", (self.largeur, self.hauteur), self.c["halo"])
+        fond = Image.composite(couleur, fond, halo)
+        opacite = float((self.charte.get("decor") or {}).get("grain", 0))
+        if opacite > 0 and self.format != "carrousel":   # grain lumineux, fixe (couche 1 du décor)
+            from .decor import grain
+            fond = ImageChops.overlay(fond, grain(fond.size, opacite).convert("RGB"))   # 128 = neutre
+        return fond
 
     def _couper(self, texte: str, police, largeur_max: int) -> list[str]:
         lignes: list[str] = []
@@ -332,6 +399,10 @@ class Rendu(ScenesPedagogiques):
         if majuscules:
             texte = texte.upper()
         mots = mots_riches(texte)
+        plafond = ((self.charte.get("typographie") or {}).get(self.format) or {}).get(style)
+        if plafond:   # grille typographique de la charte : jamais de texte surdimensionné
+            taille_max = min(taille_max, int(plafond))
+            taille_min = min(taille_min, taille_max)
         taille = taille_max
         while True:
             police = self.police(style, taille)
@@ -369,30 +440,91 @@ class Rendu(ScenesPedagogiques):
         g, _, dr, _ = self.zone
         x_c = (g + dr) / 2
         n = 0
-        for ligne in lignes:
+        for n_ligne, ligne in enumerate(lignes):
             largeur = self._largeur_ligne(ligne, police)
             x = x_c - largeur / 2 if centre else x_gauche
+            temps_calc = self._temps_calcul(ligne, depart + n_ligne * max(0.18, decalage * 5))
             for j, (mot, fort, colle) in enumerate(ligne):
                 if colle and j > 0:
                     x -= espace
-                a = self._visibilite(t, depart, n, decalage)
+                # Par groupes de sens (une ligne à la fois), plus mot à mot (direction artistique 22/11).
+                # Un calcul (« 5 + 10 + 6 + 4 = 25 ») apparaît terme à terme, au rythme de la voix (JG, 22/11).
+                a = self._visibilite(t, depart, n_ligne, max(0.18, decalage * 5))
                 n += 1
                 w = police.getlength(mot)
+                if j in temps_calc:   # morceau par morceau, chacun à son instant
+                    xp = x
+                    for piece, t0 in temps_calc[j]:
+                        ap = a if t0 is None else self._visibilite(t, t0, 0, 0, ENTREE_MOT)
+                        if ap > 0:
+                            fond = self._fond.getpixel((int(min(xp, self.largeur - 1)), int(min(y, self.hauteur - 1))))
+                            c = self.c["accent"] if fort else couleur
+                            d.text((xp, y + (1 - ap) * police.size * 0.35), piece.rstrip("\u00a0\u202f"),
+                                   font=police, fill=_melange(fond, c, ap))
+                        xp += police.getlength(piece)
+                    x += w + espace
+                    continue
                 if a > 0:
                     dy = (1 - a) * police.size * 0.35
                     fond = self._fond.getpixel((int(min(x, self.largeur - 1)), int(min(y, self.hauteur - 1))))
                     if fort and style_fort == "surligne":
-                        marge = police.size * 0.10
-                        haut_b = y + police.size * 0.12
-                        d.rectangle((x - marge, haut_b + dy, x + w + marge, haut_b + police.size * 1.02 + dy),
-                                    fill=_melange(fond, self.c["accent"], a))
-                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, self.c["fond"], a))
+                        # Surligneur doux : bande claire dans la moitié basse du mot, mot en couleur d'accent
+                        # (plus de pavé plein, jugé trop lourd par JG le 22/11/2026).
+                        marge = police.size * 0.06
+                        haut_b = y + police.size * 0.62
+                        d.rounded_rectangle((x - marge, haut_b + dy, x + w + marge, y + police.size * 1.08 + dy),
+                                            radius=max(2, round(police.size * 0.08)),
+                                            fill=_melange(fond, self.c["or"], 0.32 * a))
+                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, couleur, a))
                     else:
                         c = self.c["accent"] if fort else couleur
                         d.text((x, y + dy), mot, font=police, fill=_melange(fond, c, a))
                 x += w + espace
             y += pas
         return y, n
+
+    def _temps_calcul(self, ligne, debut_ligne) -> dict[int, list[tuple[str, float | None]]]:
+        """Calcul de la ligne (« 5 + 10 + 6 + 4 = 25 ») : pour chaque mot concerné, ses morceaux (séparés
+        par les espaces insécables de la typographie) et l'instant d'apparition de chacun. Vide si la ligne
+        ne contient pas de calcul (un opérateur et un « = »). Les termes s'étalent sur le morceau de voix en
+        cours quand la ligne apparaît (sinon sur 1,8 s) ; ce qui précède le calcul suit la ligne."""
+        decoupe = [re.split(r"([\u00a0\u202f])", m) for m, _, _ in ligne]
+        pieces = [p for parts in decoupe for p in parts[::2]]
+        if not any(p in OPERATEURS for p in pieces) or not any(p in ("=", "≈") for p in pieces):
+            return {}
+        calc = lambda p: p in OPERATEURS or p in ("=", "≈") or bool(TERME_CALCUL.match(p))
+        ordre, vu_terme = [], False          # (mot, indice du morceau) des termes, dans l'ordre
+        for j, parts in enumerate(decoupe):
+            for k in range(0, len(parts), 2):
+                p = parts[k]
+                if TERME_CALCUL.match(p):
+                    vu_terme = True
+                if vu_terme and (calc(p) or (p in UNITES_CALCUL and ordre)):
+                    ordre.append((j, k, p in UNITES_CALCUL))
+        if sum(1 for *_, u in ordre if not u) < 3:
+            return {}
+        fin = debut_ligne + 1.8
+        scene = self._scene_courante
+        morceaux = self.morceaux_voix.get(id(scene)) if scene is not None else None
+        if morceaux:
+            en_cours = [m for m in morceaux if m[1] > debut_ligne + 0.1]
+            if en_cours:
+                d0, f0 = en_cours[0]
+                fin = max(debut_ligne + 0.8, f0 - 0.15)
+                debut_ligne = max(debut_ligne, d0)
+        n_termes = sum(1 for *_, u in ordre if not u)
+        pas = (fin - debut_ligne) / max(1, n_termes)
+        instants, k_terme = {}, -1
+        for j, k, unite in ordre:
+            if not unite:
+                k_terme += 1
+            instants[(j, k)] = debut_ligne + max(0, k_terme) * pas
+        sortie = {}
+        for j in {j for j, _, _ in ordre}:
+            parts = decoupe[j]
+            sortie[j] = [(parts[k] + (parts[k + 1] if k + 1 < len(parts) else ""), instants.get((j, k)))
+                         for k in range(0, len(parts), 2)]
+        return sortie
 
     def _ecrire_gauche(self, d, x, y, lignes, police, pas, couleur, a=1.0):
         for ligne in lignes:
@@ -478,8 +610,10 @@ class Rendu(ScenesPedagogiques):
                  couverture: bool = False) -> Image.Image:
         """t : secondes écoulées depuis le début de la scène (None = état final, pour le carrousel).
         couverture : image de couverture (miniature), avec le logo selon logo.couverture."""
+        self.basculer(self.univers_de(scene))
         image = self._fond.copy()
         self._image = image
+        self._scene_courante = scene
         d = ImageDraw.Draw(image)
         g, h, dr, b = self.zone
         haut, bas = h + 130, b - 110  # sous l'en-tête, au-dessus du pied de page

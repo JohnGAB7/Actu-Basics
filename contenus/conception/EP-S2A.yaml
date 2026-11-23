@@ -145,8 +145,8 @@ deroule_episode:
     ecran: "Bandeau « données fictives » ; les 20 temps de trajet en pastilles ; « moyenne 21,25 min » et « médiane 20 min » apparaissent"
   - bloc: accueil
     duree_s: 15
-    fr: "Bonjour, et merci d'être là. Dans cet épisode, vous allez apprendre à résumer des données sans les trahir : les compter, les dessiner, puis choisir entre la moyenne et la médiane. Aucun prérequis, à part les pourcentages."
-    en: "Hi, and thanks for being here. In this episode, you'll learn to sum up data without betraying it: count it, draw it, then choose between the mean and the median. No prerequisites beyond percentages."
+    fr: "Bonjour, et bienvenue ! Merci d'être là. Salaires, notes, temps de trajet : on résume tout avec une moyenne. Dans cet épisode, on voit quand elle dit vrai, quand elle trompe, et par quoi la remplacer."
+    en: "Hi, and welcome! Thanks for being here. Salaries, grades, commuting times: we sum everything up with an average. In this episode, we'll see when it tells the truth, when it misleads, and what to use instead."
   - bloc: plan
     duree_s: 15
     fr: "Cinq étapes : compter avec un tableau ; dessiner avec des barres ou un histogramme ; lire la forme d'une distribution ; comprendre la moyenne ; et enfin, moyenne ou médiane. Avec deux laboratoires en direct et un exercice de synthèse corrigé."
@@ -213,9 +213,9 @@ deroule_episode:
     correction_en: "One: 6 out of 10, so 60% (5, 8, 12, 15, 15 and 18). Two: a right tail, caused by the 90-minute trip. Three: total 240, mean 240 ÷ 10 = 24 minutes; ten values, so the median is the average of the 5th and 6th: (15 + 18) ÷ 2 = 16.5 minutes. Four: 7 employees out of 10 are below the mean; the typical trip is the median, 16.5 minutes. Going further: if the 90 minutes were a typo for 35, the mean would drop to 18.5 minutes and the median would not move."
   - bloc: cloture
     duree_s: 25
-    fr: "Vous savez maintenant compter, dessiner et résumer des données, et choisir entre moyenne et médiane. Mais deux équipes peuvent avoir la même médiane et des trajets très différents : c'est l'objet de l'épisode suivant, « Mesurer les écarts : quartiles, variance, écart-type et score z ». Le laboratoire et l'exercice sont sur la page de l'épisode, sur le site. Si cet épisode vous a aidé, abonnez-vous, laissez un like et partagez-le à quelqu'un que ça aidera. Un exercice vous bloque ? Posez votre question en commentaire : on vous aide gratuitement."
-    en: "You can now count, draw and summarize data, and choose between the mean and the median. But two teams can share the same median and have very different trips: that's the next episode, 'Measuring spread: quartiles, variance, standard deviation and z-scores'. The lab and the exercise are on the episode page on the website. If this episode helped, subscribe, leave a like and share it with someone it will help. Stuck on an exercise? Ask in the comments and we'll help you for free."
-    controle_qc: "Contient « merci » à l'accueil (rang 2, après l'ouverture), et à la clôture « épisode suivant », « abonnez », « like », « partagez » : conforme à parcours_spectateur (charte.yaml)."
+    fr: "Voilà : la prochaine fois qu'on vous annonce un salaire moyen ou un temps d'attente moyen, vous saurez quelle question poser. Mais deux équipes peuvent avoir la même médiane et des trajets très différents : c'est tout l'enjeu du prochain épisode, sur les écarts. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu'un à qui elle servira. Et si un exercice vous résiste, écrivez-nous en commentaire : on vous aide, gratuitement. Merci d'avoir regardé, et à très vite !"
+    en: "That's it: next time someone quotes an average salary or an average waiting time, you'll know which question to ask. But two teams can share the same median and have very different trips: that's what the next episode, on spread, is all about. If this video was useful, subscribe, leave a like and share it with someone it will help. And if an exercise gets the better of you, write to us in the comments: we'll help you, for free. Thanks for watching, see you very soon!"
+    controle_qc: "Accueil réécrit (version B choisie par JG le 22/11/2026) et clôture réécrite le 22/11/2026. Contient « bonjour » à l'accueil (rang 2, après l'ouverture), et à la clôture « prochain épisode », « abonnez », « like », « partagez » : conforme à parcours_spectateur (charte.yaml)."
   - bloc: fin
     duree_s: 4
     fr: "Fin de marque : logo officiel (variante selon le fond) et « Éveiller par les chiffres. »"

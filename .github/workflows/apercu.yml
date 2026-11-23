@@ -121,7 +121,7 @@ jobs:
     # Cause des annulations précédentes : chaque image des scènes « formule » recalculait le rendu
     # mathtext (≈ 4,5 s par image, plus d'une heure et demie par langue). Corrigé par un cache ;
     # la limite d'origine de 60 minutes suffit de nouveau, pour une fiche.
-    timeout-minutes: 60
+    timeout-minutes: 150   # épisodes longs (youtube_lesson) de 25 à 35 minutes : FR puis EN (marge, 22/11/2026)
     strategy:
       fail-fast: false
       # Limite de simultanéité (PR #16). Elle n'économise pas de minutes : seul le filtrage des fiches

@@ -111,10 +111,14 @@ def luminance(image: Image.Image, boite) -> float:
     return ImageStat.Stat(zone).mean[0] / 255
 
 
-def choisir_variante(lum_fond: float, demande: str = "auto") -> str:
+def choisir_variante(lum_fond: float, demande: str = "auto", sur_fond_clair: str = "clair") -> str:
+    """Variante du logo. `sur_fond_clair` : variante voulue sur fond clair (charte logo.sur_fond_clair) ;
+    JG a retenu le 22/11/2026 le disque sombre sur le blanc cassé (le disque clair s'y fond mal)."""
     if demande in VARIANTES:
         return demande
-    return "clair" if lum_fond >= SEUIL_FOND_CLAIR else "sombre"
+    if lum_fond >= SEUIL_FOND_CLAIR:
+        return sur_fond_clair if sur_fond_clair in VARIANTES else "clair"
+    return "sombre"
 
 
 def boite_position(position: str, zone: tuple[int, int, int, int], largeur: int, hauteur: int,
@@ -143,7 +147,7 @@ def recouvrement(image: Image.Image, fond: Image.Image, boite, tolerance: int = 
 
 def poser(image: Image.Image, fond: Image.Image, logos: Logos, *, x: int, y: int, largeur: int,
           variante_demandee: str, protection: float, support: str, scene: str, index: int,
-          opacite: float = 1.0, mesurer: bool = True) -> Pose | None:
+          opacite: float = 1.0, mesurer: bool = True, sur_fond_clair: str = "clair") -> Pose | None:
     """Colle le logo (variante adaptée au fond) à (x, y). Retourne la pose, ou None si indisponible."""
     if not logos.images:
         return None
@@ -151,7 +155,7 @@ def poser(image: Image.Image, fond: Image.Image, logos: Logos, *, x: int, y: int
     hauteur = round(ref.height * largeur / ref.width)
     boite = (x, y, x + largeur, y + hauteur)
     lum = luminance(fond, boite)
-    variante = choisir_variante(lum, variante_demandee)
+    variante = choisir_variante(lum, variante_demandee, sur_fond_clair)
     if not logos.disponible(variante):
         return None
     source = logos.images[variante]
