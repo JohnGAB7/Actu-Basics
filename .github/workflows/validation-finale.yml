@@ -26,7 +26,7 @@ jobs:
   final:
     runs-on: ubuntu-latest
     environment: production   # Settings → Environments → production → Required reviewers : JG
-    timeout-minutes: 120   # vertical 9:16 puis déclinaison 16:9 YouTube
+    timeout-minutes: 240   # vertical 9:16 puis 16:9 YouTube ; un épisode long (EP-S2A, 30 min) prend environ 2 h 30
     steps:
       - name: Rendu final depuis main seulement
         if: github.ref != 'refs/heads/main'
