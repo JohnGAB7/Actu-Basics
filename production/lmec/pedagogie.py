@@ -388,6 +388,44 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             conf["questions"] = None
         else:
             conf["questions"] = [{k: str(q[k]) for k in ("question", "reponse", "icone")} for q in qs]
+    if modele in ("capitalisation", "echeancier", "escompte", "frequences"):
+        def nombre(cle, mini, maxi, requis=True):
+            v = a.get(cle)
+            if v is None and not requis:
+                return None
+            if not isinstance(v, (int, float)) or isinstance(v, bool) or not mini <= v <= maxi:
+                erreurs.append(f"{ctx}.animation.{cle} : nombre entre {mini} et {maxi}")
+                return None
+            return v
+        conf["taux"] = nombre("taux", 0.0001, 0.5)
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+        if modele == "capitalisation":
+            conf["capital"] = nombre("capital", 1, 1e9)
+            conf["annees"] = entier("annees", 2, 40)
+        elif modele == "escompte":
+            conf["nominal"] = nombre("nominal", 1, 1e9)
+        elif modele == "frequences":
+            m = entier("m", 2, 24, requis=False)
+            if m is not None:
+                conf["m"] = m
+            c = nombre("capital", 1, 1e9, requis=False)
+            if c is not None:
+                conf["capital"] = c
+        else:   # echeancier
+            mt, dt = a.get("montants"), a.get("dates")
+            if (not isinstance(mt, list) or not isinstance(dt, list) or not 1 <= len(mt) <= 12 or len(mt) != len(dt)
+                    or not all(isinstance(x, (int, float)) and not isinstance(x, bool) and x > 0 for x in mt)
+                    or not all(isinstance(x, int) and not isinstance(x, bool) and 0 <= x <= 40 for x in dt)
+                    or dt != sorted(dt)):
+                erreurs.append(f"{ctx}.animation : « montants » (1 à 12, positifs) et « dates » (entiers croissants "
+                               f"de 0 à 40, autant que de montants)")
+                conf["montants"] = None
+            else:
+                conf["montants"], conf["dates"] = list(mt), list(dt)
+            dec = entier("decimales", 0, 4, requis=False)
+            if dec is not None:
+                conf["decimales"] = dec
     phases = a.get("phases")
     if phases is not None:
         if not isinstance(phases, list) or not phases or any(p not in PHASES[modele] for p in phases):
