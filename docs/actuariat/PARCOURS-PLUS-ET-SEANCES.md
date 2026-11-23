@@ -13,6 +13,12 @@ Demande de JG (2026-11-23) : le parcours de remise à niveau en actuariat (dép�
 - **Aucun échange direct entre projets** : le lien passe par les dépôts (section 4).
 - **Règles inchangées** : JG's Holding toujours annoncée comme fictive ; chaque nombre passe par `verifier` ; aucun chiffre réel sans source datée ; supports de cours et CV de JG jamais sur un dépôt ; rien de fusionné ni publié sans l'accord de JG.
 
+### Décisions de JG du 2026-11-23 (après la première vidéo)
+
+- **Deux formats par séance** (LMEC-DEC-019) : une **vidéo longue 16:9** qui couvre toute la séance, pour suivre le parcours complet sur son site ; et des **vidéos verticales de moins de 3 min**, une par notion (ex. intérêt composé, taux d'escompte, taux équivalents), tirées de la vidéo longue, pour réviser vite. La vidéo longue est **complète** : très explicative, illustrée par des **faits réels sourcés**, animée ; l'apprenant ne doit pas avoir à chercher des vidéos ailleurs. Cela remplace « la vidéo prend le premier tiers de la séance ».
+- **Fil rouge** (LMEC-DEC-020) : à partir de la prochaine vidéo, fondamentaux compris, un cas suivi d'une vidéo à l'autre : le **contrat d'assurance vie d'une ou plusieurs personnes**, clients fictifs de JG's Holding, construit **composante après composante** (prime, évolution du capital, constitution des provisions…), comme dans le projet Belgium Pension Plan. La vidéo a1/s01, déjà produite, n'en a pas.
+- **Pause** (LMEC-DEC-021) : **aucune nouvelle vidéo** tant que le site du parcours n'est pas finalisé, au moins la partie « fondamentaux » ; ensuite, des vidéos seulement pour les parties finalisées du site.
+
 ## 2. Correspondance des modules
 
 | Parcours actuariel | Programme Actu-Basics | Leçons | État |

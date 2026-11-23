@@ -7,7 +7,7 @@
 # Version 2 (JG, 23/11/2026) : vidéo très explicative, complète (on ne doit pas avoir besoin d'aller chercher ailleurs),
 # illustrée par des faits réels sourcés (Livret A, bons du Trésor, TAEG, Powerball 2023) et animée (modèles capitalisation,
 # echeancier, escompte, frequences). Faits réels : chiffres d'origine, devise d'origine dans les deux langues.
-# Statut : aperçu, à valider par JG.
+# Statut : validée par JG le 23/11/2026 (« Je trouve la vidéo bonne »), mise sur le site pour la séance a1/s01.
 id: 2026-11-act-a1-s01-interet-et-annuites
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -38,9 +38,9 @@ pedagogie:
     en: "Made-up constant rates (2.5%; 4% in the exercise), chosen for the example; no tax, no inflation, no default risk; payments are certain"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-23"
 
 sources:
   - nom: {fr: "Service-public.fr, « Livret A » (calcul par quinzaines, intérêts ajoutés au capital au 31 décembre, taux de 1,7 %)", en: "Service-public.fr, “Livret A” (interest by half-months, added to the balance on 31 December, 1.7% rate)"}

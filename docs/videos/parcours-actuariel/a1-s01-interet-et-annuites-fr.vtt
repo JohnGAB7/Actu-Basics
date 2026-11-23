@@ -1,0 +1,1044 @@
+WEBVTT
+
+00:00.350 --> 00:06.454
+Le 11 octobre 2023, un billet vendu en
+Californie gagne le jackpot du Powerball :
+
+00:06.614 --> 00:09.326
+un milliard sept cent
+soixante-cinq millions de dollars.
+
+00:09.686 --> 00:11.054
+Mais le gagnant a le choix.
+
+00:11.414 --> 00:14.169
+Soit trente versements
+étalés sur vingt-neuf ans.
+
+00:14.529 --> 00:18.435
+Soit sept cent soixante-quatorze millions
+tout de suite, moins de la moitié.
+
+00:18.795 --> 00:19.630
+Qui y perd ?
+
+00:20.270 --> 00:22.875
+À la fin de cette vidéo,
+vous saurez le calculer.
+
+00:23.765 --> 00:26.370
+Bonjour, et bienvenue dans
+le parcours Actuariat !
+
+00:26.810 --> 00:27.965
+Merci d'être là.
+
+00:28.325 --> 00:32.338
+Aujourd'hui, on construit pas à pas la
+boîte à outils financière de l'actuaire.
+
+00:32.698 --> 00:34.706
+Pas besoin de connaissances en finance :
+
+00:34.866 --> 00:38.368
+il suffit de savoir calculer un
+pourcentage et une puissance.
+
+00:38.728 --> 00:40.501
+Tout le reste, on le voit ensemble.
+
+00:41.391 --> 00:42.695
+Voici le programme.
+
+00:43.055 --> 00:45.298
+L'intérêt simple et l'intérêt composé.
+
+00:45.658 --> 00:47.580
+L'actualisation et le facteur v.
+
+00:47.940 --> 00:49.138
+Le taux d'escompte.
+
+00:49.498 --> 00:50.738
+Les taux équivalents.
+
+00:51.098 --> 00:52.466
+Les annuités certaines.
+
+00:52.826 --> 00:55.026
+Et pour finir, un exercice corrigé.
+
+00:55.916 --> 00:57.455
+Commençons par le prix du temps :
+
+00:57.615 --> 00:58.791
+le taux d'intérêt.
+
+00:59.681 --> 01:02.713
+Quand vous prêtez de l'argent, vous
+vous en privez pendant un temps :
+
+01:02.873 --> 01:05.820
+vous ne pouvez ni le dépenser,
+ni l'utiliser ailleurs.
+
+01:06.180 --> 01:08.422
+L'emprunteur vous paie
+un loyer pour ce temps :
+
+01:08.582 --> 01:09.566
+c'est l'intérêt.
+
+01:09.926 --> 01:13.126
+Le taux d'intérêt, c'est ce
+loyer exprimé en pourcentage
+
+01:13.166 --> 01:16.308
+de la somme prêtée, pour une
+période, en général un an.
+
+01:17.198 --> 01:19.206
+Pour un assureur, c'est le cœur du métier.
+
+01:19.566 --> 01:23.751
+JG's Holding, notre assureur fictif,
+encaisse les primes de ses clients
+
+01:23.791 --> 01:27.441
+aujourd'hui, et ne paiera les
+prestations que dans des années.
+
+01:27.801 --> 01:30.769
+Entre les deux, l'argent est
+placé et rapporte des intérêts.
+
+01:31.129 --> 01:33.600
+Dans toute la vidéo, on
+prendra un taux fictif
+
+01:33.640 --> 01:35.675
+de deux virgule cinq pour cent par an.
+
+01:36.565 --> 01:38.104
+Première façon de compter :
+
+01:38.264 --> 01:39.418
+l'intérêt simple.
+
+01:39.778 --> 01:42.832
+Les intérêts se calculent
+toujours sur la somme de départ.
+
+01:43.192 --> 01:47.376
+Mille euros à deux virgule cinq pour cent
+rapportent vingt-cinq euros chaque année.
+
+01:47.736 --> 01:50.064
+Après dix ans, mille plus
+dix fois vingt-cinq :
+
+01:50.224 --> 01:51.848
+mille deux cent cinquante euros.
+
+01:52.208 --> 01:55.730
+Les intérêts déjà gagnés restent
+à côté, et ne rapportent rien.
+
+01:56.620 --> 01:57.540
+En formule :
+
+01:57.700 --> 02:01.607
+la valeur future égale la somme
+de départ, fois un plus i fois n.
+
+02:01.967 --> 02:04.935
+Chaque année ajoute la même
+marche de vingt-cinq euros :
+
+02:05.095 --> 02:07.017
+le capital grandit en ligne droite.
+
+02:07.377 --> 02:09.513
+Et n n'est pas forcément
+un nombre entier :
+
+02:09.673 --> 02:11.361
+pour six mois, n vaut un demi.
+
+02:12.251 --> 02:14.968
+L'intérêt simple existe
+vraiment, sur le livret
+
+02:15.008 --> 02:17.139
+d'épargne le plus répandu en France :
+
+02:17.299 --> 02:18.283
+le Livret A.
+
+02:18.643 --> 02:23.552
+Depuis le 1er août 2026, son taux est
+de un virgule sept pour cent par an.
+
+02:23.912 --> 02:27.158
+Pendant l'année, les intérêts sont
+comptés par quinzaines entières :
+
+02:27.318 --> 02:28.920
+une année en compte vingt-quatre.
+
+02:29.280 --> 02:32.888
+Mille euros déposés le 10 août
+commencent à rapporter le 16 :
+
+02:33.048 --> 02:35.824
+il reste neuf quinzaines
+jusqu'au 31 décembre.
+
+02:36.184 --> 02:36.976
+Intérêts :
+
+02:37.136 --> 02:40.725
+mille fois un virgule sept pour
+cent, fois neuf vingt-quatrièmes,
+
+02:40.765 --> 02:43.070
+environ six euros et trente-huit centimes.
+
+02:43.430 --> 02:48.083
+C'est exactement de l'intérêt simple, avec
+n égal à neuf vingt-quatrièmes d'année.
+
+02:48.973 --> 02:51.770
+Et si les intérêts rapportaient,
+eux aussi, des intérêts ?
+
+02:52.660 --> 02:54.177
+Restons sur le Livret A.
+
+02:54.537 --> 02:58.273
+Au 31 décembre, les intérêts de
+l'année s'ajoutent au capital.
+
+02:58.633 --> 03:02.147
+L'année suivante, ce sont donc mille
+six euros et trente-huit centimes
+
+03:02.187 --> 03:05.143
+qui rapportent des intérêts,
+et plus seulement mille euros.
+
+03:05.503 --> 03:08.919
+Les intérêts de l'an dernier
+produisent à leur tour des intérêts :
+
+03:09.079 --> 03:13.113
+c'est l'intérêt composé, on dit aussi
+que les intérêts sont capitalisés.
+
+03:14.003 --> 03:16.759
+Reprenons nos mille euros
+à deux virgule cinq pour
+
+03:16.799 --> 03:19.275
+cent, avec des intérêts
+ajoutés chaque année.
+
+03:19.635 --> 03:23.136
+Après un an, mille vingt-cinq
+euros, comme avec l'intérêt simple.
+
+03:23.496 --> 03:25.919
+Mais la deuxième année,
+les deux virgule cinq pour
+
+03:25.959 --> 03:28.086
+cent s'appliquent à
+mille vingt-cinq euros :
+
+03:28.246 --> 03:31.568
+on obtient mille cinquante euros
+et soixante-trois centimes,
+
+03:31.608 --> 03:34.819
+soit soixante-trois centimes
+de plus qu'en intérêt simple.
+
+03:35.179 --> 03:38.382
+Après dix ans, mille deux cent
+quatre-vingts euros et huit centimes :
+
+03:38.542 --> 03:39.654
+trente euros de plus.
+
+03:40.544 --> 03:41.805
+Pourquoi une puissance ?
+
+03:42.445 --> 03:44.816
+Chaque année, la somme est
+multipliée par un plus i.
+
+03:45.176 --> 03:47.355
+Après deux ans, on a multiplié deux fois ;
+
+03:47.595 --> 03:48.920
+après n ans, n fois.
+
+03:49.280 --> 03:50.349
+D'où la formule :
+
+03:50.509 --> 03:54.629
+la valeur future égale la somme de
+départ, fois un plus i, puissance n.
+
+03:54.989 --> 03:58.725
+Ce un plus i puissance n s'appelle
+le facteur de capitalisation.
+
+03:59.085 --> 04:03.248
+Et i est ici le taux annuel effectif,
+le taux réellement obtenu en un an.
+
+04:04.138 --> 04:07.917
+Regardez les deux façons de compter,
+année après année, sur trente ans.
+
+04:08.277 --> 04:10.007
+En bas, le capital de départ :
+
+04:10.167 --> 04:11.514
+mille euros, toujours là.
+
+04:11.874 --> 04:13.818
+Au-dessus, les intérêts du capital :
+
+04:13.978 --> 04:17.001
+vingt-cinq euros par an, une
+marche identique chaque année,
+
+04:17.041 --> 04:19.805
+soit mille sept cent cinquante
+euros après trente ans.
+
+04:20.165 --> 04:23.173
+Et en or, les intérêts des
+intérêts, presque invisibles
+
+04:23.213 --> 04:25.223
+au début, puis de plus en plus gros :
+
+04:25.383 --> 04:28.876
+après trente ans, on atteint deux
+mille quatre-vingt-dix-sept euros et
+
+04:28.916 --> 04:32.106
+cinquante-sept centimes, trois
+cent quarante-sept euros de plus.
+
+04:32.466 --> 04:35.285
+C'est l'effet boule de neige,
+et il grandit avec le temps.
+
+04:36.175 --> 04:37.714
+Retenez la règle d'usage.
+
+04:38.074 --> 04:40.500
+Sur moins d'un an, comme
+sur le Livret A pendant
+
+04:40.540 --> 04:42.812
+l'année, on compte souvent
+en intérêt simple.
+
+04:43.172 --> 04:45.948
+Sur plusieurs années, on
+compte en intérêt composé.
+
+04:46.308 --> 04:49.710
+Et l'actuaire, qui raisonne sur
+des contrats de trente ou quarante
+
+04:49.750 --> 04:52.370
+ans, travaille presque
+toujours en intérêt composé.
+
+04:52.730 --> 04:54.418
+C'est ce qu'on fera dans la suite.
+
+04:55.308 --> 04:58.340
+Les actuaires ont surtout
+besoin de la question inverse.
+
+04:59.230 --> 05:02.987
+JG's Holding a promis de payer
+mille euros dans dix ans.
+
+05:03.347 --> 05:06.928
+Combien doit-elle mettre de côté
+aujourd'hui, placé à deux virgule
+
+05:06.968 --> 05:09.835
+cinq pour cent, pour être
+certaine de pouvoir payer ?
+
+05:10.475 --> 05:13.209
+On ne part plus d'aujourd'hui
+vers le futur :
+
+05:13.369 --> 05:15.782
+on part du futur et on
+revient à aujourd'hui.
+
+05:16.142 --> 05:17.425
+C'est l'actualisation.
+
+05:18.315 --> 05:21.091
+Pour remonter le temps, on
+fait l'opération inverse :
+
+05:21.251 --> 05:23.643
+on divise par un plus i
+au lieu de multiplier.
+
+05:24.003 --> 05:27.248
+Les actuaires notent v ce facteur,
+un divisé par un plus i :
+
+05:27.408 --> 05:31.784
+à deux virgule cinq pour cent, environ
+zéro virgule neuf sept cinq six un.
+
+05:32.144 --> 05:35.928
+Un euro payable dans un an vaut
+donc environ quatre-vingt-dix-sept
+
+05:35.968 --> 05:37.608
+centimes et demi aujourd'hui.
+
+05:37.968 --> 05:40.659
+Sur n années, on multiplie
+par v puissance n.
+
+05:41.019 --> 05:42.920
+Ici, mille fois v puissance dix :
+
+05:43.080 --> 05:45.408
+sept cent quatre-vingt-un
+euros et vingt centimes.
+
+05:46.298 --> 05:48.263
+Visualisons-le sur la frise du temps.
+
+05:48.623 --> 05:50.589
+Le paiement promis est là, dans dix ans :
+
+05:50.749 --> 05:51.605
+mille euros.
+
+05:51.965 --> 05:54.322
+Pour le ramener à
+aujourd'hui, on le multiplie
+
+05:54.362 --> 05:56.511
+par v à chaque année traversée, dix fois :
+
+05:56.671 --> 05:57.677
+il rétrécit.
+
+05:58.037 --> 06:01.943
+Arrivé à aujourd'hui, il vaut sept cent
+quatre-vingt-un euros et vingt centimes.
+
+06:02.833 --> 06:04.372
+Vérifions dans l'autre sens :
+
+06:04.532 --> 06:07.902
+sept cent quatre-vingt-un euros
+et vingt centimes, placés dix ans
+
+06:07.942 --> 06:10.998
+à deux virgule cinq pour cent,
+deviennent bien mille euros.
+
+06:11.358 --> 06:14.988
+Capitaliser, c'est avancer dans le
+temps en multipliant par un plus i.
+
+06:15.348 --> 06:18.102
+Actualiser, c'est reculer
+en multipliant par v.
+
+06:18.462 --> 06:20.705
+Toute l'assurance repose
+sur ce va-et-vient.
+
+06:21.595 --> 06:24.435
+Une même opération peut se
+raconter de deux façons.
+
+06:25.325 --> 06:26.906
+Un fait réel pour commencer.
+
+06:27.266 --> 06:30.342
+Le Trésor américain emprunte
+à court terme avec des bons
+
+06:30.382 --> 06:32.901
+qui ne versent aucun
+intérêt pendant leur vie.
+
+06:33.261 --> 06:35.077
+Comment le prêteur
+gagne-t-il de l'argent ?
+
+06:35.717 --> 06:38.654
+Il achète le bon moins cher
+que sa valeur faciale,
+
+06:38.694 --> 06:41.096
+et reçoit la valeur faciale à l'échéance.
+
+06:41.456 --> 06:43.993
+L'intérêt est retenu dès
+le départ, et le Trésor
+
+06:44.033 --> 06:46.194
+annonce ces bons avec un taux d'escompte.
+
+06:46.554 --> 06:50.738
+Le même mécanisme existe en France
+quand une banque escompte une facture.
+
+06:51.628 --> 06:52.847
+Prenons un exemple.
+
+06:53.207 --> 06:57.497
+Une entreprise détient une facture de mille
+euros, que son client paiera dans un an.
+
+06:57.857 --> 06:59.439
+Elle veut l'argent tout de suite :
+
+06:59.599 --> 07:03.777
+la banque lui verse aujourd'hui neuf
+cent soixante-quinze euros et soixante
+
+07:03.817 --> 07:07.601
+et un centimes, et garde vingt-quatre
+euros et trente-neuf centimes.
+
+07:07.961 --> 07:10.673
+Cette somme retenue, on peut
+la mesurer de deux façons :
+
+07:10.833 --> 07:13.930
+rapportée aux mille euros de la
+fin, c'est le taux d'escompte
+
+07:13.970 --> 07:16.553
+d, environ deux virgule
+quarante-quatre pour cent ;
+
+07:16.793 --> 07:19.900
+rapportée aux neuf cent
+soixante-quinze euros prêtés, c'est
+
+07:19.940 --> 07:22.513
+le taux d'intérêt i, deux
+virgule cinq pour cent.
+
+07:23.403 --> 07:27.310
+En formule, d égale i divisé par
+un plus i, c'est-à-dire i fois v :
+
+07:27.470 --> 07:30.864
+c'est le même intérêt, mais payé
+un an plus tôt, donc actualisé.
+
+07:31.224 --> 07:33.083
+On peut aussi l'écrire un moins v :
+
+07:33.243 --> 07:35.801
+pour un euro à recevoir
+dans un an, vous recevez
+
+07:35.841 --> 07:38.344
+v aujourd'hui, et l'escompte
+est ce qui manque.
+
+07:38.704 --> 07:42.184
+Comme v est plus petit que un, d est
+toujours un peu plus petit que i.
+
+07:42.544 --> 07:45.704
+Le taux d'escompte reviendra
+très vite, dans les annuités.
+
+07:46.594 --> 07:49.391
+Un même placement peut s'annoncer
+avec des taux différents.
+
+07:50.281 --> 07:51.414
+Autre fait réel.
+
+07:51.774 --> 07:56.436
+En France, tout prêteur a l'obligation
+légale d'afficher le TAEG, le taux annuel
+
+07:56.476 --> 08:00.844
+effectif global, dans ses publicités,
+ses offres et ses contrats de crédit.
+
+08:01.204 --> 08:04.493
+Il exprime le coût total du
+crédit en pourcentage annuel,
+
+08:04.533 --> 08:07.414
+pour pouvoir comparer les
+offres sur la même base.
+
+08:07.774 --> 08:09.036
+Pourquoi une même base ?
+
+08:09.676 --> 08:13.796
+Parce qu'un crédit remboursé chaque mois
+peut s'annoncer avec un taux mensuel,
+
+08:13.836 --> 08:16.996
+un taux annuel, et ces taux ne
+se comparent pas directement.
+
+08:17.886 --> 08:20.470
+Comparons deux façons
+d'arriver au même résultat.
+
+08:20.830 --> 08:23.457
+Mille euros à deux virgule
+cinq pour cent par an :
+
+08:23.617 --> 08:26.841
+un seul saut, à la fin de l'année,
+jusqu'à mille vingt-cinq euros.
+
+08:27.201 --> 08:29.696
+Ou bien douze petits
+sauts, un par mois, à zéro
+
+08:29.736 --> 08:31.854
+virgule deux zéro six pour cent chacun :
+
+08:32.014 --> 08:35.211
+comme chaque mois compte les
+intérêts des mois précédents, on
+
+08:35.251 --> 08:38.289
+arrive exactement au même
+endroit, mille vingt-cinq euros.
+
+08:38.649 --> 08:40.294
+Ces deux taux sont équivalents.
+
+08:40.654 --> 08:42.150
+Mais attention au piège :
+
+08:42.310 --> 08:45.743
+douze fois zéro virgule deux zéro
+six pour cent ne font que deux
+
+08:45.783 --> 08:49.054
+virgule quarante-sept pour cent,
+moins que deux virgule cinq.
+
+08:49.944 --> 08:50.864
+En formule :
+
+08:51.024 --> 08:53.870
+un taux mensuel j est
+équivalent au taux annuel i
+
+08:53.910 --> 08:56.637
+si un plus j, puissance
+douze, égale un plus i.
+
+08:56.997 --> 08:58.045
+On en tire j :
+
+08:58.205 --> 09:01.557
+un virgule zéro deux cinq,
+puissance un douzième, moins un.
+
+09:01.917 --> 09:05.782
+Et douze fois j, c'est le taux nominal,
+noté i douze entre parenthèses,
+
+09:05.822 --> 09:08.256
+environ deux virgule
+quarante-sept pour cent.
+
+09:08.616 --> 09:11.947
+Un taux nominal n'est qu'une
+façon d'annoncer le taux mensuel.
+
+09:12.307 --> 09:16.448
+Pour comparer deux offres, il faut
+toujours revenir au taux annuel effectif.
+
+09:17.338 --> 09:20.583
+Et si l'on capitalisait chaque jour,
+chaque heure, chaque seconde ?
+
+09:21.223 --> 09:23.975
+À la limite, on capitalise
+en continu, et le taux
+
+09:24.015 --> 09:26.367
+s'appelle la force d'intérêt, notée delta.
+
+09:26.727 --> 09:32.063
+Un plus i égale e puissance delta, donc
+delta égale le logarithme de un plus i :
+
+09:32.223 --> 09:34.786
+environ deux virgule
+quatre six neuf pour cent.
+
+09:35.146 --> 09:37.154
+Tous ces taux décrivent le même placement.
+
+09:37.514 --> 09:41.168
+Le plus petit est le taux d'escompte,
+puis delta, puis le nominal
+
+09:41.208 --> 09:44.237
+mensuel, et le plus grand
+est le taux annuel effectif.
+
+09:45.127 --> 09:46.922
+Passons maintenant à plusieurs paiements.
+
+09:47.812 --> 09:50.289
+Une annuité, c'est une suite
+de paiements réguliers :
+
+09:50.449 --> 09:52.884
+un loyer, un remboursement
+de prêt, une rente.
+
+09:53.244 --> 09:55.449
+Elle est dite certaine
+quand chaque paiement aura
+
+09:55.489 --> 09:57.236
+lieu quoi qu'il arrive, sans condition.
+
+09:57.596 --> 10:00.500
+Pour connaître sa valeur
+aujourd'hui, une seule méthode :
+
+10:00.660 --> 10:03.479
+actualiser chaque paiement à
+sa date, puis additionner.
+
+10:04.369 --> 10:07.198
+JG's Holding doit verser
+mille euros à la fin
+
+10:07.238 --> 10:09.684
+de chacune des trois prochaines années.
+
+10:10.044 --> 10:11.732
+Les voici sur la frise du temps.
+
+10:12.092 --> 10:13.694
+On ramène chacun à aujourd'hui :
+
+10:13.854 --> 10:18.053
+le premier vaut neuf cent soixante-quinze
+euros et soixante et un centimes,
+
+10:18.093 --> 10:22.122
+le deuxième neuf cent cinquante et un
+euros et quatre-vingt-un centimes,
+
+10:22.162 --> 10:25.569
+le troisième neuf cent vingt-huit
+euros et soixante centimes.
+
+10:25.929 --> 10:28.594
+Empilés, ils valent deux
+mille huit cent cinquante-six
+
+10:28.634 --> 10:30.497
+euros aujourd'hui, et non trois mille.
+
+10:31.387 --> 10:34.246
+Pour un paiement de un en
+fin de chaque année, pendant
+
+10:34.286 --> 10:36.339
+n ans, la valeur actuelle se note a n :
+
+10:36.499 --> 10:37.824
+l'annuité immédiate.
+
+10:38.184 --> 10:42.006
+C'est v, plus v au carré, et ainsi
+de suite jusqu'à v puissance n.
+
+10:42.366 --> 10:44.992
+Cette somme géométrique se
+résume en une formule :
+
+10:45.152 --> 10:47.395
+un moins v puissance n, divisé par i.
+
+10:47.755 --> 10:50.574
+Sur trois ans, environ deux
+virgule huit cinq six :
+
+10:50.734 --> 10:53.616
+on retrouve nos deux mille
+huit cent cinquante-six euros.
+
+10:53.976 --> 10:56.795
+Sur dix ans, environ huit
+virgule soixante-quinze :
+
+10:56.955 --> 11:00.456
+dix paiements de un ne valent que huit
+virgule soixante-quinze aujourd'hui.
+
+11:01.346 --> 11:05.381
+Et si chaque paiement tombait au début de
+l'année, comme un loyer payé d'avance ?
+
+11:06.021 --> 11:07.901
+Le premier paiement tombe aujourd'hui :
+
+11:08.061 --> 11:10.239
+il vaut mille euros, sans actualisation.
+
+11:10.599 --> 11:14.549
+Les deux autres arrivent un an plus tôt
+qu'avant, ils rétrécissent donc moins.
+
+11:14.909 --> 11:18.623
+Au total, deux mille neuf cent vingt-sept
+euros et quarante-deux centimes.
+
+11:19.513 --> 11:24.124
+Cette annuité payée en début d'année s'appelle
+l'annuité due, notée a point point n.
+
+11:24.484 --> 11:27.750
+Chaque paiement arrive un an plus
+tôt que dans l'annuité immédiate :
+
+11:27.910 --> 11:29.726
+on multiplie donc tout par un plus i.
+
+11:30.086 --> 11:31.753
+Et le taux d'escompte réapparaît :
+
+11:31.913 --> 11:35.329
+a point point n égale un moins
+v puissance n, divisé par d.
+
+11:35.689 --> 11:36.481
+Normal :
+
+11:36.641 --> 11:39.630
+l'intérêt d'un paiement en début
+d'année est payé d'avance.
+
+11:40.520 --> 11:43.040
+Revenons à notre gagnant du Powerball.
+
+11:43.400 --> 11:46.706
+Le milliard sept cent soixante-cinq
+millions annoncé, c'est la
+
+11:46.746 --> 11:50.053
+somme brute des trente versements,
+un immédiat puis vingt-neuf
+
+11:50.093 --> 11:53.237
+versements annuels qui augmentent
+de cinq pour cent par an.
+
+11:53.597 --> 11:57.504
+Mais un dollar reçu dans vingt-neuf ans
+vaut bien moins qu'un dollar aujourd'hui.
+
+11:57.864 --> 12:01.426
+Les sept cent soixante-quatorze
+millions proposés tout de suite,
+
+12:01.466 --> 12:05.196
+environ quarante-quatre pour cent
+du montant annoncé, correspondent
+
+12:05.236 --> 12:08.235
+en gros à la valeur actuelle
+de ces trente versements.
+
+12:08.595 --> 12:09.707
+Personne n'y perd :
+
+12:09.867 --> 12:13.923
+ce sont deux façons de présenter la
+même richesse, à des dates différentes.
+
+12:14.813 --> 12:16.608
+Gardez précieusement cette brique.
+
+12:16.968 --> 12:20.583
+Dans le module vie et mortalité,
+une rente viagère sera une annuité
+
+12:20.623 --> 12:24.074
+dont chaque paiement n'a lieu que
+si l'assuré est encore en vie.
+
+12:24.434 --> 12:27.121
+On actualisera, comme
+aujourd'hui, mais en tenant
+
+12:27.161 --> 12:29.514
+compte en plus de la
+probabilité de survie.
+
+12:29.874 --> 12:33.461
+Toute la suite du parcours repose
+sur ce que vous venez d'apprendre.
+
+12:34.351 --> 12:35.250
+À vous de jouer.
+
+12:36.851 --> 12:38.304
+Mettez la vidéo en pause.
+
+12:38.664 --> 12:42.412
+Avec un taux annuel effectif de
+quatre pour cent et sur trois ans,
+
+12:42.452 --> 12:46.199
+calculez le taux d'escompte d, la
+force d'intérêt delta, l'annuité
+
+12:46.239 --> 12:49.355
+immédiate a trois et l'annuité
+due a point point trois.
+
+13:10.745 --> 13:11.622
+Correction.
+
+13:11.982 --> 13:13.222
+Le taux d'escompte :
+
+13:13.382 --> 13:16.606
+zéro virgule zéro quatre
+divisé par un virgule zéro
+
+13:16.646 --> 13:19.806
+quatre, environ zéro virgule
+zéro trois huit cinq.
+
+13:20.166 --> 13:21.428
+La force d'intérêt :
+
+13:21.588 --> 13:26.924
+logarithme de un virgule zéro quatre,
+environ zéro virgule zéro trois neuf deux.
+
+13:27.284 --> 13:28.609
+L'annuité immédiate :
+
+13:28.769 --> 13:33.025
+un moins un virgule zéro quatre
+puissance moins trois, divisé par zéro
+
+13:33.065 --> 13:36.708
+virgule zéro quatre, environ
+deux virgule sept sept cinq un.
+
+13:37.068 --> 13:38.158
+Et l'annuité due :
+
+13:38.318 --> 13:42.630
+un virgule zéro quatre fois a trois,
+environ deux virgule huit huit six un.
+
+13:42.990 --> 13:46.577
+On retrouve bien d plus petit que
+delta, lui-même plus petit que i.
+
+13:47.467 --> 13:48.771
+Ce qu'il faut retenir.
+
+13:49.131 --> 13:52.035
+En intérêt simple, on
+multiplie par un plus i n ;
+
+13:52.275 --> 13:55.008
+en intérêt composé, par
+un plus i puissance n.
+
+13:55.368 --> 13:57.398
+On actualise avec v puissance n.
+
+13:57.758 --> 14:00.278
+Le taux d'escompte, c'est
+l'intérêt payé d'avance :
+
+14:00.438 --> 14:01.742
+d égale i fois v.
+
+14:02.102 --> 14:05.347
+Des taux sont équivalents s'ils
+donnent la même somme au bout d'un an.
+
+14:05.707 --> 14:08.547
+Et une annuité, c'est une somme
+de paiements actualisés :
+
+14:08.707 --> 14:12.784
+un moins v puissance n sur i en fin
+d'année, fois un plus i en début d'année.
+
+14:13.674 --> 14:15.319
+Votre boîte à outils est prête.
+
+14:15.679 --> 14:16.941
+Prochain épisode :
+
+14:17.101 --> 14:19.873
+on y ajoute la mortalité,
+pour calculer ce que vaut
+
+14:19.913 --> 14:22.245
+aujourd'hui une promesse
+de payer au décès.
+
+14:22.605 --> 14:26.136
+Si cette vidéo vous a été
+utile, abonnez-vous, laissez un
+
+14:26.176 --> 14:29.519
+like et partagez-la avec
+quelqu'un à qui elle servira.
+
+14:29.879 --> 14:33.146
+Et si l'exercice vous résiste,
+écrivez-nous en commentaire :
+
+14:33.306 --> 14:34.247
+on vous aide.
+
+14:34.607 --> 14:36.914
+Merci d'avoir regardé, et à très vite !
+
+14:37.804 --> 14:38.916
+ACTU-BASICS.
+
+14:39.276 --> 14:40.580
+Éveiller par les chiffres.

@@ -14,10 +14,15 @@
 #   source_seance  commit de la séance dont les brouillons reprennent les chiffres
 #   chapitres      leçons Actu-Basics (fiches contenus/conception/<lecon>.yaml) qui servent la séance
 #   etat           a_preparer | brouillon | attend_a_produire | relue | validee_jg | rendue | site | publiee
+#   video_longue   fiche de la vidéo longue 16:9 qui couvre toute la séance (décision de JG du 23/11/2026)
+#   capsules_verticales  vidéos courtes (< 3 min, verticales) d'une notion de la séance, pour réviser
 #   provisoire     true tant que video_fr / video_en pointent vers le MP4 du site et pas encore vers YouTube
 #   video_fr, video_en   URL publiques, une fois publiées (vides avant)
 #   debut, fin     chapitre utile dans l'épisode, en secondes (vides avant le rendu)
 # Rien n'est publié sans l'accord de JG : une URL n'apparaît ici qu'après publication.
+# Pause (JG, 23/11/2026) : aucune nouvelle vidéo tant que la partie « fondamentaux » du site du parcours n'est pas
+# finalisée ; ensuite, des vidéos seulement pour les parties finalisées. À partir de la prochaine vidéo, fil rouge
+# d'un contrat d'assurance vie construit composante après composante (LMEC-DEC-020).
 version: 2
 modules:
   - module: a1
@@ -29,12 +34,15 @@ modules:
         titre: "Intérêt composé et annuités certaines"
         source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml"
         chapitres: [A1.01, A1.03, A1.04]
-        capsule: A1-C1         # « La valeur du temps », 3 min, faite pour l'étape « Vidéo » (fiche contenus/fiches/2026-11-act-a1-c01-la-valeur-du-temps.yaml)
+        video_longue: "contenus/fiches/2026-11-act-a1-s01-interet-et-annuites.yaml"   # 16:9, toute la séance, FR 14 min 41 / EN 15 min
         etat: site             # validée par JG le 23/11/2026 : sur le site d'abord, remplacée par YouTube à la publication
-        video_fr: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-la-valeur-du-temps-fr.mp4"
-        video_en: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-the-value-of-time-en.mp4"
-        sous_titres_fr: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-la-valeur-du-temps-fr.vtt"
-        sous_titres_en: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-the-value-of-time-en.vtt"
+        video_fr: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-s01-interet-et-annuites-fr.mp4"
+        video_en: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-s01-interest-and-annuities-en.mp4"
+        sous_titres_fr: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-s01-interet-et-annuites-fr.vtt"
+        sous_titres_en: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-s01-interest-and-annuities-en.vtt"
+        chapitres_fr: ["0:00 Introduction", "0:55 Taux d'intérêt et intérêt simple", "2:48 Intérêt composé", "4:54 Actualisation", "6:21 Taux d'escompte", "7:46 Taux équivalents", "9:44 Annuités certaines", "12:34 Exercice"]
+        chapitres_en: ["0:00 Intro", "0:53 Interest rate and simple interest", "2:48 Compound interest", "4:58 Discounting", "6:27 Rate of discount", "7:52 Equivalent rates", "9:57 Annuities certain", "12:53 Exercise"]
+        capsules_verticales: []   # notions isolées (< 3 min, vertical seulement), tirées de la vidéo longue ; en attente (JG, 23/11/2026)
         provisoire: true       # fichier MP4 du site ; à remplacer par l'URL YouTube dès la publication (les vues comptent alors sur YouTube)
         debut: null
         fin: null
