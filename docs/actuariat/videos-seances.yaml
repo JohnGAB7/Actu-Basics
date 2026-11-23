@@ -13,7 +13,8 @@
 #   seance         identifiant de la séance (contenus/<module>/sNN.yaml)
 #   source_seance  commit de la séance dont les brouillons reprennent les chiffres
 #   chapitres      leçons Actu-Basics (fiches contenus/conception/<lecon>.yaml) qui servent la séance
-#   etat           a_preparer | brouillon | attend_a_produire | relue | validee_jg | rendue | publiee
+#   etat           a_preparer | brouillon | attend_a_produire | relue | validee_jg | rendue | site | publiee
+#   provisoire     true tant que video_fr / video_en pointent vers le MP4 du site et pas encore vers YouTube
 #   video_fr, video_en   URL publiques, une fois publiées (vides avant)
 #   debut, fin     chapitre utile dans l'épisode, en secondes (vides avant le rendu)
 # Rien n'est publié sans l'accord de JG : une URL n'apparaît ici qu'après publication.
@@ -29,9 +30,12 @@ modules:
         source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml"
         chapitres: [A1.01, A1.03, A1.04]
         capsule: A1-C1         # « La valeur du temps », 3 min, faite pour l'étape « Vidéo » (fiche contenus/fiches/2026-11-act-a1-c01-la-valeur-du-temps.yaml)
-        etat: rendue           # aperçu FR et EN, 9:16 et 16:9, rendu le 23/11/2026 ; à valider par JG avant publication
-        video_fr: null
-        video_en: null
+        etat: site             # validée par JG le 23/11/2026 : sur le site d'abord, remplacée par YouTube à la publication
+        video_fr: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-la-valeur-du-temps-fr.mp4"
+        video_en: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-the-value-of-time-en.mp4"
+        sous_titres_fr: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-la-valeur-du-temps-fr.vtt"
+        sous_titres_en: "https://johngab7.github.io/Actu-Basics/videos/parcours-actuariel/a1-c01-the-value-of-time-en.vtt"
+        provisoire: true       # fichier MP4 du site ; à remplacer par l'URL YouTube dès la publication (les vues comptent alors sur YouTube)
         debut: null
         fin: null
 

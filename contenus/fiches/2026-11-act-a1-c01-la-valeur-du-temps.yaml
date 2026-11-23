@@ -2,7 +2,7 @@
 # Vidéo de l'étape 1 « L'intuition en vidéo » (3 min) de la séance a1/s01 du parcours actuariel de JG :
 # JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml (accroche, taux fictif de 2,5 %, 781,20 € et a₃ = 2,8560 repris de la séance).
 # Niveau débutant : la séance garde d, δ, äₙ et le code. Chapitre court de l'épisode EP-A1 (docs/actuariat/A1-PLAN.md).
-# Demande de JG du 23/11/2026 (« fais la première vidéo »). Statut : aperçu, à valider par JG ; aucune publication sans son accord.
+# Demande de JG du 23/11/2026 (« fais la première vidéo »). Statut : validée par JG le 23/11/2026 pour le site (fichiers dans docs/videos/parcours-actuariel/), avant YouTube.
 id: 2026-11-act-a1-c01-la-valeur-du-temps
 type_fiche: pedagogique
 famille: statistiques_en_pratique
@@ -29,9 +29,9 @@ pedagogie:
     en: "Made-up constant annual rate of 2.5%, chosen for the example; interest added once a year; no tax, no inflation, no default risk"
 
 validation:
-  statut: brouillon
-  valide_par: ""
-  date: ""
+  statut: valide   # JG, 23/11/2026 : « ces vidéos peuvent être mises sur le site d'abord », remplacées par YouTube ensuite
+  valide_par: "JG"
+  date: "2026-11-23"
 
 sources: []
 
