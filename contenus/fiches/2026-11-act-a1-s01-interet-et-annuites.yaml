@@ -1,0 +1,756 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a1/s01 « Intérêt simple, intérêt composé et annuités certaines »
+# (YOUTUBE_LESSON 16:9, FR et EN). Demande de JG du 23/11/2026 : une vidéo longue par séance pour le site du parcours,
+# qui couvre toute la séance (taux d'intérêt, intérêt simple et composé, actualisation, taux d'escompte, taux équivalents,
+# annuités certaines) avec une approche intuitive ; les notions isolées sont déclinées ensuite en vidéos verticales de moins de 3 min.
+# Séance source : JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml (taux fictif de 2,5 %). L'exercice final utilise 4 %
+# pour ne pas donner la réponse du calcul « À la main » de la séance (2,5 %, n = 3).
+# Version 2 (JG, 23/11/2026) : vidéo très explicative, complète (on ne doit pas avoir besoin d'aller chercher ailleurs),
+# illustrée par des faits réels sourcés (Livret A, bons du Trésor, TAEG, Powerball 2023) et animée (modèles capitalisation,
+# echeancier, escompte, frequences). Faits réels : chiffres d'origine, devise d'origine dans les deux langues.
+# Statut : validée par JG le 23/11/2026 (« Je trouve la vidéo bonne »), mise sur le site pour la séance a1/s01.
+id: 2026-11-act-a1-s01-interet-et-annuites
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A1 · Intérêt simple, intérêt composé et annuités certaines"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer intérêt simple et intérêt composé, et calculer les deux"
+      - "Capitaliser avec (1 + i)ⁿ et actualiser avec le facteur v = 1 ÷ (1 + i)"
+      - "Comprendre le taux d'escompte d, l'intérêt payé d'avance, et pourquoi d < i"
+      - "Passer d'un taux à un taux équivalent : mensuel, nominal, continu (δ)"
+      - "Calculer une annuité certaine immédiate aₙ et due äₙ, et les relier"
+    en:
+      - "Tell simple from compound interest, and compute both"
+      - "Accumulate with (1 + i)ⁿ and discount with the factor v = 1 ÷ (1 + i)"
+      - "Understand the rate of discount d, interest paid in advance, and why d < i"
+      - "Move between equivalent rates: monthly, nominal, continuous (δ)"
+      - "Compute an annuity immediate aₙ and an annuity due äₙ, and link them"
+  prerequis:
+    fr: ["Pourcentages et puissances", "Logarithme népérien (pour δ seulement)"]
+    en: ["Percentages and powers", "Natural logarithm (for δ only)"]
+  hypotheses:
+    fr: "Taux fictifs et constants (2,5 % ; 4 % dans l'exercice), choisis pour l'exemple ; ni fiscalité, ni inflation, ni risque de défaut ; paiements certains"
+    en: "Made-up constant rates (2.5%; 4% in the exercise), chosen for the example; no tax, no inflation, no default risk; payments are certain"
+
+validation:
+  statut: valide
+  valide_par: "JG"
+  date: "2026-11-23"
+
+sources:
+  - nom: {fr: "Service-public.fr, « Livret A » (calcul par quinzaines, intérêts ajoutés au capital au 31 décembre, taux de 1,7 %)", en: "Service-public.fr, “Livret A” (interest by half-months, added to the balance on 31 December, 1.7% rate)"}
+    court: "service-public.fr"
+    url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F2365"
+    date_consultation: "2026-11-23"
+  - nom: {fr: "Service-public.fr, taux du Livret A au 1er août 2026", en: "Service-public.fr, Livret A rate from 1 August 2026"}
+    court: "service-public.fr"
+    url: "https://www.service-public.gouv.fr/particuliers/actualites/A18000"
+    date_consultation: "2026-11-23"
+  - nom: {fr: "TreasuryDirect, « Understanding Pricing and Interest Rates » (bons du Trésor vendus avec un escompte)", en: "TreasuryDirect, “Understanding Pricing and Interest Rates” (Treasury bills sold at a discount)"}
+    court: "TreasuryDirect"
+    url: "https://www.treasurydirect.gov/marketable-securities/understanding-pricing/"
+    date_consultation: "2026-11-23"
+  - nom: {fr: "Service-public.fr, « Qu'est-ce que le TAEG ? »", en: "Service-public.fr, “What is the APR (TAEG)?”"}
+    court: "service-public.fr"
+    url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F2456"
+    date_consultation: "2026-11-23"
+  - nom: {fr: "Powerball, « Ticket in California Wins $1.765 Billion Powerball Jackpot » (11 octobre 2023)", en: "Powerball, “Ticket in California Wins $1.765 Billion Powerball Jackpot” (11 October 2023)"}
+    court: "powerball.com"
+    url: "https://www.powerball.com/ticket-in-california-wins-1.765-billion-powerball-jackpot"
+    date_consultation: "2026-11-23"
+
+editions:
+  fr:
+    titre: "Intérêt simple, intérêt composé et annuités : la valeur du temps"
+    legende: |
+      En 2023, le gagnant d'un jackpot Powerball de 1,765 milliard de dollars pouvait toucher 774,1 millions tout de suite. Pourquoi moins de la moitié ? Toute la réponse est dans cet épisode du parcours Actuariat : le taux d'intérêt, l'intérêt simple (comme le Livret A pendant l'année), l'intérêt composé, l'actualisation, le taux d'escompte (comme les bons du Trésor américain), les taux équivalents (et le TAEG) et les annuités certaines, immédiates et dues. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif ; les taux des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil de placement. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, interetscomposes, tauxdescompte, annuites]
+    scenes:
+      - type: accroche
+        texte: "1,765 milliard de dollars… ou *774,1 millions* tout de suite ?"
+        note: "Powerball, tirage du 11 octobre 2023 (powerball.com)."
+        voix_off: "Le 11 octobre 2023, un billet vendu en Californie gagne le jackpot du Powerball : un milliard sept cent soixante-cinq millions de dollars. Mais le gagnant a le choix. Soit trente versements étalés sur vingt-neuf ans. Soit sept cent soixante-quatorze millions tout de suite, moins de la moitié. Qui y perd ? À la fin de cette vidéo, vous saurez le calculer."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans le parcours Actuariat ! Merci d'être là. Aujourd'hui, on construit pas à pas la boîte à outils financière de l'actuaire. Pas besoin de connaissances en finance : il suffit de savoir calculer un pourcentage et une puissance. Tout le reste, on le voit ensemble."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Intérêt *simple* et *composé*"
+          - "*Actualiser* avec v"
+          - "Taux d'*escompte*"
+          - "Les taux *équivalents*"
+          - "Les *annuités* certaines"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. L'intérêt simple et l'intérêt composé. L'actualisation et le facteur v. Le taux d'escompte. Les taux équivalents. Les annuités certaines. Et pour finir, un exercice corrigé."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le taux d'intérêt et l'intérêt simple"
+        voix_off: "Commençons par le prix du temps : le taux d'intérêt."
+      - type: texte
+        texte: "Le taux d'intérêt : le *loyer de l'argent*"
+        voix_off: "Quand vous prêtez de l'argent, vous vous en privez pendant un temps : vous ne pouvez ni le dépenser, ni l'utiliser ailleurs. L'emprunteur vous paie un loyer pour ce temps : c'est l'intérêt. Le taux d'intérêt, c'est ce loyer exprimé en pourcentage de la somme prêtée, pour une période, en général un an."
+      - type: texte
+        texte: "*JG's Holding* encaisse aujourd'hui, paie plus tard"
+        note: "JG's Holding est un assureur fictif. Taux fictif de 2,5 % par an, utilisé dans toute la vidéo."
+        voix_off: "Pour un assureur, c'est le cœur du métier. JG's Holding, notre assureur fictif, encaisse les primes de ses clients aujourd'hui, et ne paiera les prestations que dans des années. Entre les deux, l'argent est placé et rapporte des intérêts. Dans toute la vidéo, on prendra un taux fictif de deux virgule cinq pour cent par an."
+      - type: etapes
+        texte: "Intérêt *simple* : *1 000 €* à 2,5 %"
+        etapes:
+          - "Chaque année : 1 000 × 2,5 % = *25 €*"
+          - "Après 10 ans : 1 000 + 10 × 25 = *1 250 €*"
+          - "Les intérêts gagnés *ne rapportent rien*"
+        voix_off: "Première façon de compter : l'intérêt simple. Les intérêts se calculent toujours sur la somme de départ. Mille euros à deux virgule cinq pour cent rapportent vingt-cinq euros chaque année. Après dix ans, mille plus dix fois vingt-cinq : mille deux cent cinquante euros. Les intérêts déjà gagnés restent à côté, et ne rapportent rien."
+        verifier:
+          - {expression: "1000 * 0.025", attendu: 25, libelle: "Intérêts annuels"}
+          - {expression: "1000 * (1 + 0.025 * 10)", attendu: 1250, libelle: "Intérêt simple, 10 ans"}
+      - type: formule
+        texte: "Intérêt simple : une *droite*"
+        formule:
+          - 'VF=VA\times(1+i\,n)'
+        note: "VA : somme de départ ; VF : valeur future ; i : taux par an ; n : durée en années (elle peut être une fraction d'année)."
+        voix_off: "En formule : la valeur future égale la somme de départ, fois un plus i fois n. Chaque année ajoute la même marche de vingt-cinq euros : le capital grandit en ligne droite. Et n n'est pas forcément un nombre entier : pour six mois, n vaut un demi."
+      - type: etapes
+        texte: "Un cas réel : le *Livret A*"
+        etapes:
+          - "Taux : *1,7 %* par an (depuis le 1er août 2026)"
+          - "Intérêts comptés par *quinzaines* entières"
+          - "1 000 € déposés le 10 août : *9 quinzaines*"
+          - "1 000 × 1,7 % × 9 ÷ 24 ≈ *6,38 €* au 31 décembre"
+        note: "Source : service-public.fr, fiche « Livret A », consultée le 23/11/2026. Un dépôt du 10 août compte à partir du 16."
+        voix_off: "L'intérêt simple existe vraiment, sur le livret d'épargne le plus répandu en France : le Livret A. Depuis le 1er août 2026, son taux est de un virgule sept pour cent par an. Pendant l'année, les intérêts sont comptés par quinzaines entières : une année en compte vingt-quatre. Mille euros déposés le 10 août commencent à rapporter le 16 : il reste neuf quinzaines jusqu'au 31 décembre. Intérêts : mille fois un virgule sept pour cent, fois neuf vingt-quatrièmes, environ six euros et trente-huit centimes. C'est exactement de l'intérêt simple, avec n égal à neuf vingt-quatrièmes d'année."
+        verifier:
+          - {expression: "1000 * 0.017 * 9 / 24", attendu: 6.38, libelle: "Intérêts Livret A, 9 quinzaines"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "L'intérêt composé"
+        voix_off: "Et si les intérêts rapportaient, eux aussi, des intérêts ?"
+      - type: texte
+        texte: "Au *31 décembre*, les intérêts du Livret A *s'ajoutent au capital*"
+        note: "Source : service-public.fr, fiche « Livret A »."
+        voix_off: "Restons sur le Livret A. Au 31 décembre, les intérêts de l'année s'ajoutent au capital. L'année suivante, ce sont donc mille six euros et trente-huit centimes qui rapportent des intérêts, et plus seulement mille euros. Les intérêts de l'an dernier produisent à leur tour des intérêts : c'est l'intérêt composé, on dit aussi que les intérêts sont capitalisés."
+      - type: etapes
+        texte: "Intérêt *composé* : *1 000 €* à 2,5 %"
+        etapes:
+          - "Après 1 an : 1 000 × 1,025 = *1 025 €*"
+          - "Après 2 ans : 1 025 × 1,025 = *1 050,63 €*"
+          - "Après 10 ans : 1 000 × 1,025¹⁰ = *1 280,08 €*"
+        voix_off: "Reprenons nos mille euros à deux virgule cinq pour cent, avec des intérêts ajoutés chaque année. Après un an, mille vingt-cinq euros, comme avec l'intérêt simple. Mais la deuxième année, les deux virgule cinq pour cent s'appliquent à mille vingt-cinq euros : on obtient mille cinquante euros et soixante-trois centimes, soit soixante-trois centimes de plus qu'en intérêt simple. Après dix ans, mille deux cent quatre-vingts euros et huit centimes : trente euros de plus."
+        verifier:
+          - {expression: "1000 * 1.025", attendu: 1025, libelle: "Après 1 an"}
+          - {expression: "1000 * 1.025**2", attendu: 1050.63, tolerance: 0.01, libelle: "Après 2 ans"}
+          - {expression: "1000 * 1.025**10", attendu: 1280.08, libelle: "Après 10 ans"}
+      - type: formule
+        texte: "Le *facteur de capitalisation*"
+        formule:
+          - 'VF=VA\times(1+i)^n'
+        note: "i est le taux annuel effectif : le taux réellement obtenu sur une année."
+        voix_off: "Pourquoi une puissance ? Chaque année, la somme est multipliée par un plus i. Après deux ans, on a multiplié deux fois ; après n ans, n fois. D'où la formule : la valeur future égale la somme de départ, fois un plus i, puissance n. Ce un plus i puissance n s'appelle le facteur de capitalisation. Et i est ici le taux annuel effectif, le taux réellement obtenu en un an."
+      - type: animation
+        texte: "*1 000 €* à 2,5 % pendant 30 ans"
+        animation:
+          modele: capitalisation
+          capital: 1000
+          taux: 0.025
+          annees: 30
+          unite: "€"
+        etapes:
+          - "Le capital de départ : *1 000 €*"
+          - "Intérêt simple : *+ 25 €* par an, 1 750 € après 30 ans"
+          - "Composé : les intérêts des intérêts, *2 097,57 €*"
+        voix_off: "Regardez les deux façons de compter, année après année, sur trente ans. En bas, le capital de départ : mille euros, toujours là. Au-dessus, les intérêts du capital : vingt-cinq euros par an, une marche identique chaque année, soit mille sept cent cinquante euros après trente ans. Et en or, les intérêts des intérêts, presque invisibles au début, puis de plus en plus gros : après trente ans, on atteint deux mille quatre-vingt-dix-sept euros et cinquante-sept centimes, trois cent quarante-sept euros de plus. C'est l'effet boule de neige, et il grandit avec le temps."
+        verifier:
+          - {expression: "1000 * (1 + 0.025 * 30)", attendu: 1750, libelle: "Intérêt simple, 30 ans"}
+          - {expression: "1000 * 1.025**30", attendu: 2097.57, libelle: "Intérêt composé, 30 ans"}
+          - {expression: "1000 * 1.025**30 - 1750", attendu: 347.57, libelle: "Intérêts des intérêts, 30 ans"}
+      - type: texte
+        texte: "Court terme : *intérêt simple*. Long terme : *intérêt composé*"
+        voix_off: "Retenez la règle d'usage. Sur moins d'un an, comme sur le Livret A pendant l'année, on compte souvent en intérêt simple. Sur plusieurs années, on compte en intérêt composé. Et l'actuaire, qui raisonne sur des contrats de trente ou quarante ans, travaille presque toujours en intérêt composé. C'est ce qu'on fera dans la suite."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "L'actualisation : remonter le temps"
+        voix_off: "Les actuaires ont surtout besoin de la question inverse."
+      - type: texte
+        texte: "Combien mettre de côté *aujourd'hui* pour payer *1 000 €* dans 10 ans ?"
+        voix_off: "JG's Holding a promis de payer mille euros dans dix ans. Combien doit-elle mettre de côté aujourd'hui, placé à deux virgule cinq pour cent, pour être certaine de pouvoir payer ? On ne part plus d'aujourd'hui vers le futur : on part du futur et on revient à aujourd'hui. C'est l'actualisation."
+      - type: formule
+        texte: "La *valeur actuelle* et le facteur *v*"
+        formule:
+          - 'v=\dfrac{1}{1+i}\approx 0{,}975610'
+          - 'VA=VF\times v^n'
+          - 'VA=1000\times v^{10}\approx 781{,}20\ \text{€}'
+        voix_off: "Pour remonter le temps, on fait l'opération inverse : on divise par un plus i au lieu de multiplier. Les actuaires notent v ce facteur, un divisé par un plus i : à deux virgule cinq pour cent, environ zéro virgule neuf sept cinq six un. Un euro payable dans un an vaut donc environ quatre-vingt-dix-sept centimes et demi aujourd'hui. Sur n années, on multiplie par v puissance n. Ici, mille fois v puissance dix : sept cent quatre-vingt-un euros et vingt centimes."
+        verifier:
+          - {expression: "1 / 1.025", attendu: 0.975610, libelle: "Facteur v à 2,5 %"}
+          - {expression: "1000 / 1.025**10", attendu: 781.20, libelle: "Valeur actuelle de 1 000 € dans 10 ans"}
+      - type: animation
+        texte: "*1 000 €* dans 10 ans, vus d'aujourd'hui"
+        animation:
+          modele: echeancier
+          montants: [1000]
+          dates: [10]
+          taux: 0.025
+          unite: "€"
+        etapes:
+          - "Le paiement promis : *1 000 €* dans 10 ans"
+          - "On le ramène à aujourd'hui : *× v¹⁰*"
+          - "Valeur actuelle : *781,20 €*"
+        voix_off: "Visualisons-le sur la frise du temps. Le paiement promis est là, dans dix ans : mille euros. Pour le ramener à aujourd'hui, on le multiplie par v à chaque année traversée, dix fois : il rétrécit. Arrivé à aujourd'hui, il vaut sept cent quatre-vingt-un euros et vingt centimes."
+        verifier:
+          - {expression: "1000 * (1 / 1.025)**10", attendu: 781.20, libelle: "Valeur actuelle"}
+      - type: texte
+        texte: "Placés à 2,5 %, *781,20 €* deviennent *1 000 €* en 10 ans"
+        voix_off: "Vérifions dans l'autre sens : sept cent quatre-vingt-un euros et vingt centimes, placés dix ans à deux virgule cinq pour cent, deviennent bien mille euros. Capitaliser, c'est avancer dans le temps en multipliant par un plus i. Actualiser, c'est reculer en multipliant par v. Toute l'assurance repose sur ce va-et-vient."
+        verifier:
+          - {expression: "781.20 * 1.025**10", attendu: 1000, tolerance: 0.1, libelle: "Vérification"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Le taux d'escompte : l'intérêt payé d'avance"
+        voix_off: "Une même opération peut se raconter de deux façons."
+      - type: texte
+        texte: "Les *bons du Trésor* américains sont vendus *moins cher* que leur valeur"
+        note: "Source : TreasuryDirect, « Understanding Pricing and Interest Rates », consulté le 23/11/2026."
+        voix_off: "Un fait réel pour commencer. Le Trésor américain emprunte à court terme avec des bons qui ne versent aucun intérêt pendant leur vie. Comment le prêteur gagne-t-il de l'argent ? Il achète le bon moins cher que sa valeur faciale, et reçoit la valeur faciale à l'échéance. L'intérêt est retenu dès le départ, et le Trésor annonce ces bons avec un taux d'escompte. Le même mécanisme existe en France quand une banque escompte une facture."
+      - type: animation
+        texte: "Une facture de *1 000 €* payable dans *un an*"
+        animation:
+          modele: escompte
+          nominal: 1000
+          taux: 0.025
+          unite: "€"
+        etapes:
+          - "La facture : *1 000 €* dans un an"
+          - "La banque paie aujourd'hui et garde *24,39 €*"
+          - "Même somme, deux taux : *d ≈ 2,44 %*, *i = 2,5 %*"
+        voix_off: "Prenons un exemple. Une entreprise détient une facture de mille euros, que son client paiera dans un an. Elle veut l'argent tout de suite : la banque lui verse aujourd'hui neuf cent soixante-quinze euros et soixante et un centimes, et garde vingt-quatre euros et trente-neuf centimes. Cette somme retenue, on peut la mesurer de deux façons : rapportée aux mille euros de la fin, c'est le taux d'escompte d, environ deux virgule quarante-quatre pour cent ; rapportée aux neuf cent soixante-quinze euros prêtés, c'est le taux d'intérêt i, deux virgule cinq pour cent."
+        verifier:
+          - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Somme versée aujourd'hui"}
+          - {expression: "1000 - 1000 / 1.025", attendu: 24.39, libelle: "Escompte retenu"}
+          - {expression: "100 * (1000 - 1000 / 1.025) / 1000", attendu: 2.44, libelle: "Taux d'escompte, en %"}
+          - {expression: "100 * (1000 - 1000 / 1.025) / (1000 / 1.025)", attendu: 2.5, libelle: "Taux d'intérêt, en %"}
+      - type: formule
+        texte: "Taux d'*escompte* et taux d'*intérêt*"
+        formule:
+          - 'd=\dfrac{i}{1+i}=i\,v\approx 0{,}02439'
+          - 'd=1-v'
+          - 'd<i'
+        voix_off: "En formule, d égale i divisé par un plus i, c'est-à-dire i fois v : c'est le même intérêt, mais payé un an plus tôt, donc actualisé. On peut aussi l'écrire un moins v : pour un euro à recevoir dans un an, vous recevez v aujourd'hui, et l'escompte est ce qui manque. Comme v est plus petit que un, d est toujours un peu plus petit que i. Le taux d'escompte reviendra très vite, dans les annuités."
+        verifier:
+          - {expression: "0.025 / 1.025", attendu: 0.02439, libelle: "d à 2,5 %"}
+          - {expression: "1 - 1 / 1.025", attendu: 0.02439, libelle: "d = 1 − v"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Les taux équivalents"
+        voix_off: "Un même placement peut s'annoncer avec des taux différents."
+      - type: texte
+        texte: "Le *TAEG* : un taux *annuel*, obligatoire dans toute offre de crédit"
+        note: "Source : service-public.fr, « Qu'est-ce que le TAEG ? », consulté le 23/11/2026."
+        voix_off: "Autre fait réel. En France, tout prêteur a l'obligation légale d'afficher le TAEG, le taux annuel effectif global, dans ses publicités, ses offres et ses contrats de crédit. Il exprime le coût total du crédit en pourcentage annuel, pour pouvoir comparer les offres sur la même base. Pourquoi une même base ? Parce qu'un crédit remboursé chaque mois peut s'annoncer avec un taux mensuel, un taux annuel, et ces taux ne se comparent pas directement."
+      - type: animation
+        texte: "*2,5 %* par an, ou *0,2060 %* par mois ?"
+        animation:
+          modele: frequences
+          taux: 0.025
+          m: 12
+          capital: 1000
+          unite: "€"
+        etapes:
+          - "Une fois par an : *+ 2,5 %* en fin d'année"
+          - "Douze fois par an : *+ 0,2060 %* chaque mois"
+          - "Même arrivée, mais 12 × 0,2060 % = *2,4718 %*"
+        voix_off: "Comparons deux façons d'arriver au même résultat. Mille euros à deux virgule cinq pour cent par an : un seul saut, à la fin de l'année, jusqu'à mille vingt-cinq euros. Ou bien douze petits sauts, un par mois, à zéro virgule deux zéro six pour cent chacun : comme chaque mois compte les intérêts des mois précédents, on arrive exactement au même endroit, mille vingt-cinq euros. Ces deux taux sont équivalents. Mais attention au piège : douze fois zéro virgule deux zéro six pour cent ne font que deux virgule quarante-sept pour cent, moins que deux virgule cinq."
+        verifier:
+          - {expression: "100 * (1.025**(1/12) - 1)", attendu: 0.2060, libelle: "Taux mensuel équivalent, en %"}
+          - {expression: "1000 * (1 + (1.025**(1/12) - 1))**12", attendu: 1025, libelle: "Même arrivée"}
+          - {expression: "1200 * (1.025**(1/12) - 1)", attendu: 2.4718, libelle: "Taux nominal annuel, en %"}
+      - type: formule
+        texte: "Taux *équivalents* : même somme au bout d'un an"
+        formule:
+          - '(1+j)^{12}=1+i'
+          - 'j=(1{,}025)^{1/12}-1\approx 0{,}2060\ \%'
+          - 'i^{(12)}=12\,j\approx 2{,}4718\ \%'
+        note: "i⁽¹²⁾ : taux nominal annuel, capitalisé mensuellement. Il est toujours plus petit que le taux effectif i."
+        voix_off: "En formule : un taux mensuel j est équivalent au taux annuel i si un plus j, puissance douze, égale un plus i. On en tire j : un virgule zéro deux cinq, puissance un douzième, moins un. Et douze fois j, c'est le taux nominal, noté i douze entre parenthèses, environ deux virgule quarante-sept pour cent. Un taux nominal n'est qu'une façon d'annoncer le taux mensuel. Pour comparer deux offres, il faut toujours revenir au taux annuel effectif."
+        verifier:
+          - {expression: "(1 + (1.025**(1/12) - 1))**12 - 1", attendu: 0.025, libelle: "Équivalence"}
+      - type: formule
+        texte: "À la limite : le taux *continu* δ"
+        formule:
+          - '1+i=e^{\delta}'
+          - '\delta=\ln(1+i)\approx 0{,}02469'
+          - 'd<\delta<i^{(12)}<i'
+        note: "À 2,5 % : d ≈ 2,439 % ; δ ≈ 2,469 % ; i⁽¹²⁾ ≈ 2,472 % ; i = 2,5 %."
+        voix_off: "Et si l'on capitalisait chaque jour, chaque heure, chaque seconde ? À la limite, on capitalise en continu, et le taux s'appelle la force d'intérêt, notée delta. Un plus i égale e puissance delta, donc delta égale le logarithme de un plus i : environ deux virgule quatre six neuf pour cent. Tous ces taux décrivent le même placement. Le plus petit est le taux d'escompte, puis delta, puis le nominal mensuel, et le plus grand est le taux annuel effectif."
+        verifier:
+          - {expression: "log(1.025)", attendu: 0.02469, libelle: "Force d'intérêt à 2,5 %"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Les annuités certaines"
+        voix_off: "Passons maintenant à plusieurs paiements."
+      - type: texte
+        texte: "Une *annuité certaine* : un paiement régulier, *quoi qu'il arrive*"
+        voix_off: "Une annuité, c'est une suite de paiements réguliers : un loyer, un remboursement de prêt, une rente. Elle est dite certaine quand chaque paiement aura lieu quoi qu'il arrive, sans condition. Pour connaître sa valeur aujourd'hui, une seule méthode : actualiser chaque paiement à sa date, puis additionner."
+      - type: animation
+        texte: "*1 000 €* à la fin de chacune des *3 années*"
+        animation:
+          modele: echeancier
+          montants: [1000, 1000, 1000]
+          dates: [1, 2, 3]
+          taux: 0.025
+          unite: "€"
+        etapes:
+          - "Trois paiements de *1 000 €*, en fin d'année"
+          - "Chacun ramené à aujourd'hui : *× v, × v², × v³*"
+          - "Total aujourd'hui : *2 856,02 €*"
+        voix_off: "JG's Holding doit verser mille euros à la fin de chacune des trois prochaines années. Les voici sur la frise du temps. On ramène chacun à aujourd'hui : le premier vaut neuf cent soixante-quinze euros et soixante et un centimes, le deuxième neuf cent cinquante et un euros et quatre-vingt-un centimes, le troisième neuf cent vingt-huit euros et soixante centimes. Empilés, ils valent deux mille huit cent cinquante-six euros aujourd'hui, et non trois mille."
+        verifier:
+          - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Paiement 1"}
+          - {expression: "1000 / 1.025**2", attendu: 951.81, libelle: "Paiement 2"}
+          - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Paiement 3"}
+          - {expression: "1000 * (1 - 1.025**-3) / 0.025", attendu: 2856.02, libelle: "Annuité immédiate × 1 000"}
+      - type: formule
+        texte: "L'annuité *immédiate* aₙ"
+        formule:
+          - 'a_n=v+v^2+\dots+v^n=\dfrac{1-v^n}{i}'
+          - 'a_3\approx 2{,}8560\qquad a_{10}\approx 8{,}7521'
+        note: "aₙ : valeur actuelle de n paiements de 1, en fin d'année. C'est une somme géométrique de raison v."
+        voix_off: "Pour un paiement de un en fin de chaque année, pendant n ans, la valeur actuelle se note a n : l'annuité immédiate. C'est v, plus v au carré, et ainsi de suite jusqu'à v puissance n. Cette somme géométrique se résume en une formule : un moins v puissance n, divisé par i. Sur trois ans, environ deux virgule huit cinq six : on retrouve nos deux mille huit cent cinquante-six euros. Sur dix ans, environ huit virgule soixante-quinze : dix paiements de un ne valent que huit virgule soixante-quinze aujourd'hui."
+        verifier:
+          - {expression: "(1 - 1.025**-3) / 0.025", attendu: 2.8560, libelle: "a3 à 2,5 %"}
+          - {expression: "(1 - 1.025**-10) / 0.025", attendu: 8.7521, libelle: "a10 à 2,5 %"}
+      - type: animation
+        texte: "Les mêmes paiements, en *début* d'année"
+        animation:
+          modele: echeancier
+          montants: [1000, 1000, 1000]
+          dates: [0, 1, 2]
+          taux: 0.025
+          unite: "€"
+        etapes:
+          - "Le premier paiement tombe *aujourd'hui*"
+          - "Chaque paiement arrive *un an plus tôt*"
+          - "Total aujourd'hui : *2 927,42 €*"
+        voix_off: "Et si chaque paiement tombait au début de l'année, comme un loyer payé d'avance ? Le premier paiement tombe aujourd'hui : il vaut mille euros, sans actualisation. Les deux autres arrivent un an plus tôt qu'avant, ils rétrécissent donc moins. Au total, deux mille neuf cent vingt-sept euros et quarante-deux centimes."
+        verifier:
+          - {expression: "1000 + 1000 / 1.025 + 1000 / 1.025**2", attendu: 2927.42, libelle: "Annuité due × 1 000"}
+      - type: formule
+        texte: "L'annuité *due* äₙ"
+        formule:
+          - '\ddot{a}_n=1+v+\dots+v^{n-1}=\dfrac{1-v^n}{d}'
+          - '\ddot{a}_n=(1+i)\,a_n'
+          - '1000\times\ddot{a}_3\approx 2\,927{,}42\ \text{€}'
+        voix_off: "Cette annuité payée en début d'année s'appelle l'annuité due, notée a point point n. Chaque paiement arrive un an plus tôt que dans l'annuité immédiate : on multiplie donc tout par un plus i. Et le taux d'escompte réapparaît : a point point n égale un moins v puissance n, divisé par d. Normal : l'intérêt d'un paiement en début d'année est payé d'avance."
+        verifier:
+          - {expression: "1000 * (1 - 1.025**-3) / (0.025 / 1.025)", attendu: 2927.42, libelle: "Par la formule en d"}
+          - {expression: "1000 * (1 - 1.025**-3) / 0.025 * 1.025", attendu: 2927.42, libelle: "Par (1 + i) × a3"}
+      - type: etapes
+        texte: "Retour au *Powerball* : 1,765 milliard ou *774,1 millions* ?"
+        etapes:
+          - "1,765 milliard : la *somme* des 30 versements"
+          - "Les derniers arrivent dans *29 ans* : ils valent bien moins aujourd'hui"
+          - "774,1 millions ≈ leur *valeur actuelle*, soit 44 %"
+        note: "Source : powerball.com (versement immédiat puis 29 versements annuels, croissants de 5 % par an)."
+        voix_off: "Revenons à notre gagnant du Powerball. Le milliard sept cent soixante-cinq millions annoncé, c'est la somme brute des trente versements, un immédiat puis vingt-neuf versements annuels qui augmentent de cinq pour cent par an. Mais un dollar reçu dans vingt-neuf ans vaut bien moins qu'un dollar aujourd'hui. Les sept cent soixante-quatorze millions proposés tout de suite, environ quarante-quatre pour cent du montant annoncé, correspondent en gros à la valeur actuelle de ces trente versements. Personne n'y perd : ce sont deux façons de présenter la même richesse, à des dates différentes."
+        verifier:
+          - {expression: "100 * 774.1 / 1765", attendu: 44, tolerance: 0.5, libelle: "Part de la valeur immédiate"}
+      - type: texte
+        texte: "Une *rente viagère*, c'est une annuité qui s'arrête au *décès*"
+        voix_off: "Gardez précieusement cette brique. Dans le module vie et mortalité, une rente viagère sera une annuité dont chaque paiement n'a lieu que si l'assuré est encore en vie. On actualisera, comme aujourd'hui, mais en tenant compte en plus de la probabilité de survie. Toute la suite du parcours repose sur ce que vous venez d'apprendre."
+      # ---------------------------------------------------------------- 7
+      - type: titre
+        numero: 7
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Taux annuel effectif *i = 4 %*, *3 ans*. Calculez :"
+        pause: 20
+        questions:
+          - "Le taux d'escompte d"
+          - "La force d'intérêt δ"
+          - "L'annuité immédiate a₃"
+          - "L'annuité due ä₃"
+        voix_off: "Mettez la vidéo en pause. Avec un taux annuel effectif de quatre pour cent et sur trois ans, calculez le taux d'escompte d, la force d'intérêt delta, l'annuité immédiate a trois et l'annuité due a point point trois."
+      - type: correction
+        etapes:
+          - "d = 0,04 ÷ 1,04 ≈ *0,0385*"
+          - "δ = ln 1,04 ≈ *0,0392*"
+          - "a₃ = (1 − 1,04⁻³) ÷ 0,04 ≈ *2,7751*"
+          - "ä₃ = 1,04 × a₃ ≈ *2,8861*"
+        voix_off: "Correction. Le taux d'escompte : zéro virgule zéro quatre divisé par un virgule zéro quatre, environ zéro virgule zéro trois huit cinq. La force d'intérêt : logarithme de un virgule zéro quatre, environ zéro virgule zéro trois neuf deux. L'annuité immédiate : un moins un virgule zéro quatre puissance moins trois, divisé par zéro virgule zéro quatre, environ deux virgule sept sept cinq un. Et l'annuité due : un virgule zéro quatre fois a trois, environ deux virgule huit huit six un. On retrouve bien d plus petit que delta, lui-même plus petit que i."
+        verifier:
+          - {expression: "0.04 / 1.04", attendu: 0.0385, libelle: "d à 4 %"}
+          - {expression: "log(1.04)", attendu: 0.0392, libelle: "δ à 4 %"}
+          - {expression: "(1 - 1.04**-3) / 0.04", attendu: 2.7751, libelle: "a3 à 4 %"}
+          - {expression: "1.04 * (1 - 1.04**-3) / 0.04", attendu: 2.8861, libelle: "ä3 à 4 %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Simple : *× (1 + i n)* ; composé : *× (1 + i)ⁿ*"
+          - "Actualiser : *× vⁿ*, avec v = 1 ÷ (1 + i)"
+          - "d = i v : l'intérêt payé *d'avance*"
+          - "Taux *équivalents* : même somme au bout d'un an"
+          - "aₙ = (1 − vⁿ) ÷ i ; äₙ = (1 + i) aₙ"
+        voix_off: "Ce qu'il faut retenir. En intérêt simple, on multiplie par un plus i n ; en intérêt composé, par un plus i puissance n. On actualise avec v puissance n. Le taux d'escompte, c'est l'intérêt payé d'avance : d égale i fois v. Des taux sont équivalents s'ils donnent la même somme au bout d'un an. Et une annuité, c'est une somme de paiements actualisés : un moins v puissance n sur i en fin d'année, fois un plus i en début d'année."
+      - type: cloture
+        texte: "Prochain épisode : *la valeur actuelle d'une assurance*. Une question ? *En commentaire*"
+        voix_off: "Votre boîte à outils est prête. Prochain épisode : on y ajoute la mortalité, pour calculer ce que vaut aujourd'hui une promesse de payer au décès. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu'un à qui elle servira. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Simple interest, compound interest and annuities: the value of time"
+    legende: |
+      In 2023, the winner of a $1.765 billion Powerball jackpot could take $774.1 million right away. Why less than half? The full answer is in this episode of the Actuarial path: the interest rate, simple interest (like France's Livret A savings account during the year), compound interest, discounting, the rate of discount (like US Treasury bills), equivalent rates (and the APR) and annuities certain, immediate and due. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer; the example rates are made up, the real facts are sourced. No investment advice. Got a question? Ask in the comments.
+    hashtags: [actuarial, compoundinterest, rateofdiscount, annuities]
+    scenes:
+      - type: accroche
+        texte: "$1.765 billion… or *$774.1 million* right now?"
+        note: "Powerball, drawing of 11 October 2023 (powerball.com)."
+        voix_off: "On October eleventh, twenty twenty-three, a ticket sold in California won the Powerball jackpot: one point seven six five billion dollars. But the winner had a choice. Either thirty payments spread over twenty-nine years. Or seven hundred and seventy-four million dollars right away, less than half. Who loses out? By the end of this video, you'll be able to work it out."
+      - type: accueil
+        texte: "Hi, and *welcome*!"
+        voix_off: "Hi, and welcome to the Actuarial path! Thanks for being here. Today we build the actuary's financial toolkit, step by step. No finance background needed: if you can compute a percentage and a power, you're set. We'll see everything else together."
+      - type: etapes
+        texte: "What you'll *learn*"
+        disposition: cartes
+        etapes:
+          - "*Simple* and *compound* interest"
+          - "*Discounting* with v"
+          - "The rate of *discount*"
+          - "*Equivalent* rates"
+          - "*Annuities* certain"
+          - "A worked *exercise*"
+        voix_off: "Here's the plan. Simple and compound interest. Discounting and the factor v. The rate of discount. Equivalent rates. Annuities certain. And to finish, a worked exercise."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The interest rate and simple interest"
+        voix_off: "Let's start with the price of time: the interest rate."
+      - type: texte
+        texte: "The interest rate: the *rent paid on money*"
+        voix_off: "When you lend money, you go without it for a while: you can't spend it or use it elsewhere. The borrower pays you rent for that time: that's interest. The interest rate is that rent as a percentage of the amount lent, for one period, usually a year."
+      - type: texte
+        texte: "*JG's Holding* collects today, pays later"
+        note: "JG's Holding is a fictional insurer. Made-up rate of 2.5% a year, used throughout the video."
+        voix_off: "For an insurer, this is the heart of the business. JG's Holding, our fictional insurer, collects its customers' premiums today, and will only pay benefits years from now. In between, the money is invested and earns interest. Throughout this video, we'll use a made-up rate of two point five percent a year."
+      - type: etapes
+        texte: "*Simple* interest: *$1,000* at 2.5%"
+        etapes:
+          - "Each year: 1,000 × 2.5% = *$25*"
+          - "After 10 years: 1,000 + 10 × 25 = *$1,250*"
+          - "Interest earned *earns nothing*"
+        voix_off: "First way of counting: simple interest. Interest is always computed on the starting amount. One thousand dollars at two point five percent earns twenty-five dollars every year. After ten years, one thousand plus ten times twenty-five: one thousand two hundred and fifty dollars. The interest already earned sits to one side, and earns nothing."
+        verifier:
+          - {expression: "1000 * 0.025", attendu: 25, libelle: "Annual interest"}
+          - {expression: "1000 * (1 + 0.025 * 10)", attendu: 1250, libelle: "Simple interest, 10 years"}
+      - type: formule
+        texte: "Simple interest: a *straight line*"
+        formule:
+          - 'FV=PV\times(1+i\,n)'
+        note: "PV: starting amount; FV: future value; i: rate per year; n: length in years (it can be a fraction of a year)."
+        voix_off: "As a formula: the future value equals the starting amount times one plus i times n. Each year adds the same twenty-five dollar step: the balance grows in a straight line. And n needn't be a whole number: for six months, n is one half."
+      - type: etapes
+        texte: "A real case: France's *Livret A*"
+        etapes:
+          - "Rate: *1.7%* a year (since 1 August 2026)"
+          - "Interest counted by whole *half-months*"
+          - "€1,000 paid in on 10 August: *9 half-months*"
+          - "1,000 × 1.7% × 9 ÷ 24 ≈ *€6.38* on 31 December"
+        note: "Source: service-public.fr, “Livret A” page, accessed 23/11/2026. A deposit on 10 August counts from the 16th."
+        voix_off: "Simple interest really exists, on France's most widely held savings account: the Livret A. Since August first, twenty twenty-six, its rate has been one point seven percent a year. During the year, interest is counted by whole half-months: a year has twenty-four of them. One thousand euros paid in on August tenth starts earning on the sixteenth: that leaves nine half-months until December thirty-first. Interest: one thousand times one point seven percent, times nine twenty-fourths, about six euros and thirty-eight cents. That's exactly simple interest, with n equal to nine twenty-fourths of a year."
+        verifier:
+          - {expression: "1000 * 0.017 * 9 / 24", attendu: 6.38, libelle: "Livret A interest, 9 half-months"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Compound interest"
+        voix_off: "What if interest earned interest too?"
+      - type: texte
+        texte: "On *31 December*, Livret A interest is *added to the balance*"
+        note: "Source: service-public.fr, “Livret A” page."
+        voix_off: "Let's stay with the Livret A. On December thirty-first, the year's interest is added to the balance. So the following year, one thousand and six euros thirty-eight earns interest, not just one thousand. Last year's interest earns interest in turn: that's compound interest. We also say the interest is capitalized."
+      - type: etapes
+        texte: "*Compound* interest: *$1,000* at 2.5%"
+        etapes:
+          - "After 1 year: 1,000 × 1.025 = *$1,025*"
+          - "After 2 years: 1,025 × 1.025 = *$1,050.63*"
+          - "After 10 years: 1,000 × 1.025¹⁰ = *$1,280.08*"
+        voix_off: "Back to our one thousand dollars at two point five percent, with interest added every year. After one year, one thousand and twenty-five dollars, just like simple interest. But in the second year, the two point five percent applies to one thousand and twenty-five dollars: we get one thousand and fifty dollars and sixty-three cents, sixty-three cents more than with simple interest. After ten years, one thousand two hundred and eighty dollars and eight cents: thirty dollars more."
+        verifier:
+          - {expression: "1000 * 1.025", attendu: 1025, libelle: "After 1 year"}
+          - {expression: "1000 * 1.025**2", attendu: 1050.63, tolerance: 0.01, libelle: "After 2 years"}
+          - {expression: "1000 * 1.025**10", attendu: 1280.08, libelle: "After 10 years"}
+      - type: formule
+        texte: "The *accumulation factor*"
+        formule:
+          - 'FV=PV\times(1+i)^n'
+        note: "i is the annual effective rate: the rate actually earned over one year."
+        voix_off: "Why a power? Each year, the amount is multiplied by one plus i. After two years, we've multiplied twice; after n years, n times. Hence the formula: the future value equals the starting amount times one plus i, to the power n. This one plus i to the n is called the accumulation factor. And i here is the annual effective rate, the rate actually earned in a year."
+      - type: animation
+        texte: "*$1,000* at 2.5% for 30 years"
+        animation:
+          modele: capitalisation
+          capital: 1000
+          taux: 0.025
+          annees: 30
+          unite: "$"
+        etapes:
+          - "The starting amount: *$1,000*"
+          - "Simple interest: *+ $25* a year, $1,750 after 30 years"
+          - "Compound: interest on interest, *$2,097.57*"
+        voix_off: "Look at both ways of counting, year after year, over thirty years. At the bottom, the starting amount: one thousand dollars, always there. Above it, the interest on the capital: twenty-five dollars a year, the same step every year, so one thousand seven hundred and fifty dollars after thirty years. And in gold, the interest on interest, almost invisible at first, then bigger and bigger: after thirty years, we reach two thousand and ninety-seven dollars and fifty-seven cents, three hundred and forty-seven dollars more. That's the snowball effect, and it grows with time."
+        verifier:
+          - {expression: "1000 * (1 + 0.025 * 30)", attendu: 1750, libelle: "Simple interest, 30 years"}
+          - {expression: "1000 * 1.025**30", attendu: 2097.57, libelle: "Compound interest, 30 years"}
+          - {expression: "1000 * 1.025**30 - 1750", attendu: 347.57, libelle: "Interest on interest, 30 years"}
+      - type: texte
+        texte: "Short term: *simple interest*. Long term: *compound interest*"
+        voix_off: "Remember the rule of thumb. Under a year, as on the Livret A during the year, interest is often simple. Over several years, it's compound. And actuaries, who reason over thirty- or forty-year contracts, almost always work with compound interest. That's what we'll do from now on."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Discounting: going back in time"
+        voix_off: "Actuaries mostly need the reverse question."
+      - type: texte
+        texte: "How much to set aside *today* to pay *$1,000* in 10 years?"
+        voix_off: "JG's Holding has promised to pay one thousand dollars in ten years. How much should it set aside today, invested at two point five percent, to be sure it can pay? We no longer go from today into the future: we start from the future and come back to today. That's discounting."
+      - type: formule
+        texte: "*Present value* and the factor *v*"
+        formule:
+          - 'v=\dfrac{1}{1+i}\approx 0.975610'
+          - 'PV=FV\times v^n'
+          - 'PV=1000\times v^{10}\approx \$781.20'
+        voix_off: "To go back in time, we do the reverse: divide by one plus i instead of multiplying. Actuaries write v for this factor, one divided by one plus i: at two point five percent, about zero point nine seven five six one. So one dollar payable in a year is worth about ninety-seven and a half cents today. Over n years, we multiply by v to the power n. Here, one thousand times v to the ten: seven hundred and eighty-one dollars and twenty cents."
+        verifier:
+          - {expression: "1 / 1.025", attendu: 0.975610, libelle: "Factor v at 2.5%"}
+          - {expression: "1000 / 1.025**10", attendu: 781.20, libelle: "Present value of $1,000 in 10 years"}
+      - type: animation
+        texte: "*$1,000* in 10 years, seen from today"
+        animation:
+          modele: echeancier
+          montants: [1000]
+          dates: [10]
+          taux: 0.025
+          unite: "$"
+        etapes:
+          - "The promised payment: *$1,000* in 10 years"
+          - "Bring it back to today: *× v¹⁰*"
+          - "Present value: *$781.20*"
+        voix_off: "Let's see it on a timeline. The promised payment is here, in ten years: one thousand dollars. To bring it back to today, we multiply it by v for each year we cross, ten times: it shrinks. When it reaches today, it's worth seven hundred and eighty-one dollars and twenty cents."
+        verifier:
+          - {expression: "1000 * (1 / 1.025)**10", attendu: 781.20, libelle: "Present value"}
+      - type: texte
+        texte: "Invested at 2.5%, *$781.20* grows to *$1,000* in 10 years"
+        voix_off: "Let's check the other way: seven hundred and eighty-one dollars and twenty cents, invested for ten years at two point five percent, does grow to one thousand dollars. Accumulating moves forward in time, multiplying by one plus i. Discounting moves back, multiplying by v. All of insurance rests on this back and forth."
+        verifier:
+          - {expression: "781.20 * 1.025**10", attendu: 1000, tolerance: 0.1, libelle: "Check"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The rate of discount: interest paid in advance"
+        voix_off: "The same deal can be told in two ways."
+      - type: texte
+        texte: "US *Treasury bills* are sold for *less* than their face value"
+        note: "Source: TreasuryDirect, “Understanding Pricing and Interest Rates”, accessed 23/11/2026."
+        voix_off: "A real fact to begin. The US Treasury borrows short term with bills that pay no interest during their life. So how does the lender earn anything? They buy the bill for less than its face value, and receive the face value at maturity. The interest is held back from the start, and the Treasury quotes these bills with a discount rate. The same mechanism exists when a bank discounts an invoice."
+      - type: animation
+        texte: "A *$1,000* invoice payable in *one year*"
+        animation:
+          modele: escompte
+          nominal: 1000
+          taux: 0.025
+          unite: "$"
+        etapes:
+          - "The invoice: *$1,000* in one year"
+          - "The bank pays today and keeps *$24.39*"
+          - "Same amount, two rates: *d ≈ 2.44%*, *i = 2.5%*"
+        voix_off: "Let's take an example. A company holds a one thousand dollar invoice that its customer will pay in a year. It wants the money now: the bank pays it nine hundred and seventy-five dollars and sixty-one cents today, and keeps twenty-four dollars and thirty-nine cents. That amount held back can be measured two ways: relative to the one thousand dollars at the end, it's the rate of discount d, about two point four four percent; relative to the nine hundred and seventy-five dollars lent, it's the interest rate i, two point five percent."
+        verifier:
+          - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Amount paid today"}
+          - {expression: "1000 - 1000 / 1.025", attendu: 24.39, libelle: "Discount kept"}
+          - {expression: "100 * (1000 - 1000 / 1.025) / 1000", attendu: 2.44, libelle: "Rate of discount, in %"}
+          - {expression: "100 * (1000 - 1000 / 1.025) / (1000 / 1.025)", attendu: 2.5, libelle: "Interest rate, in %"}
+      - type: formule
+        texte: "Rate of *discount* and rate of *interest*"
+        formule:
+          - 'd=\dfrac{i}{1+i}=i\,v\approx 0.02439'
+          - 'd=1-v'
+          - 'd<i'
+        voix_off: "As a formula, d equals i divided by one plus i, that is i times v: the same interest, but paid a year earlier, so discounted. You can also write it as one minus v: for one dollar due in a year, you get v today, and the discount is what's missing. Since v is less than one, d is always a little smaller than i. The rate of discount will be back very soon, in annuities."
+        verifier:
+          - {expression: "0.025 / 1.025", attendu: 0.02439, libelle: "d at 2.5%"}
+          - {expression: "1 - 1 / 1.025", attendu: 0.02439, libelle: "d = 1 − v"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Equivalent rates"
+        voix_off: "The same investment can be quoted with different rates."
+      - type: texte
+        texte: "The *APR*: an *annual* rate, required in every credit offer"
+        note: "Source: service-public.fr, “Qu'est-ce que le TAEG ?” (France's APR), accessed 23/11/2026."
+        voix_off: "Another real fact. In France, every lender is legally required to show the TAEG, the annual percentage rate, in its ads, offers and credit agreements. It expresses the total cost of the loan as a yearly percentage, so that offers can be compared on the same basis. Why the same basis? Because a loan repaid monthly can be quoted with a monthly rate or a yearly rate, and those rates can't be compared directly."
+      - type: animation
+        texte: "*2.5%* a year, or *0.2060%* a month?"
+        animation:
+          modele: frequences
+          taux: 0.025
+          m: 12
+          capital: 1000
+          unite: "$"
+        etapes:
+          - "Once a year: *+ 2.5%* at year end"
+          - "Twelve times a year: *+ 0.2060%* each month"
+          - "Same end point, but 12 × 0.2060% = *2.4718%*"
+        voix_off: "Let's compare two ways of reaching the same result. One thousand dollars at two point five percent a year: a single jump, at the end of the year, up to one thousand and twenty-five dollars. Or twelve small jumps, one a month, at zero point two zero six percent each: since each month counts the interest of the months before, we land in exactly the same place, one thousand and twenty-five dollars. These two rates are equivalent. But beware the trap: twelve times zero point two zero six percent is only two point four seven percent, less than two point five."
+        verifier:
+          - {expression: "100 * (1.025**(1/12) - 1)", attendu: 0.2060, libelle: "Equivalent monthly rate, in %"}
+          - {expression: "1000 * (1 + (1.025**(1/12) - 1))**12", attendu: 1025, libelle: "Same end point"}
+          - {expression: "1200 * (1.025**(1/12) - 1)", attendu: 2.4718, libelle: "Nominal annual rate, in %"}
+      - type: formule
+        texte: "*Equivalent* rates: same amount after one year"
+        formule:
+          - '(1+j)^{12}=1+i'
+          - 'j=(1.025)^{1/12}-1\approx 0.2060\%'
+          - 'i^{(12)}=12\,j\approx 2.4718\%'
+        note: "i⁽¹²⁾: nominal annual rate, compounded monthly. It is always smaller than the effective rate i."
+        voix_off: "As a formula: a monthly rate j is equivalent to the annual rate i if one plus j, to the power twelve, equals one plus i. That gives j: one point zero two five to the power one twelfth, minus one. And twelve times j is the nominal rate, written i with a twelve in brackets, about two point four seven percent. A nominal rate is just a way of quoting the monthly rate. To compare two offers, always go back to the annual effective rate."
+        verifier:
+          - {expression: "(1 + (1.025**(1/12) - 1))**12 - 1", attendu: 0.025, libelle: "Equivalence"}
+      - type: formule
+        texte: "In the limit: the *continuous* rate δ"
+        formule:
+          - '1+i=e^{\delta}'
+          - '\delta=\ln(1+i)\approx 0.02469'
+          - 'd<\delta<i^{(12)}<i'
+        note: "At 2.5%: d ≈ 2.439%; δ ≈ 2.469%; i⁽¹²⁾ ≈ 2.472%; i = 2.5%."
+        voix_off: "And what if we compounded every day, every hour, every second? In the limit, we compound continuously, and the rate is called the force of interest, written delta. One plus i equals e to the delta, so delta is the natural log of one plus i: about two point four six nine percent. All these rates describe the same investment. The smallest is the rate of discount, then delta, then the monthly nominal rate, and the largest is the annual effective rate."
+        verifier:
+          - {expression: "log(1.025)", attendu: 0.02469, libelle: "Force of interest at 2.5%"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Annuities certain"
+        voix_off: "Now let's move on to several payments."
+      - type: texte
+        texte: "An *annuity certain*: a regular payment, *no matter what*"
+        voix_off: "An annuity is a series of regular payments: rent, loan repayments, a pension. It's called certain when every payment will be made no matter what, with no conditions. To find its value today, there's only one method: discount each payment from its date, then add them up."
+      - type: animation
+        texte: "*$1,000* at the end of each of *3 years*"
+        animation:
+          modele: echeancier
+          montants: [1000, 1000, 1000]
+          dates: [1, 2, 3]
+          taux: 0.025
+          unite: "$"
+        etapes:
+          - "Three payments of *$1,000*, at year end"
+          - "Each brought back to today: *× v, × v², × v³*"
+          - "Total today: *$2,856.02*"
+        voix_off: "JG's Holding must pay one thousand dollars at the end of each of the next three years. Here they are on the timeline. We bring each one back to today: the first is worth nine hundred and seventy-five dollars and sixty-one cents, the second nine hundred and fifty-one dollars and eighty-one cents, the third nine hundred and twenty-eight dollars and sixty cents. Stacked up, they're worth two thousand eight hundred and fifty-six dollars today, not three thousand."
+        verifier:
+          - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Payment 1"}
+          - {expression: "1000 / 1.025**2", attendu: 951.81, libelle: "Payment 2"}
+          - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Payment 3"}
+          - {expression: "1000 * (1 - 1.025**-3) / 0.025", attendu: 2856.02, libelle: "Annuity immediate × 1,000"}
+      - type: formule
+        texte: "The *annuity immediate* aₙ"
+        formule:
+          - 'a_n=v+v^2+\dots+v^n=\dfrac{1-v^n}{i}'
+          - 'a_3\approx 2.8560\qquad a_{10}\approx 8.7521'
+        note: "aₙ: present value of n payments of 1, at year end. It's a geometric sum with ratio v."
+        voix_off: "For a payment of one at the end of each year, for n years, the present value is written a n: the annuity immediate. It's v, plus v squared, and so on up to v to the n. This geometric sum boils down to one formula: one minus v to the n, divided by i. Over three years, about two point eight five six: our two thousand eight hundred and fifty-six dollars. Over ten years, about eight point seven five: ten payments of one are worth only eight point seven five today."
+        verifier:
+          - {expression: "(1 - 1.025**-3) / 0.025", attendu: 2.8560, libelle: "a3 at 2.5%"}
+          - {expression: "(1 - 1.025**-10) / 0.025", attendu: 8.7521, libelle: "a10 at 2.5%"}
+      - type: animation
+        texte: "The same payments, at the *start* of each year"
+        animation:
+          modele: echeancier
+          montants: [1000, 1000, 1000]
+          dates: [0, 1, 2]
+          taux: 0.025
+          unite: "$"
+        etapes:
+          - "The first payment falls *today*"
+          - "Each payment comes *a year earlier*"
+          - "Total today: *$2,927.42*"
+        voix_off: "And what if each payment fell at the start of the year, like rent paid in advance? The first payment falls today: it's worth one thousand dollars, with no discounting. The other two come a year earlier than before, so they shrink less. In total, two thousand nine hundred and twenty-seven dollars and forty-two cents."
+        verifier:
+          - {expression: "1000 + 1000 / 1.025 + 1000 / 1.025**2", attendu: 2927.42, libelle: "Annuity due × 1,000"}
+      - type: formule
+        texte: "The *annuity due* äₙ"
+        formule:
+          - '\ddot{a}_n=1+v+\dots+v^{n-1}=\dfrac{1-v^n}{d}'
+          - '\ddot{a}_n=(1+i)\,a_n'
+          - '1000\times\ddot{a}_3\approx \$2{,}927.42'
+        voix_off: "This annuity paid at the start of each year is called the annuity due, written a double-dot n. Each payment comes a year earlier than in the annuity immediate, so we multiply everything by one plus i. And the rate of discount shows up again: a double-dot n equals one minus v to the n, divided by d. Makes sense: the interest on a payment at the start of the year is paid in advance."
+        verifier:
+          - {expression: "1000 * (1 - 1.025**-3) / (0.025 / 1.025)", attendu: 2927.42, libelle: "Using the formula in d"}
+          - {expression: "1000 * (1 - 1.025**-3) / 0.025 * 1.025", attendu: 2927.42, libelle: "Using (1 + i) × a3"}
+      - type: etapes
+        texte: "Back to *Powerball*: $1.765 billion or *$774.1 million*?"
+        etapes:
+          - "$1.765 billion: the *sum* of the 30 payments"
+          - "The last ones come in *29 years*: worth far less today"
+          - "$774.1 million ≈ their *present value*, about 44%"
+        note: "Source: powerball.com (one immediate payment, then 29 annual payments, each 5% larger)."
+        voix_off: "Back to our Powerball winner. The advertised one point seven six five billion dollars is the plain sum of the thirty payments: one right away, then twenty-nine annual payments that grow by five percent a year. But a dollar received in twenty-nine years is worth far less than a dollar today. The seven hundred and seventy-four million offered right away, about forty-four percent of the advertised amount, roughly matches the present value of those thirty payments. Nobody loses out: they're two ways of presenting the same wealth, at different dates."
+        verifier:
+          - {expression: "100 * 774.1 / 1765", attendu: 44, tolerance: 0.5, libelle: "Share of the cash value"}
+      - type: texte
+        texte: "A *life annuity* is an annuity that stops at *death*"
+        voix_off: "Keep this building block safe. In the life and mortality module, a life annuity will be an annuity where each payment is made only if the insured person is still alive. We'll discount just as we did today, but also take the probability of survival into account. The rest of the path builds on what you've just learned."
+      # ---------------------------------------------------------------- 7
+      - type: titre
+        numero: 7
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Annual effective rate *i = 4%*, *3 years*. Compute:"
+        pause: 20
+        questions:
+          - "The rate of discount d"
+          - "The force of interest δ"
+          - "The annuity immediate a₃"
+          - "The annuity due ä₃"
+        voix_off: "Pause the video. With an annual effective rate of four percent, over three years, compute the rate of discount d, the force of interest delta, the annuity immediate a three and the annuity due a double-dot three."
+      - type: correction
+        etapes:
+          - "d = 0.04 ÷ 1.04 ≈ *0.0385*"
+          - "δ = ln 1.04 ≈ *0.0392*"
+          - "a₃ = (1 − 1.04⁻³) ÷ 0.04 ≈ *2.7751*"
+          - "ä₃ = 1.04 × a₃ ≈ *2.8861*"
+        voix_off: "Solution. The rate of discount: zero point zero four divided by one point zero four, about zero point zero three eight five. The force of interest: the natural log of one point zero four, about zero point zero three nine two. The annuity immediate: one minus one point zero four to the minus three, divided by zero point zero four, about two point seven seven five one. And the annuity due: one point zero four times a three, about two point eight eight six one. Once again, d is smaller than delta, which is smaller than i."
+        verifier:
+          - {expression: "0.04 / 1.04", attendu: 0.0385, libelle: "d at 4%"}
+          - {expression: "log(1.04)", attendu: 0.0392, libelle: "δ at 4%"}
+          - {expression: "(1 - 1.04**-3) / 0.04", attendu: 2.7751, libelle: "a3 at 4%"}
+          - {expression: "1.04 * (1 - 1.04**-3) / 0.04", attendu: 2.8861, libelle: "ä3 at 4%"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Simple: *× (1 + i n)*; compound: *× (1 + i)ⁿ*"
+          - "Discount: *× vⁿ*, with v = 1 ÷ (1 + i)"
+          - "d = i v: interest paid *in advance*"
+          - "*Equivalent* rates: same amount after one year"
+          - "aₙ = (1 − vⁿ) ÷ i; äₙ = (1 + i) aₙ"
+        voix_off: "Here's what to remember. With simple interest, multiply by one plus i n; with compound interest, by one plus i to the n. Discount with v to the n. The rate of discount is interest paid in advance: d equals i times v. Rates are equivalent if they give the same amount after one year. And an annuity is a sum of discounted payments: one minus v to the n over i at year end, times one plus i at the start of the year."
+      - type: cloture
+        texte: "Next episode: *the present value of an insurance*. Questions? *In the comments*"
+        voix_off: "Your toolkit is ready. Next episode: we add mortality, to work out what a promise to pay on death is worth today. If this video helped, subscribe, leave a like and share it with someone it'll help. And if the exercise gives you trouble, write to us in the comments: we'll help. Thanks for watching, and see you soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

@@ -1,0 +1,151 @@
+# Fiche de conception, pilier A (Actuariat), module A1, leçon 4. Modèle : modeles/fiche-conception-episode.yaml
+# Plan du module : docs/actuariat/A1-PLAN.md. BROUILLON : à relire (ChatGPT), puis à valider par JG.
+# Aucun fait extérieur : montants fictifs ; taux fictif de 2,5 % repris de la séance a1/s01 du parcours actuariel.
+id_programme: A1.04
+statut: brouillon
+fiche_production: ""
+source_seance: "JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml"
+
+titres:
+  fr: "Les annuités"
+  en: "Annuities certain"
+question_centrale:
+  fr: "Combien vaut aujourd'hui 1 000 € par an pendant 10 ans ?"
+  en: "What is $1,000 a year for 10 years worth today?"
+
+position: {pilier: actuariat, niveau: 3, module: A1, rang_dans_module: 4}
+
+public:
+  prerequis: [A1.03]
+  niveau_maths: M0
+  rappel_conseille: []
+  notions_utilisees:
+    - {notion: "Valeur actuelle d'une suite de paiements", episode: A1.03, rappel: "On actualise chaque paiement, puis on additionne"}
+    - {notion: "Puissance négative", episode: "", rappel: "1,025⁻¹⁰ = 1 ÷ 1,025¹⁰"}
+    - {notion: "Somme d'une suite géométrique", episode: "", rappel: "Non démontrée à l'écran : la formule est vérifiée en additionnant les dix termes"}
+    - {notion: "JG's Holding", episode: "", rappel: "Assureur fictif, toujours annoncé comme tel"}
+
+objectifs:
+  fr:
+    - "Calculer la valeur actuelle d'une annuité de fin de période : aₙ = (1 − vⁿ) ÷ i"
+    - "Passer à une annuité de début de période en multipliant par (1 + i)"
+    - "Calculer le paiement constant qui rembourse un emprunt"
+  en:
+    - "Compute the present value of an annuity paid in arrears: aₙ = (1 − vⁿ) ÷ i"
+    - "Move to an annuity paid in advance by multiplying by (1 + i)"
+    - "Compute the level payment that repays a loan"
+
+intuition: "Dix paiements identiques : au lieu de dix lignes, une seule formule, et elle se lit dans les deux sens (une rente ou un emprunt)."
+exemple_fil_rouge: "JG's Holding (fictive) doit verser 1 000 € par an pendant 10 ans à un bénéficiaire. Combien mettre de côté aujourd'hui, à un taux fictif de 2,5 % (celui de la séance a1/s01) ?"
+exemple_reel:
+  description: "Aucun : rente et taux fictifs, annoncés comme tels."
+  source: {organisme: "", titre: "", url: "", date_publication: "", periode_donnees: "", consulte_le: ""}
+
+provenance:
+  - chiffre: "1 000 € par an ; 10 ans ; 2,5 % ; emprunt de 100 000 € ; exercice 500 € par an, 5 ans"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Choisis pour l'exemple", formule: "", transformations: ""}
+    definition: "Montants, durées et taux de l'exemple"
+    unite: "€ (FR), $ (EN) ; % par an"
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Paramètres fictifs"
+    comparabilite: "Ne représentent aucun contrat réel"
+  - chiffre: "8 752,06 € ; 8 970,87 € ; 11 425,88 € par an ; 40 000 € ; exercice 2 322,91 €"
+    support: ecran
+    nature: calcul_derive
+    calcul: {entrees: "Paramètres ci-dessus", formule: "aₙ = (1 − vⁿ) ÷ i ; äₙ = (1 + i) · aₙ ; paiement = capital ÷ aₙ ; perpétuité 1 ÷ i", transformations: "arrondi au centime"}
+    definition: "Valeur actuelle d'annuités, paiement d'un emprunt"
+    unite: "€ (FR), $ (EN)"
+    population: ""
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune"
+    comparabilite: "Mêmes nombres en FR et EN"
+
+affirmations_qualitatives:
+  - {affirmation: "La rente viagère d'un assureur est une annuité dont chaque paiement est conditionné à la survie", statut: hypothese, source: "", verification: "Annoncée comme la suite ; détail en A3.04"}
+
+cycle_enquete:
+  question: "Montrée : combien vaut une suite de paiements identiques ?"
+  population_et_mesure: "Montrée : dix paiements de 1 000 €"
+  origine_des_donnees: "Montrée : exemple fictif"
+  exploration: "Montrée : frise de dix paiements"
+  methode_et_raison: "Montrée : la somme de A1.03, puis la formule qui la résume"
+  hypotheses: "Montrée : paiements certains, taux constant, paiements en fin d'année"
+  resultat_et_incertitude: "Montrée : 8 752,06 €"
+  interpretation_permise_et_interdite: "Montrée : vérifier qu'on est en fin ou en début de période avant d'appliquer la formule"
+  reproductibilite: "Calculs recalculés par le moteur ; formule de tableur VA à l'écran"
+
+donnees_ou_simulation:
+  type: calcul_pur
+  raison_du_choix: "Montants ronds, formule vérifiable terme à terme"
+  source: {organisme: "", url: "", licence: "", population: "", variables: "", periode: "", limites: ""}
+  parametres_simulation: ""
+
+hypotheses_et_limites:
+  - {hypothese: "Paiements certains", intuition: "Chaque paiement aura lieu", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Rente viagère : paiements conditionnés à la survie (A3.04)"}
+  - {hypothese: "Taux constant", intuition: "2,5 % chaque année", testable: "", non_testable: "Taux futurs", diagnostic: "", si_elle_echoue: "Courbe des taux (A1.05)"}
+
+reproductibilite: "Formule à l'écran ; tableur : =VA(2,5%;10;-1000) (EN : =PV(2.5%,10,-1000)) et =VPM(2,5%;10;-100000) (EN : =PMT(2.5%,10,-100000))"
+
+deroule:
+  - {etape: question, contenu: "1 000 € par an pendant 10 ans : combien JG's Holding doit-elle mettre de côté aujourd'hui ?"}
+  - {etape: intuition, contenu: "10 000 € ? Moins, puisque chaque paiement est actualisé"}
+  - {etape: donnees, contenu: "Frise de dix paiements ; on pourrait additionner dix lignes comme en A1.03"}
+  - {etape: formalisation, contenu: "aₙ = (1 − vⁿ) ÷ i ; à 2,5 % sur 10 ans : 8,7521, donc 8 752,06 €"}
+  - {etape: raisonnement, contenu: "Paiements en début d'année : un an d'actualisation en moins, × 1,025, soit 8 970,87 €"}
+  - {etape: raisonnement, contenu: "Paiements sans fin : 1 000 ÷ 0,025 = 40 000 € (perpétuité)"}
+  - {etape: application, contenu: "Dans l'autre sens : un emprunt de 100 000 € sur 10 ans à 2,5 % se rembourse par 100 000 ÷ 8,7521 = 11 425,88 € par an"}
+  - {etape: exercice, contenu: "500 € par an pendant 5 ans, en fin d'année, à 2,5 % : valeur actuelle ?"}
+  - {etape: correction, contenu: "500 × (1 − 1,025⁻⁵) ÷ 0,025 ≈ 2 322,91 €"}
+  - {etape: limites, contenu: "Paiements certains : une rente viagère, elle, s'arrête au décès"}
+  - {etape: rappel, contenu: "La suite : un taux différent pour chaque échéance, la courbe des taux (A1.05)"}
+
+formules:
+  - {formule: "a_n = (1 - v^n) / i", explication_symboles: "valeur actuelle de 1 versé à la fin de chacune des n années ; v = 1 ÷ (1 + i)", conditions: "taux constant, fin de période"}
+  - {formule: "\\ddot{a}_n = (1 + i) \\cdot a_n", explication_symboles: "paiements en début de période", conditions: ""}
+  - {formule: "a_\\infty = 1 / i", explication_symboles: "perpétuité", conditions: "i > 0"}
+  - {formule: "R = K / a_n", explication_symboles: "paiement constant R d'un emprunt de capital K", conditions: "fin de période"}
+
+calculs_a_verifier:
+  - {expression: "1000 * (1 - 1.025**-10) / 0.025", attendu: 8752.06, libelle: "Annuité 10 ans à 2,5 % × 1 000"}
+  - {expression: "sum(1000 / 1.025**k for k in range(1, 11))", attendu: 8752.06, libelle: "Même chose, terme à terme"}
+  - {expression: "1000 * (1 - 1.025**-10) / 0.025 * 1.025", attendu: 8970.87, libelle: "Début de période"}
+  - {expression: "1000 / 0.025", attendu: 40000, libelle: "Perpétuité"}
+  - {expression: "100000 * 0.025 / (1 - 1.025**-10)", attendu: 11425.88, libelle: "Paiement annuel de l'emprunt"}
+  - {expression: "500 * (1 - 1.025**-5) / 0.025", attendu: 2322.91, libelle: "Exercice : 5 ans à 2,5 % × 500"}
+
+idees_fausses:
+  - {idee: "Dix paiements de 1 000 € valent 10 000 € aujourd'hui", desamorcee_a_l_etape: "intuition"}
+  - {idee: "Début ou fin de période, c'est pareil", desamorcee_a_l_etape: "raisonnement"}
+
+exercice:
+  question: "JG's Holding verse 500 € à la fin de chaque année pendant 5 ans. À 2,5 % par an, quelle est la valeur actuelle de ces paiements ?"
+  correction: "a₅ = (1 − 1,025⁻⁵) ÷ 0,025 ≈ 4,6458. Valeur actuelle : 500 × 4,6458 ≈ 2 322,91 €."
+  pause_secondes: 12
+
+preuve_apprentissage:
+  tache: "Calculer une annuité certaine et le paiement d'un emprunt"
+  question_de_transfert: "Même emprunt de 100 000 € sur 10 ans, mais à 4,5 % : le paiement monte-t-il de 2 points de pourcentage ?"
+  diagnostic_d_erreur: "« 8 752,06 € < 10 000 €, donc le bénéficiaire perd de l'argent » : pourquoi est-ce faux ?"
+  limite_a_enoncer: "La formule suppose des paiements certains, identiques et un taux constant"
+
+duree_estimee_min: [7, 9]
+format: youtube_lesson
+raison_du_format: "Leçon longue du pilier A (6 à 12 min, v3.3)"
+derives_short: ["A1.04-x1 · 1 000 € par an pendant 10 ans ne valent pas 10 000 €"]
+
+adaptation_en: "Mêmes nombres ; $ au lieu de € ; fonctions PV et PMT au lieu de VA et VPM ; « in arrears », « in advance ». Textes écrits pour l'anglais."
+licences: "Aucune donnée extérieure. Voix Kokoro (docs/voice-licenses.md)."
+
+controle:
+  test_du_debutant: "Le spectateur refait l'exercice et explique la différence début ou fin de période"
+  relecture_definitions: "Claude, 23/11/2026 (brouillon) ; à relire par ChatGPT, validation JG"
+  controle_mobile: "Après rendu (inspection)"

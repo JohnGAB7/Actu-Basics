@@ -2228,3 +2228,41 @@ def test_apercu_valide_et_cale_sur_les_propositions():
     _valider_animation({"animation": {"modele": "apercu", "cartes": [{"icone": "inconnue", "texte": "x"}] * 2}},
                        "s", erreurs, {})
     assert any("icone" in e for e in erreurs)
+
+
+def test_animations_finance():
+    """Les quatre modèles du parcours actuariel (23/11/2026) : entrées vérifiées, dessin à chaque phase."""
+    from lmec.pedagogie import _valider_animation
+    def valider(a, etapes=None):
+        erreurs, extra = [], {}
+        s = {"animation": a}
+        if etapes:
+            s["etapes"] = etapes
+        _valider_animation(s, "s", erreurs, extra)
+        return erreurs, extra.get("animation")
+    e, c = valider({"modele": "capitalisation", "capital": 1000, "taux": 0.025, "annees": 30, "unite": "€"},
+                   ["a", "b", "c"])
+    assert not e and c["annees"] == 30
+    assert valider({"modele": "capitalisation", "capital": 1000, "taux": 2.5, "annees": 30})[0]      # taux en %
+    assert not valider({"modele": "echeancier", "montants": [1000, 1000], "dates": [0, 1], "taux": 0.025})[0]
+    assert valider({"modele": "echeancier", "montants": [1000, 1000], "dates": [2, 1], "taux": 0.025})[0]
+    assert valider({"modele": "echeancier", "montants": [1000], "dates": [1, 2], "taux": 0.025})[0]
+    assert not valider({"modele": "escompte", "nominal": 1000, "taux": 0.025})[0]
+    assert not valider({"modele": "frequences", "taux": 0.025, "m": 12})[0]
+    assert valider({"modele": "frequences", "taux": 0.025, "m": 400})[0]
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-act-a1-s01-interet-et-annuites.yaml")
+    for langue, fmt in [(l, f) for l in ("fr", "en") for f in ("lecon", "video")]:
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
+        scenes = fiche.editions[langue].scenes
+        vus = set()
+        for i, s in enumerate(scenes):
+            m = (s.extra.get("animation") or {}).get("modele")
+            if m not in ("capitalisation", "echeancier", "escompte", "frequences"):
+                continue
+            vus.add(m)
+            plan = r._plan_animation(s)
+            fin = max(p["debut"] + p["duree"] for p in plan) + 0.5
+            for k in range(int(fin * 8) + 1):          # 8 images par seconde : toutes les étapes d'apparition
+                r.dessiner(s, i, len(scenes), k / 8)
+            r.dessiner(s, i, len(scenes), None)
+        assert vus == {"capitalisation", "echeancier", "escompte", "frequences"}

@@ -133,3 +133,22 @@ Un troisième extrait, « Probabilité de survivre de 60 à 65 ans », n'est **p
 - Aucun chiffre réel n'est écrit dans cette proposition pour éviter de figer une valeur non vérifiée.
 - L'hébergement des fiches PDF et du fichier tableur doit être choisi avant publication, mais pas avant l'écriture de la fiche YAML.
 - La v3.2 du parcours doit être validée par JG avant que ses règles (fiches PDF FR + EN, formule « contribue à la préparation ») soient appliquées à A3.01. Si la v3.2 reste en attente, A3.01 peut être écrite à partir de la v2 en premier jet et harmonisée ensuite.
+
+## 14. Alignement avec la séance a3/s01 du parcours actuariel (ajout du 2026-11-23)
+
+La vidéo A3.01 servira à l'étape 1 de la séance `a3/s01` « Force de mortalité et espérance de vie » du parcours actuariel de JG (voir `PARCOURS-PLUS-ET-SEANCES.md`). Ce que cela change :
+
+- **Le déroulé ne change pas.** La séance va plus loin (force de mortalité, espérance complète, code) ; la vidéo reste au niveau débutant : lire une table, passer de lₓ à une probabilité, puis à une espérance de vie. La force de mortalité est annoncée en une phrase à la fin (« la suite : A3+ ») et traitée dans A3+.01.
+- **L'accroche est la même** dans la séance et la vidéo : « À 65 ans, combien d'années vous reste-t-il, en moyenne ? ».
+- **La séance calcule avec la table belge MK** (loi de Makeham). Ses nombres sont déjà recalculés par les tests du parcours. Recalcul de contrôle avec ses paramètres : l₆₀ = 801 043, l₆₅ = 716 046, probabilité de survivre de 60 à 65 ans = 0,894, e₆₅ abrégée = 12,3 ans.
+
+**Point d'attention éditorial.** MK est une table **de tarification** (réglementaire, pour des garanties décès), pas une table observée. Son e₆₅ d'environ 12 ans est très inférieure à l'espérance de vie réelle à 65 ans en France ou aux États-Unis. Répondre à l'accroche avec MK serait faux pour le spectateur. C'est en revanche l'exemple idéal de la scène 9 « Deux familles de tables, deux usages ».
+
+### Option C · MK pour l'exercice, une table observée pour l'accroche (recommandée)
+
+- **Exercice et correction (scènes 7 et 8)** : table MK, mêmes nombres en FR et en EN, et mêmes nombres que la séance. Le spectateur du parcours retrouve en vidéo le calcul qu'il refait à la main.
+- **Réponse à l'accroche et scène 10** : une table observée et sourcée, INSEE pour la version FR, SSA pour la version EN (comme l'option A), avec son e₆₅ relevée à la source.
+- **Scène 9** : la comparaison des deux e₆₅ (MK contre table observée) montre pourquoi on ne mélange jamais les deux familles.
+- Sources à vérifier par Perplexity : le texte réglementaire belge qui définit MK et ses paramètres, la table INSEE et la table SSA les plus récentes.
+
+**Décision 1 de la section 12 : option C choisie par JG le 2026-11-23.** Brouillon de la fiche : `contenus/conception/A3.01.yaml`. Les décisions 2 et 3 restent ouvertes ; l'ordre des séances du parcours plaide pour A3.01 comme prochaine leçon.

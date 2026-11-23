@@ -1,0 +1,1018 @@
+WEBVTT
+
+00:00.350 --> 00:03.521
+On October eleventh, twenty
+twenty-three, a ticket
+
+00:03.561 --> 00:06.411
+sold in California won
+the Powerball jackpot:
+
+00:06.571 --> 00:09.070
+one point seven six five billion dollars.
+
+00:09.430 --> 00:10.777
+But the winner had a choice.
+
+00:11.137 --> 00:13.806
+Either thirty payments spread
+over twenty-nine years.
+
+00:14.166 --> 00:18.670
+Or seven hundred and seventy-four million
+dollars right away, less than half.
+
+00:19.030 --> 00:20.078
+Who loses out?
+
+00:20.718 --> 00:23.451
+By the end of this video,
+you'll be able to work it out.
+
+00:24.341 --> 00:26.797
+Hi, and welcome to the Actuarial path!
+
+00:27.237 --> 00:28.456
+Thanks for being here.
+
+00:28.816 --> 00:32.637
+Today we build the actuary's
+financial toolkit, step by step.
+
+00:32.997 --> 00:34.813
+No finance background needed:
+
+00:34.973 --> 00:38.026
+if you can compute a percentage
+and a power, you're set.
+
+00:38.386 --> 00:40.138
+We'll see everything else together.
+
+00:41.028 --> 00:42.055
+Here's the plan.
+
+00:42.415 --> 00:44.273
+Simple and compound interest.
+
+00:44.633 --> 00:46.300
+Discounting and the factor v.
+
+00:46.660 --> 00:47.857
+The rate of discount.
+
+00:48.217 --> 00:49.351
+Equivalent rates.
+
+00:49.711 --> 00:50.801
+Annuities certain.
+
+00:51.161 --> 00:53.255
+And to finish, a worked exercise.
+
+00:54.145 --> 00:55.961
+Let's start with the price of time:
+
+00:56.121 --> 00:57.233
+the interest rate.
+
+00:58.123 --> 01:00.600
+When you lend money, you
+go without it for a while:
+
+01:00.760 --> 01:02.811
+you can't spend it or use it elsewhere.
+
+01:03.171 --> 01:05.158
+The borrower pays you rent for that time:
+
+01:05.318 --> 01:06.323
+that's interest.
+
+01:06.683 --> 01:09.477
+The interest rate is that
+rent as a percentage of
+
+01:09.517 --> 01:12.254
+the amount lent, for one
+period, usually a year.
+
+01:13.144 --> 01:15.707
+For an insurer, this is
+the heart of the business.
+
+01:16.067 --> 01:19.834
+JG's Holding, our fictional
+insurer, collects its customers'
+
+01:19.874 --> 01:23.515
+premiums today, and will only
+pay benefits years from now.
+
+01:23.875 --> 01:26.907
+In between, the money is
+invested and earns interest.
+
+01:27.267 --> 01:31.536
+Throughout this video, we'll use a made-up
+rate of two point five percent a year.
+
+01:32.426 --> 01:33.709
+First way of counting:
+
+01:33.869 --> 01:34.981
+simple interest.
+
+01:35.341 --> 01:38.181
+Interest is always computed
+on the starting amount.
+
+01:38.541 --> 01:43.471
+One thousand dollars at two point five
+percent earns twenty-five dollars every year.
+
+01:43.831 --> 01:47.290
+After ten years, one thousand
+plus ten times twenty-five:
+
+01:47.450 --> 01:49.842
+one thousand two hundred
+and fifty dollars.
+
+01:50.202 --> 01:53.597
+The interest already earned sits
+to one side, and earns nothing.
+
+01:54.487 --> 01:55.535
+As a formula:
+
+01:55.695 --> 02:00.178
+the future value equals the starting
+amount times one plus i times n.
+
+02:00.538 --> 02:03.058
+Each year adds the same
+twenty-five dollar step:
+
+02:03.218 --> 02:05.055
+the balance grows in a straight line.
+
+02:05.415 --> 02:06.996
+And n needn't be a whole number:
+
+02:07.156 --> 02:09.100
+for six months, n is one half.
+
+02:09.990 --> 02:14.771
+Simple interest really exists, on France's
+most widely held savings account:
+
+02:14.931 --> 02:15.873
+the Livret A.
+
+02:16.233 --> 02:19.085
+Since August first, twenty
+twenty-six, its rate
+
+02:19.125 --> 02:21.547
+has been one point seven percent a year.
+
+02:21.907 --> 02:25.067
+During the year, interest is
+counted by whole half-months:
+
+02:25.227 --> 02:26.873
+a year has twenty-four of them.
+
+02:27.233 --> 02:31.481
+One thousand euros paid in on August
+tenth starts earning on the sixteenth:
+
+02:31.641 --> 02:34.737
+that leaves nine half-months
+until December thirty-first.
+
+02:35.097 --> 02:35.910
+Interest:
+
+02:36.070 --> 02:40.373
+one thousand times one point seven
+percent, times nine twenty-fourths,
+
+02:40.413 --> 02:42.793
+about six euros and thirty-eight cents.
+
+02:43.153 --> 02:47.657
+That's exactly simple interest, with n
+equal to nine twenty-fourths of a year.
+
+02:48.547 --> 02:50.342
+What if interest earned interest too?
+
+02:51.232 --> 02:52.771
+Let's stay with the Livret A.
+
+02:53.131 --> 02:56.973
+On December thirty-first, the year's
+interest is added to the balance.
+
+02:57.333 --> 03:00.917
+So the following year, one thousand
+and six euros thirty-eight
+
+03:00.957 --> 03:03.139
+earns interest, not just one thousand.
+
+03:03.499 --> 03:05.976
+Last year's interest
+earns interest in turn:
+
+03:06.136 --> 03:07.611
+that's compound interest.
+
+03:07.971 --> 03:10.256
+We also say the interest is capitalized.
+
+03:11.146 --> 03:14.022
+Back to our one thousand
+dollars at two point five
+
+03:14.062 --> 03:16.354
+percent, with interest added every year.
+
+03:16.714 --> 03:21.282
+After one year, one thousand and twenty-five
+dollars, just like simple interest.
+
+03:21.642 --> 03:24.475
+But in the second year,
+the two point five percent
+
+03:24.515 --> 03:27.234
+applies to one thousand
+and twenty-five dollars:
+
+03:27.394 --> 03:30.818
+we get one thousand and fifty
+dollars and sixty-three cents,
+
+03:30.858 --> 03:33.647
+sixty-three cents more
+than with simple interest.
+
+03:34.007 --> 03:38.042
+After ten years, one thousand two hundred
+and eighty dollars and eight cents:
+
+03:38.202 --> 03:39.442
+thirty dollars more.
+
+03:40.332 --> 03:41.273
+Why a power?
+
+03:41.913 --> 03:45.180
+Each year, the amount is
+multiplied by one plus i.
+
+03:45.540 --> 03:47.911
+After two years, we've multiplied twice;
+
+03:48.151 --> 03:49.775
+after n years, n times.
+
+03:50.135 --> 03:51.289
+Hence the formula:
+
+03:51.449 --> 03:56.103
+the future value equals the starting
+amount times one plus i, to the power n.
+
+03:56.463 --> 04:00.156
+This one plus i to the n is
+called the accumulation factor.
+
+04:00.516 --> 04:04.721
+And i here is the annual effective rate,
+the rate actually earned in a year.
+
+04:05.611 --> 04:09.390
+Look at both ways of counting, year
+after year, over thirty years.
+
+04:09.750 --> 04:11.587
+At the bottom, the starting amount:
+
+04:11.747 --> 04:13.798
+one thousand dollars, always there.
+
+04:14.158 --> 04:16.102
+Above it, the interest on the capital:
+
+04:16.262 --> 04:20.257
+twenty-five dollars a year, the same
+step every year, so one thousand
+
+04:20.297 --> 04:23.240
+seven hundred and fifty
+dollars after thirty years.
+
+04:23.600 --> 04:26.288
+And in gold, the interest
+on interest, almost
+
+04:26.328 --> 04:28.894
+invisible at first,
+then bigger and bigger:
+
+04:29.054 --> 04:33.064
+after thirty years, we reach two
+thousand and ninety-seven dollars and
+
+04:33.104 --> 04:36.651
+fifty-seven cents, three hundred
+and forty-seven dollars more.
+
+04:37.011 --> 04:39.574
+That's the snowball effect,
+and it grows with time.
+
+04:40.464 --> 04:41.853
+Remember the rule of thumb.
+
+04:42.213 --> 04:46.461
+Under a year, as on the Livret A during
+the year, interest is often simple.
+
+04:46.821 --> 04:48.851
+Over several years, it's compound.
+
+04:49.211 --> 04:53.151
+And actuaries, who reason over
+thirty- or forty-year contracts,
+
+04:53.191 --> 04:55.805
+almost always work with compound interest.
+
+04:56.165 --> 04:57.704
+That's what we'll do from now on.
+
+04:58.594 --> 05:01.157
+Actuaries mostly need
+the reverse question.
+
+05:02.047 --> 05:06.060
+JG's Holding has promised to pay
+one thousand dollars in ten years.
+
+05:06.420 --> 05:09.076
+How much should it set
+aside today, invested at
+
+05:09.116 --> 05:11.714
+two point five percent,
+to be sure it can pay?
+
+05:12.354 --> 05:14.596
+We no longer go from
+today into the future:
+
+05:14.756 --> 05:17.340
+we start from the future
+and come back to today.
+
+05:17.700 --> 05:18.855
+That's discounting.
+
+05:19.745 --> 05:21.817
+To go back in time, we do the reverse:
+
+05:21.977 --> 05:24.924
+divide by one plus i
+instead of multiplying.
+
+05:25.284 --> 05:29.318
+Actuaries write v for this factor,
+one divided by one plus i:
+
+05:29.478 --> 05:33.748
+at two point five percent, about
+zero point nine seven five six one.
+
+05:34.108 --> 05:38.612
+So one dollar payable in a year is worth
+about ninety-seven and a half cents today.
+
+05:38.972 --> 05:42.174
+Over n years, we multiply
+by v to the power n.
+
+05:42.534 --> 05:44.841
+Here, one thousand times v to the ten:
+
+05:45.001 --> 05:48.033
+seven hundred and eighty-one
+dollars and twenty cents.
+
+05:48.923 --> 05:50.440
+Let's see it on a timeline.
+
+05:50.800 --> 05:53.086
+The promised payment
+is here, in ten years:
+
+05:53.246 --> 05:54.550
+one thousand dollars.
+
+05:54.910 --> 05:59.691
+To bring it back to today, we multiply it
+by v for each year we cross, ten times:
+
+05:59.851 --> 06:00.750
+it shrinks.
+
+06:01.110 --> 06:03.617
+When it reaches today,
+it's worth seven hundred
+
+06:03.657 --> 06:05.784
+and eighty-one dollars and twenty cents.
+
+06:06.674 --> 06:08.021
+Let's check the other way:
+
+06:08.181 --> 06:12.465
+seven hundred and eighty-one dollars
+and twenty cents, invested for ten
+
+06:12.505 --> 06:16.546
+years at two point five percent,
+does grow to one thousand dollars.
+
+06:16.906 --> 06:20.983
+Accumulating moves forward in
+time, multiplying by one plus i.
+
+06:21.343 --> 06:24.055
+Discounting moves back, multiplying by v.
+
+06:24.415 --> 06:26.829
+All of insurance rests
+on this back and forth.
+
+06:27.719 --> 06:29.812
+The same deal can be told in two ways.
+
+06:31.386 --> 06:32.775
+A real fact to begin.
+
+06:33.135 --> 06:35.872
+The US Treasury borrows
+short term with bills
+
+06:35.912 --> 06:38.279
+that pay no interest during their life.
+
+06:38.639 --> 06:40.413
+So how does the lender earn anything?
+
+06:41.053 --> 06:43.496
+They buy the bill for
+less than its face value,
+
+06:43.536 --> 06:45.557
+and receive the face value at maturity.
+
+06:45.917 --> 06:48.957
+The interest is held back from
+the start, and the Treasury
+
+06:48.997 --> 06:51.082
+quotes these bills with a discount rate.
+
+06:51.442 --> 06:54.858
+The same mechanism exists when
+a bank discounts an invoice.
+
+06:55.748 --> 06:57.052
+Let's take an example.
+
+06:57.412 --> 07:02.129
+A company holds a one thousand dollar invoice
+that its customer will pay in a year.
+
+07:02.489 --> 07:03.815
+It wants the money now:
+
+07:03.975 --> 07:07.894
+the bank pays it nine hundred and
+seventy-five dollars and sixty-one
+
+07:07.934 --> 07:11.679
+cents today, and keeps twenty-four
+dollars and thirty-nine cents.
+
+07:12.039 --> 07:14.495
+That amount held back can
+be measured two ways:
+
+07:14.655 --> 07:18.022
+relative to the one thousand
+dollars at the end, it's the
+
+07:18.062 --> 07:21.249
+rate of discount d, about
+two point four four percent;
+
+07:21.489 --> 07:25.120
+relative to the nine hundred
+and seventy-five dollars lent,
+
+07:25.160 --> 07:28.169
+it's the interest rate i,
+two point five percent.
+
+07:29.059 --> 07:34.139
+As a formula, d equals i divided
+by one plus i, that is i times v:
+
+07:34.299 --> 07:37.395
+the same interest, but paid a
+year earlier, so discounted.
+
+07:37.755 --> 07:40.040
+You can also write it as one minus v:
+
+07:40.200 --> 07:44.598
+for one dollar due in a year, you get v
+today, and the discount is what's missing.
+
+07:44.958 --> 07:48.651
+Since v is less than one, d is
+always a little smaller than i.
+
+07:49.011 --> 07:52.043
+The rate of discount will be
+back very soon, in annuities.
+
+07:52.933 --> 07:55.752
+The same investment can be
+quoted with different rates.
+
+07:56.642 --> 07:57.818
+Another real fact.
+
+07:58.178 --> 08:02.545
+In France, every lender is legally
+required to show the TAEG, the annual
+
+08:02.585 --> 08:06.095
+percentage rate, in its ads,
+offers and credit agreements.
+
+08:06.455 --> 08:10.231
+It expresses the total cost of
+the loan as a yearly percentage,
+
+08:10.271 --> 08:13.199
+so that offers can be
+compared on the same basis.
+
+08:13.559 --> 08:14.821
+Why the same basis?
+
+08:15.461 --> 08:19.041
+Because a loan repaid monthly can
+be quoted with a monthly rate
+
+08:19.081 --> 08:22.546
+or a yearly rate, and those rates
+can't be compared directly.
+
+08:23.436 --> 08:25.913
+Let's compare two ways of
+reaching the same result.
+
+08:26.273 --> 08:29.391
+One thousand dollars at two
+point five percent a year:
+
+08:29.551 --> 08:34.140
+a single jump, at the end of the year, up
+to one thousand and twenty-five dollars.
+
+08:34.500 --> 08:39.324
+Or twelve small jumps, one a month, at
+zero point two zero six percent each:
+
+08:39.484 --> 08:43.311
+since each month counts the interest
+of the months before, we land
+
+08:43.351 --> 08:47.060
+in exactly the same place, one
+thousand and twenty-five dollars.
+
+08:47.420 --> 08:49.065
+These two rates are equivalent.
+
+08:49.425 --> 08:50.580
+But beware the trap:
+
+08:50.740 --> 08:54.518
+twelve times zero point two
+zero six percent is only two
+
+08:54.558 --> 08:57.996
+point four seven percent,
+less than two point five.
+
+08:58.886 --> 08:59.934
+As a formula:
+
+09:00.094 --> 09:03.806
+a monthly rate j is equivalent
+to the annual rate i if
+
+09:03.846 --> 09:07.350
+one plus j, to the power
+twelve, equals one plus i.
+
+09:07.710 --> 09:08.715
+That gives j:
+
+09:08.875 --> 09:12.590
+one point zero two five to the
+power one twelfth, minus one.
+
+09:12.950 --> 09:16.526
+And twelve times j is the
+nominal rate, written i with a
+
+09:16.566 --> 09:20.078
+twelve in brackets, about two
+point four seven percent.
+
+09:20.438 --> 09:23.747
+A nominal rate is just a way
+of quoting the monthly rate.
+
+09:24.107 --> 09:27.865
+To compare two offers, always go
+back to the annual effective rate.
+
+09:28.755 --> 09:32.427
+And what if we compounded every
+day, every hour, every second?
+
+09:33.067 --> 09:35.996
+In the limit, we compound
+continuously, and the rate
+
+09:36.036 --> 09:38.680
+is called the force of
+interest, written delta.
+
+09:39.040 --> 09:44.483
+One plus i equals e to the delta, so
+delta is the natural log of one plus i:
+
+09:44.643 --> 09:46.630
+about two point four six nine percent.
+
+09:46.990 --> 09:49.424
+All these rates describe
+the same investment.
+
+09:49.784 --> 09:53.721
+The smallest is the rate of discount,
+then delta, then the monthly
+
+09:53.761 --> 09:57.275
+nominal rate, and the largest
+is the annual effective rate.
+
+09:58.165 --> 10:00.216
+Now let's move on to several payments.
+
+10:01.106 --> 10:03.733
+An annuity is a series
+of regular payments:
+
+10:03.893 --> 10:05.879
+rent, loan repayments, a pension.
+
+10:06.239 --> 10:08.687
+It's called certain when
+every payment will be
+
+10:08.727 --> 10:10.850
+made no matter what, with no conditions.
+
+10:11.210 --> 10:13.965
+To find its value today,
+there's only one method:
+
+10:14.125 --> 10:17.050
+discount each payment from
+its date, then add them up.
+
+10:17.940 --> 10:20.565
+JG's Holding must pay
+one thousand dollars at
+
+10:20.605 --> 10:22.935
+the end of each of the next three years.
+
+10:23.295 --> 10:24.812
+Here they are on the timeline.
+
+10:25.172 --> 10:26.860
+We bring each one back to today:
+
+10:27.020 --> 10:31.151
+the first is worth nine hundred and
+seventy-five dollars and sixty-one
+
+10:31.191 --> 10:35.561
+cents, the second nine hundred and
+fifty-one dollars and eighty-one cents,
+
+10:35.601 --> 10:39.375
+the third nine hundred and
+twenty-eight dollars and sixty cents.
+
+10:39.735 --> 10:42.424
+Stacked up, they're worth
+two thousand eight hundred
+
+10:42.464 --> 10:44.943
+and fifty-six dollars
+today, not three thousand.
+
+10:45.833 --> 10:48.596
+For a payment of one at
+the end of each year, for
+
+10:48.636 --> 10:50.998
+n years, the present value is written a n:
+
+10:51.158 --> 10:52.505
+the annuity immediate.
+
+10:52.865 --> 10:56.238
+It's v, plus v squared, and
+so on up to v to the n.
+
+10:56.598 --> 10:59.588
+This geometric sum boils
+down to one formula:
+
+10:59.748 --> 11:02.438
+one minus v to the n, divided by i.
+
+11:02.798 --> 11:05.553
+Over three years, about
+two point eight five six:
+
+11:05.713 --> 11:08.532
+our two thousand eight hundred
+and fifty-six dollars.
+
+11:08.892 --> 11:11.476
+Over ten years, about
+eight point seven five:
+
+11:11.636 --> 11:15.265
+ten payments of one are worth only
+eight point seven five today.
+
+11:16.155 --> 11:20.446
+And what if each payment fell at the start
+of the year, like rent paid in advance?
+
+11:21.086 --> 11:22.731
+The first payment falls today:
+
+11:22.891 --> 11:25.859
+it's worth one thousand
+dollars, with no discounting.
+
+11:26.219 --> 11:29.528
+The other two come a year earlier
+than before, so they shrink less.
+
+11:29.888 --> 11:34.563
+In total, two thousand nine hundred and
+twenty-seven dollars and forty-two cents.
+
+11:35.453 --> 11:38.355
+This annuity paid at the
+start of each year is called
+
+11:38.395 --> 11:40.576
+the annuity due, written a double-dot n.
+
+11:40.936 --> 11:44.005
+Each payment comes a year
+earlier than in the annuity
+
+11:44.045 --> 11:46.997
+immediate, so we multiply
+everything by one plus i.
+
+11:47.357 --> 11:49.280
+And the rate of discount shows up again:
+
+11:49.440 --> 11:53.517
+a double-dot n equals one minus
+v to the n, divided by d.
+
+11:53.877 --> 11:54.776
+Makes sense:
+
+11:54.936 --> 11:58.608
+the interest on a payment at the
+start of the year is paid in advance.
+
+11:59.498 --> 12:00.994
+Back to our Powerball winner.
+
+12:01.354 --> 12:04.809
+The advertised one point seven
+six five billion dollars
+
+12:04.849 --> 12:07.351
+is the plain sum of the thirty payments:
+
+12:07.511 --> 12:12.335
+one right away, then twenty-nine annual
+payments that grow by five percent a year.
+
+12:12.695 --> 12:17.157
+But a dollar received in twenty-nine years
+is worth far less than a dollar today.
+
+12:17.517 --> 12:21.205
+The seven hundred and seventy-four
+million offered right away,
+
+12:21.245 --> 12:24.693
+about forty-four percent of
+the advertised amount, roughly
+
+12:24.733 --> 12:27.759
+matches the present value
+of those thirty payments.
+
+12:28.119 --> 12:29.381
+Nobody loses out:
+
+12:29.541 --> 12:32.829
+they're two ways of presenting the
+same wealth, at different dates.
+
+12:33.719 --> 12:35.322
+Keep this building block safe.
+
+12:35.682 --> 12:40.268
+In the life and mortality module, a
+life annuity will be an annuity where
+
+12:40.308 --> 12:44.260
+each payment is made only if the
+insured person is still alive.
+
+12:44.620 --> 12:47.558
+We'll discount just as we
+did today, but also take
+
+12:47.598 --> 12:49.999
+the probability of survival into account.
+
+12:50.359 --> 12:52.858
+The rest of the path builds
+on what you've just learned.
+
+12:53.748 --> 12:54.583
+Your turn.
+
+12:56.248 --> 12:57.296
+Pause the video.
+
+12:57.656 --> 13:01.953
+With an annual effective rate of four
+percent, over three years, compute
+
+13:01.993 --> 13:06.411
+the rate of discount d, the force of
+interest delta, the annuity immediate
+
+13:06.451 --> 13:09.243
+a three and the annuity
+due a double-dot three.
+
+13:30.633 --> 13:31.446
+Solution.
+
+13:31.806 --> 13:33.004
+The rate of discount:
+
+13:33.164 --> 13:36.456
+zero point zero four
+divided by one point zero
+
+13:36.496 --> 13:39.716
+four, about zero point
+zero three eight five.
+
+13:40.076 --> 13:41.380
+The force of interest:
+
+13:41.540 --> 13:46.620
+the natural log of one point zero four,
+about zero point zero three nine two.
+
+13:46.980 --> 13:48.348
+The annuity immediate:
+
+13:48.508 --> 13:52.727
+one minus one point zero four
+to the minus three, divided by
+
+13:52.767 --> 13:56.916
+zero point zero four, about two
+point seven seven five one.
+
+13:57.276 --> 13:58.473
+And the annuity due:
+
+13:58.633 --> 14:02.817
+one point zero four times a three,
+about two point eight eight six one.
+
+14:03.177 --> 14:06.700
+Once again, d is smaller than
+delta, which is smaller than i.
+
+14:07.590 --> 14:08.851
+Here's what to remember.
+
+14:09.211 --> 14:12.414
+With simple interest,
+multiply by one plus i n;
+
+14:12.654 --> 14:15.515
+with compound interest,
+by one plus i to the n.
+
+14:15.875 --> 14:17.393
+Discount with v to the n.
+
+14:17.753 --> 14:20.422
+The rate of discount is
+interest paid in advance:
+
+14:20.582 --> 14:22.249
+d equals i times v.
+
+14:22.609 --> 14:26.174
+Rates are equivalent if they give
+the same amount after one year.
+
+14:26.534 --> 14:29.289
+And an annuity is a sum
+of discounted payments:
+
+14:29.449 --> 14:34.977
+one minus v to the n over i at year end,
+times one plus i at the start of the year.
+
+14:35.867 --> 14:37.235
+Your toolkit is ready.
+
+14:37.595 --> 14:38.686
+Next episode:
+
+14:38.846 --> 14:43.243
+we add mortality, to work out what a
+promise to pay on death is worth today.
+
+14:43.603 --> 14:48.043
+If this video helped, subscribe, leave a
+like and share it with someone it'll help.
+
+14:48.403 --> 14:51.904
+And if the exercise gives you
+trouble, write to us in the comments:
+
+14:52.064 --> 14:52.856
+we'll help.
+
+14:53.216 --> 14:55.224
+Thanks for watching, and see you soon!
+
+14:56.114 --> 14:57.141
+ACTU-BASICS.
+
+14:57.501 --> 14:58.954
+Enlightening through numbers.

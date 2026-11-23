@@ -1,0 +1,225 @@
+# Parcours Actuariat (pilier A), capsule A1-C1 « La valeur du temps » (EDUCATIONAL, FR et EN, version 16:9 avec --horizontal).
+# Vidéo de l'étape 1 « L'intuition en vidéo » (3 min) de la séance a1/s01 du parcours actuariel de JG :
+# JohnGAB7/parcours-actuariel@ec63bf3:contenus/a1/s01.yaml (accroche, taux fictif de 2,5 %, 781,20 € et a₃ = 2,8560 repris de la séance).
+# Niveau débutant : la séance garde d, δ, äₙ et le code. Chapitre court de l'épisode EP-A1 (docs/actuariat/A1-PLAN.md).
+# Demande de JG du 23/11/2026 (« fais la première vidéo »). Statut : validée par JG le 23/11/2026 pour le site (fichiers dans docs/videos/parcours-actuariel/), avant YouTube.
+id: 2026-11-act-a1-c01-la-valeur-du-temps
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: educational
+habillage_sonore: true
+theme: "A1 · La valeur du temps"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Expliquer pourquoi 1 € promis plus tard vaut moins que 1 € aujourd'hui"
+      - "Capitaliser avec (1 + i)ⁿ et actualiser avec vⁿ"
+      - "Calculer la valeur actuelle de quelques paiements, première idée de l'annuité"
+    en:
+      - "Explain why one euro promised later is worth less than one euro today"
+      - "Accumulate with (1 + i)ⁿ and discount with vⁿ"
+      - "Compute the present value of a few payments, a first look at annuities"
+  prerequis:
+    fr: ["Pourcentages et puissances"]
+    en: ["Percentages and powers"]
+  hypotheses:
+    fr: "Taux annuel fictif et constant de 2,5 %, choisi pour l'exemple ; intérêts ajoutés une fois par an ; ni fiscalité, ni inflation, ni risque de défaut"
+    en: "Made-up constant annual rate of 2.5%, chosen for the example; interest added once a year; no tax, no inflation, no default risk"
+
+validation:
+  statut: valide   # JG, 23/11/2026 : « ces vidéos peuvent être mises sur le site d'abord », remplacées par YouTube ensuite
+  valide_par: "JG"
+  date: "2026-11-23"
+
+sources: []
+
+editions:
+  fr:
+    titre: "Pourquoi 1 € demain vaut moins que 1 € aujourd'hui ?"
+    legende: |
+      Pourquoi 1 € promis demain vaut-il moins que 1 € aujourd'hui ? En trois minutes : les intérêts composés, l'actualisation et une première annuité, avec les calculs d'un assureur fictif. Taux fictif de 2,5 %, calculs vérifiés, aucun conseil de placement. Un exercice vous bloque ? Posez votre question en commentaire.
+    hashtags: [actuariat, interetscomposes, valeuractuelle, finance]
+    scenes:
+      - type: accroche
+        texte: "Pourquoi *1 €* demain vaut moins que *1 €* aujourd'hui ?"
+        voix_off: "Un euro aujourd'hui, ou un euro dans dix ans ? C'est le même euro… et pourtant, pour un actuaire, ce n'est pas la même valeur. Pourquoi ? En quelques minutes, on va voir pourquoi le temps a un prix, et comment un actuaire le calcule."
+      - type: texte
+        texte: "Un assureur *encaisse aujourd'hui* et *paie plus tard*"
+        note: "JG's Holding est un assureur fictif."
+        voix_off: "Prenons JG's Holding, notre assureur fictif. Il encaisse des primes aujourd'hui et verse des prestations des années plus tard. Entre les deux, l'argent est placé et il rapporte des intérêts."
+      - type: etapes
+        texte: "*1 000 €* placés à *2,5 %* par an"
+        etapes:
+          - "Après 1 an : *1 025 €*"
+          - "Après 2 ans : *1 050,63 €*"
+          - "Après 10 ans : *1 280,08 €*"
+        note: "Taux fictif et constant ; intérêts ajoutés une fois par an."
+        voix_off: "Plaçons mille euros à deux virgule cinq pour cent par an. Après un an, on a mille vingt-cinq euros. Après deux ans, mille cinquante euros et soixante-trois centimes : les intérêts ont eux-mêmes rapporté des intérêts. Après dix ans, environ mille deux cent quatre-vingts euros."
+        verifier:
+          - {expression: "1000 * 1.025", attendu: 1025, libelle: "Après 1 an"}
+          - {expression: "1000 * 1.025**2", attendu: 1050.63, tolerance: 0.01, libelle: "Après 2 ans"}
+          - {expression: "1000 * 1.025**10", attendu: 1280.08, libelle: "Après 10 ans"}
+      - type: formule
+        texte: "Capitaliser, puis *actualiser*"
+        formule:
+          - 'VF=VA\times(1+i)^n'
+          - 'VA=VF\times v^n,\quad v=\dfrac{1}{1+i}'
+          - 'VA=\dfrac{1000}{1{,}025^{10}}\approx 781{,}20\ \text{€}'
+        note: "i : taux annuel ; n : nombre d'années ; v : facteur d'actualisation."
+        voix_off: "En multipliant par un plus i, n fois, on avance dans le temps : c'est la capitalisation. En divisant, on recule : c'est l'actualisation. Les actuaires notent v le facteur un divisé par un plus i. Mille euros promis dans dix ans valent donc aujourd'hui mille divisé par un virgule zéro deux cinq puissance dix, soit environ sept cent quatre-vingt-un euros et vingt centimes."
+        verifier:
+          - {expression: "1000 / 1.025**10", attendu: 781.20, libelle: "Valeur actuelle de 1 000 € dans 10 ans"}
+      - type: courbe
+        texte: "Valeur aujourd'hui de *1 000 €* payés plus tard, à 2,5 %"
+        courbe:
+          variable: t
+          de: 0
+          a: 30
+          expression: "1000 / 1.025**t"
+          y_max: 2000
+          axe_x: "Années avant le paiement"
+          axe_y: "Valeur actuelle (€)"
+          reperes:
+            - {x: 10, label: "10 ans : 781 €"}
+            - {x: 20, label: "20 ans : 610 €"}
+            - {x: 30, label: "30 ans : 477 €"}
+        voix_off: "Plus le paiement est lointain, moins il vaut aujourd'hui. Dans dix ans, mille euros valent environ sept cent quatre-vingt-un euros. Dans vingt ans, six cent dix. Dans trente ans, quatre cent soixante-dix-sept seulement."
+        verifier:
+          - {expression: "1000 / 1.025**20", attendu: 610, libelle: "Valeur actuelle, 20 ans"}
+          - {expression: "1000 / 1.025**30", attendu: 477, libelle: "Valeur actuelle, 30 ans"}
+      - type: etapes
+        texte: "*1 000 €* par an pendant 3 ans : une *annuité*"
+        etapes:
+          - "Dans 1 an : *975,61 €*"
+          - "Dans 2 ans : *951,81 €*"
+          - "Dans 3 ans : *928,60 €*"
+          - "Total aujourd'hui : *2 856,02 €*"
+        note: "Annuité de fin d'année : a₃ = v + v² + v³ ≈ 2,8560 à 2,5 %."
+        voix_off: "Et si JG's Holding doit verser mille euros à la fin de chacune des trois prochaines années ? On actualise chaque paiement. Le premier vaut neuf cent soixante-quinze euros et soixante et un centimes. Le deuxième, neuf cent cinquante et un euros et quatre-vingt-un centimes. Le troisième, neuf cent vingt-huit euros et soixante centimes. Au total, deux mille huit cent cinquante-six euros aujourd'hui, et non trois mille : c'est une annuité."
+        verifier:
+          - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Paiement de l'année 1"}
+          - {expression: "1000 / 1.025**2", attendu: 951.81, libelle: "Paiement de l'année 2"}
+          - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Paiement de l'année 3"}
+          - {expression: "1000 * (1 - 1.025**-3) / 0.025", attendu: 2856.02, libelle: "Annuité de 3 ans × 1 000"}
+      - type: exercice
+        texte: "JG's Holding doit verser *5 000 €* dans *5 ans*. Taux : *2,5 %* par an. Combien mettre de côté *aujourd'hui* ?"
+        pause: 12
+        voix_off: "À vous, et mettez la vidéo en pause si besoin. JG's Holding doit verser cinq mille euros dans cinq ans. Le taux est de deux virgule cinq pour cent par an. Combien doit-elle mettre de côté aujourd'hui ?"
+      - type: correction
+        etapes:
+          - "VA = 5 000 ÷ 1,025⁵"
+          - "1,025⁵ ≈ 1,1314"
+        reponse: "VA ≈ *4 419,27 €*"
+        voix_off: "On actualise sur cinq ans. Un virgule zéro deux cinq puissance cinq vaut environ un virgule un trois un quatre. Cinq mille divisé par ce nombre donne environ quatre mille quatre cent dix-neuf euros et vingt-sept centimes."
+        verifier:
+          - {expression: "1.025**5", attendu: 1.1314, libelle: "Facteur sur 5 ans"}
+          - {expression: "5000 / 1.025**5", attendu: 4419.27, libelle: "Valeur actuelle de 5 000 € dans 5 ans"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Capitaliser : *× (1 + i)ⁿ*"
+          - "Actualiser : *× vⁿ*, avec v = 1 ÷ (1 + i)"
+          - "Plusieurs paiements : on *additionne* les valeurs actuelles"
+        voix_off: "Ce qu'il faut retenir. Pour avancer dans le temps, on multiplie par un plus i, puissance n. Pour revenir à aujourd'hui, on multiplie par v puissance n. Et pour plusieurs paiements, on additionne leurs valeurs actuelles."
+      - type: cloture
+        texte: "Prochain épisode : *taux nominal et taux effectif*"
+        voix_off: "Prochain épisode : un pour cent par mois, est-ce vraiment douze pour cent par an ? Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu'un à qui elle servira. Une question ? Écrivez-nous en commentaire. Merci d'avoir regardé !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Why is $1 tomorrow worth less than $1 today?"
+    legende: |
+      Why is a dollar promised tomorrow worth less than a dollar today? In three minutes: compound interest, discounting and a first annuity, worked through by a fictional insurer. Made-up 2.5% rate, checked calculations, no investment advice. Stuck on the exercise? Ask in the comments.
+    hashtags: [actuarial, compoundinterest, presentvalue, finance]
+    scenes:
+      - type: accroche
+        texte: "Why is *$1* tomorrow worth less than *$1* today?"
+        voix_off: "One dollar today, or one dollar in ten years? Same dollar… and yet, to an actuary, not the same value. Why? In a few minutes, we'll see why time has a price, and how an actuary works it out."
+      - type: texte
+        texte: "An insurer *collects today* and *pays later*"
+        note: "JG's Holding is a fictional insurer."
+        voix_off: "Take JG's Holding, our fictional insurer. It collects premiums today and pays out benefits years later. In between, the money is invested and earns interest."
+      - type: etapes
+        texte: "*$1,000* invested at *2.5%* a year"
+        etapes:
+          - "After 1 year: *$1,025*"
+          - "After 2 years: *$1,050.63*"
+          - "After 10 years: *$1,280.08*"
+        note: "Made-up constant rate; interest added once a year."
+        voix_off: "Let's invest one thousand dollars at two point five percent a year. After one year, we have one thousand and twenty-five dollars. After two years, one thousand and fifty dollars and sixty-three cents: the interest has itself earned interest. After ten years, about one thousand two hundred and eighty dollars."
+        verifier:
+          - {expression: "1000 * 1.025", attendu: 1025, libelle: "After 1 year"}
+          - {expression: "1000 * 1.025**2", attendu: 1050.63, tolerance: 0.01, libelle: "After 2 years"}
+          - {expression: "1000 * 1.025**10", attendu: 1280.08, libelle: "After 10 years"}
+      - type: formule
+        texte: "Accumulate, then *discount*"
+        formule:
+          - 'FV=PV\times(1+i)^n'
+          - 'PV=FV\times v^n,\quad v=\dfrac{1}{1+i}'
+          - 'PV=\dfrac{1000}{1.025^{10}}\approx \$781.20'
+        note: "i: annual rate; n: number of years; v: discount factor."
+        voix_off: "Multiplying by one plus i, n times, moves money forward in time: that's accumulation. Dividing moves it back: that's discounting. Actuaries write v for one divided by one plus i. So one thousand dollars promised in ten years is worth one thousand divided by one point zero two five to the power of ten today, about seven hundred and eighty-one dollars and twenty cents."
+        verifier:
+          - {expression: "1000 / 1.025**10", attendu: 781.20, libelle: "Present value of $1,000 in 10 years"}
+      - type: courbe
+        texte: "Today's value of *$1,000* paid later, at 2.5%"
+        courbe:
+          variable: t
+          de: 0
+          a: 30
+          expression: "1000 / 1.025**t"
+          y_max: 2000
+          axe_x: "Years until payment"
+          axe_y: "Present value ($)"
+          reperes:
+            - {x: 10, label: "10 years: $781"}
+            - {x: 20, label: "20 years: $610"}
+            - {x: 30, label: "30 years: $477"}
+        voix_off: "The further away the payment, the less it's worth today. In ten years, one thousand dollars is worth about seven hundred and eighty-one. In twenty years, six hundred and ten. In thirty years, only four hundred and seventy-seven."
+        verifier:
+          - {expression: "1000 / 1.025**20", attendu: 610, libelle: "Present value, 20 years"}
+          - {expression: "1000 / 1.025**30", attendu: 477, libelle: "Present value, 30 years"}
+      - type: etapes
+        texte: "*$1,000* a year for 3 years: an *annuity*"
+        etapes:
+          - "In 1 year: *$975.61*"
+          - "In 2 years: *$951.81*"
+          - "In 3 years: *$928.60*"
+          - "Total today: *$2,856.02*"
+        note: "Annuity paid at year end: a₃ = v + v² + v³ ≈ 2.8560 at 2.5%."
+        voix_off: "And what if JG's Holding has to pay one thousand dollars at the end of each of the next three years? We discount each payment. The first is worth nine hundred and seventy-five dollars and sixty-one cents. The second, nine hundred and fifty-one dollars and eighty-one cents. The third, nine hundred and twenty-eight dollars and sixty cents. In total, two thousand eight hundred and fifty-six dollars today, not three thousand: that's an annuity."
+        verifier:
+          - {expression: "1000 / 1.025", attendu: 975.61, libelle: "Year 1 payment"}
+          - {expression: "1000 / 1.025**2", attendu: 951.81, libelle: "Year 2 payment"}
+          - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Year 3 payment"}
+          - {expression: "1000 * (1 - 1.025**-3) / 0.025", attendu: 2856.02, libelle: "3-year annuity × 1,000"}
+      - type: exercice
+        texte: "JG's Holding must pay *$5,000* in *5 years*. Rate: *2.5%* a year. How much should it set aside *today*?"
+        pause: 12
+        voix_off: "Your turn, and pause the video if you need to. JG's Holding must pay five thousand dollars in five years. The rate is two point five percent a year. How much should it set aside today?"
+      - type: correction
+        etapes:
+          - "PV = 5,000 ÷ 1.025⁵"
+          - "1.025⁵ ≈ 1.1314"
+        reponse: "PV ≈ *$4,419.27*"
+        voix_off: "We discount over five years. One point zero two five to the power of five is about one point one three one four. Five thousand divided by that gives about four thousand four hundred and nineteen dollars and twenty-seven cents."
+        verifier:
+          - {expression: "1.025**5", attendu: 1.1314, libelle: "5-year factor"}
+          - {expression: "5000 / 1.025**5", attendu: 4419.27, libelle: "Present value of $5,000 in 5 years"}
+      - type: etapes
+        texte: "Key points"
+        etapes:
+          - "Accumulate: *× (1 + i)ⁿ*"
+          - "Discount: *× vⁿ*, with v = 1 ÷ (1 + i)"
+          - "Several payments: *add up* their present values"
+        voix_off: "Key points. To move forward in time, multiply by one plus i, to the power n. To come back to today, multiply by v to the power n. And for several payments, add up their present values."
+      - type: cloture
+        texte: "Next episode: *nominal and effective rates*"
+        voix_off: "Next episode: is one percent a month really twelve percent a year? If this video helped, subscribe, leave a like and share it with someone who'll find it useful. Got a question? Ask in the comments. Thanks for watching!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
