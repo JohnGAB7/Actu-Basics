@@ -1838,9 +1838,10 @@ class AnimationsDonnees:
         xc = x0 + (n - 0.5) * pas
         k_s, k_k = av("simple"), av("compose")
         y_top_s = y_axe - h_cap - c0 * i * n * echelle
-        if k_s > 0 and k_k < 1:
+        a_s = k_s * (1 - min(1.0, k_k * 4))
+        if a_s > 0.02:      # texte fondu dans la couleur du fond : on ne le dessine plus une fois effacé
             self._texte_centre(d, self._somme_txt(c0 * (1 + i * n), unite), pv, xc, y_top_s - 54,
-                               _melange(fond, self.c["texte"], k_s * (1 - min(1.0, k_k * 4))), g, dr)
+                               _melange(fond, self.c["texte"], a_s), g, dr)
         if k_k > 0:
             y_top = y_top_s - c0 * ((1 + i) ** n - 1 - i * n) * echelle
             self._texte_centre(d, self._somme_txt(c0 * (1 + i) ** n, unite), pv, xc, y_top - 54,
