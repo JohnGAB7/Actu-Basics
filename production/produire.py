@@ -251,6 +251,7 @@ def caler_sur_la_voix(rendu: Rendu, edition, narration, durees: list[float]) -> 
         rendu.reperes[id(scene)] = [AMORCE_S + ph.debut for k, ph in enumerate(vs.phrases)
                             if k == 0 or vs.phrases[k - 1].texte.rstrip()[-1:] in ".!?…"]
         rendu.fins_voix[id(scene)] = AMORCE_S + vs.duree_voix + 0.2
+        rendu.morceaux_voix[id(scene)] = [(AMORCE_S + ph.debut, AMORCE_S + ph.fin) for ph in vs.phrases]
         if scene.type == "exercice" and not scene.duree:
             besoin = rendu.fins_voix[id(scene)] + scene.extra.get("pause", 3) + 0.8
             durees[i] = round(max(durees[i], besoin), 3)

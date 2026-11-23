@@ -792,13 +792,19 @@ def test_fichiers_logo_officiels_presents():
     assert len(noms) == 4                                   # un fichier distinct par langue et par fond
 
 
+# La charte par défaut est en version claire (ivoire) depuis le 22/11/2026 : les cas « fond sombre »
+# utilisent une charte sombre explicite (ancienne palette bleu nuit).
+SOMBRE = dict(couleurs__fond="#0B1526", couleurs__fond_bas="#14284A", couleurs__barre="#3E7CB1",
+              couleurs__texte="#F5F3EE", couleurs__halo="#3E7CB1", couleurs__encre_accent="#0B1526")
+
+
 def test_logo_choisi_selon_la_langue_et_le_fond():
     clair = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
-                 couleurs__texte="#06152B")
+                 couleurs__texte="#06152B", logo__sur_fond_clair="clair")
     attendu = {("fr", "sombre"): "logo-dark.png", ("fr", "clair"): "logo-light.png",
                ("en", "sombre"): "logo-dark-en.png", ("en", "clair"): "logo-light-en.png"}
     for langue in ("fr", "en"):
-        for fond, ch in (("sombre", CHARTE), ("clair", _charte(**clair))):
+        for fond, ch in (("sombre", _charte(**SOMBRE)), ("clair", _charte(**clair))):
             r, _, ed = _rendu_fin(ch, "carrousel", langue)
             pose = r.poses[("carrousel", len(ed.scenes) - 1)]
             assert pose.variante == fond
@@ -866,8 +872,9 @@ def test_slogans_et_marque_officiels():
 
 def test_logo_sur_fond_sombre_proportions_et_original_intact():
     avant = _empreintes()
+    sombre = _charte(**SOMBRE)
     for fmt in ("video", "carrousel"):
-        r, im, ed = _rendu_fin(CHARTE, fmt)
+        r, im, ed = _rendu_fin(sombre, fmt)
         pose = r.poses[(fmt, len(ed.scenes) - 1)]
         assert pose.variante == "sombre" and pose.luminance_fond < 0.5
         x0, y0, x1, y1 = pose.boite
@@ -876,21 +883,28 @@ def test_logo_sur_fond_sombre_proportions_et_original_intact():
         assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT                       # rien dans sa zone
         assert pose.largeur <= pose.largeur_native                                    # jamais agrandi
         rap = Rapport()
-        controler_logo("fr", r, [(fmt, len(ed.scenes) - 1, "fin")], CHARTE, PLATEFORMES, rap)
+        controler_logo("fr", r, [(fmt, len(ed.scenes) - 1, "fin")], sombre, PLATEFORMES, rap)
         assert not rap.bloquants and not rap.avertissements, [str(c) for c in rap.constats]
     assert _empreintes() == avant                                                     # fichiers d'origine intacts
 
 
-def test_logo_clair_sur_fond_clair():
-    ch = _charte(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
-                 couleurs__texte="#06152B")
-    r, _, ed = _rendu_fin(ch, "carrousel")
-    pose = r.poses[("carrousel", len(ed.scenes) - 1)]
-    assert pose.variante == "clair" and pose.luminance_fond >= 0.5
+def test_logo_sur_fond_clair_selon_la_charte():
+    """Par défaut (JG, 22/11/2026) : disque sombre sur fond clair ; `sur_fond_clair: clair` reste possible,
+    et le contrôle qualité suit la charte dans les deux cas."""
+    base = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
+                couleurs__texte="#06152B")
+    for voulu in ("sombre", "clair"):
+        ch = _charte(logo__sur_fond_clair=voulu, **base)
+        r, _, ed = _rendu_fin(ch, "carrousel")
+        pose = r.poses[("carrousel", len(ed.scenes) - 1)]
+        assert pose.variante == voulu and pose.luminance_fond >= 0.5
+        rap = Rapport()
+        controler_logo("fr", r, [("carrousel", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
+        assert not any("variante" in str(c) for c in rap.bloquants)
 
 
 def test_variante_forcee_contraire_au_fond_bloque():
-    ch = _charte(logo__variante="clair")
+    ch = _charte(logo__variante="clair", **SOMBRE)
     r, _, ed = _rendu_fin(ch)
     rap = Rapport()
     controler_logo("fr", r, [("video", len(ed.scenes) - 1, "fin")], ch, PLATEFORMES, rap)
@@ -1448,24 +1462,8 @@ def test_prononciation_de_la_marque_dans_la_voix_seulement():
     assert "ACTU-BASICS" in preparer_pour_voix("Welcome to ACTU-BASICS.", "en", lex)   # bien lu en anglais
 
 
-def test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas():
-    """La barre d'accent doit passer sous le bas réel du chiffre, avec un espace net."""
-    import numpy as np
-    fiche = charger_fiche(LANCEMENT)
-    for langue in ("fr", "en"):
-        r = Rendu(fiche, langue, CHARTE, "video", False)
-        ed = fiche.editions[langue]
-        for i, s in enumerate(ed.scenes):
-            if s.type != "titre" or not s.extra.get("numero"):
-                continue
-            px = np.array(r.dessiner(s, i, len(ed.scenes)).convert("RGB")).astype(int)
-            accent = np.array(r.c["accent"][:3])
-            g = r.zone[0]
-            colonne = np.abs(px[:, g + 20:g + 30] - accent).sum(axis=2).min(axis=1) < 40
-            lignes = np.flatnonzero(colonne)
-            blocs = np.split(lignes, np.flatnonzero(np.diff(lignes) > 1) + 1)
-            numero, barre = blocs[-2], blocs[-1]     # le chiffre, puis la barre en dessous
-            assert barre[0] - numero[-1] >= 20, (langue, i, numero[-1], barre[0])
+# test_barre_sous_le_grand_numero_de_chapitre_ne_le_coupe_pas : retiré le 22/11/2026, les titres de
+# chapitre n'ont plus de grand numéro (surtitre « Chapitre N » et points de progression).
 
 
 def test_soulignement_du_chiffre_cle_sous_la_virgule():
@@ -1614,16 +1612,17 @@ def test_barre_sous_chaque_grand_chiffre_toutes_occurrences(chemin):
     scène), la barre reste sous le glyphe entier avec une marge nette, à chaque instant de l'animation,
     en français et en anglais, en vertical comme en 16:9."""
     fiche = charger_fiche(chemin)
+    if fiche.pedagogique:   # plus de grand chiffre dans les fiches pédagogiques : rien à mesurer (et 15 min de CI)
+        return
     vus = 0
     for langue in fiche.editions:
         for fmt in ("video", "lecon", "carrousel"):
             for i, type_, t, txt, ecart, _ in _occurrences_barres(fiche, langue, fmt):
                 vus += 1
                 assert ecart >= 10, (chemin.name, langue, fmt, f"scène {i + 1} {type_}", t, txt, ecart)
-    # Une capsule sans chapitre ni chiffre (Q2.04) n'a aucun grand chiffre : rien à vérifier.
-    a_des_grands_chiffres = not fiche.pedagogique or any(
-        s.type in ("titre", "chiffre") for e in fiche.editions.values() for s in e.scenes)
-    if a_des_grands_chiffres:
+    # Depuis le 22/11/2026, les fiches pédagogiques n'ont plus de grands numéros de chapitre (titre soft :
+    # surtitre « Chapitre N » et points de progression) : seule la capsule d'actualité en garde.
+    if not fiche.pedagogique:
         assert vus, "aucune barre sous un grand chiffre trouvée : le test ne vérifie plus rien"
 
 
@@ -1971,9 +1970,12 @@ def test_plus_de_nom_de_marque_fixe_en_video_et_logo_mobile():
     ed = fiche.editions["fr"]
     for fmt in ("video", "lecon"):
         sans = Rendu(fiche, "fr", _charte(logo__mobile__actif=False), fmt, False)
-        avec = Rendu(fiche, "fr", CHARTE, fmt, False)
-        scene = ed.scenes[0]
-        im = sans.dessiner(scene, 0, len(ed.scenes))
+        avec = Rendu(fiche, "fr", _charte(logo__mobile__actif=True), fmt, False)
+        # Le logo fixe n'est posé qu'au début et à la fin (charte) : on regarde une scène du milieu.
+        scenes_logo = (CHARTE["logo"].get(fmt) or {}).get("scenes") or []
+        idx = next(i for i, s in enumerate(ed.scenes[:-1]) if s.type not in scenes_logo)
+        scene = ed.scenes[idx]
+        im = sans.dessiner(scene, idx, len(ed.scenes))
         g, h, dr, _ = sans.zone
         # Bandeau du haut vide : ni nom « ACTU-BASICS » ni logo quand le logo mobile est coupé.
         assert ImageChops.difference(im.crop((g, h, dr, h + 120)), sans._fond.crop((g, h, dr, h + 120))).getbbox() is None
@@ -1982,8 +1984,8 @@ def test_plus_de_nom_de_marque_fixe_en_video_et_logo_mobile():
         x1, _ = avec.mobile_position(avec.conf_mobile()["periode_s"] / 2)
         lg, hl, p = avec._mobile_taille()
         assert x1 > x0 and g <= x0 - p and x1 + lg + p <= dr and y0 >= h   # il bouge, dans la zone
-        avec.mesurer_mobile(scene, 0, len(ed.scenes))
-        pose = avec.poses[("mobile", 0)]
+        avec.mesurer_mobile(scene, idx, len(ed.scenes))
+        pose = avec.poses[("mobile", idx)]
         assert pose.recouvrement <= logo_mod.SEUIL_RECOUVREMENT   # aucun texte sous le logo
         assert pose.largeur == lg and pose.boite[3] - pose.boite[1] == hl   # proportions conservées
 
@@ -2074,3 +2076,155 @@ def test_manifeste_de_rendu(tmp_path, monkeypatch):
     assert m["autorisation"]["lance_par"] == "relecteur"
     assert m["fiche"]["sha256"] == manifeste.sha256(fiche) and len(m["moteur_sha256"]) == 64
     assert list(m["rapports_qc_sha256"]) == ["x/fr/rapport-qc.md"]
+
+
+def test_decor_ondes_bougent_sans_toucher_au_contenu():
+    from PIL import Image, ImageChops, ImageDraw
+    from lmec.decor import Decor
+    fond = Image.new("RGB", (640, 360), (254, 248, 236))
+    image = fond.copy()
+    ImageDraw.Draw(image).rectangle((100, 250, 300, 330), fill=(16, 38, 56))   # contenu dans la bande des ondes
+    couleurs = {"barre": (22, 133, 213), "accent": (217, 106, 0)}
+    d = Decor(fond, couleurs, CHARTE["decor"], bandeau_px=60)
+    a, b = d.appliquer(image, 0.0), d.appliquer(image, 3.0)
+    assert ImageChops.difference(a, b).getbbox()                        # le décor bouge
+    assert a.crop((100, 250, 300, 330)) == image.crop((100, 250, 300, 330))   # contenu intact
+    assert a.crop((0, 0, 640, 60)) == image.crop((0, 0, 640, 60))       # bandeau du logo libre
+    libre = d.masque_libre(image)
+    assert d.appliquer(image, 3.0, libre) == b                          # masque réutilisable (images fixes)
+
+
+def test_animations_pastilles_et_curseur_valides_et_dessinees():
+    from lmec.pedagogie import _valider_animation
+    trajets = [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
+    for anim in ({"modele": "pastilles", "valeurs": trajets, "largeur_classe": 10, "unite": "minutes"},
+                 {"modele": "curseur", "valeurs": trajets, "indice": 19, "vers": 120, "axe_max": 55,
+                  "decimales": 2}):
+        erreurs, extra = [], {}
+        _valider_animation({"animation": anim}, "s", erreurs, extra)
+        assert not erreurs and extra["animation"]["modele"] == anim["modele"]
+    erreurs = []
+    _valider_animation({"animation": {"modele": "pastilles", "valeurs": trajets, "largeur_classe": 1}},
+                       "s", erreurs, {})
+    assert any("16 classes" in e for e in erreurs)
+    erreurs = []
+    _valider_animation({"animation": {"modele": "curseur", "valeurs": trajets}}, "s", erreurs, {})
+    assert any("vers" in e for e in erreurs)
+
+
+def test_animations_equilibre_elimination_densite_validees():
+    from lmec.pedagogie import _valider_animation
+    bons = ({"modele": "equilibre", "valeurs": [5, 10, 15, 30], "unite": "€"},
+            {"modele": "elimination", "valeurs": [1600, 1800, 1900, 2000, 2200], "ajout": 200000, "unite": "€"},
+            {"modele": "densite", "bornes": [0, 10, 20, 50], "effectifs": [3, 7, 10], "unite": "minutes"})
+    for anim in bons:
+        erreurs, extra = [], {}
+        _valider_animation({"animation": anim}, "s", erreurs, extra)
+        assert not erreurs and extra["animation"]["modele"] == anim["modele"], erreurs
+    erreurs, extra = [], {}
+    _valider_animation({"animation": {"modele": "elimination", "valeurs": [1, 2, 3]}}, "s", erreurs, extra)
+    assert not erreurs and extra["animation"]["phases"] == ["rangement", "elimination", "milieu"]
+    for faux, motif in (({"modele": "equilibre", "valeurs": list(range(9))}, "2 à 8"),
+                        ({"modele": "elimination", "valeurs": [1, 2, 3], "phases": ["ajout"]}, "ajout"),
+                        ({"modele": "densite", "bornes": [0, 10, 5], "effectifs": [1, 2]}, "croissantes"),
+                        ({"modele": "densite", "bornes": [0, 10, 20], "effectifs": [1]}, "par classe")):
+        erreurs = []
+        _valider_animation({"animation": faux}, "s", erreurs, {})
+        assert any(motif in e for e in erreurs), (faux, erreurs)
+
+
+def test_episode_s2a_animations_dessinees_a_chaque_phase():
+    """Toutes les animations de l'épisode se dessinent à tout instant, en FR et en EN, en 16:9
+    comme en vertical (une barre de hauteur nulle au départ faisait échouer le rendu)."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml")
+    for langue, fmt in [(l, f) for l in ("fr", "en") for f in ("lecon", "video")]:
+        r = Rendu(fiche, langue, CHARTE, fmt, False)
+        scenes = fiche.editions[langue].scenes
+        vus = set()
+        for i, s in enumerate(scenes):
+            m = (s.extra.get("animation") or {}).get("modele")
+            if not m:
+                continue
+            vus.add(m)
+            for p in r._plan_animation(s):
+                for t in (0.0, p["debut"], p["debut"] + 0.02, p["debut"] + p["duree"] / 2,
+                          p["debut"] + p["duree"] + 0.2):
+                    r.dessiner(s, i, len(scenes), t)
+            r.dessiner(s, i, len(scenes), None)
+        assert {"equilibre", "elimination", "densite", "pastilles", "curseur", "apercu", "cumul", "partage",
+                "ponderee", "decoupages", "asymetrie", "melange", "questions", "foule"} <= vus
+
+
+def test_animations_de_la_revue_validees():
+    """Les sept modèles de la revue (22/11/2026) : entrées vérifiées, une légende par phase."""
+    from lmec.pedagogie import _valider_animation
+    def valider(a, etapes=None):
+        erreurs, extra = [], {}
+        s = {"animation": a}
+        if etapes:
+            s["etapes"] = etapes
+        _valider_animation(s, "s", erreurs, extra)
+        return erreurs, extra.get("animation")
+    e, c = valider({"modele": "cumul", "categories": ["0", "1", "2"], "frequences": [20, 50, 30]}, ["a", "b", "c"])
+    assert not e and c["phases"] == ["palier"] * 3
+    assert valider({"modele": "cumul", "categories": ["0", "1"], "frequences": [20, 50]})[0]       # total ≠ 100
+    assert not valider({"modele": "partage", "valeurs": [5, 10, 15, 30], "unite": "€"})[0]
+    assert valider({"modele": "partage", "valeurs": [5, 10, 16]})[0]                               # moyenne non entière
+    assert not valider({"modele": "ponderee", "notes": [{"valeur": 14, "coef": 3}, {"valeur": 10, "coef": 1}]})[0]
+    assert valider({"modele": "ponderee", "notes": [{"valeur": 14, "coef": 0}, {"valeur": 10, "coef": 1}]})[0]
+    e, c = valider({"modele": "decoupages", "valeurs": [4, 12, 25], "largeurs": [10, 20]})
+    assert not e and c["phases"] == ["decoupage", "decoupage"]
+    assert valider({"modele": "decoupages", "valeurs": [4, 400], "largeurs": [10, 20]})[0]       # trop de classes
+    assert not valider({"modele": "asymetrie"}, ["a", "b", "c"])[0]
+    assert valider({"modele": "asymetrie"}, ["a", "b"])[0]
+    assert not valider({"modele": "melange", "origine": 150, "largeur_classe": 5,
+                        "groupes": [[1, 2, 0], [0, 1, 3]], "noms": ["A ?", "B ?"]})[0]
+    assert valider({"modele": "melange", "largeur_classe": 5, "groupes": [[1, 2, 0], [0, 1]]})[0]
+    q = {"question": "Q ?", "reponse": "R", "icone": "mediane"}
+    assert not valider({"modele": "questions", "questions": [q, q]}, ["a", "b", "c"])[0]
+    assert valider({"modele": "questions", "questions": [q, dict(q, icone="inconnue")]})[0]
+
+
+def test_exercices_questions_ecrites_a_l_ecran():
+    """Chaque question des exercices est écrite à l'écran, numérotée, quand la voix la pose (JG, 22/11/2026) ;
+    l'exercice des formes montre les quatre formes sur le même écran."""
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-12-ep-s2a-resumer-des-donnees.yaml")
+    for langue in ("fr", "en"):
+        scenes = fiche.editions[langue].scenes
+        exos = [s for s in scenes if s.type == "exercice" and s.extra.get("etiquette") is None]
+        assert exos and all(s.extra.get("questions") for s in exos)
+        assert any(len(s.extra.get("formes") or []) == 4 for s in exos)
+        for fmt in ("lecon", "video"):
+            r = Rendu(fiche, langue, CHARTE, fmt, False)
+            r.reperes = {id(s): [0.5, 2.0, 4.0, 6.0, 8.0, 10.0] for s in exos}
+            for s in exos:
+                i = scenes.index(s)
+                debuts = r._debuts_questions(s, len(s.extra["questions"]))
+                assert debuts == sorted(debuts) and len(debuts) == len(s.extra["questions"])
+                for t in (0.0, debuts[0] + 0.1, 30.0, None):
+                    r.dessiner(s, i, len(scenes), t)
+            assert not [a for a in r.alertes if "exercice" in a]
+
+
+def test_calcul_apparait_terme_a_terme():
+    """« 5 + 10 + 6 + 4 = 25 » : chaque terme a son instant, dans l'ordre ; une ligne sans calcul n'en a pas."""
+    from lmec.formatage import typographie
+    fiche = charger_fiche(EXEMPLE)
+    r = Rendu(fiche, "fr", CHARTE, "lecon", False)
+    ligne = mots_riches(typographie("Toujours vérifier le *total* : 5 + 10 + 6 + 4 = 25", "fr"))
+    temps = r._temps_calcul(ligne, 1.0)
+    instants = [t0 for j in sorted(temps) for _, t0 in temps[j] if t0 is not None]
+    assert len(instants) >= 9 and instants == sorted(instants) and instants[0] >= 1.0 and instants[-1] > 2.0
+    assert not r._temps_calcul(mots_riches("Les fréquences font toujours *100 %*"), 1.0)
+
+
+def test_apercu_valide_et_cale_sur_les_propositions():
+    from lmec.pedagogie import _valider_animation
+    cartes = [{"icone": i, "texte": "Un *mot*"} for i in ("tableau", "histogramme", "forme")]
+    erreurs, extra = [], {}
+    _valider_animation({"animation": {"modele": "apercu", "cartes": cartes}}, "s", erreurs, extra)
+    assert not erreurs and extra["animation"]["phases"] == ["carte"] * 3
+    erreurs = []
+    _valider_animation({"animation": {"modele": "apercu", "cartes": [{"icone": "inconnue", "texte": "x"}] * 2}},
+                       "s", erreurs, {})
+    assert any("icone" in e for e in erreurs)

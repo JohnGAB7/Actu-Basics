@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw
 from .fiche import Edition, Scene
 from .rendu import Rendu
 
-FONDU_S = 0.25          # fondu enchaîné entre scènes
+FONDU_S = 0.4           # fondu enchaîné entre scènes (direction artistique : 350 à 500 ms)
 HAUTEUR_BARRE = 10      # barre de progression (pixels)
 DUREES_MIN = {"accroche": 2.5, "chiffre": 3.5, "texte": 2.5, "graphique": 5.0, "source": 4.0, "fin": 3.0, "accueil": 3.0, "cloture": 5.0,
               "titre": 2.5, "formule": 5.0, "etapes": 4.0, "courbe": 5.0, "exercice": 5.0, "correction": 4.0, "animation": 5.0}
@@ -61,8 +61,9 @@ def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: P
     precedente: Image.Image | None = None
     n_scenes = len(edition.scenes)
     n_total = round(total * fps)
-    accent = rendu.c["accent"]
+    accent = rendu.c["progression"]
     image_globale = 0
+    derniere: Image.Image | None = None
     mobile_precedent = False
     try:
         for i, (scene, duree) in enumerate(zip(edition.scenes, durees)):
@@ -70,13 +71,22 @@ def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: P
             n_fondu = round(FONDU_S * fps) if precedente is not None else 0
             n_anim = round(rendu.duree_animation(scene) * fps) + 1
             statique = rendu.dessiner(scene, i, n_scenes, None)
+            decor = rendu.decor if rendu.decor_prevu(scene) else None
+            libre_statique = decor.masque_libre(statique) if decor else None
             for k in range(n_images):
-                image = rendu.dessiner(scene, i, n_scenes, k / fps) if k < n_anim else statique.copy()
+                temps = image_globale / fps
+                image = rendu.dessiner(scene, i, n_scenes, k / fps) if k < n_anim else statique
+                # Décor en mouvement : aucune image n'est figée, même quand le contenu est posé.
+                if decor:
+                    image = decor.appliquer(image, temps, None if k < n_anim else libre_statique)
+                elif k >= n_anim:
+                    image = image.copy()
+                if k == n_images - 1:   # départ du fondu suivant : sans logo ni barre de progression
+                    derniere = image.copy()
                 if k < n_fondu:
                     image = Image.blend(precedente, image, (k + 1) / (n_fondu + 1))
                 # Logo mobile, posé après le fondu : il glisse en continu d'une scène à l'autre et
                 # s'efface pendant le fondu vers une scène qui n'en porte pas (scène de fin).
-                temps = image_globale / fps
                 if rendu.mobile_prevu(scene):
                     rendu.poser_mobile(image, temps, scene, i)
                 elif k < n_fondu and mobile_precedent:
@@ -86,7 +96,7 @@ def produire_video(rendu: Rendu, edition: Edition, durees: list[float], audio: P
                 ImageDraw.Draw(image).rectangle(
                     (0, 0, round(rendu.largeur * image_globale / n_total), HAUTEUR_BARRE), fill=accent)
                 proc.stdin.write(image.tobytes())
-            precedente = statique
+            precedente = derniere
             mobile_precedent = rendu.mobile_prevu(scene)
         proc.stdin.close()
     except BrokenPipeError:

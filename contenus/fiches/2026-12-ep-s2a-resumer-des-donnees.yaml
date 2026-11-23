@@ -1,0 +1,2646 @@
+# Épisode long EP-S2A « Résumer des données : tableaux, histogrammes, moyenne et médiane » (YOUTUBE_LESSON).
+# Assemblé le 22/11/2026 à partir des cinq fiches de chapitre validées (S2.01 à S2.05) et de la fiche de
+# conception contenus/conception/EP-S2A.yaml (validée par JG le 22/11/2026, PR #50), changements compris.
+# Données fictives, aucun chiffre réel. Statut : validée par JG le 23/11/2026 (aperçu FR et EN du 22/11/2026).
+# Références de méthode (citées dans la description, pas en pied d'image) : OpenStax, Introductory Statistics 2e,
+# « Frequency, Frequency Tables, and Levels of Measurement » et « Measures of the Center of the Data » ;
+# NIST/SEMATECH e-Handbook of Statistical Methods, « Histogram » (classes, densité).
+id: 2026-12-ep-s2a-resumer-des-donnees
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: youtube_lesson
+habillage_sonore: true
+theme: EP-S2A · Résumer des données
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+    - Construire un tableau d'effectifs, de fréquences et de fréquences cumulées
+    - Choisir entre diagramme en barres et histogramme selon le type de variable
+    - Expliquer comment la largeur des classes change un histogramme, et lire une densité quand les classes sont inégales
+    - 'Décrire la forme d''une distribution : symétrie, queue, une ou deux bosses'
+    - Calculer une moyenne simple et pondérée, et une médiane (nombre pair ou impair de valeurs)
+    - Choisir entre moyenne et médiane d'après la forme de la distribution et la question posée
+    en:
+    - Build a table of counts, relative frequencies and cumulative frequencies
+    - Choose between a bar chart and a histogram from the type of variable
+    - Explain how bin width changes a histogram, and read a density when bins are unequal
+    - 'Describe the shape of a distribution: symmetry, tail, one or two peaks'
+    - Compute a simple and a weighted mean, and a median (odd or even number of values)
+    - Choose between mean and median from the shape of the distribution and the question asked
+  prerequis:
+    fr:
+    - 'S1.03 : types de variables (épisode EP-S1A)'
+    - Pourcentages (épisode EP-M01)
+    en:
+    - 'S1.03: types of variables (episode EP-S1A)'
+    - Percentages (episode EP-M01)
+  hypotheses:
+    fr: 'Données fictives : 20 salariés d''une entreprise imaginaire, une classe, un café, des visiteurs. Aucun chiffre réel.'
+    en: 'Made-up data: 20 employees of an imaginary company, a class, a café, visitors. No real numbers.'
+validation:
+  statut: valide
+  valide_par: JG
+  date: '2026-11-23'
+sources: []
+editions:
+  fr:
+    titre: 'Moyenne, médiane, histogramme : résumer des données sans se faire avoir'
+    legende: 'Comment résumer des données sans les trahir ? Un tableau garde les proportions, un histogramme la silhouette, la moyenne le total, la médiane le milieu. Cinq chapitres, deux laboratoires en direct, un exercice de synthèse corrigé. Données fictives, calculs vérifiés. Sources de méthode : OpenStax, Introductory Statistics 2e, « Measures of the Center of the Data » ; NIST/SEMATECH e-Handbook of Statistical Methods, « Histogram ». Un exercice vous bloque ? Posez votre question en commentaire.
+
+      '
+    hashtags:
+    - statistiques
+    - moyenne
+    - mediane
+    - histogramme
+    scenes:
+    - type: accroche
+      texte: 'Vingt salariés. *Qui dit vrai* : la moyenne ou la médiane ?'
+      voix_off: 'Vingt salariés. Une seule question : combien de temps mettent-ils pour venir travailler ? La moyenne dit un peu plus de 21 minutes. Pourtant, la moitié d''entre eux met 20 minutes ou moins. Et si un seul salarié déménage loin, la moyenne bondit… alors que presque rien n''a changé pour les autres. Qui dit vrai ?'
+    - type: accueil
+      texte: Bonjour, et *bienvenue* !
+      voix_off: 'Bonjour, et bienvenue ! Merci d''être là. Salaires, notes, temps de trajet : on résume tout avec une moyenne. Dans cet épisode, on voit quand elle dit vrai, quand elle trompe, et par quoi la remplacer.'
+    - type: animation
+      texte: Ce que vous allez *apprendre*
+      animation:
+        modele: apercu
+        cartes:
+        - icone: tableau
+          texte: Construire un *tableau* de fréquences
+        - icone: histogramme
+          texte: Choisir et lire un *histogramme*
+        - icone: forme
+          texte: Reconnaître la *forme* d'une distribution
+        - icone: equilibre
+          texte: Calculer une *moyenne*
+        - icone: mediane
+          texte: Trouver la *médiane*
+        - icone: laboratoire
+          texte: Tester en *laboratoire*, puis s'exercer
+      voix_off: 'À la fin, vous saurez résumer un jeu de données, lire sa distribution et choisir entre moyenne et médiane. Concrètement : construire un tableau de fréquences ; choisir et lire un histogramme ; reconnaître la forme d''une distribution ; calculer une moyenne, et voir pourquoi c''est un point d''équilibre ; trouver une médiane ; et tout vérifier vous-même, avec deux laboratoires et un exercice corrigé.'
+    - type: titre
+      numero: '1'
+      texte: 'Compter : effectifs, fréquences, cumul'
+      voix_off: 'Mille réponses à un questionnaire : personne ne va les lire une par une. Comment les résumer ?'
+    - type: animation
+      texte: '*20 salariés* : notre fil rouge'
+      animation:
+        modele: foule
+        n: 20
+      note: Entreprise fictive de 20 salariés.
+      voix_off: 'Notre fil rouge, ce sont vingt salariés et leurs temps de trajet : nous les suivrons jusqu''à la fin de l''épisode. Pour bien voir la méthode, échauffons-nous d''abord sur une petite classe de vingt-cinq élèves.'
+    - type: titre
+      numero: '1.1'
+      texte: 'Compter : les effectifs'
+      voix_off: 'Première étape, toute simple : compter.'
+    - type: courbe
+      texte: Combien de *frères et sœurs* ? Classe de 25 élèves
+      courbe:
+        style: barres
+        points:
+        - - 0
+          - 5
+        - - 1
+          - 10
+        - - 2
+          - 6
+        - - 3
+          - 4
+        etiquettes:
+        - '0'
+        - '1'
+        - '2'
+        - '3'
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Nombre de frères et sœurs
+        axe_y: Effectif (élèves)
+      note: 'Autre exemple, pour la méthode : une classe fictive de 25 élèves.'
+      voix_off: On demande à vingt-cinq élèves combien ils ont de frères et sœurs. Cinq n'en ont aucun, dix en ont un, six en ont deux et quatre en ont trois. Ces nombres s'appellent des effectifs.
+      verifier:
+      - expression: 5 + 10 + 6 + 4
+        attendu: 25
+        libelle: Total des effectifs
+    - type: texte
+      texte: 'Toujours vérifier le *total* : 5 + 10 + 6 + 4 = 25'
+      voix_off: 'Premier réflexe : vérifier le total. Cinq plus dix plus six plus quatre, cela fait bien vingt-cinq. Sans total, un effectif ne veut pas dire grand-chose.'
+    - type: titre
+      numero: '1.2'
+      texte: 'Rapporter au total : les fréquences'
+      voix_off: 'Deuxième étape : rapporter chaque effectif au total.'
+    - type: formule
+      texte: Fréquence = effectif ÷ total
+      formule:
+      - \text{fréquence}=\dfrac{\text{effectif}}{\text{effectif total}}
+      - \dfrac{10}{25}=0{,}40=40\ \%
+      voix_off: 'La fréquence, c''est l''effectif divisé par le total. Pour les élèves qui ont un frère ou une sœur : dix divisé par vingt-cinq, cela fait zéro virgule quarante, soit quarante pour cent.'
+      verifier:
+      - expression: 10 / 25 * 100
+        attendu: 40
+        libelle: Fréquence de « 1 », en %
+    - type: etapes
+      texte: Le tableau complet
+      etapes:
+      - '0 : 5 élèves, soit *20 %*'
+      - '1 : 10 élèves, soit *40 %*'
+      - '2 : 6 élèves, soit *24 %*'
+      - '3 : 4 élèves, soit *16 %*'
+      voix_off: 'Voici le tableau complet. Aucun frère ou sœur : cinq élèves, soit vingt pour cent. Un : dix élèves, soit quarante pour cent. Deux : six élèves, soit vingt-quatre pour cent. Trois : quatre élèves, soit seize pour cent.'
+      verifier:
+      - expression: 5 / 25 * 100
+        attendu: 20
+        libelle: Fréquence de « 0 », en %
+      - expression: 6 / 25 * 100
+        attendu: 24
+        libelle: Fréquence de « 2 », en %
+      - expression: 4 / 25 * 100
+        attendu: 16
+        libelle: Fréquence de « 3 », en %
+      - expression: 20 + 40 + 24 + 16
+        attendu: 100
+        libelle: Total des fréquences, en %
+    - type: texte
+      texte: Les fréquences font toujours *100 %*
+      voix_off: Les fréquences s'additionnent toujours pour faire cent pour cent. Si ce n'est pas le cas, il manque quelqu'un, ou un arrondi est passé par là.
+    - type: titre
+      numero: '1.3'
+      texte: 'Additionner : les fréquences cumulées'
+      voix_off: 'Troisième étape : les fréquences cumulées.'
+    - type: animation
+      texte: '*Au plus* tant de frères et sœurs'
+      animation:
+        modele: cumul
+        categories:
+        - '0'
+        - '1'
+        - '2'
+        - '3'
+        frequences:
+        - 20
+        - 40
+        - 24
+        - 16
+      etapes:
+      - 'Au plus 0 : *20 %*'
+      - 'Au plus 1 : 20 + 40 = *60 %*'
+      - 'Au plus 2 : 60 + 24 = *84 %*'
+      - 'Au plus 3 : 84 + 16 = *100 %*'
+      voix_off: 'On additionne les fréquences au fur et à mesure. Au plus zéro frère ou sœur : vingt pour cent. Au plus un : vingt plus quarante, soit soixante pour cent. Au plus deux : soixante plus vingt-quatre, soit quatre-vingt-quatre pour cent. Au plus trois : cent pour cent, toute la classe.'
+      verifier:
+      - expression: 20 + 40
+        attendu: 60
+        libelle: Cumul jusqu'à 1
+      - expression: 20 + 40 + 24
+        attendu: 84
+        libelle: Cumul jusqu'à 2
+    - type: chiffre
+      valeur: 84
+      suffixe:
+        fr: ' %'
+        en: '%'
+      texte: des élèves ont *au plus deux* frères et sœurs
+      note: 'Le cumul suit l''ordre des valeurs : il a un sens ici parce que 0, 1, 2, 3 sont rangés.'
+      voix_off: 'Une seule phrase résume alors la classe : quatre-vingt-quatre pour cent des élèves ont au plus deux frères et sœurs. Le cumul a un sens ici parce que les valeurs sont rangées dans l''ordre.'
+    - type: titre
+      numero: '1.4'
+      texte: 'Le piège : comparer des effectifs'
+      voix_off: Dernier point, et c'est le piège le plus courant.
+    - type: etapes
+      texte: Deux classes, *deux tailles*
+      etapes:
+      - 'Classe A, 25 élèves : 10 ont un frère ou une sœur, *40 %*'
+      - 'Classe B, 40 élèves : 12 en ont un, *30 %*'
+      voix_off: Comparons deux classes. Dans la classe A, de vingt-cinq élèves, dix ont exactement un frère ou une sœur, soit quarante pour cent. Dans la classe B, de quarante élèves, ils sont douze, soit trente pour cent seulement.
+      verifier:
+      - expression: 12 / 40 * 100
+        attendu: 30
+        libelle: Classe B, en %
+    - type: texte
+      texte: 12 est plus grand que 10, mais *30 % est plus petit que 40 %*
+      voix_off: Douze est plus grand que dix. Mais rapporté à la taille de la classe, c'est moins. Pour comparer deux groupes de tailles différentes, on compare des fréquences, pas des effectifs.
+    - type: exercice
+      texte: '20 salariés et leur mode de transport : *8 voiture*, *6 transports en commun*, *4 vélo*, *2 marche*.'
+      pause: 8
+      voix_off: 'À vous. Vingt salariés indiquent leur mode de transport : huit en voiture, six en transports en commun, quatre à vélo et deux à pied. Calculez les fréquences. Puis demandez-vous : un cumul aurait-il un sens ici ?'
+      questions:
+      - Calculez la fréquence de chaque mode de transport.
+      - Un cumul aurait-il un sens ici ?
+    - type: correction
+      etapes:
+      - Voiture 8 ÷ 20 = *40 %*, transports 6 ÷ 20 = *30 %*
+      - Vélo 4 ÷ 20 = *20 %*, marche 2 ÷ 20 = *10 %*
+      - 'Cumul : *pas de sens*, ces catégories n''ont pas d''ordre'
+      reponse: Total 100 % ; pas de cumul sans ordre
+      voix_off: 'Correction. Voiture : huit divisé par vingt, quarante pour cent ; transports en commun : trente pour cent. Vélo : vingt pour cent ; marche : dix pour cent. Et le cumul ? Il n''a pas de sens ici : les modes de transport n''ont pas d''ordre naturel. Le total fait bien cent pour cent, et l''on ne cumule que des valeurs rangées, comme un nombre de frères et sœurs ou des durées.'
+      verifier:
+      - expression: 8 / 20 * 100
+        attendu: 40
+        libelle: Voiture, en %
+      - expression: 6 / 20 * 100
+        attendu: 30
+        libelle: Transports en commun, en %
+      - expression: 4 / 20 * 100
+        attendu: 20
+        libelle: Vélo, en %
+      - expression: 2 / 20 * 100
+        attendu: 10
+        libelle: Marche, en %
+      - expression: 8 + 6 + 4 + 2
+        attendu: 20
+        libelle: Total des salariés
+    - type: texte
+      texte: Gardez ces *20 salariés* en tête
+      voix_off: 'Retrouvons nos vingt salariés, notre fil rouge : gardez-les en tête. D''abord, dessinons leurs réponses.'
+    - type: titre
+      numero: '2'
+      texte: 'Dessiner : barres ou histogramme'
+      voix_off: Deux graphiques faits de barres. Sur l'un, elles se touchent ; sur l'autre, non. Ce détail change toute la façon de les lire.
+    - type: titre
+      numero: '2.1'
+      texte: 'Le diagramme en barres : des catégories'
+      voix_off: Commençons par le diagramme en barres.
+    - type: courbe
+      texte: Mode de transport de *20 salariés*
+      courbe:
+        style: barres
+        points:
+        - - 0
+          - 8
+        - - 1
+          - 6
+        - - 2
+          - 4
+        - - 3
+          - 2
+        etiquettes:
+        - Voiture
+        - Transports
+        - Vélo
+        - Marche
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Mode de transport
+        axe_y: Effectif (salariés)
+      note: Entreprise fictive de 20 salariés (exercice du chapitre 1).
+      voix_off: 'Voici les vingt salariés de l''exercice du chapitre 1. Une barre par mode de transport : voiture, transports en commun, vélo, marche. Les barres sont séparées, parce que ce sont des catégories distinctes. On pourrait les ranger dans un autre ordre sans rien changer au sens.'
+      verifier:
+      - expression: 8 + 6 + 4 + 2
+        attendu: 20
+        libelle: Total des salariés
+    - type: titre
+      numero: '2.2'
+      texte: 'L''histogramme : des nombres en classes'
+      voix_off: 'Passons maintenant à une variable numérique : le temps de trajet, en minutes. Un histogramme regroupe ces valeurs en intervalles. Pour une variable numérique discrète, comme un nombre de frères et sœurs, des barres séparées restent possibles, une par valeur.'
+    - type: courbe
+      texte: Temps de trajet, *classes de 10 minutes*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 3
+        - - 10
+          - 7
+        - - 20
+          - 6
+        - - 30
+          - 3
+        - - 40
+          - 1
+        largeur_classe: 10
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Temps de trajet (minutes)
+        axe_y: Effectif (salariés)
+      note: Temps de trajet fictifs des 20 mêmes salariés.
+      voix_off: 'On range les temps de trajet en classes de dix minutes. Trois salariés mettent moins de dix minutes, sept entre dix et vingt, six entre vingt et trente, trois entre trente et quarante, un seul entre quarante et cinquante. Cette fois, les barres se touchent : les minutes forment une suite continue, sans trou entre les classes. Chaque classe contient sa borne gauche, pas sa borne droite : un trajet de vingt minutes compte dans la classe de vingt à trente.'
+      verifier:
+      - expression: 3 + 7 + 6 + 3 + 1
+        attendu: 20
+        libelle: Total, classes de 10 minutes
+    - type: courbe
+      texte: Les mêmes temps, *classes de 20 minutes*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 10
+        - - 20
+          - 9
+        - - 40
+          - 1
+        largeur_classe: 20
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Temps de trajet (minutes)
+        axe_y: Effectif (salariés)
+      voix_off: Ce sont exactement les mêmes données, regroupées en classes de vingt minutes. Dix salariés mettent moins de vingt minutes, neuf entre vingt et quarante, un seul plus de quarante. Le sommet, entre dix et vingt minutes, a disparu.
+      verifier:
+      - expression: 3 + 7
+        attendu: 10
+        libelle: Classe 0 à 20 minutes
+      - expression: 6 + 3
+        attendu: 9
+        libelle: Classe 20 à 40 minutes
+    - type: animation
+      texte: Le choix des classes *change la silhouette*
+      animation:
+        modele: decoupages
+        valeurs: &id001
+        - 4
+        - 7
+        - 9
+        - 11
+        - 12
+        - 14
+        - 15
+        - 16
+        - 18
+        - 19
+        - 21
+        - 23
+        - 25
+        - 26
+        - 27
+        - 29
+        - 32
+        - 35
+        - 38
+        - 44
+        largeurs:
+        - 10
+        - 20
+        unite: min
+      etapes:
+      - '*Une bosse* nette entre 10 et 20 minutes'
+      - Le même sommet *disparaît*
+      univers: immersif
+      voix_off: 'Mettons côte à côte les mêmes vingt temps de trajet. En classes de dix minutes, une bosse nette apparaît, entre dix et vingt minutes. En classes de vingt minutes, ce sommet disparaît : trop larges, les classes cachent les détails ; trop étroites, elles inventent des bosses dues au hasard ; regardez toujours leur largeur.'
+    - type: titre
+      numero: '2.3'
+      texte: 'Classes inégales : la surface compte'
+      voix_off: 'Dernier piège : les classes de largeurs différentes.'
+    - type: courbe
+      texte: '*Construction trompeuse* : hauteur = effectif, classes inégales'
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 3
+        - - 10
+          - 7
+        - - 20
+          - 10
+        largeur_classe: 30
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Temps de trajet (minutes)
+        axe_y: Effectif (salariés)
+      voix_off: 'Regroupons maintenant tout ce qui dépasse vingt minutes dans une seule classe, de vingt à cinquante. Elle contient dix salariés. Si l''on prend l''effectif comme hauteur, cette grande barre écrase tout : on croirait que les trajets longs dominent.'
+      verifier:
+      - expression: 6 + 3 + 1
+        attendu: 10
+        libelle: Classe 20 à 50 minutes
+    - type: formule
+      texte: 'La bonne hauteur : la *densité*'
+      formule:
+      - \text{densité}=\dfrac{\text{effectif}}{\text{largeur de la classe}}
+      - \dfrac{10}{30}\approx 0{,}33\ \text{salarié par minute}
+      voix_off: 'Dans un histogramme, c''est la surface qui représente l''effectif. La hauteur doit donc être une densité : l''effectif divisé par la largeur de la classe. Pour la classe de vingt à cinquante minutes : dix divisé par trente, environ zéro virgule trente-trois salarié par minute.'
+      verifier:
+      - expression: 10 / 30
+        attendu: 0.33
+        libelle: Densité de la classe 20 à 50 minutes
+      - expression: 3 / 10
+        attendu: 0.3
+        libelle: Densité de la classe 0 à 10 minutes
+      - expression: 7 / 10
+        attendu: 0.7
+        libelle: Densité de la classe 10 à 20 minutes
+    - type: animation
+      texte: 'Hauteur = *densité* : l''image redevient juste'
+      animation:
+        modele: densite
+        bornes:
+        - 0
+        - 10
+        - 20
+        - 50
+        effectifs:
+        - 3
+        - 7
+        - 10
+        unite: minutes
+      etapes:
+      - 'Hauteur = effectif : la grande classe *écrase tout*'
+      - 'Hauteur = *densité* : le même espacement partout'
+      - Surface = densité × largeur = *effectif*
+      voix_off: 'Reprenons la construction trompeuse : avec l''effectif comme hauteur, la grande classe de vingt à cinquante minutes écrase tout. Passons à la densité : les barres montent ou descendent, et les pastilles, une par salarié, prennent le même espacement partout ; la classe de dix à vingt minutes redevient la plus dense. La surface de chaque barre redonne son effectif : zéro virgule trois fois dix, trois ; zéro virgule sept fois dix, sept ; un tiers fois trente, dix.'
+      verifier:
+      - expression: 0.7 * 10
+        attendu: 7
+        libelle: Surface de la classe 10 à 20 minutes
+      - expression: 10 / 30 * 30
+        attendu: 10
+        libelle: Surface de la classe 20 à 50 minutes
+    - type: exercice
+      texte: '40 visiteurs d''un musée : *0–20 ans : 8* ; *20–30 ans : 12* ; *30–60 ans : 20*.'
+      pause: 8
+      voix_off: 'À vous. Quarante visiteurs d''un musée fictif : huit ont entre zéro et vingt ans, douze entre vingt et trente ans, vingt entre trente et soixante ans. Un histogramme qui prend l''effectif comme hauteur met en avant les trente à soixante ans. A-t-il raison ? Quelle classe est la plus dense ?'
+      questions:
+      - Un histogramme en effectifs met en avant les 30–60 ans. A-t-il raison ?
+      - Quelle classe est la plus dense ?
+    - type: correction
+      etapes:
+      - '0–20 ans : 8 ÷ 20 = *0,4* visiteur par année d''âge'
+      - '20–30 ans : 12 ÷ 10 = *1,2* visiteur par année d''âge'
+      - '30–60 ans : 20 ÷ 30 ≈ *0,67* visiteur par année d''âge'
+      reponse: 'Les 20–30 ans : la classe la plus dense'
+      voix_off: 'Divisons chaque effectif par la largeur de sa classe. De zéro à vingt ans : huit divisé par vingt, zéro virgule quatre visiteur par année d''âge. De vingt à trente ans : douze divisé par dix, un virgule deux. De trente à soixante ans : vingt divisé par trente, environ zéro virgule soixante-sept. La classe la plus dense est celle des vingt à trente ans : l''histogramme en effectifs était trompeur.'
+      verifier:
+      - expression: 8 / 20
+        attendu: 0.4
+        libelle: Densité 0 à 20 ans
+      - expression: 12 / 10
+        attendu: 1.2
+        libelle: Densité 20 à 30 ans
+      - expression: 20 / 30
+        attendu: 0.67
+        libelle: Densité 30 à 60 ans
+    - type: texte
+      texte: Et si l'on changeait *nous-mêmes* les classes ?
+      voix_off: Avant de regarder la forme, essayons nous-mêmes de changer les classes.
+    - type: titre
+      texte: 'Laboratoire : la largeur des classes'
+      numero: '2.4'
+      univers: immersif
+      voix_off: Laboratoire. Prenons les vingt temps de trajet et changeons nous-mêmes la largeur des classes.
+    - type: animation
+      texte: Classes de *20 minutes*
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Classes de vingt minutes : dix, neuf, un. Le sommet a disparu.'
+      verifier:
+      - expression: 3 + 7
+        attendu: 10
+        libelle: 0 à 20 minutes
+    - type: animation
+      texte: Classes de *10 minutes*
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 10
+        unite: minutes
+      voix_off: 'Classes de dix minutes : trois, sept, six, trois, un. Une bosse nette.'
+    - type: animation
+      texte: 'Classes de *5 minutes* : deux « sommets » ?'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 5
+        unite: minutes
+      voix_off: 'Classes de cinq minutes. Le trajet de quinze minutes est compté dans la classe de quinze à vingt : la borne gauche est incluse. Deux sommets apparaissent, à quinze et à vingt-cinq minutes. Ils ne tiennent qu''à un ou deux salariés. Trop larges, les classes cachent ; trop étroites, elles inventent.'
+      verifier:
+      - expression: 1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1
+        attendu: 20
+        libelle: Classes de 5 minutes
+    - type: courbe
+      texte: 'Âges de 40 visiteurs : *hauteur = effectif*'
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 8
+        - - 20
+          - 12
+        - - 30
+          - 20
+        largeur_classe: 30
+        valeurs: true
+        y_min: 0
+        y_max: 24
+        axe_x: Âge (années)
+        axe_y: Effectif (visiteurs)
+      voix_off: 'Second réglage : les âges de quarante visiteurs, en classes inégales. Avec l''effectif comme hauteur, les trente à soixante ans dominent.'
+    - type: courbe
+      texte: Hauteur = *densité d'effectif*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 0.4
+        - - 20
+          - 1.2
+        - - 30
+          - 0.6667
+        largeur_classe: 30
+        valeurs: false
+        y_min: 0
+        y_max: 1.6
+        axe_x: Âge (années)
+        axe_y: Densité (visiteurs par an)
+        decimales_y: 1
+      note: 'Aires : 0,4 × 20 = 8 ; 1,2 × 10 = 12 ; ⅔ × 30 = 20 ; total 40 (hauteur 0,67 arrondie).'
+      voix_off: 'On bascule sur la densité d''effectif : l''effectif divisé par la largeur, en visiteurs par année d''âge. Zéro virgule quatre, un virgule deux, environ zéro virgule soixante-sept. La classe la plus dense est vingt à trente ans. Et l''aire de chaque rectangle redonne son effectif : un virgule deux fois dix ans, douze visiteurs. L''aire totale vaut quarante, le nombre de visiteurs.'
+      verifier:
+      - expression: 1.2 * 10
+        attendu: 12
+        libelle: Aire 20–30 ans
+      - expression: 0.4 * 20 + 1.2 * 10 + 20 / 30 * 30
+        attendu: 40
+        libelle: Aire totale
+    - type: titre
+      numero: '3'
+      texte: Lire la forme d'une distribution
+      voix_off: Avant de calculer quoi que ce soit, regardez la silhouette d'un histogramme. Elle en dit déjà beaucoup.
+    - type: animation
+      texte: 'Nos *20 salariés* : une bosse, une petite queue à droite'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 10
+        unite: minutes
+      etapes:
+      - Un point par salarié
+      - Une *bosse* entre 10 et 30 minutes
+      - 'Une petite *queue* à droite : 44 minutes'
+      voix_off: 'Revenons à nos vingt salariés. Leur histogramme a une bosse, entre dix et trente minutes, et une petite queue à droite : le salarié qui met quarante-quatre minutes. C''est une propriété de ces données fictives, pas une loi des trajets réels.'
+      verifier:
+      - expression: 3 + 7 + 6 + 3 + 1
+        attendu: 20
+        libelle: Total des salariés
+    - type: titre
+      numero: '3.1'
+      texte: 'Symétrique : deux côtés comparables'
+      voix_off: Première forme, la plus simple.
+    - type: courbe
+      texte: Notes de *20 élèves*, sur 20
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 1
+        - - 4
+          - 4
+        - - 8
+          - 10
+        - - 12
+          - 4
+        - - 16
+          - 1
+        largeur_classe: 4
+        y_min: 0
+        y_max: 12
+        axe_x: Note sur 20
+        axe_y: Élèves
+      note: Notes fictives de 20 élèves.
+      voix_off: Voici les notes fictives de vingt élèves. Une bosse au milieu, entre huit et douze, et deux côtés qui se ressemblent comme dans un miroir. Dans cet exemple, la distribution est à peu près symétrique. Ici, le milieu résume bien le groupe.
+      verifier:
+      - expression: 1 + 4 + 10 + 4 + 1
+        attendu: 20
+        libelle: Total des élèves
+    - type: titre
+      numero: '3.2'
+      texte: 'Asymétrique : une longue queue'
+      voix_off: 'Deuxième forme : la distribution asymétrique.'
+    - type: courbe
+      texte: Revenus mensuels de *25 personnes*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 2
+        - - 1000
+          - 9
+        - - 2000
+          - 6
+        - - 3000
+          - 3
+        - - 4000
+          - 2
+        - - 5000
+          - 1
+        - - 6000
+          - 1
+        - - 7000
+          - 1
+        largeur_classe: 1000
+        y_min: 0
+        y_max: 12
+        axe_x: Revenu (€)
+        axe_y: Personnes
+      note: Revenus fictifs de 25 personnes, classes de 1 000 €.
+      voix_off: 'Voici des revenus mensuels fictifs. La plupart des gens sont à gauche, entre mille et trois mille euros. Puis une longue queue s''étire vers la droite : quelques revenus très élevés. On parle d''asymétrie à droite.'
+      verifier:
+      - expression: 2 + 9 + 6 + 3 + 2 + 1 + 1 + 1
+        attendu: 25
+        libelle: Total des personnes
+    - type: etapes
+      texte: Une queue, *d'un côté ou de l'autre*
+      etapes:
+      - 'Queue *à droite* : quelques valeurs très grandes'
+      - 'Queue *à gauche* : quelques valeurs très petites'
+      voix_off: Une queue peut aller d'un côté ou de l'autre. À droite, elle signale quelques valeurs très grandes, comme les hauts revenus. À gauche, quelques valeurs très petites. Ce qu'une queue fait à la moyenne, on le verra au chapitre 5.
+    - type: titre
+      numero: '3.3'
+      texte: 'Deux bosses : deux groupes ?'
+      voix_off: Troisième forme, la plus surprenante.
+    - type: animation
+      texte: Tailles de *44 adultes*
+      animation:
+        modele: melange
+        origine: 150
+        largeur_classe: 5
+        unite: cm
+        groupes:
+        - - 2
+          - 6
+          - 8
+          - 4
+          - 2
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 1
+          - 4
+          - 9
+          - 5
+          - 2
+        noms:
+        - Femmes ?
+        - Hommes ?
+      etapes:
+      - 'Deux bosses : une distribution *bimodale*'
+      - '*Une explication possible* : deux groupes mélangés'
+      - L'histogramme seul *ne le prouve pas*
+      note: Tailles fictives ; la décomposition en deux groupes est une hypothèse d'illustration.
+      voix_off: 'Voici les tailles fictives de quarante-quatre adultes : deux bosses, l''une autour de cent soixante centimètres, l''autre autour de cent soixante-quinze ; on dit que la distribution est bimodale. Une explication possible : le mélange de deux groupes aux tailles moyennes différentes, par exemple des femmes et des hommes. Mais l''histogramme seul ne le prouve pas : il faut d''autres informations pour l''établir.'
+      verifier:
+      - expression: 2 + 6 + 9 + 5 + 6 + 9 + 5 + 2
+        attendu: 44
+        libelle: Total des adultes
+    - type: texte
+      texte: Deux bosses ? Cherchez si *plusieurs groupes* se mélangent
+      voix_off: 'Si deux groupes se mélangent, un seul nombre « central » ne décrirait ni l''un ni l''autre. Retenez ce réflexe : deux bosses peuvent signaler un mélange de groupes. Vérifiez-le avec d''autres informations, puis séparez-les avant de résumer.'
+    - type: courbe
+      texte: Forme *A*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 1
+        - - 1
+          - 1
+        - - 2
+          - 2
+        - - 3
+          - 3
+        - - 4
+          - 5
+        - - 5
+          - 8
+        - - 6
+          - 10
+        - - 7
+          - 6
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Valeur (sans unité)
+      voix_off: 'Forme A : une queue vers la gauche.'
+    - type: courbe
+      texte: Forme *B*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 1
+        - - 1
+          - 3
+        - - 2
+          - 6
+        - - 3
+          - 9
+        - - 4
+          - 9
+        - - 5
+          - 6
+        - - 6
+          - 3
+        - - 7
+          - 1
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Valeur (sans unité)
+      voix_off: 'Forme B : deux côtés comparables.'
+    - type: courbe
+      texte: Forme *C*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 2
+        - - 1
+          - 7
+        - - 2
+          - 9
+        - - 3
+          - 4
+        - - 4
+          - 4
+        - - 5
+          - 9
+        - - 6
+          - 7
+        - - 7
+          - 2
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Valeur (sans unité)
+      voix_off: 'Forme C : deux bosses.'
+    - type: courbe
+      texte: Forme *D*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 6
+        - - 1
+          - 10
+        - - 2
+          - 8
+        - - 3
+          - 5
+        - - 4
+          - 3
+        - - 5
+          - 2
+        - - 6
+          - 1
+        - - 7
+          - 1
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Valeur (sans unité)
+      voix_off: 'Forme D : une queue vers la droite.'
+    - type: exercice
+      texte: 'Quatre formes, *A*, *B*, *C* et *D*. Quatre variables : âge au décès, revenus, notes à un examen, tailles d''adultes.'
+      pause: 8
+      voix_off: 'À vous. Voici quatre formes, A, B, C et D. Et quatre variables : l''âge au décès, les revenus, les notes à un examen, les tailles d''adultes. Associez chaque variable à sa forme.'
+      questions:
+      - Associez chaque variable à sa forme.
+      formes:
+      - nom: A
+        valeurs:
+        - 1
+        - 1
+        - 2
+        - 3
+        - 5
+        - 8
+        - 10
+        - 6
+      - nom: B
+        valeurs:
+        - 1
+        - 3
+        - 6
+        - 9
+        - 9
+        - 6
+        - 3
+        - 1
+      - nom: C
+        valeurs:
+        - 2
+        - 7
+        - 9
+        - 4
+        - 4
+        - 9
+        - 7
+        - 2
+      - nom: D
+        valeurs:
+        - 6
+        - 10
+        - 8
+        - 5
+        - 3
+        - 2
+        - 1
+        - 1
+    - type: correction
+      etapes:
+      - 'Notes : *B*, à peu près symétrique'
+      - 'Revenus : *D*, queue à droite'
+      - 'Âge au décès : *A*, queue à gauche'
+      - 'Tailles d''adultes : *C*, deux bosses'
+      reponse: Chaque forme a une explication
+      voix_off: 'Voici la correction. Les notes, forme B : souvent à peu près symétriques. Les revenus, forme D : une queue à droite, à cause de quelques revenus très élevés. L''âge au décès, forme A : là où la plupart des décès surviennent à un âge avancé, une queue vers les âges jeunes. Les tailles d''adultes, forme C : deux bosses, sans doute un mélange de femmes et d''hommes. Derrière chaque forme, il y a une explication.'
+    - type: texte
+      texte: 'Un seul nombre pour résumer : *la moyenne* ?'
+      voix_off: 'La forme se voit. Maintenant, mettons-la en un seul nombre. Le premier qui vient à l''esprit : la moyenne.'
+    - type: titre
+      numero: '4'
+      texte: Ce que dit vraiment la moyenne
+      voix_off: « En moyenne. » On le lit dans tous les articles. Mais que veut dire ce mot, exactement ?
+    - type: titre
+      numero: '4.1'
+      texte: La moyenne, un partage égal
+      voix_off: 'Commençons par une image simple : un partage.'
+    - type: animation
+      texte: Quatre amis, *une cagnotte*
+      animation:
+        modele: partage
+        valeurs:
+        - 5
+        - 10
+        - 15
+        - 30
+        unite: €
+      etapes:
+      - Ils ont 5, 10, 15 et 30 €
+      - 'Tout dans la cagnotte : *60 €*'
+      - 'Partagé en quatre : *15 € chacun*'
+      note: 'Autre exemple : quatre amis (fictif).'
+      voix_off: 'Quatre amis mettent leur argent en commun. Ils ont cinq, dix, quinze et trente euros. Dans la cagnotte, cela fait soixante euros. Partagés à parts égales entre les quatre, cela fait quinze euros chacun : c''est la moyenne.'
+      verifier:
+      - expression: 5 + 10 + 15 + 30
+        attendu: 60
+        libelle: Total de la cagnotte
+      - expression: 60 / 4
+        attendu: 15
+        libelle: Part de chacun
+    - type: formule
+      texte: Moyenne = *somme ÷ nombre*
+      formule:
+      - \text{moyenne}=\dfrac{\text{somme des valeurs}}{\text{nombre de valeurs}}
+      - \dfrac{5+10+15+30}{4}=\dfrac{60}{4}=15
+      voix_off: 'D''où la formule : la moyenne, c''est la somme des valeurs divisée par leur nombre. Ici, soixante divisé par quatre : quinze.'
+      verifier:
+      - expression: (5 + 10 + 15 + 30) / 4
+        attendu: 15
+        libelle: Moyenne de la cagnotte
+    - type: titre
+      numero: '4.2'
+      texte: La notation Σ, pas à pas
+      voix_off: Dans les livres, cette formule s'écrit avec un symbole qui fait peur. Il n'a rien de compliqué.
+    - type: formule
+      texte: Σ veut dire *« additionner »*
+      formule:
+      - \bar{x}=\dfrac{x_1+x_2+x_3+x_4}{4}
+      - \bar{x}=\dfrac{1}{n}\times\sum_{i=1}^{n}x_i
+      voix_off: On appelle les valeurs x un, x deux, x trois, x quatre, et la moyenne x barre. Le symbole sigma indique qu'on additionne toutes les valeurs, de la première à la n-ième. Puis on divise cette somme par n, le nombre de valeurs. C'est exactement le calcul de la cagnotte.
+    - type: titre
+      numero: '4.3'
+      texte: Le point d'équilibre
+      voix_off: 'Deuxième façon de voir la moyenne : un point d''équilibre.'
+    - type: animation
+      texte: La moyenne, *point d'équilibre*
+      animation:
+        modele: equilibre
+        valeurs:
+        - 5
+        - 10
+        - 15
+        - 30
+        unite: €
+      etapes:
+      - 'Quatre amis : *5, 10, 15 et 30 €*'
+      - 'L''appui à *15 €* : la planche s''équilibre'
+      - 'Les écarts se *compensent* : leur somme vaut 0'
+      voix_off: 'Posons les quatre montants de la cagnotte sur une planche : cinq, dix, quinze et trente euros. Pour que la planche tienne à l''horizontale, l''appui doit se placer exactement à la moyenne, quinze euros. Là, les écarts se compensent : moins dix et moins cinq d''un côté, plus quinze de l''autre, zéro au total ; c''est toujours vrai pour la moyenne, et une seule valeur très loin suffit à déplacer l''équilibre.'
+      verifier:
+      - expression: (5 + 10 + 15 + 30) / 4
+        attendu: 15
+        libelle: Moyenne de la cagnotte
+      - expression: (5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)
+        attendu: 0
+        libelle: Somme des écarts à la moyenne
+    - type: titre
+      numero: '4.4'
+      texte: La moyenne pondérée
+      voix_off: Et quand toutes les valeurs ne comptent pas autant ?
+    - type: formule
+      texte: 14 en maths, *coefficient 3* ; 10 en français, *coefficient 1*
+      formule:
+      - \dfrac{14\times 3+10\times 1}{3+1}
+      - =\dfrac{52}{4}=13
+      voix_off: 'Une élève a quatorze en mathématiques, avec un coefficient trois, et dix en français, avec un coefficient un. On multiplie chaque note par son coefficient, on additionne, puis on divise par la somme des coefficients. Quatorze fois trois plus dix, cinquante-deux, divisé par quatre : treize.'
+      verifier:
+      - expression: (14 * 3 + 10 * 1) / (3 + 1)
+        attendu: 13
+        libelle: Moyenne pondérée
+    - type: animation
+      texte: 'Sans coefficients : 12. Avec : *13*'
+      animation:
+        modele: ponderee
+        notes:
+        - valeur: 14
+          coef: 3
+          libelle: Maths
+        - valeur: 10
+          coef: 1
+          libelle: Français
+      etapes:
+      - 'Sans coefficients : moyenne *12*'
+      - 'Coefficient 3 : le 14 compte *trois fois*'
+      - 'Avec coefficients : moyenne *13*'
+      voix_off: 'Représentons les deux notes par des pastilles : quatorze et dix, dont la moyenne simple vaut douze. Le coefficient trois fait compter le quatorze trois fois : trois pastilles de quatorze, une seule de dix. La moyenne glisse alors de douze à treize : la moyenne pondérée donne plus de poids à ce qui compte le plus, ici les mathématiques.'
+      verifier:
+      - expression: (14 + 10) / 2
+        attendu: 12
+        libelle: Moyenne simple des deux notes
+      - expression: (14 + 14 + 14 + 10) / 4
+        attendu: 13
+        libelle: Moyenne pondérée, pastille par pastille
+    - type: exercice
+      texte: 'Classe de *10 élèves* : 12 de moyenne. Classe de *30 élèves* : 8 de moyenne.'
+      pause: 8
+      voix_off: À vous. Une classe de dix élèves a douze de moyenne. Une classe de trente élèves a huit de moyenne. Quelle est la moyenne générale des quarante élèves ?
+      questions:
+      - Quelle est la moyenne générale des 40 élèves ?
+    - type: correction
+      etapes:
+      - 10 × 12 = 120 points et 30 × 8 = 240 points
+      - (120 + 240) ÷ 40 = *9*
+      reponse: 9, et non 10
+      voix_off: 'Faisons le calcul. La première classe totalise dix fois douze, cent vingt points ; la seconde, trente fois huit, deux cent quarante points. Trois cent soixante points pour quarante élèves : neuf de moyenne. Pas dix, qui serait la moyenne des deux moyennes : la grande classe pèse trois fois plus.'
+      verifier:
+      - expression: (10 * 12 + 30 * 8) / 40
+        attendu: 9
+        libelle: Moyenne générale
+      - expression: (12 + 8) / 2
+        attendu: 10
+        libelle: Moyenne des moyennes (fausse)
+    - type: chiffre
+      valeur: 170
+      suffixe:
+        fr: ' cm'
+        en: ' cm'
+      texte: la moyenne tombe *dans le creux*, entre les deux bosses
+      note: 'Moyenne approchée par les centres de classes : environ 169,8 cm.'
+      voix_off: 'Souvenez-vous des tailles à deux bosses. On ne connaît que les classes : on prend le milieu de chaque classe, par exemple cent cinquante-deux et demi pour la classe de cent cinquante à cent cinquante-cinq, comme valeur de ses adultes. On obtient une moyenne approchée d''environ cent soixante-dix centimètres. Elle tombe dans le creux, là où il y a peu de monde : une moyenne peut ne décrire personne.'
+      verifier:
+      - expression: (152.5*2 + 157.5*6 + 162.5*9 + 167.5*5 + 172.5*6 + 177.5*9 + 182.5*5 + 187.5*2) / 44
+        attendu: 170
+        libelle: Moyenne approchée, en cm
+    - type: chiffre
+      texte: le trajet moyen de nos *20 salariés*
+      valeur: 21.25
+      decimales: 2
+      suffixe:
+        fr: ' min'
+        en: ' min'
+      note: 'Total des 20 trajets : 425 minutes ; 425 ÷ 20 = 21,25.'
+      verifier:
+      - expression: 4 + 7 + 9 + 11 + 12 + 14 + 15 + 16 + 18 + 19 + 21 + 23 + 25 + 26 + 27 + 29 + 32 + 35 + 38 + 44
+        attendu: 425
+        libelle: Somme des 20 trajets
+      - expression: 425 / 20
+        attendu: 21.25
+        libelle: Trajet moyen
+      voix_off: 'Et nos vingt salariés ? Leurs trajets font quatre cent vingt-cinq minutes au total. Divisé par vingt, cela donne vingt et une minutes et quart. C''est ce qu''aurait chacun si l''on partageait également le total des durées individuelles. Ce total additionne des trajets séparés : ce n''est pas un temps passé ensemble.'
+    - type: texte
+      texte: '21,25 min : le trajet d''un salarié *typique* ?'
+      voix_off: 21,25 minutes. Est-ce le trajet d'un salarié typique ? Pas forcément.
+    - type: titre
+      numero: '5'
+      texte: Moyenne ou médiane ?
+      voix_off: Pourquoi la plupart des gens gagnent-ils moins que le salaire moyen ? Ça paraît impossible. Et pourtant, c'est très courant.
+    - type: exercice
+      texte: Dans un groupe, quelle part des gens gagne *moins que la moyenne* ?
+      etiquette: DÉFI
+      pause: 4
+      voix_off: Une question pour commencer. Dans un groupe de salariés, quelle part gagne moins que le salaire moyen ? Moins de la moitié, la moitié, ou plus de la moitié ? Gardez votre réponse en tête.
+    - type: titre
+      numero: '5.1'
+      texte: La moyenne
+      voix_off: Commençons par la moyenne.
+    - type: texte
+      texte: Neuf clients dans un café gagnent de *1 600 €* à *2 800 €* par mois
+      note: 1 600 · 1 800 · 1 900 · 2 000 · 2 200 · 2 300 · 2 500 · 2 700 · 2 800 €
+      voix_off: Neuf clients sont assis dans un café. Ils gagnent entre mille six cents et deux mille huit cents euros par mois.
+    - type: formule
+      texte: Leur salaire *moyen*
+      formule:
+      - \mathrm{moyenne}=\dfrac{\mathrm{somme}}{\mathrm{nombre}}
+      - =\dfrac{19\,800}{9}=2\,200
+      voix_off: 'La moyenne, c''est la somme divisée par le nombre de personnes. Leurs salaires font au total dix-neuf mille huit cents euros. Divisé par neuf : deux mille deux cents euros.'
+      note: En euros par mois.
+      verifier:
+      - expression: 1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800
+        attendu: 19800
+        libelle: Somme des 9 salaires
+      - expression: 19800 / 9
+        attendu: 2200
+        libelle: Moyenne des 9 salaires
+    - type: texte
+      texte: Un dixième client entre. Il gagne *200 000 €* par mois.
+      voix_off: 'La porte s''ouvre. Un dixième client entre : il gagne deux cent mille euros par mois.'
+    - type: formule
+      texte: La moyenne *s'envole*
+      formule:
+      - \dfrac{19\,800+200\,000}{10}
+      - =21\,980
+      voix_off: Recalculons. Dix-neuf mille huit cents plus deux cent mille, divisé par dix. Le salaire moyen du café passe à vingt et un mille neuf cent quatre-vingts euros.
+      verifier:
+      - expression: (19800 + 200000) / 10
+        attendu: 21980
+        libelle: Moyenne des 10 salaires
+    - type: chiffre
+      valeur: 90
+      suffixe:
+        fr: ' %'
+        en: '%'
+      texte: des clients gagnent désormais *moins que la moyenne*
+      note: 9 clients sur 10.
+      voix_off: 'Neuf clients sur dix gagnent maintenant moins que la moyenne. Personne n''a changé de salaire : une seule valeur extrême a tiré la moyenne vers le haut.'
+      verifier:
+      - expression: 100 * 9 / 10
+        attendu: 90
+        libelle: Part des clients sous la moyenne, en %
+    - type: titre
+      numero: '5.2'
+      texte: La médiane
+      voix_off: 'Il existe un autre indicateur, qui résiste beaucoup mieux : la médiane.'
+    - type: etapes
+      texte: Calculer une médiane
+      etapes:
+      - Ranger les valeurs *dans l'ordre*
+      - 'Nombre impair : la valeur *du milieu*'
+      - 'Nombre pair : la moyenne des *deux du milieu*'
+      voix_off: La médiane se calcule en trois temps. D'abord, on range les valeurs de la plus petite à la plus grande. Avec un nombre impair de valeurs, la médiane est celle du milieu. Avec un nombre pair, on prend la moyenne des deux valeurs du milieu.
+    - type: animation
+      texte: La médiane *par élimination*
+      animation:
+        modele: elimination
+        valeurs: &id002
+        - 1600
+        - 1800
+        - 1900
+        - 2000
+        - 2200
+        - 2300
+        - 2500
+        - 2700
+        - 2800
+        ajout: 200000
+        unite: €
+      etapes:
+      - Neuf salaires, *rangés*
+      - On barre le plus *bas* et le plus *haut*
+      - 'Il reste le *milieu* : la 5e valeur'
+      - Le client à *200 000 €* entre
+      - 'Dix valeurs : la moyenne des *deux du milieu*'
+      voix_off: 'Revenons au café et rangeons ses neuf premiers salaires, du plus bas au plus haut. Barrons le plus bas et le plus haut, puis recommençons, deux par deux. Il reste la cinquième valeur, deux mille deux cents euros : c''est la médiane, à la position n plus un sur deux. Le client riche entre, avec deux cent mille euros : il y a maintenant dix salaires. On barre à nouveau deux par deux, et il en reste deux, la cinquième et la sixième : la médiane est leur moyenne, deux mille deux cent cinquante euros.'
+      verifier:
+      - expression: (9 + 1) / 2
+        attendu: 5
+        libelle: Position du milieu, 9 valeurs
+      - expression: (10 + 1) / 2
+        attendu: 5.5
+        libelle: Position du milieu, 10 valeurs
+      - expression: (2200 + 2300) / 2
+        attendu: 2250
+        libelle: Médiane des 10 salaires
+    - type: etapes
+      texte: Une valeur extrême
+      etapes:
+      - 'Moyenne : de 2 200 € à *21 980 €*'
+      - 'Médiane : de 2 200 € à *2 250 €*'
+      voix_off: Comparons. Une seule valeur extrême fait passer la moyenne de deux mille deux cents à près de vingt-deux mille euros. La médiane, elle, ne gagne que cinquante euros.
+      verifier:
+      - expression: 2250 - 2200
+        attendu: 50
+        libelle: Hausse de la médiane, en euros
+    - type: courbe
+      texte: Les dix salaires, *du plus bas au plus haut*
+      courbe:
+        points:
+        - - 1
+          - 1600
+        - - 2
+          - 1800
+        - - 3
+          - 1900
+        - - 4
+          - 2000
+        - - 5
+          - 2200
+        - - 6
+          - 2300
+        - - 7
+          - 2500
+        - - 8
+          - 2700
+        - - 9
+          - 2800
+        - - 10
+          - 200000
+        style: points
+        seuils:
+        - valeur: 21980
+          label: 'Moyenne : 21 980 €'
+        - valeur: 2250
+          label: 'Médiane : 2 250 €'
+        axe_x: Rang du client
+        reperes:
+        - x: 10
+          label: 200 000 €
+      note: Neuf salaires groupés en bas, un seul tout en haut.
+      voix_off: 'Rangeons les dix salaires, du plus bas au plus haut : neuf restent groupés, la médiane avec eux, à deux mille deux cent cinquante euros. Le dixième, deux cent mille euros, tire à lui seul la moyenne jusqu''à vingt et un mille neuf cent quatre-vingts euros, au-dessus de neuf salaires sur dix.'
+      verifier:
+      - expression: (1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10
+        attendu: 21980
+        libelle: Moyenne des dix salaires du graphique
+    - type: animation
+      texte: Moyenne et médiane selon la *forme* de la distribution
+      animation:
+        modele: asymetrie
+      etapes:
+      - 'Longue traîne vers le haut : moyenne *souvent au-dessus* de la médiane'
+      - 'Distribution symétrique : moyenne *proche* de la médiane'
+      - 'Longue traîne vers le bas : moyenne *souvent en dessous* de la médiane'
+      voix_off: 'C''est une tendance fréquente, pas une loi : tout dépend de la forme de la distribution. Quand quelques valeurs très grandes forment une longue traîne vers le haut, comme souvent les salaires ou les patrimoines, la moyenne passe souvent au-dessus de la médiane. Quand la distribution est parfaitement symétrique, elles coïncident ; à peu près symétrique, elles sont proches. Et quand la traîne part vers le bas, la moyenne passe souvent en dessous.'
+    - type: texte
+      texte: 'Moyenne au-dessus de la médiane : *au moins la moitié* des valeurs sont inférieures à la moyenne'
+      voix_off: Voilà la réponse au défi. Par définition, au moins la moitié des valeurs sont inférieures ou égales à la médiane. Si la moyenne est au-dessus de la médiane, au moins la moitié des valeurs sont donc inférieures à la moyenne. Pour des salaires, cela fait au moins la moitié des salariés, et souvent bien plus.
+    - type: exercice
+      texte: 'Sept salaires mensuels : 1 500, 1 600, 1 700, 1 800, 1 900, 2 000 et 2 100 €.'
+      pause: 8
+      voix_off: 'À vous. Sept salaires mensuels : mille cinq cents, mille six cents, mille sept cents, mille huit cents, mille neuf cents, deux mille et deux mille cent euros. Calculez la moyenne et la médiane. Puis recommencez après l''arrivée d''un salaire de vingt mille euros.'
+      questions:
+      - Calculez la moyenne et la médiane.
+      - 'Un salaire de *20 000 €* arrive : recalculez la moyenne et la médiane.'
+    - type: correction
+      etapes:
+      - 'Avant : 12 600 ÷ 7 = *1 800 €* ; médiane *1 800 €*'
+      - 'Après : 32 600 ÷ 8 = *4 075 €*'
+      - 'Médiane : (1 800 + 1 900) ÷ 2 = *1 850 €*'
+      reponse: La moyenne fait plus que doubler, la médiane gagne 50 €
+      voix_off: 'Voici la correction. Avant, la somme vaut douze mille six cents euros : divisée par sept, la moyenne est de mille huit cents euros, comme la médiane, la quatrième valeur. Après, la somme passe à trente-deux mille six cents euros, divisée par huit : quatre mille soixante-quinze euros. Avec huit valeurs, la médiane est la moyenne de la quatrième et de la cinquième : mille huit cent cinquante euros. La moyenne a plus que doublé, la médiane n''a gagné que cinquante euros.'
+      verifier:
+      - expression: 1500 + 1600 + 1700 + 1800 + 1900 + 2000 + 2100
+        attendu: 12600
+        libelle: Somme des 7 salaires
+      - expression: 12600 / 7
+        attendu: 1800
+        libelle: Moyenne des 7 salaires
+      - expression: (12600 + 20000) / 8
+        attendu: 4075
+        libelle: Moyenne des 8 salaires
+      - expression: (1800 + 1900) / 2
+        attendu: 1850
+        libelle: Médiane des 8 salaires
+    - type: titre
+      numero: '5.3'
+      texte: Laquelle choisir ?
+      voix_off: 'La moyenne est sensible aux valeurs extrêmes : une seule valeur très élevée peut la tirer vers le haut. La médiane, elle, dépend de la position centrale des valeurs ordonnées. Cela ne signifie pas qu''elle est toujours meilleure : le bon indicateur dépend de la question que l''on cherche à éclairer.'
+    - type: animation
+      texte: Chaque indicateur répond à *sa* question
+      animation:
+        modele: questions
+        questions:
+        - question: Que gagne un salarié *typique* ?
+          reponse: la *médiane*
+          icone: mediane
+        - question: Combien coûtent *tous* les salaires ?
+          reponse: la *moyenne* × l'effectif
+          icone: equilibre
+      etapes:
+      - « Que gagne un salarié typique ? » → la *médiane*
+      - « Combien coûtent tous les salaires ? » → la *moyenne*, × l'effectif
+      - 'Le plus honnête : donner *les deux*'
+      voix_off: 'Chaque indicateur répond à sa propre question. Pour savoir ce que gagne un salarié typique, la médiane est la bonne réponse. Pour savoir combien coûtent tous les salaires ensemble, il faut la moyenne, multipliée par le nombre de salariés : la médiane ne le permet pas. Le plus honnête est souvent de donner les deux, car l''écart entre elles dit à lui seul si la distribution est asymétrique.'
+    - type: texte
+      texte: 'La médiane a sa limite : elle ignore *l''ampleur* des écarts'
+      note: Avec un client à 2 millions € par mois, la médiane du café resterait 2 250 €.
+      voix_off: 'La médiane a aussi sa limite : elle ignore l''ampleur des écarts. Que le client riche gagne deux cent mille euros ou deux millions, la médiane du café reste la même. Elle indique le centre, mais pas à quel point les valeurs sont dispersées : deux groupes peuvent avoir la même médiane et des inégalités très différentes.'
+    - type: titre
+      texte: 'Laboratoire : une seule valeur extrême'
+      numero: '5.4'
+      univers: immersif
+      voix_off: Deuxième laboratoire. Faisons bouger une seule valeur, et regardons qui suit.
+    - type: animation
+      texte: 'Le dixième client : *curseur* de 2 300 à 200 000 €'
+      univers: immersif
+      animation:
+        modele: curseur
+        valeurs:
+        - 1600
+        - 1800
+        - 1900
+        - 2000
+        - 2200
+        - 2300
+        - 2500
+        - 2700
+        - 2800
+        - 2300
+        indice: 9
+        vers: 200000
+        axe_max: 3600
+        unite: €
+        decimales: 0
+      etapes:
+      - Neuf salaires, et un *dixième client* à 2 300 €
+      - 'Médiane : *2 250 €*'
+      - 'Moyenne : *2 210 €*'
+      - 'Le dixième monte à 200 000 € : la moyenne *s''envole*, la médiane *reste*'
+      voix_off: 'Les neuf salaires du café, et un dixième client dont on fait monter le salaire. À chaque position, on range à nouveau les dix salaires et on recalcule. À deux mille trois cents euros : moyenne deux mille deux cent dix, médiane deux mille deux cent cinquante. À cinquante mille : moyenne six mille neuf cent quatre-vingts, médiane toujours deux mille deux cent cinquante. À deux cent mille : moyenne vingt et un mille neuf cent quatre-vingts. La médiane ne bouge pas : dès deux mille trois cents euros, le dixième client se range après le sixième salaire, et les deux valeurs du milieu restent deux mille deux cents et deux mille trois cents.'
+      verifier:
+      - expression: (19800 + 2300) / 10
+        attendu: 2210
+        libelle: Moyenne à 2 300 €
+      - expression: (19800 + 50000) / 10
+        attendu: 6980
+        libelle: Moyenne à 50 000 €
+      - expression: (19800 + 200000) / 10
+        attendu: 21980
+        libelle: Moyenne à 200 000 €
+      - expression: (2200 + 2300) / 2
+        attendu: 2250
+        libelle: Médiane dès 2 300 €
+    - type: animation
+      texte: 'Un salarié *déménage* : 44 → 120 minutes'
+      univers: immersif
+      animation:
+        modele: curseur
+        valeurs: *id001
+        indice: 19
+        vers: 120
+        axe_max: 55
+        unite: minutes
+        decimales: 2
+      etapes:
+      - Les mêmes *20 salariés*
+      - 'Médiane : *20 min*'
+      - 'Moyenne : *21,25 min*'
+      - '44 → 120 minutes : moyenne *25,05 min*, médiane *20 min*'
+      voix_off: 'Retour à l''entreprise. On n''ajoute personne : le salarié qui mettait quarante-quatre minutes déménage et en met cent vingt. Ce sont toujours les mêmes vingt salariés. La moyenne passe de vingt et une minutes et quart à vingt-cinq minutes et cinq centièmes. La médiane reste à vingt minutes. Un seul individu a bougé, et seule la moyenne l''a suivi.'
+      verifier:
+      - expression: (425 - 44 + 120) / 20
+        attendu: 25.05
+        libelle: Moyenne après le déménagement
+      - expression: (19 + 21) / 2
+        attendu: 20
+        libelle: Médiane des trajets
+    - type: etapes
+      texte: À retenir
+      etapes:
+      - Comparer des *fréquences*, pas des effectifs
+      - 'Classes inégales : la *surface* compte'
+      - Regarder la *forme* avant tout calcul
+      - 'Moyenne : *partage égal* du total'
+      - 'Médiane : coupe en *deux* ; queue à droite, moyenne souvent au-dessus'
+      voix_off: 'Ce qu''il faut retenir. Un : on compte, puis on rapporte au total ; on compare des fréquences, pas des effectifs. Deux : des barres séparées pour des catégories, un histogramme pour des nombres, et quand les classes sont inégales, c''est la surface qui compte. Trois : regardez la forme avant tout calcul ; deux bosses, c''est peut-être deux groupes. Quatre : la moyenne, c''est le total divisé par le nombre, ce qu''aurait chacun si l''on partageait également ; une seule valeur extrême la déplace. Cinq : la médiane coupe en deux ; avec une queue à droite, la moyenne est souvent au-dessus de la médiane. Choisissez celle qui répond à votre question.'
+    - type: exercice
+      texte: 'Dix salariés, temps de trajet en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et *90*.'
+      pause: 15
+      voix_off: 'À vous, et mettez la vidéo en pause pour répondre. Dix salariés d''une agence fictive mettent, en minutes : 5, 8, 12, 15, 15, 18, 22, 25, 30 et 90. Un : quelle part met moins de 20 minutes ? Deux : quelle forme a cette distribution ? Trois : calculez la moyenne et la médiane. Quatre : combien de salariés sont sous la moyenne, et quel nombre annonceriez-vous comme « trajet typique » ?'
+      questions:
+      - Quelle part met moins de 20 minutes ?
+      - Quelle forme a cette distribution ?
+      - Calculez la moyenne et la médiane.
+      - Combien de salariés sont sous la moyenne ? Quel « trajet typique » annonceriez-vous ?
+    - type: correction
+      etapes:
+      - 'Moins de 20 min : 6 sur 10, *60 %*'
+      - 'Forme : *queue à droite* (le trajet de 90 min)'
+      - 'Moyenne : 240 ÷ 10 = *24 min*'
+      - 'Médiane : (15 + 18) ÷ 2 = *16,5 min*'
+      voix_off: 'Un : 6 sur 10, soit 60 % (5, 8, 12, 15, 15 et 18). Deux : une queue à droite, due au trajet de 90 minutes. Trois : somme 240, moyenne 240 ÷ 10 = 24 minutes ; dix valeurs, donc la médiane est la moyenne des 5e et 6e : (15 + 18) ÷ 2 = 16,5 minutes.'
+      verifier:
+      - expression: 5+8+12+15+15+18+22+25+30+90
+        attendu: 240
+        libelle: Somme
+      - expression: 240 / 10
+        attendu: 24
+        libelle: Moyenne
+      - expression: (15 + 18) / 2
+        attendu: 16.5
+        libelle: Médiane
+      - expression: 6 / 10 * 100
+        attendu: 60
+        libelle: Part sous 20 min
+    - type: etapes
+      texte: Correction (suite)
+      etapes:
+      - '7 sur 10 sous la moyenne : trajet typique *16,5 min*'
+      - 'Si 90 était une erreur pour 35 : moyenne *18,5 min*, médiane inchangée'
+      verifier:
+      - expression: (240 - 90 + 35) / 10
+        attendu: 18.5
+        libelle: Moyenne si 90 était 35
+      voix_off: 'Quatre : 7 salariés sur 10 sont sous la moyenne ; le trajet typique, c''est la médiane, 16,5 minutes. Pour aller plus loin : si les 90 minutes étaient une erreur de saisie pour 35, la moyenne tomberait à 18,5 minutes et la médiane ne bougerait pas.'
+    - type: cloture
+      texte: 'Prochain épisode : *les écarts*. Une question ? *En commentaire*'
+      voix_off: 'Voilà : la prochaine fois qu''on vous annonce un salaire moyen ou un temps d''attente moyen, vous saurez quelle question poser. Mais deux équipes peuvent avoir la même médiane et des trajets très différents : c''est tout l''enjeu du prochain épisode, sur les écarts. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu''un à qui elle servira. Et si un exercice vous résiste, écrivez-nous en commentaire : on vous aide, gratuitement. Merci d''avoir regardé, et à très vite !'
+    - type: fin
+      texte: Éveiller par les chiffres.
+      voix_off: ACTU-BASICS. Éveiller par les chiffres.
+  en:
+    titre: 'Mean, median, histogram: summarizing data without being fooled'
+    legende: 'How do you summarize data without betraying it? A table keeps the proportions, a histogram the shape, the mean the total, the median the middle. Five chapters, two live labs, a worked summary exercise. Made-up data, checked calculations. Method sources: OpenStax, Introductory Statistics 2e, “Measures of the Center of the Data”; NIST/SEMATECH e-Handbook of Statistical Methods, “Histogram”. Stuck on an exercise? Ask in the comments.
+
+      '
+    hashtags:
+    - statistics
+    - mean
+    - median
+    - histogram
+    scenes:
+    - type: accroche
+      texte: 'Twenty employees. *Which tells the truth*: the mean or the median?'
+      voix_off: 'Twenty employees. One question: how long does it take them to get to work? The mean says just over 21 minutes. Yet half of them take 20 minutes or less. And if just one employee moves far away, the mean jumps… while almost nothing changes for anyone else. Which number tells the truth?'
+    - type: accueil
+      texte: Hi, and *welcome*!
+      voix_off: 'Hi, and welcome! Thanks for being here. Salaries, grades, commuting times: we sum everything up with an average. In this episode, we''ll see when it tells the truth, when it misleads, and what to use instead.'
+    - type: animation
+      texte: What you'll *learn*
+      animation:
+        modele: apercu
+        cartes:
+        - icone: tableau
+          texte: Build a frequency *table*
+        - icone: histogramme
+          texte: Choose and read a *histogram*
+        - icone: forme
+          texte: Recognise a distribution's *shape*
+        - icone: equilibre
+          texte: Compute a *mean*
+        - icone: mediane
+          texte: Find the *median*
+        - icone: laboratoire
+          texte: Test it in the *lab*, then practise
+      voix_off: 'By the end, you''ll be able to summarize a data set, read its distribution and choose between mean and median. In practice: build a frequency table; choose and read a histogram; recognise the shape of a distribution; compute a mean, and see why it''s a balance point; find a median; and check it all yourself, with two labs and a worked exercise.'
+    - type: titre
+      numero: '1'
+      texte: 'Counting: counts, frequencies, cumulative'
+      voix_off: 'A thousand answers to a survey: nobody is going to read them one by one. How do you sum them up?'
+    - type: animation
+      texte: '*20 employees*: our common thread'
+      animation:
+        modele: foule
+        n: 20
+      note: Fictional company with 20 employees.
+      voix_off: 'Our common thread is twenty employees and their commuting times: we''ll follow them to the end of the episode. To see the method clearly, let''s warm up first with a small class of twenty-five pupils.'
+    - type: titre
+      numero: '1.1'
+      texte: 'Counting: the counts'
+      voix_off: 'Step one is very simple: count.'
+    - type: courbe
+      texte: How many *brothers and sisters*? Class of 25
+      courbe:
+        style: barres
+        points:
+        - - 0
+          - 5
+        - - 1
+          - 10
+        - - 2
+          - 6
+        - - 3
+          - 4
+        etiquettes:
+        - '0'
+        - '1'
+        - '2'
+        - '3'
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Number of brothers and sisters
+        axe_y: Count (pupils)
+      note: 'Another example, to learn the method: a fictional class of 25 pupils.'
+      voix_off: We ask twenty-five pupils how many brothers and sisters they have. Five have none, ten have one, six have two and four have three. These numbers are called counts.
+      verifier:
+      - expression: 5 + 10 + 6 + 4
+        attendu: 25
+        libelle: Total count
+    - type: texte
+      texte: 'Always check the *total*: 5 + 10 + 6 + 4 = 25'
+      voix_off: 'First habit: check the total. Five plus ten plus six plus four does make twenty-five. Without the total, a count doesn''t mean much.'
+    - type: titre
+      numero: '1.2'
+      texte: 'Dividing by the total: frequencies'
+      voix_off: 'Step two: divide each count by the total.'
+    - type: formule
+      texte: Frequency = count ÷ total
+      formule:
+      - \text{frequency}=\dfrac{\text{count}}{\text{total count}}
+      - \dfrac{10}{25}=0.40=40\%
+      voix_off: 'The frequency is the count divided by the total. For the pupils with one brother or sister: ten divided by twenty-five is zero point four zero, or forty percent.'
+      verifier:
+      - expression: 10 / 25 * 100
+        attendu: 40
+        libelle: Frequency of “1”, in %
+    - type: etapes
+      texte: The full table
+      etapes:
+      - '0: 5 pupils, or *20%*'
+      - '1: 10 pupils, or *40%*'
+      - '2: 6 pupils, or *24%*'
+      - '3: 4 pupils, or *16%*'
+      voix_off: 'Here is the full table. No brothers or sisters: five pupils, or twenty percent. One: ten pupils, or forty percent. Two: six pupils, or twenty-four percent. Three: four pupils, or sixteen percent.'
+      verifier:
+      - expression: 5 / 25 * 100
+        attendu: 20
+        libelle: Frequency of “0”, in %
+      - expression: 6 / 25 * 100
+        attendu: 24
+        libelle: Frequency of “2”, in %
+      - expression: 4 / 25 * 100
+        attendu: 16
+        libelle: Frequency of “3”, in %
+      - expression: 20 + 40 + 24 + 16
+        attendu: 100
+        libelle: Total of frequencies, in %
+    - type: texte
+      texte: Frequencies always add up to *100%*
+      voix_off: Frequencies always add up to one hundred percent. If they don't, someone is missing, or rounding got in the way.
+    - type: titre
+      numero: '1.3'
+      texte: 'Adding up: cumulative frequencies'
+      voix_off: 'Step three: cumulative frequencies.'
+    - type: animation
+      texte: '*At most* so many brothers and sisters'
+      animation:
+        modele: cumul
+        categories:
+        - '0'
+        - '1'
+        - '2'
+        - '3'
+        frequences:
+        - 20
+        - 40
+        - 24
+        - 16
+      etapes:
+      - 'At most 0: *20%*'
+      - 'At most 1: 20 + 40 = *60%*'
+      - 'At most 2: 60 + 24 = *84%*'
+      - 'At most 3: 84 + 16 = *100%*'
+      voix_off: 'We add the frequencies as we go. At most zero brothers or sisters: twenty percent. At most one: twenty plus forty, sixty percent. At most two: sixty plus twenty-four, eighty-four percent. At most three: one hundred percent, the whole class.'
+      verifier:
+      - expression: 20 + 40
+        attendu: 60
+        libelle: Cumulative up to 1
+      - expression: 20 + 40 + 24
+        attendu: 84
+        libelle: Cumulative up to 2
+    - type: chiffre
+      valeur: 84
+      suffixe:
+        fr: ' %'
+        en: '%'
+      texte: of pupils have *at most two* brothers and sisters
+      note: 'Cumulating follows the order of the values: it makes sense here because 0, 1, 2, 3 are ordered.'
+      voix_off: 'One sentence now sums up the class: eighty-four percent of the pupils have at most two brothers and sisters. Cumulating makes sense here because the values come in order.'
+    - type: titre
+      numero: '1.4'
+      texte: 'The trap: comparing counts'
+      voix_off: One last point, and it is the most common trap.
+    - type: etapes
+      texte: Two classes, *two sizes*
+      etapes:
+      - 'Class A, 25 pupils: 10 have one brother or sister, *40%*'
+      - 'Class B, 40 pupils: 12 have one, *30%*'
+      voix_off: Let's compare two classes. In class A, with twenty-five pupils, ten have exactly one brother or sister, or forty percent. In class B, with forty pupils, there are twelve, only thirty percent.
+      verifier:
+      - expression: 12 / 40 * 100
+        attendu: 30
+        libelle: Class B, in %
+    - type: texte
+      texte: 12 is more than 10, but *30% is less than 40%*
+      voix_off: Twelve is more than ten. But relative to the size of the class, it is less. To compare groups of different sizes, compare frequencies, not counts.
+    - type: exercice
+      texte: '20 employees and how they get to work: *8 car*, *6 public transport*, *4 bike*, *2 walk*.'
+      pause: 8
+      voix_off: 'Your turn. Twenty employees say how they get to work: eight by car, six by public transport, four by bike and two on foot. Work out the frequencies. Then ask yourself: would a cumulative total make sense here?'
+      questions:
+      - Work out the frequency of each way of getting to work.
+      - Would a cumulative total make sense here?
+    - type: correction
+      etapes:
+      - Car 8 ÷ 20 = *40%*, public transport 6 ÷ 20 = *30%*
+      - Bike 4 ÷ 20 = *20%*, walk 2 ÷ 20 = *10%*
+      - 'Cumulative: *no meaning*, these categories have no order'
+      reponse: Total 100%; no cumulative without an order
+      voix_off: 'Here''s the answer. Car: eight divided by twenty, forty percent; public transport: thirty percent. Bike: twenty percent; walking: ten percent. And the cumulative total? It has no meaning here: ways of getting to work have no natural order. The total is one hundred percent, and we only accumulate values that can be ranked, like a number of siblings or durations.'
+      verifier:
+      - expression: 8 / 20 * 100
+        attendu: 40
+        libelle: Car, in %
+      - expression: 6 / 20 * 100
+        attendu: 30
+        libelle: Public transport, in %
+      - expression: 4 / 20 * 100
+        attendu: 20
+        libelle: Bike, in %
+      - expression: 2 / 20 * 100
+        attendu: 10
+        libelle: Walk, in %
+      - expression: 8 + 6 + 4 + 2
+        attendu: 20
+        libelle: Total employees
+    - type: texte
+      texte: Keep these *20 employees* in mind
+      voix_off: 'Back to our twenty employees, our common thread: keep them in mind. First, let''s draw their answers.'
+    - type: titre
+      numero: '2'
+      texte: 'Drawing: bar chart or histogram'
+      voix_off: Two charts made of bars. On one, the bars touch; on the other, they don't. That detail changes how you read them.
+    - type: titre
+      numero: '2.1'
+      texte: 'The bar chart: categories'
+      voix_off: Let's start with the bar chart.
+    - type: courbe
+      texte: How *20 employees* get to work
+      courbe:
+        style: barres
+        points:
+        - - 0
+          - 8
+        - - 1
+          - 6
+        - - 2
+          - 4
+        - - 3
+          - 2
+        etiquettes:
+        - Car
+        - Public transport
+        - Bike
+        - Walk
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Way of getting to work
+        axe_y: Count (employees)
+      note: Fictional company of 20 employees (chapter 1 exercise).
+      voix_off: 'Here are the twenty employees from the chapter 1 exercise. One bar for each way of getting to work: car, public transport, bike, walking. The bars are separate, because these are distinct categories. You could put them in another order without changing the meaning.'
+      verifier:
+      - expression: 8 + 6 + 4 + 2
+        attendu: 20
+        libelle: Total employees
+    - type: titre
+      numero: '2.2'
+      texte: 'The histogram: numbers in classes'
+      voix_off: 'Now let''s take a numerical variable: commuting time, in minutes. A histogram groups these values into intervals. For a discrete numerical variable, like a number of siblings, separate bars are still fine, one per value.'
+    - type: courbe
+      texte: Commuting time, *10-minute classes*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 3
+        - - 10
+          - 7
+        - - 20
+          - 6
+        - - 30
+          - 3
+        - - 40
+          - 1
+        largeur_classe: 10
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Commuting time (minutes)
+        axe_y: Count (employees)
+      note: Fictional commuting times of the same 20 employees.
+      voix_off: 'We group the commuting times into ten-minute classes. Three employees take under ten minutes, seven between ten and twenty, six between twenty and thirty, three between thirty and forty, and just one between forty and fifty. This time the bars touch: minutes run on continuously, with no gap between classes. Each bin includes its left edge but not its right one: a 20-minute trip counts in the 20-to-30 bin.'
+      verifier:
+      - expression: 3 + 7 + 6 + 3 + 1
+        attendu: 20
+        libelle: Total, 10-minute classes
+    - type: courbe
+      texte: The same times, *20-minute classes*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 10
+        - - 20
+          - 9
+        - - 40
+          - 1
+        largeur_classe: 20
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Commuting time (minutes)
+        axe_y: Count (employees)
+      voix_off: These are exactly the same data, grouped into twenty-minute classes. Ten employees take under twenty minutes, nine between twenty and forty, only one over forty. The peak between ten and twenty minutes has vanished.
+      verifier:
+      - expression: 3 + 7
+        attendu: 10
+        libelle: Class 0 to 20 minutes
+      - expression: 6 + 3
+        attendu: 9
+        libelle: Class 20 to 40 minutes
+    - type: animation
+      texte: The choice of classes *changes the shape*
+      animation:
+        modele: decoupages
+        valeurs: *id001
+        largeurs:
+        - 10
+        - 20
+        unite: min
+      etapes:
+      - A clear *hump* between 10 and 20 minutes
+      - The same peak *disappears*
+      univers: immersif
+      voix_off: 'Let''s put the same twenty commuting times side by side. With ten-minute classes, a clear hump appears, between ten and twenty minutes. With twenty-minute classes, that peak disappears: too wide, classes hide the details; too narrow, they invent bumps that are just chance; always check their width.'
+    - type: titre
+      numero: '2.3'
+      texte: 'Unequal widths: area = count'
+      voix_off: 'One last trap: classes of different widths.'
+    - type: courbe
+      texte: '*Misleading build*: height = count, unequal classes'
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 3
+        - - 10
+          - 7
+        - - 20
+          - 10
+        largeur_classe: 30
+        valeurs: true
+        y_min: 0
+        y_max: 12
+        axe_x: Commuting time (minutes)
+        axe_y: Count (employees)
+      voix_off: 'Now let''s put everything over twenty minutes into a single class, from twenty to fifty. It holds ten employees. If we use the count as the height, this big bar dwarfs the rest: long commutes seem to dominate.'
+      verifier:
+      - expression: 6 + 3 + 1
+        attendu: 10
+        libelle: Class 20 to 50 minutes
+    - type: formule
+      texte: 'The right height: *density*'
+      formule:
+      - \text{density}=\dfrac{\text{count}}{\text{class width}}
+      - \dfrac{10}{30}\approx 0.33\ \text{employee per minute}
+      voix_off: 'In a histogram, the area stands for the count. So the height must be a density: the count divided by the width of the class. For the class from twenty to fifty minutes: ten divided by thirty, about zero point three three employee per minute.'
+      verifier:
+      - expression: 10 / 30
+        attendu: 0.33
+        libelle: Density of class 20 to 50 minutes
+      - expression: 3 / 10
+        attendu: 0.3
+        libelle: Density of class 0 to 10 minutes
+      - expression: 7 / 10
+        attendu: 0.7
+        libelle: Density of class 10 to 20 minutes
+    - type: animation
+      texte: 'Height = *density*: the picture is right again'
+      animation:
+        modele: densite
+        bornes:
+        - 0
+        - 10
+        - 20
+        - 50
+        effectifs:
+        - 3
+        - 7
+        - 10
+        unite: minutes
+      etapes:
+      - 'Height = count: the wide bin *crushes everything*'
+      - 'Height = *density*: the same spacing everywhere'
+      - Area = density × width = *count*
+      voix_off: 'Back to the misleading build: with the count as the height, the big twenty-to-fifty-minute bin crushes everything. Let''s switch to density: the bars rise or fall, and the dots, one per employee, take the same spacing everywhere; the ten-to-twenty-minute bin is the densest again. Each bar''s area gives back its count: zero point three times ten, three; zero point seven times ten, seven; a third times thirty, ten.'
+      verifier:
+      - expression: 0.7 * 10
+        attendu: 7
+        libelle: Area of class 10 to 20 minutes
+      - expression: 10 / 30 * 30
+        attendu: 10
+        libelle: Area of class 20 to 50 minutes
+    - type: exercice
+      texte: '40 museum visitors: *aged 0–20: 8*; *20–30: 12*; *30–60: 20*.'
+      pause: 8
+      voix_off: 'Your turn. Forty visitors to a fictional museum: eight are aged zero to twenty, twelve are twenty to thirty, twenty are thirty to sixty. A histogram that uses the count as height highlights the thirty to sixty group. Is it right? Which class is the densest?'
+      questions:
+      - A histogram using counts highlights the 30–60 group. Is it right?
+      - Which class is the densest?
+    - type: correction
+      etapes:
+      - 'Aged 0–20: 8 ÷ 20 = *0.4* visitor per year of age'
+      - 'Aged 20–30: 12 ÷ 10 = *1.2* visitors per year of age'
+      - 'Aged 30–60: 20 ÷ 30 ≈ *0.67* visitor per year of age'
+      reponse: 'Ages 20–30: the densest class'
+      voix_off: 'Divide each count by the width of its class. Zero to twenty: eight divided by twenty, zero point four visitor per year of age. Twenty to thirty: twelve divided by ten, one point two. Thirty to sixty: twenty divided by thirty, about zero point six seven. The densest class is twenty to thirty: the histogram based on counts was misleading.'
+      verifier:
+      - expression: 8 / 20
+        attendu: 0.4
+        libelle: Density aged 0 to 20
+      - expression: 12 / 10
+        attendu: 1.2
+        libelle: Density aged 20 to 30
+      - expression: 20 / 30
+        attendu: 0.67
+        libelle: Density aged 30 to 60
+    - type: texte
+      texte: What if we changed the bins *ourselves*?
+      voix_off: Before reading the shape, let's change the bins ourselves.
+    - type: titre
+      texte: 'Lab: bin width'
+      numero: '2.4'
+      univers: immersif
+      voix_off: Lab time. Let's take the twenty travel times and change the bin width ourselves.
+    - type: animation
+      texte: '*20-minute* bins'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Twenty-minute bins: ten, nine, one. The peak has gone.'
+      verifier:
+      - expression: 3 + 7
+        attendu: 10
+        libelle: 0 à 20 minutes
+    - type: animation
+      texte: '*10-minute* bins'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 10
+        unite: minutes
+      voix_off: 'Ten-minute bins: three, seven, six, three, one. A clear hump.'
+    - type: animation
+      texte: '*5-minute* bins: two ''peaks''?'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 5
+        unite: minutes
+      voix_off: 'Five-minute bins. The fifteen-minute trip counts in the fifteen-to-twenty bin: the left edge is included. Two peaks appear, at fifteen and at twenty-five minutes. They rest on one or two employees. Too wide, bins hide; too narrow, they invent.'
+      verifier:
+      - expression: 1 + 2 + 3 + 4 + 2 + 4 + 1 + 2 + 1
+        attendu: 20
+        libelle: Classes de 5 minutes
+    - type: courbe
+      texte: 'Ages of 40 visitors: *height = count*'
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 8
+        - - 20
+          - 12
+        - - 30
+          - 20
+        largeur_classe: 30
+        valeurs: true
+        y_min: 0
+        y_max: 24
+        axe_x: Age (years)
+        axe_y: Count (visitors)
+      voix_off: 'Second setting: the ages of forty visitors, in unequal bins. With the count as the height, the thirty-to-sixty group dominates.'
+    - type: courbe
+      texte: Height = *count density*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 0.4
+        - - 20
+          - 1.2
+        - - 30
+          - 0.6667
+        largeur_classe: 30
+        valeurs: false
+        y_min: 0
+        y_max: 1.6
+        axe_x: Age (years)
+        axe_y: Density (visitors per year)
+        decimales_y: 1
+      note: 'Areas: 0.4 × 20 = 8; 1.2 × 10 = 12; ⅔ × 30 = 20; total 40 (height 0.67 rounded).'
+      voix_off: 'We switch to count density: the count divided by the width, in visitors per year of age. Zero point four, one point two, about zero point six seven. The densest bin is twenty to thirty. And each rectangle''s area gives back its count: one point two times ten years, twelve visitors. The total area is forty, the number of visitors.'
+      verifier:
+      - expression: 1.2 * 10
+        attendu: 12
+        libelle: Aire 20–30 ans
+      - expression: 0.4 * 20 + 1.2 * 10 + 20 / 30 * 30
+        attendu: 40
+        libelle: Aire totale
+    - type: titre
+      numero: '3'
+      texte: Reading the shape of a distribution
+      voix_off: Before you calculate anything, look at the shape of a histogram. It already tells you a lot.
+    - type: animation
+      texte: 'Our *20 employees*: one hump, a small right tail'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 10
+        unite: minutes
+      etapes:
+      - One dot per employee
+      - A *hump* between 10 and 30 minutes
+      - 'A small right *tail*: 44 minutes'
+      voix_off: 'Back to our twenty employees. Their histogram has one hump, between ten and thirty minutes, and a small right tail: the employee who takes forty-four minutes. That''s a property of these made-up data, not a law of real commutes.'
+      verifier:
+      - expression: 3 + 7 + 6 + 3 + 1
+        attendu: 20
+        libelle: Total des salariés
+    - type: titre
+      numero: '3.1'
+      texte: 'Symmetric: two similar sides'
+      voix_off: First shape, the simplest one.
+    - type: courbe
+      texte: Marks of *20 pupils*, out of 20
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 1
+        - - 4
+          - 4
+        - - 8
+          - 10
+        - - 12
+          - 4
+        - - 16
+          - 1
+        largeur_classe: 4
+        y_min: 0
+        y_max: 12
+        axe_x: Mark out of 20
+        axe_y: Pupils
+      note: Fictional marks of 20 pupils.
+      voix_off: Here are the fictional marks of twenty pupils. One peak in the middle, between eight and twelve, and two sides that mirror each other. In this example, the distribution is roughly symmetric. Here, the middle sums up the group well.
+      verifier:
+      - expression: 1 + 4 + 10 + 4 + 1
+        attendu: 20
+        libelle: Total pupils
+    - type: titre
+      numero: '3.2'
+      texte: 'Skewed: a long tail'
+      voix_off: 'Second shape: the skewed distribution.'
+    - type: courbe
+      texte: Monthly incomes of *25 people*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 2
+        - - 1000
+          - 9
+        - - 2000
+          - 6
+        - - 3000
+          - 3
+        - - 4000
+          - 2
+        - - 5000
+          - 1
+        - - 6000
+          - 1
+        - - 7000
+          - 1
+        largeur_classe: 1000
+        y_min: 0
+        y_max: 12
+        axe_x: Income (€)
+        axe_y: People
+      note: Fictional incomes of 25 people, classes of €1,000.
+      voix_off: 'Here are fictional monthly incomes. Most people are on the left, between one thousand and three thousand euros. Then a long tail stretches to the right: a few very high incomes. This is called right skew.'
+      verifier:
+      - expression: 2 + 9 + 6 + 3 + 2 + 1 + 1 + 1
+        attendu: 25
+        libelle: Total people
+    - type: etapes
+      texte: A tail, *on one side or the other*
+      etapes:
+      - 'Tail *on the right*: a few very large values'
+      - 'Tail *on the left*: a few very small values'
+      voix_off: A tail can go either way. On the right, it points to a few very large values, like high incomes. On the left, a few very small values. What a tail does to the mean, we'll see in chapter 5.
+    - type: titre
+      numero: '3.3'
+      texte: 'Two peaks: two groups?'
+      voix_off: Third shape, the most surprising one.
+    - type: animation
+      texte: Heights of *44 adults*
+      animation:
+        modele: melange
+        origine: 150
+        largeur_classe: 5
+        unite: cm
+        groupes:
+        - - 2
+          - 6
+          - 8
+          - 4
+          - 2
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 1
+          - 4
+          - 9
+          - 5
+          - 2
+        noms:
+        - Women?
+        - Men?
+      etapes:
+      - 'Two peaks: a *bimodal* distribution'
+      - '*One possible explanation*: two groups mixed'
+      - The histogram alone *doesn't prove it*
+      note: Fictional heights; the split into two groups is an illustrative hypothesis.
+      voix_off: 'Here are the fictional heights of forty-four adults: two peaks, one around one hundred and sixty centimetres, the other around one hundred and seventy-five; we call this distribution bimodal. One possible explanation: a mix of two groups with different average heights, for example women and men. But the histogram alone doesn''t prove it: you need other information to establish it.'
+      verifier:
+      - expression: 2 + 6 + 9 + 5 + 6 + 9 + 5 + 2
+        attendu: 44
+        libelle: Total adults
+    - type: texte
+      texte: Two peaks? Check whether *several groups* are mixed
+      voix_off: 'If two groups are mixed, a single ''central'' number would describe neither. Remember this reflex: two peaks can signal a mix of groups. Check it with other information, then separate them before summarizing.'
+    - type: courbe
+      texte: Shape *A*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 1
+        - - 1
+          - 1
+        - - 2
+          - 2
+        - - 3
+          - 3
+        - - 4
+          - 5
+        - - 5
+          - 8
+        - - 6
+          - 10
+        - - 7
+          - 6
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Value (no unit)
+      voix_off: 'Shape A: a tail to the left.'
+    - type: courbe
+      texte: Shape *B*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 1
+        - - 1
+          - 3
+        - - 2
+          - 6
+        - - 3
+          - 9
+        - - 4
+          - 9
+        - - 5
+          - 6
+        - - 6
+          - 3
+        - - 7
+          - 1
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Value (no unit)
+      voix_off: 'Shape B: two similar sides.'
+    - type: courbe
+      texte: Shape *C*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 2
+        - - 1
+          - 7
+        - - 2
+          - 9
+        - - 3
+          - 4
+        - - 4
+          - 4
+        - - 5
+          - 9
+        - - 6
+          - 7
+        - - 7
+          - 2
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Value (no unit)
+      voix_off: 'Shape C: two peaks.'
+    - type: courbe
+      texte: Shape *D*
+      courbe:
+        style: histogramme
+        points:
+        - - 0
+          - 6
+        - - 1
+          - 10
+        - - 2
+          - 8
+        - - 3
+          - 5
+        - - 4
+          - 3
+        - - 5
+          - 2
+        - - 6
+          - 1
+        - - 7
+          - 1
+        largeur_classe: 1
+        y_min: 0
+        y_max: 12
+        axe_x: Value (no unit)
+      voix_off: 'Shape D: a tail to the right.'
+    - type: exercice
+      texte: 'Four shapes, *A*, *B*, *C* and *D*. Four variables: age at death, income, exam marks, adult heights.'
+      pause: 8
+      voix_off: 'Your turn. Here are four shapes, A, B, C and D. And four variables: age at death, income, exam marks, adult heights. Match each variable to its shape.'
+      questions:
+      - Match each variable to its shape.
+      formes:
+      - nom: A
+        valeurs:
+        - 1
+        - 1
+        - 2
+        - 3
+        - 5
+        - 8
+        - 10
+        - 6
+      - nom: B
+        valeurs:
+        - 1
+        - 3
+        - 6
+        - 9
+        - 9
+        - 6
+        - 3
+        - 1
+      - nom: C
+        valeurs:
+        - 2
+        - 7
+        - 9
+        - 4
+        - 4
+        - 9
+        - 7
+        - 2
+      - nom: D
+        valeurs:
+        - 6
+        - 10
+        - 8
+        - 5
+        - 3
+        - 2
+        - 1
+        - 1
+    - type: correction
+      etapes:
+      - 'Exam marks: *B*, roughly symmetric'
+      - 'Income: *D*, right tail'
+      - 'Age at death: *A*, left tail'
+      - 'Adult heights: *C*, two peaks'
+      reponse: Every shape has an explanation
+      voix_off: 'Here''s the answer. Exam marks, shape B: often roughly symmetric. Income, shape D: a right tail, because of a few very high incomes. Age at death, shape A: where most deaths happen at an old age, a tail towards younger ages. Adult heights, shape C: two peaks, probably a mix of women and men. Behind every shape there is an explanation.'
+    - type: texte
+      texte: 'One number to sum it up: *the mean*?'
+      voix_off: 'We can see the shape. Now let''s put it into a single number. The first that comes to mind: the mean.'
+    - type: titre
+      numero: '4'
+      texte: What the mean really says
+      voix_off: “On average.” You read it in every article. But what exactly does it mean?
+    - type: titre
+      numero: '4.1'
+      texte: The mean, an equal share
+      voix_off: 'Let''s start with a simple picture: sharing.'
+    - type: animation
+      texte: Four friends, *one shared pot*
+      animation:
+        modele: partage
+        valeurs:
+        - 5
+        - 10
+        - 15
+        - 30
+        unite: €
+      etapes:
+      - They have €5, €10, €15 and €30
+      - 'All in the pot: *€60*'
+      - 'Split four ways: *€15 each*'
+      voix_off: 'Four friends pool their money. They have five, ten, fifteen and thirty euros. In the pot, that makes sixty euros. Shared equally between the four, that is fifteen euros each: that''s the mean.'
+      verifier:
+      - expression: 5 + 10 + 15 + 30
+        attendu: 60
+        libelle: Total in the pot
+      - expression: 60 / 4
+        attendu: 15
+        libelle: Each person's share
+    - type: formule
+      texte: Mean = *sum ÷ count*
+      formule:
+      - \text{mean}=\dfrac{\text{sum of the values}}{\text{number of values}}
+      - \dfrac{5+10+15+30}{4}=\dfrac{60}{4}=15
+      voix_off: 'Hence the formula: the mean is the sum of the values divided by how many there are. Here, sixty divided by four: fifteen.'
+      verifier:
+      - expression: (5 + 10 + 15 + 30) / 4
+        attendu: 15
+        libelle: Mean of the pot
+    - type: titre
+      numero: '4.2'
+      texte: The Σ notation, step by step
+      voix_off: In textbooks, this formula is written with a scary-looking symbol. There is nothing complicated about it.
+    - type: formule
+      texte: Σ means *“add up”*
+      formule:
+      - \bar{x}=\dfrac{x_1+x_2+x_3+x_4}{4}
+      - \bar{x}=\dfrac{1}{n}\times\sum_{i=1}^{n}x_i
+      voix_off: We call the values x one, x two, x three, x four, and the mean x bar. The sigma symbol tells you to add up all the values, from the first to the n-th. Then divide that sum by n, the number of values. It is exactly the shared pot calculation.
+    - type: titre
+      numero: '4.3'
+      texte: The balance point
+      voix_off: 'A second way to see the mean: a balance point.'
+    - type: animation
+      texte: The mean, a *balance point*
+      animation:
+        modele: equilibre
+        valeurs:
+        - 5
+        - 10
+        - 15
+        - 30
+        unite: €
+      etapes:
+      - 'Four friends: *€5, €10, €15 and €30*'
+      - 'Pivot at *€15*: the plank balances'
+      - 'The deviations *cancel out*: they sum to 0'
+      voix_off: 'Let''s put the four amounts from the kitty on a plank: five, ten, fifteen and thirty euros. For the plank to stay level, the pivot must sit exactly at the mean, fifteen euros. There, the deviations cancel out: minus ten and minus five on one side, plus fifteen on the other, zero in total; that''s always true for the mean, and a single value far away is enough to shift the balance.'
+      verifier:
+      - expression: (5 + 10 + 15 + 30) / 4
+        attendu: 15
+        libelle: Moyenne de la cagnotte
+      - expression: (5 - 15) + (10 - 15) + (15 - 15) + (30 - 15)
+        attendu: 0
+        libelle: Somme des écarts à la moyenne
+    - type: titre
+      numero: '4.4'
+      texte: The weighted mean
+      voix_off: And what if the values don't all count the same?
+    - type: formule
+      texte: 14 in maths, *weight 3*; 10 in French, *weight 1*
+      formule:
+      - \dfrac{14\times 3+10\times 1}{3+1}
+      - =\dfrac{52}{4}=13
+      voix_off: 'A pupil gets fourteen in maths, with a weight of three, and ten in French, with a weight of one. Multiply each mark by its weight, add them up, then divide by the sum of the weights. Fourteen times three plus ten, fifty-two, divided by four: thirteen.'
+      verifier:
+      - expression: (14 * 3 + 10 * 1) / (3 + 1)
+        attendu: 13
+        libelle: Weighted mean
+    - type: animation
+      texte: 'Without weights: 12. With them: *13*'
+      animation:
+        modele: ponderee
+        notes:
+        - valeur: 14
+          coef: 3
+          libelle: Maths
+        - valeur: 10
+          coef: 1
+          libelle: French
+      etapes:
+      - 'Without weights: mean *12*'
+      - 'Weight 3: the 14 counts *three times*'
+      - 'With weights: mean *13*'
+      voix_off: 'Let''s show the two marks as dots: fourteen and ten, whose simple mean is twelve. A weight of three makes the fourteen count three times: three dots of fourteen, just one of ten. The mean then slides from twelve to thirteen: the weighted mean gives more weight to what matters most, here maths.'
+      verifier:
+      - expression: (14 + 10) / 2
+        attendu: 12
+        libelle: Simple mean of the two marks
+      - expression: (14 + 14 + 14 + 10) / 4
+        attendu: 13
+        libelle: Moyenne pondérée, pastille par pastille
+    - type: exercice
+      texte: 'Class of *10 pupils*: mean 12. Class of *30 pupils*: mean 8.'
+      pause: 8
+      voix_off: Your turn. A class of ten pupils has a mean mark of twelve. A class of thirty pupils has a mean of eight. What is the overall mean of the forty pupils?
+      questions:
+      - What is the overall mean of the 40 pupils?
+    - type: correction
+      etapes:
+      - 10 × 12 = 120 points and 30 × 8 = 240 points
+      - (120 + 240) ÷ 40 = *9*
+      reponse: 9, not 10
+      voix_off: 'Let''s work it out. The first class has ten times twelve, one hundred and twenty points; the second, thirty times eight, two hundred and forty points. Three hundred and sixty points for forty pupils: a mean of nine. Not ten, which would be the mean of the two means: the big class weighs three times as much.'
+      verifier:
+      - expression: (10 * 12 + 30 * 8) / 40
+        attendu: 9
+        libelle: Overall mean
+      - expression: (12 + 8) / 2
+        attendu: 10
+        libelle: Mean of the means (wrong)
+    - type: chiffre
+      valeur: 170
+      suffixe:
+        fr: ' cm'
+        en: ' cm'
+      texte: the mean falls *in the dip*, between the two peaks
+      note: 'Approximate mean from bin midpoints: about 169.8 cm.'
+      voix_off: 'Remember the two-peaked heights. We only know the bins, so we take the middle of each bin, for example a hundred and fifty-two and a half for the bin from a hundred and fifty to a hundred and fifty-five, as the value of its adults. That gives an approximate mean of about a hundred and seventy centimetres. It falls in the dip, where there are few people: a mean can describe no one.'
+      verifier:
+      - expression: (152.5*2 + 157.5*6 + 162.5*9 + 167.5*5 + 172.5*6 + 177.5*9 + 182.5*5 + 187.5*2) / 44
+        attendu: 170
+        libelle: Approximate mean, in cm
+    - type: chiffre
+      texte: the mean trip of our *20 employees*
+      valeur: 21.25
+      decimales: 2
+      suffixe:
+        fr: ' min'
+        en: ' min'
+      note: 'Total of the 20 trips: 425 minutes; 425 ÷ 20 = 21.25.'
+      verifier:
+      - expression: 4 + 7 + 9 + 11 + 12 + 14 + 15 + 16 + 18 + 19 + 21 + 23 + 25 + 26 + 27 + 29 + 32 + 35 + 38 + 44
+        attendu: 425
+        libelle: Somme des 20 trajets
+      - expression: 425 / 20
+        attendu: 21.25
+        libelle: Trajet moyen
+      voix_off: 'And our twenty employees? Their trips add up to 425 minutes. Divided by twenty, that''s twenty-one and a quarter minutes. It''s what each would have if the total of individual durations were shared equally. That total adds up separate trips: it isn''t time spent together.'
+    - type: texte
+      texte: '21.25 min: a *typical* employee''s trip?'
+      voix_off: 21.25 minutes. Is that a typical employee's trip? Not necessarily.
+    - type: titre
+      numero: '5'
+      texte: Mean or median?
+      voix_off: Why do most people earn less than the average salary? It sounds impossible. And yet it happens all the time.
+    - type: exercice
+      texte: In a group, what share of people earn *less than the mean*?
+      etiquette: CHALLENGE
+      pause: 4
+      voix_off: Here's a question to start. In a group of workers, what share earn less than the average salary? Less than half, exactly half, or more than half? Hold on to your answer.
+    - type: titre
+      numero: '5.1'
+      texte: The mean
+      voix_off: Let's start with the mean.
+    - type: texte
+      texte: Nine customers in a café earn between *€1,600* and *€2,800* a month
+      note: €1,600 · 1,800 · 1,900 · 2,000 · 2,200 · 2,300 · 2,500 · 2,700 · 2,800
+      voix_off: Nine customers are sitting in a café. They earn between one thousand six hundred and two thousand eight hundred euros a month.
+    - type: formule
+      texte: Their *mean* salary
+      formule:
+      - \mathrm{mean}=\dfrac{\mathrm{total}}{\mathrm{count}}
+      - =\dfrac{19{,}800}{9}=2{,}200
+      voix_off: The mean is the total divided by the number of people. Together they earn nineteen thousand eight hundred euros. Divide by nine, and you get two thousand two hundred euros.
+      note: In euros per month.
+      verifier:
+      - expression: 1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800
+        attendu: 19800
+        libelle: Total of the 9 salaries
+      - expression: 19800 / 9
+        attendu: 2200
+        libelle: Mean of the 9 salaries
+    - type: texte
+      texte: A tenth customer walks in. He earns *€200,000* a month.
+      voix_off: The door opens. A tenth customer walks in, and he earns two hundred thousand euros a month.
+    - type: formule
+      texte: The mean *shoots up*
+      formule:
+      - \dfrac{19{,}800+200{,}000}{10}
+      - =21{,}980
+      voix_off: Let's do the sum again. Nineteen thousand eight hundred plus two hundred thousand, divided by ten. The café's mean salary jumps to twenty-one thousand nine hundred eighty euros.
+      verifier:
+      - expression: (19800 + 200000) / 10
+        attendu: 21980
+        libelle: Mean of the 10 salaries
+    - type: chiffre
+      valeur: 90
+      suffixe:
+        fr: ' %'
+        en: '%'
+      texte: of the customers now earn *less than the mean*
+      note: 9 customers out of 10.
+      voix_off: Nine customers out of ten now earn less than the mean. Nobody's pay has changed. One extreme value has dragged the mean upward.
+      verifier:
+      - expression: 100 * 9 / 10
+        attendu: 90
+        libelle: Share of customers below the mean, %
+    - type: titre
+      numero: '5.2'
+      texte: The median
+      voix_off: 'There''s another summary that holds up much better: the median.'
+    - type: etapes
+      texte: Finding the median
+      etapes:
+      - Put the values *in order*
+      - 'Odd number of values: take *the middle one*'
+      - 'Even number: average *the two in the middle*'
+      voix_off: Finding the median takes three steps. First, put the values in order, from smallest to largest. With an odd number of values, the median is the one in the middle. With an even number, you take the average of the two middle values.
+    - type: animation
+      texte: The median *by elimination*
+      animation:
+        modele: elimination
+        valeurs: *id002
+        ajout: 200000
+        unite: €
+      etapes:
+      - Nine salaries, *sorted*
+      - Cross out the *lowest* and the *highest*
+      - 'The *middle* is left: the 5th value'
+      - The *€200,000* customer walks in
+      - 'Ten values: the mean of the *two middle ones*'
+      voix_off: 'Back to the café: let''s sort its first nine salaries, from lowest to highest. Cross out the lowest and the highest, then again, two by two. The fifth value is left, two thousand two hundred euros: that''s the median, at position n plus one over two. The rich customer walks in, with two hundred thousand euros: there are now ten salaries. Cross out two by two again, and two are left, the fifth and the sixth: the median is their mean, two thousand two hundred and fifty euros.'
+      verifier:
+      - expression: (9 + 1) / 2
+        attendu: 5
+        libelle: Position du milieu, 9 valeurs
+      - expression: (10 + 1) / 2
+        attendu: 5.5
+        libelle: Position du milieu, 10 valeurs
+      - expression: (2200 + 2300) / 2
+        attendu: 2250
+        libelle: Médiane des 10 salaires
+    - type: etapes
+      texte: One extreme value
+      etapes:
+      - 'Mean: from €2,200 to *€21,980*'
+      - 'Median: from €2,200 to *€2,250*'
+      voix_off: Compare the two. One extreme value pushes the mean from two thousand two hundred to almost twenty-two thousand euros. The median goes up by just fifty euros.
+      verifier:
+      - expression: 2250 - 2200
+        attendu: 50
+        libelle: Rise in the median, euros
+    - type: courbe
+      texte: The ten salaries, *lowest to highest*
+      courbe:
+        points:
+        - - 1
+          - 1600
+        - - 2
+          - 1800
+        - - 3
+          - 1900
+        - - 4
+          - 2000
+        - - 5
+          - 2200
+        - - 6
+          - 2300
+        - - 7
+          - 2500
+        - - 8
+          - 2700
+        - - 9
+          - 2800
+        - - 10
+          - 200000
+        style: points
+        seuils:
+        - valeur: 21980
+          label: 'Mean: €21,980'
+        - valeur: 2250
+          label: 'Median: €2,250'
+        axe_x: Customer rank
+        reperes:
+        - x: 10
+          label: €200,000
+      note: Nine salaries clustered at the bottom, a single one at the top.
+      voix_off: 'Let''s line up the ten salaries, from lowest to highest: nine stay clustered together, and the median stays with them, at two thousand two hundred fifty euros. The tenth, two hundred thousand euros, single-handedly drags the mean up to twenty-one thousand nine hundred eighty euros, above nine salaries out of ten.'
+      verifier:
+      - expression: (1600 + 1800 + 1900 + 2000 + 2200 + 2300 + 2500 + 2700 + 2800 + 200000) / 10
+        attendu: 21980
+        libelle: Mean of the ten salaries in the chart
+    - type: animation
+      texte: Mean and median depend on the *shape* of the distribution
+      animation:
+        modele: asymetrie
+      etapes:
+      - 'Long tail toward high values: mean *often above* the median'
+      - 'Symmetric distribution: mean *close to* the median'
+      - 'Long tail toward low values: mean *often below* the median'
+      voix_off: 'This is a common tendency, not a law: it all depends on the shape of the distribution. When a few very large values form a long tail toward the top, as salaries and wealth often do, the mean often ends up above the median. When the distribution is perfectly symmetric, they coincide; when it is roughly symmetric, they are close. And when the tail points toward low values, the mean often falls below the median.'
+    - type: texte
+      texte: 'Mean above the median: *at least half* of the values are below the mean'
+      voix_off: That answers the challenge. By definition, at least half of the values are less than or equal to the median. So if the mean is above the median, at least half of the values are below the mean. For salaries, that means at least half of workers, and often many more.
+    - type: exercice
+      texte: 'Seven monthly salaries: €1,500, 1,600, 1,700, 1,800, 1,900, 2,000 and 2,100.'
+      pause: 8
+      voix_off: 'Your turn. Seven monthly salaries: one thousand five hundred, one thousand six hundred, one thousand seven hundred, one thousand eight hundred, one thousand nine hundred, two thousand, and two thousand one hundred euros. Work out the mean and the median. Then do it again after a salary of twenty thousand euros joins the group.'
+      questions:
+      - Work out the mean and the median.
+      - 'A *€20,000* salary joins: work out the mean and the median again.'
+    - type: correction
+      etapes:
+      - 'Before: 12,600 ÷ 7 = *€1,800*; median *€1,800*'
+      - 'After: 32,600 ÷ 8 = *€4,075*'
+      - 'Median: (1,800 + 1,900) ÷ 2 = *€1,850*'
+      reponse: The mean more than doubles, the median gains €50
+      voix_off: 'Here''s the solution. Before, the total is twelve thousand six hundred euros. Divided by seven, the mean is one thousand eight hundred euros, the same as the median, the fourth value. Afterwards, the total is thirty-two thousand six hundred euros, divided by eight: four thousand seventy-five euros. With eight values, the median is the average of the fourth and fifth: one thousand eight hundred fifty euros. The mean has more than doubled, while the median gained only fifty euros.'
+      verifier:
+      - expression: 1500 + 1600 + 1700 + 1800 + 1900 + 2000 + 2100
+        attendu: 12600
+        libelle: Total of the 7 salaries
+      - expression: 12600 / 7
+        attendu: 1800
+        libelle: Mean of the 7 salaries
+      - expression: (12600 + 20000) / 8
+        attendu: 4075
+        libelle: Mean of the 8 salaries
+      - expression: (1800 + 1900) / 2
+        attendu: 1850
+        libelle: Median of the 8 salaries
+    - type: titre
+      numero: '5.3'
+      texte: Which one should you use?
+      voix_off: 'The mean is sensitive to extreme values: a single very large value can pull it upwards. The median, by contrast, is determined by the middle position in the ordered data. That does not make it universally better: the right measure depends on the question we want to answer.'
+    - type: animation
+      texte: Each summary answers *its own* question
+      animation:
+        modele: questions
+        questions:
+        - question: What does a *typical* worker earn?
+          reponse: the *median*
+          icone: mediane
+        - question: What do *all* the salaries cost?
+          reponse: the *mean* × headcount
+          icone: equilibre
+      etapes:
+      - '"What does a typical worker earn?" → the *median*'
+      - '"What do all the salaries cost?" → the *mean*, × headcount'
+      - 'The most honest choice: report *both*'
+      voix_off: Each summary answers its own question. To know what a typical worker earns, the median is the right answer. To know what all the salaries cost together, you need the mean, multiplied by the number of workers; the median can't tell you that. The most honest choice is often to report both, because the gap between them tells you on its own whether the distribution is skewed.
+    - type: texte
+      texte: 'The median has a blind spot: it ignores *how big* the gaps are'
+      note: If the customer earned €2 million a month, the café's median would still be €2,250.
+      voix_off: 'The median has a blind spot too: it ignores how big the gaps are. Whether the rich customer earns two hundred thousand euros or two million, the café''s median stays the same. It shows the centre, but not how spread out the values are: two groups can share the same median and have very different inequality.'
+    - type: titre
+      texte: 'Lab: a single extreme value'
+      numero: '5.4'
+      univers: immersif
+      voix_off: Second lab. Let's move a single value and watch who follows.
+    - type: animation
+      texte: 'The tenth customer: *slider* from €2,300 to €200,000'
+      univers: immersif
+      animation:
+        modele: curseur
+        valeurs:
+        - 1600
+        - 1800
+        - 1900
+        - 2000
+        - 2200
+        - 2300
+        - 2500
+        - 2700
+        - 2800
+        - 2300
+        indice: 9
+        vers: 200000
+        axe_max: 3600
+        unite: €
+        decimales: 0
+      etapes:
+      - Nine salaries, and a *tenth customer* at €2,300
+      - 'Median: *€2,250*'
+      - 'Mean: *€2,210*'
+      - 'The tenth climbs to €200,000: the mean *flies off*, the median *stays*'
+      voix_off: 'The café''s nine salaries, and a tenth customer whose salary we raise. At each position, we sort the ten salaries again and recompute. At two thousand three hundred euros: mean two thousand two hundred and ten, median two thousand two hundred and fifty. At fifty thousand: mean six thousand nine hundred and eighty, median still two thousand two hundred and fifty. At two hundred thousand: mean twenty-one thousand nine hundred and eighty. The median doesn''t move: from two thousand three hundred up, the tenth customer sorts after the sixth salary, so the two middle values stay two thousand two hundred and two thousand three hundred.'
+      verifier:
+      - expression: (19800 + 2300) / 10
+        attendu: 2210
+        libelle: Moyenne à 2 300 €
+      - expression: (19800 + 50000) / 10
+        attendu: 6980
+        libelle: Moyenne à 50 000 €
+      - expression: (19800 + 200000) / 10
+        attendu: 21980
+        libelle: Moyenne à 200 000 €
+      - expression: (2200 + 2300) / 2
+        attendu: 2250
+        libelle: Médiane dès 2 300 €
+    - type: animation
+      texte: 'One employee *moves*: 44 → 120 minutes'
+      univers: immersif
+      animation:
+        modele: curseur
+        valeurs: *id001
+        indice: 19
+        vers: 120
+        axe_max: 55
+        unite: minutes
+        decimales: 2
+      etapes:
+      - The same *20 employees*
+      - 'Median: *20 min*'
+      - 'Mean: *21.25 min*'
+      - '44 → 120 minutes: mean *25.05 min*, median *20 min*'
+      voix_off: 'Back to the company. No one is added: the employee who took forty-four minutes moves and now takes one hundred and twenty. Still the same twenty employees. The mean goes from twenty-one and a quarter to twenty-five point zero five minutes. The median stays at twenty minutes. One individual moved, and only the mean followed.'
+      verifier:
+      - expression: (425 - 44 + 120) / 20
+        attendu: 25.05
+        libelle: Moyenne après le déménagement
+      - expression: (19 + 21) / 2
+        attendu: 20
+        libelle: Médiane des trajets
+    - type: etapes
+      texte: Key takeaways
+      etapes:
+      - Compare *frequencies*, not counts
+      - 'Unequal bins: *area* counts'
+      - Look at the *shape* before any calculation
+      - 'Mean: an *equal share* of the total'
+      - 'Median: splits in *two*; right tail, mean often above'
+      voix_off: 'What to remember. One: count, then divide by the total; compare frequencies, not counts. Two: separate bars for categories, a histogram for numbers, and when bins are unequal, area is what counts. Three: look at the shape before any calculation; two peaks may mean two groups. Four: the mean is the total divided by the count, what each would get with an equal share; one extreme value moves it. Five: the median splits the data in half; with a right tail, the mean usually sits above the median. Pick the one that answers your question.'
+    - type: exercice
+      texte: 'Ten employees, commuting times in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and *90*.'
+      pause: 15
+      voix_off: 'Your turn, and pause the video to answer. Ten employees at a fictional branch take, in minutes: 5, 8, 12, 15, 15, 18, 22, 25, 30 and 90. One: what share takes under 20 minutes? Two: what shape is this distribution? Three: compute the mean and the median. Four: how many employees are below the mean, and which number would you report as the ''typical trip''?'
+      questions:
+      - What share takes under 20 minutes?
+      - What shape is this distribution?
+      - Compute the mean and the median.
+      - How many employees are below the mean? Which 'typical trip' would you report?
+    - type: correction
+      etapes:
+      - 'Under 20 min: 6 out of 10, *60%*'
+      - 'Shape: *right tail* (the 90-minute trip)'
+      - 'Mean: 240 ÷ 10 = *24 min*'
+      - 'Median: (15 + 18) ÷ 2 = *16.5 min*'
+      voix_off: 'One: 6 out of 10, so 60% (5, 8, 12, 15, 15 and 18). Two: a right tail, caused by the 90-minute trip. Three: total 240, mean 240 ÷ 10 = 24 minutes; ten values, so the median is the average of the 5th and 6th: (15 + 18) ÷ 2 = 16.5 minutes.'
+      verifier:
+      - expression: 5+8+12+15+15+18+22+25+30+90
+        attendu: 240
+        libelle: Somme
+      - expression: 240 / 10
+        attendu: 24
+        libelle: Moyenne
+      - expression: (15 + 18) / 2
+        attendu: 16.5
+        libelle: Médiane
+      - expression: 6 / 10 * 100
+        attendu: 60
+        libelle: Part sous 20 min
+    - type: etapes
+      texte: Answer (continued)
+      etapes:
+      - '7 out of 10 below the mean: typical trip *16.5 min*'
+      - 'If 90 were a typo for 35: mean *18.5 min*, median unchanged'
+      verifier:
+      - expression: (240 - 90 + 35) / 10
+        attendu: 18.5
+        libelle: Moyenne si 90 était 35
+      voix_off: 'Four: 7 employees out of 10 are below the mean; the typical trip is the median, 16.5 minutes. Going further: if the 90 minutes were a typo for 35, the mean would drop to 18.5 minutes and the median would not move.'
+    - type: cloture
+      texte: 'Next episode: *spread*. A question? *Ask in the comments*'
+      voix_off: 'That''s it: next time someone quotes an average salary or an average waiting time, you''ll know which question to ask. But two teams can share the same median and have very different trips: that''s what the next episode, on spread, is all about. If this video was useful, subscribe, leave a like and share it with someone it will help. And if an exercise gets the better of you, write to us in the comments: we''ll help you, for free. Thanks for watching, see you very soon!'
+    - type: fin
+      texte: Enlightening through numbers.
+      voix_off: ACTU-BASICS. Enlightening through numbers.

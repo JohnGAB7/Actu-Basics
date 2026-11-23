@@ -226,6 +226,168 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             erreurs.append(f"{ctx}.animation.valeur : part du premier événement, entre 0 et 1 (ex. 0.493)")
         else:
             conf["valeur"] = float(v)
+    if modele in ("pastilles", "curseur", "equilibre", "elimination"):
+        v = a.get("valeurs")
+        n_min, n_max = {"equilibre": (2, 8), "elimination": (3, 12)}.get(modele, (2, 60))
+        if not isinstance(v, list) or not n_min <= len(v) <= n_max or not all(_nombre(x) for x in v):
+            erreurs.append(f"{ctx}.animation.valeurs : liste de {n_min} à {n_max} nombres (une pastille par individu)")
+            conf["valeurs"] = None
+        else:
+            conf["valeurs"] = [float(x) for x in v]
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+    if modele == "pastilles":
+        lc, origine = a.get("largeur_classe"), a.get("origine", 0)
+        if not _nombre(lc) or lc <= 0 or not _nombre(origine):
+            erreurs.append(f"{ctx}.animation : « largeur_classe » positive (et « origine » numérique)")
+            conf["largeur_classe"] = None
+        else:
+            conf["largeur_classe"], conf["origine"] = float(lc), float(origine)
+            if conf.get("valeurs"):
+                from .laboratoires import classes_regulieres
+                try:
+                    if len(classes_regulieres(conf["valeurs"], lc, origine)) > 16:
+                        erreurs.append(f"{ctx}.animation : plus de 16 classes, élargir « largeur_classe »")
+                except ValueError as exc:
+                    erreurs.append(f"{ctx}.animation : {exc}")
+    if modele == "curseur":
+        if not _nombre(a.get("vers")):
+            erreurs.append(f"{ctx}.animation.vers : valeur d'arrivée du curseur (nombre)")
+            conf["vers"] = None
+        else:
+            conf["vers"] = float(a["vers"])
+        if a.get("indice") is not None:
+            n_v = len(conf.get("valeurs") or []) or 1
+            conf["indice"] = entier("indice", 0, n_v - 1)
+        dec = entier("decimales", 0, 3, requis=False)
+        conf["decimales"] = 0 if dec is None else dec
+        if a.get("axe_max") is not None:
+            if not _nombre(a["axe_max"]) or a["axe_max"] <= 0:
+                erreurs.append(f"{ctx}.animation.axe_max : nombre positif")
+                conf["axe_max"] = None
+            else:
+                conf["axe_max"] = float(a["axe_max"])
+    if modele in ("equilibre", "elimination"):
+        dec = entier("decimales", 0, 3, requis=False)
+        conf["decimales"] = 0 if dec is None else dec
+    if modele == "equilibre" and a.get("appui_depart") is not None:
+        if not _nombre(a["appui_depart"]):
+            erreurs.append(f"{ctx}.animation.appui_depart : position de départ du point d'appui (nombre)")
+        else:
+            conf["appui_depart"] = float(a["appui_depart"])
+    if modele == "elimination":
+        if a.get("ajout") is not None:
+            if not _nombre(a["ajout"]) or len(conf.get("valeurs") or []) >= 12:
+                erreurs.append(f"{ctx}.animation.ajout : valeur ajoutée (nombre), 11 valeurs au plus avant l'ajout")
+            else:
+                conf["ajout"] = float(a["ajout"])
+        if a.get("phases") and {"ajout", "pair"} & set(a["phases"]) and "ajout" not in conf:
+            erreurs.append(f"{ctx}.animation : les phases « ajout » et « pair » demandent une valeur « ajout »")
+    if modele == "densite":
+        bornes, eff = a.get("bornes"), a.get("effectifs")
+        if (not isinstance(bornes, list) or not 3 <= len(bornes) <= 9 or not all(_nombre(b) for b in bornes)
+                or any(b2 <= b1 for b1, b2 in zip(bornes, bornes[1:]))):
+            erreurs.append(f"{ctx}.animation.bornes : 3 à 9 bornes croissantes (2 à 8 classes)")
+        elif (not isinstance(eff, list) or len(eff) != len(bornes) - 1
+              or not all(isinstance(e, int) and not isinstance(e, bool) and 0 <= e <= 40 for e in eff)):
+            erreurs.append(f"{ctx}.animation.effectifs : un effectif entier (0 à 40) par classe")
+        else:
+            conf["bornes"], conf["effectifs"] = [float(b) for b in bornes], list(eff)
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+    if modele == "apercu":
+        from .animations import ICONES_APERCU
+        cartes = a.get("cartes")
+        if (not isinstance(cartes, list) or not 2 <= len(cartes) <= 6
+                or not all(isinstance(c, dict) and c.get("icone") in ICONES_APERCU and str(c.get("texte") or "").strip()
+                           for c in cartes)):
+            erreurs.append(f"{ctx}.animation.cartes : 2 à 6 cartes {{icone, texte}}, icone parmi "
+                           f"{', '.join(ICONES_APERCU)}")
+            conf["cartes"] = None
+        else:
+            conf["cartes"] = [{"icone": c["icone"], "texte": str(c["texte"])} for c in cartes]
+            conf["phases"] = ["carte"] * len(cartes)
+    if modele == "cumul":
+        cats, fr_ = a.get("categories"), a.get("frequences")
+        if (not isinstance(cats, list) or not 2 <= len(cats) <= 8 or not all(str(c).strip() for c in cats)
+                or not isinstance(fr_, list) or len(fr_) != len(cats) or not all(_nombre(f) and f >= 0 for f in fr_)
+                or abs(sum(fr_) - 100) > 0.5):
+            erreurs.append(f"{ctx}.animation : « categories » (2 à 8, dans l'ordre des valeurs) et « frequences » "
+                           "en %, une par catégorie, de total 100")
+            conf["categories"] = None
+        else:
+            conf["categories"], conf["frequences"] = [str(c) for c in cats], [float(f) for f in fr_]
+            conf["phases"] = ["palier"] * len(cats)
+    if modele == "partage":
+        v = a.get("valeurs")
+        if (not isinstance(v, list) or not 2 <= len(v) <= 6
+                or not all(isinstance(x, int) and not isinstance(x, bool) and x > 0 for x in v)
+                or sum(v) % len(v)):
+            erreurs.append(f"{ctx}.animation.valeurs : 2 à 6 montants entiers positifs, de moyenne entière")
+            conf["valeurs"] = None
+        else:
+            bloc = math.gcd(*v, sum(v) // len(v))
+            if sum(v) // bloc > 48:
+                erreurs.append(f"{ctx}.animation.valeurs : trop de briques ({sum(v) // bloc}, 48 au plus)")
+                conf["valeurs"] = None
+            else:
+                conf["valeurs"] = list(v)
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+    if modele == "ponderee":
+        notes = a.get("notes")
+        if (not isinstance(notes, list) or not 2 <= len(notes) <= 4
+                or not all(isinstance(n_, dict) and _nombre(n_.get("valeur")) and isinstance(n_.get("coef"), int)
+                           and not isinstance(n_.get("coef"), bool) and 1 <= n_["coef"] <= 5 for n_ in notes)
+                or len({n_["valeur"] for n_ in notes}) != len(notes)):
+            erreurs.append(f"{ctx}.animation.notes : 2 à 4 notes distinctes {{valeur, coef (1 à 5), libelle}}")
+            conf["notes"] = None
+        else:
+            conf["notes"] = [{"valeur": float(n_["valeur"]), "coef": n_["coef"], "libelle": str(n_.get("libelle") or "")}
+                             for n_ in notes]
+    if modele == "decoupages":
+        v, ls = a.get("valeurs"), a.get("largeurs")
+        if (not isinstance(v, list) or not 2 <= len(v) <= 60 or not all(_nombre(x) and x >= 0 for x in v)
+                or not isinstance(ls, list) or not 2 <= len(ls) <= 3 or not all(_nombre(w) and w > 0 for w in ls)
+                or any(max(v) / w > 16 for w in ls)):
+            erreurs.append(f"{ctx}.animation : « valeurs » (2 à 60, positives) et « largeurs » (2 ou 3, 16 classes "
+                           "au plus chacune)")
+            conf["valeurs"] = None
+        else:
+            conf["valeurs"], conf["largeurs"] = [float(x) for x in v], [float(w) for w in ls]
+            conf["phases"] = ["decoupage"] * len(ls)
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+    if modele == "melange":
+        gr, o, w = a.get("groupes"), a.get("origine", 0), a.get("largeur_classe")
+        if (not isinstance(gr, list) or len(gr) != 2 or not all(isinstance(e, list) for e in gr)
+                or len(gr[0]) != len(gr[1]) or not 3 <= len(gr[0]) <= 14
+                or not all(isinstance(c, int) and not isinstance(c, bool) and 0 <= c <= 60 for e in gr for c in e)
+                or not _nombre(o) or not _nombre(w) or w <= 0):
+            erreurs.append(f"{ctx}.animation : « groupes » (deux listes d'effectifs entiers de même longueur, 3 à 14 "
+                           "classes), « origine » et « largeur_classe »")
+            conf["groupes"] = None
+        else:
+            conf["groupes"], conf["origine"], conf["largeur_classe"] = [list(e) for e in gr], float(o), float(w)
+        noms = a.get("noms")
+        if noms is not None:
+            if not isinstance(noms, list) or len(noms) != 2:
+                erreurs.append(f"{ctx}.animation.noms : deux noms (hypothèses), ex. [« Groupe 1 ? », « Groupe 2 ? »]")
+            else:
+                conf["noms"] = [str(x) for x in noms]
+        if a.get("unite") is not None:
+            conf["unite"] = str(a["unite"])
+    if modele == "questions":
+        from .animations import ICONES_APERCU
+        qs = a.get("questions")
+        if (not isinstance(qs, list) or len(qs) != 2
+                or not all(isinstance(q, dict) and str(q.get("question") or "").strip()
+                           and str(q.get("reponse") or "").strip() and q.get("icone") in ICONES_APERCU for q in qs)):
+            erreurs.append(f"{ctx}.animation.questions : deux {{question, reponse, icone}}, icone parmi "
+                           f"{', '.join(ICONES_APERCU)}")
+            conf["questions"] = None
+        else:
+            conf["questions"] = [{k: str(q[k]) for k in ("question", "reponse", "icone")} for q in qs]
     phases = a.get("phases")
     if phases is not None:
         if not isinstance(phases, list) or not phases or any(p not in PHASES[modele] for p in phases):
@@ -238,6 +400,8 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
             erreurs.append(f"{ctx}.animation.phases : plus de phases « personne » que de personnes")
             phases = None
         conf["phases"] = phases
+    if modele == "elimination" and not conf.get("phases") and "ajout" not in conf:
+        conf["phases"] = ["rangement", "elimination", "milieu"]     # sans valeur ajoutée
     n_phases = len(conf.get("phases") or PHASES_DEFAUT[modele])
     legendes = s.get("etapes")
     if isinstance(legendes, list) and legendes and len(legendes) != n_phases:
@@ -279,6 +443,21 @@ def valider_scene(type_: str, s: dict, ctx: str, erreurs: list[str]) -> dict:
         extra["pause"] = float(pause)
         if s.get("etiquette") is not None:
             extra["etiquette"] = str(s["etiquette"])
+        if s.get("questions") is not None:
+            q = _liste_textes(s.get("questions"), f"{ctx}.questions", erreurs)
+            if len(q) > 5:
+                erreurs.append(f"{ctx}.questions : 1 à 5 questions, une par ligne à l'écran")
+            elif q:
+                extra["questions"] = q
+        if s.get("formes") is not None:
+            fo = s["formes"]
+            if (not isinstance(fo, list) or not 2 <= len(fo) <= 4
+                    or not all(isinstance(f, dict) and str(f.get("nom") or "").strip() and isinstance(f.get("valeurs"), list)
+                               and 3 <= len(f["valeurs"]) <= 16 and all(_nombre(v) and v >= 0 for v in f["valeurs"])
+                               for f in fo)):
+                erreurs.append(f"{ctx}.formes : 2 à 4 formes {{nom, valeurs (3 à 16 hauteurs)}}, montrées avec les questions")
+            else:
+                extra["formes"] = [{"nom": str(f["nom"]), "valeurs": [float(v) for v in f["valeurs"]]} for f in fo]
     if type_ == "animation":
         _valider_animation(s, ctx, erreurs, extra)
     if type_ == "etapes" and s.get("disposition") is not None:
