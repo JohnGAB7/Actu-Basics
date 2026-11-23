@@ -1,0 +1,635 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a1/s02 « Taux nominaux et paiements mensuels »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A1.md), format de JG du 23/11/2026 :
+# une vidéo longue complète par séance, très explicative, faits réels sourcés, objets animés, FR et EN en même temps.
+# Séance source : JohnGAB7/AB-Actuarial-Lab@a6f86ba:contenus/a1/s02.yaml (taux effectif fictif de 4 %, m = 12, n = 10).
+# Première vidéo avec le fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : le contrat d'épargne-pension de Léa,
+# cliente fictive de JG's Holding. L'exercice final utilise 3 %, m = 4, n = 5, pour ne pas donner le calcul « À la main ».
+# Faits réels : chiffres d'origine, devise d'origine dans les deux langues.
+id: 2026-11-act-a1-s02-taux-nominaux
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A1 · Taux nominaux et paiements mensuels"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer un taux nominal i⁽ᵐ⁾ d'un taux annuel effectif i, et passer de l'un à l'autre"
+      - "Calculer le taux d'escompte nominal d⁽ᵐ⁾ et ranger tous les taux équivalents"
+      - "Comprendre le taux continu δ comme limite, et l'origine du nombre e"
+      - "Calculer une annuité payable m fois par an, immédiate et due, et l'annuité continue"
+      - "Évaluer les primes mensuelles d'un contrat d'épargne-pension"
+    en:
+      - "Tell a nominal rate i⁽ᵐ⁾ from an annual effective rate i, and convert between them"
+      - "Compute the nominal rate of discount d⁽ᵐ⁾ and rank all equivalent rates"
+      - "Understand the force of interest δ as a limit, and where the number e comes from"
+      - "Value an annuity payable m times a year, immediate and due, and the continuous annuity"
+      - "Value the monthly premiums of a pension savings contract"
+  prerequis:
+    fr: ["Séance A1.01 : intérêt composé, actualisation, annuités", "Puissances fractionnaires et logarithme népérien"]
+    en: ["Session A1.01: compound interest, discounting, annuities", "Fractional powers and the natural logarithm"]
+  hypotheses:
+    fr: "Taux fictif et constant de 4 % effectif (3 % dans l'exercice), choisi pour l'exemple ; ni frais, ni fiscalité, ni mortalité ; paiements certains"
+    en: "Made-up constant effective rate of 4% (3% in the exercise), chosen for the example; no fees, no tax, no mortality; payments are certain"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Federal Reserve, statistique G.19 « Consumer Credit » du 6 novembre 2026 (taux des cartes de crédit, 3e trimestre 2026)", en: "Federal Reserve, G.19 “Consumer Credit” release of 6 November 2026 (credit card rates, Q3 2026)"}
+    court: "Federal Reserve G.19"
+    url: "https://www.federalreserve.gov/releases/g19/current/default.htm"
+    date_consultation: "2026-11-23"
+  - nom: {fr: "MacTutor History of Mathematics, « The number e » (Jacob Bernoulli, 1683)", en: "MacTutor History of Mathematics, “The number e” (Jacob Bernoulli, 1683)"}
+    court: "MacTutor"
+    url: "https://mathshistory.st-andrews.ac.uk/HistTopics/e/"
+    date_consultation: "2026-11-23"
+  - nom: {fr: "Service fédéral des Pensions (Belgique), « Quand ma pension est-elle payée ? »", en: "Belgian Federal Pension Service, “When is my pension paid?”"}
+    court: "sfpd.fgov.be"
+    url: "https://www.sfpd.fgov.be/fr/paiement/date-de-paiement"
+    date_consultation: "2026-11-23"
+
+editions:
+  fr:
+    titre: "Taux nominaux et paiements mensuels : 6 % par an, est-ce vraiment 6 % ?"
+    legende: |
+      Aux États-Unis, les cartes de crédit affichent en moyenne 22,36 % par an (Federal Reserve, 3e trimestre 2026). Payés chaque mois, ces intérêts coûtent en réalité près de 24,8 %. Pourquoi ? Toute la réponse est dans cet épisode du parcours Actuariat : le taux nominal et le taux effectif, le taux d'escompte nominal, le taux continu et la naissance du nombre e, les annuités payables chaque mois, et le premier chapitre du fil rouge, le contrat d'épargne-pension de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les taux des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil de placement ni de crédit. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, tauxnominal, tauxeffectif, annuites]
+    scenes:
+      - type: accroche
+        texte: "*22,36 %* par an… ou *24,8 %* ?"
+        note: "Federal Reserve, G.19 du 6/11/2026 : comptes de cartes de crédit qui paient des intérêts, 3e trimestre 2026."
+        voix_off: "Aux États-Unis, au troisième trimestre 2026, les titulaires de cartes de crédit qui paient des intérêts paient en moyenne un taux de vingt-deux virgule trente-six pour cent par an. C'est le chiffre officiel de la Réserve fédérale. Mais si ces intérêts s'ajoutent à la dette chaque mois, le coût réel sur un an dépasse vingt-quatre virgule huit pour cent. Deux taux pour la même dette ? À la fin de cette vidéo, vous saurez passer de l'un à l'autre."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce deuxième épisode du parcours Actuariat ! Merci d'être là. La dernière fois, on a construit la boîte à outils : intérêt composé, actualisation, annuités. Aujourd'hui, on la règle sur le rythme de la vraie vie, où l'on paie chaque mois : les salaires, les loyers, les crédits, les pensions. Et on ouvre un dossier qui nous suivra tout au long du parcours."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Taux *nominal* et taux *effectif*"
+          - "Le taux d'*escompte* nominal"
+          - "Le taux *continu* et le nombre *e*"
+          - "Les annuités *mensuelles*"
+          - "Le contrat de *Léa*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. Le taux nominal et le taux effectif. Le taux d'escompte nominal. Le taux continu, et la naissance du nombre e. Les annuités payées chaque mois. Puis le premier chapitre de notre fil rouge : le contrat de Léa. Et pour finir, un exercice corrigé."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Taux nominal et taux effectif"
+        voix_off: "Commençons par le piège le plus courant : le taux affiché."
+      - type: texte
+        texte: "Un taux *nominal* : un taux annuel *affiché*, versé *par morceaux*"
+        voix_off: "Une banque vous annonce six pour cent par an, convertible mensuellement. Que veut-elle dire ? Elle ne vous versera pas six pour cent en fin d'année. Elle divise ce taux en douze : chaque mois, elle crédite zéro virgule cinq pour cent. Ce six pour cent est un taux nominal : un taux annuel d'affichage, versé en m morceaux dans l'année. Ici, m vaut douze. On le note i, avec m entre parenthèses en exposant."
+      - type: etapes
+        texte: "*6 %* convertible mensuellement, sur *1 000 €*"
+        etapes:
+          - "Chaque mois : 6 % ÷ 12 = *0,5 %*"
+          - "Mais les intérêts de chaque mois *rapportent* à leur tour"
+          - "Après 12 mois : 1 000 × 1,005¹² = *1 061,68 €*"
+          - "Taux annuel *effectif* : *6,17 %*, pas 6 %"
+        voix_off: "Faisons le calcul sur mille euros. Chaque mois, on ajoute zéro virgule cinq pour cent. Mais, comme dans l'épisode précédent, les intérêts de janvier rapportent à leur tour des intérêts en février, et ainsi de suite. Au bout de douze mois, on a multiplié douze fois par un virgule zéro zéro cinq : on obtient mille soixante et un euros et soixante-huit centimes. Le taux réellement obtenu sur l'année, le taux annuel effectif, est donc de six virgule dix-sept pour cent, et non six."
+        verifier:
+          - {expression: "100 * 0.06 / 12", attendu: 0.5, libelle: "Taux mensuel, en %"}
+          - {expression: "1000 * 1.005**12", attendu: 1061.68, libelle: "Après 12 mois"}
+          - {expression: "100 * (1.005**12 - 1)", attendu: 6.17, libelle: "Taux effectif, en %"}
+      - type: animation
+        texte: "*6 %* nominal mensuel = *6,17 %* effectif"
+        animation:
+          modele: frequences
+          taux: 0.0616778
+          m: 12
+          capital: 1000
+          unite: "€"
+        etapes:
+          - "Une fois par an : *+ 6,17 %* en fin d'année"
+          - "Douze fois par an : *+ 0,5 %* chaque mois"
+          - "Même arrivée : *1 061,68 €*, mais 12 × 0,5 % = *6 %* seulement"
+        voix_off: "Regardons-le en mouvement. En haut, un seul saut en fin d'année, au taux effectif de six virgule dix-sept pour cent. En dessous, douze petits sauts de zéro virgule cinq pour cent, un par mois. Chaque saut part un peu plus haut que le précédent, parce qu'il inclut les intérêts déjà gagnés. Les deux chemins arrivent exactement au même endroit, mille soixante et un euros et soixante-huit centimes : ces deux taux sont équivalents. Le taux nominal, lui, se contente d'additionner les douze morceaux : six pour cent."
+        verifier:
+          - {expression: "100 * (1.0616778**(1/12) - 1)", attendu: 0.5, libelle: "Taux mensuel équivalent, en %"}
+          - {expression: "1000 * 1.0616778", attendu: 1061.68, libelle: "Même arrivée"}
+      - type: formule
+        texte: "Du nominal à l'*effectif*, et retour"
+        formule:
+          - '1+i=\left(1+\dfrac{i^{(m)}}{m}\right)^{m}'
+          - 'i^{(m)}=m\left[(1+i)^{1/m}-1\right]'
+        note: "i : taux annuel effectif ; i⁽ᵐ⁾ : taux nominal convertible m fois par an ; i⁽ᵐ⁾ ÷ m : taux de chaque période."
+        voix_off: "En formule. Un plus i égale un plus i m divisé par m, le tout puissance m : m périodes, chacune au taux i m sur m. C'est la règle des taux équivalents de l'épisode précédent : même somme au bout d'un an. Dans l'autre sens, pour trouver le taux nominal à partir du taux effectif, on prend la racine m-ième de un plus i, on retire un, et on multiplie par m."
+      - type: etapes
+        texte: "Deux banques, *6 %* chacune. *Laquelle* rapporte le plus ?"
+        etapes:
+          - "Banque A, mensuel : 1,005¹² − 1 = *6,168 %*"
+          - "Banque B, trimestriel : 1,015⁴ − 1 = *6,136 %*"
+          - "Même taux affiché, *rendements différents* : on compare en *effectif*"
+        voix_off: "Un cas pratique. La banque A propose six pour cent capitalisé chaque mois ; la banque B, six pour cent capitalisé chaque trimestre. Même taux affiché. Pour la banque A, on trouve six virgule cent soixante-huit pour cent effectif. Pour la banque B, un virgule zéro quinze puissance quatre, moins un : six virgule cent trente-six pour cent. La banque A rapporte un peu plus. Plus on capitalise souvent, plus le taux effectif s'éloigne du taux affiché. La règle d'or : pour comparer deux offres, on convertit toujours en taux annuel effectif."
+        verifier:
+          - {expression: "100 * (1.005**12 - 1)", attendu: 6.168, libelle: "Banque A, en %"}
+          - {expression: "100 * (1.015**4 - 1)", attendu: 6.136, libelle: "Banque B, en %"}
+      - type: animation
+        texte: "Carte de crédit : *22,36 %* affiché, *24,8 %* réel"
+        animation:
+          modele: frequences
+          taux: 0.248
+          m: 12
+          capital: 1000
+          unite: "$"
+        etapes:
+          - "Sur un an : *+ 24,8 %* de dette"
+          - "Chaque mois : 22,36 % ÷ 12 = *+ 1,863 %*"
+          - "Le taux affiché n'est que le *nominal* : 12 × 1,863 % = *22,36 %*"
+        note: "Federal Reserve, G.19 : 22,36 % au 3e trimestre 2026. Calcul illustratif avec des intérêts ajoutés chaque mois."
+        voix_off: "Revenons à nos cartes de crédit américaines. Le taux annoncé, vingt-deux virgule trente-six pour cent, est un taux nominal annuel. Supposons que les intérêts s'ajoutent à la dette chaque mois : chaque mois, la dette grossit de un virgule huit six trois pour cent, et le mois suivant, on paie des intérêts sur ces intérêts. Mille dollars non remboursés deviennent mille deux cent quarante-huit dollars en un an : un coût réel de vingt-quatre virgule huit pour cent. C'est pour cela que la loi impose, en Europe comme aux États-Unis, d'afficher un taux annuel calculé selon une méthode commune."
+        verifier:
+          - {expression: "100 * 0.2236 / 12", attendu: 1.863, libelle: "Taux mensuel, en %"}
+          - {expression: "100 * ((1 + 0.2236 / 12)**12 - 1)", attendu: 24.8, libelle: "Taux effectif, en %"}
+          - {expression: "1000 * (1 + 0.2236 / 12)**12", attendu: 1248, libelle: "Dette après un an"}
+      - type: etapes
+        texte: "Le piège : *diviser par 12* un taux *effectif*"
+        etapes:
+          - "4 % effectif ÷ 12 = 0,3333 % par mois ? *Non*"
+          - "1,003333¹² − 1 = *4,07 %* : trop"
+          - "Le bon taux mensuel : 1,04^(1/12) − 1 = *0,3274 %*"
+          - "D'où i⁽¹²⁾ = 12 × 0,3274 % = *3,928 %*"
+        note: "Dans toute la suite : taux fictif de 4 % effectif par an, comme dans la séance."
+        voix_off: "Attention au piège inverse. Le taux effectif est de quatre pour cent. Peut-on diviser par douze, et dire zéro virgule trois trois trois pour cent par mois ? Non : en capitalisant ce taux douze fois, on obtiendrait quatre virgule zéro sept pour cent, trop. Le bon taux mensuel est la racine douzième de un virgule zéro quatre, moins un : zéro virgule trois deux sept quatre pour cent. Et le taux nominal correspondant vaut douze fois plus, trois virgule neuf deux huit pour cent. À taux effectif fixé, le taux nominal est toujours plus petit. On garde ce taux fictif de quatre pour cent dans toute la suite."
+        verifier:
+          - {expression: "100 * ((1 + 0.04 / 12)**12 - 1)", attendu: 4.07, libelle: "Effectif si l'on divise par 12, en %"}
+          - {expression: "100 * (1.04**(1/12) - 1)", attendu: 0.3274, libelle: "Taux mensuel équivalent, en %"}
+          - {expression: "1200 * (1.04**(1/12) - 1)", attendu: 3.928, libelle: "i(12) à 4 %, en %"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Le taux d'escompte nominal"
+        voix_off: "Même idée, côté intérêt payé d'avance."
+      - type: formule
+        texte: "*d⁽ᵐ⁾* : l'escompte retenu *au début* de chaque période"
+        formule:
+          - '\left(1-\dfrac{d^{(m)}}{m}\right)^{-m}=1+i'
+          - 'd^{(m)}=m\left[1-v^{1/m}\right]'
+          - 'd^{(12)}\approx 3{,}9157\ \%\ \text{à}\ 4\ \%'
+        note: "v = 1 ÷ (1 + i) : le facteur d'actualisation de l'épisode 1."
+        voix_off: "Dans l'épisode précédent, le taux d'escompte d était l'intérêt retenu au début de l'année. Si on le retient chaque mois, au début de chaque mois, on obtient le taux d'escompte nominal, noté d m. Chaque mois, on retient d m divisé par m. La règle d'équivalence est la même : sur un an, on doit retrouver un plus i. On en tire d m égale m fois un moins v puissance un sur m. À quatre pour cent, d douze vaut environ trois virgule neuf un cinq sept pour cent."
+        verifier:
+          - {expression: "100 * 12 * (1 - 1.04**(-1/12))", attendu: 3.9157, libelle: "d(12) à 4 %, en %"}
+          - {expression: "(1 - 12 * (1 - 1.04**(-1/12)) / 12)**-12", attendu: 1.04, libelle: "Équivalence"}
+      - type: formule
+        texte: "Cinq taux, *un seul* placement"
+        formule:
+          - 'd<d^{(12)}<\delta<i^{(12)}<i'
+          - '3{,}846\ \%<3{,}916\ \%<3{,}922\ \%<3{,}928\ \%<4\ \%'
+        note: "À 4 % effectif. d et d⁽¹²⁾ : intérêt payé d'avance ; i⁽¹²⁾ et i : intérêt payé à terme échu."
+        voix_off: "Rangeons tous ces taux, pour le même placement à quatre pour cent. Le plus petit est le taux d'escompte annuel, trois virgule huit quatre six pour cent. Puis le taux d'escompte mensuel, trois virgule neuf un six. Au milieu, le taux continu delta, trois virgule neuf deux deux. Puis le taux nominal mensuel, trois virgule neuf deux huit. Et enfin le taux effectif, quatre pour cent. Ce classement est toujours vrai. Les taux d'escompte, payés d'avance, sont en dessous ; les taux d'intérêt, payés à la fin, sont au-dessus. Et plus la période est courte, plus les deux familles se rapprochent de delta, au centre."
+        verifier:
+          - {expression: "100 * 0.04 / 1.04", attendu: 3.846, libelle: "d à 4 %, en %"}
+          - {expression: "100 * 12 * (1 - 1.04**(-1/12))", attendu: 3.916, libelle: "d(12), en %"}
+          - {expression: "100 * log(1.04)", attendu: 3.922, libelle: "δ, en %"}
+          - {expression: "100 * 12 * (1.04**(1/12) - 1)", attendu: 3.928, libelle: "i(12), en %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "À la limite : le taux continu et le nombre e"
+        voix_off: "Et si l'on capitalisait à chaque instant ?"
+      - type: etapes
+        texte: "*1683* : Jacob Bernoulli et *1 €* placé à *100 %*"
+        etapes:
+          - "Une fois par an : 1 × 2 = *2 €*"
+          - "Deux fois : 1,5² = *2,25 €*"
+          - "Chaque mois : (1 + 1⁄12)¹² ≈ *2,613 €*"
+          - "Chaque jour : (1 + 1⁄365)³⁶⁵ ≈ *2,715 €*"
+          - "À la limite : *e ≈ 2,718 €*"
+        note: "Source : MacTutor History of Mathematics, « The number e », consulté le 23/11/2026."
+        voix_off: "Un fait d'histoire. En 1683, le mathématicien suisse Jacob Bernoulli se pose exactement notre question, à propos des intérêts composés. Un euro placé à cent pour cent par an. Une seule fois en fin d'année : deux euros. En deux fois, à cinquante pour cent : deux euros vingt-cinq. Chaque mois : environ deux euros soixante et un. Chaque jour : environ deux euros soixante et onze. Ça augmente, mais de moins en moins vite, et ça ne dépasse jamais une certaine limite. Cette limite, c'est un nombre devenu célèbre : e, environ deux virgule sept un huit. Le nombre e est né d'un problème d'intérêts."
+        verifier:
+          - {expression: "1.5**2", attendu: 2.25, libelle: "Deux fois"}
+          - {expression: "(1 + 1/12)**12", attendu: 2.613, libelle: "Chaque mois"}
+          - {expression: "(1 + 1/365)**365", attendu: 2.715, libelle: "Chaque jour"}
+          - {expression: "exp(1)", attendu: 2.718, libelle: "e"}
+      - type: formule
+        texte: "La force d'intérêt *δ* : la limite de *i⁽ᵐ⁾*"
+        formule:
+          - '\lim_{m\to\infty}i^{(m)}=\ln(1+i)=\delta'
+          - 'i^{(2)}=3{,}961\ \%\quad i^{(12)}=3{,}928\ \%\quad\delta=3{,}922\ \%'
+        note: "À 4 % effectif. Le taux nominal baisse quand m augmente, et s'arrête à δ."
+        voix_off: "Pour nous, c'est la même histoire, à l'envers. À taux effectif fixé, plus on capitalise souvent, plus le taux nominal nécessaire est petit. À quatre pour cent effectif : trois virgule neuf six un pour cent en deux fois, trois virgule neuf deux huit en douze fois. Et à la limite, en continu, on atteint la force d'intérêt delta, le logarithme de un plus i : trois virgule neuf deux deux pour cent. Le taux nominal descend vers delta, sans jamais passer en dessous."
+        verifier:
+          - {expression: "100 * 2 * (1.04**0.5 - 1)", attendu: 3.961, libelle: "i(2), en %"}
+          - {expression: "100 * log(1.04)", attendu: 3.922, libelle: "δ, en %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Les annuités payées chaque mois"
+        voix_off: "Appliquons tout cela aux paiements réguliers."
+      - type: texte
+        texte: "En Belgique, la pension est payée *chaque mois*"
+        note: "Source : Service fédéral des Pensions, « Quand ma pension est-elle payée ? », consulté le 23/11/2026."
+        voix_off: "Un fait réel. En Belgique, le Service fédéral des Pensions verse les pensions chaque mois, à des dates fixées à l'avance. C'est la règle presque partout : salaires, loyers, crédits, pensions, tout se paie au mois. Or nos annuités de l'épisode précédent supposaient un paiement par an. Il nous faut donc des annuités payables m fois par an."
+      - type: formule
+        texte: "*1 par an*, versé en *m* morceaux de *1⁄m*"
+        formule:
+          - 'a^{(m)}_n=\dfrac{1-v^n}{i^{(m)}}=\dfrac{i}{i^{(m)}}\,a_n'
+          - '\ddot{a}^{(m)}_n=\dfrac{1-v^n}{d^{(m)}}'
+        note: "a⁽ᵐ⁾ₙ : paiements en fin de période ; ä⁽ᵐ⁾ₙ : en début de période. Le total versé reste 1 par an."
+        voix_off: "Une annuité payable m fois par an verse au total un par an, mais en m morceaux de un sur m. La bonne nouvelle : la formule garde la même forme que dans l'épisode précédent. Le numérateur reste un moins v puissance n. Seul le dénominateur change : on remplace le taux effectif par le taux nominal de même fréquence que les paiements. Paiements en fin de mois : on divise par i douze. Paiements en début de mois : on divise par d douze, le taux d'escompte mensuel. Et comme i est plus grand que i m, l'annuité mensuelle vaut un peu plus que l'annuité annuelle."
+      - type: etapes
+        texte: "Pourquoi *payer chaque mois* vaut *plus* que payer en fin d'année"
+        etapes:
+          - "Même total : *1 par an*"
+          - "Mais en moyenne, l'argent arrive *vers le milieu* de l'année"
+          - "Il est donc *moins actualisé*"
+          - "Facteur de correction : i ÷ i⁽¹²⁾ ≈ *1,0182* à 4 %"
+        voix_off: "Pourquoi un peu plus ? Dans les deux cas, on reçoit un au total chaque année. Mais avec des paiements annuels en fin d'année, tout arrive le trente et un décembre. Avec des paiements mensuels, l'argent arrive tout au long de l'année, en moyenne vers le milieu : il est reçu plus tôt, donc moins actualisé, donc plus précieux. À quatre pour cent, le facteur de correction, i divisé par i douze, vaut environ un virgule zéro un huit deux : près de deux pour cent de plus. C'est petit, mais sur des millions de pensions, c'est énorme."
+        verifier:
+          - {expression: "0.04 / (12 * (1.04**(1/12) - 1))", attendu: 1.0182, libelle: "i / i(12) à 4 %"}
+      - type: formule
+        texte: "Et *en continu* : l'annuité *ā*"
+        formule:
+          - '\bar{a}_n=\int_0^n v^t\,dt=\dfrac{1-v^n}{\delta}'
+          - 'a_n<a^{(12)}_n<\bar{a}_n<\ddot{a}^{(12)}_n<\ddot{a}_n'
+        note: "Même ordre que les taux, dans l'autre sens : plus le dénominateur est petit, plus l'annuité est grande."
+        voix_off: "Poussons jusqu'au bout. Si l'argent arrivait en continu, comme un flux, l'annuité s'appellerait l'annuité continue, a barre n : l'intégrale de v puissance t. Sa formule ? Toujours un moins v puissance n, divisé cette fois par delta. Elle sert d'approximation pour des paiements très fréquents, comme un salaire. Et l'ordre des annuités est l'inverse de l'ordre des taux : plus le dénominateur est petit, plus l'annuité est grande. La moins chère est l'annuité annuelle en fin d'année ; la plus chère, l'annuité annuelle en début d'année ; les versions mensuelles et continue sont entre les deux."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : le contrat de Léa"
+        voix_off: "Ouvrons maintenant le dossier qui nous suivra tout au long du parcours."
+      - type: etapes
+        texte: "*Léa*, 30 ans, cliente de *JG's Holding*"
+        etapes:
+          - "Contrat d'*épargne-pension*"
+          - "Prime : *100 €* par mois, en *début* de mois"
+          - "Pendant *35 ans*, jusqu'à 65 ans"
+          - "Taux garanti fictif : *4 %* effectif"
+        note: "JG's Holding est un assureur fictif, et Léa une cliente fictive. Pour l'instant : ni frais, ni fiscalité, ni mortalité."
+        voix_off: "Je vous présente Léa. Elle a trente ans, et elle vient de signer chez JG's Holding, notre assureur fictif, un contrat d'épargne-pension. Elle versera cent euros par mois, au début de chaque mois, pendant trente-cinq ans, jusqu'à ses soixante-cinq ans. JG's Holding lui garantit un taux fictif de quatre pour cent effectif par an. Léa est une cliente fictive, mais son contrat ressemble à de vrais contrats. Épisode après épisode, on va le construire pièce par pièce : la prime, l'évolution du capital, la rente, la mortalité, puis les réserves de l'assureur. Aujourd'hui, première pièce : ses primes mensuelles. Pour l'instant, on oublie les frais, les impôts et le risque de décès : ils viendront plus tard."
+      - type: etapes
+        texte: "Combien valent les primes de Léa *aujourd'hui* ?"
+        etapes:
+          - "Versé au total : 35 × 1 200 = *42 000 €*"
+          - "Primes de début de mois : *ä⁽¹²⁾₃₅*"
+          - "1 200 × ä⁽¹²⁾₃₅ ≈ 1 200 × 19,0666 = *22 879,91 €*"
+        voix_off: "Première question de l'actuaire : combien valent aujourd'hui toutes les primes que Léa va verser ? Au total, elle versera trente-cinq fois mille deux cents euros, soit quarante-deux mille euros. Mais ces primes s'étalent sur trente-cinq ans : il faut les actualiser. Ce sont mille deux cents euros par an, versés en douze morceaux au début de chaque mois : c'est exactement une annuité due mensuelle, a point point douze, sur trente-cinq ans. Elle vaut environ dix-neuf virgule zéro six six six. Multipliée par mille deux cents : vingt-deux mille huit cent soixante-dix-neuf euros et quatre-vingt-onze centimes. C'est la valeur actuelle des primes de Léa."
+        verifier:
+          - {expression: "35 * 1200", attendu: 42000, libelle: "Total versé"}
+          - {expression: "(1 - 1.04**-35) / (12 * (1 - 1.04**(-1/12)))", attendu: 19.0666, libelle: "ä(12) sur 35 ans à 4 %"}
+          - {expression: "1200 * (1 - 1.04**-35) / (12 * (1 - 1.04**(-1/12)))", attendu: 22879.91, libelle: "Valeur actuelle des primes"}
+      - type: etapes
+        texte: "Mensuel, annuel : *l'ordre* se vérifie"
+        etapes:
+          - "1 200 € une fois par an, en *fin* d'année : *22 397,54 €*"
+          - "100 € *chaque mois*, en début de mois : *22 879,91 €*"
+          - "1 200 € une fois par an, en *début* d'année : *23 293,44 €*"
+        voix_off: "Vérifions l'ordre qu'on vient de voir. Si Léa versait mille deux cents euros d'un coup, à la fin de chaque année, ses primes vaudraient aujourd'hui vingt-deux mille trois cent quatre-vingt-dix-sept euros. Si elle les versait d'un coup au début de chaque année, vingt-trois mille deux cent quatre-vingt-treize euros. Ses cent euros par mois, en début de mois, se situent entre les deux : vingt-deux mille huit cent quatre-vingts euros. Plus l'argent arrive tôt, plus il vaut cher aujourd'hui."
+        verifier:
+          - {expression: "1200 * (1 - 1.04**-35) / 0.04", attendu: 22397.54, libelle: "Annuel, fin d'année"}
+          - {expression: "1200 * 1.04 * (1 - 1.04**-35) / 0.04", attendu: 23293.44, libelle: "Annuel, début d'année"}
+      - type: formule
+        texte: "Le *capital de Léa* à 65 ans"
+        formule:
+          - 'VF=1\,200\times\ddot{a}^{(12)}_{35}\times(1{,}04)^{35}'
+          - 'VF=1\,200\times\ddot{s}^{(12)}_{35}\approx 90\,286{,}15\ \text{€}'
+        note: "s̈⁽¹²⁾ₙ = ä⁽¹²⁾ₙ × (1 + i)ⁿ : la valeur accumulée des primes à la fin du contrat."
+        voix_off: "Deuxième question : quel capital Léa aura-t-elle à soixante-cinq ans ? On a la valeur des primes aujourd'hui. Il suffit de la capitaliser sur trente-cinq ans : multiplier par un virgule zéro quatre puissance trente-cinq, environ trois virgule neuf cinq. On obtient quatre-vingt-dix mille deux cent quatre-vingt-six euros. Ce produit a un nom : s point point douze, la valeur accumulée de l'annuité. Léa aura versé quarante-deux mille euros ; les intérêts composés, mois après mois, ont plus que doublé son effort."
+        verifier:
+          - {expression: "1.04**35", attendu: 3.946, libelle: "Facteur de capitalisation, 35 ans"}
+          - {expression: "1200 * (1.04**35 - 1) / (12 * (1 - 1.04**(-1/12)))", attendu: 90286.15, libelle: "Capital à 65 ans"}
+      - type: texte
+        texte: "La suite du dossier : la prime de Léa *augmente*, puis la *rente*"
+        voix_off: "Gardez le dossier de Léa sous la main. Dans le prochain épisode, sa prime suivra l'inflation, et on se demandera ce que vaut une rente qui ne s'arrête jamais. Plus tard, on suivra son capital année par année, on regardera où JG's Holding place son argent, puis on ajoutera la mortalité. Chaque épisode ajoute une pièce au même contrat."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Taux effectif *i = 3 %*, paiements *trimestriels* (m = 4), *5 ans*. Calculez :"
+        pause: 20
+        questions:
+          - "Le taux nominal i⁽⁴⁾"
+          - "Le taux d'escompte nominal d⁽⁴⁾"
+          - "L'annuité a⁽⁴⁾₅"
+          - "L'annuité due ä⁽⁴⁾₅"
+        voix_off: "Mettez la vidéo en pause. Avec un taux annuel effectif de trois pour cent, des paiements chaque trimestre, donc m égale quatre, sur cinq ans : calculez le taux nominal i quatre, le taux d'escompte nominal d quatre, l'annuité a quatre sur cinq ans et l'annuité due a point point quatre sur cinq ans."
+      - type: correction
+        etapes:
+          - "i⁽⁴⁾ = 4 × (1,03^(1/4) − 1) ≈ *2,9668 %*"
+          - "d⁽⁴⁾ = 4 × (1 − 1,03^(−1/4)) ≈ *2,9450 %*"
+          - "a⁽⁴⁾₅ = (1 − 1,03⁻⁵) ÷ i⁽⁴⁾ ≈ *4,6309*"
+          - "ä⁽⁴⁾₅ = (1 − 1,03⁻⁵) ÷ d⁽⁴⁾ ≈ *4,6653*"
+        voix_off: "Correction. Le taux nominal : quatre fois, racine quatrième de un virgule zéro trois moins un, environ deux virgule neuf six six huit pour cent. Le taux d'escompte nominal : quatre fois, un moins un virgule zéro trois puissance moins un quart, environ deux virgule neuf quatre cinq zéro pour cent. Le numérateur commun, un moins un virgule zéro trois puissance moins cinq, vaut environ zéro virgule un trois sept quatre. Divisé par i quatre : quatre virgule six trois zéro neuf. Divisé par d quatre : quatre virgule six six cinq trois. Et les deux sont plus grands que l'annuité annuelle a cinq, environ quatre virgule cinq sept neuf sept, comme prévu."
+        verifier:
+          - {expression: "100 * 4 * (1.03**0.25 - 1)", attendu: 2.9668, libelle: "i(4) à 3 %, en %"}
+          - {expression: "100 * 4 * (1 - 1.03**-0.25)", attendu: 2.9450, libelle: "d(4) à 3 %, en %"}
+          - {expression: "1 - 1.03**-5", attendu: 0.1374, libelle: "Numérateur"}
+          - {expression: "(1 - 1.03**-5) / (4 * (1.03**0.25 - 1))", attendu: 4.6309, libelle: "a(4) sur 5 ans"}
+          - {expression: "(1 - 1.03**-5) / (4 * (1 - 1.03**-0.25))", attendu: 4.6653, libelle: "ä(4) sur 5 ans"}
+          - {expression: "(1 - 1.03**-5) / 0.03", attendu: 4.5797, libelle: "a5 à 3 %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Nominal : 1 + i = *(1 + i⁽ᵐ⁾ ÷ m)ᵐ* ; on compare en *effectif*"
+          - "Ne jamais diviser un taux *effectif* par 12"
+          - "d < d⁽ᵐ⁾ < *δ* < i⁽ᵐ⁾ < i"
+          - "a⁽ᵐ⁾ₙ = (1 − vⁿ) ÷ *i⁽ᵐ⁾* ; ä⁽ᵐ⁾ₙ = (1 − vⁿ) ÷ *d⁽ᵐ⁾*"
+          - "Léa : *22 879,91 €* aujourd'hui, *90 286,15 €* à 65 ans"
+        voix_off: "Ce qu'il faut retenir. Un taux nominal se convertit en taux effectif par un plus i m sur m, puissance m, et on compare toujours les offres en taux effectif. On ne divise jamais un taux effectif par douze. Les taux se rangent toujours dans le même ordre, avec delta au centre. Une annuité payable m fois par an garde le numérateur un moins v puissance n, avec i m ou d m au dénominateur. Et les primes de Léa valent vingt-deux mille huit cent quatre-vingts euros aujourd'hui, pour un capital de quatre-vingt-dix mille deux cent quatre-vingt-six euros à soixante-cinq ans."
+      - type: cloture
+        texte: "Prochain épisode : *une rente qui ne s'arrête jamais*. Une question ? *En commentaire*"
+        voix_off: "Votre boîte à outils bat maintenant au rythme des mois. Prochain épisode : combien vaut une rente qui ne s'arrête jamais, et que devient le contrat de Léa quand sa prime augmente chaque année ? Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Nominal rates and monthly payments: 6% a year, is it really 6%?"
+    legende: |
+      In the United States, credit cards charge on average 22.36% a year (Federal Reserve, Q3 2026). Charged monthly, that interest really costs close to 24.8%. Why? The full answer is in this episode of the Actuarial path: nominal and effective rates, the nominal rate of discount, the force of interest and the birth of the number e, annuities payable monthly, and the first chapter of our running case, Léa's pension savings contract. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer and Léa a fictional client; the example rates are made up, the real facts are sourced. No investment or credit advice. Got a question? Ask in the comments.
+    hashtags: [actuarial, nominalrate, effectiverate, annuities]
+    scenes:
+      - type: accroche
+        texte: "*22.36%* a year… or *24.8%*?"
+        note: "Federal Reserve, G.19 of 6/11/2026: credit card accounts assessed interest, Q3 2026."
+        voix_off: "In the United States, in the third quarter of 2026, credit card holders who pay interest pay an average rate of twenty-two point three six percent a year. That is the official Federal Reserve figure. But if that interest is added to the debt every month, the real cost over a year is above twenty-four point eight percent. Two rates for the same debt? By the end of this video, you will be able to go from one to the other."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this second episode of the Actuarial path! Thanks for being here. Last time, we built the toolbox: compound interest, discounting, annuities. Today, we tune it to the rhythm of real life, where we pay every month: salaries, rent, loans, pensions. And we open a file that will follow us all along the path."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "*Nominal* and *effective* rates"
+          - "The nominal rate of *discount*"
+          - "The *force* of interest and *e*"
+          - "*Monthly* annuities"
+          - "*Léa*'s contract"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. Nominal and effective rates. The nominal rate of discount. The force of interest, and the birth of the number e. Annuities paid every month. Then the first chapter of our running case: Léa's contract. And to finish, a solved exercise."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Nominal rate and effective rate"
+        voix_off: "Let's start with the most common trap: the quoted rate."
+      - type: texte
+        texte: "A *nominal* rate: a *quoted* annual rate, paid *in pieces*"
+        voix_off: "A bank offers you six percent a year, convertible monthly. What does it mean? It will not pay you six percent at the end of the year. It splits the rate into twelve: every month, it credits zero point five percent. This six percent is a nominal rate: an annual rate for display, paid in m pieces during the year. Here, m is twelve. We write it i, with m in brackets as a superscript."
+      - type: etapes
+        texte: "*6%* convertible monthly, on *€1,000*"
+        etapes:
+          - "Each month: 6% ÷ 12 = *0.5%*"
+          - "But each month's interest *earns* interest in turn"
+          - "After 12 months: 1,000 × 1.005¹² = *€1,061.68*"
+          - "Annual *effective* rate: *6.17%*, not 6%"
+        voix_off: "Let's do the maths on one thousand euros. Each month, we add zero point five percent. But, as in the previous episode, January's interest earns interest in February, and so on. After twelve months, we have multiplied twelve times by one point zero zero five: we get one thousand and sixty-one euros sixty-eight. The rate actually earned over the year, the annual effective rate, is six point one seven percent, not six."
+        verifier:
+          - {expression: "100 * 0.06 / 12", attendu: 0.5, libelle: "Monthly rate, %"}
+          - {expression: "1000 * 1.005**12", attendu: 1061.68, libelle: "After 12 months"}
+          - {expression: "100 * (1.005**12 - 1)", attendu: 6.17, libelle: "Effective rate, %"}
+      - type: animation
+        texte: "*6%* nominal monthly = *6.17%* effective"
+        animation:
+          modele: frequences
+          taux: 0.0616778
+          m: 12
+          capital: 1000
+          unite: "€"
+        etapes:
+          - "Once a year: *+ 6.17%* at year end"
+          - "Twelve times a year: *+ 0.5%* each month"
+          - "Same arrival: *€1,061.68*, but 12 × 0.5% = only *6%*"
+        voix_off: "Let's watch it move. At the top, a single jump at year end, at the effective rate of six point one seven percent. Below, twelve small jumps of zero point five percent, one a month. Each jump starts a little higher than the one before, because it includes the interest already earned. Both paths arrive at exactly the same place, one thousand and sixty-one euros sixty-eight: these two rates are equivalent. The nominal rate simply adds up the twelve pieces: six percent."
+        verifier:
+          - {expression: "100 * (1.0616778**(1/12) - 1)", attendu: 0.5, libelle: "Equivalent monthly rate, %"}
+          - {expression: "1000 * 1.0616778", attendu: 1061.68, libelle: "Same arrival"}
+      - type: formule
+        texte: "From nominal to *effective*, and back"
+        formule:
+          - '1+i=\left(1+\dfrac{i^{(m)}}{m}\right)^{m}'
+          - 'i^{(m)}=m\left[(1+i)^{1/m}-1\right]'
+        note: "i: annual effective rate; i⁽ᵐ⁾: nominal rate convertible m times a year; i⁽ᵐ⁾ ÷ m: rate for each period."
+        voix_off: "As a formula. One plus i equals one plus i m over m, all to the power m: m periods, each at the rate i m over m. It is the rule of equivalent rates from the previous episode: the same amount after one year. The other way round, to get the nominal rate from the effective rate, take the m-th root of one plus i, subtract one, and multiply by m."
+      - type: etapes
+        texte: "Two banks, *6%* each. *Which* pays more?"
+        etapes:
+          - "Bank A, monthly: 1.005¹² − 1 = *6.168%*"
+          - "Bank B, quarterly: 1.015⁴ − 1 = *6.136%*"
+          - "Same quoted rate, *different returns*: compare on an *effective* basis"
+        voix_off: "A practical case. Bank A offers six percent compounded monthly; bank B, six percent compounded quarterly. Same quoted rate. For bank A, we find six point one six eight percent effective. For bank B, one point zero one five to the power four, minus one: six point one three six percent. Bank A pays a little more. The more often interest is compounded, the further the effective rate moves from the quoted rate. The golden rule: to compare two offers, always convert to the annual effective rate."
+        verifier:
+          - {expression: "100 * (1.005**12 - 1)", attendu: 6.168, libelle: "Bank A, %"}
+          - {expression: "100 * (1.015**4 - 1)", attendu: 6.136, libelle: "Bank B, %"}
+      - type: animation
+        texte: "Credit card: *22.36%* quoted, *24.8%* real"
+        animation:
+          modele: frequences
+          taux: 0.248
+          m: 12
+          capital: 1000
+          unite: "$"
+        etapes:
+          - "Over a year: *+ 24.8%* of debt"
+          - "Each month: 22.36% ÷ 12 = *+ 1.863%*"
+          - "The quoted rate is only the *nominal*: 12 × 1.863% = *22.36%*"
+        note: "Federal Reserve, G.19: 22.36% in Q3 2026. Illustrative calculation with interest added monthly."
+        voix_off: "Back to American credit cards. The quoted rate, twenty-two point three six percent, is a nominal annual rate. Suppose the interest is added to the debt every month: each month, the debt grows by one point eight six three percent, and the next month, you pay interest on that interest. One thousand dollars left unpaid becomes one thousand two hundred and forty-eight dollars in a year: a real cost of twenty-four point eight percent. That is why the law, in Europe as in the United States, requires lenders to show an annual rate computed with a common method."
+        verifier:
+          - {expression: "100 * 0.2236 / 12", attendu: 1.863, libelle: "Monthly rate, %"}
+          - {expression: "100 * ((1 + 0.2236 / 12)**12 - 1)", attendu: 24.8, libelle: "Effective rate, %"}
+          - {expression: "1000 * (1 + 0.2236 / 12)**12", attendu: 1248, libelle: "Debt after a year"}
+      - type: etapes
+        texte: "The trap: *dividing* an *effective* rate *by 12*"
+        etapes:
+          - "4% effective ÷ 12 = 0.3333% a month? *No*"
+          - "1.003333¹² − 1 = *4.07%*: too much"
+          - "The right monthly rate: 1.04^(1/12) − 1 = *0.3274%*"
+          - "Hence i⁽¹²⁾ = 12 × 0.3274% = *3.928%*"
+        note: "From here on: made-up rate of 4% effective a year, as in the session."
+        voix_off: "Watch out for the reverse trap. The effective rate is four percent. Can we divide by twelve and say zero point three three three percent a month? No: compounding that rate twelve times would give four point zero seven percent, too much. The right monthly rate is the twelfth root of one point zero four, minus one: zero point three two seven four percent. And the matching nominal rate is twelve times that, three point nine two eight percent. For a given effective rate, the nominal rate is always smaller. We keep this made-up four percent rate for the rest of the video."
+        verifier:
+          - {expression: "100 * ((1 + 0.04 / 12)**12 - 1)", attendu: 4.07, libelle: "Effective if divided by 12, %"}
+          - {expression: "100 * (1.04**(1/12) - 1)", attendu: 0.3274, libelle: "Equivalent monthly rate, %"}
+          - {expression: "1200 * (1.04**(1/12) - 1)", attendu: 3.928, libelle: "i(12) at 4%, %"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The nominal rate of discount"
+        voix_off: "Same idea, on the side of interest paid in advance."
+      - type: formule
+        texte: "*d⁽ᵐ⁾*: discount taken *at the start* of each period"
+        formule:
+          - '\left(1-\dfrac{d^{(m)}}{m}\right)^{-m}=1+i'
+          - 'd^{(m)}=m\left[1-v^{1/m}\right]'
+          - 'd^{(12)}\approx 3.9157\%\ \text{at}\ 4\%'
+        note: "v = 1 ÷ (1 + i): the discount factor from episode 1."
+        voix_off: "In the previous episode, the rate of discount d was the interest taken at the start of the year. If it is taken every month, at the start of each month, we get the nominal rate of discount, written d m. Each month, we take d m divided by m. The equivalence rule is the same: over one year, we must get back one plus i. Hence d m equals m times one minus v to the power one over m. At four percent, d twelve is about three point nine one five seven percent."
+        verifier:
+          - {expression: "100 * 12 * (1 - 1.04**(-1/12))", attendu: 3.9157, libelle: "d(12) at 4%, %"}
+          - {expression: "(1 - 12 * (1 - 1.04**(-1/12)) / 12)**-12", attendu: 1.04, libelle: "Equivalence"}
+      - type: formule
+        texte: "Five rates, *one* investment"
+        formule:
+          - 'd<d^{(12)}<\delta<i^{(12)}<i'
+          - '3.846\%<3.916\%<3.922\%<3.928\%<4\%'
+        note: "At 4% effective. d and d⁽¹²⁾: interest paid in advance; i⁽¹²⁾ and i: interest paid in arrears."
+        voix_off: "Let's rank all these rates, for the same investment at four percent. The smallest is the annual rate of discount, three point eight four six percent. Then the monthly rate of discount, three point nine one six. In the middle, the force of interest delta, three point nine two two. Then the monthly nominal rate, three point nine two eight. And finally the effective rate, four percent. This ranking always holds. Discount rates, paid in advance, sit below; interest rates, paid at the end, sit above. And the shorter the period, the closer both families get to delta, in the centre."
+        verifier:
+          - {expression: "100 * 0.04 / 1.04", attendu: 3.846, libelle: "d at 4%, %"}
+          - {expression: "100 * 12 * (1 - 1.04**(-1/12))", attendu: 3.916, libelle: "d(12), %"}
+          - {expression: "100 * log(1.04)", attendu: 3.922, libelle: "δ, %"}
+          - {expression: "100 * 12 * (1.04**(1/12) - 1)", attendu: 3.928, libelle: "i(12), %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "In the limit: the force of interest and the number e"
+        voix_off: "What if interest were compounded at every instant?"
+      - type: etapes
+        texte: "*1683*: Jacob Bernoulli and *€1* at *100%*"
+        etapes:
+          - "Once a year: 1 × 2 = *€2*"
+          - "Twice: 1.5² = *€2.25*"
+          - "Monthly: (1 + 1⁄12)¹² ≈ *€2.613*"
+          - "Daily: (1 + 1⁄365)³⁶⁵ ≈ *€2.715*"
+          - "In the limit: *e ≈ €2.718*"
+        note: "Source: MacTutor History of Mathematics, “The number e”, accessed 23/11/2026."
+        voix_off: "A fact from history. In 1683, the Swiss mathematician Jacob Bernoulli asked exactly our question, about compound interest. One euro invested at one hundred percent a year. Once, at year end: two euros. In two steps, at fifty percent: two euros twenty-five. Every month: about two euros sixty-one. Every day: about two euros seventy-one. It grows, but more and more slowly, and it never goes past a certain limit. That limit is a number that became famous: e, about two point seven one eight. The number e was born from a problem about interest."
+        verifier:
+          - {expression: "1.5**2", attendu: 2.25, libelle: "Twice"}
+          - {expression: "(1 + 1/12)**12", attendu: 2.613, libelle: "Monthly"}
+          - {expression: "(1 + 1/365)**365", attendu: 2.715, libelle: "Daily"}
+          - {expression: "exp(1)", attendu: 2.718, libelle: "e"}
+      - type: formule
+        texte: "The force of interest *δ*: the limit of *i⁽ᵐ⁾*"
+        formule:
+          - '\lim_{m\to\infty}i^{(m)}=\ln(1+i)=\delta'
+          - 'i^{(2)}=3.961\%\quad i^{(12)}=3.928\%\quad\delta=3.922\%'
+        note: "At 4% effective. The nominal rate falls as m grows, and stops at δ."
+        voix_off: "For us, it is the same story, the other way round. For a given effective rate, the more often we compound, the smaller the nominal rate needed. At four percent effective: three point nine six one percent in two steps, three point nine two eight in twelve. And in the limit, continuously, we reach the force of interest delta, the natural log of one plus i: three point nine two two percent. The nominal rate falls towards delta, without ever going below it."
+        verifier:
+          - {expression: "100 * 2 * (1.04**0.5 - 1)", attendu: 3.961, libelle: "i(2), %"}
+          - {expression: "100 * log(1.04)", attendu: 3.922, libelle: "δ, %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Annuities paid every month"
+        voix_off: "Let's apply all this to regular payments."
+      - type: texte
+        texte: "In Belgium, pensions are paid *every month*"
+        note: "Source: Belgian Federal Pension Service, “When is my pension paid?”, accessed 23/11/2026."
+        voix_off: "A real fact. In Belgium, the Federal Pension Service pays pensions every month, on dates set in advance. That is the rule almost everywhere: salaries, rent, loans, pensions, everything is paid monthly. Yet our annuities from the previous episode assumed one payment a year. So we need annuities payable m times a year."
+      - type: formule
+        texte: "*1 a year*, paid in *m* pieces of *1⁄m*"
+        formule:
+          - 'a^{(m)}_n=\dfrac{1-v^n}{i^{(m)}}=\dfrac{i}{i^{(m)}}\,a_n'
+          - '\ddot{a}^{(m)}_n=\dfrac{1-v^n}{d^{(m)}}'
+        note: "a⁽ᵐ⁾ₙ: payments at the end of each period; ä⁽ᵐ⁾ₙ: at the start. The total paid stays 1 a year."
+        voix_off: "An annuity payable m times a year pays one a year in total, but in m pieces of one over m. The good news: the formula keeps the same shape as in the previous episode. The numerator stays one minus v to the power n. Only the denominator changes: we replace the effective rate with the nominal rate of the same frequency as the payments. Payments at the end of each month: divide by i twelve. Payments at the start of each month: divide by d twelve, the monthly rate of discount. And since i is larger than i m, the monthly annuity is worth a little more than the annual one."
+      - type: etapes
+        texte: "Why *paying monthly* is worth *more* than paying at year end"
+        etapes:
+          - "Same total: *1 a year*"
+          - "But on average, the money arrives *around mid-year*"
+          - "So it is *less discounted*"
+          - "Correction factor: i ÷ i⁽¹²⁾ ≈ *1.0182* at 4%"
+        voix_off: "Why a little more? In both cases, you receive one in total each year. But with annual payments in arrears, everything arrives on the thirty-first of December. With monthly payments, the money arrives throughout the year, on average around the middle: it comes earlier, so it is less discounted, so it is worth more. At four percent, the correction factor, i divided by i twelve, is about one point zero one eight two: almost two percent more. Small, but over millions of pensions, it is huge."
+        verifier:
+          - {expression: "0.04 / (12 * (1.04**(1/12) - 1))", attendu: 1.0182, libelle: "i / i(12) at 4%"}
+      - type: formule
+        texte: "And *continuously*: the annuity *ā*"
+        formule:
+          - '\bar{a}_n=\int_0^n v^t\,dt=\dfrac{1-v^n}{\delta}'
+          - 'a_n<a^{(12)}_n<\bar{a}_n<\ddot{a}^{(12)}_n<\ddot{a}_n'
+        note: "Same order as the rates, reversed: the smaller the denominator, the larger the annuity."
+        voix_off: "Let's go all the way. If the money arrived continuously, as a flow, the annuity would be called the continuous annuity, a bar n: the integral of v to the power t. Its formula? Still one minus v to the power n, this time divided by delta. It is used as an approximation for very frequent payments, like a salary. And the order of the annuities is the reverse of the order of the rates: the smaller the denominator, the larger the annuity. The cheapest is the annual annuity in arrears; the most expensive, the annual annuity in advance; the monthly and continuous versions sit in between."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Our running case: Léa's contract"
+        voix_off: "Now let's open the file that will follow us all along the path."
+      - type: etapes
+        texte: "*Léa*, 30, a client of *JG's Holding*"
+        etapes:
+          - "A *pension savings* contract"
+          - "Premium: *€100* a month, at the *start* of each month"
+          - "For *35 years*, until age 65"
+          - "Made-up guaranteed rate: *4%* effective"
+        note: "JG's Holding is a fictional insurer, and Léa a fictional client. For now: no fees, no tax, no mortality."
+        voix_off: "Meet Léa. She is thirty, and she has just signed a pension savings contract with JG's Holding, our fictional insurer. She will pay one hundred euros a month, at the start of each month, for thirty-five years, until she turns sixty-five. JG's Holding guarantees her a made-up rate of four percent effective a year. Léa is a fictional client, but her contract looks like real contracts. Episode after episode, we will build it piece by piece: the premium, how the capital grows, the annuity, mortality, then the insurer's reserves. Today, the first piece: her monthly premiums. For now, we leave out fees, taxes and the risk of death: they will come later."
+      - type: etapes
+        texte: "What are Léa's premiums worth *today*?"
+        etapes:
+          - "Paid in total: 35 × 1,200 = *€42,000*"
+          - "Premiums at the start of each month: *ä⁽¹²⁾₃₅*"
+          - "1,200 × ä⁽¹²⁾₃₅ ≈ 1,200 × 19.0666 = *€22,879.91*"
+        voix_off: "The actuary's first question: what are all the premiums Léa will pay worth today? In total, she will pay thirty-five times one thousand two hundred euros, that is forty-two thousand euros. But those premiums are spread over thirty-five years: they must be discounted. It is one thousand two hundred euros a year, paid in twelve pieces at the start of each month: exactly a monthly annuity due, a double dot twelve, over thirty-five years. It is worth about nineteen point zero six six six. Times one thousand two hundred: twenty-two thousand eight hundred and seventy-nine euros ninety-one. That is the present value of Léa's premiums."
+        verifier:
+          - {expression: "35 * 1200", attendu: 42000, libelle: "Total paid"}
+          - {expression: "(1 - 1.04**-35) / (12 * (1 - 1.04**(-1/12)))", attendu: 19.0666, libelle: "ä(12) over 35 years at 4%"}
+          - {expression: "1200 * (1 - 1.04**-35) / (12 * (1 - 1.04**(-1/12)))", attendu: 22879.91, libelle: "Present value of the premiums"}
+      - type: etapes
+        texte: "Monthly, yearly: *the order* holds"
+        etapes:
+          - "€1,200 once a year, at year *end*: *€22,397.54*"
+          - "€100 *every month*, at the start of the month: *€22,879.91*"
+          - "€1,200 once a year, at year *start*: *€23,293.44*"
+        voix_off: "Let's check the order we just saw. If Léa paid one thousand two hundred euros in one go at the end of each year, her premiums would be worth twenty-two thousand three hundred and ninety-seven euros today. If she paid them in one go at the start of each year, twenty-three thousand two hundred and ninety-three euros. Her one hundred euros a month, at the start of each month, sit in between: twenty-two thousand eight hundred and eighty euros. The earlier the money arrives, the more it is worth today."
+        verifier:
+          - {expression: "1200 * (1 - 1.04**-35) / 0.04", attendu: 22397.54, libelle: "Yearly, in arrears"}
+          - {expression: "1200 * 1.04 * (1 - 1.04**-35) / 0.04", attendu: 23293.44, libelle: "Yearly, in advance"}
+      - type: formule
+        texte: "*Léa's capital* at 65"
+        formule:
+          - 'FV=1{,}200\times\ddot{a}^{(12)}_{35}\times(1.04)^{35}'
+          - 'FV=1{,}200\times\ddot{s}^{(12)}_{35}\approx \text{€}90{,}286.15'
+        note: "s̈⁽¹²⁾ₙ = ä⁽¹²⁾ₙ × (1 + i)ⁿ: the accumulated value of the premiums at the end of the contract."
+        voix_off: "Second question: what capital will Léa have at sixty-five? We have the value of the premiums today. We just accumulate it over thirty-five years: multiply by one point zero four to the power thirty-five, about three point nine five. We get ninety thousand two hundred and eighty-six euros. This product has a name: s double dot twelve, the accumulated value of the annuity. Léa will have paid forty-two thousand euros; compound interest, month after month, has more than doubled her effort."
+        verifier:
+          - {expression: "1.04**35", attendu: 3.946, libelle: "Accumulation factor, 35 years"}
+          - {expression: "1200 * (1.04**35 - 1) / (12 * (1 - 1.04**(-1/12)))", attendu: 90286.15, libelle: "Capital at 65"}
+      - type: texte
+        texte: "Next in the file: Léa's premium *grows*, then the *annuity*"
+        voix_off: "Keep Léa's file at hand. In the next episode, her premium will follow inflation, and we will ask what an annuity that never stops is worth. Later, we will follow her capital year by year, look at where JG's Holding invests her money, then add mortality. Each episode adds a piece to the same contract."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Effective rate *i = 3%*, *quarterly* payments (m = 4), *5 years*. Compute:"
+        pause: 20
+        questions:
+          - "The nominal rate i⁽⁴⁾"
+          - "The nominal rate of discount d⁽⁴⁾"
+          - "The annuity a⁽⁴⁾₅"
+          - "The annuity due ä⁽⁴⁾₅"
+        voix_off: "Pause the video. With an annual effective rate of three percent, payments every quarter, so m equals four, over five years: compute the nominal rate i four, the nominal rate of discount d four, the annuity a four over five years and the annuity due a double dot four over five years."
+      - type: correction
+        etapes:
+          - "i⁽⁴⁾ = 4 × (1.03^(1/4) − 1) ≈ *2.9668%*"
+          - "d⁽⁴⁾ = 4 × (1 − 1.03^(−1/4)) ≈ *2.9450%*"
+          - "a⁽⁴⁾₅ = (1 − 1.03⁻⁵) ÷ i⁽⁴⁾ ≈ *4.6309*"
+          - "ä⁽⁴⁾₅ = (1 − 1.03⁻⁵) ÷ d⁽⁴⁾ ≈ *4.6653*"
+        voix_off: "Solution. The nominal rate: four times the fourth root of one point zero three minus one, about two point nine six six eight percent. The nominal rate of discount: four times one minus one point zero three to the power minus a quarter, about two point nine four five zero percent. The common numerator, one minus one point zero three to the power minus five, is about zero point one three seven four. Divided by i four: four point six three zero nine. Divided by d four: four point six six five three. And both are larger than the annual annuity a five, about four point five seven nine seven, as expected."
+        verifier:
+          - {expression: "100 * 4 * (1.03**0.25 - 1)", attendu: 2.9668, libelle: "i(4) at 3%, %"}
+          - {expression: "100 * 4 * (1 - 1.03**-0.25)", attendu: 2.9450, libelle: "d(4) at 3%, %"}
+          - {expression: "1 - 1.03**-5", attendu: 0.1374, libelle: "Numerator"}
+          - {expression: "(1 - 1.03**-5) / (4 * (1.03**0.25 - 1))", attendu: 4.6309, libelle: "a(4) over 5 years"}
+          - {expression: "(1 - 1.03**-5) / (4 * (1 - 1.03**-0.25))", attendu: 4.6653, libelle: "ä(4) over 5 years"}
+          - {expression: "(1 - 1.03**-5) / 0.03", attendu: 4.5797, libelle: "a5 at 3%"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Nominal: 1 + i = *(1 + i⁽ᵐ⁾ ÷ m)ᵐ*; compare on an *effective* basis"
+          - "Never divide an *effective* rate by 12"
+          - "d < d⁽ᵐ⁾ < *δ* < i⁽ᵐ⁾ < i"
+          - "a⁽ᵐ⁾ₙ = (1 − vⁿ) ÷ *i⁽ᵐ⁾*; ä⁽ᵐ⁾ₙ = (1 − vⁿ) ÷ *d⁽ᵐ⁾*"
+          - "Léa: *€22,879.91* today, *€90,286.15* at 65"
+        voix_off: "What to remember. A nominal rate converts to an effective rate through one plus i m over m, to the power m, and offers are always compared on an effective basis. Never divide an effective rate by twelve. Rates always rank in the same order, with delta in the centre. An annuity payable m times a year keeps the numerator one minus v to the power n, with i m or d m as the denominator. And Léa's premiums are worth twenty-two thousand eight hundred and eighty euros today, for a capital of ninety thousand two hundred and eighty-six euros at sixty-five."
+      - type: cloture
+        texte: "Next episode: *an annuity that never stops*. A question? *In the comments*"
+        voix_off: "Your toolbox now beats to the rhythm of the months. Next episode: what is an annuity that never stops worth, and what happens to Léa's contract when her premium grows every year? If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
