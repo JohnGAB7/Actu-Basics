@@ -8,7 +8,7 @@ Contenu du module repris de la v2 et de la v3.3 : intérêts simples et composé
 | --- | --- | --- | --- | --- |
 | A1.01 | 1 000 € aujourd'hui ou dans 30 ans / $1,000 today or in 30 years | Est-ce vraiment la même somme ? | Intérêts simples et composés, capitalisation, actualisation, règle de 72 | **rendue (pilote)** |
 | A1.02 | Taux nominal, taux effectif / Nominal and effective rates | 1 % par mois, est-ce 12 % par an ? | Taux périodique, taux effectif annuel, taux équivalents | brouillon (`contenus/conception/A1.02.yaml`) |
-| A1.03 | La valeur actuelle de plusieurs paiements / Present value of a cash flow stream | Deux offres, trois paiements : laquelle vaut le plus aujourd'hui ? | Somme des valeurs actuelles, comparer des échéanciers | à écrire |
+| A1.03 | La valeur actuelle de plusieurs paiements / Present value of a cash flow stream | Deux offres, trois paiements : laquelle vaut le plus aujourd'hui ? | Somme des valeurs actuelles, comparer des échéanciers | brouillon (`contenus/conception/A1.03.yaml`) |
 | A1.04 | Les annuités / Annuities certain | Combien vaut 1 000 € par an pendant 10 ans ? | aₙ = (1 − vⁿ) / i, début ou fin de période, mensualité d'un emprunt | à écrire |
 | A1.05 | La courbe des taux / The yield curve | Pourquoi le taux à 10 ans n'est-il pas le taux à 1 an ? | Taux au comptant, facteurs d'actualisation, actualiser avec une courbe | à écrire |
 
