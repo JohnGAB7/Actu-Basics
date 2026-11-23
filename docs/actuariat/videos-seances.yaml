@@ -1,0 +1,23 @@
+# Registre des vidéos Actu-Basics utilisées à l'étape 1 « Vidéo » des séances du parcours actuariel
+# (https://github.com/JohnGAB7/parcours-actuariel). Voir docs/actuariat/PARCOURS-PLUS-ET-SEANCES.md.
+#
+# Une entrée par séance. Champs :
+#   seance         identifiant de la séance dans le parcours (contenus/<module>/sNN.yaml)
+#   source_seance  commit de la séance dont la fiche est tirée
+#   lecon          leçon Actu-Basics (fiche de conception contenus/conception/<lecon>.yaml)
+#   etat           a_proposer | proposition | fiche_ecrite | relue | validee_jg | rendue | publiee
+#   video_fr, video_en   URL publiques, une fois publiées (vides avant)
+#   debut, fin     chapitre utile dans la leçon, en secondes (vides si la leçon entière sert)
+# Rien n'est publié sans l'accord de JG : une URL n'apparaît ici qu'après publication.
+version: 1
+seances:
+  - seance: a3/s01
+    titre: "Force de mortalité et espérance de vie"
+    source_seance: "JohnGAB7/parcours-actuariel@41bbd7e:contenus/a3/s01.yaml"
+    lecon: A3.01
+    titre_lecon: {fr: "Lire une table de mortalité", en: "Reading a life table"}
+    etat: proposition        # docs/actuariat/A3-01-PROPOSITION.md, en attente de JG
+    video_fr: null
+    video_en: null
+    debut: null
+    fin: null
