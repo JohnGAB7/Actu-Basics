@@ -82,8 +82,8 @@ editions:
         etapes:
           - "La *loi* : inconnue, avec un paramètre θ"
           - "L'*échantillon* : n observations x₁, …, xₙ"
-          - "L'*estimateur* θ̂ : une formule appliquée à l'échantillon"
-          - "Un autre échantillon donnerait un *autre* θ̂"
+          - "L'*estimateur* θ estimé : une formule appliquée à l'échantillon"
+          - "Un autre échantillon donnerait un *autre* θ estimé"
         voix_off: "Trois mots. La loi des sinistres, d'abord : elle existe, mais on ne la voit pas, et elle dépend d'un paramètre inconnu, thêta. L'échantillon ensuite : les n sinistres effectivement observés. Et l'estimateur, thêta chapeau : une formule qui transforme l'échantillon en une valeur du paramètre. Point essentiel : avec d'autres sinistres, on aurait obtenu une autre valeur. Un estimateur est donc lui-même une variable aléatoire, avec sa moyenne et sa variance."
       - type: formule
         texte: "Juger un estimateur : *biais*, *variance*, *EQM*"
@@ -102,7 +102,7 @@ editions:
         formule:
           - '\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\qquad s^2=\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2'
           - '\mathrm{se}(\bar{x})=\frac{s}{\sqrt{n}}'
-        note: "On divise par n − 1 pour que s² soit sans biais. Diviser par n donne σ̂², biaisé : E[σ̂²] = (n − 1) σ² ÷ n."
+        note: "On divise par n − 1 pour que s² soit sans biais. Diviser par n donne σ² (÷ n), biaisé : E[σ² (÷ n)] = (n − 1) σ² ÷ n."
         voix_off: "La moyenne de l'échantillon estime l'espérance de la loi. La variance empirique, s carré, estime sa variance : la somme des carrés des écarts à la moyenne, divisée par n moins un. Pourquoi n moins un ? Parce que les écarts sont mesurés autour de la moyenne de l'échantillon, et non de la vraie moyenne : ils sont un peu trop petits, et diviser par n moins un corrige ce biais. Enfin, l'erreur type de la moyenne, s sur racine de n, mesure la précision de la moyenne elle-même. C'est la formule de mutualisation de l'épisode A2.04, appliquée aux données."
       - type: courbe
         texte: "*10* sinistres fictifs : moyenne et médiane"
@@ -148,16 +148,16 @@ editions:
         formule:
           - '\text{Gamma}(\alpha,\theta):\quad E[X]=\alpha\theta\qquad \mathrm{Var}(X)=\alpha\theta^2'
           - '\alpha\theta=\bar{x},\ \ \alpha\theta^2=\hat{\sigma}^2\ \Rightarrow\ \hat{\theta}=\frac{\hat{\sigma}^2}{\bar{x}},\ \ \hat{\alpha}=\frac{\bar{x}^2}{\hat{\sigma}^2}'
-        note: "Par convention, la méthode des moments utilise σ̂², la variance divisée par n. La loi gamma généralise l'exponentielle (α = 1)."
+        note: "Par convention, la méthode des moments utilise σ² (÷ n), la variance divisée par n. La loi gamma généralise l'exponentielle (α = 1)."
         voix_off: "L'idée de la méthode des moments est très simple. La loi a des moments, sa moyenne et sa variance, qui dépendent des paramètres. L'échantillon a aussi une moyenne et une variance. On les égale, et on résout. Prenons la loi gamma, souple et très utilisée pour les montants de sinistres. Elle a deux paramètres, alpha et thêta, une moyenne alpha thêta et une variance alpha thêta carré. Deux équations, deux inconnues : thêta chapeau vaut la variance divisée par la moyenne, et alpha chapeau la moyenne au carré divisée par la variance."
       - type: etapes
         texte: "Nos *10* sinistres : une loi gamma"
         etapes:
-          - "σ̂² = 15 525 000 ÷ 10 = *1 552 500*"
-          - "θ̂ = 1 552 500 ÷ 1 950 ≈ *796,15 €*"
-          - "α̂ = 1 950² ÷ 1 552 500 ≈ *2,4493*"
-          - "Contrôle : α̂ θ̂ = *1 950 €*, la moyenne"
-        note: "Échantillon fictif. α̂ > 1 : la loi a un mode au-dessus de zéro, contrairement à l'exponentielle."
+          - "σ² (÷ n) = 15 525 000 ÷ 10 = *1 552 500*"
+          - "θ estimé = 1 552 500 ÷ 1 950 ≈ *796,15 €*"
+          - "α estimé = 1 950² ÷ 1 552 500 ≈ *2,4493*"
+          - "Contrôle : α × θ estimés = *1 950 €*, la moyenne"
+        note: "Échantillon fictif. α estimé > 1 : la loi a un mode au-dessus de zéro, contrairement à l'exponentielle."
         voix_off: "Appliquons la méthode à nos dix sinistres. La variance divisée par n vaut un million cinq cent cinquante-deux mille cinq cents. Thêta chapeau vaut cette variance divisée par la moyenne : environ sept cent nonante-six euros quinze. Alpha chapeau vaut la moyenne au carré divisée par la variance : environ deux virgule quatre quatre neuf trois. Vérification : alpha chapeau fois thêta chapeau redonne bien mille neuf cent cinquante euros, la moyenne. On a une loi complète, avec laquelle calculer des probabilités de dépassement."
         verifier:
           - {expression: "15525000 / 10", attendu: 1552500, libelle: "σ̂²"}
@@ -170,7 +170,7 @@ editions:
           - "200 corps-années, *122* décès : moyenne *0,61*"
           - "Variance de l'échantillon : ≈ *0,61* aussi"
           - "Poisson : *moyenne = variance*, l'hypothèse tient"
-          - "Méthode des moments : *λ̂ = 0,61*"
+          - "Méthode des moments : *λ estimé = 0,61*"
         note: "Bortkiewicz, 1898 (épisode A2.02). Variance divisée par n − 1 : 0,611 ; divisée par n : 0,608."
         voix_off: "Retour aux soldats prussiens de l'épisode A2.02. Sur deux cents corps-années, cent vingt-deux décès par coup de sabot : une moyenne de zéro virgule soixante et un. Calculons aussi la variance de l'échantillon : environ zéro virgule soixante et un, elle aussi. Or, pour une loi de Poisson, la moyenne et la variance sont égales. Les moments confirment donc l'hypothèse de Poisson, et la méthode des moments donne lambda chapeau égal à zéro virgule soixante et un. Si la variance avait été bien plus grande, on aurait choisi une binomiale négative."
         verifier:
@@ -226,15 +226,15 @@ editions:
         questions:
           - "La moyenne x̄"
           - "s et l'erreur type de x̄"
-          - "σ̂² (variance divisée par n)"
-          - "α̂ et θ̂ d'une loi gamma"
+          - "σ² (÷ n) (variance divisée par n)"
+          - "α estimé et θ estimé d'une loi gamma"
         voix_off: "Mettez la vidéo en pause. Six sinistres fictifs : cinq cents, mille trois cents, deux mille sept cents, neuf cents, mille six cents et trois mille euros. Calculez leur moyenne, l'écart-type s et l'erreur type de la moyenne. Puis la variance divisée par n, et enfin les paramètres alpha et thêta d'une loi gamma par la méthode des moments."
       - type: correction
         etapes:
           - "x̄ = 10 000 ÷ 6 ≈ *1 666,67 €*"
           - "s ≈ *993,31 €* ; erreur type ≈ *405,52 €*"
-          - "σ̂² ≈ *822 222,22*"
-          - "α̂ ≈ *3,3784* ; θ̂ ≈ *493,33 €*"
+          - "σ² (÷ n) ≈ *822 222,22*"
+          - "α estimé ≈ *3,3784* ; θ estimé ≈ *493,33 €*"
         voix_off: "Correction. La somme vaut dix mille euros, donc la moyenne vaut mille six cent soixante-six euros soixante-sept. La somme des carrés des écarts vaut environ quatre millions neuf cent trente-trois mille. Divisée par cinq, elle donne s carré, et s vaut environ neuf cent nonante-trois euros trente et un. L'erreur type : s divisé par racine de six, quatre cent cinq euros cinquante-deux. Divisée par six, la somme des carrés donne sigma chapeau carré, environ huit cent vingt-deux mille deux cent vingt-deux. Alpha chapeau vaut la moyenne au carré divisée par ce nombre, trois virgule trois sept huit quatre, et thêta chapeau, ce nombre divisé par la moyenne, quatre cent nonante-trois euros trente-trois."
         verifier:
           - {expression: "(500 + 1300 + 2700 + 900 + 1600 + 3000) / 6", attendu: 1666.67, libelle: "x̄"}
@@ -292,8 +292,8 @@ editions:
         etapes:
           - "The *distribution*: unknown, with a parameter θ"
           - "The *sample*: n observations x₁, …, xₙ"
-          - "The *estimator* θ̂: a formula applied to the sample"
-          - "Another sample would give *another* θ̂"
+          - "The *estimator* est. θ: a formula applied to the sample"
+          - "Another sample would give *another* est. θ"
         voix_off: "Three words. The claim distribution, first: it exists, but we cannot see it, and it depends on an unknown parameter, theta. The sample next: the n claims actually observed. And the estimator, theta hat: a formula that turns the sample into a value of the parameter. The key point: with other claims, we would have got another value. So an estimator is itself a random variable, with its own mean and variance."
       - type: formule
         texte: "Judging an estimator: *bias*, *variance*, *MSE*"
@@ -312,7 +312,7 @@ editions:
         formule:
           - '\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\qquad s^2=\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2'
           - '\mathrm{se}(\bar{x})=\frac{s}{\sqrt{n}}'
-        note: "We divide by n − 1 so that s² is unbiased. Dividing by n gives σ̂², which is biased: E[σ̂²] = (n − 1) σ² ÷ n."
+        note: "We divide by n − 1 so that s² is unbiased. Dividing by n gives σ² (÷ n), which is biased: E[σ² (÷ n)] = (n − 1) σ² ÷ n."
         voix_off: "The sample mean estimates the expectation of the distribution. The sample variance, s squared, estimates its variance: the sum of the squared deviations from the mean, divided by n minus one. Why n minus one? Because the deviations are measured around the sample mean, not the true mean: they are a little too small, and dividing by n minus one corrects that bias. Finally, the standard error of the mean, s over the square root of n, measures the precision of the mean itself. It is the pooling formula of episode A2.04, applied to data."
       - type: courbe
         texte: "*10* made-up claims: mean and median"
@@ -358,16 +358,16 @@ editions:
         formule:
           - '\text{Gamma}(\alpha,\theta):\quad E[X]=\alpha\theta\qquad \mathrm{Var}(X)=\alpha\theta^2'
           - '\alpha\theta=\bar{x},\ \ \alpha\theta^2=\hat{\sigma}^2\ \Rightarrow\ \hat{\theta}=\frac{\hat{\sigma}^2}{\bar{x}},\ \ \hat{\alpha}=\frac{\bar{x}^2}{\hat{\sigma}^2}'
-        note: "By convention, the method of moments uses σ̂², the variance divided by n. The gamma generalises the exponential (α = 1)."
+        note: "By convention, the method of moments uses σ² (÷ n), the variance divided by n. The gamma generalises the exponential (α = 1)."
         voix_off: "The idea of the method of moments is very simple. The distribution has moments, its mean and its variance, which depend on the parameters. The sample also has a mean and a variance. We set them equal, and solve. Take the gamma distribution, flexible and widely used for claim amounts. It has two parameters, alpha and theta, a mean alpha theta and a variance alpha theta squared. Two equations, two unknowns: theta hat is the variance divided by the mean, and alpha hat the squared mean divided by the variance."
       - type: etapes
         texte: "Our *10* claims: a gamma distribution"
         etapes:
-          - "σ̂² = 15,525,000 ÷ 10 = *1,552,500*"
-          - "θ̂ = 1,552,500 ÷ 1,950 ≈ *796.15 €*"
-          - "α̂ = 1,950² ÷ 1,552,500 ≈ *2.4493*"
-          - "Check: α̂ θ̂ = *1,950 €*, the mean"
-        note: "Made-up sample. α̂ > 1: the distribution has a mode above zero, unlike the exponential."
+          - "σ² (÷ n) = 15,525,000 ÷ 10 = *1,552,500*"
+          - "est. θ = 1,552,500 ÷ 1,950 ≈ *796.15 €*"
+          - "est. α = 1,950² ÷ 1,552,500 ≈ *2.4493*"
+          - "Check: estimated α × θ = *1,950 €*, the mean"
+        note: "Made-up sample. est. α > 1: the distribution has a mode above zero, unlike the exponential."
         voix_off: "Let's apply the method to our ten claims. The variance divided by n is one million five hundred and fifty-two thousand five hundred. Theta hat is that variance divided by the mean: about seven hundred and ninety-six euros fifteen. Alpha hat is the squared mean divided by the variance: about two point four four nine three. Check: alpha hat times theta hat gives back one thousand nine hundred and fifty euros, the mean. We now have a full distribution, to compute exceedance probabilities with."
         verifier:
           - {expression: "15525000 / 10", attendu: 1552500, libelle: "σ̂²"}
@@ -380,7 +380,7 @@ editions:
           - "200 corps-years, *122* deaths: mean *0.61*"
           - "Sample variance: ≈ *0.61* as well"
           - "Poisson: *mean = variance*, the assumption holds"
-          - "Method of moments: *λ̂ = 0.61*"
+          - "Method of moments: *est. λ = 0.61*"
         note: "Bortkiewicz, 1898 (episode A2.02). Variance divided by n − 1: 0.611; divided by n: 0.608."
         voix_off: "Back to the Prussian soldiers of episode A2.02. Over two hundred corps-years, one hundred and twenty-two deaths from horse kicks: a mean of zero point six one. Let's also compute the sample variance: about zero point six one, too. Now, for a Poisson distribution, the mean and the variance are equal. So the moments confirm the Poisson assumption, and the method of moments gives lambda hat equal to zero point six one. Had the variance been much larger, we would have chosen a negative binomial."
         verifier:
@@ -436,15 +436,15 @@ editions:
         questions:
           - "The mean x̄"
           - "s and the standard error of x̄"
-          - "σ̂² (variance divided by n)"
-          - "α̂ and θ̂ of a gamma distribution"
+          - "σ² (÷ n) (variance divided by n)"
+          - "est. α and est. θ of a gamma distribution"
         voix_off: "Pause the video. Six made-up claims: five hundred, one thousand three hundred, two thousand seven hundred, nine hundred, one thousand six hundred and three thousand euros. Compute their mean, the standard deviation s and the standard error of the mean. Then the variance divided by n, and finally the parameters alpha and theta of a gamma distribution by the method of moments."
       - type: correction
         etapes:
           - "x̄ = 10,000 ÷ 6 ≈ *1,666.67 €*"
           - "s ≈ *993.31 €*; standard error ≈ *405.52 €*"
-          - "σ̂² ≈ *822,222.22*"
-          - "α̂ ≈ *3.3784*; θ̂ ≈ *493.33 €*"
+          - "σ² (÷ n) ≈ *822,222.22*"
+          - "est. α ≈ *3.3784*; est. θ ≈ *493.33 €*"
         voix_off: "Solution. The sum is ten thousand euros, so the mean is one thousand six hundred and sixty-six euros sixty-seven. The sum of the squared deviations is about four million nine hundred and thirty-three thousand. Divided by five, it gives s squared, and s is about nine hundred and ninety-three euros thirty-one. The standard error: s divided by the square root of six, four hundred and five euros fifty-two. Divided by six, the sum of squares gives sigma hat squared, about eight hundred and twenty-two thousand two hundred and twenty-two. Alpha hat is the squared mean divided by that number, three point three seven eight four, and theta hat that number divided by the mean, four hundred and ninety-three euros thirty-three."
         verifier:
           - {expression: "(500 + 1300 + 2700 + 900 + 1600 + 3000) / 6", attendu: 1666.67, libelle: "x̄"}

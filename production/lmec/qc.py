@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import datetime as dt
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -782,6 +783,10 @@ def controler_glyphes(fiche: Fiche, charte: dict, r: Rapport, langues=None) -> N
                     for car in set(t) - {"*", " ", "\n"}:
                         if ord(car) > 127 and any(_glyphe_absent(p, car) for p in chemins):
                             manquants.setdefault(f"« {car} » (U+{ord(car):04X})", set()).add(i)
+                    # A combining accent is only placed correctly on a Latin letter (θ̂ and σ̂ come out shifted).
+                    for a, b in zip(t, t[1:]):
+                        if unicodedata.combining(b) and not ("a" <= a.lower() <= "z"):
+                            manquants.setdefault(f"« {a}{b} » (accent combinant mal placé)", set()).add(i)
         r.verifier(not manquants, f"[{l}] Tous les caractères affichés existent dans les polices de la charte",
                    f"[{l}] Caractères absents des polices, affichés comme une case vide : "
                    + " ; ".join(f"{c}, scène(s) {', '.join(map(str, sorted(v)))}" for c, v in manquants.items()),

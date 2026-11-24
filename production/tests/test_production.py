@@ -2280,3 +2280,7 @@ def test_glyphes_absents_bloquent():
     r = Rapport()
     controler_glyphes(fiche, CHARTE, r)
     assert any("U+2099" in b.message for b in r.bloquants)
+    s.texte = "Estimateur θ̂"
+    r = Rapport()
+    controler_glyphes(fiche, CHARTE, r)
+    assert any("accent combinant" in b.message for b in r.bloquants)
