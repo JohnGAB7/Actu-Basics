@@ -1,0 +1,430 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2b/s03 « Intervalles de confiance : quelle précision pour une fréquence ? »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2b.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2b/s03.yaml (calcul « À la main » : 120 sinistres sur 2 000 contrats).
+# Les exemples utilisent 35 sinistres sur 500 contrats et les 10 sinistres fictifs de A2b.01 ; l'exercice final 150 sinistres
+# sur 3 000 contrats, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : l'intervalle de confiance du nombre de décès annuel du portefeuille
+# de Léa (cinq années fictives de A2b.01), et le nombre d'années d'observation qu'il faudrait pour une marge de 10 %.
+# Faits réels : expérience de Kerrich (UiO), chiffres Assuralia 2025 (fréquence RC auto, parc de 6,1 millions de voitures).
+id: 2026-11-act-a2b-s03-intervalles-de-confiance
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2b · Intervalles de confiance"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Interpréter un intervalle de confiance et un niveau de confiance"
+      - "Construire l'intervalle d'une moyenne avec la loi de Student"
+      - "Construire l'intervalle d'une proportion et d'un paramètre de Poisson"
+      - "Calculer la taille d'échantillon nécessaire pour une marge donnée"
+      - "Relier la précision d'une fréquence à la taille du portefeuille"
+    en:
+      - "Interpret a confidence interval and a confidence level"
+      - "Build the interval for a mean with Student's t distribution"
+      - "Build the interval for a proportion and for a Poisson parameter"
+      - "Compute the sample size needed for a given margin"
+      - "Link the precision of a frequency to the size of the portfolio"
+  prerequis:
+    fr: ["Séances A2b.01 et A2b.02 : erreur type, maximum de vraisemblance", "Loi normale (A2.04)"]
+    en: ["Sessions A2b.01 and A2b.02: standard error, maximum likelihood", "Normal distribution (A2.04)"]
+  hypotheses:
+    fr: "Observations indépendantes ; approximation normale ; portefeuilles et décès fictifs ; statistiques publiques telles que publiées"
+    en: "Independent observations; normal approximation; made-up portfolios and deaths; public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Université d'Oslo, « John Kerrich's coin-tossing Experiment » (notes de cours MAT4010)", en: "University of Oslo, “John Kerrich's coin-tossing Experiment” (MAT4010 lecture notes)"}
+    court: "Kerrich, UiO"
+    url: "https://www.uio.no/studier/emner/matnat/math/MAT4010/data/forelesningsnotater/kerrich.pdf"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Assuralia, « L'assurance automobile en Belgique, chiffres clés 2025 » (10 novembre 2026)", en: "Assuralia, “Motor insurance in Belgium, key figures 2025” (10 November 2026)"}
+    court: "Assuralia"
+    url: "https://press.assuralia.be/lassurance-automobile-en-belgique"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Intervalles de confiance : quelle précision pour une fréquence de sinistres ?"
+    legende: |
+      Un assureur observe 7 % de sinistres sur 500 contrats. Mais la vraie fréquence est-elle de 7 %, de 5 % ou de 9 % ? Une estimation seule ne suffit pas : il faut dire à quel point on s'y fie. Cet épisode du parcours Actuariat explique l'intervalle de confiance et le niveau de confiance, l'intervalle d'une moyenne avec la loi de Student, d'une proportion (et les 10 000 lancers de John Kerrich) et d'un paramètre de Poisson, la taille d'échantillon, la précision de la fréquence automobile en Belgique, et le treizième chapitre du fil rouge : combien d'années faudrait-il pour connaître le taux de décès du portefeuille de Léa ? Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les portefeuilles des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, statistique, assurance, confiance]
+    scenes:
+      - type: accroche
+        texte: "*7 %* de sinistres observés. Mais la *vraie* fréquence ?"
+        voix_off: "Sur cinq cents contrats, un assureur observe trente-cinq sinistres : sept pour cent. Est-ce la vraie fréquence ? Avec d'autres contrats, ou une autre année, il aurait pu voir cinq pour cent, ou neuf. Une estimation seule ne suffit pas. Il faut dire aussi à quel point on peut s'y fier."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce troisième épisode du module statistique du parcours Actuariat ! Merci d'être là. On sait estimer un paramètre, et calculer son erreur type. Aujourd'hui, on transforme cette erreur type en une réponse claire : un intervalle de confiance."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Le *niveau* de confiance"
+          - "Une *moyenne*"
+          - "Une *proportion*"
+          - "Une *Poisson*"
+          - "La *taille* d'échantillon"
+          - "Les décès de *Léa*"
+        voix_off: "Voici le programme. L'intervalle et le niveau de confiance. L'intervalle d'une moyenne, avec la loi de Student. Celui d'une proportion. Celui d'un paramètre de Poisson. La taille d'échantillon nécessaire pour une marge donnée. Puis le treizième chapitre du fil rouge : la précision du taux de décès du portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le niveau de confiance"
+        voix_off: "Que veut dire, exactement, confiance à quatre-vingt-quinze pour cent ?"
+      - type: formule
+        texte: "Un *intervalle* autour de l'estimation"
+        formule:
+          - '\hat{\theta}\pm z\,\mathrm{se}(\hat{\theta})\qquad z=1{,}96\ \text{pour}\ 95\,\%'
+          - '\text{marge}=z\,\mathrm{se}(\hat{\theta})'
+        note: "Sur un grand nombre d'échantillons, 95 % des intervalles ainsi construits contiennent la vraie valeur."
+        voix_off: "Un intervalle de confiance part de l'estimation, et s'étend de part et d'autre d'un certain nombre d'erreurs types. Pour un niveau de confiance de quatre-vingt-quinze pour cent, ce nombre vaut un virgule quatre-vingt-seize, tiré de la loi normale. La demi-largeur s'appelle la marge d'erreur. Attention à l'interprétation : le paramètre n'est pas aléatoire, c'est l'intervalle qui l'est. Si l'on refaisait l'expérience un grand nombre de fois, quatre-vingt-quinze pour cent des intervalles ainsi construits contiendraient la vraie valeur."
+      - type: etapes
+        texte: "Kerrich, *10 000* lancers : la pièce est-elle équilibrée ?"
+        etapes:
+          - "p estimé = *0,5067* ; erreur type ≈ *0,0050*"
+          - "Marge : 1,96 × 0,0050 ≈ *0,0098*"
+          - "Intervalle à 95 % : *[0,4969 ; 0,5165]*"
+          - "0,5 est *dedans* : rien ne prouve un déséquilibre"
+        note: "Source : Université d'Oslo, notes de cours sur l'expérience de John Kerrich (épisodes A2.04 et A2b.02)."
+        voix_off: "Reprenons John Kerrich et ses dix mille lancers : cinq mille soixante-sept fois face. La proportion estimée vaut zéro virgule cinq zéro six sept, avec une erreur type d'environ zéro virgule zéro zéro cinq. La marge d'erreur à quatre-vingt-quinze pour cent vaut un virgule quatre-vingt-seize fois cette erreur type, presque un point. L'intervalle va de zéro virgule quatre neuf six neuf à zéro virgule cinq un six cinq. Il contient zéro virgule cinq : ces lancers ne prouvent pas que la pièce soit déséquilibrée."
+        verifier:
+          - {expression: "0.5067 - 1.96 * sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.4969, libelle: "Borne basse"}
+          - {expression: "0.5067 + 1.96 * sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.5165, libelle: "Borne haute"}
+          - {expression: "1.96 * sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.0098, libelle: "Marge"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Une moyenne, une proportion, une Poisson"
+        voix_off: "Trois formules à connaître."
+      - type: formule
+        texte: "Les *trois* intervalles à 95 %"
+        formule:
+          - '\text{moyenne : }\ \bar{x}\pm t_{n-1;\,0{,}975}\,\frac{s}{\sqrt{n}}'
+          - '\text{proportion : }\ \hat{p}\pm 1{,}96\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}'
+          - '\text{Poisson : }\ \hat{\lambda}\pm 1{,}96\sqrt{\frac{\hat{\lambda}}{n}}'
+        note: "t : quantile de la loi de Student à n − 1 degrés de liberté, plus grand que 1,96 pour un petit échantillon (2,262 pour n = 10)."
+        voix_off: "Pour une moyenne, on remplace un virgule quatre-vingt-seize par un quantile de la loi de Student à n moins un degrés de liberté : il est plus grand, pour tenir compte du fait que l'écart-type est lui-même estimé. Pour une proportion, l'erreur type vaut la racine de p chapeau fois un moins p chapeau, sur n. Et pour un paramètre de Poisson, la racine de lambda chapeau sur n, vue dans l'épisode précédent. Ces formules reposent toutes sur l'approximation normale."
+      - type: etapes
+        texte: "Nos *10* sinistres fictifs : la moyenne à 95 %"
+        etapes:
+          - "x̄ = *1 950 €* ; s ≈ *1 313,39 €*"
+          - "t à 9 degrés de liberté : *2,262*"
+          - "Marge : 2,262 × 1 313,39 ÷ √10 ≈ *939,48 €*"
+          - "Intervalle : *[1 010,52 € ; 2 889,48 €]*"
+        note: "Échantillon fictif de l'épisode A2b.01. Avec 1,96 au lieu de 2,262, l'intervalle serait trop étroit."
+        voix_off: "Appliquons la formule aux dix sinistres fictifs de l'épisode A2b.01. Moyenne : mille neuf cent cinquante euros. Écart-type : mille trois cent treize euros trente-neuf. Le quantile de Student à neuf degrés de liberté vaut deux virgule deux six deux. La marge vaut donc neuf cent trente-neuf euros quarante-huit, et l'intervalle va de mille dix euros cinquante-deux à deux mille huit cent quatre-vingt-neuf euros quarante-huit. Le coût moyen est presque inconnu à un facteur trois près : dix sinistres ne disent pas grand-chose."
+        verifier:
+          - {expression: "2.262 * sqrt(15525000 / 9) / sqrt(10)", attendu: 939.48, libelle: "Marge"}
+          - {expression: "1950 - 2.262 * sqrt(15525000 / 9) / sqrt(10)", attendu: 1010.52, libelle: "Borne basse"}
+          - {expression: "1950 + 2.262 * sqrt(15525000 / 9) / sqrt(10)", attendu: 2889.48, libelle: "Borne haute"}
+      - type: etapes
+        texte: "*35* sinistres sur *500* contrats : la fréquence à 95 %"
+        etapes:
+          - "p estimé = 35 ÷ 500 = *7 %*"
+          - "Erreur type : √(0,07 × 0,93 ÷ 500) ≈ *1,14 point*"
+          - "Marge : 1,96 × 1,14 ≈ *2,24 points*"
+          - "Intervalle : *[4,76 % ; 9,24 %]*"
+        note: "Portefeuille fictif. Sur 500 contrats, la fréquence n'est connue qu'à ± 2 points environ."
+        voix_off: "Revenons à notre accroche : trente-cinq sinistres sur cinq cents contrats fictifs. La fréquence estimée vaut sept pour cent. Son erreur type vaut la racine de zéro virgule zéro sept fois zéro virgule neuf trois, divisé par cinq cents : un virgule quatorze point. La marge à quatre-vingt-quinze pour cent : deux virgule vingt-quatre points. La vraie fréquence se situe donc, avec une confiance de quatre-vingt-quinze pour cent, entre quatre virgule soixante-seize et neuf virgule vingt-quatre pour cent. Presque du simple au double."
+        verifier:
+          - {expression: "100 * 35 / 500", attendu: 7, libelle: "Fréquence, en %"}
+          - {expression: "100 * sqrt(0.07 * 0.93 / 500)", attendu: 1.14, tolerance: 0.005, libelle: "Erreur type, en points"}
+          - {expression: "100 * 1.96 * sqrt(0.07 * 0.93 / 500)", attendu: 2.24, tolerance: 0.005, libelle: "Marge, en points"}
+          - {expression: "100 * (0.07 - 1.96 * sqrt(0.07 * 0.93 / 500))", attendu: 4.76, tolerance: 0.005, libelle: "Borne basse, en %"}
+          - {expression: "100 * (0.07 + 1.96 * sqrt(0.07 * 0.93 / 500))", attendu: 9.24, tolerance: 0.005, libelle: "Borne haute, en %"}
+      - type: etapes
+        texte: "Le marché belge : *6,1 millions* de voitures"
+        etapes:
+          - "Fréquence RC des voitures : *4,56 %* (2025)"
+          - "Erreur type : √(0,0456 × 0,9544 ÷ 6 100 000) ≈ *0,008 point*"
+          - "Marge à 95 % : ≈ *± 0,017 point*"
+          - "À cette échelle, le *hasard* disparaît presque"
+        note: "Source : Assuralia, chiffres clés 2025 (parc de 6,1 millions de voitures particulières). Calcul illustratif, une voiture = un contrat."
+        voix_off: "Comparons avec tout le marché belge. Selon Assuralia, la Belgique compte six virgule un millions de voitures particulières, avec une fréquence de sinistres en responsabilité civile de quatre virgule cinquante-six pour cent en 2025. Si chaque voiture est un contrat, l'erreur type de cette fréquence n'est plus que de zéro virgule zéro zéro huit point, et la marge à quatre-vingt-quinze pour cent d'environ zéro virgule zéro dix-sept point. À cette échelle, le hasard disparaît presque. La vraie difficulté devient alors ailleurs : les assurés ne sont pas tous identiques."
+        verifier:
+          - {expression: "100 * sqrt(0.0456 * 0.9544 / 6100000)", attendu: 0.008, tolerance: 0.0005, libelle: "Erreur type, en points"}
+          - {expression: "100 * 1.96 * sqrt(0.0456 * 0.9544 / 6100000)", attendu: 0.017, tolerance: 0.0005, libelle: "Marge, en points"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La taille d'échantillon"
+        voix_off: "Et si l'on fixe la précision voulue d'avance ?"
+      - type: formule
+        texte: "Combien de contrats pour une marge *e* ?"
+        formule:
+          - 'n\geq\frac{z^2\,p(1-p)}{e^2}'
+          - 'p=7\,\%,\ e=0{,}5\ \text{point}:\quad n\geq\frac{1{,}96^2\times 0{,}0651}{0{,}005^2}=10\,003{,}5'
+        note: "On arrondit au-dessus : 10 004 contrats. La marge baisse en 1/√n : la diviser par 2 demande 4 fois plus de contrats."
+        voix_off: "On peut aussi raisonner à l'envers : fixer la marge voulue, e, et en déduire le nombre de contrats nécessaire. Il suffit de résoudre la formule de la marge : n doit dépasser z au carré fois p fois un moins p, divisé par e au carré. Pour connaître une fréquence de sept pour cent à zéro virgule cinq point près, il faut au moins dix mille quatre contrats. Et comme la marge baisse comme un sur racine de n, la diviser par deux demande quatre fois plus de contrats."
+        verifier:
+          - {expression: "1.96**2 * 0.07 * 0.93 / 0.005**2", attendu: 10003.5, tolerance: 0.05, libelle: "n minimal"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Le fil rouge : la précision du taux de décès"
+        voix_off: "Retrouvons les cinq années de décès du portefeuille de Léa."
+      - type: etapes
+        texte: "*5* années, *12,6* décès par an : l'intervalle à 95 %"
+        etapes:
+          - "λ estimé = *12,6* ; erreur type √(12,6 ÷ 5) ≈ *1,59*"
+          - "Marge : 1,96 × 1,59 ≈ *3,11* décès"
+          - "Intervalle : *[9,49 ; 15,71]* décès par an"
+          - "Taux de décès : entre *0,095 %* et *0,157 %*"
+        note: "JG's Holding et Léa sont fictifs. Décès observés fictifs (A2b.01), 10 000 assurés par an."
+        voix_off: "Pour le portefeuille de JG's Holding, les cinq années fictives de décès donnent un lambda estimé de douze virgule six décès par an, avec une erreur type d'un virgule cinquante-neuf. La marge à quatre-vingt-quinze pour cent vaut trois virgule onze décès. L'intervalle va de neuf virgule quarante-neuf à quinze virgule soixante et onze décès par an. Ramené aux dix mille assurés, le taux de décès se situe entre zéro virgule zéro nonante-cinq et zéro virgule cent cinquante-sept pour cent. Une fourchette large, pour un tarif."
+        verifier:
+          - {expression: "1.96 * sqrt(12.6 / 5)", attendu: 3.11, tolerance: 0.005, libelle: "Marge"}
+          - {expression: "12.6 - 1.96 * sqrt(12.6 / 5)", attendu: 9.49, tolerance: 0.005, libelle: "Borne basse"}
+          - {expression: "12.6 + 1.96 * sqrt(12.6 / 5)", attendu: 15.71, tolerance: 0.005, libelle: "Borne haute"}
+          - {expression: "100 * (12.6 - 1.96 * sqrt(12.6 / 5)) / 10000", attendu: 0.095, tolerance: 0.0005, libelle: "Taux bas, en %"}
+          - {expression: "100 * (12.6 + 1.96 * sqrt(12.6 / 5)) / 10000", attendu: 0.157, tolerance: 0.0005, libelle: "Taux haut, en %"}
+      - type: etapes
+        texte: "Pour une marge de *± 10 %* : combien d'*années* ?"
+        etapes:
+          - "Marge voulue : 10 % de 12,6 = *1,26* décès"
+          - "n ≥ 1,96² × 12,6 ÷ 1,26² ≈ *30,5*"
+          - "Il faudrait *31 années* d'observation"
+          - "D'où la *crédibilité* : mêler expérience propre et table de marché"
+        note: "JG's Holding et Léa sont fictifs. Avec 10 000 assurés, un taux de décès précis demande des décennies d'historique."
+        voix_off: "Combien d'années d'observation faudrait-il à JG's Holding pour connaître son taux de décès à dix pour cent près ? La marge voulue vaut un virgule vingt-six décès. En inversant la formule de Poisson, n doit dépasser un virgule quatre-vingt-seize au carré fois douze virgule six, divisé par un virgule vingt-six au carré : trente virgule cinq. Il faudrait trente et une années ! Aucun assureur n'attend si longtemps. Il mélange plutôt sa propre expérience avec une table de marché, en proportion de sa précision : c'est la théorie de la crédibilité."
+        verifier:
+          - {expression: "0.1 * 12.6", attendu: 1.26, libelle: "Marge voulue"}
+          - {expression: "1.96**2 * 12.6 / 1.26**2", attendu: 30.5, tolerance: 0.05, libelle: "Années nécessaires"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "*150* sinistres sur *3 000* contrats fictifs. Niveau de confiance *95 %*"
+        pause: 20
+        questions:
+          - "La fréquence estimée"
+          - "Son erreur type"
+          - "L'intervalle de confiance à 95 %"
+          - "Le nombre de contrats pour une marge de ± 0,5 point"
+        voix_off: "Mettez la vidéo en pause. Un portefeuille fictif de trois mille contrats a connu cent cinquante sinistres. Calculez la fréquence estimée, son erreur type, puis l'intervalle de confiance à quatre-vingt-quinze pour cent. Enfin, combien de contrats faudrait-il pour connaître cette fréquence à zéro virgule cinq point près ?"
+      - type: correction
+        etapes:
+          - "p estimé = 150 ÷ 3 000 = *0,05*"
+          - "Erreur type : √(0,05 × 0,95 ÷ 3 000) ≈ *0,0040*"
+          - "Intervalle : *[0,0422 ; 0,0578]*"
+          - "n ≥ 1,96² × 0,0475 ÷ 0,005² ≈ 7 299,0 : *7 300* contrats"
+        voix_off: "Correction. La fréquence estimée vaut cent cinquante divisé par trois mille, zéro virgule zéro cinq. Son erreur type vaut la racine de zéro virgule zéro cinq fois zéro virgule neuf cinq, divisé par trois mille : environ zéro virgule zéro zéro quatre. L'intervalle à quatre-vingt-quinze pour cent va de zéro virgule zéro quatre deux deux à zéro virgule zéro cinq sept huit. Et pour une marge d'un demi-point, il faut un virgule quatre-vingt-seize au carré, fois zéro virgule zéro quatre sept cinq, divisé par zéro virgule zéro zéro cinq au carré : sept mille deux cent nonante-neuf, qu'on arrondit au-dessus, sept mille trois cents contrats."
+        verifier:
+          - {expression: "150 / 3000", attendu: 0.05, libelle: "p estimé"}
+          - {expression: "sqrt(0.05 * 0.95 / 3000)", attendu: 0.004, tolerance: 0.00005, libelle: "Erreur type"}
+          - {expression: "0.05 - 1.96 * sqrt(0.05 * 0.95 / 3000)", attendu: 0.0422, libelle: "Borne basse"}
+          - {expression: "0.05 + 1.96 * sqrt(0.05 * 0.95 / 3000)", attendu: 0.0578, libelle: "Borne haute"}
+          - {expression: "ceil(1.96**2 * 0.05 * 0.95 / 0.005**2)", attendu: 7300, libelle: "Contrats nécessaires"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Intervalle : estimation *± z × erreur type*"
+          - "95 % : *95 %* des intervalles contiennent la vraie valeur"
+          - "Petite moyenne : quantile de *Student*"
+          - "Proportion : √(p (1 − p) ÷ n) ; Poisson : *√(λ ÷ n)*"
+          - "Marge ÷ 2 : *4 fois* plus de données"
+        voix_off: "Ce qu'il faut retenir. Un intervalle de confiance, c'est l'estimation plus ou moins z fois l'erreur type. À quatre-vingt-quinze pour cent, quatre-vingt-quinze pour cent des intervalles ainsi construits contiennent la vraie valeur. Pour la moyenne d'un petit échantillon, on prend le quantile de Student. Pour une proportion, l'erreur type vaut la racine de p fois un moins p sur n ; pour une Poisson, la racine de lambda sur n. Et diviser la marge par deux demande quatre fois plus de données."
+      - type: cloture
+        texte: "Prochain épisode : *la loi colle-t-elle aux données ?* Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant dire à quel point une estimation est précise. Prochain épisode, le dernier du module : comment vérifier que la loi choisie colle vraiment aux données. Ce sont les tests d'adéquation. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Confidence intervals: how precise is a claim frequency?"
+    legende: |
+      An insurer observes 7% claims on 500 policies. But is the true frequency 7%, 5% or 9%? An estimate alone is not enough: you must also say how far to trust it. This episode of the Actuarial track explains the confidence interval and the confidence level, the interval for a mean with Student's t distribution, for a proportion (and John Kerrich's 10,000 tosses) and for a Poisson parameter, the sample size, the precision of the motor claim frequency in Belgium, and the thirteenth chapter of the common thread: how many years would it take to know the death rate of Léa's portfolio? Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the portfolios in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, statistics, insurance, confidence]
+    scenes:
+      - type: accroche
+        texte: "*7%* of claims observed. But the *true* frequency?"
+        voix_off: "Out of five hundred policies, an insurer observes thirty-five claims: seven percent. Is that the true frequency? With other policies, or another year, it might have seen five percent, or nine. An estimate alone is not enough. You must also say how far you can trust it."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this third episode of the statistics module of the Actuarial track! Thanks for being here. We can estimate a parameter, and compute its standard error. Today, we turn that standard error into a clear answer: a confidence interval."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The confidence *level*"
+          - "A *mean*"
+          - "A *proportion*"
+          - "A *Poisson*"
+          - "The *sample* size"
+          - "*Léa*'s deaths"
+        voix_off: "Here is the plan. The interval and the confidence level. The interval for a mean, with Student's t distribution. The one for a proportion. The one for a Poisson parameter. The sample size needed for a given margin. Then the thirteenth chapter of the common thread: the precision of the death rate of Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The confidence level"
+        voix_off: "What exactly does ninety-five percent confidence mean?"
+      - type: formule
+        texte: "An *interval* around the estimate"
+        formule:
+          - '\hat{\theta}\pm z\,\mathrm{se}(\hat{\theta})\qquad z=1.96\ \text{for}\ 95\%'
+          - '\text{margin of error}=z\,\mathrm{se}(\hat{\theta})'
+        note: "Over many samples, 95% of the intervals built this way contain the true value."
+        voix_off: "A confidence interval starts from the estimate, and stretches a certain number of standard errors on each side. For a ninety-five percent confidence level, that number is one point nine six, taken from the normal distribution. The half-width is called the margin of error. Careful with the interpretation: the parameter is not random, the interval is. If we repeated the experiment many times, ninety-five percent of the intervals built this way would contain the true value."
+      - type: etapes
+        texte: "Kerrich, *10,000* tosses: is the coin fair?"
+        etapes:
+          - "Estimated p = *0.5067*; standard error ≈ *0.0050*"
+          - "Margin: 1.96 × 0.0050 ≈ *0.0098*"
+          - "95% interval: *[0.4969; 0.5165]*"
+          - "0.5 is *inside*: no proof of an unfair coin"
+        note: "Source: University of Oslo, lecture notes on John Kerrich's experiment (episodes A2.04 and A2b.02)."
+        voix_off: "Back to John Kerrich and his ten thousand tosses: five thousand and sixty-seven heads. The estimated share is zero point five zero six seven, with a standard error of about zero point zero zero five. The ninety-five percent margin of error is one point nine six times that standard error, almost one point. The interval runs from zero point four nine six nine to zero point five one six five. It contains zero point five: these tosses do not prove that the coin is unfair."
+        verifier:
+          - {expression: "0.5067 - 1.96 * sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.4969, libelle: "Lower bound"}
+          - {expression: "0.5067 + 1.96 * sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.5165, libelle: "Upper bound"}
+          - {expression: "1.96 * sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.0098, libelle: "Margin"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "A mean, a proportion, a Poisson"
+        voix_off: "Three formulas to know."
+      - type: formule
+        texte: "The *three* 95% intervals"
+        formule:
+          - '\text{mean: }\ \bar{x}\pm t_{n-1;\,0.975}\,\frac{s}{\sqrt{n}}'
+          - '\text{proportion: }\ \hat{p}\pm 1.96\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}'
+          - '\text{Poisson: }\ \hat{\lambda}\pm 1.96\sqrt{\frac{\hat{\lambda}}{n}}'
+        note: "t: quantile of Student's t with n − 1 degrees of freedom, larger than 1.96 for a small sample (2.262 for n = 10)."
+        voix_off: "For a mean, we replace one point nine six with a quantile of Student's t distribution with n minus one degrees of freedom: it is larger, to account for the standard deviation being estimated too. For a proportion, the standard error is the square root of p hat times one minus p hat, over n. And for a Poisson parameter, the square root of lambda hat over n, seen in the previous episode. These formulas all rest on the normal approximation."
+      - type: etapes
+        texte: "Our *10* made-up claims: the mean at 95%"
+        etapes:
+          - "x̄ = *1,950 €*; s ≈ *1,313.39 €*"
+          - "t with 9 degrees of freedom: *2.262*"
+          - "Margin: 2.262 × 1,313.39 ÷ √10 ≈ *939.48 €*"
+          - "Interval: *[1,010.52 €; 2,889.48 €]*"
+        note: "Made-up sample from episode A2b.01. With 1.96 instead of 2.262, the interval would be too narrow."
+        voix_off: "Let's apply the formula to the ten made-up claims of episode A2b.01. Mean: one thousand nine hundred and fifty euros. Standard deviation: one thousand three hundred and thirteen euros thirty-nine. The Student quantile with nine degrees of freedom is two point two six two. So the margin is nine hundred and thirty-nine euros forty-eight, and the interval runs from one thousand and ten euros fifty-two to two thousand eight hundred and eighty-nine euros forty-eight. The average cost is unknown to within almost a factor of three: ten claims say very little."
+        verifier:
+          - {expression: "2.262 * sqrt(15525000 / 9) / sqrt(10)", attendu: 939.48, libelle: "Margin"}
+          - {expression: "1950 - 2.262 * sqrt(15525000 / 9) / sqrt(10)", attendu: 1010.52, libelle: "Lower bound"}
+          - {expression: "1950 + 2.262 * sqrt(15525000 / 9) / sqrt(10)", attendu: 2889.48, libelle: "Upper bound"}
+      - type: etapes
+        texte: "*35* claims out of *500* policies: the frequency at 95%"
+        etapes:
+          - "Estimated p = 35 ÷ 500 = *7%*"
+          - "Standard error: √(0.07 × 0.93 ÷ 500) ≈ *1.14 points*"
+          - "Margin: 1.96 × 1.14 ≈ *2.24 points*"
+          - "Interval: *[4.76%; 9.24%]*"
+        note: "Made-up portfolio. On 500 policies, the frequency is only known to about ± 2 points."
+        voix_off: "Back to our opening: thirty-five claims out of five hundred made-up policies. The estimated frequency is seven percent. Its standard error is the square root of zero point zero seven times zero point nine three, divided by five hundred: one point one four points. The ninety-five percent margin: two point two four points. So the true frequency lies, with ninety-five percent confidence, between four point seven six and nine point two four percent. Almost double from one end to the other."
+        verifier:
+          - {expression: "100 * 35 / 500", attendu: 7, libelle: "Frequency, in %"}
+          - {expression: "100 * sqrt(0.07 * 0.93 / 500)", attendu: 1.14, tolerance: 0.005, libelle: "Standard error, in points"}
+          - {expression: "100 * 1.96 * sqrt(0.07 * 0.93 / 500)", attendu: 2.24, tolerance: 0.005, libelle: "Margin, in points"}
+          - {expression: "100 * (0.07 - 1.96 * sqrt(0.07 * 0.93 / 500))", attendu: 4.76, tolerance: 0.005, libelle: "Lower bound, in %"}
+          - {expression: "100 * (0.07 + 1.96 * sqrt(0.07 * 0.93 / 500))", attendu: 9.24, tolerance: 0.005, libelle: "Upper bound, in %"}
+      - type: etapes
+        texte: "The Belgian market: *6.1 million* cars"
+        etapes:
+          - "Car liability frequency: *4.56%* (2025)"
+          - "Standard error: √(0.0456 × 0.9544 ÷ 6,100,000) ≈ *0.008 points*"
+          - "95% margin: ≈ *± 0.017 points*"
+          - "At this scale, *chance* almost disappears"
+        note: "Source: Assuralia, key figures 2025 (fleet of 6.1 million private cars). Illustrative calculation, one car = one policy."
+        voix_off: "Let's compare with the whole Belgian market. According to Assuralia, Belgium has six point one million private cars, with a liability claim frequency of four point five six percent in 2025. If each car is one policy, the standard error of that frequency is only zero point zero zero eight points, and the ninety-five percent margin about zero point zero one seven points. At this scale, chance almost disappears. The real difficulty then lies elsewhere: policyholders are not all alike."
+        verifier:
+          - {expression: "100 * sqrt(0.0456 * 0.9544 / 6100000)", attendu: 0.008, tolerance: 0.0005, libelle: "Standard error, in points"}
+          - {expression: "100 * 1.96 * sqrt(0.0456 * 0.9544 / 6100000)", attendu: 0.017, tolerance: 0.0005, libelle: "Margin, in points"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The sample size"
+        voix_off: "And if we set the precision we want in advance?"
+      - type: formule
+        texte: "How many policies for a margin *e*?"
+        formule:
+          - 'n\geq\frac{z^2\,p(1-p)}{e^2}'
+          - 'p=7\%,\ e=0.5\ \text{point}:\quad n\geq\frac{1.96^2\times 0.0651}{0.005^2}=10\,003.5'
+        note: "We round up: 10,004 policies. The margin falls in 1/√n: halving it takes 4 times as many policies."
+        voix_off: "We can also reason backwards: set the margin we want, e, and work out the number of policies needed. Just solve the margin formula: n must exceed z squared times p times one minus p, divided by e squared. To know a seven percent frequency to within half a point, you need at least ten thousand and four policies. And since the margin falls like one over the square root of n, halving it takes four times as many policies."
+        verifier:
+          - {expression: "1.96**2 * 0.07 * 0.93 / 0.005**2", attendu: 10003.5, tolerance: 0.05, libelle: "Minimum n"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The common thread: the precision of the death rate"
+        voix_off: "Let's get back to the five years of deaths in Léa's portfolio."
+      - type: etapes
+        texte: "*5* years, *12.6* deaths a year: the 95% interval"
+        etapes:
+          - "Estimated λ = *12.6*; standard error √(12.6 ÷ 5) ≈ *1.59*"
+          - "Margin: 1.96 × 1.59 ≈ *3.11* deaths"
+          - "Interval: *[9.49; 15.71]* deaths a year"
+          - "Death rate: between *0.095%* and *0.157%*"
+        note: "JG's Holding and Léa are made up. Observed deaths made up (A2b.01), 10,000 insured lives a year."
+        voix_off: "For JG's Holding's portfolio, the five made-up years of deaths give an estimated lambda of twelve point six deaths a year, with a standard error of one point five nine. The ninety-five percent margin is three point one one deaths. The interval runs from nine point four nine to fifteen point seven one deaths a year. Over the ten thousand insured lives, the death rate lies between zero point zero nine five and zero point one five seven percent. A wide range, for pricing."
+        verifier:
+          - {expression: "1.96 * sqrt(12.6 / 5)", attendu: 3.11, tolerance: 0.005, libelle: "Margin"}
+          - {expression: "12.6 - 1.96 * sqrt(12.6 / 5)", attendu: 9.49, tolerance: 0.005, libelle: "Lower bound"}
+          - {expression: "12.6 + 1.96 * sqrt(12.6 / 5)", attendu: 15.71, tolerance: 0.005, libelle: "Upper bound"}
+          - {expression: "100 * (12.6 - 1.96 * sqrt(12.6 / 5)) / 10000", attendu: 0.095, tolerance: 0.0005, libelle: "Low rate, in %"}
+          - {expression: "100 * (12.6 + 1.96 * sqrt(12.6 / 5)) / 10000", attendu: 0.157, tolerance: 0.0005, libelle: "High rate, in %"}
+      - type: etapes
+        texte: "For a *± 10%* margin: how many *years*?"
+        etapes:
+          - "Target margin: 10% of 12.6 = *1.26* deaths"
+          - "n ≥ 1.96² × 12.6 ÷ 1.26² ≈ *30.5*"
+          - "It would take *31 years* of observation"
+          - "Hence *credibility*: blend own experience and a market table"
+        note: "JG's Holding and Léa are made up. With 10,000 insured lives, a precise death rate needs decades of history."
+        voix_off: "How many years of observation would JG's Holding need to know its death rate to within ten percent? The target margin is one point two six deaths. Inverting the Poisson formula, n must exceed one point nine six squared times twelve point six, divided by one point two six squared: thirty point five. It would take thirty-one years! No insurer waits that long. Instead, it blends its own experience with a market table, in proportion to its precision: that is credibility theory."
+        verifier:
+          - {expression: "0.1 * 12.6", attendu: 1.26, libelle: "Target margin"}
+          - {expression: "1.96**2 * 12.6 / 1.26**2", attendu: 30.5, tolerance: 0.05, libelle: "Years needed"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "*150* claims on *3,000* made-up policies. Confidence level *95%*"
+        pause: 20
+        questions:
+          - "The estimated frequency"
+          - "Its standard error"
+          - "The 95% confidence interval"
+          - "The number of policies for a ± 0.5 point margin"
+        voix_off: "Pause the video. A made-up portfolio of three thousand policies had one hundred and fifty claims. Compute the estimated frequency, its standard error, then the ninety-five percent confidence interval. Finally, how many policies would it take to know this frequency to within half a point?"
+      - type: correction
+        etapes:
+          - "Estimated p = 150 ÷ 3,000 = *0.05*"
+          - "Standard error: √(0.05 × 0.95 ÷ 3,000) ≈ *0.0040*"
+          - "Interval: *[0.0422; 0.0578]*"
+          - "n ≥ 1.96² × 0.0475 ÷ 0.005² ≈ 7,299.0: *7,300* policies"
+        voix_off: "Solution. The estimated frequency is one hundred and fifty divided by three thousand, zero point zero five. Its standard error is the square root of zero point zero five times zero point nine five, divided by three thousand: about zero point zero zero four. The ninety-five percent interval runs from zero point zero four two two to zero point zero five seven eight. And for a half-point margin, we need one point nine six squared, times zero point zero four seven five, divided by zero point zero zero five squared: seven thousand two hundred and ninety-nine, rounded up to seven thousand three hundred policies."
+        verifier:
+          - {expression: "150 / 3000", attendu: 0.05, libelle: "Estimated p"}
+          - {expression: "sqrt(0.05 * 0.95 / 3000)", attendu: 0.004, tolerance: 0.00005, libelle: "Standard error"}
+          - {expression: "0.05 - 1.96 * sqrt(0.05 * 0.95 / 3000)", attendu: 0.0422, libelle: "Lower bound"}
+          - {expression: "0.05 + 1.96 * sqrt(0.05 * 0.95 / 3000)", attendu: 0.0578, libelle: "Upper bound"}
+          - {expression: "ceil(1.96**2 * 0.05 * 0.95 / 0.005**2)", attendu: 7300, libelle: "Policies needed"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Interval: estimate *± z × standard error*"
+          - "95%: *95%* of the intervals contain the true value"
+          - "Small-sample mean: *Student* quantile"
+          - "Proportion: √(p (1 − p) ÷ n); Poisson: *√(λ ÷ n)*"
+          - "Halve the margin: *4 times* the data"
+        voix_off: "What to remember. A confidence interval is the estimate plus or minus z times the standard error. At ninety-five percent, ninety-five percent of the intervals built this way contain the true value. For the mean of a small sample, use the Student quantile. For a proportion, the standard error is the square root of p times one minus p over n; for a Poisson, the square root of lambda over n. And halving the margin takes four times as much data."
+      - type: cloture
+        texte: "Next episode: *does the distribution fit the data?* A question? *In the comments*"
+        voix_off: "You can now say how precise an estimate is. Next episode, the last of the module: how to check that the chosen distribution really fits the data. Those are goodness-of-fit tests. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
