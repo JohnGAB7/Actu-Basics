@@ -1,0 +1,490 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2b/s04 « La loi colle-t-elle aux données ? Tests d'adéquation »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2b.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2b/s04.yaml (calcul « À la main » : Poisson 0,5 sur 1 000 contrats,
+# Kolmogorov-Smirnov sur 8 sinistres). Les exemples utilisent le tableau de Bortkiewicz et les 10 sinistres fictifs de A2b.01 ;
+# l'exercice final 800 contrats fictifs face à une Poisson 0,4 de marché, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : les cinq années fictives de décès du portefeuille de Léa
+# sont-elles compatibles avec une loi de Poisson ? (test de dispersion).
+# Faits réels : tableau de Bortkiewicz (1898), article d'Akaike (1974).
+id: 2026-11-act-a2b-s04-tests-adequation
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2b · Tests d'adéquation"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Mener un test du khi-deux sur des effectifs par classe"
+      - "Compter les degrés de liberté et regrouper les classes"
+      - "Calculer la statistique de Kolmogorov-Smirnov"
+      - "Comparer plusieurs lois avec le critère d'Akaike (AIC)"
+      - "Lire un QQ-plot et reconnaître les limites d'un test"
+    en:
+      - "Run a chi-square test on counts by class"
+      - "Count the degrees of freedom and group the classes"
+      - "Compute the Kolmogorov-Smirnov statistic"
+      - "Compare several distributions with the Akaike information criterion (AIC)"
+      - "Read a QQ plot and recognise the limits of a test"
+  prerequis:
+    fr: ["Séances A2b.01 à A2b.03 : moments, maximum de vraisemblance, intervalles", "Lois de Poisson et exponentielle (A2.02, A2.03)"]
+    en: ["Sessions A2b.01 to A2b.03: moments, maximum likelihood, intervals", "Poisson and exponential distributions (A2.02, A2.03)"]
+  hypotheses:
+    fr: "Observations indépendantes ; approximation du khi-deux ; échantillons et décès fictifs ; statistiques publiques telles que publiées"
+    en: "Independent observations; chi-square approximation; made-up samples and deaths; public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "L. von Bortkiewicz, Das Gesetz der kleinen Zahlen (1898), tableau repris par S. M. Carr, Memorial University, « Poisson distributions »", en: "L. von Bortkiewicz, Das Gesetz der kleinen Zahlen (1898), table reproduced by S. M. Carr, Memorial University, “Poisson distributions”"}
+    court: "Bortkiewicz 1898"
+    url: "https://www.mun.ca/biology/scarr/smcPoisson_distributions.html"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "H. Akaike, « A new look at the statistical model identification », IEEE Transactions on Automatic Control, 19(6), 1974", en: "H. Akaike, “A new look at the statistical model identification”, IEEE Transactions on Automatic Control, 19(6), 1974"}
+    court: "Akaike 1974"
+    url: "https://doi.org/10.1109/TAC.1974.1100705"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Tests d'adéquation : la loi choisie colle-t-elle aux sinistres ?"
+    legende: |
+      Trois lois décrivent les mêmes dix sinistres, et donnent trois réponses : 3,8 %, 7,7 % ou 12,5 % de chances de dépasser 5 000 €. Laquelle croire ? Une loi ajustée reste une hypothèse : il faut la tester. Cet épisode du parcours Actuariat explique le test du khi-deux et ses degrés de liberté (sur les ruades de chevaux de Bortkiewicz), le test de Kolmogorov-Smirnov, le critère d'information d'Akaike, le QQ-plot, et le quatorzième chapitre du fil rouge : les décès du portefeuille de Léa suivent-ils une loi de Poisson ? Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les échantillons des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, statistique, assurance, adequation]
+    scenes:
+      - type: accroche
+        texte: "Trois lois, trois réponses : *3,8 %*, *7,7 %* ou *12,5 %* ?"
+        voix_off: "Dix sinistres. Trois lois ajustées dessus. Et trois réponses différentes à une seule question : quelle est la probabilité qu'un sinistre dépasse cinq mille euros ? Trois virgule huit pour cent, sept virgule sept, ou douze virgule cinq. Pour un tarif ou une réassurance, l'écart est énorme. Laquelle croire ?"
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce quatrième et dernier épisode du module statistique du parcours Actuariat ! Merci d'être là. On sait estimer les paramètres d'une loi, et dire à quel point on s'y fie. Il reste une question : la loi elle-même est-elle la bonne ? Ce sont les tests d'adéquation."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Le *khi-deux*"
+          - "Les degrés de *liberté*"
+          - "*Kolmogorov*-Smirnov"
+          - "Le critère *AIC*"
+          - "Le *QQ-plot*"
+          - "Les décès de *Léa*"
+        voix_off: "Voici le programme. Le test du khi-deux, qui compare des effectifs. Les degrés de liberté, et le regroupement des classes. Le test de Kolmogorov-Smirnov, qui compare des fonctions de répartition. Le critère d'Akaike, pour choisir entre plusieurs lois. Le QQ-plot, pour voir où une loi décroche. Puis le quatorzième chapitre du fil rouge : les décès du portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le test du khi-deux"
+        voix_off: "Commençons par compter."
+      - type: formule
+        texte: "Observé *contre* attendu"
+        formule:
+          - '\chi^2=\sum_{j=1}^{k}\frac{(O_j-E_j)^2}{E_j}'
+          - '\text{ddl}=k-1-p\qquad E_j\geq 5'
+        note: "O : effectif observé ; E : effectif attendu sous la loi ; k : nombre de classes ; p : nombre de paramètres estimés."
+        voix_off: "Le test du khi-deux répartit les observations en classes. Dans chaque classe, il compare l'effectif observé, O, à l'effectif attendu si la loi était la bonne, E. Il additionne les écarts au carré, divisés par l'effectif attendu. Plus la somme est grande, moins la loi colle. On la compare à une loi du khi-deux dont le nombre de degrés de liberté vaut le nombre de classes, moins un, moins le nombre de paramètres estimés sur les données. Et pour que l'approximation tienne, chaque effectif attendu doit dépasser cinq : on regroupe les classes trop petites."
+      - type: etapes
+        texte: "Bortkiewicz : *200* années de corps d'armée, λ estimé *0,61*"
+        etapes:
+          - "0 décès : observé *109*, attendu *108,67*"
+          - "1 décès : observé *65*, attendu *66,29*"
+          - "2 et plus : observé *26*, attendu *25,04*"
+          - "χ² ≈ *0,063* ; 1 degré de liberté"
+        note: "Source : Bortkiewicz, 1898 (épisodes A2.02 et A2b.01). Les classes 2, 3 et 4 sont regroupées : 4,82 attendus pour 3 et plus, moins de 5."
+        voix_off: "Reprenons le tableau de Bortkiewicz : les soldats prussiens tués par une ruade de cheval, sur deux cents années de corps d'armée. La moyenne vaut zéro virgule soixante et un décès. Sous une loi de Poisson de ce paramètre, on attendrait cent huit virgule soixante-sept années sans décès : on en observe cent neuf. Soixante-six virgule vingt-neuf avec un décès : on en observe soixante-cinq. Pour trois décès et plus, on n'attendrait que quatre virgule huit années, moins de cinq : on regroupe avec deux. Vingt-cinq virgule zéro quatre attendus, vingt-six observés. Le khi-deux vaut à peine zéro virgule zéro six trois. Trois classes, moins un, moins le paramètre estimé : un degré de liberté."
+        verifier:
+          - {expression: "122 / 200", attendu: 0.61, libelle: "λ estimé"}
+          - {expression: "200 * exp(-0.61)", attendu: 108.67, libelle: "Attendu, 0"}
+          - {expression: "200 * 0.61 * exp(-0.61)", attendu: 66.29, libelle: "Attendu, 1"}
+          - {expression: "200 - 200 * exp(-0.61) * 1.61", attendu: 25.04, libelle: "Attendu, 2 et plus"}
+          - {expression: "200 - 200 * exp(-0.61) * (1 + 0.61 + 0.61**2 / 2)", attendu: 4.82, libelle: "Attendu, 3 et plus"}
+          - {expression: "(109 - 200 * exp(-0.61))**2 / (200 * exp(-0.61)) + (65 - 122 * exp(-0.61))**2 / (122 * exp(-0.61)) + (26 - 200 + 322 * exp(-0.61))**2 / (200 - 322 * exp(-0.61))", attendu: 0.063, tolerance: 0.0005, libelle: "χ²"}
+      - type: courbe
+        texte: "La loi du khi-deux à *1* degré de liberté : où tombe *0,063* ?"
+        courbe:
+          variable: x
+          de: 0
+          a: 6
+          pas: 0.05
+          expression: "100 * (1 - erf(sqrt(x / 2)))"
+          y_max: 105
+          axe_x: "Valeur du khi-deux"
+          axe_y: "P(χ² > x), en %"
+          reperes:
+            - {x: 0.05, label: "Bortkiewicz : p ≈ 80 %"}
+            - {x: 3.85, label: "Seuil 5 % : 3,84"}
+        note: "Avec 1 degré de liberté, P(χ² > x) = 1 − erf(√(x/2)). Au-delà de 3,84, on rejette la loi au seuil de 5 %."
+        voix_off: "Voici la probabilité qu'une loi du khi-deux à un degré de liberté dépasse une valeur donnée. Au seuil de cinq pour cent, on rejette la loi si le khi-deux dépasse trois virgule quatre-vingt-quatre. Le khi-deux de Bortkiewicz, zéro virgule zéro six trois, est tout en bas de l'échelle : sa p-valeur vaut environ quatre-vingts pour cent. Des écarts aussi grands arriveraient quatre fois sur cinq par le seul hasard. Rien ne contredit la loi de Poisson : c'est pour cela que ce tableau est devenu célèbre."
+        verifier:
+          - {expression: "1 - erf(sqrt(3.84 / 2))", attendu: 0.05, tolerance: 0.0005, libelle: "Seuil à 1 ddl"}
+          - {expression: "1 - erf(sqrt(0.0628 / 2))", attendu: 0.80, tolerance: 0.005, libelle: "p-valeur Bortkiewicz"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Le test de Kolmogorov-Smirnov"
+        voix_off: "Et pour des montants, sans classes ?"
+      - type: formule
+        texte: "Le plus grand *écart* entre deux répartitions"
+        formule:
+          - 'D=\max_x\,\left|F_n(x)-F(x)\right|'
+          - 'F_n(x)=\frac{\text{nombre de }x_i\leq x}{n}'
+        note: "Seuil usuel à 5 % : environ 1,36/√n. Il est trop indulgent quand les paramètres sont estimés sur les mêmes données."
+        voix_off: "Pour des montants, découper en classes fait perdre de l'information. Le test de Kolmogorov-Smirnov compare directement deux fonctions de répartition. D'un côté, la fonction de répartition empirique : la part des sinistres inférieurs ou égaux à x. De l'autre, celle de la loi ajustée. La statistique D est le plus grand écart vertical entre les deux. Le seuil usuel à cinq pour cent vaut environ un virgule trente-six divisé par la racine de n. Attention : quand les paramètres sont estimés sur les mêmes données, ce seuil est trop indulgent."
+      - type: courbe
+        texte: "Nos *10* sinistres face à l'exponentielle : l'*écart* entre les répartitions"
+        courbe:
+          variable: x
+          de: 0
+          a: 6000
+          pas: 10
+          expression: "100 * abs(sum(v <= x for v in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) / 10 - (1 - exp(-x / 1950)))"
+          y_max: 30
+          axe_x: "Montant du sinistre (€)"
+          axe_y: "Écart, en points"
+          reperes:
+            - {x: 590, label: "D ≈ 0,265 juste avant 600 €"}
+        note: "Échantillon fictif de l'épisode A2b.01 ; exponentielle de moyenne 1 950 €. Seuil usuel : 1,36 ÷ √10 ≈ 0,43."
+        voix_off: "Reprenons les dix sinistres fictifs de l'épisode A2b.01, face à l'exponentielle de moyenne mille neuf cent cinquante euros. Voici l'écart entre les deux fonctions de répartition. Il est maximal juste avant le plus petit sinistre, six cents euros : l'exponentielle y place déjà vingt-six virgule cinq pour cent des sinistres, et l'échantillon aucun. D vaut donc zéro virgule deux six cinq. Le seuil usuel, un virgule trente-six sur racine de dix, vaut zéro virgule quarante-trois. On ne rejette pas l'exponentielle. Mais avec dix sinistres, on ne rejetterait presque rien."
+        verifier:
+          - {expression: "1 - exp(-600 / 1950)", attendu: 0.265, tolerance: 0.0005, libelle: "D"}
+          - {expression: "1.36 / sqrt(10)", attendu: 0.43, tolerance: 0.005, libelle: "Seuil usuel"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Choisir entre plusieurs lois : l'AIC"
+        voix_off: "Quand plusieurs lois passent le test, laquelle garder ?"
+      - type: formule
+        texte: "Le critère d'*Akaike* : le plus *faible* gagne"
+        formule:
+          - '\text{AIC}=2p-2\,\ell(\hat{\theta})'
+        note: "p : nombre de paramètres estimés ; ℓ : log-vraisemblance maximale. Source : H. Akaike, IEEE Transactions on Automatic Control, 1974."
+        voix_off: "En mille neuf cent septante-quatre, le statisticien japonais Hirotugu Akaike propose un critère simple pour comparer des modèles. L'AIC vaut deux fois le nombre de paramètres, moins deux fois la log-vraisemblance maximale. Le second terme récompense une loi qui explique bien les données. Le premier pénalise chaque paramètre en plus. La loi qui a le plus faible AIC gagne."
+      - type: etapes
+        texte: "Nos *10* sinistres : trois lois, trois *AIC*"
+        etapes:
+          - "Exponentielle (1 paramètre) : ℓ ≈ −85,76 ; AIC ≈ *173,51*"
+          - "Pareto, θ = 3 000 € (1 paramètre) : ℓ ≈ −87,27 ; AIC ≈ *176,55*"
+          - "Lognormale (2 paramètres) : ℓ ≈ −83,54 ; AIC ≈ *171,09*"
+          - "La *lognormale* gagne, malgré son paramètre en plus"
+        note: "Échantillon fictif de A2b.01. Lognormale par maximum de vraisemblance : μ ≈ 7,3728 ; σ ≈ 0,6456."
+        voix_off: "Appliquons-le aux dix sinistres fictifs. L'exponentielle, un paramètre, log-vraisemblance moins quatre-vingt-cinq virgule soixante-seize : AIC cent septante-trois virgule cinquante et un. La Pareto d'échelle trois mille euros, un paramètre aussi : AIC cent septante-six virgule cinquante-cinq. Et la lognormale, ajustée par maximum de vraisemblance, avec deux paramètres : sa log-vraisemblance remonte à moins quatre-vingt-trois virgule cinquante-quatre, et son AIC vaut cent septante et un virgule zéro neuf. C'est le plus faible : la lognormale gagne, malgré son paramètre en plus."
+        verifier:
+          - {expression: "2 + 20 * log(1950) + 20", attendu: 173.51, tolerance: 0.005, libelle: "AIC exponentielle"}
+          - {expression: "2 - 2 * sum(log(2.1188 / 3000) - 3.1188 * log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 176.55, tolerance: 0.01, libelle: "AIC Pareto"}
+          - {expression: "sum(log(x) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) / 10", attendu: 7.3728, libelle: "μ"}
+          - {expression: "sqrt(sum((log(x) - 7.372829)**2 for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) / 10)", attendu: 0.6456, libelle: "σ"}
+          - {expression: "-sum(log(x) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) - 10 * log(0.645646) - 5 * log(2 * pi) - 5", attendu: -83.54, tolerance: 0.005, libelle: "ℓ lognormale"}
+          - {expression: "4 + 2 * (sum(log(x) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) + 10 * log(0.645646) + 5 * log(2 * pi) + 5)", attendu: 171.09, tolerance: 0.005, libelle: "AIC lognormale"}
+      - type: etapes
+        texte: "Le *QQ-plot* : où la loi *décroche*-t-elle ?"
+        etapes:
+          - "On trie les sinistres, on les place face aux *quantiles* du modèle"
+          - "Exponentielle, plus petit : modèle *100 €*, observé *600 €*"
+          - "Exponentielle, plus grand : modèle *5 842 €*, observé *4 800 €*"
+          - "Les points sortent de la diagonale aux *deux bouts*"
+        note: "Quantile du modèle pour le i-ème plus petit sinistre : −1 950 × ln(1 − (i − 0,5)/10). Échantillon fictif."
+        voix_off: "Le QQ-plot montre où une loi décroche. On trie les sinistres, et on place chacun face au quantile correspondant du modèle. Si la loi colle, les points suivent la diagonale. Pour l'exponentielle, le plus petit sinistre devrait valoir environ cent euros : il en vaut six cents. Le plus grand devrait valoir cinq mille huit cent quarante-deux euros : il en vaut quatre mille huit cents. L'exponentielle prévoit trop de petits sinistres et une queue plus longue que nos données. Un tracé dit souvent plus qu'une p-valeur."
+        verifier:
+          - {expression: "-1950 * log(1 - 0.5 / 10)", attendu: 100, tolerance: 0.5, libelle: "Quantile, plus petit"}
+          - {expression: "-1950 * log(1 - 9.5 / 10)", attendu: 5842, tolerance: 0.5, libelle: "Quantile, plus grand"}
+      - type: etapes
+        texte: "Mais la *queue*, aucun test ne la voit"
+        etapes:
+          - "P(X > 5 000 €), lognormale : *3,8 %*"
+          - "P(X > 5 000 €), exponentielle : *7,7 %*"
+          - "P(X > 5 000 €), Pareto : *12,5 %*"
+          - "Dix sinistres ne départagent pas la *queue*"
+        note: "Échantillon fictif. Le jugement de l'actuaire et les données de marché comptent autant que la p-valeur."
+        voix_off: "Revenons à notre accroche. La lognormale a le meilleur AIC. Pourtant, elle donne la plus faible probabilité de dépasser cinq mille euros : trois virgule huit pour cent, contre sept virgule sept pour l'exponentielle et douze virgule cinq pour la Pareto. Aucune des trois n'est rejetée. Avec dix sinistres, aucun test ne voit la queue. Pour une réassurance ou un capital, l'actuaire complète donc les tests par son jugement et par les données du marché."
+        verifier:
+          - {expression: "100 * (1 - 0.5 * (1 + erf((log(5000) - 7.372829) / (0.645646 * sqrt(2)))))", attendu: 3.8, tolerance: 0.05, libelle: "Lognormale"}
+          - {expression: "100 * exp(-5000 / 1950)", attendu: 7.7, tolerance: 0.05, libelle: "Exponentielle"}
+          - {expression: "100 * (3000 / 8000)**2.1188", attendu: 12.5, tolerance: 0.05, libelle: "Pareto"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Le fil rouge : des décès bien poissonniens ?"
+        voix_off: "Retrouvons les cinq années de décès du portefeuille de Léa."
+      - type: formule
+        texte: "Le test de *dispersion*"
+        formule:
+          - '\chi^2=\sum_{i=1}^{n}\frac{(x_i-\bar{x})^2}{\bar{x}}\qquad\text{ddl}=n-1'
+        note: "Pour une Poisson, la variance égale la moyenne : ce khi-deux vaut (n − 1) × variance ÷ moyenne."
+        voix_off: "Une loi de Poisson a une propriété forte : sa variance est égale à sa moyenne. Le test de dispersion en profite. Il additionne les écarts à la moyenne au carré, divisés par la moyenne. Si les données sont poissonniennes, cette somme suit à peu près une loi du khi-deux à n moins un degrés de liberté. Trop grande, elle signale une surdispersion : des années bien plus agitées que ne le prévoit la loi de Poisson."
+      - type: etapes
+        texte: "Décès *11, 14, 9, 13, 16* : la loi de Poisson tient-elle ?"
+        etapes:
+          - "Écarts au carré : 2,56 + 1,96 + 12,96 + 0,16 + 11,56 = *29,2*"
+          - "χ² = 29,2 ÷ 12,6 ≈ *2,32* ; 4 degrés de liberté"
+          - "Seuil à 5 % : *9,49* ; p-valeur ≈ *68 %*"
+          - "La loi de Poisson n'est *pas rejetée*"
+        note: "JG's Holding et Léa sont fictifs. Décès observés fictifs (A2b.01). À 4 ddl, p = e^(−χ²/2) (1 + χ²/2)."
+        voix_off: "Pour le portefeuille de JG's Holding, la moyenne vaut douze virgule six décès par an. Les écarts au carré s'additionnent à vingt-neuf virgule deux. Divisé par douze virgule six : un khi-deux de deux virgule trente-deux, à quatre degrés de liberté. Le seuil à cinq pour cent vaut neuf virgule quarante-neuf, et la p-valeur environ soixante-huit pour cent. La loi de Poisson n'est pas rejetée : le modèle des épisodes précédents tient. Mais avec cinq années, une surdispersion modérée passerait inaperçue."
+        verifier:
+          - {expression: "sum((v - 12.6)**2 for v in [11, 14, 9, 13, 16])", attendu: 29.2, libelle: "Somme des écarts au carré"}
+          - {expression: "29.2 / 12.6", attendu: 2.32, tolerance: 0.005, libelle: "χ²"}
+          - {expression: "exp(-9.49 / 2) * (1 + 9.49 / 2)", attendu: 0.05, tolerance: 0.0005, libelle: "Seuil à 4 ddl"}
+          - {expression: "100 * exp(-29.2 / 12.6 / 2) * (1 + 29.2 / 12.6 / 2)", attendu: 68, tolerance: 0.5, libelle: "p-valeur, en %"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "*800* contrats fictifs face à une Poisson de marché, *λ = 0,4*"
+        pause: 20
+        questions:
+          - "Effectifs observés : 540, 210, 40 et 10 (3 et plus)"
+          - "Les quatre effectifs attendus"
+          - "Le khi-deux et ses degrés de liberté (λ donné, non estimé)"
+          - "Conclusion au seuil de 5 % (seuil : 7,81)"
+        voix_off: "Mettez la vidéo en pause. Un portefeuille fictif de huit cents contrats a connu, sur un an, cinq cent quarante contrats sans sinistre, deux cent dix avec un sinistre, quarante avec deux, et dix avec trois ou plus. La table du marché propose une loi de Poisson de paramètre zéro virgule quatre, donnée, et non estimée sur ces données. Calculez les effectifs attendus, le khi-deux et ses degrés de liberté. La loi du marché convient-elle, au seuil de cinq pour cent ? Le seuil vaut sept virgule quatre-vingt-un."
+      - type: correction
+        etapes:
+          - "Attendus : *536,26* ; *214,50* ; *42,90* ; *6,34*"
+          - "Contributions : 0,026 + 0,095 + 0,196 + 2,111"
+          - "χ² ≈ *2,43* ; ddl = 4 − 1 − 0 = *3*"
+          - "2,43 < 7,81 : la loi du marché n'est *pas rejetée*"
+        voix_off: "Correction. Les effectifs attendus valent huit cents fois e puissance moins zéro virgule quatre, cinq cent trente-six virgule vingt-six ; puis deux cent quatorze virgule cinquante ; quarante-deux virgule nonante ; et, par différence, six virgule trente-quatre pour trois sinistres et plus, au-dessus de cinq. Les contributions s'additionnent à deux virgule quarante-trois. Aucun paramètre n'est estimé : quatre classes moins un, trois degrés de liberté. Deux virgule quarante-trois reste bien sous sept virgule quatre-vingt-un : la loi du marché n'est pas rejetée. Notez que la dernière classe pèse à elle seule presque tout le khi-deux."
+        verifier:
+          - {expression: "800 * exp(-0.4)", attendu: 536.26, libelle: "Attendu, 0"}
+          - {expression: "800 * 0.4 * exp(-0.4)", attendu: 214.50, libelle: "Attendu, 1"}
+          - {expression: "800 * 0.08 * exp(-0.4)", attendu: 42.90, libelle: "Attendu, 2"}
+          - {expression: "800 - 800 * exp(-0.4) * 1.48", attendu: 6.34, libelle: "Attendu, 3 et plus"}
+          - {expression: "(540 - 536.256)**2 / 536.256 + (210 - 214.502)**2 / 214.502 + (40 - 42.900)**2 / 42.900 + (10 - 6.341)**2 / 6.341", attendu: 2.43, tolerance: 0.005, libelle: "χ²"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Khi-deux : Σ (O − E)² ÷ E, chaque *E ≥ 5*"
+          - "Degrés de liberté : *k − 1 − p*"
+          - "Kolmogorov-Smirnov : le plus grand *écart* des répartitions"
+          - "AIC = 2p − 2ℓ : le plus *faible* gagne"
+          - "Peu de données : aucun test ne voit la *queue*"
+        voix_off: "Ce qu'il faut retenir. Le khi-deux additionne les écarts au carré entre effectifs observés et attendus, divisés par les attendus, chacun au moins égal à cinq. Ses degrés de liberté valent le nombre de classes, moins un, moins le nombre de paramètres estimés. Kolmogorov-Smirnov mesure le plus grand écart entre les fonctions de répartition. Pour choisir entre des lois, le plus faible AIC gagne. Et sur peu de données, aucun test ne voit la queue : le jugement de l'actuaire reste indispensable."
+      - type: cloture
+        texte: "Prochain module : *la vie et la mortalité*. Une question ? *En commentaire*"
+        voix_off: "Ce module de statistique est terminé : vous savez estimer, mesurer la précision, et tester une loi. Le prochain épisode ouvre le module suivant du parcours : l'assurance vie et la mortalité. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Goodness-of-fit tests: does the chosen distribution fit the claims?"
+    legende: |
+      Three distributions describe the same ten claims, and give three answers: a 3.8%, 7.7% or 12.5% chance of exceeding €5,000. Which one to believe? A fitted distribution remains an assumption: it must be tested. This episode of the Actuarial track explains the chi-square test and its degrees of freedom (on Bortkiewicz's horse kicks), the Kolmogorov-Smirnov test, the Akaike information criterion, the QQ plot, and the fourteenth chapter of the common thread: do the deaths in Léa's portfolio follow a Poisson distribution? Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the samples in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, statistics, insurance, goodnessoffit]
+    scenes:
+      - type: accroche
+        texte: "Three distributions, three answers: *3.8%*, *7.7%* or *12.5%*?"
+        voix_off: "Ten claims. Three distributions fitted to them. And three different answers to a single question: what is the probability that a claim exceeds five thousand euros? Three point eight percent, seven point seven, or twelve point five. For a premium or a reinsurance treaty, the gap is huge. Which one to believe?"
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this fourth and last episode of the statistics module of the Actuarial track! Thanks for being here. We can estimate the parameters of a distribution, and say how far to trust them. One question remains: is the distribution itself the right one? That is what goodness-of-fit tests are for."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *chi-square*"
+          - "Degrees of *freedom*"
+          - "*Kolmogorov*-Smirnov"
+          - "The *AIC*"
+          - "The *QQ plot*"
+          - "*Léa*'s deaths"
+        voix_off: "Here is the plan. The chi-square test, which compares counts. Degrees of freedom, and grouping classes. The Kolmogorov-Smirnov test, which compares distribution functions. The Akaike criterion, to choose between several distributions. The QQ plot, to see where a distribution breaks down. Then the fourteenth chapter of the common thread: the deaths in Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The chi-square test"
+        voix_off: "Let's start by counting."
+      - type: formule
+        texte: "Observed *versus* expected"
+        formule:
+          - '\chi^2=\sum_{j=1}^{k}\frac{(O_j-E_j)^2}{E_j}'
+          - '\text{df}=k-1-p\qquad E_j\geq 5'
+        note: "O: observed count; E: expected count under the distribution; k: number of classes; p: number of estimated parameters."
+        voix_off: "The chi-square test splits the observations into classes. In each class, it compares the observed count, O, with the count expected if the distribution were right, E. It adds up the squared gaps, divided by the expected count. The larger the sum, the worse the fit. It is compared with a chi-square distribution whose degrees of freedom equal the number of classes, minus one, minus the number of parameters estimated from the data. And for the approximation to hold, each expected count must exceed five: classes that are too small are grouped."
+      - type: etapes
+        texte: "Bortkiewicz: *200* army-corps years, estimated λ *0.61*"
+        etapes:
+          - "0 deaths: observed *109*, expected *108.67*"
+          - "1 death: observed *65*, expected *66.29*"
+          - "2 or more: observed *26*, expected *25.04*"
+          - "χ² ≈ *0.063*; 1 degree of freedom"
+        note: "Source: Bortkiewicz, 1898 (episodes A2.02 and A2b.01). Classes 2, 3 and 4 are grouped: 4.82 expected for 3 or more, under 5."
+        voix_off: "Let's go back to Bortkiewicz's table: Prussian soldiers killed by a horse kick, over two hundred army-corps years. The mean is zero point six one deaths. Under a Poisson distribution with that parameter, we would expect one hundred and eight point six seven years without a death: we observe one hundred and nine. Sixty-six point two nine with one death: we observe sixty-five. For three deaths or more, we would expect only four point eight years, under five: we group them with two. Twenty-five point zero four expected, twenty-six observed. The chi-square is barely zero point zero six three. Three classes, minus one, minus the estimated parameter: one degree of freedom."
+        verifier:
+          - {expression: "122 / 200", attendu: 0.61, libelle: "Estimated λ"}
+          - {expression: "200 * exp(-0.61)", attendu: 108.67, libelle: "Expected, 0"}
+          - {expression: "200 * 0.61 * exp(-0.61)", attendu: 66.29, libelle: "Expected, 1"}
+          - {expression: "200 - 200 * exp(-0.61) * 1.61", attendu: 25.04, libelle: "Expected, 2 or more"}
+          - {expression: "200 - 200 * exp(-0.61) * (1 + 0.61 + 0.61**2 / 2)", attendu: 4.82, libelle: "Expected, 3 or more"}
+          - {expression: "(109 - 200 * exp(-0.61))**2 / (200 * exp(-0.61)) + (65 - 122 * exp(-0.61))**2 / (122 * exp(-0.61)) + (26 - 200 + 322 * exp(-0.61))**2 / (200 - 322 * exp(-0.61))", attendu: 0.063, tolerance: 0.0005, libelle: "χ²"}
+      - type: courbe
+        texte: "The chi-square with *1* degree of freedom: where does *0.063* fall?"
+        courbe:
+          variable: x
+          de: 0
+          a: 6
+          pas: 0.05
+          expression: "100 * (1 - erf(sqrt(x / 2)))"
+          y_max: 105
+          axe_x: "Chi-square value"
+          axe_y: "P(χ² > x), in %"
+          reperes:
+            - {x: 0.05, label: "Bortkiewicz: p ≈ 80%"}
+            - {x: 3.85, label: "5% threshold: 3.84"}
+        note: "With 1 degree of freedom, P(χ² > x) = 1 − erf(√(x/2)). Above 3.84, the distribution is rejected at the 5% level."
+        voix_off: "Here is the probability that a chi-square with one degree of freedom exceeds a given value. At the five percent level, the distribution is rejected if the chi-square exceeds three point eight four. Bortkiewicz's chi-square, zero point zero six three, sits at the very bottom of the scale: its p-value is about eighty percent. Gaps that large would happen four times out of five by chance alone. Nothing contradicts the Poisson distribution: that is why this table became famous."
+        verifier:
+          - {expression: "1 - erf(sqrt(3.84 / 2))", attendu: 0.05, tolerance: 0.0005, libelle: "Threshold at 1 df"}
+          - {expression: "1 - erf(sqrt(0.0628 / 2))", attendu: 0.80, tolerance: 0.005, libelle: "Bortkiewicz p-value"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The Kolmogorov-Smirnov test"
+        voix_off: "And for amounts, without classes?"
+      - type: formule
+        texte: "The largest *gap* between two distribution functions"
+        formule:
+          - 'D=\max_x\,\left|F_n(x)-F(x)\right|'
+          - 'F_n(x)=\frac{\text{number of }x_i\leq x}{n}'
+        note: "Usual 5% threshold: about 1.36/√n. It is too lenient when the parameters are estimated from the same data."
+        voix_off: "For amounts, cutting into classes loses information. The Kolmogorov-Smirnov test compares two distribution functions directly. On one side, the empirical distribution function: the share of claims less than or equal to x. On the other, that of the fitted distribution. The statistic D is the largest vertical gap between the two. The usual five percent threshold is about one point three six divided by the square root of n. Be careful: when the parameters are estimated from the same data, this threshold is too lenient."
+      - type: courbe
+        texte: "Our *10* claims against the exponential: the *gap* between distribution functions"
+        courbe:
+          variable: x
+          de: 0
+          a: 6000
+          pas: 10
+          expression: "100 * abs(sum(v <= x for v in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) / 10 - (1 - exp(-x / 1950)))"
+          y_max: 30
+          axe_x: "Claim amount (€)"
+          axe_y: "Gap, in points"
+          reperes:
+            - {x: 590, label: "D ≈ 0.265 just below €600"}
+        note: "Made-up sample from episode A2b.01; exponential with mean €1,950. Usual threshold: 1.36 ÷ √10 ≈ 0.43."
+        voix_off: "Let's take the ten made-up claims from episode A2b.01, against the exponential with a mean of one thousand nine hundred and fifty euros. Here is the gap between the two distribution functions. It is largest just below the smallest claim, six hundred euros: the exponential already puts twenty-six point five percent of claims there, and the sample none. So D is zero point two six five. The usual threshold, one point three six over the square root of ten, is zero point four three. The exponential is not rejected. But with ten claims, almost nothing would be."
+        verifier:
+          - {expression: "1 - exp(-600 / 1950)", attendu: 0.265, tolerance: 0.0005, libelle: "D"}
+          - {expression: "1.36 / sqrt(10)", attendu: 0.43, tolerance: 0.005, libelle: "Usual threshold"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Choosing between distributions: the AIC"
+        voix_off: "When several distributions pass the test, which one to keep?"
+      - type: formule
+        texte: "The *Akaike* criterion: the *lowest* wins"
+        formule:
+          - '\text{AIC}=2p-2\,\ell(\hat{\theta})'
+        note: "p: number of estimated parameters; ℓ: maximum log-likelihood. Source: H. Akaike, IEEE Transactions on Automatic Control, 1974."
+        voix_off: "In nineteen seventy-four, the Japanese statistician Hirotugu Akaike proposed a simple criterion to compare models. The AIC is twice the number of parameters, minus twice the maximum log-likelihood. The second term rewards a distribution that explains the data well. The first one penalises each extra parameter. The distribution with the lowest AIC wins."
+      - type: etapes
+        texte: "Our *10* claims: three distributions, three *AICs*"
+        etapes:
+          - "Exponential (1 parameter): ℓ ≈ −85.76; AIC ≈ *173.51*"
+          - "Pareto, θ = €3,000 (1 parameter): ℓ ≈ −87.27; AIC ≈ *176.55*"
+          - "Lognormal (2 parameters): ℓ ≈ −83.54; AIC ≈ *171.09*"
+          - "The *lognormal* wins, despite its extra parameter"
+        note: "Made-up sample from A2b.01. Lognormal by maximum likelihood: μ ≈ 7.3728; σ ≈ 0.6456."
+        voix_off: "Let's apply it to the ten made-up claims. The exponential, one parameter, log-likelihood minus eighty-five point seven six: AIC one hundred and seventy-three point five one. The Pareto with a scale of three thousand euros, also one parameter: AIC one hundred and seventy-six point five five. And the lognormal, fitted by maximum likelihood, with two parameters: its log-likelihood rises to minus eighty-three point five four, and its AIC is one hundred and seventy-one point zero nine. It is the lowest: the lognormal wins, despite its extra parameter."
+        verifier:
+          - {expression: "2 + 20 * log(1950) + 20", attendu: 173.51, tolerance: 0.005, libelle: "Exponential AIC"}
+          - {expression: "2 - 2 * sum(log(2.1188 / 3000) - 3.1188 * log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 176.55, tolerance: 0.01, libelle: "Pareto AIC"}
+          - {expression: "sum(log(x) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) / 10", attendu: 7.3728, libelle: "μ"}
+          - {expression: "sqrt(sum((log(x) - 7.372829)**2 for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) / 10)", attendu: 0.6456, libelle: "σ"}
+          - {expression: "-sum(log(x) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) - 10 * log(0.645646) - 5 * log(2 * pi) - 5", attendu: -83.54, tolerance: 0.005, libelle: "Lognormal ℓ"}
+          - {expression: "4 + 2 * (sum(log(x) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500]) + 10 * log(0.645646) + 5 * log(2 * pi) + 5)", attendu: 171.09, tolerance: 0.005, libelle: "Lognormal AIC"}
+      - type: etapes
+        texte: "The *QQ plot*: where does the distribution *break down*?"
+        etapes:
+          - "Sort the claims, set them against the model's *quantiles*"
+          - "Exponential, smallest: model *€100*, observed *€600*"
+          - "Exponential, largest: model *€5,842*, observed *€4,800*"
+          - "The points leave the diagonal at *both ends*"
+        note: "Model quantile for the i-th smallest claim: −1,950 × ln(1 − (i − 0.5)/10). Made-up sample."
+        voix_off: "The QQ plot shows where a distribution breaks down. Sort the claims, and set each one against the matching quantile of the model. If the distribution fits, the points follow the diagonal. For the exponential, the smallest claim should be about one hundred euros: it is six hundred. The largest should be five thousand eight hundred and forty-two euros: it is four thousand eight hundred. The exponential expects too many small claims and a longer tail than our data. A plot often says more than a p-value."
+        verifier:
+          - {expression: "-1950 * log(1 - 0.5 / 10)", attendu: 100, tolerance: 0.5, libelle: "Quantile, smallest"}
+          - {expression: "-1950 * log(1 - 9.5 / 10)", attendu: 5842, tolerance: 0.5, libelle: "Quantile, largest"}
+      - type: etapes
+        texte: "But no test can see the *tail*"
+        etapes:
+          - "P(X > €5,000), lognormal: *3.8%*"
+          - "P(X > €5,000), exponential: *7.7%*"
+          - "P(X > €5,000), Pareto: *12.5%*"
+          - "Ten claims cannot settle the *tail*"
+        note: "Made-up sample. The actuary's judgement and market data matter as much as the p-value."
+        voix_off: "Back to our opening question. The lognormal has the best AIC. Yet it gives the lowest probability of exceeding five thousand euros: three point eight percent, against seven point seven for the exponential and twelve point five for the Pareto. None of the three is rejected. With ten claims, no test can see the tail. For a reinsurance treaty or a capital requirement, the actuary therefore adds judgement and market data to the tests."
+        verifier:
+          - {expression: "100 * (1 - 0.5 * (1 + erf((log(5000) - 7.372829) / (0.645646 * sqrt(2)))))", attendu: 3.8, tolerance: 0.05, libelle: "Lognormal"}
+          - {expression: "100 * exp(-5000 / 1950)", attendu: 7.7, tolerance: 0.05, libelle: "Exponential"}
+          - {expression: "100 * (3000 / 8000)**2.1188", attendu: 12.5, tolerance: 0.05, libelle: "Pareto"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The common thread: truly Poisson deaths?"
+        voix_off: "Let's get back to the five years of deaths in Léa's portfolio."
+      - type: formule
+        texte: "The *dispersion* test"
+        formule:
+          - '\chi^2=\sum_{i=1}^{n}\frac{(x_i-\bar{x})^2}{\bar{x}}\qquad\text{df}=n-1'
+        note: "For a Poisson, the variance equals the mean: this chi-square is (n − 1) × variance ÷ mean."
+        voix_off: "A Poisson distribution has a strong property: its variance equals its mean. The dispersion test uses it. It adds up the squared deviations from the mean, divided by the mean. If the data are Poisson, this sum roughly follows a chi-square distribution with n minus one degrees of freedom. If it is too large, it signals overdispersion: years much more turbulent than the Poisson distribution predicts."
+      - type: etapes
+        texte: "Deaths *11, 14, 9, 13, 16*: does the Poisson hold?"
+        etapes:
+          - "Squared deviations: 2.56 + 1.96 + 12.96 + 0.16 + 11.56 = *29.2*"
+          - "χ² = 29.2 ÷ 12.6 ≈ *2.32*; 4 degrees of freedom"
+          - "5% threshold: *9.49*; p-value ≈ *68%*"
+          - "The Poisson distribution is *not rejected*"
+        note: "JG's Holding and Léa are made up. Made-up observed deaths (A2b.01). At 4 df, p = e^(−χ²/2) (1 + χ²/2)."
+        voix_off: "For the JG's Holding portfolio, the mean is twelve point six deaths a year. The squared deviations add up to twenty-nine point two. Divided by twelve point six: a chi-square of two point three two, with four degrees of freedom. The five percent threshold is nine point four nine, and the p-value about sixty-eight percent. The Poisson distribution is not rejected: the model from the previous episodes holds. But with five years, moderate overdispersion would go unnoticed."
+        verifier:
+          - {expression: "sum((v - 12.6)**2 for v in [11, 14, 9, 13, 16])", attendu: 29.2, libelle: "Sum of squared deviations"}
+          - {expression: "29.2 / 12.6", attendu: 2.32, tolerance: 0.005, libelle: "χ²"}
+          - {expression: "exp(-9.49 / 2) * (1 + 9.49 / 2)", attendu: 0.05, tolerance: 0.0005, libelle: "Threshold at 4 df"}
+          - {expression: "100 * exp(-29.2 / 12.6 / 2) * (1 + 29.2 / 12.6 / 2)", attendu: 68, tolerance: 0.5, libelle: "p-value, in %"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "*800* made-up policies against a market Poisson, *λ = 0.4*"
+        pause: 20
+        questions:
+          - "Observed counts: 540, 210, 40 and 10 (3 or more)"
+          - "The four expected counts"
+          - "The chi-square and its degrees of freedom (λ given, not estimated)"
+          - "Conclusion at the 5% level (threshold: 7.81)"
+        voix_off: "Pause the video. A made-up portfolio of eight hundred policies had, over one year, five hundred and forty policies with no claim, two hundred and ten with one claim, forty with two, and ten with three or more. The market table proposes a Poisson distribution with parameter zero point four, given, and not estimated from these data. Compute the expected counts, the chi-square and its degrees of freedom. Does the market distribution fit, at the five percent level? The threshold is seven point eight one."
+      - type: correction
+        etapes:
+          - "Expected: *536.26*; *214.50*; *42.90*; *6.34*"
+          - "Contributions: 0.026 + 0.095 + 0.196 + 2.111"
+          - "χ² ≈ *2.43*; df = 4 − 1 − 0 = *3*"
+          - "2.43 < 7.81: the market distribution is *not rejected*"
+        voix_off: "Solution. The expected counts are eight hundred times e to the minus zero point four, five hundred and thirty-six point two six; then two hundred and fourteen point five zero; forty-two point nine zero; and, by difference, six point three four for three claims or more, above five. The contributions add up to two point four three. No parameter is estimated: four classes minus one, three degrees of freedom. Two point four three stays well below seven point eight one: the market distribution is not rejected. Note that the last class alone carries almost all of the chi-square."
+        verifier:
+          - {expression: "800 * exp(-0.4)", attendu: 536.26, libelle: "Expected, 0"}
+          - {expression: "800 * 0.4 * exp(-0.4)", attendu: 214.50, libelle: "Expected, 1"}
+          - {expression: "800 * 0.08 * exp(-0.4)", attendu: 42.90, libelle: "Expected, 2"}
+          - {expression: "800 - 800 * exp(-0.4) * 1.48", attendu: 6.34, libelle: "Expected, 3 or more"}
+          - {expression: "(540 - 536.256)**2 / 536.256 + (210 - 214.502)**2 / 214.502 + (40 - 42.900)**2 / 42.900 + (10 - 6.341)**2 / 6.341", attendu: 2.43, tolerance: 0.005, libelle: "χ²"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Chi-square: Σ (O − E)² ÷ E, each *E ≥ 5*"
+          - "Degrees of freedom: *k − 1 − p*"
+          - "Kolmogorov-Smirnov: the largest *gap* between distribution functions"
+          - "AIC = 2p − 2ℓ: the *lowest* wins"
+          - "Little data: no test can see the *tail*"
+        voix_off: "What to remember. The chi-square adds up the squared gaps between observed and expected counts, divided by the expected counts, each at least five. Its degrees of freedom are the number of classes, minus one, minus the number of estimated parameters. Kolmogorov-Smirnov measures the largest gap between distribution functions. To choose between distributions, the lowest AIC wins. And on little data, no test can see the tail: the actuary's judgement remains essential."
+      - type: cloture
+        texte: "Next module: *life insurance and mortality*. A question? *In the comments*"
+        voix_off: "This statistics module is complete: you can estimate, measure precision, and test a distribution. The next episode opens the following module of the track: life insurance and mortality. If this video helped you, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
