@@ -1,0 +1,453 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2/s05 « Fréquence, sévérité et charge totale »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2/s05.yaml (calcul « À la main » : Poisson 50, exponentielle 2 000 €,
+# seuil 130 000 €). Les exemples utilisent une Poisson composée discrète (λ = 1 ; 1 000 € ou 5 000 €), une Poisson 80 avec
+# des sinistres exponentiels de 2 500 € et une binomiale négative de même moyenne ; l'exercice final utilise Poisson 30,
+# exponentielle 3 000 € et seuil 110 000 €, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la charge annuelle des capitaux décès (fictifs) du portefeuille de
+# JG's Holding, avec la Poisson de moyenne 12,56 de l'épisode A2.02.
+# Faits réels : chiffres d'origine (Assuralia, assurance automobile 2025). Paramètres des exemples : fictifs.
+id: 2026-11-act-a2-s05-charge-totale
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2 · Fréquence, sévérité et charge totale"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Écrire la charge totale comme une somme d'un nombre aléatoire de sinistres"
+      - "Calculer l'espérance et la variance de la charge totale"
+      - "Utiliser la loi de Poisson composée et la formule Var(S) = λ E[X²]"
+      - "Obtenir la loi exacte d'une petite charge par convolution"
+      - "Mesurer l'effet de la surdispersion sur la queue de la charge"
+    en:
+      - "Write the aggregate loss as a sum of a random number of claims"
+      - "Compute the mean and variance of the aggregate loss"
+      - "Use the compound Poisson distribution and the formula Var(S) = λ E[X²]"
+      - "Get the exact distribution of a small aggregate loss by convolution"
+      - "Measure the effect of overdispersion on the tail of the aggregate loss"
+  prerequis:
+    fr: ["Séances A2.02 à A2.04 : Poisson, lois continues, approximation normale"]
+    en: ["Sessions A2.02 to A2.04: Poisson, continuous distributions, normal approximation"]
+  hypotheses:
+    fr: "Fréquence et montants indépendants, montants de même loi ; paramètres et capitaux décès fictifs ; statistiques publiques telles que publiées"
+    en: "Frequency and amounts independent, amounts identically distributed; made-up parameters and death benefits; public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Assuralia, « L'assurance automobile en Belgique, chiffres clés 2025 » (10 novembre 2026)", en: "Assuralia, “Motor insurance in Belgium, key figures 2025” (10 November 2026)"}
+    court: "Assuralia"
+    url: "https://press.assuralia.be/lassurance-automobile-en-belgique"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Fréquence et sévérité : la charge totale d'un assureur"
+    legende: |
+      En 2025, les assureurs belges ont réglé 371 980 sinistres en responsabilité civile automobile, plus de mille par jour. Combien cela coûte-t-il au total, et avec quel risque ? Il faut combiner deux hasards : le nombre de sinistres et le montant de chacun. Cet épisode du parcours Actuariat explique le modèle collectif, l'espérance et la variance de la charge totale, la loi de Poisson composée, la convolution, l'effet de la surdispersion, et le neuvième chapitre du fil rouge : la charge des capitaux décès du portefeuille de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les paramètres des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, probabilites, assurance, nonvie]
+    scenes:
+      - type: accroche
+        texte: "*Combien* de sinistres, et *combien* chacun ?"
+        voix_off: "En 2025, les assureurs belges ont réglé plus de mille sinistres automobiles par jour. Pour prévoir ce que cela leur coûtera l'an prochain, une seule question ne suffit pas. Il en faut deux : combien de sinistres, et combien coûtera chacun. Deux hasards à combiner en un seul nombre : la charge totale."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce cinquième épisode du module probabilités du parcours Actuariat ! Merci d'être là. On a appris à compter les sinistres, puis à décrire leur montant, puis à additionner des contrats. Aujourd'hui, on réunit tout dans le modèle que tout actuaire non-vie utilise : fréquence et sévérité."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Le modèle *collectif*"
+          - "*Moyenne* et variance"
+          - "La Poisson *composée*"
+          - "La *convolution*"
+          - "La *surdispersion*"
+          - "Les décès de *Léa*"
+        voix_off: "Voici le programme. Le modèle collectif. L'espérance et la variance de la charge totale. La loi de Poisson composée. La convolution, pour la loi exacte. La surdispersion et son effet sur la queue. Puis le neuvième chapitre du fil rouge : la charge des capitaux décès du portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le modèle collectif"
+        voix_off: "Une somme dont le nombre de termes est lui-même aléatoire."
+      - type: formule
+        texte: "La charge totale : *N* sinistres de montants *X₁, X₂, …*"
+        formule:
+          - 'S=\sum_{i=1}^{N}X_i'
+          - 'E[S]=E[N]\,E[X]'
+          - '\mathrm{Var}(S)=E[N]\,\mathrm{Var}(X)+\mathrm{Var}(N)\,(E[X])^2'
+        note: "Hypothèses : N indépendant des montants, montants indépendants et de même loi. Si N = 0, S = 0."
+        voix_off: "Le modèle collectif regarde le portefeuille d'un bloc. Pendant l'année, il survient N sinistres, un nombre aléatoire : c'est la fréquence. Chaque sinistre a un montant aléatoire, X : c'est la sévérité. La charge totale S est la somme des N montants. Son espérance est simple : nombre moyen de sinistres fois montant moyen. Sa variance a deux morceaux : l'incertitude sur les montants, et l'incertitude sur le nombre de sinistres, amplifiée par le carré du montant moyen."
+      - type: etapes
+        texte: "RC automobile en Belgique, *2025* : fréquence et sévérité"
+        etapes:
+          - "*371 980* sinistres réglés, soit *1 019* par jour"
+          - "Voitures : fréquence *4,56 %* par an"
+          - "Coût moyen : *4 865 €* par sinistre"
+          - "Coût moyen par voiture : 0,0456 × 4 865 ≈ *221,84 €*"
+        note: "Source : Assuralia, chiffres clés 2025 de l'assurance automobile. 842 sinistres dépassent 125 000 €, dont 182 au-delà de 500 000 €."
+        voix_off: "Un fait réel. Selon Assuralia, les assureurs ont réglé en 2025 trois cent septante et un mille neuf cent quatre-vingts sinistres en responsabilité civile automobile, mille dix-neuf par jour. Pour une voiture particulière, la fréquence moyenne est de quatre virgule cinquante-six pour cent par an, et un sinistre coûte en moyenne quatre mille huit cent soixante-cinq euros. Fréquence fois sévérité : environ deux cent vingt et un euros quatre-vingt-quatre par voiture et par an. Mais derrière cette moyenne, huit cent quarante-deux sinistres ont dépassé cent vingt-cinq mille euros."
+        verifier:
+          - {expression: "371980 / 365", attendu: 1019, tolerance: 0.5, libelle: "Sinistres par jour"}
+          - {expression: "0.0456 * 4865", attendu: 221.84, libelle: "Coût moyen par voiture"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La loi de Poisson composée"
+        voix_off: "Le cas le plus courant : une fréquence de Poisson."
+      - type: formule
+        texte: "*N* de Poisson : la variance devient *λ E[X²]*"
+        formule:
+          - 'N\sim\mathcal{P}(\lambda):\quad E[S]=\lambda\,E[X]\qquad \mathrm{Var}(S)=\lambda\,E[X^2]'
+          - '\text{Exponentielle de moyenne }\theta:\quad E[X^2]=2\theta^2'
+        note: "Pour une Poisson, Var(N) = E[N] = λ : les deux morceaux de la variance se regroupent en λ E[X²]."
+        voix_off: "Quand le nombre de sinistres suit une loi de Poisson de paramètre lambda, la charge totale suit une loi de Poisson composée. Comme la variance de N est égale à sa moyenne, lambda, les deux morceaux de la variance se regroupent : la variance de S vaut lambda fois l'espérance de X au carré. Pour des montants exponentiels de moyenne thêta, l'espérance de X au carré vaut deux thêta carré."
+      - type: etapes
+        texte: "Un portefeuille fictif : *λ = 80* sinistres, montants exponentiels de *2 500 €*"
+        etapes:
+          - "E[S] = 80 × 2 500 = *200 000 €*"
+          - "Var(S) = 80 × 2 × 2 500² = *1 milliard*"
+          - "Écart-type : √10⁹ ≈ *31 623 €*"
+          - "P(S > 250 000 €) ≈ 1 − Φ(1,581) ≈ *5,7 %*"
+        note: "Portefeuille et paramètres fictifs, pour l'exemple. Approximation normale."
+        voix_off: "Un exemple fictif. Un portefeuille attend en moyenne quatre-vingts sinistres par an, de montants exponentiels de moyenne deux mille cinq cents euros. La charge moyenne vaut deux cent mille euros. Sa variance : quatre-vingts fois deux fois deux mille cinq cents au carré, un milliard. L'écart-type vaut donc environ trente et un mille six cent vingt-trois euros. Avec l'approximation normale, la probabilité que la charge dépasse deux cent cinquante mille euros est d'environ cinq virgule sept pour cent."
+        verifier:
+          - {expression: "80 * 2500", attendu: 200000, libelle: "E[S]"}
+          - {expression: "80 * 2 * 2500**2", attendu: 1000000000, libelle: "Var(S)"}
+          - {expression: "sqrt(1e9)", attendu: 31623, tolerance: 1, libelle: "Écart-type"}
+          - {expression: "50000 / sqrt(1e9)", attendu: 1.581, tolerance: 0.0005, libelle: "z"}
+          - {expression: "100 * (1 - 0.5 * (1 + erf(50000 / sqrt(1e9) / sqrt(2))))", attendu: 5.7, tolerance: 0.05, libelle: "P(S > 250 000), en %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La convolution"
+        voix_off: "Et si l'on veut la loi exacte, pas seulement une approximation ?"
+      - type: formule
+        texte: "La loi *exacte* de S : la *convolution*"
+        formule:
+          - 'P(S=s)=\sum_{n\geq 0}P(N=n)\,P(X_1+\cdots+X_n=s)'
+        note: "On pondère la loi de la somme de n sinistres par la probabilité d'en avoir n. Facile à programmer, long à la main."
+        voix_off: "Pour des montants discrets, on peut calculer la loi exacte de la charge totale. Pour chaque nombre possible de sinistres n, on calcule la loi de la somme de n montants, puis on la pondère par la probabilité d'avoir n sinistres. On additionne le tout. C'est la convolution. À la main, cela devient vite long. Sur ordinateur, c'est immédiat."
+      - type: courbe
+        texte: "λ = 1 sinistre : *1 000 €* (80 %) ou *5 000 €* (20 %)"
+        courbe:
+          style: barres
+          points: [[0, 36.79], [1, 29.43], [2, 11.77], [3, 3.14], [4, 0.63], [5, 7.46], [6, 5.9], [7, 2.36], [8, 0.63], [9, 0.13], [10, 0.76], [11, 0.59]]
+          etiquettes: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+          mis_en_avant: [5, 10]
+          y_min: 0
+          y_max: 40
+          axe_x: "Charge totale S (milliers d'euros)"
+          axe_y: "Probabilité (%)"
+        note: "Paramètres fictifs. E[S] = 1 800 € ; Var(S) = E[X²] = 5,8 millions, écart-type ≈ 2 408 €."
+        voix_off: "Un petit exemple fictif. Un sinistre par an en moyenne, selon une loi de Poisson. Chaque sinistre coûte mille euros, avec une probabilité de quatre-vingts pour cent, ou cinq mille euros, avec vingt pour cent. Aucun sinistre : e puissance moins un, trente-six virgule huit pour cent. Mille euros : vingt-neuf virgule quatre pour cent. Puis la loi décroît, et remonte brusquement à cinq mille euros, sept virgule cinq pour cent : c'est un seul gros sinistre. Et une nouvelle bosse à dix mille. Aucune loi normale ne ressemble à cela."
+        verifier:
+          - {expression: "100 * exp(-1)", attendu: 36.79, libelle: "P(S = 0)"}
+          - {expression: "100 * exp(-1) * 0.8", attendu: 29.43, libelle: "P(S = 1 000)"}
+          - {expression: "100 * exp(-1) * 0.8**2 / 2", attendu: 11.77, libelle: "P(S = 2 000)"}
+          - {expression: "100 * exp(-1) * 0.8**3 / 6", attendu: 3.14, libelle: "P(S = 3 000)"}
+          - {expression: "100 * exp(-1) * (0.2 + 0.8**5 / 120)", attendu: 7.46, libelle: "P(S = 5 000)"}
+          - {expression: "100 * exp(-1) * (0.8 * 0.2 + 0.8**6 / 720)", attendu: 5.9, libelle: "P(S = 6 000)"}
+          - {expression: "0.8 * 1000 + 0.2 * 5000", attendu: 1800, libelle: "E[S]"}
+          - {expression: "sqrt(0.8 * 1000**2 + 0.2 * 5000**2)", attendu: 2408, tolerance: 0.5, libelle: "Écart-type"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "La surdispersion"
+        voix_off: "Et si la fréquence varie plus qu'une Poisson ?"
+      - type: etapes
+        texte: "Même moyenne de *80* sinistres, variance *doublée*"
+        etapes:
+          - "Binomiale négative : E[N] = 80, Var(N) = *160*"
+          - "Var(S) = 80 × 2 500² + 160 × 2 500² = *1,5 milliard*"
+          - "Écart-type : *31 623 €* devient *38 730 €*"
+          - "P(S > 250 000 €) : *5,7 %* devient *9,8 %*"
+        note: "Paramètres fictifs. Une fréquence surdispersée vient souvent d'assurés hétérogènes, ou d'événements communs (tempête, gel)."
+        voix_off: "En pratique, le nombre de sinistres varie souvent plus qu'une Poisson : certains assurés sont plus exposés que d'autres, et une tempête touche tout le monde à la fois. On dit que la fréquence est surdispersée, et on la modélise par une binomiale négative. Gardons une moyenne de quatre-vingts sinistres, mais avec une variance de cent soixante. La variance de la charge passe à un virgule cinq milliard, l'écart-type à trente-huit mille sept cent trente euros. Et la probabilité de dépasser deux cent cinquante mille euros passe de cinq virgule sept à neuf virgule huit pour cent. Même charge moyenne, queue bien plus lourde."
+        verifier:
+          - {expression: "80 * 2500**2 + 160 * 2500**2", attendu: 1500000000, libelle: "Var(S)"}
+          - {expression: "sqrt(1.5e9)", attendu: 38730, tolerance: 1, libelle: "Écart-type"}
+          - {expression: "100 * (1 - 0.5 * (1 + erf(50000 / sqrt(1.5e9) / sqrt(2))))", attendu: 9.8, tolerance: 0.05, libelle: "P(S > 250 000), en %"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : la charge des capitaux décès"
+        voix_off: "Retrouvons le portefeuille de Léa."
+      - type: etapes
+        texte: "*12,56* décès attendus, *50 000 €* chacun"
+        etapes:
+          - "N ~ Poisson(12,56) (A2.02), X = *50 000 €* fixe"
+          - "E[S] = 12,56 × 50 000 = *628 000 €*"
+          - "Écart-type : 50 000 × √12,56 ≈ *177 200 €*"
+          - "P(S ≥ 1 million €) = P(N ≥ 20) ≈ *3,2 %*"
+        note: "JG's Holding et Léa sont fictifs. Taux de décès et capitaux décès fictifs (épisodes A2.01 à A2.04)."
+        voix_off: "Le portefeuille de JG's Holding compte dix mille assurés, dont Léa, chacun avec un capital décès fictif de cinquante mille euros. Le nombre de décès suit à peu près une Poisson de moyenne douze virgule cinquante-six, comme on l'a vu dans l'épisode A2.02. Ici, la sévérité est fixe : chaque décès coûte cinquante mille euros. La charge moyenne vaut six cent vingt-huit mille euros, avec un écart-type d'environ cent septante-sept mille deux cents euros. Et une charge d'un million d'euros ou plus correspond à vingt décès ou plus : trois virgule deux pour cent."
+        verifier:
+          - {expression: "12.56 * 50000", attendu: 628000, libelle: "E[S]"}
+          - {expression: "50000 * sqrt(12.56)", attendu: 177200, tolerance: 1, libelle: "Écart-type"}
+          - {expression: "100 * (1 - sum(exp(-12.56) * 12.56**k / factorial(k) for k in range(20)))", attendu: 3.2, tolerance: 0.05, libelle: "P(N ≥ 20), en %"}
+      - type: etapes
+        texte: "Et si les capitaux sont *inégaux* ?"
+        etapes:
+          - "Moitié à *50 000 €*, moitié à *100 000 €*"
+          - "E[X] = *75 000 €* ; E[X²] = *6,25 milliards*"
+          - "E[S] = *942 000 €* ; écart-type ≈ *280 179 €*"
+          - "Les gros capitaux pèsent *plus* dans le risque"
+        note: "JG's Holding et Léa sont fictifs. Var(S) = λ E[X²] = 12,56 × 6,25 × 10⁹."
+        voix_off: "Supposons maintenant que la moitié des assurés ait un capital de cinquante mille euros, et l'autre moitié de cent mille. Le capital moyen vaut soixante-quinze mille euros, et l'espérance de son carré, six virgule vingt-cinq milliards. La charge moyenne vaut neuf cent quarante-deux mille euros, et son écart-type deux cent quatre-vingt mille cent septante-neuf euros. Le risque relatif augmente : l'écart-type passe de vingt-huit à presque trente pour cent de la moyenne. C'est le carré des montants qui compte : un gros capital pèse plus lourd dans le risque que deux petits."
+        verifier:
+          - {expression: "(50000**2 + 100000**2) / 2", attendu: 6250000000, libelle: "E[X²]"}
+          - {expression: "12.56 * 75000", attendu: 942000, libelle: "E[S]"}
+          - {expression: "sqrt(12.56 * 6.25e9)", attendu: 280179, tolerance: 1, libelle: "Écart-type"}
+          - {expression: "100 * 177200 / 628000", attendu: 28, tolerance: 0.5, libelle: "Écart-type relatif, capitaux égaux"}
+          - {expression: "100 * 280179 / 942000", attendu: 30, tolerance: 0.5, libelle: "Écart-type relatif, capitaux inégaux"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "N ~ *Poisson(30)*, montants *exponentiels* de moyenne *3 000 €*"
+        pause: 20
+        questions:
+          - "E[S]"
+          - "E[X²] et Var(S)"
+          - "L'écart-type de S"
+          - "P(S > 110 000 €), approximation normale"
+        voix_off: "Mettez la vidéo en pause. Le nombre de sinistres suit une loi de Poisson de moyenne trente, et leurs montants une loi exponentielle de moyenne trois mille euros. Calculez la charge moyenne, puis l'espérance de X au carré et la variance de la charge, son écart-type, et enfin la probabilité que la charge dépasse cent dix mille euros, avec l'approximation normale."
+      - type: correction
+        etapes:
+          - "E[S] = 30 × 3 000 = *90 000 €*"
+          - "E[X²] = 2 × 3 000² = *18 millions* ; Var(S) = *540 millions*"
+          - "Écart-type ≈ *23 237,90 €*"
+          - "z = 20 000 ÷ 23 237,90 ≈ 0,8607 ; P ≈ *0,1947*"
+        voix_off: "Correction. La charge moyenne vaut trente fois trois mille, quatre-vingt-dix mille euros. L'espérance de X au carré vaut deux fois trois mille au carré, dix-huit millions, donc la variance de la charge vaut trente fois dix-huit millions, cinq cent quarante millions. L'écart-type vaut environ vingt-trois mille deux cent trente-sept euros nonante. Dépasser cent dix mille euros, c'est s'écarter de vingt mille euros, soit zéro virgule huit six zéro sept écart-type : probabilité d'environ zéro virgule un neuf quatre sept."
+        verifier:
+          - {expression: "30 * 3000", attendu: 90000, libelle: "E[S]"}
+          - {expression: "2 * 3000**2", attendu: 18000000, libelle: "E[X²]"}
+          - {expression: "30 * 2 * 3000**2", attendu: 540000000, libelle: "Var(S)"}
+          - {expression: "sqrt(540000000)", attendu: 23237.90, libelle: "Écart-type"}
+          - {expression: "20000 / sqrt(540000000)", attendu: 0.8607, libelle: "z"}
+          - {expression: "1 - 0.5 * (1 + erf(20000 / sqrt(540000000) / sqrt(2)))", attendu: 0.1947, libelle: "P(S > 110 000)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Charge totale : *S = X₁ + … + X_N*"
+          - "E[S] = *E[N] E[X]*"
+          - "Poisson composée : *Var(S) = λ E[X²]*"
+          - "Loi exacte : la *convolution*"
+          - "Surdispersion : même moyenne, queue *plus lourde*"
+        voix_off: "Ce qu'il faut retenir. La charge totale est une somme d'un nombre aléatoire de montants aléatoires. Son espérance vaut le nombre moyen de sinistres fois le montant moyen. Pour une fréquence de Poisson, sa variance vaut lambda fois l'espérance du carré des montants. La convolution donne sa loi exacte. Et une fréquence surdispersée garde la même moyenne, mais alourdit la queue de la charge."
+      - type: cloture
+        texte: "Prochain épisode : *la prime*. Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant calculer la charge totale d'un portefeuille. Prochain épisode : comment en tirer un prix. La prime pure, la franchise et la prime commerciale. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Frequency and severity: an insurer's aggregate loss"
+    legende: |
+      In 2025, Belgian insurers settled 371,980 motor liability claims, more than a thousand a day. What does that cost in total, and with what risk? Two random quantities must be combined: the number of claims and the amount of each. This episode of the Actuarial track explains the collective risk model, the mean and variance of the aggregate loss, the compound Poisson distribution, convolution, the effect of overdispersion, and the ninth chapter of the common thread: the cost of death benefits in Léa's portfolio. Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the parameters in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, probability, insurance, nonlife]
+    scenes:
+      - type: accroche
+        texte: "*How many* claims, and *how much* each?"
+        voix_off: "In 2025, Belgian insurers settled more than a thousand motor claims a day. To predict what that will cost them next year, one question is not enough. It takes two: how many claims, and how much each will cost. Two random quantities to combine into a single number: the aggregate loss."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this fifth episode of the probability module of the Actuarial track! Thanks for being here. We learned to count claims, then to describe their amount, then to add up policies. Today, we bring it all together in the model every non-life actuary uses: frequency and severity."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *collective* model"
+          - "*Mean* and variance"
+          - "*Compound* Poisson"
+          - "*Convolution*"
+          - "*Overdispersion*"
+          - "*Léa*'s deaths"
+        voix_off: "Here is the plan. The collective risk model. The mean and variance of the aggregate loss. The compound Poisson distribution. Convolution, for the exact distribution. Overdispersion and its effect on the tail. Then the ninth chapter of the common thread: the cost of death benefits in Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The collective risk model"
+        voix_off: "A sum whose number of terms is itself random."
+      - type: formule
+        texte: "The aggregate loss: *N* claims of amounts *X₁, X₂, …*"
+        formule:
+          - 'S=\sum_{i=1}^{N}X_i'
+          - 'E[S]=E[N]\,E[X]'
+          - '\mathrm{Var}(S)=E[N]\,\mathrm{Var}(X)+\mathrm{Var}(N)\,(E[X])^2'
+        note: "Assumptions: N independent of the amounts, amounts independent and identically distributed. If N = 0, S = 0."
+        voix_off: "The collective model looks at the portfolio as a whole. During the year, N claims occur, a random number: that is the frequency. Each claim has a random amount, X: that is the severity. The aggregate loss S is the sum of the N amounts. Its expectation is simple: the average number of claims times the average amount. Its variance has two parts: the uncertainty on the amounts, and the uncertainty on the number of claims, amplified by the square of the average amount."
+      - type: etapes
+        texte: "Motor liability in Belgium, *2025*: frequency and severity"
+        etapes:
+          - "*371,980* claims settled, that is *1,019* a day"
+          - "Cars: frequency *4.56%* a year"
+          - "Average cost: *4,865 €* per claim"
+          - "Average cost per car: 0.0456 × 4,865 ≈ *221.84 €*"
+        note: "Source: Assuralia, motor insurance key figures 2025. 842 claims exceed 125,000 €, 182 of them above 500,000 €."
+        voix_off: "A real fact. According to Assuralia, insurers settled three hundred and seventy-one thousand nine hundred and eighty motor liability claims in 2025, one thousand and nineteen a day. For a private car, the average frequency is four point five six percent a year, and a claim costs four thousand eight hundred and sixty-five euros on average. Frequency times severity: about two hundred and twenty-one euros eighty-four per car per year. But behind that average, eight hundred and forty-two claims exceeded one hundred and twenty-five thousand euros."
+        verifier:
+          - {expression: "371980 / 365", attendu: 1019, tolerance: 0.5, libelle: "Claims per day"}
+          - {expression: "0.0456 * 4865", attendu: 221.84, libelle: "Average cost per car"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The compound Poisson distribution"
+        voix_off: "The most common case: a Poisson frequency."
+      - type: formule
+        texte: "Poisson *N*: the variance becomes *λ E[X²]*"
+        formule:
+          - 'N\sim\mathcal{P}(\lambda):\quad E[S]=\lambda\,E[X]\qquad \mathrm{Var}(S)=\lambda\,E[X^2]'
+          - '\text{Exponential with mean }\theta:\quad E[X^2]=2\theta^2'
+        note: "For a Poisson, Var(N) = E[N] = λ: the two parts of the variance merge into λ E[X²]."
+        voix_off: "When the number of claims follows a Poisson distribution with parameter lambda, the aggregate loss follows a compound Poisson distribution. Since the variance of N equals its mean, lambda, the two parts of the variance merge: the variance of S is lambda times the expectation of X squared. For exponential amounts with mean theta, the expectation of X squared is two theta squared."
+      - type: etapes
+        texte: "A made-up portfolio: *λ = 80* claims, exponential amounts of *2,500 €*"
+        etapes:
+          - "E[S] = 80 × 2,500 = *200,000 €*"
+          - "Var(S) = 80 × 2 × 2,500² = *1 billion*"
+          - "Standard deviation: √10⁹ ≈ *31,623 €*"
+          - "P(S > 250,000 €) ≈ 1 − Φ(1.581) ≈ *5.7%*"
+        note: "Made-up portfolio and parameters, for the example. Normal approximation."
+        voix_off: "A made-up example. A portfolio expects eighty claims a year on average, with exponential amounts averaging two thousand five hundred euros. The average aggregate loss is two hundred thousand euros. Its variance: eighty times two times two thousand five hundred squared, one billion. So the standard deviation is about thirty-one thousand six hundred and twenty-three euros. With the normal approximation, the probability that the aggregate loss exceeds two hundred and fifty thousand euros is about five point seven percent."
+        verifier:
+          - {expression: "80 * 2500", attendu: 200000, libelle: "E[S]"}
+          - {expression: "80 * 2 * 2500**2", attendu: 1000000000, libelle: "Var(S)"}
+          - {expression: "sqrt(1e9)", attendu: 31623, tolerance: 1, libelle: "Standard deviation"}
+          - {expression: "50000 / sqrt(1e9)", attendu: 1.581, tolerance: 0.0005, libelle: "z"}
+          - {expression: "100 * (1 - 0.5 * (1 + erf(50000 / sqrt(1e9) / sqrt(2))))", attendu: 5.7, tolerance: 0.05, libelle: "P(S > 250,000), in %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Convolution"
+        voix_off: "And if we want the exact distribution, not just an approximation?"
+      - type: formule
+        texte: "The *exact* distribution of S: *convolution*"
+        formule:
+          - 'P(S=s)=\sum_{n\geq 0}P(N=n)\,P(X_1+\cdots+X_n=s)'
+        note: "We weight the distribution of the sum of n claims by the probability of having n. Easy to code, slow by hand."
+        voix_off: "For discrete amounts, we can compute the exact distribution of the aggregate loss. For each possible number of claims n, we compute the distribution of the sum of n amounts, then weight it by the probability of having n claims. We add it all up. That is convolution. By hand, it quickly gets long. On a computer, it is instant."
+      - type: courbe
+        texte: "λ = 1 claim: *1,000 €* (80%) or *5,000 €* (20%)"
+        courbe:
+          style: barres
+          points: [[0, 36.79], [1, 29.43], [2, 11.77], [3, 3.14], [4, 0.63], [5, 7.46], [6, 5.9], [7, 2.36], [8, 0.63], [9, 0.13], [10, 0.76], [11, 0.59]]
+          etiquettes: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+          mis_en_avant: [5, 10]
+          y_min: 0
+          y_max: 40
+          axe_x: "Aggregate loss S (thousand euros)"
+          axe_y: "Probability (%)"
+        note: "Made-up parameters. E[S] = 1,800 €; Var(S) = E[X²] = 5.8 million, standard deviation ≈ 2,408 €."
+        voix_off: "A small made-up example. One claim a year on average, following a Poisson distribution. Each claim costs one thousand euros, with probability eighty percent, or five thousand euros, with twenty percent. No claim: e to the minus one, thirty-six point eight percent. One thousand euros: twenty-nine point four percent. Then the distribution falls, and jumps back up at five thousand euros, seven point five percent: that is a single large claim. And another bump at ten thousand. No normal distribution looks like this."
+        verifier:
+          - {expression: "100 * exp(-1)", attendu: 36.79, libelle: "P(S = 0)"}
+          - {expression: "100 * exp(-1) * 0.8", attendu: 29.43, libelle: "P(S = 1,000)"}
+          - {expression: "100 * exp(-1) * 0.8**2 / 2", attendu: 11.77, libelle: "P(S = 2,000)"}
+          - {expression: "100 * exp(-1) * 0.8**3 / 6", attendu: 3.14, libelle: "P(S = 3,000)"}
+          - {expression: "100 * exp(-1) * (0.2 + 0.8**5 / 120)", attendu: 7.46, libelle: "P(S = 5,000)"}
+          - {expression: "100 * exp(-1) * (0.8 * 0.2 + 0.8**6 / 720)", attendu: 5.9, libelle: "P(S = 6,000)"}
+          - {expression: "0.8 * 1000 + 0.2 * 5000", attendu: 1800, libelle: "E[S]"}
+          - {expression: "sqrt(0.8 * 1000**2 + 0.2 * 5000**2)", attendu: 2408, tolerance: 0.5, libelle: "Standard deviation"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Overdispersion"
+        voix_off: "And if the frequency varies more than a Poisson?"
+      - type: etapes
+        texte: "Same mean of *80* claims, *doubled* variance"
+        etapes:
+          - "Negative binomial: E[N] = 80, Var(N) = *160*"
+          - "Var(S) = 80 × 2,500² + 160 × 2,500² = *1.5 billion*"
+          - "Standard deviation: *31,623 €* becomes *38,730 €*"
+          - "P(S > 250,000 €): *5.7%* becomes *9.8%*"
+        note: "Made-up parameters. An overdispersed frequency often comes from mixed policyholders, or shared events (storm, frost)."
+        voix_off: "In practice, the number of claims often varies more than a Poisson: some policyholders are more exposed than others, and a storm hits everyone at once. We say the frequency is overdispersed, and we model it with a negative binomial. Let's keep a mean of eighty claims, but with a variance of one hundred and sixty. The variance of the aggregate loss rises to one point five billion, the standard deviation to thirty-eight thousand seven hundred and thirty euros. And the probability of exceeding two hundred and fifty thousand euros goes from five point seven to nine point eight percent. Same average loss, a much heavier tail."
+        verifier:
+          - {expression: "80 * 2500**2 + 160 * 2500**2", attendu: 1500000000, libelle: "Var(S)"}
+          - {expression: "sqrt(1.5e9)", attendu: 38730, tolerance: 1, libelle: "Standard deviation"}
+          - {expression: "100 * (1 - 0.5 * (1 + erf(50000 / sqrt(1.5e9) / sqrt(2))))", attendu: 9.8, tolerance: 0.05, libelle: "P(S > 250,000), in %"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "The common thread: the cost of death benefits"
+        voix_off: "Let's get back to Léa's portfolio."
+      - type: etapes
+        texte: "*12.56* expected deaths, *50,000 €* each"
+        etapes:
+          - "N ~ Poisson(12.56) (A2.02), X = *50,000 €* fixed"
+          - "E[S] = 12.56 × 50,000 = *628,000 €*"
+          - "Standard deviation: 50,000 × √12.56 ≈ *177,200 €*"
+          - "P(S ≥ 1 million €) = P(N ≥ 20) ≈ *3.2%*"
+        note: "JG's Holding and Léa are made up. Death rate and death benefits made up (episodes A2.01 to A2.04)."
+        voix_off: "JG's Holding's portfolio has ten thousand insured lives, Léa among them, each with a made-up death benefit of fifty thousand euros. The number of deaths roughly follows a Poisson with mean twelve point five six, as we saw in episode A2.02. Here, the severity is fixed: each death costs fifty thousand euros. The average aggregate loss is six hundred and twenty-eight thousand euros, with a standard deviation of about one hundred and seventy-seven thousand two hundred euros. And a loss of one million euros or more means twenty deaths or more: three point two percent."
+        verifier:
+          - {expression: "12.56 * 50000", attendu: 628000, libelle: "E[S]"}
+          - {expression: "50000 * sqrt(12.56)", attendu: 177200, tolerance: 1, libelle: "Standard deviation"}
+          - {expression: "100 * (1 - sum(exp(-12.56) * 12.56**k / factorial(k) for k in range(20)))", attendu: 3.2, tolerance: 0.05, libelle: "P(N ≥ 20), in %"}
+      - type: etapes
+        texte: "And if the benefits are *unequal*?"
+        etapes:
+          - "Half at *50,000 €*, half at *100,000 €*"
+          - "E[X] = *75,000 €*; E[X²] = *6.25 billion*"
+          - "E[S] = *942,000 €*; standard deviation ≈ *280,179 €*"
+          - "Large benefits weigh *more* in the risk"
+        note: "JG's Holding and Léa are made up. Var(S) = λ E[X²] = 12.56 × 6.25 × 10⁹."
+        voix_off: "Now suppose half of the insured lives have a fifty-thousand-euro benefit, and the other half one hundred thousand. The average benefit is seventy-five thousand euros, and the expectation of its square six point two five billion. The average aggregate loss is nine hundred and forty-two thousand euros, and its standard deviation two hundred and eighty thousand one hundred and seventy-nine euros. The relative risk rises: the standard deviation goes from twenty-eight to almost thirty percent of the mean. It is the square of the amounts that matters: one large benefit weighs more in the risk than two small ones."
+        verifier:
+          - {expression: "(50000**2 + 100000**2) / 2", attendu: 6250000000, libelle: "E[X²]"}
+          - {expression: "12.56 * 75000", attendu: 942000, libelle: "E[S]"}
+          - {expression: "sqrt(12.56 * 6.25e9)", attendu: 280179, tolerance: 1, libelle: "Standard deviation"}
+          - {expression: "100 * 177200 / 628000", attendu: 28, tolerance: 0.5, libelle: "Relative std dev, equal benefits"}
+          - {expression: "100 * 280179 / 942000", attendu: 30, tolerance: 0.5, libelle: "Relative std dev, unequal benefits"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "N ~ *Poisson(30)*, *exponential* amounts with mean *3,000 €*"
+        pause: 20
+        questions:
+          - "E[S]"
+          - "E[X²] and Var(S)"
+          - "The standard deviation of S"
+          - "P(S > 110,000 €), normal approximation"
+        voix_off: "Pause the video. The number of claims follows a Poisson distribution with mean thirty, and their amounts an exponential distribution with mean three thousand euros. Compute the average aggregate loss, then the expectation of X squared and the variance of the aggregate loss, its standard deviation, and finally the probability that the aggregate loss exceeds one hundred and ten thousand euros, with the normal approximation."
+      - type: correction
+        etapes:
+          - "E[S] = 30 × 3,000 = *90,000 €*"
+          - "E[X²] = 2 × 3,000² = *18 million*; Var(S) = *540 million*"
+          - "Standard deviation ≈ *23,237.90 €*"
+          - "z = 20,000 ÷ 23,237.90 ≈ 0.8607; P ≈ *0.1947*"
+        voix_off: "Solution. The average aggregate loss is thirty times three thousand, ninety thousand euros. The expectation of X squared is two times three thousand squared, eighteen million, so the variance of the aggregate loss is thirty times eighteen million, five hundred and forty million. The standard deviation is about twenty-three thousand two hundred and thirty-seven euros ninety. Exceeding one hundred and ten thousand euros means straying by twenty thousand euros, that is zero point eight six zero seven standard deviations: a probability of about zero point one nine four seven."
+        verifier:
+          - {expression: "30 * 3000", attendu: 90000, libelle: "E[S]"}
+          - {expression: "2 * 3000**2", attendu: 18000000, libelle: "E[X²]"}
+          - {expression: "30 * 2 * 3000**2", attendu: 540000000, libelle: "Var(S)"}
+          - {expression: "sqrt(540000000)", attendu: 23237.90, libelle: "Standard deviation"}
+          - {expression: "20000 / sqrt(540000000)", attendu: 0.8607, libelle: "z"}
+          - {expression: "1 - 0.5 * (1 + erf(20000 / sqrt(540000000) / sqrt(2)))", attendu: 0.1947, libelle: "P(S > 110,000)"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Aggregate loss: *S = X₁ + … + X_N*"
+          - "E[S] = *E[N] E[X]*"
+          - "Compound Poisson: *Var(S) = λ E[X²]*"
+          - "Exact distribution: *convolution*"
+          - "Overdispersion: same mean, *heavier* tail"
+        voix_off: "What to remember. The aggregate loss is a sum of a random number of random amounts. Its expectation is the average number of claims times the average amount. For a Poisson frequency, its variance is lambda times the expectation of the squared amounts. Convolution gives its exact distribution. And an overdispersed frequency keeps the same mean, but makes the tail of the aggregate loss heavier."
+      - type: cloture
+        texte: "Next episode: *the premium*. A question? *In the comments*"
+        voix_off: "You can now compute the aggregate loss of a portfolio. Next episode: how to turn it into a price. The pure premium, the deductible and the gross premium. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
