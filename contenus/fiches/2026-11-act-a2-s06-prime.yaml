@@ -1,0 +1,443 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2/s06 « Prime pure, franchise et prime commerciale »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2/s06.yaml (calcul « À la main » : fréquence 5 %, exponentielle
+# 2 000 €, franchise 500 €, chargement 20 %, frais 25 %). Les exemples utilisent une fréquence de 8 %, une exponentielle de
+# 2 500 €, une franchise de 250 €, un chargement de 15 % et des frais de 30 % ; l'exercice final utilise 10 %, 1 500 €,
+# 300 €, 10 % et 20 %, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la prime de la garantie décès (fictive) de Léa, à partir de la
+# prime pure et du chargement de sécurité de l'épisode A2.04.
+# Faits réels : chiffres d'origine (Assuralia, assurance automobile 2025 et chiffres clés du secteur 2025).
+id: 2026-11-act-a2-s06-prime
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2 · Prime pure, franchise et prime commerciale"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer la prime pure d'un contrat : fréquence fois sévérité"
+      - "Mesurer l'effet d'une franchise et d'un plafond sur la prime pure"
+      - "Calculer le taux d'élimination des sinistres"
+      - "Passer de la prime pure à la prime commerciale : chargement et frais"
+      - "Lire un ratio sinistres sur primes et un ratio combiné"
+    en:
+      - "Compute the pure premium of a policy: frequency times severity"
+      - "Measure the effect of a deductible and a limit on the pure premium"
+      - "Compute the loss elimination ratio"
+      - "Go from the pure premium to the gross premium: loading and expenses"
+      - "Read a loss ratio and a combined ratio"
+  prerequis:
+    fr: ["Séances A2.03 à A2.05 : loi exponentielle, mutualisation, charge totale"]
+    en: ["Sessions A2.03 to A2.05: exponential distribution, pooling, aggregate loss"]
+  hypotheses:
+    fr: "Montants exponentiels ; fréquences, montants, chargements et frais fictifs ; statistiques publiques telles que publiées"
+    en: "Exponential amounts; made-up frequencies, amounts, loadings and expenses; public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Assuralia, « L'assurance automobile en Belgique, chiffres clés 2025 » (10 novembre 2026)", en: "Assuralia, “Motor insurance in Belgium, key figures 2025” (10 November 2026)"}
+    court: "Assuralia, auto"
+    url: "https://press.assuralia.be/lassurance-automobile-en-belgique"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Assuralia, « Portée par le retour de l'assurance vie, l'assurance belge enregistre une croissance de 7,7 % en 2025 » (1er octobre 2026)", en: "Assuralia, “Driven by the return of life insurance, Belgian insurance grows 7.7% in 2025” (1 October 2026)"}
+    court: "Assuralia, secteur"
+    url: "https://press.assuralia.be/portee-par-le-retour-de-lassurance-vie-lassurance-belge-enregistre-une-croissance-de-77-en-2025"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "La prime d'assurance : de la prime pure au prix payé"
+    legende: |
+      En Belgique, une voiture coûte en moyenne environ 222 € de sinistres par an en responsabilité civile, mais la prime moyenne est de 328 € hors taxes. Où passe la différence ? Cet épisode du parcours Actuariat explique la prime pure, l'effet d'une franchise et d'un plafond, le taux d'élimination des sinistres, la prime commerciale (chargement de sécurité et frais), le ratio sinistres sur primes et le ratio combiné, et le dixième chapitre du fil rouge : le prix de la garantie décès de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les paramètres des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil d'achat d'assurance. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, assurance, tarification, nonvie]
+    scenes:
+      - type: accroche
+        texte: "*222 €* de sinistres, *328 €* de prime : où va la *différence* ?"
+        voix_off: "En Belgique, une voiture particulière coûte en moyenne environ deux cent vingt-deux euros de sinistres par an en responsabilité civile. Pourtant, la prime moyenne est de trois cent vingt-huit euros hors taxes. Où passe la différence ? Est-ce le bénéfice de l'assureur ? Pas vraiment. Aujourd'hui, on construit une prime pièce par pièce."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce sixième et dernier épisode du module probabilités du parcours Actuariat ! Merci d'être là. On sait calculer la charge attendue d'un portefeuille, et le risque qui l'entoure. Il reste à en faire un prix : la prime que paie l'assuré."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "La prime *pure*"
+          - "La *franchise*"
+          - "Le *plafond*"
+          - "La prime *commerciale*"
+          - "Les *ratios*"
+          - "La prime de *Léa*"
+        voix_off: "Voici le programme. La prime pure. L'effet d'une franchise. L'effet d'un plafond. La prime commerciale, avec son chargement et ses frais. Le ratio sinistres sur primes et le ratio combiné. Puis le dixième chapitre du fil rouge : le prix de la garantie décès de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "La prime pure"
+        voix_off: "Le point de départ de tout tarif."
+      - type: formule
+        texte: "La *prime pure* : la charge *attendue* d'un contrat"
+        formule:
+          - '\pi=E[N]\times E[X]=\text{fr\acute{e}quence}\times\text{s\acute{e}v\acute{e}rit\acute{e}}'
+          - 'E[N]=0{,}08,\ E[X]=2\,500\ \text{€}:\quad \pi=200\ \text{€}'
+        note: "C'est l'espérance de la charge totale d'un contrat sur un an (épisode A2.05). Exemple fictif."
+        voix_off: "La prime pure est la charge attendue d'un contrat sur un an : le nombre moyen de sinistres multiplié par leur montant moyen. C'est exactement l'espérance de la charge totale de l'épisode précédent, pour un seul contrat. Exemple fictif : huit pour cent de chance de sinistre par an, et un montant moyen de deux mille cinq cents euros. La prime pure vaut deux cents euros. Si l'assureur demandait exactement cela, il couvrirait ses sinistres en moyenne, et rien d'autre."
+        verifier:
+          - {expression: "0.08 * 2500", attendu: 200, libelle: "Prime pure"}
+      - type: etapes
+        texte: "RC automobile, *2025* : prime pure et prime réelle"
+        etapes:
+          - "Prime pure : 4,56 % × 4 865 € ≈ *221,84 €*"
+          - "Prime moyenne : *328 €* hors taxes"
+          - "Taxes : *89 €*, soit *417 €* au total"
+          - "Les sinistres pèsent ≈ *68 %* de la prime hors taxes"
+        note: "Source : Assuralia, chiffres clés 2025 de l'assurance automobile (voitures particulières). Calcul illustratif."
+        voix_off: "Un fait réel. Selon Assuralia, la fréquence des sinistres en responsabilité civile automobile est de quatre virgule cinquante-six pour cent par an pour une voiture particulière, pour un coût moyen de quatre mille huit cent soixante-cinq euros. Prime pure : environ deux cent vingt et un euros quatre-vingt-quatre. La prime moyenne est de trois cent vingt-huit euros hors taxes, à laquelle s'ajoutent quatre-vingt-neuf euros de taxes, soit quatre cent dix-sept euros. Les sinistres représentent donc environ soixante-huit pour cent de la prime hors taxes. Le reste paie les frais, les commissions, la sécurité et le capital."
+        verifier:
+          - {expression: "0.0456 * 4865", attendu: 221.84, libelle: "Prime pure"}
+          - {expression: "328 + 89", attendu: 417, libelle: "Prime taxes comprises"}
+          - {expression: "100 * 0.0456 * 4865 / 328", attendu: 68, tolerance: 0.5, libelle: "Part des sinistres, en %"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La franchise"
+        voix_off: "L'assuré garde une partie de chaque sinistre."
+      - type: formule
+        texte: "Une *franchise* d : l'assureur paie *(X − d)₊*"
+        formule:
+          - '\pi_d=E[N]\,E\left[(X-d)_+\right]'
+          - '\text{Exponentielle :}\quad E\left[(X-d)_+\right]=\theta\,e^{-d/\theta}'
+          - '\mathrm{LER}=\frac{E[\min(X,d)]}{E[X]}=1-e^{-d/\theta}'
+        note: "(X − d)₊ vaut X − d si X dépasse d, et 0 sinon. LER : taux d'élimination des sinistres (loss elimination ratio)."
+        voix_off: "Avec une franchise d, l'assuré paie lui-même les d premiers euros de chaque sinistre. L'assureur ne paie que la partie qui dépasse : X moins d, ou rien du tout si le sinistre est plus petit que la franchise. Pour des montants exponentiels, le paiement moyen par sinistre vaut thêta fois e puissance moins d sur thêta. Et la part de la charge que la franchise retire à l'assureur s'appelle le taux d'élimination des sinistres : un moins e puissance moins d sur thêta."
+      - type: courbe
+        texte: "Prime pure selon la *franchise* (fréquence 8 %, moyenne 2 500 €)"
+        courbe:
+          variable: d
+          de: 0
+          a: 2500
+          pas: 10
+          expression: "0.08 * 2500 * exp(-d / 2500)"
+          y_max: 220
+          axe_x: "Franchise d (€)"
+          axe_y: "Prime pure (€)"
+          reperes:
+            - {x: 250, label: "250 € : 180,97 €"}
+            - {x: 500, label: "500 € : 163,75 €"}
+            - {x: 1000, label: "1 000 € : 134,06 €"}
+        note: "Paramètres fictifs. Taux d'élimination pour 250 € : 1 − e^(−0,1) ≈ 9,52 %."
+        voix_off: "Voici la prime pure selon la franchise, dans notre exemple fictif. Sans franchise, deux cents euros. Avec une franchise de deux cent cinquante euros, cent quatre-vingts euros nonante-sept : le taux d'élimination vaut neuf virgule cinquante-deux pour cent. Avec cinq cents euros, cent soixante-trois euros septante-cinq. Avec mille euros, cent trente-quatre euros six. La franchise supprime aussi tous les petits sinistres, coûteux à gérer pour l'assureur."
+        verifier:
+          - {expression: "0.08 * 2500 * exp(-0.1)", attendu: 180.97, libelle: "Franchise 250 €"}
+          - {expression: "0.08 * 2500 * exp(-0.2)", attendu: 163.75, libelle: "Franchise 500 €"}
+          - {expression: "0.08 * 2500 * exp(-0.4)", attendu: 134.06, libelle: "Franchise 1 000 €"}
+          - {expression: "100 * (1 - exp(-0.1))", attendu: 9.52, libelle: "LER, en %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Le plafond"
+        voix_off: "À l'autre bout, l'assureur peut limiter son engagement."
+      - type: formule
+        texte: "Un *plafond* u : l'assureur paie *min(X, u)*"
+        formule:
+          - '\text{Exponentielle :}\quad E[\min(X,u)]=\theta\left(1-e^{-u/\theta}\right)'
+          - 'u=10\,000\ \text{€}:\quad 2\,500\,(1-e^{-4})=2\,454{,}21\ \text{€}'
+        note: "Paramètres fictifs. Le plafond retire seulement 1,8 % de la charge, mais toute la partie extrême de la queue."
+        voix_off: "Un plafond u borne chaque paiement : au-delà de u, l'assureur ne paie plus. Pour des montants exponentiels, le paiement moyen vaut thêta fois un moins e puissance moins u sur thêta. Avec un plafond de dix mille euros, il vaut deux mille quatre cent cinquante-quatre euros vingt et un, au lieu de deux mille cinq cents. Le plafond ne retire qu'un virgule huit pour cent de la charge moyenne. Mais il retire toute la partie extrême de la queue, celle qui coûte le plus en capital."
+        verifier:
+          - {expression: "2500 * (1 - exp(-4))", attendu: 2454.21, libelle: "Paiement moyen plafonné"}
+          - {expression: "100 * exp(-4)", attendu: 1.8, tolerance: 0.05, libelle: "Part retirée, en %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "La prime commerciale"
+        voix_off: "Il reste à couvrir le risque et les frais."
+      - type: formule
+        texte: "La *prime commerciale* : chargement η et frais c"
+        formule:
+          - 'P=\frac{\pi\,(1+\eta)}{1-c}'
+          - '\pi_d=180{,}97,\ \eta=15\,\%,\ c=30\,\%:\quad P=\frac{180{,}97\times 1{,}15}{0{,}70}=297{,}30\ \text{€}'
+        note: "Exemple fictif. Les frais sont un pourcentage de la prime commerciale, d'où la division par 1 − c."
+        voix_off: "La prime commerciale part de la prime pure. On ajoute d'abord un chargement de sécurité, eta, pour les mauvaises années : c'est le chargement de l'épisode A2.04, ici quinze pour cent. Puis on couvre les frais : gestion, commissions des intermédiaires, exprimés en pourcentage c de la prime elle-même. C'est pourquoi on divise par un moins c, au lieu de multiplier par un plus c. Dans notre exemple, avec une franchise de deux cent cinquante euros et trente pour cent de frais, la prime commerciale vaut deux cent nonante-sept euros trente."
+        verifier:
+          - {expression: "0.08 * 2500 * exp(-0.1) * 1.15 / 0.7", attendu: 297.3, libelle: "Prime commerciale"}
+      - type: etapes
+        texte: "Les *ratios* de l'assureur"
+        etapes:
+          - "Sinistres ÷ primes : 0,70 ÷ 1,15 ≈ *60,9 %*"
+          - "Frais ÷ primes : *30 %*"
+          - "Ratio combiné : ≈ *90,9 %* : *bénéfice technique*"
+          - "Au-dessus de 100 % : *perte technique*"
+        note: "Exemple fictif, si la charge réelle égale la prime pure. Les revenus financiers s'ajoutent ensuite."
+        voix_off: "Si la charge réelle égale exactement la prime pure, les sinistres représentent zéro virgule septante divisé par un virgule quinze, soit environ soixante virgule neuf pour cent des primes : c'est le ratio sinistres sur primes. Les frais en représentent trente pour cent. Leur somme, le ratio combiné, vaut environ nonante virgule neuf pour cent. En dessous de cent pour cent, l'assureur dégage un bénéfice technique. Au-dessus, il perd de l'argent sur son activité d'assurance, avant ses revenus financiers."
+        verifier:
+          - {expression: "100 * 0.7 / 1.15", attendu: 60.9, tolerance: 0.05, libelle: "Ratio sinistres sur primes, en %"}
+          - {expression: "100 * (0.7 / 1.15 + 0.3)", attendu: 90.9, tolerance: 0.05, libelle: "Ratio combiné, en %"}
+      - type: etapes
+        texte: "L'assurance belge en *2025*"
+        etapes:
+          - "Primes encaissées : *37,5 milliards €*"
+          - "Revenus financiers : *7,1 milliards €*"
+          - "Bénéfice du secteur : *2,7 milliards €*"
+          - "Solvabilité : ratio SCR de *203 %*"
+        note: "Source : Assuralia, chiffres clés et résultats 2025 de l'assurance belge (1er octobre 2026)."
+        voix_off: "Un fait réel. Selon Assuralia, les assureurs belges ont encaissé trente-sept virgule cinq milliards d'euros de primes en 2025. Leurs placements ont rapporté sept virgule un milliards d'euros de revenus financiers, et le secteur a dégagé un bénéfice de deux virgule sept milliards. Son ratio de solvabilité SCR atteint deux cent trois pour cent : les fonds propres couvrent deux fois le capital exigé. La rentabilité d'un assureur ne vient donc pas que de ses primes : elle dépend aussi de ses frais, de sa réassurance et de ses placements."
+        verifier:
+          - {expression: "100 * 2.7 / 37.5", attendu: 7.2, libelle: "Bénéfice en % des primes"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : la prime de Léa"
+        voix_off: "Combien Léa paie-t-elle sa garantie décès ?"
+      - type: etapes
+        texte: "Garantie décès de *50 000 €* : la prime de Léa"
+        etapes:
+          - "Prime pure : *62,80 €* (A2.04)"
+          - "Chargement de sécurité : *29,13 €*, soit η ≈ *46,4 %*"
+          - "Frais fictifs : *20 %* de la prime"
+          - "Prime commerciale : 91,93 ÷ 0,80 ≈ *114,91 €* par an"
+        note: "JG's Holding et Léa sont fictifs. Capital, taux de décès, chargement et frais fictifs (portefeuille de 10 000 assurés)."
+        voix_off: "Revenons à Léa. Sa garantie décès fictive de cinquante mille euros a une prime pure de soixante-deux euros quatre-vingts par an, comme on l'a calculé dans l'épisode A2.04. Le chargement de sécurité au seuil de quatre-vingt-quinze pour cent, pour un portefeuille de dix mille assurés, ajoute vingt-neuf euros treize : un chargement de quarante-six virgule quatre pour cent. Avec des frais fictifs de vingt pour cent de la prime, JG's Holding demande à Léa cent quatorze euros nonante et un par an. Un risque rare coûte cher en sécurité, et cela se voit dans le prix."
+        verifier:
+          - {expression: "100 * 29.13 / 62.8", attendu: 46.4, tolerance: 0.05, libelle: "η, en %"}
+          - {expression: "(62.8 + 29.13) / 0.8", attendu: 114.91, libelle: "Prime commerciale"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Fréquence *10 %*, sinistres exponentiels de *1 500 €*, franchise *300 €*"
+        pause: 20
+        questions:
+          - "La prime pure avec franchise"
+          - "Le taux d'élimination (LER)"
+          - "La prime commerciale (η = 10 %, c = 20 %)"
+          - "Le ratio sinistres sur primes"
+        voix_off: "Mettez la vidéo en pause. Un contrat fictif a dix pour cent de chance de sinistre par an, des montants exponentiels de moyenne mille cinq cents euros et une franchise de trois cents euros. Calculez la prime pure avec franchise, puis le taux d'élimination des sinistres. Ensuite, la prime commerciale, avec un chargement de dix pour cent et des frais de vingt pour cent de la prime. Et enfin le ratio sinistres sur primes."
+      - type: correction
+        etapes:
+          - "π_d = 0,10 × 1 500 × e^(−0,2) ≈ *122,81 €*"
+          - "LER = 1 − e^(−0,2) ≈ *0,1813*"
+          - "P = 122,81 × 1,10 ÷ 0,80 ≈ *168,86 €*"
+          - "Sinistres ÷ primes = 0,80 ÷ 1,10 ≈ *0,7273*"
+        voix_off: "Correction. Le paiement moyen par sinistre vaut mille cinq cents fois e puissance moins trois cents sur mille cinq cents, soit e puissance moins zéro virgule deux. Multiplié par la fréquence : cent vingt-deux euros quatre-vingt-un. Le taux d'élimination vaut un moins e puissance moins zéro virgule deux, zéro virgule un huit un trois. La prime commerciale : cent vingt-deux euros quatre-vingt-un fois un virgule dix, divisé par zéro virgule huit, cent soixante-huit euros quatre-vingt-six. Et le ratio sinistres sur primes : zéro virgule huit divisé par un virgule un, zéro virgule sept deux sept trois."
+        verifier:
+          - {expression: "0.1 * 1500 * exp(-0.2)", attendu: 122.81, libelle: "Prime pure avec franchise"}
+          - {expression: "1 - exp(-0.2)", attendu: 0.1813, libelle: "LER"}
+          - {expression: "0.1 * 1500 * exp(-0.2) * 1.1 / 0.8", attendu: 168.86, libelle: "Prime commerciale"}
+          - {expression: "0.8 / 1.1", attendu: 0.7273, libelle: "Ratio sinistres sur primes"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Prime pure : *fréquence × sévérité*"
+          - "Franchise : paiement *(X − d)₊*, LER = 1 − e^(−d/θ)"
+          - "Plafond : retire la *queue* extrême"
+          - "Prime commerciale : *π (1 + η) ÷ (1 − c)*"
+          - "Ratio combiné *< 100 %* : bénéfice technique"
+        voix_off: "Ce qu'il faut retenir. La prime pure vaut la fréquence fois la sévérité. Une franchise réduit chaque paiement à X moins d, et le taux d'élimination mesure la part de la charge qu'elle retire. Un plafond retire la queue extrême. La prime commerciale ajoute un chargement de sécurité et couvre les frais : prime pure fois un plus eta, divisé par un moins c. Et un ratio combiné sous cent pour cent signifie un bénéfice technique."
+      - type: cloture
+        texte: "Prochain épisode : *estimer une loi à partir des données*. Une question ? *En commentaire*"
+        voix_off: "Vous avez terminé le module probabilités : bravo ! Jusqu'ici, on a supposé connaître les lois et leurs paramètres. Dans le prochain module, on les estime à partir des données, en commençant par la méthode des moments. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "The insurance premium: from pure premium to the price paid"
+    legende: |
+      In Belgium, a car costs on average about 222 € of liability claims a year, yet the average premium is 328 € before taxes. Where does the difference go? This episode of the Actuarial track explains the pure premium, the effect of a deductible and a limit, the loss elimination ratio, the gross premium (safety loading and expenses), the loss ratio and the combined ratio, and the tenth chapter of the common thread: the price of Léa's death cover. Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the parameters in the examples are made up, the real facts are sourced. No advice on buying insurance. A question? Ask it in the comments.
+    hashtags: [actuarial, insurance, pricing, nonlife]
+    scenes:
+      - type: accroche
+        texte: "*222 €* of claims, *328 €* of premium: where does the *difference* go?"
+        voix_off: "In Belgium, a private car costs on average about two hundred and twenty-two euros of liability claims a year. Yet the average premium is three hundred and twenty-eight euros before taxes. Where does the difference go? Is it the insurer's profit? Not really. Today, we build a premium piece by piece."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this sixth and last episode of the probability module of the Actuarial track! Thanks for being here. We can compute the expected cost of a portfolio, and the risk around it. What remains is to turn it into a price: the premium the policyholder pays."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *pure* premium"
+          - "The *deductible*"
+          - "The *limit*"
+          - "The *gross* premium"
+          - "The *ratios*"
+          - "*Léa*'s premium"
+        voix_off: "Here is the plan. The pure premium. The effect of a deductible. The effect of a limit. The gross premium, with its loading and its expenses. The loss ratio and the combined ratio. Then the tenth chapter of the common thread: the price of Léa's death cover. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The pure premium"
+        voix_off: "The starting point of every rate."
+      - type: formule
+        texte: "The *pure premium*: the *expected* cost of a policy"
+        formule:
+          - '\pi=E[N]\times E[X]=\text{frequency}\times\text{severity}'
+          - 'E[N]=0.08,\ E[X]=2\,500\ \text{€}:\quad \pi=200\ \text{€}'
+        note: "It is the expected aggregate loss of one policy over a year (episode A2.05). Made-up example."
+        voix_off: "The pure premium is the expected cost of a policy over a year: the average number of claims times their average amount. It is exactly the expected aggregate loss of the previous episode, for a single policy. A made-up example: an eight percent chance of a claim a year, and an average amount of two thousand five hundred euros. The pure premium is two hundred euros. If the insurer charged exactly that, it would cover its claims on average, and nothing else."
+        verifier:
+          - {expression: "0.08 * 2500", attendu: 200, libelle: "Pure premium"}
+      - type: etapes
+        texte: "Motor liability, *2025*: pure premium and actual premium"
+        etapes:
+          - "Pure premium: 4.56% × 4,865 € ≈ *221.84 €*"
+          - "Average premium: *328 €* before taxes"
+          - "Taxes: *89 €*, that is *417 €* in total"
+          - "Claims weigh ≈ *68%* of the premium before taxes"
+        note: "Source: Assuralia, motor insurance key figures 2025 (private cars). Illustrative calculation."
+        voix_off: "A real fact. According to Assuralia, the motor liability claim frequency is four point five six percent a year for a private car, at an average cost of four thousand eight hundred and sixty-five euros. Pure premium: about two hundred and twenty-one euros eighty-four. The average premium is three hundred and twenty-eight euros before taxes, plus eighty-nine euros of taxes, that is four hundred and seventeen euros. So claims make up about sixty-eight percent of the premium before taxes. The rest pays for expenses, commissions, safety and capital."
+        verifier:
+          - {expression: "0.0456 * 4865", attendu: 221.84, libelle: "Pure premium"}
+          - {expression: "328 + 89", attendu: 417, libelle: "Premium including taxes"}
+          - {expression: "100 * 0.0456 * 4865 / 328", attendu: 68, tolerance: 0.5, libelle: "Share of claims, in %"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The deductible"
+        voix_off: "The policyholder keeps part of each claim."
+      - type: formule
+        texte: "A *deductible* d: the insurer pays *(X − d)₊*"
+        formule:
+          - '\pi_d=E[N]\,E\left[(X-d)_+\right]'
+          - '\text{Exponential:}\quad E\left[(X-d)_+\right]=\theta\,e^{-d/\theta}'
+          - '\mathrm{LER}=\frac{E[\min(X,d)]}{E[X]}=1-e^{-d/\theta}'
+        note: "(X − d)₊ is X − d if X exceeds d, and 0 otherwise. LER: loss elimination ratio."
+        voix_off: "With a deductible d, the policyholder pays the first d euros of each claim. The insurer only pays the part above: X minus d, or nothing at all if the claim is smaller than the deductible. For exponential amounts, the average payment per claim is theta times e to the minus d over theta. And the share of the cost that the deductible takes away from the insurer is called the loss elimination ratio: one minus e to the minus d over theta."
+      - type: courbe
+        texte: "Pure premium by *deductible* (frequency 8%, mean 2,500 €)"
+        courbe:
+          variable: d
+          de: 0
+          a: 2500
+          pas: 10
+          expression: "0.08 * 2500 * exp(-d / 2500)"
+          y_max: 220
+          axe_x: "Deductible d (€)"
+          axe_y: "Pure premium (€)"
+          reperes:
+            - {x: 250, label: "250 €: 180.97 €"}
+            - {x: 500, label: "500 €: 163.75 €"}
+            - {x: 1000, label: "1,000 €: 134.06 €"}
+        note: "Made-up parameters. Loss elimination ratio for 250 €: 1 − e^(−0.1) ≈ 9.52%."
+        voix_off: "Here is the pure premium by deductible, in our made-up example. Without a deductible, two hundred euros. With a two-hundred-and-fifty-euro deductible, one hundred and eighty euros ninety-seven: the loss elimination ratio is nine point five two percent. With five hundred euros, one hundred and sixty-three euros seventy-five. With one thousand euros, one hundred and thirty-four euros six. The deductible also removes all the small claims, which are costly for the insurer to handle."
+        verifier:
+          - {expression: "0.08 * 2500 * exp(-0.1)", attendu: 180.97, libelle: "Deductible 250 €"}
+          - {expression: "0.08 * 2500 * exp(-0.2)", attendu: 163.75, libelle: "Deductible 500 €"}
+          - {expression: "0.08 * 2500 * exp(-0.4)", attendu: 134.06, libelle: "Deductible 1,000 €"}
+          - {expression: "100 * (1 - exp(-0.1))", attendu: 9.52, libelle: "LER, in %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The limit"
+        voix_off: "At the other end, the insurer can cap its commitment."
+      - type: formule
+        texte: "A *limit* u: the insurer pays *min(X, u)*"
+        formule:
+          - '\text{Exponential:}\quad E[\min(X,u)]=\theta\left(1-e^{-u/\theta}\right)'
+          - 'u=10\,000\ \text{€}:\quad 2\,500\,(1-e^{-4})=2\,454.21\ \text{€}'
+        note: "Made-up parameters. The limit only removes 1.8% of the cost, but the whole extreme part of the tail."
+        voix_off: "A limit u caps each payment: beyond u, the insurer pays nothing more. For exponential amounts, the average payment is theta times one minus e to the minus u over theta. With a ten-thousand-euro limit, it is two thousand four hundred and fifty-four euros twenty-one, instead of two thousand five hundred. The limit only removes one point eight percent of the average cost. But it removes the whole extreme part of the tail, the part that costs the most in capital."
+        verifier:
+          - {expression: "2500 * (1 - exp(-4))", attendu: 2454.21, libelle: "Capped average payment"}
+          - {expression: "100 * exp(-4)", attendu: 1.8, tolerance: 0.05, libelle: "Share removed, in %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The gross premium"
+        voix_off: "What remains is to cover the risk and the expenses."
+      - type: formule
+        texte: "The *gross premium*: loading η and expenses c"
+        formule:
+          - 'P=\frac{\pi\,(1+\eta)}{1-c}'
+          - '\pi_d=180.97,\ \eta=15\%,\ c=30\%:\quad P=\frac{180.97\times 1.15}{0.70}=297.30\ \text{€}'
+        note: "Made-up example. Expenses are a percentage of the gross premium, hence the division by 1 − c."
+        voix_off: "The gross premium starts from the pure premium. First we add a safety loading, eta, for the bad years: that is the loading of episode A2.04, here fifteen percent. Then we cover the expenses: administration and intermediaries' commissions, expressed as a percentage c of the premium itself. That is why we divide by one minus c, instead of multiplying by one plus c. In our example, with a two-hundred-and-fifty-euro deductible and thirty percent expenses, the gross premium is two hundred and ninety-seven euros thirty."
+        verifier:
+          - {expression: "0.08 * 2500 * exp(-0.1) * 1.15 / 0.7", attendu: 297.3, libelle: "Gross premium"}
+      - type: etapes
+        texte: "The insurer's *ratios*"
+        etapes:
+          - "Claims ÷ premiums: 0.70 ÷ 1.15 ≈ *60.9%*"
+          - "Expenses ÷ premiums: *30%*"
+          - "Combined ratio: ≈ *90.9%*: *underwriting profit*"
+          - "Above 100%: *underwriting loss*"
+        note: "Made-up example, if the actual cost equals the pure premium. Investment income comes on top."
+        voix_off: "If the actual cost exactly equals the pure premium, claims make up zero point seven divided by one point one five, about sixty point nine percent of the premiums: that is the loss ratio. Expenses make up thirty percent. Their sum, the combined ratio, is about ninety point nine percent. Below one hundred percent, the insurer makes an underwriting profit. Above it, it loses money on its insurance business, before its investment income."
+        verifier:
+          - {expression: "100 * 0.7 / 1.15", attendu: 60.9, tolerance: 0.05, libelle: "Loss ratio, in %"}
+          - {expression: "100 * (0.7 / 1.15 + 0.3)", attendu: 90.9, tolerance: 0.05, libelle: "Combined ratio, in %"}
+      - type: etapes
+        texte: "Belgian insurance in *2025*"
+        etapes:
+          - "Premiums collected: *37.5 billion €*"
+          - "Investment income: *7.1 billion €*"
+          - "Sector profit: *2.7 billion €*"
+          - "Solvency: SCR ratio of *203%*"
+        note: "Source: Assuralia, key figures and results 2025 of Belgian insurance (1 October 2026)."
+        voix_off: "A real fact. According to Assuralia, Belgian insurers collected thirty-seven point five billion euros of premiums in 2025. Their investments yielded seven point one billion euros of investment income, and the sector made a profit of two point seven billion. Its SCR solvency ratio reaches two hundred and three percent: own funds cover twice the required capital. So an insurer's profitability does not come from premiums alone: it also depends on its expenses, its reinsurance and its investments."
+        verifier:
+          - {expression: "100 * 2.7 / 37.5", attendu: 7.2, libelle: "Profit as a % of premiums"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "The common thread: Léa's premium"
+        voix_off: "How much does Léa pay for her death cover?"
+      - type: etapes
+        texte: "A *50,000 €* death benefit: Léa's premium"
+        etapes:
+          - "Pure premium: *62.80 €* (A2.04)"
+          - "Safety loading: *29.13 €*, that is η ≈ *46.4%*"
+          - "Made-up expenses: *20%* of the premium"
+          - "Gross premium: 91.93 ÷ 0.80 ≈ *114.91 €* a year"
+        note: "JG's Holding and Léa are made up. Benefit, death rate, loading and expenses made up (portfolio of 10,000 insured lives)."
+        voix_off: "Back to Léa. Her made-up death benefit of fifty thousand euros has a pure premium of sixty-two euros eighty a year, as we computed in episode A2.04. The safety loading at the ninety-five percent level, for a portfolio of ten thousand insured lives, adds twenty-nine euros thirteen: a loading of forty-six point four percent. With made-up expenses of twenty percent of the premium, JG's Holding charges Léa one hundred and fourteen euros ninety-one a year. A rare risk costs a lot in safety, and it shows in the price."
+        verifier:
+          - {expression: "100 * 29.13 / 62.8", attendu: 46.4, tolerance: 0.05, libelle: "η, in %"}
+          - {expression: "(62.8 + 29.13) / 0.8", attendu: 114.91, libelle: "Gross premium"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Frequency *10%*, exponential claims of *1,500 €*, deductible *300 €*"
+        pause: 20
+        questions:
+          - "The pure premium with deductible"
+          - "The loss elimination ratio (LER)"
+          - "The gross premium (η = 10%, c = 20%)"
+          - "The loss ratio"
+        voix_off: "Pause the video. A made-up policy has a ten percent chance of a claim a year, exponential amounts with a mean of one thousand five hundred euros and a deductible of three hundred euros. Compute the pure premium with the deductible, then the loss elimination ratio. Then the gross premium, with a ten percent loading and expenses of twenty percent of the premium. And finally the loss ratio."
+      - type: correction
+        etapes:
+          - "π_d = 0.10 × 1,500 × e^(−0.2) ≈ *122.81 €*"
+          - "LER = 1 − e^(−0.2) ≈ *0.1813*"
+          - "P = 122.81 × 1.10 ÷ 0.80 ≈ *168.86 €*"
+          - "Claims ÷ premiums = 0.80 ÷ 1.10 ≈ *0.7273*"
+        voix_off: "Solution. The average payment per claim is one thousand five hundred times e to the minus three hundred over one thousand five hundred, that is e to the minus zero point two. Times the frequency: one hundred and twenty-two euros eighty-one. The loss elimination ratio is one minus e to the minus zero point two, zero point one eight one three. The gross premium: one hundred and twenty-two euros eighty-one times one point one, divided by zero point eight, one hundred and sixty-eight euros eighty-six. And the loss ratio: zero point eight divided by one point one, zero point seven two seven three."
+        verifier:
+          - {expression: "0.1 * 1500 * exp(-0.2)", attendu: 122.81, libelle: "Pure premium with deductible"}
+          - {expression: "1 - exp(-0.2)", attendu: 0.1813, libelle: "LER"}
+          - {expression: "0.1 * 1500 * exp(-0.2) * 1.1 / 0.8", attendu: 168.86, libelle: "Gross premium"}
+          - {expression: "0.8 / 1.1", attendu: 0.7273, libelle: "Loss ratio"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Pure premium: *frequency × severity*"
+          - "Deductible: payment *(X − d)₊*, LER = 1 − e^(−d/θ)"
+          - "Limit: removes the extreme *tail*"
+          - "Gross premium: *π (1 + η) ÷ (1 − c)*"
+          - "Combined ratio *< 100%*: underwriting profit"
+        voix_off: "What to remember. The pure premium is frequency times severity. A deductible reduces each payment to X minus d, and the loss elimination ratio measures the share of the cost it removes. A limit removes the extreme tail. The gross premium adds a safety loading and covers the expenses: pure premium times one plus eta, divided by one minus c. And a combined ratio below one hundred percent means an underwriting profit."
+      - type: cloture
+        texte: "Next episode: *estimating a distribution from data*. A question? *In the comments*"
+        voix_off: "You have finished the probability module: well done! So far, we assumed we knew the distributions and their parameters. In the next module, we estimate them from data, starting with the method of moments. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
