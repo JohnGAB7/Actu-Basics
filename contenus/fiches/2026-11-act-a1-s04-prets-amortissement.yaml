@@ -98,7 +98,7 @@ editions:
           - {expression: "10000 / ((1 - 1.04**-5) / 0.04)", attendu: 2246.27, libelle: "Annuité constante"}
           - {expression: "2246.27 * (1 - 1.04**-5) / 0.04", attendu: 10000, tolerance: 0.05, libelle: "Valeur actuelle des remboursements"}
       - type: formule
-        texte: "L'annuité *constante* : *P = L ÷ aₙ*"
+        texte: "L'annuité *constante* P"
         formule:
           - 'L=P\,a_n\quad\Longrightarrow\quad P=\dfrac{L}{a_n}'
           - 'P=\dfrac{10\,000}{a_5}=\dfrac{10\,000}{4{,}4518}\approx 2\,246{,}27\ \text{€}'
@@ -336,7 +336,7 @@ editions:
           - {expression: "10000 / ((1 - 1.04**-5) / 0.04)", attendu: 2246.27, libelle: "Level payment"}
           - {expression: "2246.27 * (1 - 1.04**-5) / 0.04", attendu: 10000, tolerance: 0.05, libelle: "Present value of repayments"}
       - type: formule
-        texte: "The *level* payment: *P = L ÷ aₙ*"
+        texte: "The *level* payment P"
         formule:
           - 'L=P\,a_n\quad\Longrightarrow\quad P=\dfrac{L}{a_n}'
           - 'P=\dfrac{10{,}000}{a_5}=\dfrac{10{,}000}{4.4518}\approx \text{€}2{,}246.27'

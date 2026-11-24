@@ -106,7 +106,7 @@ editions:
         texte: "La franchise"
         voix_off: "L'assuré garde une partie de chaque sinistre."
       - type: formule
-        texte: "Une *franchise* d : l'assureur paie *(X − d)₊*"
+        texte: "Une *franchise* d : l'assureur paie *X − d* au-delà de d"
         formule:
           - '\pi_d=E[N]\,E\left[(X-d)_+\right]'
           - '\text{Exponentielle :}\quad E\left[(X-d)_+\right]=\theta\,e^{-d/\theta}'
@@ -302,7 +302,7 @@ editions:
         texte: "The deductible"
         voix_off: "The policyholder keeps part of each claim."
       - type: formule
-        texte: "A *deductible* d: the insurer pays *(X − d)₊*"
+        texte: "A *deductible* d: the insurer pays *X − d* above d"
         formule:
           - '\pi_d=E[N]\,E\left[(X-d)_+\right]'
           - '\text{Exponential:}\quad E\left[(X-d)_+\right]=\theta\,e^{-d/\theta}'

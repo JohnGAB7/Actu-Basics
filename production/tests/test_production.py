@@ -2266,3 +2266,17 @@ def test_animations_finance():
                 r.dessiner(s, i, len(scenes), k / 8)
             r.dessiner(s, i, len(scenes), None)
         assert vus == {"capitalisation", "echeancier", "escompte", "frequences"}
+
+
+# --------------------------------------------------------------------------- caractères absents des polices
+def test_glyphes_absents_bloquent():
+    from lmec.qc import controler_glyphes
+    fiche = charger_fiche(EXEMPLE)
+    r = Rapport()
+    controler_glyphes(fiche, CHARTE, r)
+    assert not r.bloquants
+    s = fiche.editions[fiche.langues[0]].scenes[0]
+    s.texte = "La valeur accumulée sₙ"
+    r = Rapport()
+    controler_glyphes(fiche, CHARTE, r)
+    assert any("U+2099" in b.message for b in r.bloquants)

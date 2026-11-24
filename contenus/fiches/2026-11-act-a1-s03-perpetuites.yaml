@@ -93,7 +93,7 @@ editions:
           - {expression: "1000 * 1.04**9", attendu: 1423.31, libelle: "1er versement capitalisé"}
           - {expression: "1000 * (1.04**10 - 1) / 0.04", attendu: 12006.11, libelle: "Valeur accumulée"}
       - type: formule
-        texte: "La valeur *accumulée* sₙ"
+        texte: "La valeur *accumulée*"
         formule:
           - 's_n=1+(1+i)+\dots+(1+i)^{n-1}=\dfrac{(1+i)^n-1}{i}'
           - 's_n=(1+i)^n\,a_n\qquad \ddot{s}_n=(1+i)\,s_n'
@@ -178,7 +178,7 @@ editions:
           - {expression: "((1.04 * (1 - 1.04**-5) / 0.04) - 5 * 1.04**-5) / 0.04", attendu: 13.0065, libelle: "(Ia)5 à 4 %"}
           - {expression: "(5 - (1 - 1.04**-5) / 0.04) / 0.04", attendu: 13.7044, libelle: "(Da)5 à 4 %"}
       - type: etapes
-        texte: "Le contrôle : *(Ia) + (Da) = (n + 1) aₙ*"
+        texte: "Le contrôle : *(Ia) + (Da)*"
         etapes:
           - "Chaque année : k + (n + 1 − k) = *n + 1*"
           - "Ensemble, elles paient *6 par an* pendant 5 ans"
@@ -351,7 +351,7 @@ editions:
           - {expression: "1000 * 1.04**9", attendu: 1423.31, libelle: "1st payment accumulated"}
           - {expression: "1000 * (1.04**10 - 1) / 0.04", attendu: 12006.11, libelle: "Accumulated value"}
       - type: formule
-        texte: "The *accumulated* value sₙ"
+        texte: "The *accumulated* value"
         formule:
           - 's_n=1+(1+i)+\dots+(1+i)^{n-1}=\dfrac{(1+i)^n-1}{i}'
           - 's_n=(1+i)^n\,a_n\qquad \ddot{s}_n=(1+i)\,s_n'
@@ -436,7 +436,7 @@ editions:
           - {expression: "((1.04 * (1 - 1.04**-5) / 0.04) - 5 * 1.04**-5) / 0.04", attendu: 13.0065, libelle: "(Ia)5 at 4%"}
           - {expression: "(5 - (1 - 1.04**-5) / 0.04) / 0.04", attendu: 13.7044, libelle: "(Da)5 at 4%"}
       - type: etapes
-        texte: "The check: *(Ia) + (Da) = (n + 1) aₙ*"
+        texte: "The check: *(Ia) + (Da)*"
         etapes:
           - "Each year: k + (n + 1 − k) = *n + 1*"
           - "Together, they pay *6 a year* for 5 years"

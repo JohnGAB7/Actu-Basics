@@ -99,7 +99,7 @@ editions:
           - 'P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}'
           - 'P(A\cap B)=P(A\mid B)\,P(B)'
           - 'P(D\cap F)=0{,}003\times 0{,}128=0{,}000384'
-        note: "D : l'assuré décède dans l'année ; F : l'assuré fume ; ∩ : « et »."
+        note: "D : l'assuré décède dans l'année ; F : l'assuré fume. L'intersection se lit « et »."
         voix_off: "En formule, P de A sachant B, c'est la probabilité que A et B arrivent ensemble, divisée par la probabilité de B. On la retourne souvent : la probabilité de A et B, c'est P de A sachant B, fois P de B. Notons D le décès dans l'année et F le fait de fumer. La probabilité qu'un assuré pris au hasard soit fumeur et décède dans l'année vaut zéro virgule zéro zéro trois fois zéro virgule cent vingt-huit : zéro virgule zéro zéro zéro trois huit quatre. Sur dix mille assurés, environ trois virgule huit décès de fumeurs par an."
         verifier:
           - {expression: "0.003 * 0.128", attendu: 0.000384, libelle: "P(D et F)"}
@@ -256,8 +256,8 @@ editions:
       - type: etapes
         texte: "À retenir"
         etapes:
-          - "*P(A | B)* = P(A ∩ B) ÷ P(B)"
-          - "Indépendants : *P(A ∩ B) = P(A) P(B)*"
+          - "*P(A | B)* = P(A et B) ÷ P(B)"
+          - "Indépendants : *P(A et B) = P(A) P(B)*"
           - "Probabilités totales : la *moyenne pondérée* des classes"
           - "Bayes : de l'*effet* vers la *cause* ; P(D | F) ≠ P(F | D)"
           - "Au moins un : *1 − (1 − p)ⁿ*"
@@ -319,7 +319,7 @@ editions:
           - 'P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}'
           - 'P(A\cap B)=P(A\mid B)\,P(B)'
           - 'P(D\cap S)=0.003\times 0.128=0.000384'
-        note: "D: the policyholder dies within the year; S: the policyholder smokes; ∩: “and”."
+        note: "D: the policyholder dies within the year; S: the policyholder smokes. The intersection reads “and”."
         voix_off: "As a formula, P of A given B is the probability that A and B happen together, divided by the probability of B. We often turn it around: the probability of A and B is P of A given B, times P of B. Write D for death within the year and S for smoking. The probability that a policyholder picked at random smokes and dies within the year is zero point zero zero three times zero point one two eight: zero point zero zero zero three eight four. Out of ten thousand policyholders, about three point eight deaths of smokers a year."
         verifier:
           - {expression: "0.003 * 0.128", attendu: 0.000384, libelle: "P(D and S)"}
@@ -476,8 +476,8 @@ editions:
       - type: etapes
         texte: "Key takeaways"
         etapes:
-          - "*P(A | B)* = P(A ∩ B) ÷ P(B)"
-          - "Independent: *P(A ∩ B) = P(A) P(B)*"
+          - "*P(A | B)* = P(A and B) ÷ P(B)"
+          - "Independent: *P(A and B) = P(A) P(B)*"
           - "Total probability: the *weighted average* of the classes"
           - "Bayes: from *effect* to *cause*; P(D | S) ≠ P(S | D)"
           - "At least one: *1 − (1 − p)ⁿ*"
