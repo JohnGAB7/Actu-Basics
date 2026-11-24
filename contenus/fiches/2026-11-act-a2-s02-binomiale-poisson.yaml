@@ -1,0 +1,482 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2/s02 « Nombre de sinistres : binomiale et Poisson »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2/s02.yaml (calcul « À la main » : Poisson 0,3 ; binomiale 20 et 0,05).
+# Les exemples utilisent une binomiale (10 ; 0,1), l'approximation (1 000 ; 0,002) et le portefeuille fictif de JG's Holding ;
+# l'exercice final utilise Poisson 0,5 et binomiale (8 ; 0,1), pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : le nombre de décès dans le portefeuille de 10 000 assurés de
+# l'épisode A2.01, dont Léa fait partie, suit à peu près une loi de Poisson de moyenne 12,56.
+# Faits réels : chiffres d'origine. Taux de décès du portefeuille : fictifs (A2.01).
+id: 2026-11-act-a2-s02-binomiale-poisson
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2 · Nombre de sinistres : binomiale et Poisson"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Décrire une variable aléatoire discrète par sa loi, son espérance et sa variance"
+      - "Reconnaître et utiliser la loi de Bernoulli et la loi binomiale"
+      - "Utiliser la loi de Poisson pour compter des événements rares"
+      - "Approcher une binomiale par une Poisson quand n est grand et p petit"
+      - "Estimer le nombre de décès d'un portefeuille et sa dispersion"
+    en:
+      - "Describe a discrete random variable by its distribution, mean and variance"
+      - "Recognise and use the Bernoulli and binomial distributions"
+      - "Use the Poisson distribution to count rare events"
+      - "Approximate a binomial with a Poisson when n is large and p small"
+      - "Estimate the number of deaths in a portfolio and its spread"
+  prerequis:
+    fr: ["Séance A2.01 : probabilités conditionnelles, indépendance", "Factorielle et exponentielle"]
+    en: ["Session A2.01: conditional probability, independence", "Factorial and exponential"]
+  hypotheses:
+    fr: "Contrats indépendants ; portefeuille et taux de décès fictifs (A2.01) ; données historiques et statistiques publiques telles que publiées"
+    en: "Independent policies; made-up portfolio and death rates (A2.01); historical data and public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "L. von Bortkiewicz, Das Gesetz der kleinen Zahlen (1898), tableau repris par S. M. Carr, Memorial University, « Poisson distributions »", en: "L. von Bortkiewicz, Das Gesetz der kleinen Zahlen (1898), table reproduced by S. M. Carr, Memorial University, “Poisson distributions”"}
+    court: "Bortkiewicz 1898"
+    url: "https://www.mun.ca/biology/scarr/smcPoisson_distributions.html"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Statbel, « 464 morts sur les routes belges en 2025 »", en: "Statbel, “464 deaths on Belgian roads in 2025”"}
+    court: "Statbel"
+    url: "https://statbel.fgov.be/fr/nouvelles/464-morts-sur-les-routes-belges-en-2025"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Binomiale et Poisson : combien de sinistres l'an prochain ?"
+    legende: |
+      En 1898, un statisticien compte les soldats prussiens tués par un coup de sabot de cheval, et découvre que ces accidents suivent une loi très précise. Cette loi, la loi de Poisson, sert aujourd'hui à tous les assureurs pour prévoir le nombre de sinistres. Toute la réponse est dans cet épisode du parcours Actuariat : espérance et variance, la loi de Bernoulli, la loi binomiale, la loi de Poisson (et les 464 morts sur les routes belges en 2025), l'approximation de l'une par l'autre, et le sixième chapitre du fil rouge, le nombre de décès dans le portefeuille de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les taux de décès des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, probabilites, poisson, assurance]
+    scenes:
+      - type: accroche
+        texte: "Combien de sinistres l'an prochain ? *Une loi*, pas un chiffre"
+        voix_off: "Combien de sinistres un assureur aura-t-il l'an prochain ? Personne ne peut donner le chiffre exact. Mais on peut dire mieux qu'un chiffre : la probabilité de chaque nombre possible. Zéro, un, deux, douze, vingt sinistres. Cette liste de probabilités s'appelle une loi. Et l'une d'elles est née, en 1898, de soldats tués par des chevaux."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce deuxième épisode du module probabilités du parcours Actuariat ! Merci d'être là. La dernière fois, on a calculé des probabilités d'événements. Aujourd'hui, on compte : combien de contrats sinistrés, combien de décès, combien d'accidents. Ce sont les deux lois que tout actuaire utilise chaque semaine."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Espérance et *variance*"
+          - "La loi *binomiale*"
+          - "La loi de *Poisson*"
+          - "L'*approximation*"
+          - "Les décès du *portefeuille*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. L'espérance et la variance. La loi binomiale. La loi de Poisson. L'approximation de l'une par l'autre. Puis le sixième chapitre du fil rouge : le nombre de décès dans le portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Espérance et variance"
+        voix_off: "Commençons par résumer une loi en deux nombres."
+      - type: formule
+        texte: "L'*espérance* : la moyenne. La *variance* : la dispersion"
+        formule:
+          - 'E[X]=\sum_k k\,P(X=k)'
+          - '\mathrm{Var}(X)=E[X^2]-(E[X])^2'
+          - 'E[aX+b]=a\,E[X]+b\qquad \mathrm{Var}(aX+b)=a^2\,\mathrm{Var}(X)'
+        note: "L'écart-type est la racine carrée de la variance : il s'exprime dans la même unité que X."
+        voix_off: "Une variable aléatoire discrète, comme un nombre de sinistres, prend des valeurs isolées : zéro, un, deux, et ainsi de suite. Sa loi donne la probabilité de chacune. On la résume par deux nombres. L'espérance, la moyenne pondérée par les probabilités : c'est ce qu'on obtient en moyenne sur un grand nombre de répétitions. Et la variance, qui mesure à quel point les valeurs s'écartent de cette moyenne. Deux règles utiles : multiplier X par a multiplie l'espérance par a, mais la variance par a au carré ; ajouter une constante ne change pas la variance."
+      - type: etapes
+        texte: "Léa décède-t-elle avant 65 ans ? Une variable de *Bernoulli*"
+        etapes:
+          - "X = 1 si oui, 0 si non"
+          - "P(X = 1) = *p = 2,5 %* (A2.01)"
+          - "E[X] = p = *0,025*"
+          - "Var(X) = p (1 − p) = *0,0244*"
+        note: "JG's Holding est un assureur fictif, Léa une cliente fictive. Probabilité fictive de l'épisode A2.01."
+        voix_off: "La loi la plus simple de toutes : la loi de Bernoulli. Elle ne prend que deux valeurs, un si l'événement arrive, zéro sinon. Exemple : Léa décède-t-elle avant soixante-cinq ans ? Dans l'épisode précédent, on a trouvé une probabilité fictive de deux virgule cinq pour cent. Son espérance vaut p, zéro virgule zéro deux cinq. Sa variance vaut p fois un moins p, zéro virgule zéro deux quatre quatre. Chaque contrat d'assurance est, au fond, une variable de Bernoulli : sinistre ou pas."
+        verifier:
+          - {expression: "0.025 * 0.975", attendu: 0.0244, libelle: "Variance de Bernoulli"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La loi binomiale"
+        voix_off: "Passons d'un contrat à plusieurs."
+      - type: formule
+        texte: "*Combien* de contrats sinistrés parmi *n* ?"
+        formule:
+          - 'P(X=k)=\binom{n}{k}\,p^k\,(1-p)^{n-k}'
+          - 'E[X]=np\qquad \mathrm{Var}(X)=np(1-p)'
+        note: "n contrats indépendants, chacun sinistré avec la probabilité p. Le coefficient « k parmi n » compte les façons de choisir les k sinistrés."
+        voix_off: "Prenons n contrats indépendants, chacun sinistré avec la même probabilité p. Le nombre de contrats sinistrés suit une loi binomiale. La probabilité d'en avoir exactement k est le produit de trois morceaux : p puissance k pour les k sinistrés, un moins p puissance n moins k pour les autres, et le coefficient k parmi n, qui compte de combien de façons on peut choisir les k contrats sinistrés. L'espérance vaut n p, et la variance n p fois un moins p : la somme de n Bernoulli indépendantes."
+      - type: courbe
+        texte: "*10* contrats à *10 %* : la loi binomiale"
+        courbe:
+          style: barres
+          points: [[0, 34.87], [1, 38.74], [2, 19.37], [3, 5.74], [4, 1.12]]
+          etiquettes: ["0", "1", "2", "3", "4"]
+          etiquettes_valeurs: ["34,9 %", "38,7 %", "19,4 %", "5,7 %", "1,1 %"]
+          valeurs: true
+          y_min: 0
+          y_max: 45
+          axe_x: "Nombre de contrats sinistrés"
+          axe_y: "Probabilité (%)"
+        note: "Contrats fictifs, pour l'exemple. Au-delà de 4 sinistres : moins de 0,2 %."
+        voix_off: "Un exemple. Dix contrats, chacun sinistré avec une probabilité de dix pour cent. Aucun sinistre : zéro virgule neuf puissance dix, trente-quatre virgule neuf pour cent. Un seul sinistre, le cas le plus probable : trente-huit virgule sept pour cent. Deux sinistres : dix-neuf virgule quatre pour cent. Puis la probabilité s'effondre : trois sinistres, cinq virgule sept pour cent ; quatre, un virgule un pour cent. En moyenne, n p, un sinistre. Variance : zéro virgule neuf."
+        verifier:
+          - {expression: "100 * 0.9**10", attendu: 34.87, libelle: "P(X = 0)"}
+          - {expression: "100 * 10 * 0.1 * 0.9**9", attendu: 38.74, libelle: "P(X = 1)"}
+          - {expression: "100 * 45 * 0.01 * 0.9**8", attendu: 19.37, libelle: "P(X = 2)"}
+          - {expression: "100 * 120 * 0.001 * 0.9**7", attendu: 5.74, libelle: "P(X = 3)"}
+          - {expression: "100 * 210 * 0.0001 * 0.9**6", attendu: 1.12, libelle: "P(X = 4)"}
+          - {expression: "10 * 0.1 * 0.9", attendu: 0.9, libelle: "Variance"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La loi de Poisson"
+        voix_off: "Et quand les événements sont rares, mais les occasions innombrables ?"
+      - type: formule
+        texte: "La loi de *Poisson* : compter les événements *rares*"
+        formule:
+          - 'P(N=k)=e^{-\lambda}\,\dfrac{\lambda^k}{k!}'
+          - 'E[N]=\mathrm{Var}(N)=\lambda'
+        note: "λ : nombre moyen d'événements sur la période. k! = 1 × 2 × … × k. Formule de Siméon Denis Poisson, 1837."
+        voix_off: "Parfois, on ne compte pas des contrats sinistrés, mais des événements : des accidents, des tempêtes, des sinistres, qui peuvent survenir plusieurs fois, et dont chacun est rare et indépendant des autres. Leur nombre sur une période suit souvent une loi de Poisson. Un seul paramètre, lambda : le nombre moyen d'événements. La probabilité d'en observer k vaut e puissance moins lambda, fois lambda puissance k, divisé par factorielle k. Et une propriété remarquable : l'espérance et la variance sont égales, toutes deux à lambda."
+      - type: courbe
+        texte: "*1898* : les soldats prussiens tués par un *cheval*"
+        courbe:
+          style: barres
+          points: [[0, 109], [1, 65], [2, 22], [3, 3], [4, 1]]
+          etiquettes: ["0", "1", "2", "3", "4"]
+          valeurs: true
+          y_min: 0
+          y_max: 120
+          axe_x: "Décès dans un corps d'armée, en un an"
+          axe_y: "Nombre de corps-années"
+        note: "Bortkiewicz, 1898 : 10 corps de cavalerie prussiens sur 20 ans, 122 décès. Poisson attendu : 108,7 ; 66,3 ; 20,2 ; 4,1 ; 0,6."
+        voix_off: "Le fait historique le plus célèbre de la statistique. En 1898, Ladislaus von Bortkiewicz étudie dix corps de l'armée prussienne pendant vingt ans : deux cents corps-années. Il compte les soldats tués par un coup de sabot de cheval : cent vingt-deux, soit zéro virgule soixante et un par corps et par an. Cent neuf fois, aucun décès dans l'année. Soixante-cinq fois, un décès. Vingt-deux fois, deux. Trois fois, trois. Une fois, quatre. Et la loi de Poisson de moyenne zéro virgule soixante et un prédit cent huit virgule sept, soixante-six virgule trois, vingt virgule deux, quatre virgule un et zéro virgule six. Presque exactement ce qu'on observe."
+        verifier:
+          - {expression: "122 / 200", attendu: 0.61, libelle: "Moyenne par corps-année"}
+          - {expression: "200 * exp(-0.61)", attendu: 108.7, libelle: "Attendu, 0 décès"}
+          - {expression: "200 * exp(-0.61) * 0.61", attendu: 66.3, libelle: "Attendu, 1 décès"}
+          - {expression: "200 * exp(-0.61) * 0.61**2 / 2", attendu: 20.2, libelle: "Attendu, 2 décès"}
+          - {expression: "200 * exp(-0.61) * 0.61**3 / 6", attendu: 4.1, libelle: "Attendu, 3 décès"}
+          - {expression: "200 * exp(-0.61) * 0.61**4 / 24", attendu: 0.6, libelle: "Attendu, 4 décès"}
+      - type: etapes
+        texte: "*464* morts sur les routes belges en 2025 : un jour *sans* décès ?"
+        etapes:
+          - "Par jour : λ = 464 ÷ 365 ≈ *1,27*"
+          - "Aucun décès : e^(−1,27) ≈ *28 %* des jours"
+          - "Deux décès ou plus : ≈ *36 %* des jours"
+        note: "Source : Statbel, « 464 morts sur les routes belges en 2025 » (décès dans les 30 jours). Modèle de Poisson illustratif."
+        voix_off: "Un fait réel, plus proche de nous. Selon Statbel, quatre cent soixante-quatre personnes sont décédées sur les routes belges en 2025. Soit en moyenne un virgule vingt-sept par jour. Si ces décès suivaient une loi de Poisson, environ vingt-huit pour cent des jours n'en compteraient aucun, et trente-six pour cent en compteraient deux ou plus. Le même nombre moyen cache une grande irrégularité d'un jour à l'autre : c'est exactement ce que la loi décrit."
+        verifier:
+          - {expression: "464 / 365", attendu: 1.27, libelle: "Décès par jour"}
+          - {expression: "100 * exp(-464 / 365)", attendu: 28, tolerance: 0.5, libelle: "Jours sans décès, en %"}
+          - {expression: "100 * (1 - exp(-464 / 365) * (1 + 464 / 365))", attendu: 36, tolerance: 0.5, libelle: "Deux décès ou plus, en %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "De la binomiale à Poisson"
+        voix_off: "Les deux lois sont en fait des cousines."
+      - type: formule
+        texte: "*n* grand, *p* petit : binomiale *≈* Poisson de λ = n p"
+        formule:
+          - '\binom{n}{k}p^k(1-p)^{n-k}\approx e^{-np}\,\dfrac{(np)^k}{k!}'
+          - 'n=1\,000,\ p=0{,}002:\quad P(X=0)=0{,}1351\ \ \text{contre}\ \ e^{-2}=0{,}1353'
+        note: "Règle pratique : l'approximation est bonne pour n ≥ 50 et n p ≤ 5, environ."
+        voix_off: "Quand le nombre de contrats n est grand et la probabilité p petite, la binomiale ressemble de très près à une loi de Poisson de paramètre lambda égal à n p. Exemple : mille contrats à zéro virgule deux pour cent. Probabilité d'aucun sinistre, par la binomiale : zéro virgule neuf neuf huit puissance mille, zéro virgule un trois cinq un. Par Poisson de paramètre deux : e puissance moins deux, zéro virgule un trois cinq trois. Presque identique, et bien plus simple à calculer. C'est pour cela que les actuaires non-vie partent presque toujours d'une Poisson."
+        verifier:
+          - {expression: "0.998**1000", attendu: 0.1351, libelle: "Binomiale"}
+          - {expression: "exp(-2)", attendu: 0.1353, libelle: "Poisson"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : les décès du portefeuille de Léa"
+        voix_off: "Retrouvons le portefeuille de JG's Holding."
+      - type: courbe
+        texte: "*10 000* assurés : combien de *décès* cette année ?"
+        courbe:
+          style: barres
+          points: [[4, 0.36], [5, 0.91], [6, 1.91], [7, 3.43], [8, 5.39], [9, 7.52], [10, 9.45], [11, 10.79], [12, 11.29], [13, 10.91], [14, 9.79], [15, 8.2], [16, 6.43], [17, 4.75], [18, 3.32], [19, 2.19], [20, 1.38], [21, 0.82]]
+          etiquettes: ["4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"]
+          mis_en_avant: [16, 17]
+          y_min: 0
+          y_max: 12
+          axe_x: "Nombre de décès dans l'année"
+          axe_y: "Probabilité (%)"
+        note: "JG's Holding et Léa sont fictifs. Taux de décès fictif de l'épisode A2.01 : 0,1256 % par an. Poisson de moyenne 12,56."
+        voix_off: "Le portefeuille vie de JG's Holding compte dix mille assurés de quarante ans, dont Léa. Dans l'épisode précédent, on a trouvé un taux de décès moyen fictif de zéro virgule douze cinquante-six pour cent par an. Le nombre de décès dans l'année suit une binomiale de paramètres dix mille et zéro virgule zéro zéro un deux cinq six, qu'on approche par une Poisson de moyenne douze virgule cinquante-six. La voici. Le nombre le plus probable est douze, mais chaque valeur entre huit et dix-sept reste plausible. Et la queue à droite, vingt décès ou plus, a une probabilité d'environ trois pour cent."
+        verifier:
+          - {expression: "10000 * 0.001256", attendu: 12.56, libelle: "λ"}
+          - {expression: "100 * exp(-12.56) * 12.56**12 / factorial(12)", attendu: 11.29, libelle: "P(N = 12), en %"}
+      - type: etapes
+        texte: "Ce que l'assureur doit *prévoir*"
+        etapes:
+          - "En moyenne : *12,56* décès"
+          - "Écart-type : √12,56 ≈ *3,54* décès"
+          - "20 décès ou plus : ≈ *3,2 %*, une année sur 31"
+          - "Il faut des *réserves* pour les mauvaises années"
+        voix_off: "Que doit en retenir JG's Holding ? En moyenne, douze virgule cinquante-six décès par an, avec un écart-type de trois virgule cinquante-quatre décès, la racine carrée de lambda. Une année sur trente et une environ, il y aura vingt décès ou plus : soixante pour cent de plus que la moyenne. L'assureur ne peut pas se contenter de prévoir la moyenne : il doit aussi garder des réserves pour les mauvaises années. Mesurer ce risque sera l'objet des épisodes sur la mutualisation et la charge totale."
+        verifier:
+          - {expression: "sqrt(12.56)", attendu: 3.54, libelle: "Écart-type"}
+          - {expression: "100 * (1 - sum(exp(-12.56) * 12.56**k / factorial(k) for k in range(20)))", attendu: 3.2, tolerance: 0.05, libelle: "P(N ≥ 20), en %"}
+          - {expression: "1 / (1 - sum(exp(-12.56) * 12.56**k / factorial(k) for k in range(20)))", attendu: 31, tolerance: 0.5, libelle: "Une année sur…"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "N suit une *Poisson de 0,5* ; X une *binomiale (8 ; 0,1)*. Calculez :"
+        pause: 20
+        questions:
+          - "P(N = 0) et P(N = 1)"
+          - "P(N ≥ 2)"
+          - "P(X = 0) et P(X ≥ 1)"
+          - "P(X = 1)"
+        voix_off: "Mettez la vidéo en pause. N suit une loi de Poisson de paramètre zéro virgule cinq, et X une loi binomiale de paramètres huit et zéro virgule un. Calculez la probabilité que N vaille zéro, puis un, puis la probabilité que N vaille au moins deux. Ensuite, la probabilité que X vaille zéro, au moins un, et exactement un."
+      - type: correction
+        etapes:
+          - "P(N = 0) = e^(−0,5) ≈ *0,6065* ; P(N = 1) ≈ *0,3033*"
+          - "P(N ≥ 2) = 1 − 0,6065 − 0,3033 ≈ *0,0902*"
+          - "P(X = 0) = 0,9⁸ ≈ *0,4305* ; P(X ≥ 1) ≈ *0,5695*"
+          - "P(X = 1) = 8 × 0,1 × 0,9⁷ ≈ *0,3826*"
+        voix_off: "Correction. P de N égale zéro : e puissance moins zéro virgule cinq, environ zéro virgule six zéro six cinq. P de N égale un : zéro virgule cinq fois ce nombre, zéro virgule trois zéro trois trois. Donc au moins deux : un moins les deux, zéro virgule zéro neuf zéro deux. Pour la binomiale, aucun sinistre : zéro virgule neuf puissance huit, zéro virgule quatre trois zéro cinq ; donc au moins un, zéro virgule cinq six neuf cinq. Et exactement un : huit fois zéro virgule un fois zéro virgule neuf puissance sept, zéro virgule trois huit deux six."
+        verifier:
+          - {expression: "exp(-0.5)", attendu: 0.6065, libelle: "P(N = 0)"}
+          - {expression: "0.5 * exp(-0.5)", attendu: 0.3033, libelle: "P(N = 1)"}
+          - {expression: "1 - 1.5 * exp(-0.5)", attendu: 0.0902, libelle: "P(N ≥ 2)"}
+          - {expression: "0.9**8", attendu: 0.4305, libelle: "P(X = 0)"}
+          - {expression: "1 - 0.9**8", attendu: 0.5695, libelle: "P(X ≥ 1)"}
+          - {expression: "8 * 0.1 * 0.9**7", attendu: 0.3826, libelle: "P(X = 1)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Espérance : la *moyenne* ; variance : la *dispersion*"
+          - "Binomiale : *E = np*, Var = np(1 − p)"
+          - "Poisson : *E = Var = λ*"
+          - "n grand, p petit : binomiale *≈* Poisson de λ = np"
+          - "Portefeuille de Léa : *12,56 ± 3,54* décès par an"
+        voix_off: "Ce qu'il faut retenir. L'espérance donne la moyenne d'une loi, la variance sa dispersion. La binomiale compte les contrats sinistrés parmi n : espérance n p, variance n p fois un moins p. La Poisson compte des événements rares : espérance et variance égales à lambda. Quand n est grand et p petit, la binomiale ressemble à une Poisson de paramètre n p. Et le portefeuille de Léa compte en moyenne douze virgule cinquante-six décès par an, à plus ou moins trois virgule cinquante-quatre près."
+      - type: cloture
+        texte: "Prochain épisode : *combien coûte un sinistre ?* Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant compter les sinistres. Prochain épisode : combien coûte chacun d'eux ? On passe aux lois continues : exponentielle, normale, et les lois des gros sinistres. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Binomial and Poisson: how many claims next year?"
+    legende: |
+      In 1898, a statistician counted Prussian soldiers killed by a horse's kick, and found that these accidents follow a very precise law. That law, the Poisson distribution, is now used by every insurer to forecast the number of claims. The full answer is in this episode of the Actuarial path: mean and variance, the Bernoulli distribution, the binomial distribution, the Poisson distribution (and the 464 deaths on Belgian roads in 2025), approximating one with the other, and the sixth chapter of our running case, the number of deaths in Léa's portfolio. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer and Léa a fictional client; the death rates in the examples are made up, the real facts are sourced. Got a question? Ask in the comments.
+    hashtags: [actuarial, probability, poisson, insurance]
+    scenes:
+      - type: accroche
+        texte: "How many claims next year? *A distribution*, not a number"
+        voix_off: "How many claims will an insurer have next year? Nobody can give the exact number. But we can say better than a number: the probability of each possible count. Zero, one, two, twelve, twenty claims. That list of probabilities is called a distribution. And one of them was born, in 1898, from soldiers killed by horses."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this second episode of the probability module of the Actuarial path! Thanks for being here. Last time, we computed probabilities of events. Today, we count: how many policies with a claim, how many deaths, how many accidents. These are the two distributions every actuary uses every week."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "Mean and *variance*"
+          - "The *binomial*"
+          - "The *Poisson*"
+          - "The *approximation*"
+          - "The *portfolio*'s deaths"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. Mean and variance. The binomial distribution. The Poisson distribution. Approximating one with the other. Then the sixth chapter of our running case: the number of deaths in Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Mean and variance"
+        voix_off: "Let's start by summing up a distribution in two numbers."
+      - type: formule
+        texte: "The *mean*: the average. The *variance*: the spread"
+        formule:
+          - 'E[X]=\sum_k k\,P(X=k)'
+          - '\mathrm{Var}(X)=E[X^2]-(E[X])^2'
+          - 'E[aX+b]=a\,E[X]+b\qquad \mathrm{Var}(aX+b)=a^2\,\mathrm{Var}(X)'
+        note: "The standard deviation is the square root of the variance: it is in the same unit as X."
+        voix_off: "A discrete random variable, like a number of claims, takes separate values: zero, one, two, and so on. Its distribution gives the probability of each. We sum it up with two numbers. The expected value, or mean, the average weighted by the probabilities: it is what we get on average over many repetitions. And the variance, which measures how far the values stray from that mean. Two useful rules: multiplying X by a multiplies the mean by a, but the variance by a squared; adding a constant does not change the variance."
+      - type: etapes
+        texte: "Does Léa die before 65? A *Bernoulli* variable"
+        etapes:
+          - "X = 1 if yes, 0 if no"
+          - "P(X = 1) = *p = 2.5%* (A2.01)"
+          - "E[X] = p = *0.025*"
+          - "Var(X) = p (1 − p) = *0.0244*"
+        note: "JG's Holding is a fictional insurer, Léa a fictional client. Made-up probability from episode A2.01."
+        voix_off: "The simplest distribution of all: the Bernoulli distribution. It takes only two values, one if the event happens, zero otherwise. Example: does Léa die before sixty-five? In the previous episode, we found a made-up probability of two point five percent. Its mean is p, zero point zero two five. Its variance is p times one minus p, zero point zero two four four. Every insurance policy is, at heart, a Bernoulli variable: a claim or not."
+        verifier:
+          - {expression: "0.025 * 0.975", attendu: 0.0244, libelle: "Bernoulli variance"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The binomial distribution"
+        voix_off: "Let's move from one policy to several."
+      - type: formule
+        texte: "*How many* policies with a claim out of *n*?"
+        formule:
+          - 'P(X=k)=\binom{n}{k}\,p^k\,(1-p)^{n-k}'
+          - 'E[X]=np\qquad \mathrm{Var}(X)=np(1-p)'
+        note: "n independent policies, each with a claim with probability p. “n choose k” counts the ways to pick the k claims."
+        voix_off: "Take n independent policies, each with a claim with the same probability p. The number of policies with a claim follows a binomial distribution. The probability of exactly k is the product of three pieces: p to the power k for the k claims, one minus p to the power n minus k for the others, and the coefficient n choose k, which counts how many ways we can pick the k policies with a claim. The mean is n p, and the variance n p times one minus p: the sum of n independent Bernoulli variables."
+      - type: courbe
+        texte: "*10* policies at *10%*: the binomial distribution"
+        courbe:
+          style: barres
+          points: [[0, 34.87], [1, 38.74], [2, 19.37], [3, 5.74], [4, 1.12]]
+          etiquettes: ["0", "1", "2", "3", "4"]
+          etiquettes_valeurs: ["34.9%", "38.7%", "19.4%", "5.7%", "1.1%"]
+          valeurs: true
+          y_min: 0
+          y_max: 45
+          axe_x: "Number of policies with a claim"
+          axe_y: "Probability (%)"
+        note: "Made-up policies, for the example. Beyond 4 claims: less than 0.2%."
+        voix_off: "An example. Ten policies, each with a ten percent probability of a claim. No claim: zero point nine to the power ten, thirty-four point nine percent. Exactly one claim, the most likely case: thirty-eight point seven percent. Two claims: nineteen point four percent. Then the probability collapses: three claims, five point seven percent; four, one point one percent. On average, n p, one claim. Variance: zero point nine."
+        verifier:
+          - {expression: "100 * 0.9**10", attendu: 34.87, libelle: "P(X = 0)"}
+          - {expression: "100 * 10 * 0.1 * 0.9**9", attendu: 38.74, libelle: "P(X = 1)"}
+          - {expression: "100 * 45 * 0.01 * 0.9**8", attendu: 19.37, libelle: "P(X = 2)"}
+          - {expression: "100 * 120 * 0.001 * 0.9**7", attendu: 5.74, libelle: "P(X = 3)"}
+          - {expression: "100 * 210 * 0.0001 * 0.9**6", attendu: 1.12, libelle: "P(X = 4)"}
+          - {expression: "10 * 0.1 * 0.9", attendu: 0.9, libelle: "Variance"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The Poisson distribution"
+        voix_off: "And when events are rare, but opportunities countless?"
+      - type: formule
+        texte: "The *Poisson* distribution: counting *rare* events"
+        formule:
+          - 'P(N=k)=e^{-\lambda}\,\dfrac{\lambda^k}{k!}'
+          - 'E[N]=\mathrm{Var}(N)=\lambda'
+        note: "λ: average number of events over the period. k! = 1 × 2 × … × k. Formula of Siméon Denis Poisson, 1837."
+        voix_off: "Sometimes we do not count policies with a claim, but events: accidents, storms, claims, which can happen several times, each rare and independent of the others. Their number over a period often follows a Poisson distribution. A single parameter, lambda: the average number of events. The probability of observing k is e to the power minus lambda, times lambda to the power k, divided by k factorial. And a remarkable property: the mean and the variance are equal, both to lambda."
+      - type: courbe
+        texte: "*1898*: Prussian soldiers killed by a *horse*"
+        courbe:
+          style: barres
+          points: [[0, 109], [1, 65], [2, 22], [3, 3], [4, 1]]
+          etiquettes: ["0", "1", "2", "3", "4"]
+          valeurs: true
+          y_min: 0
+          y_max: 120
+          axe_x: "Deaths in one army corps, in one year"
+          axe_y: "Number of corps-years"
+        note: "Bortkiewicz, 1898: 10 Prussian cavalry corps over 20 years, 122 deaths. Poisson expected: 108.7; 66.3; 20.2; 4.1; 0.6."
+        voix_off: "The most famous historical fact in statistics. In 1898, Ladislaus von Bortkiewicz studied ten corps of the Prussian army over twenty years: two hundred corps-years. He counted the soldiers killed by a horse's kick: one hundred and twenty-two, that is zero point six one per corps per year. One hundred and nine times, no death in the year. Sixty-five times, one death. Twenty-two times, two. Three times, three. Once, four. And the Poisson distribution with mean zero point six one predicts one hundred and eight point seven, sixty-six point three, twenty point two, four point one and zero point six. Almost exactly what was observed."
+        verifier:
+          - {expression: "122 / 200", attendu: 0.61, libelle: "Mean per corps-year"}
+          - {expression: "200 * exp(-0.61)", attendu: 108.7, libelle: "Expected, 0 deaths"}
+          - {expression: "200 * exp(-0.61) * 0.61", attendu: 66.3, libelle: "Expected, 1 death"}
+          - {expression: "200 * exp(-0.61) * 0.61**2 / 2", attendu: 20.2, libelle: "Expected, 2 deaths"}
+          - {expression: "200 * exp(-0.61) * 0.61**3 / 6", attendu: 4.1, libelle: "Expected, 3 deaths"}
+          - {expression: "200 * exp(-0.61) * 0.61**4 / 24", attendu: 0.6, libelle: "Expected, 4 deaths"}
+      - type: etapes
+        texte: "*464* deaths on Belgian roads in 2025: a day *without* a death?"
+        etapes:
+          - "Per day: λ = 464 ÷ 365 ≈ *1.27*"
+          - "No death: e^(−1.27) ≈ *28%* of days"
+          - "Two deaths or more: ≈ *36%* of days"
+        note: "Source: Statbel, “464 deaths on Belgian roads in 2025” (deaths within 30 days). Illustrative Poisson model."
+        voix_off: "A real fact, closer to home. According to Statbel, four hundred and sixty-four people died on Belgian roads in 2025. That is on average one point two seven a day. If these deaths followed a Poisson distribution, about twenty-eight percent of days would have none, and thirty-six percent would have two or more. The same average hides a lot of irregularity from one day to the next: that is exactly what the distribution describes."
+        verifier:
+          - {expression: "464 / 365", attendu: 1.27, libelle: "Deaths per day"}
+          - {expression: "100 * exp(-464 / 365)", attendu: 28, tolerance: 0.5, libelle: "Days without a death, %"}
+          - {expression: "100 * (1 - exp(-464 / 365) * (1 + 464 / 365))", attendu: 36, tolerance: 0.5, libelle: "Two deaths or more, %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "From the binomial to Poisson"
+        voix_off: "The two distributions are in fact cousins."
+      - type: formule
+        texte: "*n* large, *p* small: binomial *≈* Poisson with λ = n p"
+        formule:
+          - '\binom{n}{k}p^k(1-p)^{n-k}\approx e^{-np}\,\dfrac{(np)^k}{k!}'
+          - 'n=1{,}000,\ p=0.002:\quad P(X=0)=0.1351\ \ \text{vs}\ \ e^{-2}=0.1353'
+        note: "Rule of thumb: the approximation is good for n ≥ 50 and n p ≤ 5, roughly."
+        voix_off: "When the number of policies n is large and the probability p small, the binomial looks very much like a Poisson distribution with parameter lambda equal to n p. Example: one thousand policies at zero point two percent. Probability of no claim, by the binomial: zero point nine nine eight to the power one thousand, zero point one three five one. By the Poisson with parameter two: e to the power minus two, zero point one three five three. Almost identical, and much simpler to compute. That is why non-life actuaries almost always start from a Poisson."
+        verifier:
+          - {expression: "0.998**1000", attendu: 0.1351, libelle: "Binomial"}
+          - {expression: "exp(-2)", attendu: 0.1353, libelle: "Poisson"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Our running case: the deaths in Léa's portfolio"
+        voix_off: "Let's go back to JG's Holding's portfolio."
+      - type: courbe
+        texte: "*10,000* policyholders: how many *deaths* this year?"
+        courbe:
+          style: barres
+          points: [[4, 0.36], [5, 0.91], [6, 1.91], [7, 3.43], [8, 5.39], [9, 7.52], [10, 9.45], [11, 10.79], [12, 11.29], [13, 10.91], [14, 9.79], [15, 8.2], [16, 6.43], [17, 4.75], [18, 3.32], [19, 2.19], [20, 1.38], [21, 0.82]]
+          etiquettes: ["4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"]
+          mis_en_avant: [16, 17]
+          y_min: 0
+          y_max: 12
+          axe_x: "Number of deaths in the year"
+          axe_y: "Probability (%)"
+        note: "JG's Holding and Léa are fictional. Made-up death rate from episode A2.01: 0.1256% a year. Poisson with mean 12.56."
+        voix_off: "JG's Holding's life portfolio has ten thousand policyholders aged forty, including Léa. In the previous episode, we found a made-up average death rate of zero point one two five six percent a year. The number of deaths in the year follows a binomial with parameters ten thousand and zero point zero zero one two five six, which we approximate with a Poisson of mean twelve point five six. Here it is. The most likely number is twelve, but every value between eight and seventeen remains plausible. And the right tail, twenty deaths or more, has a probability of about three percent."
+        verifier:
+          - {expression: "10000 * 0.001256", attendu: 12.56, libelle: "λ"}
+          - {expression: "100 * exp(-12.56) * 12.56**12 / factorial(12)", attendu: 11.29, libelle: "P(N = 12), %"}
+      - type: etapes
+        texte: "What the insurer must *plan for*"
+        etapes:
+          - "On average: *12.56* deaths"
+          - "Standard deviation: √12.56 ≈ *3.54* deaths"
+          - "20 deaths or more: ≈ *3.2%*, one year in 31"
+          - "*Reserves* are needed for the bad years"
+        voix_off: "What should JG's Holding take from this? On average, twelve point five six deaths a year, with a standard deviation of three point five four deaths, the square root of lambda. About one year in thirty-one, there will be twenty deaths or more: sixty percent above the average. The insurer cannot just plan for the average: it must also keep reserves for the bad years. Measuring that risk will be the subject of the episodes on pooling and aggregate loss."
+        verifier:
+          - {expression: "sqrt(12.56)", attendu: 3.54, libelle: "Standard deviation"}
+          - {expression: "100 * (1 - sum(exp(-12.56) * 12.56**k / factorial(k) for k in range(20)))", attendu: 3.2, tolerance: 0.05, libelle: "P(N ≥ 20), %"}
+          - {expression: "1 / (1 - sum(exp(-12.56) * 12.56**k / factorial(k) for k in range(20)))", attendu: 31, tolerance: 0.5, libelle: "One year in…"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "N is *Poisson with 0.5*; X is *binomial (8; 0.1)*. Compute:"
+        pause: 20
+        questions:
+          - "P(N = 0) and P(N = 1)"
+          - "P(N ≥ 2)"
+          - "P(X = 0) and P(X ≥ 1)"
+          - "P(X = 1)"
+        voix_off: "Pause the video. N follows a Poisson distribution with parameter zero point five, and X a binomial distribution with parameters eight and zero point one. Compute the probability that N equals zero, then one, then the probability that N is at least two. Then, the probability that X equals zero, at least one, and exactly one."
+      - type: correction
+        etapes:
+          - "P(N = 0) = e^(−0.5) ≈ *0.6065*; P(N = 1) ≈ *0.3033*"
+          - "P(N ≥ 2) = 1 − 0.6065 − 0.3033 ≈ *0.0902*"
+          - "P(X = 0) = 0.9⁸ ≈ *0.4305*; P(X ≥ 1) ≈ *0.5695*"
+          - "P(X = 1) = 8 × 0.1 × 0.9⁷ ≈ *0.3826*"
+        voix_off: "Solution. P of N equals zero: e to the power minus zero point five, about zero point six zero six five. P of N equals one: zero point five times that number, zero point three zero three three. So at least two: one minus both, zero point zero nine zero two. For the binomial, no claim: zero point nine to the power eight, zero point four three zero five; so at least one, zero point five six nine five. And exactly one: eight times zero point one times zero point nine to the power seven, zero point three eight two six."
+        verifier:
+          - {expression: "exp(-0.5)", attendu: 0.6065, libelle: "P(N = 0)"}
+          - {expression: "0.5 * exp(-0.5)", attendu: 0.3033, libelle: "P(N = 1)"}
+          - {expression: "1 - 1.5 * exp(-0.5)", attendu: 0.0902, libelle: "P(N ≥ 2)"}
+          - {expression: "0.9**8", attendu: 0.4305, libelle: "P(X = 0)"}
+          - {expression: "1 - 0.9**8", attendu: 0.5695, libelle: "P(X ≥ 1)"}
+          - {expression: "8 * 0.1 * 0.9**7", attendu: 0.3826, libelle: "P(X = 1)"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Mean: the *average*; variance: the *spread*"
+          - "Binomial: *E = np*, Var = np(1 − p)"
+          - "Poisson: *E = Var = λ*"
+          - "n large, p small: binomial *≈* Poisson with λ = np"
+          - "Léa's portfolio: *12.56 ± 3.54* deaths a year"
+        voix_off: "What to remember. The mean gives the average of a distribution, the variance its spread. The binomial counts policies with a claim out of n: mean n p, variance n p times one minus p. The Poisson counts rare events: mean and variance both equal to lambda. When n is large and p small, the binomial looks like a Poisson with parameter n p. And Léa's portfolio has on average twelve point five six deaths a year, give or take three point five four."
+      - type: cloture
+        texte: "Next episode: *how much does a claim cost?* A question? *In the comments*"
+        voix_off: "You can now count claims. Next episode: how much does each one cost? We move to continuous distributions: exponential, normal, and the distributions of large claims. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
