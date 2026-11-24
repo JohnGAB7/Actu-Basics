@@ -1,0 +1,490 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2/s01 « Probabilités conditionnelles et formule de Bayes »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2/s01.yaml (calcul « À la main » : 0,2 / 0,15 / 0,05, puis 10 contrats à 5 %).
+# Les exemples utilisent le portefeuille vie fictif de JG's Holding (fumeurs, non-fumeurs) ; l'exercice final utilise
+# 0,3 / 0,1 / 0,02, puis 20 contrats à 2 %, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : premier pas vers la mortalité, la probabilité que Léa (non-fumeuse)
+# atteigne 65 ans avec un taux de décès annuel fictif et constant ; les vraies tables arrivent en A3.
+# Faits réels : chiffres d'origine. Taux de décès par classe : fictifs, pour l'exemple.
+id: 2026-11-act-a2-s01-bayes
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2 · Probabilités conditionnelles et formule de Bayes"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer une probabilité conditionnelle P(A | B) et une intersection"
+      - "Reconnaître deux événements indépendants"
+      - "Recomposer un taux global avec la formule des probabilités totales"
+      - "Remonter d'un événement observé vers sa cause probable avec la formule de Bayes"
+      - "Calculer la probabilité d'au moins un événement parmi n contrats indépendants"
+    en:
+      - "Compute a conditional probability P(A | B) and an intersection"
+      - "Recognise two independent events"
+      - "Rebuild an overall rate with the law of total probability"
+      - "Go back from an observed event to its likely cause with Bayes' theorem"
+      - "Compute the probability of at least one event among n independent policies"
+  prerequis:
+    fr: ["Fractions et pourcentages", "Puissances"]
+    en: ["Fractions and percentages", "Powers"]
+  hypotheses:
+    fr: "Portefeuille fictif de JG's Holding ; part réelle de fumeurs quotidiens en Belgique (12,8 %), taux de décès par classe fictifs (0,3 % et 0,1 % par an) ; contrats indépendants ; taux de décès de Léa fictif et constant"
+    en: "Made-up JG's Holding portfolio; real share of daily smokers in Belgium (12.8%), made-up death rates by class (0.3% and 0.1% a year); independent policies; Léa's death rate made up and constant"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Sciensano, Enquête de santé 2023-2024, « Consommation de tabac » (infographie)", en: "Sciensano, Health Interview Survey 2023-2024, “Tobacco use” (infographic)"}
+    court: "Sciensano"
+    url: "https://www.sciensano.be/sites/default/files/infographic_ta_fr.pdf"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Loterie Nationale (Belgique), « Quelles sont mes chances de gain à EuroMillions ? »", en: "Belgian National Lottery, “What are my chances of winning EuroMillions?”"}
+    court: "loterie-nationale.be"
+    url: "https://www.loterie-nationale.be/info/questions-frequemment-posees/nos-jeux/euromillions/jackpot-gains-et-resultats/euromillions-chances-de-gain"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Probabilités conditionnelles et Bayes : un décès vient d'être déclaré, est-ce un fumeur ?"
+    legende: |
+      En Belgique, 12,8 % des adultes fument chaque jour (Sciensano, 2023-2024). Pourtant, chez un assureur vie, un décès sur trois peut concerner un fumeur. Comment est-ce possible ? Toute la réponse est dans cet épisode du parcours Actuariat : les probabilités conditionnelles, l'indépendance, la formule des probabilités totales, la formule de Bayes, la probabilité d'« au moins un » (et vos chances à l'EuroMillions), et le cinquième chapitre du fil rouge, la probabilité que Léa atteigne 65 ans. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les taux de décès des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil médical ni de jeu. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, probabilites, bayes, assurance]
+    scenes:
+      - type: accroche
+        texte: "*12,8 %* de fumeurs… mais *1 décès sur 3* ?"
+        note: "Sciensano, enquête de santé 2023-2024 : 12,8 % de fumeurs quotidiens en Belgique. Taux de décès de l'exemple : fictifs."
+        voix_off: "En Belgique, selon Sciensano, douze virgule huit pour cent des adultes fument chaque jour. Imaginons un assureur vie dont les clients ressemblent à la population belge. Un décès vient d'être déclaré. Quelle est la probabilité que ce soit un fumeur ? Douze virgule huit pour cent ? Non : dans notre exemple, ce sera près d'un sur trois. À la fin de cette vidéo, vous saurez pourquoi, et vous saurez le calculer."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans le module probabilités du parcours Actuariat ! Merci d'être là. Jusqu'ici, tous nos paiements étaient certains. Mais l'assureur ne sait jamais à l'avance qui aura un accident, qui tombera malade, ni qui décédera. Aujourd'hui, on apprend à raisonner avec une information partielle : c'est l'outil de base de toute tarification."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Probabilité *conditionnelle*"
+          - "L'*indépendance*"
+          - "Probabilités *totales*"
+          - "La formule de *Bayes*"
+          - "Au moins *un*"
+          - "Léa à *65 ans*"
+        voix_off: "Voici le programme. La probabilité conditionnelle. L'indépendance. La formule des probabilités totales. La formule de Bayes. La probabilité d'au moins un événement. Puis le cinquième chapitre du fil rouge : Léa atteindra-t-elle soixante-cinq ans ? Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "La probabilité conditionnelle"
+        voix_off: "Commençons par une information qui change tout."
+      - type: texte
+        texte: "*P(A | B)* : la probabilité de A, *sachant* que B est arrivé"
+        voix_off: "Une probabilité conditionnelle, c'est la probabilité d'un événement A quand on sait déjà qu'un autre événement B est arrivé. On l'écrit P de A sachant B, avec une barre verticale. Savoir que B est arrivé, c'est restreindre le monde des possibles : on ne regarde plus toute la population, seulement ceux pour qui B est vrai. Et dans ce monde plus petit, la proportion de A peut être très différente."
+      - type: etapes
+        texte: "Le portefeuille vie de *JG's Holding* : *10 000* assurés de 40 ans"
+        etapes:
+          - "Fumeurs : *12,8 %*, soit *1 280* assurés"
+          - "Non-fumeurs : *8 720* assurés"
+          - "Décès dans l'année, fumeurs : *0,3 %*"
+          - "Décès dans l'année, non-fumeurs : *0,1 %*"
+        note: "JG's Holding est un assureur fictif. Part de fumeurs : réelle (Sciensano). Taux de décès : fictifs, pour l'exemple."
+        voix_off: "Prenons le portefeuille vie de JG's Holding, notre assureur fictif : dix mille assurés de quarante ans. On lui donne la même part de fumeurs que la Belgique : douze virgule huit pour cent, soit mille deux cent quatre-vingts assurés. Les autres, huit mille sept cent vingt, ne fument pas. Pour l'exemple, on fixe des taux de décès fictifs : sur une année, zéro virgule trois pour cent chez les fumeurs, et zéro virgule un pour cent chez les non-fumeurs. Ce sont des probabilités conditionnelles : la probabilité de décès, sachant que l'assuré fume, ou ne fume pas."
+        verifier:
+          - {expression: "10000 * 0.128", attendu: 1280, libelle: "Fumeurs"}
+          - {expression: "10000 - 1280", attendu: 8720, libelle: "Non-fumeurs"}
+      - type: formule
+        texte: "Conditionnelle et *intersection*"
+        formule:
+          - 'P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}'
+          - 'P(A\cap B)=P(A\mid B)\,P(B)'
+          - 'P(D\cap F)=0{,}003\times 0{,}128=0{,}000384'
+        note: "D : l'assuré décède dans l'année ; F : l'assuré fume ; ∩ : « et »."
+        voix_off: "En formule, P de A sachant B, c'est la probabilité que A et B arrivent ensemble, divisée par la probabilité de B. On la retourne souvent : la probabilité de A et B, c'est P de A sachant B, fois P de B. Notons D le décès dans l'année et F le fait de fumer. La probabilité qu'un assuré pris au hasard soit fumeur et décède dans l'année vaut zéro virgule zéro zéro trois fois zéro virgule cent vingt-huit : zéro virgule zéro zéro zéro trois huit quatre. Sur dix mille assurés, environ trois virgule huit décès de fumeurs par an."
+        verifier:
+          - {expression: "0.003 * 0.128", attendu: 0.000384, libelle: "P(D et F)"}
+          - {expression: "10000 * 0.003 * 0.128", attendu: 3.84, libelle: "Décès de fumeurs attendus"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "L'indépendance"
+        voix_off: "Et si l'information ne changeait rien ?"
+      - type: formule
+        texte: "Indépendants : savoir B *ne change rien* à A"
+        formule:
+          - 'A\perp B\Leftrightarrow P(A\mid B)=P(A)'
+          - 'A\perp B\Leftrightarrow P(A\cap B)=P(A)\,P(B)'
+        note: "Exemple d'indépendance : deux lancers de dé, ou deux assurés sans lien entre eux."
+        voix_off: "Deux événements sont indépendants si savoir que l'un est arrivé ne change pas la probabilité de l'autre. Dans ce cas, la probabilité qu'ils arrivent ensemble est simplement le produit de leurs probabilités. Deux lancers de dé sont indépendants. Deux assurés qui ne se connaissent pas, qui ne vivent pas au même endroit, sont en général considérés comme indépendants. Cette hypothèse sera essentielle dans un instant."
+      - type: etapes
+        texte: "Fumer et décéder : *pas* indépendants"
+        etapes:
+          - "P(D | F) = *0,3 %*"
+          - "P(D | non F) = *0,1 %*"
+          - "L'information « fume » *triple* le risque"
+          - "C'est pourquoi l'assureur pose la *question*"
+        voix_off: "Dans notre portefeuille, fumer et décéder dans l'année ne sont pas indépendants. Sachant que l'assuré fume, la probabilité de décès vaut zéro virgule trois pour cent ; sachant qu'il ne fume pas, zéro virgule un pour cent. Dans notre exemple, l'information triple le risque. C'est exactement pour cela qu'un assureur vie demande, à la souscription, si vous fumez : c'est une information qui change la probabilité, donc le prix."
+        verifier:
+          - {expression: "0.003 / 0.001", attendu: 3, libelle: "Rapport des risques"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La formule des probabilités totales"
+        voix_off: "Recomposons maintenant le taux du portefeuille entier."
+      - type: formule
+        texte: "Le taux global = la *moyenne pondérée* des classes"
+        formule:
+          - 'P(A)=\sum_j P(A\mid B_j)\,P(B_j)'
+          - 'P(D)=0{,}003\times 0{,}128+0{,}001\times 0{,}872=0{,}001256'
+        note: "Les classes Bⱼ forment une partition : chaque assuré est dans une et une seule classe."
+        voix_off: "Un assureur découpe son portefeuille en classes de risque : fumeurs et non-fumeurs, par exemple. Chaque assuré est dans une classe et une seule : on dit qu'elles forment une partition. La probabilité globale d'un événement est alors la moyenne des probabilités de chaque classe, pondérée par la taille des classes. C'est la formule des probabilités totales. Ici : zéro virgule trois pour cent fois douze virgule huit pour cent, plus zéro virgule un pour cent fois quatre-vingt-sept virgule deux pour cent. Le taux de décès du portefeuille vaut zéro virgule douze cinquante-six pour cent : environ douze à treize décès par an sur dix mille assurés."
+        verifier:
+          - {expression: "0.003 * 0.128 + 0.001 * 0.872", attendu: 0.001256, libelle: "P(D)"}
+          - {expression: "10000 * (0.003 * 0.128 + 0.001 * 0.872)", attendu: 12.56, libelle: "Décès attendus"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "La formule de Bayes"
+        voix_off: "Et maintenant, remontons le temps : de l'effet vers la cause."
+      - type: formule
+        texte: "Bayes : *de l'événement observé* vers *la classe probable*"
+        formule:
+          - 'P(B_j\mid A)=\dfrac{P(A\mid B_j)\,P(B_j)}{P(A)}'
+          - 'P(F\mid D)=\dfrac{0{,}000384}{0{,}001256}\approx 30{,}6\ \%'
+        note: "Formule de Thomas Bayes, publiée en 1763. On inverse le sens du conditionnement."
+        voix_off: "Un décès vient d'être déclaré. Quelle est la probabilité que l'assuré ait été fumeur ? On cherche cette fois P de F sachant D : on inverse le sens du conditionnement. La formule de Bayes répond : c'est la part des décès de fumeurs dans l'ensemble des décès. Zéro virgule zéro zéro zéro trois huit quatre, divisé par zéro virgule zéro zéro un deux cinq six : trente virgule six pour cent. Les fumeurs ne sont que douze virgule huit pour cent des assurés, mais ils représentent près d'un décès sur trois."
+        verifier:
+          - {expression: "100 * 0.000384 / 0.001256", attendu: 30.6, libelle: "P(F | D), en %"}
+      - type: courbe
+        texte: "Parmi les *assurés*, puis parmi les *décès*"
+        courbe:
+          style: barres
+          points: [[0, 12.8], [1, 30.6]]
+          etiquettes: ["Fumeurs parmi les assurés", "Fumeurs parmi les décès"]
+          etiquettes_valeurs: ["12,8 %", "30,6 %"]
+          valeurs: true
+          y_min: 0
+          y_max: 40
+          axe_y: "Part des fumeurs (%)"
+        note: "Portefeuille fictif de JG's Holding, taux de décès fictifs de 0,3 % et 0,1 %."
+        voix_off: "Voici l'effet en image. À gauche, la part des fumeurs parmi tous les assurés : douze virgule huit pour cent. À droite, leur part parmi les décès : trente virgule six pour cent. Observer un décès est une information : elle déplace la probabilité vers la classe la plus risquée. C'est le raisonnement que fait un actuaire quand il cherche d'où viennent ses sinistres."
+      - type: texte
+        texte: "Le piège : confondre *P(D | F)* et *P(F | D)*"
+        voix_off: "Attention au piège le plus courant en probabilités. P de D sachant F, la probabilité de décéder quand on fume, vaut zéro virgule trois pour cent : c'est petit. P de F sachant D, la probabilité d'avoir fumé quand on est décédé, vaut trente virgule six pour cent : c'est cent fois plus grand. Ce ne sont pas les mêmes questions, et la confusion entre les deux a déjà trompé des médecins, des juges et des journalistes. Avant chaque calcul, demandez-vous : sachant quoi ?"
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "La probabilité d'au moins un"
+        voix_off: "Passons d'un assuré à un portefeuille entier."
+      - type: formule
+        texte: "*Au moins un* : passer par *aucun*"
+        formule:
+          - 'P(\text{aucun})=(1-p)^n'
+          - 'P(\text{au moins un})=1-(1-p)^n'
+        note: "Valable pour n événements indépendants de même probabilité p."
+        voix_off: "Combien de chances qu'au moins un assuré décède cette année ? Compter tous les cas, un décès, deux décès, trois décès, serait long. L'astuce : passer par le contraire. Avec n assurés indépendants, chacun survit avec la probabilité un moins p. Par indépendance, la probabilité qu'aucun ne décède est un moins p, puissance n. Et la probabilité d'au moins un décès, c'est tout le reste : un moins ce nombre."
+      - type: animation
+        texte: "*1 000* assurés : au moins *un* décès dans l'année ?"
+        animation: {modele: complement, valeur: 0.2846, phases: [gauche, droite, total]}
+        etapes:
+          - "Aucun décès : (1 − 0,001256)¹⁰⁰⁰ ≈ *28,5 %*"
+          - "Au moins un décès : *71,5 %*"
+          - "Ensemble : *100 %*"
+        voix_off: "Prenons mille assurés du portefeuille, chacun avec une probabilité de décès de zéro virgule douze cinquante-six pour cent. La probabilité qu'aucun ne décède dans l'année : un moins zéro virgule zéro zéro un deux cinq six, puissance mille, environ vingt-huit virgule cinq pour cent. Donc, au moins un décès : soixante et onze virgule cinq pour cent. Pour chaque assuré, le décès est très rare. Pour le portefeuille, c'est presque sûr. C'est pour cela que l'assureur doit toujours être prêt à payer."
+        verifier:
+          - {expression: "(1 - 0.001256)**1000", attendu: 0.2846, libelle: "Aucun décès"}
+          - {expression: "1 - (1 - 0.001256)**1000", attendu: 0.7154, libelle: "Au moins un décès"}
+      - type: etapes
+        texte: "EuroMillions : jouer *deux fois par semaine* pendant *50 ans*"
+        etapes:
+          - "Une grille : *1 chance sur 139 838 160*"
+          - "5 200 tirages : 1 − (1 − p)⁵²⁰⁰ ≈ *0,0037 %*"
+          - "Soit environ *1 chance sur 26 892*"
+          - "Pour *13 000 €* de mises"
+        note: "Source : Loterie Nationale, « Quelles sont mes chances de gain à EuroMillions ? ». Mise de 2,50 € par grille."
+        voix_off: "Un fait réel, pour mesurer ce que rare veut dire. Selon la Loterie Nationale, une grille d'EuroMillions a une chance sur cent trente-neuf millions huit cent trente-huit mille cent soixante de gagner le jackpot. Jouez une grille deux fois par semaine pendant cinquante ans : cinq mille deux cents tirages. La probabilité de gagner au moins une fois : un moins un moins p, puissance cinq mille deux cents, environ zéro virgule zéro zéro trois sept pour cent. Une chance sur vingt-six mille huit cent quatre-vingt-douze, pour treize mille euros de mises. Ici, la même formule montre l'inverse : même répété, un événement très rare reste très rare."
+        verifier:
+          - {expression: "100 * (1 - (1 - 1/139838160)**5200)", attendu: 0.0037, libelle: "Au moins un jackpot, en %"}
+          - {expression: "1 / (1 - (1 - 1/139838160)**5200)", attendu: 26892, tolerance: 1, libelle: "Une chance sur…"}
+          - {expression: "5200 * 2.5", attendu: 13000, libelle: "Mises"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Le fil rouge : Léa atteindra-t-elle 65 ans ?"
+        voix_off: "Retrouvons Léa, pour la première fois face au hasard."
+      - type: etapes
+        texte: "Léa, *40 ans*, *non-fumeuse* : survivre *25 ans*"
+        etapes:
+          - "Taux de décès fictif et constant : *0,1 %* par an"
+          - "Survivre un an : *99,9 %*"
+          - "Années indépendantes : 0,999²⁵ ≈ *97,5 %*"
+          - "Décéder avant 65 ans : *2,5 %*"
+        note: "JG's Holding et Léa sont fictifs. Taux de décès fictif et constant : en réalité, il augmente avec l'âge (module A3)."
+        voix_off: "Léa a quarante ans, et elle a déclaré qu'elle ne fume pas. Jusqu'ici, on a supposé qu'elle toucherait son capital à soixante-cinq ans, c'est-à-dire qu'elle serait en vie. Mais ce n'est pas certain. Prenons un taux de décès fictif et constant de zéro virgule un pour cent par an. Survivre une année : quatre-vingt-dix-neuf virgule neuf pour cent. Survivre vingt-cinq années de suite, en supposant chaque année indépendante : zéro virgule neuf neuf neuf, puissance vingt-cinq, environ quatre-vingt-dix-sept virgule cinq pour cent. Il y a donc environ deux virgule cinq pour cent de chances qu'elle décède avant soixante-cinq ans."
+        verifier:
+          - {expression: "100 * 0.999**25", attendu: 97.5, libelle: "Survie 25 ans, en %"}
+          - {expression: "100 * (1 - 0.999**25)", attendu: 2.5, libelle: "Décès avant 65 ans, en %"}
+      - type: texte
+        texte: "Et si Léa décède avant 65 ans ? Le contrat doit *le prévoir*"
+        voix_off: "Que devient alors le capital de Léa ? Le contrat doit le prévoir : par exemple, verser la valeur du contrat à ses bénéficiaires. Pour fixer le prix de cette garantie, l'assureur a besoin de la probabilité de décès à chaque âge. Et un taux constant ne suffit pas : en réalité, le risque de décès augmente avec l'âge. C'est l'objet des tables de mortalité, dans le module vie. D'ici là, les prochains épisodes vous donnent les lois de probabilité dont vous aurez besoin."
+      # ---------------------------------------------------------------- 7
+      - type: titre
+        numero: 7
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Classe B₁ : *30 %* des assurés, sinistre *10 %*. Classe B₂ : sinistre *2 %*. Calculez :"
+        pause: 20
+        questions:
+          - "Le taux global de sinistre P(S)"
+          - "P(B₁ | S) : la part de B₁ parmi les sinistres"
+          - "Avec 20 contrats indépendants à 2 % : P(aucun sinistre)"
+          - "P(au moins un sinistre)"
+        voix_off: "Mettez la vidéo en pause. Un portefeuille compte deux classes : la classe B un, trente pour cent des assurés, a une probabilité de sinistre de dix pour cent ; la classe B deux, de deux pour cent. Calculez le taux global de sinistre, puis la probabilité qu'un sinistre observé vienne de la classe B un. Enfin, avec vingt contrats indépendants à deux pour cent, la probabilité d'aucun sinistre, puis d'au moins un."
+      - type: correction
+        etapes:
+          - "P(S) = 0,3 × 0,1 + 0,7 × 0,02 = *0,044*"
+          - "P(B₁ | S) = 0,03 ÷ 0,044 ≈ *0,6818*"
+          - "0,98²⁰ ≈ *0,6676*"
+          - "1 − 0,6676 ≈ *0,3324*"
+        voix_off: "Correction. Le taux global, par les probabilités totales : zéro virgule trois fois zéro virgule un, plus zéro virgule sept fois zéro virgule zéro deux, soit zéro virgule zéro quarante-quatre. Par Bayes, la part de B un parmi les sinistres : zéro virgule zéro trois divisé par zéro virgule zéro quarante-quatre, environ soixante-huit pour cent, alors que B un ne représente que trente pour cent des assurés. Aucun sinistre sur vingt contrats : zéro virgule neuf huit puissance vingt, environ zéro virgule six six sept six. Et au moins un : zéro virgule trois trois deux quatre."
+        verifier:
+          - {expression: "0.3 * 0.1 + 0.7 * 0.02", attendu: 0.044, libelle: "P(S)"}
+          - {expression: "0.03 / 0.044", attendu: 0.6818, libelle: "P(B1 | S)"}
+          - {expression: "0.98**20", attendu: 0.6676, libelle: "Aucun sinistre"}
+          - {expression: "1 - 0.98**20", attendu: 0.3324, libelle: "Au moins un"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "*P(A | B)* = P(A ∩ B) ÷ P(B)"
+          - "Indépendants : *P(A ∩ B) = P(A) P(B)*"
+          - "Probabilités totales : la *moyenne pondérée* des classes"
+          - "Bayes : de l'*effet* vers la *cause* ; P(D | F) ≠ P(F | D)"
+          - "Au moins un : *1 − (1 − p)ⁿ*"
+        voix_off: "Ce qu'il faut retenir. Une probabilité conditionnelle, c'est l'intersection divisée par la probabilité de ce qu'on sait. Deux événements sont indépendants si l'intersection est le produit. Les probabilités totales recomposent le taux global comme une moyenne pondérée des classes. Bayes remonte de l'effet observé vers la cause probable, et P de D sachant F n'est pas P de F sachant D. Enfin, la probabilité d'au moins un se calcule en passant par aucun."
+      - type: cloture
+        texte: "Prochain épisode : *combien de sinistres cette année ?* Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant raisonner avec une information partielle. Prochain épisode : combien de sinistres l'assureur doit-il attendre cette année ? On découvre la loi binomiale et la loi de Poisson. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Conditional probability and Bayes: a death has just been reported, was it a smoker?"
+    legende: |
+      In Belgium, 12.8% of adults smoke every day (Sciensano, 2023-2024). Yet at a life insurer, one death in three can involve a smoker. How is that possible? The full answer is in this episode of the Actuarial path: conditional probability, independence, the law of total probability, Bayes' theorem, the probability of “at least one” (and your chances at EuroMillions), and the fifth chapter of our running case, the probability that Léa reaches 65. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer and Léa a fictional client; the death rates in the examples are made up, the real facts are sourced. No medical or gambling advice. Got a question? Ask in the comments.
+    hashtags: [actuarial, probability, bayes, insurance]
+    scenes:
+      - type: accroche
+        texte: "*12.8%* smokers… but *1 death in 3*?"
+        note: "Sciensano, 2023-2024 health survey: 12.8% daily smokers in Belgium. Death rates in the example: made up."
+        voix_off: "In Belgium, according to Sciensano, twelve point eight percent of adults smoke every day. Imagine a life insurer whose clients look like the Belgian population. A death has just been reported. What is the probability that it was a smoker? Twelve point eight percent? No: in our example, it will be almost one in three. By the end of this video, you will know why, and you will be able to compute it."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to the probability module of the Actuarial path! Thanks for being here. Until now, all our payments were certain. But the insurer never knows in advance who will have an accident, who will fall ill, or who will die. Today, we learn to reason with partial information: it is the basic tool of all pricing."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "*Conditional* probability"
+          - "*Independence*"
+          - "*Total* probability"
+          - "*Bayes'* theorem"
+          - "At least *one*"
+          - "Léa at *65*"
+        voix_off: "Here is the plan. Conditional probability. Independence. The law of total probability. Bayes' theorem. The probability of at least one event. Then the fifth chapter of our running case: will Léa reach sixty-five? And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Conditional probability"
+        voix_off: "Let's start with a piece of information that changes everything."
+      - type: texte
+        texte: "*P(A | B)*: the probability of A, *given* that B happened"
+        voix_off: "A conditional probability is the probability of an event A when we already know that another event B has happened. We write P of A given B, with a vertical bar. Knowing that B happened narrows the world of possibilities: we no longer look at the whole population, only at those for whom B is true. And in that smaller world, the share of A can be very different."
+      - type: etapes
+        texte: "*JG's Holding*'s life portfolio: *10,000* policyholders aged 40"
+        etapes:
+          - "Smokers: *12.8%*, that is *1,280* policyholders"
+          - "Non-smokers: *8,720* policyholders"
+          - "Death within the year, smokers: *0.3%*"
+          - "Death within the year, non-smokers: *0.1%*"
+        note: "JG's Holding is a fictional insurer. Share of smokers: real (Sciensano). Death rates: made up, for the example."
+        voix_off: "Take JG's Holding's life portfolio, our fictional insurer: ten thousand policyholders aged forty. We give it the same share of smokers as Belgium: twelve point eight percent, that is one thousand two hundred and eighty policyholders. The other eight thousand seven hundred and twenty do not smoke. For the example, we set made-up death rates: over one year, zero point three percent among smokers, and zero point one percent among non-smokers. These are conditional probabilities: the probability of death, given that the policyholder smokes, or does not."
+        verifier:
+          - {expression: "10000 * 0.128", attendu: 1280, libelle: "Smokers"}
+          - {expression: "10000 - 1280", attendu: 8720, libelle: "Non-smokers"}
+      - type: formule
+        texte: "Conditional and *intersection*"
+        formule:
+          - 'P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}'
+          - 'P(A\cap B)=P(A\mid B)\,P(B)'
+          - 'P(D\cap S)=0.003\times 0.128=0.000384'
+        note: "D: the policyholder dies within the year; S: the policyholder smokes; ∩: “and”."
+        voix_off: "As a formula, P of A given B is the probability that A and B happen together, divided by the probability of B. We often turn it around: the probability of A and B is P of A given B, times P of B. Write D for death within the year and S for smoking. The probability that a policyholder picked at random smokes and dies within the year is zero point zero zero three times zero point one two eight: zero point zero zero zero three eight four. Out of ten thousand policyholders, about three point eight deaths of smokers a year."
+        verifier:
+          - {expression: "0.003 * 0.128", attendu: 0.000384, libelle: "P(D and S)"}
+          - {expression: "10000 * 0.003 * 0.128", attendu: 3.84, libelle: "Expected smoker deaths"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Independence"
+        voix_off: "What if the information changed nothing?"
+      - type: formule
+        texte: "Independent: knowing B *changes nothing* about A"
+        formule:
+          - 'A\perp B\Leftrightarrow P(A\mid B)=P(A)'
+          - 'A\perp B\Leftrightarrow P(A\cap B)=P(A)\,P(B)'
+        note: "Example of independence: two dice rolls, or two unrelated policyholders."
+        voix_off: "Two events are independent if knowing that one happened does not change the probability of the other. In that case, the probability that they happen together is simply the product of their probabilities. Two dice rolls are independent. Two policyholders who do not know each other, and do not live in the same place, are usually treated as independent. This assumption will be essential in a moment."
+      - type: etapes
+        texte: "Smoking and dying: *not* independent"
+        etapes:
+          - "P(D | S) = *0.3%*"
+          - "P(D | not S) = *0.1%*"
+          - "The information “smokes” *triples* the risk"
+          - "That is why the insurer asks the *question*"
+        voix_off: "In our portfolio, smoking and dying within the year are not independent. Given that the policyholder smokes, the probability of death is zero point three percent; given that they do not, zero point one percent. In our example, the information triples the risk. That is exactly why a life insurer asks, when you take out a policy, whether you smoke: it is information that changes the probability, and so the price."
+        verifier:
+          - {expression: "0.003 / 0.001", attendu: 3, libelle: "Risk ratio"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The law of total probability"
+        voix_off: "Now let's rebuild the rate for the whole portfolio."
+      - type: formule
+        texte: "The overall rate = the *weighted average* of the classes"
+        formule:
+          - 'P(A)=\sum_j P(A\mid B_j)\,P(B_j)'
+          - 'P(D)=0.003\times 0.128+0.001\times 0.872=0.001256'
+        note: "The classes Bⱼ form a partition: each policyholder is in one and only one class."
+        voix_off: "An insurer splits its portfolio into risk classes: smokers and non-smokers, for example. Each policyholder is in one class and only one: we say they form a partition. The overall probability of an event is then the average of the probabilities in each class, weighted by the size of the classes. That is the law of total probability. Here: zero point three percent times twelve point eight percent, plus zero point one percent times eighty-seven point two percent. The portfolio's death rate is zero point one two five six percent: about twelve to thirteen deaths a year out of ten thousand policyholders."
+        verifier:
+          - {expression: "0.003 * 0.128 + 0.001 * 0.872", attendu: 0.001256, libelle: "P(D)"}
+          - {expression: "10000 * (0.003 * 0.128 + 0.001 * 0.872)", attendu: 12.56, libelle: "Expected deaths"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Bayes' theorem"
+        voix_off: "And now, let's go back in time: from the effect to the cause."
+      - type: formule
+        texte: "Bayes: *from the observed event* to *the likely class*"
+        formule:
+          - 'P(B_j\mid A)=\dfrac{P(A\mid B_j)\,P(B_j)}{P(A)}'
+          - 'P(S\mid D)=\dfrac{0.000384}{0.001256}\approx 30.6\%'
+        note: "Thomas Bayes' formula, published in 1763. We reverse the direction of the conditioning."
+        voix_off: "A death has just been reported. What is the probability that the policyholder was a smoker? This time we want P of S given D: we reverse the direction of the conditioning. Bayes' theorem answers: it is the share of smoker deaths among all deaths. Zero point zero zero zero three eight four, divided by zero point zero zero one two five six: thirty point six percent. Smokers are only twelve point eight percent of policyholders, but they account for almost one death in three."
+        verifier:
+          - {expression: "100 * 0.000384 / 0.001256", attendu: 30.6, libelle: "P(S | D), %"}
+      - type: courbe
+        texte: "Among *policyholders*, then among *deaths*"
+        courbe:
+          style: barres
+          points: [[0, 12.8], [1, 30.6]]
+          etiquettes: ["Smokers among policyholders", "Smokers among deaths"]
+          etiquettes_valeurs: ["12.8%", "30.6%"]
+          valeurs: true
+          y_min: 0
+          y_max: 40
+          axe_y: "Share of smokers (%)"
+        note: "JG's Holding's made-up portfolio, made-up death rates of 0.3% and 0.1%."
+        voix_off: "Here is the effect in a picture. On the left, the share of smokers among all policyholders: twelve point eight percent. On the right, their share among deaths: thirty point six percent. Observing a death is information: it shifts the probability towards the riskier class. It is the reasoning an actuary uses when looking for where claims come from."
+      - type: texte
+        texte: "The trap: confusing *P(D | S)* and *P(S | D)*"
+        voix_off: "Watch out for the most common trap in probability. P of D given S, the probability of dying when you smoke, is zero point three percent: small. P of S given D, the probability of having smoked when you have died, is thirty point six percent: a hundred times larger. They are not the same question, and confusing them has already misled doctors, judges and journalists. Before every calculation, ask yourself: given what?"
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "The probability of at least one"
+        voix_off: "Let's move from one policyholder to a whole portfolio."
+      - type: formule
+        texte: "*At least one*: go through *none*"
+        formule:
+          - 'P(\text{none})=(1-p)^n'
+          - 'P(\text{at least one})=1-(1-p)^n'
+        note: "Valid for n independent events with the same probability p."
+        voix_off: "What are the chances that at least one policyholder dies this year? Counting every case, one death, two deaths, three deaths, would take a long time. The trick: go through the opposite. With n independent policyholders, each survives with probability one minus p. By independence, the probability that none dies is one minus p, to the power n. And the probability of at least one death is everything else: one minus that number."
+      - type: animation
+        texte: "*1,000* policyholders: at least *one* death this year?"
+        animation: {modele: complement, valeur: 0.2846, phases: [gauche, droite, total]}
+        etapes:
+          - "No death: (1 − 0.001256)¹⁰⁰⁰ ≈ *28.5%*"
+          - "At least one death: *71.5%*"
+          - "Together: *100%*"
+        voix_off: "Take one thousand policyholders from the portfolio, each with a probability of death of zero point one two five six percent. The probability that none dies within the year: one minus zero point zero zero one two five six, to the power one thousand, about twenty-eight point five percent. So, at least one death: seventy-one point five percent. For each policyholder, death is very rare. For the portfolio, it is almost certain. That is why the insurer must always be ready to pay."
+        verifier:
+          - {expression: "(1 - 0.001256)**1000", attendu: 0.2846, libelle: "No death"}
+          - {expression: "1 - (1 - 0.001256)**1000", attendu: 0.7154, libelle: "At least one death"}
+      - type: etapes
+        texte: "EuroMillions: playing *twice a week* for *50 years*"
+        etapes:
+          - "One ticket: *1 chance in 139,838,160*"
+          - "5,200 draws: 1 − (1 − p)⁵²⁰⁰ ≈ *0.0037%*"
+          - "That is about *1 chance in 26,892*"
+          - "For *€13,000* of stakes"
+        note: "Source: Belgian National Lottery, “What are my chances of winning EuroMillions?”. Stake of €2.50 per ticket."
+        voix_off: "A real fact, to measure what rare means. According to the Belgian National Lottery, a EuroMillions ticket has one chance in one hundred and thirty-nine million eight hundred and thirty-eight thousand one hundred and sixty of winning the jackpot. Play one ticket twice a week for fifty years: five thousand two hundred draws. The probability of winning at least once: one minus one minus p, to the power five thousand two hundred, about zero point zero zero three seven percent. One chance in twenty-six thousand eight hundred and ninety-two, for thirteen thousand euros of stakes. Here, the same formula shows the opposite: even when repeated, a very rare event stays very rare."
+        verifier:
+          - {expression: "100 * (1 - (1 - 1/139838160)**5200)", attendu: 0.0037, libelle: "At least one jackpot, %"}
+          - {expression: "1 / (1 - (1 - 1/139838160)**5200)", attendu: 26892, tolerance: 1, libelle: "One chance in…"}
+          - {expression: "5200 * 2.5", attendu: 13000, libelle: "Stakes"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Our running case: will Léa reach 65?"
+        voix_off: "Let's meet Léa again, facing chance for the first time."
+      - type: etapes
+        texte: "Léa, *40*, *non-smoker*: surviving *25 years*"
+        etapes:
+          - "Made-up constant death rate: *0.1%* a year"
+          - "Surviving one year: *99.9%*"
+          - "Independent years: 0.999²⁵ ≈ *97.5%*"
+          - "Dying before 65: *2.5%*"
+        note: "JG's Holding is a fictional insurer, Léa a fictional client. Made-up constant death rate: in reality, it rises with age (module A3)."
+        voix_off: "Léa is forty, and she has declared that she does not smoke. So far, we assumed she would receive her capital at sixty-five, that is, that she would be alive. But that is not certain. Take a made-up constant death rate of zero point one percent a year. Surviving one year: ninety-nine point nine percent. Surviving twenty-five years in a row, assuming each year is independent: zero point nine nine nine to the power twenty-five, about ninety-seven point five percent. So there is about a two point five percent chance that she dies before sixty-five."
+        verifier:
+          - {expression: "100 * 0.999**25", attendu: 97.5, libelle: "25-year survival, %"}
+          - {expression: "100 * (1 - 0.999**25)", attendu: 2.5, libelle: "Death before 65, %"}
+      - type: texte
+        texte: "And if Léa dies before 65? The contract must *provide for it*"
+        voix_off: "What happens to Léa's capital then? The contract must provide for it: for example, by paying the contract value to her beneficiaries. To price this guarantee, the insurer needs the probability of death at each age. And a constant rate is not enough: in reality, the risk of death rises with age. That is the subject of mortality tables, in the life module. Until then, the next episodes give you the probability distributions you will need."
+      # ---------------------------------------------------------------- 7
+      - type: titre
+        numero: 7
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Class B₁: *30%* of policyholders, claim *10%*. Class B₂: claim *2%*. Compute:"
+        pause: 20
+        questions:
+          - "The overall claim rate P(C)"
+          - "P(B₁ | C): the share of B₁ among claims"
+          - "With 20 independent policies at 2%: P(no claim)"
+          - "P(at least one claim)"
+        voix_off: "Pause the video. A portfolio has two classes: class B one, thirty percent of policyholders, has a claim probability of ten percent; class B two, two percent. Compute the overall claim rate, then the probability that an observed claim comes from class B one. Finally, with twenty independent policies at two percent, the probability of no claim, then of at least one."
+      - type: correction
+        etapes:
+          - "P(C) = 0.3 × 0.1 + 0.7 × 0.02 = *0.044*"
+          - "P(B₁ | C) = 0.03 ÷ 0.044 ≈ *0.6818*"
+          - "0.98²⁰ ≈ *0.6676*"
+          - "1 − 0.6676 ≈ *0.3324*"
+        voix_off: "Solution. The overall rate, by total probability: zero point three times zero point one, plus zero point seven times zero point zero two, that is zero point zero four four. By Bayes, the share of B one among claims: zero point zero three divided by zero point zero four four, about sixty-eight percent, while B one is only thirty percent of policyholders. No claim out of twenty policies: zero point nine eight to the power twenty, about zero point six six seven six. And at least one: zero point three three two four."
+        verifier:
+          - {expression: "0.3 * 0.1 + 0.7 * 0.02", attendu: 0.044, libelle: "P(C)"}
+          - {expression: "0.03 / 0.044", attendu: 0.6818, libelle: "P(B1 | C)"}
+          - {expression: "0.98**20", attendu: 0.6676, libelle: "No claim"}
+          - {expression: "1 - 0.98**20", attendu: 0.3324, libelle: "At least one"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "*P(A | B)* = P(A ∩ B) ÷ P(B)"
+          - "Independent: *P(A ∩ B) = P(A) P(B)*"
+          - "Total probability: the *weighted average* of the classes"
+          - "Bayes: from *effect* to *cause*; P(D | S) ≠ P(S | D)"
+          - "At least one: *1 − (1 − p)ⁿ*"
+        voix_off: "What to remember. A conditional probability is the intersection divided by the probability of what we know. Two events are independent if the intersection is the product. Total probability rebuilds the overall rate as a weighted average of the classes. Bayes goes back from the observed effect to the likely cause, and P of D given S is not P of S given D. Finally, the probability of at least one is computed by going through none."
+      - type: cloture
+        texte: "Next episode: *how many claims this year?* A question? *In the comments*"
+        voix_off: "You can now reason with partial information. Next episode: how many claims should the insurer expect this year? We discover the binomial and Poisson distributions. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
