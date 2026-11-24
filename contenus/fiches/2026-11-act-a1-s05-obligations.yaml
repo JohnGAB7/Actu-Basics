@@ -1,0 +1,456 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a1/s05 « Obligations et courbe des taux »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A1.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a1/s05.yaml (calcul « À la main » : nominal 1 000 €, coupon 5 %, 5 ans à 4 %, spots 3 / 3,5 / 4 %).
+# Les exemples utilisent une obligation à 10 ans, coupon 3 %, et la courbe 2 / 2,5 / 3 % ; l'exercice final utilise
+# nominal 100 €, coupon 6 %, 4 ans à 5 %, puis les spots 4 % et 4,5 %.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la promesse faite à Léa (119 286,87 € à 65 ans) est une
+# obligation zéro-coupon que JG's Holding a émise ; sa valeur bouge avec les taux, comme celle des obligations à l'actif.
+# Faits réels : chiffres d'origine, devise d'origine dans les deux langues.
+id: 2026-11-act-a1-s05-obligations
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A1 · Obligations et courbe des taux"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer le prix d'une obligation à partir de ses coupons, de son nominal et du taux de rendement"
+      - "Expliquer pourquoi le prix baisse quand les taux montent, et reconnaître prime, pair et décote"
+      - "Actualiser avec une courbe de taux spot, et calculer un taux à terme"
+      - "Comprendre pourquoi un assureur a besoin d'une courbe, et pas d'un seul taux"
+      - "Mesurer la sensibilité aux taux de la promesse faite à un assuré"
+    en:
+      - "Price a bond from its coupons, face value and yield"
+      - "Explain why the price falls when rates rise, and recognise premium, par and discount"
+      - "Discount with a spot rate curve, and compute a forward rate"
+      - "Understand why an insurer needs a curve, not a single rate"
+      - "Measure how sensitive the promise made to a policyholder is to rates"
+  prerequis:
+    fr: ["Séances A1.01 à A1.04 : actualisation, annuités, TRI"]
+    en: ["Sessions A1.01 to A1.04: discounting, annuities, IRR"]
+  hypotheses:
+    fr: "Obligations et courbes fictives choisies pour l'exemple, sans risque de défaut ; coupons annuels ; ni frais, ni fiscalité ; taux du contrat de Léa fictif"
+    en: "Made-up bonds and curves chosen for the example, with no default risk; annual coupons; no fees, no tax; Léa's contract rate is made up"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Agence fédérale de la Dette (Belgique), « Résultats de l'émission du bon d'État à 1 an du 4 septembre 2023 »", en: "Belgian Debt Agency, “Results of the 1-year State Note issue of 4 September 2023”"}
+    court: "debtagency.be"
+    url: "https://www.debtagency.be/fr/content/resultats-de-lemission-du-bon-detat-1-du-4-septembre-2023"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "EIOPA, « Risk-free interest rate term structures » (publication mensuelle)", en: "EIOPA, “Risk-free interest rate term structures” (monthly publication)"}
+    court: "EIOPA"
+    url: "https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Obligations et courbe des taux : pourquoi le prix baisse quand les taux montent ?"
+    legende: |
+      En septembre 2023, les Belges ont prêté 21,9 milliards d'euros à leur État en un seul jour, à 3,30 % sur un an : un record. Ils ont acheté une obligation. Mais pourquoi son prix baisse-t-il quand les taux montent ? Toute la réponse est dans cet épisode du parcours Actuariat : le prix d'une obligation, la prime et la décote, la courbe des taux spot, les taux à terme, et le quatrième chapitre du fil rouge, la promesse que JG's Holding a faite à Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les obligations et les taux des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil de placement. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, obligations, courbedestaux, finance]
+    scenes:
+      - type: accroche
+        texte: "*21,9 milliards d'euros* prêtés à l'État en *un jour*"
+        note: "Agence fédérale de la Dette : bon d'État à 1 an du 4 septembre 2023, coupon de 3,30 %, 21,896 milliards d'euros."
+        voix_off: "Le 4 septembre 2023, en Belgique, les particuliers prêtent vingt et un virgule neuf milliards d'euros à leur État, en une seule émission : un record historique. Ils achètent un bon d'État à un an, qui rapporte trois virgule trente pour cent. Ils ont acheté une obligation. Et voici la question du jour : si les taux du marché montent juste après, que vaut encore leur bon ? Moins. Et à la fin de cette vidéo, vous saurez dire exactement combien."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce cinquième et dernier épisode de mathématiques financières du parcours Actuariat ! Merci d'être là. Aujourd'hui, on découvre l'actif préféré des assureurs : l'obligation. C'est avec elle que JG's Holding tient la promesse faite à Léa. Et vous verrez qu'avec tout ce qu'on a appris, son prix se calcule en une ligne."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Le *prix* d'une obligation"
+          - "Prime, pair, *décote*"
+          - "La courbe des *taux*"
+          - "Les taux *à terme*"
+          - "La promesse à *Léa*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. Le prix d'une obligation. La prime, le pair et la décote. La courbe des taux. Les taux à terme. Puis le quatrième chapitre du fil rouge : la promesse faite à Léa. Et pour finir, un exercice corrigé."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Le prix d'une obligation"
+        voix_off: "Commençons par ce qu'est une obligation."
+      - type: etapes
+        texte: "Une obligation : un *prêt* découpé en *titres*"
+        etapes:
+          - "*Nominal* : la somme remboursée à la fin"
+          - "*Coupon* : l'intérêt versé chaque année"
+          - "*Échéance* : la date du remboursement"
+        voix_off: "Une obligation, c'est un prêt, découpé en petits titres que l'on peut acheter et revendre. Un État ou une entreprise emprunte ; vous prêtez. En échange, elle promet trois choses. Le nominal : la somme remboursée à la fin, par exemple mille euros. Le coupon : l'intérêt versé chaque année, calculé sur le nominal. Et l'échéance : la date du remboursement. Tout est écrit d'avance. La seule chose qui change, c'est le prix auquel le titre s'échange sur le marché."
+      - type: animation
+        texte: "Nominal *1 000 €*, coupon *3 %*, *10 ans*, au rendement de *4 %*"
+        animation:
+          modele: echeancier
+          montants: [30, 30, 30, 30, 30, 30, 30, 30, 30, 1030]
+          dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          taux: 0.04
+          unite: "€"
+          decimales: 0
+        etapes:
+          - "Neuf coupons de *30 €*, puis *1 030 €* la dernière année"
+          - "Chaque flux actualisé au rendement du marché, *4 %*"
+          - "Prix : *918,89 €*, moins que le nominal"
+        note: "Obligation fictive, pour l'exemple."
+        voix_off: "Prenons une obligation de nominal mille euros, avec un coupon de trois pour cent, sur dix ans. Elle verse trente euros chaque année, et la dixième année, trente euros plus les mille euros du nominal. Les voici sur la frise du temps. Aujourd'hui, les placements de même qualité rapportent quatre pour cent par an : c'est le taux de rendement exigé par le marché. On actualise chaque flux à quatre pour cent, et on additionne. Le prix est de neuf cent dix-huit euros et quatre-vingt-neuf centimes. Moins que les mille euros du nominal, car le coupon de trois pour cent est moins généreux que le marché."
+        verifier:
+          - {expression: "30 * (1 - 1.04**-10) / 0.04 + 1000 * 1.04**-10", attendu: 918.89, libelle: "Prix à 4 %"}
+      - type: formule
+        texte: "Le prix : *coupons* actualisés + *nominal* actualisé"
+        formule:
+          - 'P=c\,a_{n|y}+F\,v_y^{\,n}'
+          - 'P=30\,a_{10|4\%}+1\,000\,v^{10}\approx 918{,}89\ \text{€}'
+        note: "c : coupon ; F : nominal ; y : taux de rendement à l'échéance ; n : années restantes."
+        voix_off: "En formule. Les coupons forment une annuité : c fois a n, au taux y. Le nominal est un paiement unique dans n ans : F fois v puissance n. Le prix est la somme des deux. Le taux y s'appelle le taux de rendement à l'échéance : c'est exactement le taux de rendement interne de l'épisode précédent. Si vous achetez à ce prix et gardez l'obligation jusqu'au bout, vous obtenez quatre pour cent par an."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Prime, pair et décote"
+        voix_off: "Faisons maintenant bouger le taux du marché."
+      - type: etapes
+        texte: "La même obligation, *trois* taux de marché"
+        etapes:
+          - "Marché à *2 %* : prix *1 089,83 €* (prime)"
+          - "Marché à *3 %* : prix *1 000,00 €* (pair)"
+          - "Marché à *4 %* : prix *918,89 €* (décote)"
+          - "Marché à *5 %* : prix *845,57 €*"
+        voix_off: "Gardons la même obligation, coupon trois pour cent, et changeons le taux du marché. À deux pour cent, notre coupon est plus généreux que le marché : tout le monde veut l'obligation, et son prix monte à mille quatre-vingt-neuf euros. C'est une prime. À trois pour cent, coupon et marché sont égaux : le prix vaut exactement le nominal, on dit au pair. À quatre pour cent, décote : neuf cent dix-neuf euros. Et à cinq pour cent, huit cent quarante-six euros. Quand les taux montent, le prix baisse. Toujours."
+        verifier:
+          - {expression: "30 * (1 - 1.02**-10) / 0.02 + 1000 * 1.02**-10", attendu: 1089.83, libelle: "Prix à 2 %"}
+          - {expression: "30 * (1 - 1.03**-10) / 0.03 + 1000 * 1.03**-10", attendu: 1000, libelle: "Prix à 3 %"}
+          - {expression: "30 * (1 - 1.05**-10) / 0.05 + 1000 * 1.05**-10", attendu: 845.57, libelle: "Prix à 5 %"}
+      - type: formule
+        texte: "La formule qui *dit tout*"
+        formule:
+          - 'P-F=(c-F\,y)\,a_{n|y}'
+          - '918{,}89-1\,000=(30-40)\times a_{10|4\%}\approx -81{,}11'
+        note: "Coupon > F y : prime. Coupon = F y : pair. Coupon < F y : décote."
+        voix_off: "Une formule résume tout. Le prix moins le nominal égale le coupon moins F fois y, multiplié par a n. Si le coupon dépasse ce que le marché demande, F fois y, la différence est positive : prime. S'ils sont égaux, prix au pair. Sinon, décote. Ici, l'obligation verse trente euros alors que le marché en demande quarante : dix euros de moins chaque année, pendant dix ans. Leur valeur actuelle, quatre-vingt-un euros, c'est exactement la décote."
+        verifier:
+          - {expression: "(30 - 40) * (1 - 1.04**-10) / 0.04", attendu: -81.11, libelle: "Décote"}
+      - type: etapes
+        texte: "Le bon d'État belge à *3,30 %*, si le marché passe à *4 %*"
+        etapes:
+          - "Dans un an : 100 € + 3,30 € = *103,30 €*"
+          - "Au marché à 3,30 % : 103,30 ÷ 1,033 = *100 €*"
+          - "Au marché à 4 % : 103,30 ÷ 1,04 = *99,33 €*"
+        note: "Coupon réel de 3,30 % ; hausse du marché à 4 % fictive, pour l'exemple."
+        voix_off: "Revenons au bon d'État belge. Pour cent euros prêtés, il promet cent trois euros et trente centimes dans un an. Le jour de l'émission, au taux de trois virgule trente pour cent, il vaut exactement cent euros. Imaginons que le lendemain, le marché exige quatre pour cent. Les cent trois euros trente sont alors actualisés à quatre pour cent : quatre-vingt-dix-neuf euros et trente-trois centimes. Celui qui veut revendre son bon perd soixante-sept centimes. Celui qui le garde jusqu'au bout reçoit bien ses cent trois euros trente : la perte n'existe que s'il vend."
+        verifier:
+          - {expression: "100 * 1.033", attendu: 103.30, libelle: "Remboursement"}
+          - {expression: "103.30 / 1.04", attendu: 99.33, libelle: "Valeur au marché à 4 %"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La courbe des taux"
+        voix_off: "En réalité, le marché n'utilise pas un seul taux."
+      - type: texte
+        texte: "Un taux *par échéance* : la *courbe des taux spot*"
+        voix_off: "Prêter pour un an ou pour trente ans, ce n'est pas la même chose : le marché ne demande pas le même taux. Le taux spot s t est le taux qui actualise un paiement unique dans t années. L'ensemble de ces taux, d'une échéance à l'autre, forme la courbe des taux. Le plus souvent, elle monte : on demande plus pour prêter plus longtemps. Pour l'exemple, prenons une courbe fictive : deux pour cent à un an, deux et demi à deux ans, trois à trois ans."
+      - type: formule
+        texte: "Chaque flux, *son* taux"
+        formule:
+          - 'P=\sum_{t=1}^{n}\dfrac{C_t}{(1+s_t)^t}'
+          - 'P=\dfrac{40}{1{,}02}+\dfrac{40}{1{,}025^2}+\dfrac{1\,040}{1{,}03^3}\approx 1\,029{,}04\ \text{€}'
+          - 'y\approx 2{,}974\ \%'
+        note: "Obligation fictive : nominal 1 000 €, coupon 4 %, 3 ans. Courbe fictive : 2 % ; 2,5 % ; 3 %."
+        voix_off: "Avec une courbe, chaque flux est actualisé à son propre taux. Une obligation de trois ans, coupon quatre pour cent : quarante euros actualisés à deux pour cent, quarante euros à deux et demi pour cent sur deux ans, et mille quarante euros à trois pour cent sur trois ans. Prix : mille vingt-neuf euros et quatre centimes. Et son taux de rendement unique, celui qui redonne ce prix ? Environ deux virgule neuf sept quatre pour cent : une sorte de moyenne des taux spot, pondérée par les flux, très proche du taux à trois ans, car c'est là que tombe le gros flux."
+        verifier:
+          - {expression: "40 / 1.02 + 40 / 1.025**2 + 1040 / 1.03**3", attendu: 1029.04, libelle: "Prix avec la courbe"}
+          - {expression: "40 / 1.02974 + 40 / 1.02974**2 + 1040 / 1.02974**3", attendu: 1029.04, tolerance: 0.02, libelle: "Même prix au rendement y"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Les taux à terme"
+        voix_off: "La courbe cache une information précieuse sur l'avenir."
+      - type: formule
+        texte: "Le taux *à terme* : le taux *entre deux dates futures*"
+        formule:
+          - '(1+s_t)^t=(1+s_{t-1})^{t-1}\,(1+f_{t-1,t})'
+          - 'f_{1,2}=\dfrac{1{,}025^2}{1{,}02}-1\approx 3{,}00\ \%'
+          - 'f_{2,3}=\dfrac{1{,}03^3}{1{,}025^2}-1\approx 4{,}01\ \%'
+        note: "Placer deux ans au taux spot, ou un an au taux spot puis un an au taux à terme : même résultat."
+        voix_off: "Deux façons de placer pour deux ans. Soit directement, au taux spot à deux ans : on multiplie par un virgule zéro deux cinq au carré. Soit un an au taux spot à un an, puis une deuxième année à un taux convenu dès aujourd'hui, le taux à terme. Pour que les deux reviennent au même, ce taux à terme entre un et deux ans doit valoir environ trois pour cent. Entre deux et trois ans, environ quatre virgule zéro un pour cent. Une courbe qui monte annonce des taux à terme plus élevés que les taux spot."
+        verifier:
+          - {expression: "100 * (1.025**2 / 1.02 - 1)", attendu: 3.00, libelle: "f(1,2), en %"}
+          - {expression: "100 * (1.03**3 / 1.025**2 - 1)", attendu: 4.01, libelle: "f(2,3), en %"}
+      - type: texte
+        texte: "Les assureurs européens actualisent avec la courbe publiée chaque mois par l'*EIOPA*"
+        note: "Source : EIOPA, « Risk-free interest rate term structures », consulté le 24/11/2026."
+        voix_off: "Un fait réel. Dans l'Union européenne, sous le régime Solvabilité deux, les assureurs n'actualisent pas leurs engagements avec un taux choisi librement. Chaque mois, l'autorité européenne des assurances, l'EIOPA, publie des courbes de taux sans risque, une par devise. Tous les assureurs s'en servent pour calculer leurs provisions de la même façon, de Lisbonne à Helsinki. Une courbe, et non un taux unique."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : la promesse faite à Léa"
+        voix_off: "Retournons chez JG's Holding."
+      - type: texte
+        texte: "La promesse à Léa : une obligation *zéro-coupon* à *35 ans*"
+        note: "JG's Holding est un assureur fictif, Léa une cliente fictive. Taux fictif de 4 %, sans frais ni mortalité."
+        voix_off: "Regardez le contrat de Léa avec des lunettes d'obligation. JG's Holding a promis de lui verser cent dix-neuf mille deux cent quatre-vingt-sept euros à soixante-cinq ans, dans trente-cinq ans. Une seule somme, à une date fixe, sans coupon : pour l'assureur, c'est comme s'il avait émis une obligation zéro-coupon. Et comme toute obligation, sa valeur aujourd'hui dépend des taux."
+      - type: etapes
+        texte: "La promesse à Léa vue d'aujourd'hui, selon les *taux*"
+        etapes:
+          - "Taux à *4 %* : *30 229 €*"
+          - "Taux à *3 %* : *42 393 €*, + 40 %"
+          - "Taux à *5 %* : *21 626 €*, − 28 %"
+        voix_off: "Actualisons cette promesse sur trente-cinq ans. À quatre pour cent, elle vaut trente mille deux cent vingt-neuf euros aujourd'hui : exactement la valeur des primes de Léa, on l'avait vu. Si les taux baissent à trois pour cent, elle vaut quarante-deux mille trois cent quatre-vingt-treize euros : quarante pour cent de plus. S'ils montent à cinq pour cent, vingt et un mille six cent vingt-six euros. Un point de taux, et la valeur bouge de plus d'un tiers. Plus l'échéance est lointaine, plus la valeur est sensible aux taux."
+        verifier:
+          - {expression: "119286.87 * 1.04**-35", attendu: 30229, tolerance: 1, libelle: "À 4 %"}
+          - {expression: "119286.87 * 1.03**-35", attendu: 42393, tolerance: 1, libelle: "À 3 %"}
+          - {expression: "119286.87 * 1.05**-35", attendu: 21626, tolerance: 1, libelle: "À 5 %"}
+          - {expression: "100 * (1.04 / 1.03)**35 - 100", attendu: 40, tolerance: 0.5, libelle: "Hausse en %"}
+          - {expression: "100 - 100 * (1.04 / 1.05)**35", attendu: 28, tolerance: 0.5, libelle: "Baisse en %"}
+      - type: texte
+        texte: "L'assureur achète des obligations qui *bougent comme* ses promesses"
+        voix_off: "Voilà le grand défi de l'assureur. Quand les taux baissent, la valeur de ses promesses monte. Pour ne pas être pris en défaut, il achète des obligations dont la valeur monte aussi quand les taux baissent, et au même rythme : des obligations longues, dont les flux ressemblent à ceux de ses engagements. Faire correspondre l'actif et le passif, c'est la gestion actif-passif, l'ALM. Vous la verrez dans le domaine ALM du parcours. Pour l'instant, retenez que pour un assureur vie, les taux sont un risque majeur."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Nominal *100 €*, coupon *6 %*, *4 ans*, rendement *5 %*. Puis spots *4 %* et *4,5 %*. Calculez :"
+        pause: 20
+        questions:
+          - "Le prix de l'obligation à 4 ans"
+          - "Prime ou décote, et de combien ?"
+          - "Le prix d'une obligation à 2 ans, coupon 6 %, avec les spots"
+          - "Le taux à terme f₁,₂"
+        voix_off: "Mettez la vidéo en pause. Une obligation de nominal cent euros, coupon six pour cent, sur quatre ans, au rendement de cinq pour cent : calculez son prix, et dites s'il y a prime ou décote. Puis, avec des taux spot de quatre pour cent à un an et quatre et demi pour cent à deux ans, calculez le prix d'une obligation à deux ans de coupon six pour cent, et le taux à terme entre un et deux ans."
+      - type: correction
+        etapes:
+          - "P = 6 × a₄ + 100 × 1,05⁻⁴ ≈ *103,55 €*"
+          - "Prime : (6 − 5) × a₄ ≈ *3,55 €*"
+          - "6 ÷ 1,04 + 106 ÷ 1,045² ≈ *102,84 €*"
+          - "f₁,₂ = 1,045² ÷ 1,04 − 1 ≈ *5,00 %*"
+        voix_off: "Correction. Le prix : six euros fois a quatre à cinq pour cent, plus cent euros actualisés sur quatre ans, environ cent trois euros et cinquante-cinq centimes. Le coupon de six euros dépasse les cinq euros demandés par le marché : c'est une prime, d'un euro par an pendant quatre ans, soit trois euros cinquante-cinq. Avec la courbe : six euros actualisés à quatre pour cent, plus cent six euros actualisés à quatre et demi pour cent sur deux ans, environ cent deux euros et quatre-vingt-quatre centimes. Et le taux à terme : un virgule zéro quatre cinq au carré, divisé par un virgule zéro quatre, moins un, environ cinq pour cent."
+        verifier:
+          - {expression: "6 * (1 - 1.05**-4) / 0.05 + 100 * 1.05**-4", attendu: 103.55, libelle: "Prix à 5 %"}
+          - {expression: "(6 - 5) * (1 - 1.05**-4) / 0.05", attendu: 3.55, libelle: "Prime"}
+          - {expression: "6 / 1.04 + 106 / 1.045**2", attendu: 102.84, libelle: "Prix avec les spots"}
+          - {expression: "100 * (1.045**2 / 1.04 - 1)", attendu: 5.00, libelle: "f(1,2), en %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Prix : *c aₙ + F vⁿ* au rendement y"
+          - "Taux en *hausse* : prix en *baisse*"
+          - "P − F = *(c − F y) aₙ* : prime, pair, décote"
+          - "Courbe : *un taux* par échéance ; taux à terme entre deux dates"
+          - "Promesse à Léa : *+ 40 %* si les taux baissent d'un point"
+        voix_off: "Ce qu'il faut retenir. Le prix d'une obligation, ce sont ses coupons et son nominal actualisés au taux de rendement. Quand les taux montent, le prix baisse. La différence entre le prix et le nominal se lit dans la formule de prime et de décote. Le marché utilise une courbe, un taux par échéance, d'où l'on tire les taux à terme. Et la promesse faite à Léa prend quarante pour cent de valeur si les taux baissent d'un point."
+      - type: cloture
+        texte: "Prochain épisode : *les probabilités*. Une question ? *En commentaire*"
+        voix_off: "Bravo : vous avez terminé les mathématiques financières du parcours ! Vous savez actualiser, évaluer une rente, un prêt et une obligation. Mais jusqu'ici, tous les paiements étaient certains. Dans le prochain module, on ajoute le hasard : les probabilités, puis la mortalité. Et on se demandera enfin si Léa atteindra ses soixante-cinq ans. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Une question ? Écrivez-nous en commentaire. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Bonds and the yield curve: why do prices fall when rates rise?"
+    legende: |
+      In September 2023, Belgians lent €21.9 billion to their State in a single day, at 3.30% for one year: a record. They bought a bond. But why does its price fall when rates rise? The full answer is in this episode of the Actuarial path: the price of a bond, premium and discount, the spot rate curve, forward rates, and the fourth chapter of our running case, the promise JG's Holding made to Léa. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer and Léa a fictional client; the bonds and rates in the examples are made up, the real facts are sourced. No investment advice. Got a question? Ask in the comments.
+    hashtags: [actuarial, bonds, yieldcurve, finance]
+    scenes:
+      - type: accroche
+        texte: "*€21.9 billion* lent to the State in *one day*"
+        note: "Belgian Debt Agency: 1-year State Note of 4 September 2023, 3.30% coupon, €21.896 billion."
+        voix_off: "On the fourth of September 2023, in Belgium, individuals lent twenty-one point nine billion euros to their State, in a single issue: an all-time record. They bought a one-year State Note paying three point three zero percent. They bought a bond. And here is today's question: if market rates rise just afterwards, what is their note still worth? Less. And by the end of this video, you will be able to say exactly how much."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this fifth and last episode of financial mathematics on the Actuarial path! Thanks for being here. Today, we discover insurers' favourite asset: the bond. It is with bonds that JG's Holding keeps the promise made to Léa. And you will see that, with everything we have learned, its price takes one line to compute."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *price* of a bond"
+          - "Premium, par, *discount*"
+          - "The yield *curve*"
+          - "*Forward* rates"
+          - "The promise to *Léa*"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. The price of a bond. Premium, par and discount. The yield curve. Forward rates. Then the fourth chapter of our running case: the promise made to Léa. And to finish, a solved exercise."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The price of a bond"
+        voix_off: "Let's start with what a bond is."
+      - type: etapes
+        texte: "A bond: a *loan* cut into *securities*"
+        etapes:
+          - "*Face value*: the amount repaid at the end"
+          - "*Coupon*: the interest paid each year"
+          - "*Maturity*: the repayment date"
+        voix_off: "A bond is a loan, cut into small securities that can be bought and sold. A State or a company borrows; you lend. In return, it promises three things. The face value: the amount repaid at the end, for example one thousand euros. The coupon: the interest paid each year, computed on the face value. And the maturity: the repayment date. Everything is written in advance. The only thing that changes is the price at which the security trades on the market."
+      - type: animation
+        texte: "Face *€1,000*, coupon *3%*, *10 years*, at a *4%* yield"
+        animation:
+          modele: echeancier
+          montants: [30, 30, 30, 30, 30, 30, 30, 30, 30, 1030]
+          dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          taux: 0.04
+          unite: "€"
+          decimales: 0
+        etapes:
+          - "Nine coupons of *€30*, then *€1,030* in the last year"
+          - "Each cash flow discounted at the market yield, *4%*"
+          - "Price: *€918.89*, less than the face value"
+        note: "Made-up bond, for the example."
+        voix_off: "Take a bond with a face value of one thousand euros, a three percent coupon, over ten years. It pays thirty euros each year, and in the tenth year, thirty euros plus the one thousand euros of face value. Here they are on the timeline. Today, investments of the same quality earn four percent a year: that is the yield the market requires. We discount each cash flow at four percent, and add them up. The price is nine hundred and eighteen euros eighty-nine. Less than the one thousand euros of face value, because the three percent coupon is less generous than the market."
+        verifier:
+          - {expression: "30 * (1 - 1.04**-10) / 0.04 + 1000 * 1.04**-10", attendu: 918.89, libelle: "Price at 4%"}
+      - type: formule
+        texte: "The price: discounted *coupons* + discounted *face value*"
+        formule:
+          - 'P=c\,a_{n|y}+F\,v_y^{\,n}'
+          - 'P=30\,a_{10|4\%}+1{,}000\,v^{10}\approx \text{€}918.89'
+        note: "c: coupon; F: face value; y: yield to maturity; n: years remaining."
+        voix_off: "As a formula. The coupons form an annuity: c times a n, at the rate y. The face value is a single payment in n years: F times v to the power n. The price is the sum of the two. The rate y is called the yield to maturity: it is exactly the internal rate of return from the previous episode. If you buy at this price and hold the bond to the end, you earn four percent a year."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Premium, par and discount"
+        voix_off: "Now let's move the market rate."
+      - type: etapes
+        texte: "The same bond, *three* market rates"
+        etapes:
+          - "Market at *2%*: price *€1,089.83* (premium)"
+          - "Market at *3%*: price *€1,000.00* (par)"
+          - "Market at *4%*: price *€918.89* (discount)"
+          - "Market at *5%*: price *€845.57*"
+        voix_off: "Keep the same bond, three percent coupon, and change the market rate. At two percent, our coupon is more generous than the market: everyone wants the bond, and its price rises to one thousand and eighty-nine euros. That is a premium. At three percent, coupon and market are equal: the price is exactly the face value; we say it trades at par. At four percent, a discount: nine hundred and nineteen euros. And at five percent, eight hundred and forty-six euros. When rates rise, the price falls. Always."
+        verifier:
+          - {expression: "30 * (1 - 1.02**-10) / 0.02 + 1000 * 1.02**-10", attendu: 1089.83, libelle: "Price at 2%"}
+          - {expression: "30 * (1 - 1.03**-10) / 0.03 + 1000 * 1.03**-10", attendu: 1000, libelle: "Price at 3%"}
+          - {expression: "30 * (1 - 1.05**-10) / 0.05 + 1000 * 1.05**-10", attendu: 845.57, libelle: "Price at 5%"}
+      - type: formule
+        texte: "The formula that *says it all*"
+        formule:
+          - 'P-F=(c-F\,y)\,a_{n|y}'
+          - '918.89-1{,}000=(30-40)\times a_{10|4\%}\approx -81.11'
+        note: "Coupon > F y: premium. Coupon = F y: par. Coupon < F y: discount."
+        voix_off: "One formula sums it all up. The price minus the face value equals the coupon minus F times y, multiplied by a n. If the coupon is more than what the market asks, F times y, the difference is positive: a premium. If they are equal, the price is at par. Otherwise, a discount. Here, the bond pays thirty euros while the market asks forty: ten euros less every year, for ten years. Their present value, eighty-one euros, is exactly the discount."
+        verifier:
+          - {expression: "(30 - 40) * (1 - 1.04**-10) / 0.04", attendu: -81.11, libelle: "Discount"}
+      - type: etapes
+        texte: "The Belgian *3.30%* State Note, if the market moves to *4%*"
+        etapes:
+          - "In one year: €100 + €3.30 = *€103.30*"
+          - "With the market at 3.30%: 103.30 ÷ 1.033 = *€100*"
+          - "With the market at 4%: 103.30 ÷ 1.04 = *€99.33*"
+        note: "Real 3.30% coupon; the market rise to 4% is made up, for the example."
+        voix_off: "Back to the Belgian State Note. For one hundred euros lent, it promises one hundred and three euros thirty in a year. On issue day, at three point three zero percent, it is worth exactly one hundred euros. Imagine that the next day, the market requires four percent. The one hundred and three euros thirty are then discounted at four percent: ninety-nine euros thirty-three. Anyone who wants to sell the note loses sixty-seven cents. Anyone who holds it to the end still receives their one hundred and three euros thirty: the loss only exists if they sell."
+        verifier:
+          - {expression: "100 * 1.033", attendu: 103.30, libelle: "Repayment"}
+          - {expression: "103.30 / 1.04", attendu: 99.33, libelle: "Value with the market at 4%"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The yield curve"
+        voix_off: "In reality, the market does not use a single rate."
+      - type: texte
+        texte: "One rate *per maturity*: the *spot rate curve*"
+        voix_off: "Lending for one year or for thirty years is not the same thing: the market does not ask for the same rate. The spot rate s t is the rate that discounts a single payment in t years. All these rates, from one maturity to the next, form the yield curve. Most often, it slopes upward: lenders ask for more to lend for longer. For the example, take a made-up curve: two percent at one year, two and a half at two years, three at three years."
+      - type: formule
+        texte: "Each cash flow, *its own* rate"
+        formule:
+          - 'P=\sum_{t=1}^{n}\dfrac{C_t}{(1+s_t)^t}'
+          - 'P=\dfrac{40}{1.02}+\dfrac{40}{1.025^2}+\dfrac{1{,}040}{1.03^3}\approx \text{€}1{,}029.04'
+          - 'y\approx 2.974\%'
+        note: "Made-up bond: face €1,000, 4% coupon, 3 years. Made-up curve: 2%; 2.5%; 3%."
+        voix_off: "With a curve, each cash flow is discounted at its own rate. A three-year bond with a four percent coupon: forty euros discounted at two percent, forty euros at two and a half percent over two years, and one thousand and forty euros at three percent over three years. Price: one thousand and twenty-nine euros and four cents. And its single yield, the one that gives back this price? About two point nine seven four percent: a kind of average of the spot rates, weighted by the cash flows, very close to the three-year rate, because that is where the big cash flow falls."
+        verifier:
+          - {expression: "40 / 1.02 + 40 / 1.025**2 + 1040 / 1.03**3", attendu: 1029.04, libelle: "Price with the curve"}
+          - {expression: "40 / 1.02974 + 40 / 1.02974**2 + 1040 / 1.02974**3", attendu: 1029.04, tolerance: 0.02, libelle: "Same price at yield y"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Forward rates"
+        voix_off: "The curve hides valuable information about the future."
+      - type: formule
+        texte: "The *forward* rate: the rate *between two future dates*"
+        formule:
+          - '(1+s_t)^t=(1+s_{t-1})^{t-1}\,(1+f_{t-1,t})'
+          - 'f_{1,2}=\dfrac{1.025^2}{1.02}-1\approx 3.00\%'
+          - 'f_{2,3}=\dfrac{1.03^3}{1.025^2}-1\approx 4.01\%'
+        note: "Investing two years at the spot rate, or one year at the spot rate then one year at the forward rate: same result."
+        voix_off: "Two ways to invest for two years. Either directly, at the two-year spot rate: we multiply by one point zero two five squared. Or one year at the one-year spot rate, then a second year at a rate agreed today, the forward rate. For both to give the same result, the forward rate between years one and two must be about three percent. Between years two and three, about four point zero one percent. An upward-sloping curve signals forward rates above the spot rates."
+        verifier:
+          - {expression: "100 * (1.025**2 / 1.02 - 1)", attendu: 3.00, libelle: "f(1,2), %"}
+          - {expression: "100 * (1.03**3 / 1.025**2 - 1)", attendu: 4.01, libelle: "f(2,3), %"}
+      - type: texte
+        texte: "European insurers discount with the curve *EIOPA* publishes every month"
+        note: "Source: EIOPA, “Risk-free interest rate term structures”, accessed 24/11/2026."
+        voix_off: "A real fact. In the European Union, under the Solvency Two regime, insurers do not discount their liabilities with a rate of their choice. Every month, the European insurance authority, EIOPA, publishes risk-free rate curves, one per currency. All insurers use them to compute their reserves in the same way, from Lisbon to Helsinki. A curve, not a single rate."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Our running case: the promise made to Léa"
+        voix_off: "Let's go back to JG's Holding."
+      - type: texte
+        texte: "The promise to Léa: a *35-year zero-coupon* bond"
+        note: "JG's Holding is a fictional insurer, Léa a fictional client. Made-up rate of 4%, no fees, no mortality."
+        voix_off: "Look at Léa's contract through bond glasses. JG's Holding has promised to pay her one hundred and nineteen thousand two hundred and eighty-seven euros at sixty-five, in thirty-five years. A single amount, on a fixed date, with no coupon: for the insurer, it is as if it had issued a zero-coupon bond. And like any bond, its value today depends on rates."
+      - type: etapes
+        texte: "The promise to Léa seen from today, by *rate*"
+        etapes:
+          - "Rates at *4%*: *€30,229*"
+          - "Rates at *3%*: *€42,393*, + 40%"
+          - "Rates at *5%*: *€21,626*, − 28%"
+        voix_off: "Let's discount this promise over thirty-five years. At four percent, it is worth thirty thousand two hundred and twenty-nine euros today: exactly the value of Léa's premiums, as we saw. If rates fall to three percent, it is worth forty-two thousand three hundred and ninety-three euros: forty percent more. If they rise to five percent, twenty-one thousand six hundred and twenty-six euros. One point of rate, and the value moves by more than a third. The more distant the maturity, the more sensitive the value is to rates."
+        verifier:
+          - {expression: "119286.87 * 1.04**-35", attendu: 30229, tolerance: 1, libelle: "At 4%"}
+          - {expression: "119286.87 * 1.03**-35", attendu: 42393, tolerance: 1, libelle: "At 3%"}
+          - {expression: "119286.87 * 1.05**-35", attendu: 21626, tolerance: 1, libelle: "At 5%"}
+          - {expression: "100 * (1.04 / 1.03)**35 - 100", attendu: 40, tolerance: 0.5, libelle: "Rise, %"}
+          - {expression: "100 - 100 * (1.04 / 1.05)**35", attendu: 28, tolerance: 0.5, libelle: "Fall, %"}
+      - type: texte
+        texte: "The insurer buys bonds that *move like* its promises"
+        voix_off: "Here is the insurer's great challenge. When rates fall, the value of its promises rises. Not to be caught out, it buys bonds whose value also rises when rates fall, and at the same pace: long bonds, whose cash flows look like those of its liabilities. Matching assets and liabilities is asset-liability management, ALM. You will see it in the ALM domain of the path. For now, remember that for a life insurer, rates are a major risk."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Face *€100*, coupon *6%*, *4 years*, yield *5%*. Then spots *4%* and *4.5%*. Compute:"
+        pause: 20
+        questions:
+          - "The price of the 4-year bond"
+          - "Premium or discount, and how much?"
+          - "The price of a 2-year 6% coupon bond, with the spots"
+          - "The forward rate f₁,₂"
+        voix_off: "Pause the video. A bond with a face value of one hundred euros, a six percent coupon, over four years, at a five percent yield: compute its price, and say whether it trades at a premium or a discount. Then, with spot rates of four percent at one year and four and a half percent at two years, compute the price of a two-year bond with a six percent coupon, and the forward rate between years one and two."
+      - type: correction
+        etapes:
+          - "P = 6 × a₄ + 100 × 1.05⁻⁴ ≈ *€103.55*"
+          - "Premium: (6 − 5) × a₄ ≈ *€3.55*"
+          - "6 ÷ 1.04 + 106 ÷ 1.045² ≈ *€102.84*"
+          - "f₁,₂ = 1.045² ÷ 1.04 − 1 ≈ *5.00%*"
+        voix_off: "Solution. The price: six euros times a four at five percent, plus one hundred euros discounted over four years, about one hundred and three euros fifty-five. The six-euro coupon is more than the five euros the market asks: it is a premium, of one euro a year for four years, that is three euros fifty-five. With the curve: six euros discounted at four percent, plus one hundred and six euros discounted at four and a half percent over two years, about one hundred and two euros eighty-four. And the forward rate: one point zero four five squared, divided by one point zero four, minus one, about five percent."
+        verifier:
+          - {expression: "6 * (1 - 1.05**-4) / 0.05 + 100 * 1.05**-4", attendu: 103.55, libelle: "Price at 5%"}
+          - {expression: "(6 - 5) * (1 - 1.05**-4) / 0.05", attendu: 3.55, libelle: "Premium"}
+          - {expression: "6 / 1.04 + 106 / 1.045**2", attendu: 102.84, libelle: "Price with the spots"}
+          - {expression: "100 * (1.045**2 / 1.04 - 1)", attendu: 5.00, libelle: "f(1,2), %"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Price: *c aₙ + F vⁿ* at the yield y"
+          - "Rates *up*: prices *down*"
+          - "P − F = *(c − F y) aₙ*: premium, par, discount"
+          - "Curve: *one rate* per maturity; forward rate between two dates"
+          - "Promise to Léa: *+ 40%* if rates fall by one point"
+        voix_off: "What to remember. The price of a bond is its coupons and face value discounted at the yield. When rates rise, the price falls. The gap between price and face value can be read from the premium and discount formula. The market uses a curve, one rate per maturity, from which we derive forward rates. And the promise made to Léa gains forty percent in value if rates fall by one point."
+      - type: cloture
+        texte: "Next episode: *probability*. A question? *In the comments*"
+        voix_off: "Well done: you have finished the financial mathematics of the path! You can discount, and value an annuity, a loan and a bond. But so far, every payment was certain. In the next module, we add chance: probability, then mortality. And we will finally ask whether Léa will reach sixty-five. If this video helped, subscribe, leave a like and share it. A question? Write to us in the comments. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
