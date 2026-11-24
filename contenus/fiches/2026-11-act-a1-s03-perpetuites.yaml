@@ -1,0 +1,565 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a1/s03 « Perpétuités et annuités variables »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A1.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a1/s03.yaml (calcul « À la main » à 5 %, n = 10, g = 2 %).
+# Les exemples utilisent 4 %, le taux du fil rouge ; l'exercice final utilise 6 %, n = 5, g = 3 %, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : Léa choisit l'option d'indexation de 2 % par an de sa prime,
+# puis on regarde quelle rente perpétuelle son capital pourrait financer (sans mortalité, qui arrive en A2 et A3).
+# Faits réels : chiffres d'origine, devise d'origine dans les deux langues.
+id: 2026-11-act-a1-s03-perpetuites
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A1 · Perpétuités et annuités variables"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer la valeur accumulée sₙ d'une annuité, et la relier à aₙ"
+      - "Évaluer une perpétuité, immédiate et due, et comprendre pourquoi elle vaut 1 ÷ i"
+      - "Évaluer une annuité arithmétique croissante (Ia) et décroissante (Da), et vérifier avec (Ia) + (Da) = (n + 1) aₙ"
+      - "Évaluer une annuité géométrique et une perpétuité indexée"
+      - "Appliquer l'indexation aux primes d'un contrat d'épargne-pension"
+    en:
+      - "Compute the accumulated value sₙ of an annuity, and link it to aₙ"
+      - "Value a perpetuity, immediate and due, and see why it is worth 1 ÷ i"
+      - "Value an increasing (Ia) and a decreasing (Da) arithmetic annuity, and check with (Ia) + (Da) = (n + 1) aₙ"
+      - "Value a geometric annuity and an indexed perpetuity"
+      - "Apply indexation to the premiums of a pension savings contract"
+  prerequis:
+    fr: ["Séance A1.01 : actualisation et annuités", "Séance A1.02 : annuités mensuelles"]
+    en: ["Session A1.01: discounting and annuities", "Session A1.02: monthly annuities"]
+  hypotheses:
+    fr: "Taux fictif et constant de 4 % effectif (6 % dans l'exercice) ; indexation fictive de 2 % par an ; ni frais, ni fiscalité, ni mortalité ; paiements certains"
+    en: "Made-up constant effective rate of 4% (6% in the exercise); made-up indexation of 2% a year; no fees, no tax, no mortality; payments are certain"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "GOV.UK, HM Treasury, « Repayment of £2.6 billion historical debt to be completed by government » (27 mars 2015)", en: "GOV.UK, HM Treasury, “Repayment of £2.6 billion historical debt to be completed by government” (27 March 2015)"}
+    court: "GOV.UK"
+    url: "https://www.gov.uk/government/news/repayment-of-26-billion-historical-debt-to-be-completed-by-government"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Service fédéral des Pensions (Belgique), « Indexation »", en: "Belgian Federal Pension Service, “Indexation”"}
+    court: "sfpd.fgov.be"
+    url: "https://www.sfpd.fgov.be/fr/montant-de-la-pension/calcul/indexation"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Perpétuités et annuités variables : combien vaut une rente qui ne s'arrête jamais ?"
+    legende: |
+      Le 5 juillet 2015, le Royaume-Uni rembourse ses dernières obligations sans date d'échéance, dont certaines remontent à 1720. Des intérêts versés pendant près de trois siècles : combien vaut une rente qui ne s'arrête jamais ? Toute la réponse est dans cet épisode du parcours Actuariat : la valeur accumulée d'une annuité, les perpétuités, les annuités croissantes et décroissantes, les annuités indexées (comme les pensions belges), et le deuxième chapitre du fil rouge, le contrat d'épargne-pension de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les taux des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil de placement. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, perpetuite, annuites, indexation]
+    scenes:
+      - type: accroche
+        texte: "Une dette de *1720*, remboursée en *2015*"
+        note: "GOV.UK, HM Treasury, 27 mars 2015 : 2,6 milliards de livres d'obligations sans échéance, remboursées le 5 juillet 2015."
+        voix_off: "Le 5 juillet 2015, le Trésor britannique rembourse deux virgule six milliards de livres de vieilles dettes. Une partie remonte à 1720, à l'époque de la bulle de la Compagnie des mers du Sud. Ces obligations n'avaient pas de date d'échéance : l'État versait des intérêts chaque année, sans jamais être obligé de rembourser. Près de trois siècles de paiements. Combien vaut une rente qui ne s'arrête jamais ? Étonnamment, la réponse tient en une division."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce troisième épisode du parcours Actuariat ! Merci d'être là. Jusqu'ici, nos annuités versaient toujours le même montant, pendant une durée fixée. Aujourd'hui, on lève ces deux limites : des paiements sans fin, et des paiements qui changent chaque année. Et on retrouve Léa, dont le contrat prend une nouvelle option."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "La valeur *accumulée*"
+          - "Les *perpétuités*"
+          - "Annuités *croissantes*"
+          - "Annuités *indexées*"
+          - "Le contrat de *Léa*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. La valeur accumulée d'une annuité. Les perpétuités. Les annuités croissantes et décroissantes. Les annuités indexées. Puis le deuxième chapitre du contrat de Léa. Et pour finir, un exercice corrigé."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "La valeur accumulée d'une annuité"
+        voix_off: "Commençons par regarder une annuité depuis la fin."
+      - type: texte
+        texte: "Valeur *actuelle* : vue d'aujourd'hui. Valeur *accumulée* : vue du *dernier* paiement"
+        note: "Dans tout l'épisode : taux fictif de 4 % effectif par an, le taux du contrat de Léa."
+        voix_off: "Jusqu'ici, on a toujours ramené les paiements à aujourd'hui : c'est la valeur actuelle. Mais on peut aussi se placer à l'autre bout, à la date du dernier paiement, et se demander combien on a accumulé, intérêts compris. C'est la valeur accumulée. Pour un épargnant, c'est souvent la question qui compte : combien aurai-je à la fin ? Dans tout l'épisode, on prend un taux fictif de quatre pour cent par an, celui du contrat de Léa."
+      - type: etapes
+        texte: "*1 000 €* en fin d'année, pendant *10 ans*, à 4 %"
+        etapes:
+          - "Versé au total : *10 000 €*"
+          - "Le 1er versement travaille *9 ans* : 1 000 × 1,04⁹"
+          - "Le dernier ne travaille *pas* : 1 000"
+          - "Valeur accumulée : *12 006,11 €*"
+        voix_off: "Un exemple. On place mille euros à la fin de chaque année, pendant dix ans, à quatre pour cent. On a versé dix mille euros. Mais chaque versement a travaillé plus ou moins longtemps. Le premier, versé à la fin de la première année, a rapporté des intérêts pendant neuf ans. Le dernier, versé le jour même, n'a rien rapporté. En additionnant chaque versement capitalisé jusqu'à la fin, on obtient douze mille six euros et onze centimes : deux mille six euros d'intérêts."
+        verifier:
+          - {expression: "1000 * 1.04**9", attendu: 1423.31, libelle: "1er versement capitalisé"}
+          - {expression: "1000 * (1.04**10 - 1) / 0.04", attendu: 12006.11, libelle: "Valeur accumulée"}
+      - type: formule
+        texte: "La valeur *accumulée* sₙ"
+        formule:
+          - 's_n=1+(1+i)+\dots+(1+i)^{n-1}=\dfrac{(1+i)^n-1}{i}'
+          - 's_n=(1+i)^n\,a_n\qquad \ddot{s}_n=(1+i)\,s_n'
+          - 's_{10}\approx 12{,}0061\ \text{à}\ 4\ \%'
+        note: "sₙ : valeur accumulée de n paiements de 1 en fin d'année, à la date du dernier paiement."
+        voix_off: "En formule, la valeur accumulée se note s n. C'est encore une somme géométrique, de raison un plus i cette fois. Elle vaut un plus i puissance n, moins un, divisé par i. Et elle est liée à l'annuité a n de la façon la plus simple qui soit : s n, c'est a n capitalisé sur n années. Pour des paiements en début d'année, on multiplie encore par un plus i : c'est s point point n. C'est exactement ce qu'on a fait pour le capital de Léa à soixante-cinq ans, dans l'épisode précédent."
+        verifier:
+          - {expression: "(1.04**10 - 1) / 0.04", attendu: 12.0061, libelle: "s10 à 4 %"}
+          - {expression: "1.04**10 * (1 - 1.04**-10) / 0.04", attendu: 12.0061, libelle: "(1 + i)^10 × a10"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Les perpétuités"
+        voix_off: "Et si les paiements ne s'arrêtaient jamais ?"
+      - type: texte
+        texte: "Les *consols* : des obligations *sans échéance*"
+        note: "Source : GOV.UK, HM Treasury, 27 mars 2015. Les dernières, à 2¾ % et 2½ %, ont été remboursées le 5 juillet 2015."
+        voix_off: "Revenons aux obligations britanniques. Pendant près de trois siècles, le Royaume-Uni a emprunté avec des obligations perpétuelles, qu'on appelait les consols. Le principe : vous prêtez cent livres à l'État, et il vous verse un intérêt fixe chaque année, par exemple deux livres cinquante pour un taux de deux et demi pour cent, sans date de fin. L'État peut rembourser quand il le souhaite, mais n'y est jamais obligé. Les dernières ont été remboursées en 2015. C'est l'exemple réel le plus célèbre de perpétuité."
+      - type: formule
+        texte: "La *perpétuité* : une annuité *sans fin*"
+        formule:
+          - 'a_{\infty}=\lim_{n\to\infty}\dfrac{1-v^n}{i}=\dfrac{1}{i}'
+          - '\ddot{a}_{\infty}=\dfrac{1}{d}=\dfrac{1}{i}+1'
+          - 'a_{\infty}=25\qquad\ddot{a}_{\infty}=26\ \ \text{à}\ 4\ \%'
+        note: "Quand n grandit sans fin, vⁿ tend vers 0 : les paiements lointains ne valent presque plus rien aujourd'hui."
+        voix_off: "Une infinité de paiements, ça ne vaut pas une somme infinie ? Non. Reprenons la formule de l'annuité : un moins v puissance n, divisé par i. Quand n grandit sans fin, v puissance n devient minuscule : un euro dans trois cents ans ne vaut presque rien aujourd'hui. Il reste un divisé par i. À quatre pour cent, une perpétuité de un par an vaut vingt-cinq. Si le premier paiement tombe aujourd'hui, on ajoute ce paiement : vingt-six, soit un divisé par d."
+        verifier:
+          - {expression: "1 / 0.04", attendu: 25, libelle: "Perpétuité à 4 %"}
+          - {expression: "1 / (0.04 / 1.04)", attendu: 26, libelle: "Perpétuité due à 4 %"}
+          - {expression: "1.04**-300", attendu: 0.0000077, tolerance: 0.000001, libelle: "1 € dans 300 ans"}
+      - type: etapes
+        texte: "Pourquoi *1 ÷ i* ? Un capital qui ne *s'épuise jamais*"
+        etapes:
+          - "Placez *25 €* à 4 %"
+          - "Chaque année : 25 × 4 % = *1 €* d'intérêts"
+          - "Vous versez cet euro, le capital reste *25 €*"
+          - "Et ainsi de suite, *pour toujours*"
+        voix_off: "Il y a une façon très simple de le voir. Placez vingt-cinq euros à quatre pour cent. Au bout d'un an, ils rapportent exactement un euro d'intérêts. Vous versez cet euro, et il vous reste vingt-cinq euros, qui rapporteront encore un euro l'année suivante. Et ainsi de suite, pour toujours. Vingt-cinq euros suffisent donc à financer un euro par an sans fin : c'est la valeur de la perpétuité. On ne touche jamais au capital, on ne verse que les intérêts."
+        verifier:
+          - {expression: "25 * 0.04", attendu: 1, libelle: "Intérêts annuels"}
+      - type: etapes
+        texte: "Un consol à *2½ %*, quand le marché demande *4 %*"
+        etapes:
+          - "Il verse *2,50 £* par an, pour toujours"
+          - "Valeur : 2,50 ÷ 4 % = *62,50 £*"
+          - "Bien moins que les *100 £* prêtées"
+          - "Les taux *montent* : le prix *baisse*"
+        note: "Taux de marché fictif de 4 %, pour l'exemple."
+        voix_off: "Appliquons-le. Un consol à deux et demi pour cent verse deux livres cinquante par an, pour toujours. Si les placements de même risque rapportent quatre pour cent, combien un investisseur est-il prêt à le payer ? La valeur de la perpétuité : deux livres cinquante divisées par quatre pour cent, soixante-deux livres cinquante. Bien moins que les cent livres prêtées au départ. Quand les taux montent, la valeur des paiements futurs baisse. On reviendra sur ce mécanisme dans l'épisode sur les obligations."
+        verifier:
+          - {expression: "2.5 / 0.04", attendu: 62.5, libelle: "Valeur du consol"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Les annuités croissantes et décroissantes"
+        voix_off: "Passons à des paiements qui changent chaque année."
+      - type: animation
+        texte: "*1 000 €*, *2 000 €*… *5 000 €* : une annuité *croissante*"
+        animation:
+          modele: echeancier
+          montants: [1000, 2000, 3000, 4000, 5000]
+          dates: [1, 2, 3, 4, 5]
+          taux: 0.04
+          unite: "€"
+        etapes:
+          - "Les paiements *augmentent* de 1 000 € par an"
+          - "Chacun ramené à aujourd'hui : *× vᵏ*"
+          - "Total aujourd'hui : *13 006,49 €*"
+        voix_off: "JG's Holding doit verser mille euros dans un an, deux mille euros dans deux ans, et ainsi de suite jusqu'à cinq mille euros dans cinq ans. Au total, quinze mille euros. Les voici sur la frise du temps. Chacun est ramené à aujourd'hui, comme d'habitude : le premier vaut neuf cent soixante et un euros, le dernier quatre mille cent dix euros. Empilés, ils valent treize mille six euros et quarante-neuf centimes aujourd'hui."
+        verifier:
+          - {expression: "1000 / 1.04", attendu: 961.54, libelle: "Paiement 1"}
+          - {expression: "5000 / 1.04**5", attendu: 4109.64, libelle: "Paiement 5"}
+          - {expression: "1000 * ((1.04 * (1 - 1.04**-5) / 0.04) - 5 * 1.04**-5) / 0.04", attendu: 13006.49, libelle: "1 000 × (Ia)5"}
+      - type: formule
+        texte: "*Croissante* (Ia) et *décroissante* (Da)"
+        formule:
+          - '(Ia)_n=\dfrac{\ddot{a}_n-n\,v^n}{i}\qquad (Da)_n=\dfrac{n-a_n}{i}'
+          - '(Ia)_5\approx 13{,}0065\qquad (Da)_5\approx 13{,}7044'
+        note: "(Ia)ₙ : paiements 1, 2, …, n ; (Da)ₙ : paiements n, n − 1, …, 1. Tous en fin d'année."
+        voix_off: "Ces annuités dont le paiement augmente de un chaque année ont un nom : l'annuité arithmétique croissante, notée I a, I pour increasing. Sa formule : a point point n, moins n fois v puissance n, le tout divisé par i. Sa jumelle, l'annuité décroissante D a, paie n la première année, puis n moins un, jusqu'à un : elle vaut n moins a n, divisé par i. À quatre pour cent sur cinq ans : treize virgule zéro zéro six cinq pour la croissante, treize virgule sept zéro quatre quatre pour la décroissante. Elle vaut plus, car les gros paiements arrivent en premier."
+        verifier:
+          - {expression: "((1.04 * (1 - 1.04**-5) / 0.04) - 5 * 1.04**-5) / 0.04", attendu: 13.0065, libelle: "(Ia)5 à 4 %"}
+          - {expression: "(5 - (1 - 1.04**-5) / 0.04) / 0.04", attendu: 13.7044, libelle: "(Da)5 à 4 %"}
+      - type: etapes
+        texte: "Le contrôle : *(Ia) + (Da) = (n + 1) aₙ*"
+        etapes:
+          - "Chaque année : k + (n + 1 − k) = *n + 1*"
+          - "Ensemble, elles paient *6 par an* pendant 5 ans"
+          - "13,0065 + 13,7044 = *26,7109* = 6 × a₅"
+        voix_off: "Un bon réflexe d'actuaire : vérifier ses calculs. Additionnez les deux annuités, année par année. La première année, un plus cinq, six. La deuxième, deux plus quatre, six. Chaque année, on obtient n plus un, ici six. Ensemble, elles forment donc une annuité constante de six par an : six fois a cinq. Et en effet, treize virgule zéro zéro six cinq plus treize virgule sept zéro quatre quatre font vingt-six virgule sept un zéro neuf, exactement six fois a cinq. Si ça ne tombe pas juste, il y a une erreur quelque part."
+        verifier:
+          - {expression: "6 * (1 - 1.04**-5) / 0.04", attendu: 26.7109, libelle: "6 × a5"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Les annuités indexées"
+        voix_off: "Dans la vraie vie, les paiements suivent souvent les prix."
+      - type: texte
+        texte: "En Belgique, les pensions augmentent de *2 %* à chaque *indice pivot* dépassé"
+        note: "Source : Service fédéral des Pensions, « Indexation », consulté le 24/11/2026. En 2026 : indexations au 1er mars et au 1er septembre."
+        voix_off: "Un fait réel. En Belgique, les pensions sont indexées : quand l'indice des prix dépasse un seuil, appelé l'indice pivot, les pensions augmentent de deux pour cent, depuis 2025 le troisième mois après le dépassement. En 2026, c'est arrivé deux fois, au premier mars et au premier septembre. Une pension qui augmente d'un pourcentage fixe à intervalles réguliers, c'est une annuité géométrique."
+      - type: formule
+        texte: "L'annuité *géométrique* : *+ g* par an"
+        formule:
+          - '\sum_{k=1}^{n}(1+g)^{k-1}v^k=\dfrac{1-\left(\frac{1+g}{1+i}\right)^n}{i-g}'
+          - 'a_{\infty}^{(g)}=\dfrac{1}{i-g}\quad (g<i)'
+        note: "Le premier paiement vaut 1, puis il augmente de g chaque année. Pour g = i, chaque paiement vaut v aujourd'hui : la somme vaut n v."
+        voix_off: "Le premier paiement vaut un, puis chaque paiement augmente de g par an. Chaque paiement grandit de un plus g, mais il est actualisé de un plus i : tout se joue dans le rapport des deux. La somme vaut un moins ce rapport puissance n, divisé par i moins g. Et si g est plus petit que i, on peut laisser n grandir sans fin : la perpétuité indexée vaut un divisé par i moins g."
+      - type: etapes
+        texte: "Indexer à *2 %* : la valeur *double*"
+        etapes:
+          - "Perpétuité fixe à 4 % : 1 ÷ 0,04 = *25*"
+          - "Perpétuité indexée à 2 % : 1 ÷ (0,04 − 0,02) = *50*"
+          - "Pour l'actuaire, *indexer* pèse autant que *baisser* le taux"
+        voix_off: "Regardez l'effet. À quatre pour cent, une perpétuité fixe de un par an vaut vingt-cinq. Indexée à deux pour cent par an, elle vaut un divisé par zéro virgule zéro deux : cinquante. Le double. Indexer de deux pour cent, c'est comme actualiser à deux pour cent au lieu de quatre. C'est pour cela qu'un régime de pension indexé coûte beaucoup plus cher à financer, et que l'actuaire surveille autant l'inflation que les taux d'intérêt."
+        verifier:
+          - {expression: "1 / 0.04", attendu: 25, libelle: "Perpétuité fixe"}
+          - {expression: "1 / (0.04 - 0.02)", attendu: 50, libelle: "Perpétuité indexée"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : Léa indexe sa prime"
+        voix_off: "Retrouvons Léa et son contrat chez JG's Holding."
+      - type: animation
+        texte: "La prime de *Léa* : *+ 2 %* chaque année"
+        animation:
+          modele: echeancier
+          montants: [1200, 1224, 1248.48, 1273.45, 1298.92, 1324.9, 1351.39, 1378.42, 1405.99, 1434.11]
+          dates: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          taux: 0.04
+          unite: "€"
+          decimales: 0
+        etapes:
+          - "Les primes des *10 premières* années, + 2 % par an"
+          - "Ramenées à aujourd'hui à *4 %*"
+          - "Elles valent *11 013 €* aujourd'hui"
+        note: "JG's Holding est un assureur fictif, Léa une cliente fictive. Indexation fictive de 2 % par an. Primes annuelles regroupées pour l'image."
+        voix_off: "Léa a trente ans et verse cent euros par mois. Elle choisit l'option d'indexation de son contrat : chaque premier janvier, sa prime augmente de deux pour cent, pour suivre la hausse de ses revenus. Sur la frise, ses primes annuelles des dix premières années : mille deux cents euros, puis mille deux cent vingt-quatre, et ainsi de suite. Elles grandissent de deux pour cent par an, mais l'actualisation les réduit de quatre pour cent par an : vues d'aujourd'hui, elles rétrécissent quand même. Ces dix années valent environ onze mille treize euros aujourd'hui."
+        verifier:
+          - {expression: "1200 * 1.02**9", attendu: 1434.11, libelle: "Prime de la 10e année"}
+          - {expression: "1200 * (1 - (1.02 / 1.04)**10) / (1 - 1.02 / 1.04)", attendu: 11013, tolerance: 1, libelle: "10 premières années"}
+      - type: etapes
+        texte: "Les *35 ans* de primes indexées de Léa"
+        etapes:
+          - "Dernière prime, à 64 ans : *196,07 €* par mois"
+          - "Versé au total : *59 993,37 €*"
+          - "Valeur aujourd'hui : *30 229,14 €*"
+          - "Capital à 65 ans : *119 286,87 €*"
+        voix_off: "Sur trente-cinq ans, la prime de Léa double presque : sa dernière mensualité, à soixante-quatre ans, sera de cent quatre-vingt-seize euros. Au total, elle versera cinquante-neuf mille neuf cent quatre-vingt-treize euros. Pour la valeur aujourd'hui, on combine les deux épisodes : une annuité géométrique sur trente-cinq ans, et le fait que chaque année se paie en douze mensualités de début de mois. On trouve trente mille deux cent vingt-neuf euros. Capitalisés sur trente-cinq ans, cela donne cent dix-neuf mille deux cent quatre-vingt-sept euros à soixante-cinq ans, contre quatre-vingt-dix mille sans indexation."
+        verifier:
+          - {expression: "100 * 1.02**34", attendu: 196.07, libelle: "Dernière mensualité"}
+          - {expression: "1200 * (1.02**35 - 1) / 0.02", attendu: 59993.37, libelle: "Total versé"}
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**35) / 0.02", attendu: 30229.14, libelle: "Valeur actuelle des primes indexées"}
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**35) / 0.02 * 1.04**35", attendu: 119286.87, libelle: "Capital à 65 ans"}
+      - type: formule
+        texte: "À 65 ans : une rente *qui ne s'arrête jamais*"
+        formule:
+          - 'R\times\ddot{a}^{(12)}_{\infty}=C\qquad \ddot{a}^{(12)}_{\infty}=\dfrac{1}{d^{(12)}}'
+          - 'R=C\times d^{(12)}=119\,286{,}87\times 3{,}9157\ \%'
+          - 'R\div 12\approx 389{,}24\ \text{€}\ \text{par mois}'
+        note: "Sans indexation des primes : 90 286,15 € de capital, soit 294,61 € par mois. Rente sans mortalité : on ne touche qu'aux intérêts."
+        voix_off: "À soixante-cinq ans, Léa veut une rente mensuelle, versée au début de chaque mois. Imaginons d'abord une rente qui ne s'arrête jamais : JG's Holding ne verse que les intérêts, et le capital reste intact. C'est une perpétuité mensuelle, qui vaut un divisé par d douze. Le montant annuel est donc le capital fois d douze, trois virgule neuf un cinq sept pour cent. Par mois : trois cent quatre-vingt-neuf euros. Sans l'indexation, ce serait deux cent quatre-vingt-quinze euros par mois."
+        verifier:
+          - {expression: "119286.87 * 12 * (1 - 1.04**(-1/12)) / 12", attendu: 389.24, libelle: "Rente perpétuelle mensuelle"}
+          - {expression: "90286.15 * 12 * (1 - 1.04**(-1/12)) / 12", attendu: 294.61, libelle: "Sans indexation"}
+      - type: texte
+        texte: "Une vraie rente s'arrête au *décès* : elle vaudra *plus* par mois"
+        voix_off: "Évidemment, Léa ne vivra pas éternellement. Une vraie rente de retraite s'arrête à son décès. JG's Holding peut donc consommer aussi le capital, et verser bien plus que les seuls intérêts. Mais combien ? Pour le savoir, il faut savoir combien de temps Léa a des chances de vivre : ce sera le rôle des probabilités et de la mortalité, dans les modules suivants. Pour l'instant, retenez que la perpétuité est le plafond de durée : aucune rente n'est plus longue."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Taux effectif *i = 6 %*, *5 ans*, indexation *g = 3 %*. Calculez :"
+        pause: 20
+        questions:
+          - "La valeur accumulée s₅"
+          - "La perpétuité a∞"
+          - "(Ia)₅ et (Da)₅"
+          - "L'annuité géométrique sur 5 ans"
+        voix_off: "Mettez la vidéo en pause. Avec un taux annuel effectif de six pour cent, sur cinq ans, calculez la valeur accumulée s cinq, la perpétuité a infini, les annuités croissante et décroissante I a cinq et D a cinq, puis l'annuité géométrique sur cinq ans, avec une indexation de trois pour cent."
+      - type: correction
+        etapes:
+          - "s₅ = (1,06⁵ − 1) ÷ 0,06 ≈ *5,6371*"
+          - "a∞ = 1 ÷ 0,06 ≈ *16,6667*"
+          - "(Ia)₅ ≈ *12,1469* ; (Da)₅ ≈ *13,1273*"
+          - "Géométrique : (1 − (1,03 ÷ 1,06)⁵) ÷ 0,03 ≈ *4,4574*"
+        voix_off: "Correction. La valeur accumulée : un virgule zéro six puissance cinq, moins un, divisé par zéro virgule zéro six, environ cinq virgule six trois sept un. La perpétuité : un divisé par zéro virgule zéro six, environ seize virgule six six six sept. L'annuité croissante vaut environ douze virgule un quatre six neuf, la décroissante treize virgule un deux sept trois. Le contrôle : leur somme, vingt-cinq virgule deux sept quatre deux, vaut bien six fois a cinq. Et l'annuité géométrique : environ quatre virgule quatre cinq sept quatre."
+        verifier:
+          - {expression: "(1.06**5 - 1) / 0.06", attendu: 5.6371, libelle: "s5 à 6 %"}
+          - {expression: "1 / 0.06", attendu: 16.6667, libelle: "Perpétuité à 6 %"}
+          - {expression: "((1.06 * (1 - 1.06**-5) / 0.06) - 5 * 1.06**-5) / 0.06", attendu: 12.1469, libelle: "(Ia)5 à 6 %"}
+          - {expression: "(5 - (1 - 1.06**-5) / 0.06) / 0.06", attendu: 13.1273, libelle: "(Da)5 à 6 %"}
+          - {expression: "6 * (1 - 1.06**-5) / 0.06", attendu: 25.2742, libelle: "Contrôle"}
+          - {expression: "(1 - (1.03 / 1.06)**5) / 0.03", attendu: 4.4574, libelle: "Géométrique"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "sₙ = ((1 + i)ⁿ − 1) ÷ i = *(1 + i)ⁿ aₙ*"
+          - "Perpétuité : *a∞ = 1 ÷ i* ; ä∞ = 1 ÷ d"
+          - "(Ia) + (Da) = *(n + 1) aₙ* : le contrôle"
+          - "Indexée : *1 ÷ (i − g)* sans fin"
+          - "Léa, indexée : *119 286,87 €* à 65 ans"
+        voix_off: "Ce qu'il faut retenir. La valeur accumulée s n, c'est l'annuité vue du dernier paiement : a n capitalisé sur n années. Une perpétuité vaut un divisé par i : le capital dont les intérêts paient un par an, pour toujours. Les annuités croissante et décroissante se contrôlent l'une l'autre. Une perpétuité indexée vaut un divisé par i moins g. Et avec l'indexation, Léa disposera de cent dix-neuf mille deux cent quatre-vingt-sept euros à soixante-cinq ans."
+      - type: cloture
+        texte: "Prochain épisode : *dans une mensualité, combien rembourse vraiment ?* Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant évaluer une rente sans fin et une rente qui grandit. Prochain épisode : les prêts. Dans une mensualité de crédit, combien sert vraiment à rembourser ? Et on suivra le capital de Léa, année après année. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Perpetuities and varying annuities: what is an annuity that never stops worth?"
+    legende: |
+      On 5 July 2015, the United Kingdom repaid its last undated bonds, some of which date back to 1720. Interest paid for almost three centuries: what is an annuity that never stops worth? The full answer is in this episode of the Actuarial path: the accumulated value of an annuity, perpetuities, increasing and decreasing annuities, indexed annuities (like Belgian pensions), and the second chapter of our running case, Léa's pension savings contract. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer and Léa a fictional client; the example rates are made up, the real facts are sourced. No investment advice. Got a question? Ask in the comments.
+    hashtags: [actuarial, perpetuity, annuities, indexation]
+    scenes:
+      - type: accroche
+        texte: "A debt from *1720*, repaid in *2015*"
+        note: "GOV.UK, HM Treasury, 27 March 2015: £2.6 billion of undated bonds, repaid on 5 July 2015."
+        voix_off: "On the fifth of July 2015, the British Treasury repaid two point six billion pounds of old debt. Part of it dated back to 1720, to the time of the South Sea Bubble. These bonds had no maturity date: the State paid interest every year, without ever being obliged to repay. Almost three centuries of payments. What is an annuity that never stops worth? Surprisingly, the answer fits in a single division."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this third episode of the Actuarial path! Thanks for being here. Until now, our annuities always paid the same amount, for a fixed term. Today, we lift both limits: payments that never end, and payments that change every year. And we meet Léa again, whose contract takes a new option."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *accumulated* value"
+          - "*Perpetuities*"
+          - "*Increasing* annuities"
+          - "*Indexed* annuities"
+          - "*Léa*'s contract"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. The accumulated value of an annuity. Perpetuities. Increasing and decreasing annuities. Indexed annuities. Then the second chapter of Léa's contract. And to finish, a solved exercise."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The accumulated value of an annuity"
+        voix_off: "Let's start by looking at an annuity from the end."
+      - type: texte
+        texte: "*Present* value: seen from today. *Accumulated* value: seen from the *last* payment"
+        note: "Throughout the episode: made-up rate of 4% effective a year, the rate of Léa's contract."
+        voix_off: "So far, we have always brought payments back to today: that is the present value. But we can also stand at the other end, on the date of the last payment, and ask how much we have built up, interest included. That is the accumulated value. For a saver, it is often the question that matters: how much will I have at the end? Throughout the episode, we use a made-up rate of four percent a year, the rate of Léa's contract."
+      - type: etapes
+        texte: "*€1,000* at year end, for *10 years*, at 4%"
+        etapes:
+          - "Paid in total: *€10,000*"
+          - "The 1st payment works for *9 years*: 1,000 × 1.04⁹"
+          - "The last one does *not* work: 1,000"
+          - "Accumulated value: *€12,006.11*"
+        voix_off: "An example. We invest one thousand euros at the end of each year, for ten years, at four percent. We have paid in ten thousand euros. But each payment has worked for a different length of time. The first, paid at the end of year one, earned interest for nine years. The last, paid on the final day, earned nothing. Adding up each payment accumulated to the end, we get twelve thousand and six euros eleven: two thousand and six euros of interest."
+        verifier:
+          - {expression: "1000 * 1.04**9", attendu: 1423.31, libelle: "1st payment accumulated"}
+          - {expression: "1000 * (1.04**10 - 1) / 0.04", attendu: 12006.11, libelle: "Accumulated value"}
+      - type: formule
+        texte: "The *accumulated* value sₙ"
+        formule:
+          - 's_n=1+(1+i)+\dots+(1+i)^{n-1}=\dfrac{(1+i)^n-1}{i}'
+          - 's_n=(1+i)^n\,a_n\qquad \ddot{s}_n=(1+i)\,s_n'
+          - 's_{10}\approx 12.0061\ \text{at}\ 4\%'
+        note: "sₙ: accumulated value of n payments of 1 at year end, on the date of the last payment."
+        voix_off: "As a formula, the accumulated value is written s n. It is again a geometric sum, this time with ratio one plus i. It equals one plus i to the power n, minus one, divided by i. And it is linked to the annuity a n in the simplest possible way: s n is a n accumulated over n years. For payments at the start of each year, we multiply once more by one plus i: that is s double dot n. It is exactly what we did for Léa's capital at sixty-five, in the previous episode."
+        verifier:
+          - {expression: "(1.04**10 - 1) / 0.04", attendu: 12.0061, libelle: "s10 at 4%"}
+          - {expression: "1.04**10 * (1 - 1.04**-10) / 0.04", attendu: 12.0061, libelle: "(1 + i)^10 × a10"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Perpetuities"
+        voix_off: "What if the payments never stopped?"
+      - type: texte
+        texte: "*Consols*: bonds with *no maturity date*"
+        note: "Source: GOV.UK, HM Treasury, 27 March 2015. The last ones, at 2¾% and 2½%, were repaid on 5 July 2015."
+        voix_off: "Back to British bonds. For almost three centuries, the United Kingdom borrowed with perpetual bonds, called consols. The idea: you lend one hundred pounds to the State, and it pays you a fixed interest every year, for example two pounds fifty for a two and a half percent rate, with no end date. The State may repay whenever it wishes, but is never obliged to. The last ones were repaid in 2015. It is the most famous real example of a perpetuity."
+      - type: formule
+        texte: "The *perpetuity*: an annuity *without end*"
+        formule:
+          - 'a_{\infty}=\lim_{n\to\infty}\dfrac{1-v^n}{i}=\dfrac{1}{i}'
+          - '\ddot{a}_{\infty}=\dfrac{1}{d}=\dfrac{1}{i}+1'
+          - 'a_{\infty}=25\qquad\ddot{a}_{\infty}=26\ \ \text{at}\ 4\%'
+        note: "As n grows without end, vⁿ tends to 0: distant payments are worth almost nothing today."
+        voix_off: "Infinitely many payments, isn't that worth an infinite amount? No. Take the annuity formula again: one minus v to the power n, divided by i. As n grows without end, v to the power n becomes tiny: one euro in three hundred years is worth almost nothing today. What remains is one divided by i. At four percent, a perpetuity of one a year is worth twenty-five. If the first payment falls today, we add that payment: twenty-six, that is one divided by d."
+        verifier:
+          - {expression: "1 / 0.04", attendu: 25, libelle: "Perpetuity at 4%"}
+          - {expression: "1 / (0.04 / 1.04)", attendu: 26, libelle: "Perpetuity due at 4%"}
+          - {expression: "1.04**-300", attendu: 0.0000077, tolerance: 0.000001, libelle: "€1 in 300 years"}
+      - type: etapes
+        texte: "Why *1 ÷ i*? A capital that *never runs out*"
+        etapes:
+          - "Invest *€25* at 4%"
+          - "Each year: 25 × 4% = *€1* of interest"
+          - "You pay out that euro, the capital stays *€25*"
+          - "And so on, *forever*"
+        voix_off: "There is a very simple way to see it. Invest twenty-five euros at four percent. After a year, they earn exactly one euro of interest. You pay out that euro, and you still have twenty-five euros, which will earn another euro the next year. And so on, forever. So twenty-five euros are enough to fund one euro a year without end: that is the value of the perpetuity. The capital is never touched; only the interest is paid out."
+        verifier:
+          - {expression: "25 * 0.04", attendu: 1, libelle: "Annual interest"}
+      - type: etapes
+        texte: "A *2½%* consol, when the market asks *4%*"
+        etapes:
+          - "It pays *£2.50* a year, forever"
+          - "Value: 2.50 ÷ 4% = *£62.50*"
+          - "Far less than the *£100* lent"
+          - "Rates *rise*: the price *falls*"
+        note: "Made-up market rate of 4%, for the example."
+        voix_off: "Let's apply it. A two and a half percent consol pays two pounds fifty a year, forever. If investments of the same risk earn four percent, how much will an investor pay for it? The value of the perpetuity: two pounds fifty divided by four percent, sixty-two pounds fifty. Far less than the one hundred pounds lent at the start. When rates rise, the value of future payments falls. We will come back to this mechanism in the episode on bonds."
+        verifier:
+          - {expression: "2.5 / 0.04", attendu: 62.5, libelle: "Value of the consol"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Increasing and decreasing annuities"
+        voix_off: "Now let's move to payments that change every year."
+      - type: animation
+        texte: "*€1,000*, *€2,000*… *€5,000*: an *increasing* annuity"
+        animation:
+          modele: echeancier
+          montants: [1000, 2000, 3000, 4000, 5000]
+          dates: [1, 2, 3, 4, 5]
+          taux: 0.04
+          unite: "€"
+        etapes:
+          - "Payments *grow* by €1,000 a year"
+          - "Each one brought back to today: *× vᵏ*"
+          - "Total today: *€13,006.49*"
+        voix_off: "JG's Holding must pay one thousand euros in one year, two thousand euros in two years, and so on up to five thousand euros in five years. Fifteen thousand euros in total. Here they are on the timeline. Each one is brought back to today, as usual: the first is worth nine hundred and sixty-one euros, the last four thousand one hundred and ten euros. Stacked up, they are worth thirteen thousand and six euros forty-nine today."
+        verifier:
+          - {expression: "1000 / 1.04", attendu: 961.54, libelle: "Payment 1"}
+          - {expression: "5000 / 1.04**5", attendu: 4109.64, libelle: "Payment 5"}
+          - {expression: "1000 * ((1.04 * (1 - 1.04**-5) / 0.04) - 5 * 1.04**-5) / 0.04", attendu: 13006.49, libelle: "1,000 × (Ia)5"}
+      - type: formule
+        texte: "*Increasing* (Ia) and *decreasing* (Da)"
+        formule:
+          - '(Ia)_n=\dfrac{\ddot{a}_n-n\,v^n}{i}\qquad (Da)_n=\dfrac{n-a_n}{i}'
+          - '(Ia)_5\approx 13.0065\qquad (Da)_5\approx 13.7044'
+        note: "(Ia)ₙ: payments 1, 2, …, n; (Da)ₙ: payments n, n − 1, …, 1. All at year end."
+        voix_off: "These annuities whose payment rises by one each year have a name: the increasing arithmetic annuity, written I a, I for increasing. Its formula: a double dot n, minus n times v to the power n, all divided by i. Its twin, the decreasing annuity D a, pays n in the first year, then n minus one, down to one: it is worth n minus a n, divided by i. At four percent over five years: thirteen point zero zero six five for the increasing one, thirteen point seven zero four four for the decreasing one. It is worth more, because the big payments come first."
+        verifier:
+          - {expression: "((1.04 * (1 - 1.04**-5) / 0.04) - 5 * 1.04**-5) / 0.04", attendu: 13.0065, libelle: "(Ia)5 at 4%"}
+          - {expression: "(5 - (1 - 1.04**-5) / 0.04) / 0.04", attendu: 13.7044, libelle: "(Da)5 at 4%"}
+      - type: etapes
+        texte: "The check: *(Ia) + (Da) = (n + 1) aₙ*"
+        etapes:
+          - "Each year: k + (n + 1 − k) = *n + 1*"
+          - "Together, they pay *6 a year* for 5 years"
+          - "13.0065 + 13.7044 = *26.7109* = 6 × a₅"
+        voix_off: "A good actuarial habit: check your work. Add the two annuities, year by year. Year one, one plus five, six. Year two, two plus four, six. Every year, we get n plus one, here six. Together, they form a level annuity of six a year: six times a five. And indeed, thirteen point zero zero six five plus thirteen point seven zero four four make twenty-six point seven one zero nine, exactly six times a five. If it does not match, there is a mistake somewhere."
+        verifier:
+          - {expression: "6 * (1 - 1.04**-5) / 0.04", attendu: 26.7109, libelle: "6 × a5"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Indexed annuities"
+        voix_off: "In real life, payments often follow prices."
+      - type: texte
+        texte: "In Belgium, pensions rise by *2%* each time the *pivot index* is passed"
+        note: "Source: Belgian Federal Pension Service, “Indexation”, accessed 24/11/2026. In 2026: indexations on 1 March and 1 September."
+        voix_off: "A real fact. In Belgium, pensions are indexed: when the price index passes a threshold, called the pivot index, pensions rise by two percent, since 2025 in the third month after the threshold is passed. In 2026, it happened twice, on the first of March and the first of September. A pension that rises by a fixed percentage at regular intervals is a geometric annuity."
+      - type: formule
+        texte: "The *geometric* annuity: *+ g* a year"
+        formule:
+          - '\sum_{k=1}^{n}(1+g)^{k-1}v^k=\dfrac{1-\left(\frac{1+g}{1+i}\right)^n}{i-g}'
+          - 'a_{\infty}^{(g)}=\dfrac{1}{i-g}\quad (g<i)'
+        note: "The first payment is 1, then it grows by g each year. For g = i, each payment is worth v today: the sum is n v."
+        voix_off: "The first payment is one, then each payment grows by g a year. Each payment grows by one plus g, but it is discounted by one plus i: everything depends on the ratio of the two. The sum equals one minus that ratio to the power n, divided by i minus g. And if g is smaller than i, we can let n grow without end: the indexed perpetuity is worth one divided by i minus g."
+      - type: etapes
+        texte: "Indexing at *2%*: the value *doubles*"
+        etapes:
+          - "Level perpetuity at 4%: 1 ÷ 0.04 = *25*"
+          - "Perpetuity indexed at 2%: 1 ÷ (0.04 − 0.02) = *50*"
+          - "For the actuary, *indexing* weighs as much as *lowering* the rate"
+        voix_off: "Look at the effect. At four percent, a level perpetuity of one a year is worth twenty-five. Indexed at two percent a year, it is worth one divided by zero point zero two: fifty. Double. Indexing by two percent is like discounting at two percent instead of four. That is why an indexed pension scheme costs much more to fund, and why the actuary watches inflation as closely as interest rates."
+        verifier:
+          - {expression: "1 / 0.04", attendu: 25, libelle: "Level perpetuity"}
+          - {expression: "1 / (0.04 - 0.02)", attendu: 50, libelle: "Indexed perpetuity"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Our running case: Léa indexes her premium"
+        voix_off: "Let's meet Léa again, and her contract with JG's Holding."
+      - type: animation
+        texte: "*Léa*'s premium: *+ 2%* every year"
+        animation:
+          modele: echeancier
+          montants: [1200, 1224, 1248.48, 1273.45, 1298.92, 1324.9, 1351.39, 1378.42, 1405.99, 1434.11]
+          dates: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          taux: 0.04
+          unite: "€"
+          decimales: 0
+        etapes:
+          - "Premiums for the *first 10* years, + 2% a year"
+          - "Brought back to today at *4%*"
+          - "They are worth *€11,013* today"
+        note: "JG's Holding is a fictional insurer, Léa a fictional client. Made-up indexation of 2% a year. Yearly premiums grouped for the picture."
+        voix_off: "Léa is thirty and pays one hundred euros a month. She picks her contract's indexation option: every first of January, her premium rises by two percent, to follow her growing income. On the timeline, her yearly premiums for the first ten years: one thousand two hundred euros, then one thousand two hundred and twenty-four, and so on. They grow by two percent a year, but discounting shrinks them by four percent a year: seen from today, they still get smaller. These ten years are worth about eleven thousand and thirteen euros today."
+        verifier:
+          - {expression: "1200 * 1.02**9", attendu: 1434.11, libelle: "Premium in year 10"}
+          - {expression: "1200 * (1 - (1.02 / 1.04)**10) / (1 - 1.02 / 1.04)", attendu: 11013, tolerance: 1, libelle: "First 10 years"}
+      - type: etapes
+        texte: "Léa's *35 years* of indexed premiums"
+        etapes:
+          - "Last premium, at 64: *€196.07* a month"
+          - "Paid in total: *€59,993.37*"
+          - "Value today: *€30,229.14*"
+          - "Capital at 65: *€119,286.87*"
+        voix_off: "Over thirty-five years, Léa's premium almost doubles: her last monthly payment, at sixty-four, will be one hundred and ninety-six euros. In total, she will pay fifty-nine thousand nine hundred and ninety-three euros. For the value today, we combine the two episodes: a geometric annuity over thirty-five years, and the fact that each year is paid in twelve monthly instalments at the start of the month. We get thirty thousand two hundred and twenty-nine euros. Accumulated over thirty-five years, that gives one hundred and nineteen thousand two hundred and eighty-seven euros at sixty-five, against ninety thousand without indexation."
+        verifier:
+          - {expression: "100 * 1.02**34", attendu: 196.07, libelle: "Last monthly premium"}
+          - {expression: "1200 * (1.02**35 - 1) / 0.02", attendu: 59993.37, libelle: "Total paid"}
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**35) / 0.02", attendu: 30229.14, libelle: "Present value of indexed premiums"}
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**35) / 0.02 * 1.04**35", attendu: 119286.87, libelle: "Capital at 65"}
+      - type: formule
+        texte: "At 65: an annuity *that never stops*"
+        formule:
+          - 'R\times\ddot{a}^{(12)}_{\infty}=C\qquad \ddot{a}^{(12)}_{\infty}=\dfrac{1}{d^{(12)}}'
+          - 'R=C\times d^{(12)}=119{,}286.87\times 3.9157\%'
+          - 'R\div 12\approx \text{€}389.24\ \text{a month}'
+        note: "Without premium indexation: €90,286.15 of capital, i.e. €294.61 a month. Annuity without mortality: only the interest is used."
+        voix_off: "At sixty-five, Léa wants a monthly annuity, paid at the start of each month. Let's first imagine an annuity that never stops: JG's Holding pays out only the interest, and the capital stays intact. It is a monthly perpetuity, worth one divided by d twelve. So the yearly amount is the capital times d twelve, three point nine one five seven percent. Per month: three hundred and eighty-nine euros. Without indexation, it would be two hundred and ninety-five euros a month."
+        verifier:
+          - {expression: "119286.87 * 12 * (1 - 1.04**(-1/12)) / 12", attendu: 389.24, libelle: "Monthly perpetuity"}
+          - {expression: "90286.15 * 12 * (1 - 1.04**(-1/12)) / 12", attendu: 294.61, libelle: "Without indexation"}
+      - type: texte
+        texte: "A real annuity stops at *death*: it will pay *more* each month"
+        voix_off: "Of course, Léa will not live forever. A real retirement annuity stops when she dies. So JG's Holding can also use up the capital, and pay much more than the interest alone. But how much? To know, we need to know how long Léa is likely to live: that will be the job of probability and mortality, in the next modules. For now, remember that the perpetuity is the ceiling on length: no annuity lasts longer."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Effective rate *i = 6%*, *5 years*, indexation *g = 3%*. Compute:"
+        pause: 20
+        questions:
+          - "The accumulated value s₅"
+          - "The perpetuity a∞"
+          - "(Ia)₅ and (Da)₅"
+          - "The geometric annuity over 5 years"
+        voix_off: "Pause the video. With an annual effective rate of six percent, over five years, compute the accumulated value s five, the perpetuity a infinity, the increasing and decreasing annuities I a five and D a five, then the geometric annuity over five years, with an indexation of three percent."
+      - type: correction
+        etapes:
+          - "s₅ = (1.06⁵ − 1) ÷ 0.06 ≈ *5.6371*"
+          - "a∞ = 1 ÷ 0.06 ≈ *16.6667*"
+          - "(Ia)₅ ≈ *12.1469*; (Da)₅ ≈ *13.1273*"
+          - "Geometric: (1 − (1.03 ÷ 1.06)⁵) ÷ 0.03 ≈ *4.4574*"
+        voix_off: "Solution. The accumulated value: one point zero six to the power five, minus one, divided by zero point zero six, about five point six three seven one. The perpetuity: one divided by zero point zero six, about sixteen point six six six seven. The increasing annuity is about twelve point one four six nine, the decreasing one thirteen point one two seven three. The check: their sum, twenty-five point two seven four two, is indeed six times a five. And the geometric annuity: about four point four five seven four."
+        verifier:
+          - {expression: "(1.06**5 - 1) / 0.06", attendu: 5.6371, libelle: "s5 at 6%"}
+          - {expression: "1 / 0.06", attendu: 16.6667, libelle: "Perpetuity at 6%"}
+          - {expression: "((1.06 * (1 - 1.06**-5) / 0.06) - 5 * 1.06**-5) / 0.06", attendu: 12.1469, libelle: "(Ia)5 at 6%"}
+          - {expression: "(5 - (1 - 1.06**-5) / 0.06) / 0.06", attendu: 13.1273, libelle: "(Da)5 at 6%"}
+          - {expression: "6 * (1 - 1.06**-5) / 0.06", attendu: 25.2742, libelle: "Check"}
+          - {expression: "(1 - (1.03 / 1.06)**5) / 0.03", attendu: 4.4574, libelle: "Geometric"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "sₙ = ((1 + i)ⁿ − 1) ÷ i = *(1 + i)ⁿ aₙ*"
+          - "Perpetuity: *a∞ = 1 ÷ i*; ä∞ = 1 ÷ d"
+          - "(Ia) + (Da) = *(n + 1) aₙ*: the check"
+          - "Indexed: *1 ÷ (i − g)* without end"
+          - "Léa, indexed: *€119,286.87* at 65"
+        voix_off: "What to remember. The accumulated value s n is the annuity seen from the last payment: a n accumulated over n years. A perpetuity is worth one divided by i: the capital whose interest pays one a year, forever. Increasing and decreasing annuities check each other. An indexed perpetuity is worth one divided by i minus g. And with indexation, Léa will have one hundred and nineteen thousand two hundred and eighty-seven euros at sixty-five."
+      - type: cloture
+        texte: "Next episode: *how much of a loan payment really repays?* A question? *In the comments*"
+        voix_off: "You can now value an annuity without end and an annuity that grows. Next episode: loans. In a monthly loan payment, how much really goes to repaying? And we will follow Léa's capital, year after year. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
