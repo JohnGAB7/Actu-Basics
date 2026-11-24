@@ -66,7 +66,7 @@ editions:
         disposition: cartes
         etapes:
           - "L'annuité *constante*"
-          - "Le tableau d'*amortissement*"
+          - "L'*amortissement*"
           - "Le solde *restant dû*"
           - "Le taux de *rendement*"
           - "Le contrat de *Léa*"
@@ -85,7 +85,7 @@ editions:
         texte: "*10 000 €* sur *5 ans* à 4 % : *2 246,27 €* par an"
         animation:
           modele: echeancier
-          montants: [2246.27, 2246.27, 2246.27, 2246.27, 2246.27]
+          montants: [2246.2711, 2246.2711, 2246.2711, 2246.2711, 2246.2711]
           dates: [1, 2, 3, 4, 5]
           taux: 0.04
           unite: "€"
@@ -323,7 +323,7 @@ editions:
         texte: "*€10,000* over *5 years* at 4%: *€2,246.27* a year"
         animation:
           modele: echeancier
-          montants: [2246.27, 2246.27, 2246.27, 2246.27, 2246.27]
+          montants: [2246.2711, 2246.2711, 2246.2711, 2246.2711, 2246.2711]
           dates: [1, 2, 3, 4, 5]
           taux: 0.04
           unite: "€"
