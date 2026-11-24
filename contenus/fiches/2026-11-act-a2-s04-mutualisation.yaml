@@ -1,0 +1,512 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2/s04 « Mutualisation et loi des grands nombres »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2/s04.yaml (calcul « À la main » : 1 % de chance d'un sinistre de
+# 10 000 €, 10 000 contrats). Les exemples utilisent 2 % de chance d'un sinistre de 5 000 € ; l'exercice final utilise 5 %
+# de chance d'un sinistre de 2 000 € et 2 500 contrats, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la garantie décès du portefeuille de JG's Holding (10 000 assurés,
+# taux de décès fictif 0,1256 % des épisodes A2.01 et A2.02), avec un capital décès fictif de 50 000 €.
+# Faits réels : chiffres d'origine (Kerrich, Bernoulli, Assuralia). Probabilités et montants des exemples : fictifs.
+id: 2026-11-act-a2-s04-mutualisation
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2 · Mutualisation et loi des grands nombres"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer l'espérance et la variance d'une charge totale de contrats indépendants"
+      - "Voir le risque par contrat baisser comme 1 sur racine de n"
+      - "Énoncer la loi des grands nombres et le théorème central limite"
+      - "Calculer un chargement de sécurité au seuil de 95 %"
+      - "Reconnaître les limites de la mutualisation : corrélation et catastrophes"
+    en:
+      - "Compute the mean and variance of the aggregate cost of independent policies"
+      - "See the risk per policy fall like one over the square root of n"
+      - "State the law of large numbers and the central limit theorem"
+      - "Compute a safety loading at the 95% level"
+      - "Recognise the limits of pooling: correlation and catastrophes"
+  prerequis:
+    fr: ["Séances A2.02 et A2.03 : espérance, variance, lois", "Loi normale et sa table Φ"]
+    en: ["Sessions A2.02 and A2.03: mean, variance, distributions", "The normal distribution and its table Φ"]
+  hypotheses:
+    fr: "Contrats indépendants et identiques ; probabilités, montants et capital décès fictifs ; données historiques et statistiques publiques telles que publiées"
+    en: "Independent, identical policies; made-up probabilities, amounts and death benefit; historical data and public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "J. Miller, « Earliest Known Uses of Some of the Words of Mathematics », MacTutor (Bernoulli's theorem, Ars Conjectandi, 1713)", en: "J. Miller, “Earliest Known Uses of Some of the Words of Mathematics”, MacTutor (Bernoulli's theorem, Ars Conjectandi, 1713)"}
+    court: "MacTutor"
+    url: "https://mathshistory.st-andrews.ac.uk/Miller/mathword/b/"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Université d'Oslo, « John Kerrich's coin-tossing Experiment » (notes de cours MAT4010)", en: "University of Oslo, “John Kerrich's coin-tossing Experiment” (MAT4010 lecture notes)"}
+    court: "Kerrich, UiO"
+    url: "https://www.uio.no/studier/emner/matnat/math/MAT4010/data/forelesningsnotater/kerrich.pdf"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Assuralia, « Quatre ans après les inondations : chiffres actualisés et leçons pour l'avenir » (8 juillet 2025)", en: "Assuralia, “Four years after the floods: updated figures and lessons for the future” (8 July 2025)"}
+    court: "Assuralia"
+    url: "https://press.assuralia.be/quatre-ans-apres-les-inondations--chiffres-actualises-et-lecons-pour-lavenir"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Mutualisation : pourquoi l'assurance fonctionne"
+    legende: |
+      Un assureur ne peut pas prévoir si votre maison brûlera cette année. Mais il peut prévoir, à quelques euros près, ce que coûteront dix mille maisons. Pourquoi ? C'est la loi des grands nombres, que Jacob Bernoulli a démontrée en 1713, et qu'un mathématicien prisonnier pendant la Seconde Guerre mondiale a vérifiée en lançant une pièce 10 000 fois. Cet épisode du parcours Actuariat explique la charge totale, la baisse du risque en 1 sur racine de n, le théorème central limite, le chargement de sécurité, les limites de la mutualisation (les inondations de 2021) et le huitième chapitre du fil rouge : la garantie décès du portefeuille de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les probabilités et montants des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, probabilites, assurance, mutualisation]
+    scenes:
+      - type: accroche
+        texte: "Imprévisible pour *un* contrat, prévisible pour *dix mille*"
+        voix_off: "Un assureur ne peut pas prévoir si votre maison brûlera cette année. Personne ne le peut. Et pourtant, il peut prévoir à quelques euros près ce que lui coûteront dix mille maisons. Ce paradoxe est le cœur même de l'assurance. Il porte un nom : la mutualisation."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce quatrième épisode du module probabilités du parcours Actuariat ! Merci d'être là. On sait maintenant décrire un sinistre : combien, et à quel prix. Aujourd'hui, on additionne des milliers de contrats, et on découvre pourquoi la somme est bien plus sage que chacun de ses morceaux."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "La *charge* totale"
+          - "Le risque en *1/√n*"
+          - "Les *grands nombres*"
+          - "Le *chargement*"
+          - "Les *limites*"
+          - "La garantie *décès*"
+        voix_off: "Voici le programme. La charge totale d'un portefeuille. Le risque par contrat qui baisse en un sur racine de n. La loi des grands nombres et le théorème central limite. Le chargement de sécurité. Les limites de la mutualisation. Puis le huitième chapitre du fil rouge : la garantie décès du portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "La charge totale"
+        voix_off: "Additionnons les contrats."
+      - type: formule
+        texte: "*n* contrats indépendants, de moyenne μ et d'écart-type σ"
+        formule:
+          - 'S_n=X_1+\cdots+X_n:\quad E[S_n]=n\mu\qquad \mathrm{Var}(S_n)=n\sigma^2'
+          - '\bar{X}_n=\frac{S_n}{n}:\quad E[\bar{X}_n]=\mu\qquad \sigma_{\bar{X}_n}=\frac{\sigma}{\sqrt{n}}'
+        note: "La variance d'une somme est la somme des variances seulement si les contrats sont indépendants."
+        voix_off: "Prenons n contrats indépendants, dont chaque coût a la même moyenne mu et le même écart-type sigma. La charge totale, S n, est leur somme. Son espérance vaut n fois mu, et sa variance n fois sigma carré, parce que les contrats sont indépendants. Divisons maintenant par n pour obtenir le coût moyen par contrat. Son espérance reste mu. Mais son écart-type vaut sigma divisé par racine de n. C'est toute la mutualisation en une formule."
+      - type: etapes
+        texte: "Un contrat fictif : *2 %* de chance d'un sinistre de *5 000 €*"
+        etapes:
+          - "Coût moyen : μ = 0,02 × 5 000 = *100 €*"
+          - "Variance : 5 000² × 0,02 × 0,98 = *490 000*"
+          - "Écart-type : σ = *700 €*, sept fois la moyenne"
+          - "Seul, le contrat coûte *0 €* ou *5 000 €*"
+        note: "Contrat fictif, pour l'exemple. Le coût est une variable de Bernoulli multipliée par 5 000 €."
+        voix_off: "Un exemple fictif. Chaque contrat a deux pour cent de chance de subir un sinistre de cinq mille euros. Le coût moyen vaut cent euros. La variance vaut cinq mille au carré fois zéro virgule zéro deux fois zéro virgule neuf huit, quatre cent nonante mille. L'écart-type vaut donc sept cents euros, sept fois la moyenne. Pour un seul contrat, le coût vaut soit zéro, soit cinq mille euros : jamais cent. Impossible de prévoir."
+        verifier:
+          - {expression: "0.02 * 5000", attendu: 100, libelle: "μ"}
+          - {expression: "5000**2 * 0.02 * 0.98", attendu: 490000, libelle: "σ²"}
+          - {expression: "sqrt(5000**2 * 0.02 * 0.98)", attendu: 700, libelle: "σ"}
+      - type: courbe
+        texte: "Écart-type du coût moyen : *σ ÷ √n*"
+        courbe:
+          style: barres
+          points: [[0, 700], [1, 70], [2, 7], [3, 0.7]]
+          etiquettes: ["1 contrat", "100", "10 000", "1 000 000"]
+          etiquettes_valeurs: ["700 €", "70 €", "7 €", "0,70 €"]
+          valeurs: true
+          y_min: 0
+          y_max: 800
+          axe_x: "Nombre de contrats n"
+          axe_y: "Écart-type du coût moyen (€)"
+        note: "Contrats fictifs et indépendants. Le coût moyen reste 100 € ; seul l'écart autour de 100 € fond."
+        voix_off: "Voici l'effet de la taille du portefeuille. Un contrat seul : écart-type de sept cents euros autour d'un coût moyen de cent. Cent contrats : soixante-dix euros. Dix mille contrats : sept euros. Un million de contrats : soixante-dix centimes. Multiplier le nombre de contrats par cent divise l'écart-type par dix. Le coût par contrat devient presque certain."
+        verifier:
+          - {expression: "700 / sqrt(100)", attendu: 70, libelle: "n = 100"}
+          - {expression: "700 / sqrt(10000)", attendu: 7, libelle: "n = 10 000"}
+          - {expression: "700 / sqrt(1000000)", attendu: 0.7, libelle: "n = 1 000 000"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La loi des grands nombres"
+        voix_off: "Ce résultat a plus de trois siècles."
+      - type: formule
+        texte: "La *loi des grands nombres* : la moyenne tend vers μ"
+        formule:
+          - '\bar{X}_n\ \longrightarrow\ \mu\quad \text{quand}\ n\to\infty'
+        note: "Démontrée par Jacob Bernoulli dans Ars Conjectandi, publié en 1713 après sa mort (source : MacTutor)."
+        voix_off: "La loi des grands nombres dit que la moyenne de n réalisations indépendantes d'une même loi se rapproche de son espérance quand n grandit. Jacob Bernoulli l'a démontrée le premier, dans son livre Ars Conjectandi, l'art de conjecturer, publié en 1713, huit ans après sa mort. On l'a longtemps appelée le théorème de Bernoulli. C'est elle qui garantit qu'un assureur, avec assez de contrats, retrouve le coût moyen."
+      - type: etapes
+        texte: "Un prisonnier lance une pièce *10 000* fois"
+        etapes:
+          - "John Kerrich, prisonnier pendant la Seconde Guerre mondiale"
+          - "*5 067* « face » sur *10 000* lancers : *50,67 %*"
+          - "Écart-type attendu : 0,5 ÷ √10 000 = *0,5 point*"
+          - "Écart observé : *1,34* écart-type, tout à fait normal"
+        note: "Source : Université d'Oslo, notes de cours sur l'expérience de Kerrich, publiée en 1946."
+        voix_off: "Un fait réel. Pendant la Seconde Guerre mondiale, le mathématicien John Kerrich, prisonnier, a lancé une pièce dix mille fois. Résultat : cinq mille soixante-sept fois face, cinquante virgule soixante-sept pour cent. Est-ce loin de cinquante pour cent ? L'écart-type de la proportion vaut zéro virgule cinq divisé par racine de dix mille, soit zéro virgule cinq point. L'écart observé, zéro virgule soixante-sept point, ne fait qu'un virgule trente-quatre écart-type. Exactement ce que prévoit la théorie."
+        verifier:
+          - {expression: "100 * 5067 / 10000", attendu: 50.67, libelle: "Proportion de face"}
+          - {expression: "100 * 0.5 / sqrt(10000)", attendu: 0.5, libelle: "Écart-type, en points"}
+          - {expression: "0.67 / 0.5", attendu: 1.34, libelle: "Écart en écarts-types"}
+      - type: formule
+        texte: "Le *théorème central limite* : à quelle *vitesse* ?"
+        formule:
+          - '\bar{X}_n\approx\mathcal{N}\left(\mu,\ \frac{\sigma^2}{n}\right)'
+          - 'P(\bar{X}_n>\mu+c)\approx 1-\Phi\left(\frac{c\,\sqrt{n}}{\sigma}\right)'
+        note: "L'approximation vaut quelle que soit la loi d'un contrat, pourvu que n soit assez grand et σ fini."
+        voix_off: "La loi des grands nombres dit où va la moyenne. Le théorème central limite dit comment elle s'en écarte : quelle que soit la loi d'un contrat, même une loi à deux valeurs comme la nôtre, le coût moyen suit à peu près une loi normale, de moyenne mu et d'écart-type sigma sur racine de n. On peut donc calculer la probabilité que le coût moyen dépasse mu de plus de c euros, avec la table de la loi normale."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Le chargement de sécurité"
+        voix_off: "Combien l'assureur doit-il demander ?"
+      - type: courbe
+        texte: "*10 000* contrats : la loi du coût *moyen*"
+        courbe:
+          variable: x
+          de: 75
+          a: 125
+          pas: 0.5
+          expression: "100 * exp(-(x - 100)**2 / 98) / (7 * sqrt(2 * pi))"
+          y_max: 6
+          axe_x: "Coût moyen par contrat (€)"
+          axe_y: "Densité (% par €)"
+          reperes:
+            - {x: 100, label: "μ = 100 €"}
+            - {x: 110, label: "110 € : dépassé 7,7 %"}
+            - {x: 111.5, label: "111,52 € : dépassé 5 %"}
+        note: "Approximation normale, contrats fictifs : moyenne 100 €, écart-type 7 €."
+        voix_off: "Avec dix mille contrats, le coût moyen suit à peu près une loi normale de moyenne cent euros et d'écart-type sept euros. Si l'assureur demande exactement cent euros, il perd de l'argent une année sur deux. Avec cent dix euros, il ne dépasse que dans sept virgule sept pour cent des cas. Pour ne dépasser que dans cinq pour cent des cas, il ajoute un virgule six quatre cinq écart-type : onze euros cinquante-deux. La prime devient cent onze euros cinquante-deux."
+        verifier:
+          - {expression: "100 * (1 - 0.5 * (1 + erf(10 / 7 / sqrt(2))))", attendu: 7.7, tolerance: 0.05, libelle: "P(coût moyen > 110), en %"}
+          - {expression: "1.645 * 7", attendu: 11.52, tolerance: 0.005, libelle: "Chargement à 95 %"}
+      - type: formule
+        texte: "Le *chargement de sécurité* au seuil de 95 %"
+        formule:
+          - '\pi=\mu+1{,}645\,\frac{\sigma}{\sqrt{n}}'
+          - 'n=100:\ \pi=215{,}15\ \text{€}\qquad n=10\,000:\ \pi=111{,}52\ \text{€}'
+        note: "Contrats fictifs. Plus le portefeuille est grand, plus la prime se rapproche du coût moyen."
+        voix_off: "La règle générale : la prime vaut le coût moyen mu plus un virgule six quatre cinq fois sigma sur racine de n. C'est le chargement de sécurité. Avec cent contrats seulement, il faut demander deux cent quinze euros quinze, plus du double du coût moyen. Avec dix mille contrats, cent onze euros cinquante-deux. Un grand assureur peut donc proposer des primes plus justes qu'un petit : la taille est un avantage réel."
+        verifier:
+          - {expression: "100 + 1.645 * 70", attendu: 215.15, libelle: "Prime, n = 100"}
+          - {expression: "100 + 1.645 * 7", attendu: 111.52, tolerance: 0.005, libelle: "Prime, n = 10 000"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Les limites de la mutualisation"
+        voix_off: "Mais tout repose sur un mot : indépendants."
+      - type: etapes
+        texte: "Juillet 2021 : *73 790* sinistres en *quelques jours*"
+        etapes:
+          - "Les mêmes pluies touchent des *milliers* de maisons"
+          - "Les sinistres ne sont *plus indépendants*"
+          - "Le risque ne baisse plus en *1/√n*"
+          - "Plafond légal du secteur : porté à *1,8 milliard €*"
+        note: "Source : Assuralia, 8 juillet 2025 (73 790 dossiers, 2,24 milliards d'euros d'indemnités ; plafond multiplié par quatre)."
+        voix_off: "En juillet 2021, les inondations ont provoqué en Belgique soixante-treize mille sept cent nonante dossiers de sinistres, presque tous en quelques jours, selon Assuralia. Ces sinistres ne sont pas indépendants : la même pluie touche des milliers de maisons à la fois. Dans ce cas, ajouter des contrats n'élimine plus le risque, et la formule en un sur racine de n ne tient plus. Depuis, le plafond légal d'intervention des assureurs pour ces catastrophes a été multiplié par quatre, jusqu'à un virgule huit milliard d'euros. Pour ces risques corrélés, il faut de la réassurance et du capital."
+        verifier:
+          - {expression: "1.8 / 4", attendu: 0.45, libelle: "Ancien plafond, en milliards d'euros"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : la garantie décès"
+        voix_off: "Retrouvons le portefeuille de Léa."
+      - type: etapes
+        texte: "Un capital décès de *50 000 €* : un contrat seul"
+        etapes:
+          - "Taux de décès : *0,1256 %* par an (A2.01)"
+          - "Coût moyen : 50 000 × 0,001256 = *62,80 €*"
+          - "Écart-type : 50 000 × √(q (1 − q)) ≈ *1 770,89 €*"
+          - "*28 fois* la moyenne : le décès est un risque *rare*"
+        note: "JG's Holding et Léa sont fictifs. Capital décès et taux de décès fictifs."
+        voix_off: "Supposons que chaque contrat du portefeuille de JG's Holding, dont celui de Léa, prévoie un capital décès fictif de cinquante mille euros. Avec le taux de décès fictif des épisodes précédents, zéro virgule douze cinquante-six pour cent par an, le coût moyen d'un contrat vaut soixante-deux euros quatre-vingts. Mais son écart-type vaut environ mille sept cent septante et un euros, vingt-huit fois la moyenne. Plus un risque est rare, plus il est imprévisible contrat par contrat."
+        verifier:
+          - {expression: "50000 * 0.001256", attendu: 62.8, libelle: "Coût moyen"}
+          - {expression: "50000 * sqrt(0.001256 * 0.998744)", attendu: 1770.89, libelle: "Écart-type"}
+          - {expression: "50000 * sqrt(0.001256 * 0.998744) / 62.8", attendu: 28, tolerance: 0.5, libelle: "Rapport à la moyenne"}
+      - type: courbe
+        texte: "Chargement à 95 % selon la *taille* du portefeuille"
+        courbe:
+          style: barres
+          points: [[0, 146.7], [1, 46.4], [2, 4.6]]
+          etiquettes: ["1 000 assurés", "10 000", "1 000 000"]
+          etiquettes_valeurs: ["92,12 € (+147 %)", "29,13 € (+46 %)", "2,91 € (+4,6 %)"]
+          valeurs: true
+          y_min: 0
+          y_max: 170
+          axe_x: "Nombre d'assurés"
+          axe_y: "Chargement, en % du coût moyen"
+        note: "JG's Holding et Léa sont fictifs. Chargement = 1,645 × 1 770,89 ÷ √n, pour un coût moyen de 62,80 €."
+        voix_off: "Combien JG's Holding doit-il ajouter au coût moyen pour couvrir la garantie décès au seuil de quatre-vingt-quinze pour cent ? Avec mille assurés, quatre-vingt-douze euros douze par contrat : cent quarante-sept pour cent du coût moyen. Avec les dix mille assurés du portefeuille de Léa, vingt-neuf euros treize, quarante-six pour cent. Il faudrait un million d'assurés pour descendre à deux euros nonante et un, quatre virgule six pour cent. Pour un risque rare, la mutualisation exige un très grand portefeuille."
+        verifier:
+          - {expression: "1.645 * 50000 * sqrt(0.001256 * 0.998744) / sqrt(1000)", attendu: 92.12, libelle: "n = 1 000"}
+          - {expression: "1.645 * 50000 * sqrt(0.001256 * 0.998744) / sqrt(10000)", attendu: 29.13, libelle: "n = 10 000"}
+          - {expression: "1.645 * 50000 * sqrt(0.001256 * 0.998744) / sqrt(1000000)", attendu: 2.91, libelle: "n = 1 000 000"}
+          - {expression: "100 * 92.12 / 62.8", attendu: 146.7, tolerance: 0.05, libelle: "En % du coût moyen"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "*2 500* contrats fictifs : *5 %* de chance d'un sinistre de *2 000 €*"
+        pause: 20
+        questions:
+          - "μ et σ d'un contrat"
+          - "L'écart-type du coût moyen"
+          - "P(coût moyen > 105 €)"
+          - "La prime au seuil de 95 %"
+        voix_off: "Mettez la vidéo en pause. Un portefeuille fictif de deux mille cinq cents contrats indépendants. Chacun a cinq pour cent de chance de subir un sinistre de deux mille euros. Calculez le coût moyen et l'écart-type d'un contrat, puis l'écart-type du coût moyen par contrat. Ensuite, la probabilité que le coût moyen dépasse cent cinq euros, et la prime qui suffit au seuil de quatre-vingt-quinze pour cent."
+      - type: correction
+        etapes:
+          - "μ = *100 €* ; σ = 2 000 × √(0,05 × 0,95) ≈ *435,89 €*"
+          - "σ ÷ √2 500 = 435,89 ÷ 50 ≈ *8,72 €*"
+          - "z = 5 ÷ 8,72 ≈ 0,574 ; P ≈ *0,2831*"
+          - "Prime : 100 + 1,645 × 8,72 ≈ *114,34 €*"
+        voix_off: "Correction. Le coût moyen vaut zéro virgule zéro cinq fois deux mille, cent euros. L'écart-type vaut deux mille fois la racine de zéro virgule zéro cinq fois zéro virgule neuf cinq, environ quatre cent trente-cinq euros quatre-vingt-neuf. Divisé par racine de deux mille cinq cents, c'est-à-dire cinquante, il donne huit euros septante-deux. Dépasser cent cinq euros, c'est s'écarter de cinq euros, soit zéro virgule cinq sept quatre écart-type : probabilité d'environ zéro virgule deux huit trois un. Et la prime à quatre-vingt-quinze pour cent : cent plus un virgule six quatre cinq fois huit virgule septante-deux, cent quatorze euros trente-quatre."
+        verifier:
+          - {expression: "0.05 * 2000", attendu: 100, libelle: "μ"}
+          - {expression: "2000 * sqrt(0.05 * 0.95)", attendu: 435.89, libelle: "σ"}
+          - {expression: "2000 * sqrt(0.05 * 0.95) / 50", attendu: 8.72, libelle: "Écart-type du coût moyen"}
+          - {expression: "5 / (2000 * sqrt(0.05 * 0.95) / 50)", attendu: 0.574, tolerance: 0.0005, libelle: "z"}
+          - {expression: "1 - 0.5 * (1 + erf(5 / (2000 * sqrt(0.05 * 0.95) / 50) / sqrt(2)))", attendu: 0.2831, libelle: "P(coût moyen > 105)"}
+          - {expression: "100 + 1.645 * 2000 * sqrt(0.05 * 0.95) / 50", attendu: 114.34, libelle: "Prime à 95 %"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Charge totale : *E = nμ*, Var = nσ²"
+          - "Coût moyen : écart-type *σ ÷ √n*"
+          - "Loi des grands nombres : la moyenne tend vers *μ*"
+          - "Prime à 95 % : *μ + 1,645 σ ÷ √n*"
+          - "Risques *corrélés* : la mutualisation ne suffit plus"
+        voix_off: "Ce qu'il faut retenir. La charge totale de n contrats indépendants a pour espérance n mu et pour variance n sigma carré. Le coût moyen par contrat a pour écart-type sigma sur racine de n : il devient presque certain. C'est la loi des grands nombres, et le théorème central limite donne sa loi normale. La prime au seuil de quatre-vingt-quinze pour cent vaut mu plus un virgule six quatre cinq sigma sur racine de n. Et quand les risques sont corrélés, la mutualisation ne suffit plus."
+      - type: cloture
+        texte: "Prochain épisode : *fréquence et sévérité*. Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant pourquoi l'assurance fonctionne. Prochain épisode : on réunit tout. Le nombre de sinistres, leur montant, et la charge totale qui en résulte. C'est le modèle fréquence et sévérité. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Pooling: why insurance works"
+    legende: |
+      An insurer cannot predict whether your house will burn down this year. But it can predict, to within a few euros, what ten thousand houses will cost. Why? That is the law of large numbers, proved by Jacob Bernoulli in 1713, and checked by a mathematician held prisoner during the Second World War who tossed a coin 10,000 times. This episode of the Actuarial track explains the aggregate cost, the risk falling like one over the square root of n, the central limit theorem, the safety loading, the limits of pooling (the 2021 floods) and the eighth chapter of the common thread: the death benefit of Léa's portfolio. Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the probabilities and amounts in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, probability, insurance, pooling]
+    scenes:
+      - type: accroche
+        texte: "Unpredictable for *one* policy, predictable for *ten thousand*"
+        voix_off: "An insurer cannot predict whether your house will burn down this year. Nobody can. And yet it can predict, to within a few euros, what ten thousand houses will cost it. This paradox is the very heart of insurance. It has a name: pooling."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this fourth episode of the probability module of the Actuarial track! Thanks for being here. We can now describe a claim: how many, and at what cost. Today, we add up thousands of policies, and discover why the sum is far better behaved than each of its pieces."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *aggregate* cost"
+          - "Risk in *1/√n*"
+          - "*Large* numbers"
+          - "The *loading*"
+          - "The *limits*"
+          - "The *death* benefit"
+        voix_off: "Here is the plan. The aggregate cost of a portfolio. The risk per policy falling like one over the square root of n. The law of large numbers and the central limit theorem. The safety loading. The limits of pooling. Then the eighth chapter of the common thread: the death benefit of Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The aggregate cost"
+        voix_off: "Let's add up the policies."
+      - type: formule
+        texte: "*n* independent policies, with mean μ and standard deviation σ"
+        formule:
+          - 'S_n=X_1+\cdots+X_n:\quad E[S_n]=n\mu\qquad \mathrm{Var}(S_n)=n\sigma^2'
+          - '\bar{X}_n=\frac{S_n}{n}:\quad E[\bar{X}_n]=\mu\qquad \sigma_{\bar{X}_n}=\frac{\sigma}{\sqrt{n}}'
+        note: "The variance of a sum is the sum of the variances only if the policies are independent."
+        voix_off: "Take n independent policies, each with a cost of the same mean mu and the same standard deviation sigma. The aggregate cost, S n, is their sum. Its expectation is n times mu, and its variance n times sigma squared, because the policies are independent. Now divide by n to get the average cost per policy. Its expectation stays mu. But its standard deviation is sigma divided by the square root of n. That is the whole of pooling in one formula."
+      - type: etapes
+        texte: "A made-up policy: a *2%* chance of a *5,000 €* claim"
+        etapes:
+          - "Average cost: μ = 0.02 × 5,000 = *100 €*"
+          - "Variance: 5,000² × 0.02 × 0.98 = *490,000*"
+          - "Standard deviation: σ = *700 €*, seven times the mean"
+          - "On its own, the policy costs *0 €* or *5,000 €*"
+        note: "Made-up policy, for the example. The cost is a Bernoulli variable times 5,000 €."
+        voix_off: "A made-up example. Each policy has a two percent chance of a five-thousand-euro claim. The average cost is one hundred euros. The variance is five thousand squared times zero point zero two times zero point nine eight, four hundred and ninety thousand. So the standard deviation is seven hundred euros, seven times the mean. For a single policy, the cost is either zero or five thousand euros: never one hundred. Impossible to predict."
+        verifier:
+          - {expression: "0.02 * 5000", attendu: 100, libelle: "μ"}
+          - {expression: "5000**2 * 0.02 * 0.98", attendu: 490000, libelle: "σ²"}
+          - {expression: "sqrt(5000**2 * 0.02 * 0.98)", attendu: 700, libelle: "σ"}
+      - type: courbe
+        texte: "Standard deviation of the average cost: *σ ÷ √n*"
+        courbe:
+          style: barres
+          points: [[0, 700], [1, 70], [2, 7], [3, 0.7]]
+          etiquettes: ["1 policy", "100", "10,000", "1,000,000"]
+          etiquettes_valeurs: ["700 €", "70 €", "7 €", "0.70 €"]
+          valeurs: true
+          y_min: 0
+          y_max: 800
+          axe_x: "Number of policies n"
+          axe_y: "Std dev of the average cost (€)"
+        note: "Made-up, independent policies. The average cost stays 100 €; only the spread around 100 € melts away."
+        voix_off: "Here is the effect of portfolio size. One policy alone: a standard deviation of seven hundred euros around an average cost of one hundred. One hundred policies: seventy euros. Ten thousand policies: seven euros. One million policies: seventy cents. Multiplying the number of policies by a hundred divides the standard deviation by ten. The cost per policy becomes almost certain."
+        verifier:
+          - {expression: "700 / sqrt(100)", attendu: 70, libelle: "n = 100"}
+          - {expression: "700 / sqrt(10000)", attendu: 7, libelle: "n = 10,000"}
+          - {expression: "700 / sqrt(1000000)", attendu: 0.7, libelle: "n = 1,000,000"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The law of large numbers"
+        voix_off: "This result is more than three centuries old."
+      - type: formule
+        texte: "The *law of large numbers*: the average tends to μ"
+        formule:
+          - '\bar{X}_n\ \longrightarrow\ \mu\quad \text{as}\ n\to\infty'
+        note: "Proved by Jacob Bernoulli in Ars Conjectandi, published in 1713 after his death (source: MacTutor)."
+        voix_off: "The law of large numbers says that the average of n independent outcomes of the same distribution gets closer to its expectation as n grows. Jacob Bernoulli proved it first, in his book Ars Conjectandi, the art of conjecturing, published in 1713, eight years after his death. It was long called Bernoulli's theorem. It is what guarantees that an insurer with enough policies gets back to the average cost."
+      - type: etapes
+        texte: "A prisoner tosses a coin *10,000* times"
+        etapes:
+          - "John Kerrich, a prisoner during the Second World War"
+          - "*5,067* heads out of *10,000* tosses: *50.67%*"
+          - "Expected standard deviation: 0.5 ÷ √10,000 = *0.5 point*"
+          - "Observed gap: *1.34* standard deviations, quite normal"
+        note: "Source: University of Oslo, lecture notes on Kerrich's experiment, published in 1946."
+        voix_off: "A real fact. During the Second World War, the mathematician John Kerrich, held prisoner, tossed a coin ten thousand times. Result: five thousand and sixty-seven heads, fifty point six seven percent. Is that far from fifty percent? The standard deviation of the proportion is zero point five divided by the square root of ten thousand, that is zero point five points. The observed gap, zero point six seven points, is only one point three four standard deviations. Exactly what the theory predicts."
+        verifier:
+          - {expression: "100 * 5067 / 10000", attendu: 50.67, libelle: "Share of heads"}
+          - {expression: "100 * 0.5 / sqrt(10000)", attendu: 0.5, libelle: "Standard deviation, in points"}
+          - {expression: "0.67 / 0.5", attendu: 1.34, libelle: "Gap in standard deviations"}
+      - type: formule
+        texte: "The *central limit theorem*: how *fast*?"
+        formule:
+          - '\bar{X}_n\approx\mathcal{N}\left(\mu,\ \frac{\sigma^2}{n}\right)'
+          - 'P(\bar{X}_n>\mu+c)\approx 1-\Phi\left(\frac{c\,\sqrt{n}}{\sigma}\right)'
+        note: "The approximation holds whatever the distribution of one policy, as long as n is large enough and σ finite."
+        voix_off: "The law of large numbers says where the average goes. The central limit theorem says how it strays from it: whatever the distribution of one policy, even a two-valued one like ours, the average cost roughly follows a normal distribution, with mean mu and standard deviation sigma over the square root of n. So we can compute the probability that the average cost exceeds mu by more than c euros, with the normal table."
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The safety loading"
+        voix_off: "How much should the insurer charge?"
+      - type: courbe
+        texte: "*10,000* policies: the distribution of the *average* cost"
+        courbe:
+          variable: x
+          de: 75
+          a: 125
+          pas: 0.5
+          expression: "100 * exp(-(x - 100)**2 / 98) / (7 * sqrt(2 * pi))"
+          y_max: 6
+          axe_x: "Average cost per policy (€)"
+          axe_y: "Density (% per €)"
+          reperes:
+            - {x: 100, label: "μ = 100 €"}
+            - {x: 110, label: "110 €: exceeded 7.7%"}
+            - {x: 111.5, label: "111.52 €: exceeded 5%"}
+        note: "Normal approximation, made-up policies: mean 100 €, standard deviation 7 €."
+        voix_off: "With ten thousand policies, the average cost roughly follows a normal distribution with a mean of one hundred euros and a standard deviation of seven euros. If the insurer charges exactly one hundred euros, it loses money one year in two. With one hundred and ten euros, the cost exceeds it in only seven point seven percent of cases. To be exceeded in only five percent of cases, it adds one point six four five standard deviations: eleven euros fifty-two. The premium becomes one hundred and eleven euros fifty-two."
+        verifier:
+          - {expression: "100 * (1 - 0.5 * (1 + erf(10 / 7 / sqrt(2))))", attendu: 7.7, tolerance: 0.05, libelle: "P(average cost > 110), in %"}
+          - {expression: "1.645 * 7", attendu: 11.52, tolerance: 0.005, libelle: "95% loading"}
+      - type: formule
+        texte: "The *safety loading* at the 95% level"
+        formule:
+          - '\pi=\mu+1.645\,\frac{\sigma}{\sqrt{n}}'
+          - 'n=100:\ \pi=215.15\ \text{€}\qquad n=10\,000:\ \pi=111.52\ \text{€}'
+        note: "Made-up policies. The larger the portfolio, the closer the premium gets to the average cost."
+        voix_off: "The general rule: the premium is the average cost mu plus one point six four five times sigma over the square root of n. That is the safety loading. With only one hundred policies, the insurer must charge two hundred and fifteen euros fifteen, more than twice the average cost. With ten thousand policies, one hundred and eleven euros fifty-two. So a large insurer can offer fairer premiums than a small one: size is a real advantage."
+        verifier:
+          - {expression: "100 + 1.645 * 70", attendu: 215.15, libelle: "Premium, n = 100"}
+          - {expression: "100 + 1.645 * 7", attendu: 111.52, tolerance: 0.005, libelle: "Premium, n = 10,000"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The limits of pooling"
+        voix_off: "But everything rests on one word: independent."
+      - type: etapes
+        texte: "July 2021: *73,790* claims in *a few days*"
+        etapes:
+          - "The same rain hits *thousands* of homes"
+          - "The claims are *no longer independent*"
+          - "Risk no longer falls in *1/√n*"
+          - "The sector's legal cap: raised to *1.8 billion €*"
+        note: "Source: Assuralia, 8 July 2025 (73,790 files, 2.24 billion euros paid; cap multiplied by four)."
+        voix_off: "In July 2021, the floods caused seventy-three thousand seven hundred and ninety claim files in Belgium, nearly all within a few days, according to Assuralia. These claims are not independent: the same rain hits thousands of homes at once. In that case, adding policies no longer removes the risk, and the one-over-root-n formula no longer holds. Since then, the legal cap on insurers' payouts for such catastrophes has been multiplied by four, to one point eight billion euros. For such correlated risks, you need reinsurance and capital."
+        verifier:
+          - {expression: "1.8 / 4", attendu: 0.45, libelle: "Former cap, in billion euros"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "The common thread: the death benefit"
+        voix_off: "Let's get back to Léa's portfolio."
+      - type: etapes
+        texte: "A *50,000 €* death benefit: one policy alone"
+        etapes:
+          - "Death rate: *0.1256%* a year (A2.01)"
+          - "Average cost: 50,000 × 0.001256 = *62.80 €*"
+          - "Standard deviation: 50,000 × √(q (1 − q)) ≈ *1,770.89 €*"
+          - "*28 times* the mean: death is a *rare* risk"
+        note: "JG's Holding and Léa are made up. Death benefit and death rate made up."
+        voix_off: "Suppose each policy in JG's Holding's portfolio, Léa's included, pays a made-up death benefit of fifty thousand euros. With the made-up death rate of the previous episodes, zero point one two five six percent a year, the average cost of a policy is sixty-two euros eighty. But its standard deviation is about one thousand seven hundred and seventy-one euros, twenty-eight times the mean. The rarer a risk, the less predictable it is policy by policy."
+        verifier:
+          - {expression: "50000 * 0.001256", attendu: 62.8, libelle: "Average cost"}
+          - {expression: "50000 * sqrt(0.001256 * 0.998744)", attendu: 1770.89, libelle: "Standard deviation"}
+          - {expression: "50000 * sqrt(0.001256 * 0.998744) / 62.8", attendu: 28, tolerance: 0.5, libelle: "Ratio to the mean"}
+      - type: courbe
+        texte: "95% loading by portfolio *size*"
+        courbe:
+          style: barres
+          points: [[0, 146.7], [1, 46.4], [2, 4.6]]
+          etiquettes: ["1,000 insured", "10,000", "1,000,000"]
+          etiquettes_valeurs: ["92.12 € (+147%)", "29.13 € (+46%)", "2.91 € (+4.6%)"]
+          valeurs: true
+          y_min: 0
+          y_max: 170
+          axe_x: "Number of insured lives"
+          axe_y: "Loading, in % of the average cost"
+        note: "JG's Holding and Léa are made up. Loading = 1.645 × 1,770.89 ÷ √n, for an average cost of 62.80 €."
+        voix_off: "How much must JG's Holding add to the average cost to cover the death benefit at the ninety-five percent level? With one thousand insured lives, ninety-two euros twelve per policy: one hundred and forty-seven percent of the average cost. With the ten thousand insured lives of Léa's portfolio, twenty-nine euros thirteen, forty-six percent. It would take one million insured lives to get down to two euros ninety-one, four point six percent. For a rare risk, pooling needs a very large portfolio."
+        verifier:
+          - {expression: "1.645 * 50000 * sqrt(0.001256 * 0.998744) / sqrt(1000)", attendu: 92.12, libelle: "n = 1,000"}
+          - {expression: "1.645 * 50000 * sqrt(0.001256 * 0.998744) / sqrt(10000)", attendu: 29.13, libelle: "n = 10,000"}
+          - {expression: "1.645 * 50000 * sqrt(0.001256 * 0.998744) / sqrt(1000000)", attendu: 2.91, libelle: "n = 1,000,000"}
+          - {expression: "100 * 92.12 / 62.8", attendu: 146.7, tolerance: 0.05, libelle: "In % of the average cost"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "*2,500* made-up policies: a *5%* chance of a *2,000 €* claim"
+        pause: 20
+        questions:
+          - "μ and σ of one policy"
+          - "The std dev of the average cost"
+          - "P(average cost > 105 €)"
+          - "The premium at the 95% level"
+        voix_off: "Pause the video. A made-up portfolio of two thousand five hundred independent policies. Each has a five percent chance of a two-thousand-euro claim. Compute the average cost and the standard deviation of one policy, then the standard deviation of the average cost per policy. Then the probability that the average cost exceeds one hundred and five euros, and the premium that is enough at the ninety-five percent level."
+      - type: correction
+        etapes:
+          - "μ = *100 €*; σ = 2,000 × √(0.05 × 0.95) ≈ *435.89 €*"
+          - "σ ÷ √2,500 = 435.89 ÷ 50 ≈ *8.72 €*"
+          - "z = 5 ÷ 8.72 ≈ 0.574; P ≈ *0.2831*"
+          - "Premium: 100 + 1.645 × 8.72 ≈ *114.34 €*"
+        voix_off: "Solution. The average cost is zero point zero five times two thousand, one hundred euros. The standard deviation is two thousand times the square root of zero point zero five times zero point nine five, about four hundred and thirty-five euros eighty-nine. Divided by the square root of two thousand five hundred, that is fifty, it gives eight euros seventy-two. Exceeding one hundred and five euros means straying by five euros, that is zero point five seven four standard deviations: a probability of about zero point two eight three one. And the ninety-five percent premium: one hundred plus one point six four five times eight point seven two, one hundred and fourteen euros thirty-four."
+        verifier:
+          - {expression: "0.05 * 2000", attendu: 100, libelle: "μ"}
+          - {expression: "2000 * sqrt(0.05 * 0.95)", attendu: 435.89, libelle: "σ"}
+          - {expression: "2000 * sqrt(0.05 * 0.95) / 50", attendu: 8.72, libelle: "Std dev of the average cost"}
+          - {expression: "5 / (2000 * sqrt(0.05 * 0.95) / 50)", attendu: 0.574, tolerance: 0.0005, libelle: "z"}
+          - {expression: "1 - 0.5 * (1 + erf(5 / (2000 * sqrt(0.05 * 0.95) / 50) / sqrt(2)))", attendu: 0.2831, libelle: "P(average cost > 105)"}
+          - {expression: "100 + 1.645 * 2000 * sqrt(0.05 * 0.95) / 50", attendu: 114.34, libelle: "95% premium"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Aggregate cost: *E = nμ*, Var = nσ²"
+          - "Average cost: std dev *σ ÷ √n*"
+          - "Law of large numbers: the average tends to *μ*"
+          - "95% premium: *μ + 1.645 σ ÷ √n*"
+          - "*Correlated* risks: pooling is no longer enough"
+        voix_off: "What to remember. The aggregate cost of n independent policies has mean n mu and variance n sigma squared. The average cost per policy has standard deviation sigma over the square root of n: it becomes almost certain. That is the law of large numbers, and the central limit theorem gives its normal distribution. The premium at the ninety-five percent level is mu plus one point six four five sigma over the square root of n. And when risks are correlated, pooling is no longer enough."
+      - type: cloture
+        texte: "Next episode: *frequency and severity*. A question? *In the comments*"
+        voix_off: "You now know why insurance works. Next episode: we bring it all together. The number of claims, their amount, and the aggregate cost that results. That is the frequency and severity model. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
