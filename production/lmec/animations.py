@@ -47,6 +47,18 @@ Modèles :
                 sous-distributions colorées, à titre d'hypothèse (« prudence » : l'histogramme ne le prouve pas) ;
 - questions   : deux questions côte à côte (question, reponse, icone), chacune mène à son indicateur ; « deux »
                 les relie ;
+- capitalisation : intérêt simple ou composé, année par année (« capital », « taux », « annees ») ;
+                « capital » pose le capital (axe coupé, signalé), « simple » empile les intérêts du capital
+                (une marche égale par an), « compose » ajoute les intérêts des intérêts, qui font boule de neige ;
+- echeancier  : des versements (« montants », « dates ») sur une frise du temps, au « taux » donné ; « flux »
+                les pose, « actualisation » fait glisser chacun vers la date 0 en le rétrécissant de vᵗ,
+                « somme » empile les valeurs actuelles et écrit le total ;
+- escompte    : une facture de « nominal » payable dans un an, au « taux » d'intérêt i ; « facture » la pose,
+                « retenue » la ramène à aujourd'hui en coupant l'escompte (d = i / (1 + i)), « interet » montre
+                que la même somme vaut d du nominal et i du montant versé ;
+- frequences  : un an, un « taux » annuel effectif, « m » périodes ; « annuel » trace un seul saut en fin
+                d'année, « mensuel » les m petits sauts au taux équivalent, « egalite » montre l'arrivée commune
+                et le piège du taux proportionnel (m × j < i) ;
 - selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
                 celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
                 des données observées, « filtre » trace la flèche « sélection par la survie ».
@@ -61,7 +73,8 @@ from .formatage import formater_nombre
 
 MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille",
            "pastilles", "curseur", "equilibre", "elimination", "densite", "apercu",
-           "cumul", "partage", "ponderee", "decoupages", "asymetrie", "melange", "questions")
+           "cumul", "partage", "ponderee", "decoupages", "asymetrie", "melange", "questions",
+           "capitalisation", "echeancier", "escompte", "frequences")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
@@ -84,6 +97,10 @@ PHASES = {
     "asymetrie": ("queue_droite", "symetrique", "queue_gauche"),
     "melange": ("global", "hypothese", "prudence"),
     "questions": ("question", "deux"),
+    "capitalisation": ("capital", "simple", "compose"),
+    "echeancier": ("flux", "actualisation", "somme"),
+    "escompte": ("facture", "retenue", "interet"),
+    "frequences": ("annuel", "mensuel", "egalite"),
 }
 ICONES_APERCU = ("tableau", "histogramme", "forme", "equilibre", "mediane", "laboratoire")
 PHASES_DEFAUT = {
@@ -108,6 +125,10 @@ PHASES_DEFAUT = {
     "asymetrie": ["queue_droite", "symetrique", "queue_gauche"],
     "melange": ["global", "hypothese", "prudence"],
     "questions": ["question", "question", "deux"],
+    "capitalisation": ["capital", "simple", "compose"],
+    "echeancier": ["flux", "actualisation", "somme"],
+    "escompte": ["facture", "retenue", "interet"],
+    "frequences": ["annuel", "mensuel", "egalite"],
 }
 LIBELLES = {
     "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents",
@@ -191,7 +212,10 @@ class Animations:
                       "carte": 0.9, "palier": 1.0, "montants": 1.4, "cagnotte": 1.8, "partage": 1.8,
                       "notes": 1.2, "poids": 1.6, "ponderee": 1.6, "decoupage": 1.6, "queue_droite": 2.0,
                       "symetrique": 2.0, "queue_gauche": 2.0, "global": 1.6, "hypothese": 2.0, "prudence": 1.0,
-                      "question": 1.2, "deux": 0.8}
+                      "question": 1.2, "deux": 0.8,
+                      "capital": 1.4, "simple": 2.6, "compose": 2.6, "flux": 1.6, "actualisation": 3.2,
+                      "somme": 1.2, "facture": 1.2, "retenue": 2.2, "interet": 1.6, "annuel": 1.6,
+                      "mensuel": 3.2, "egalite": 1.0}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -1726,6 +1750,312 @@ class AnimationsDonnees:
             pp = self.police("affichage", int(64 * k_d) + 1)
             self._texte_centre(d, "+", pp, cx, cy - 64 * k_d * 0.66, _melange(self.c["or"], (255, 255, 255), 1.0))
 
+    # ------------------------------------------------------------------ finance (parcours actuariel, 23/11/2026)
+    def _somme_txt(self, v, unite, dec=2):
+        txt = formater_nombre(round(v, dec), self.langue, dec)
+        if unite == "€":
+            return txt + " €" if self.langue == "fr" else "€" + txt
+        if unite == "$":
+            return "$" + txt
+        return txt + (" " + unite if unite else "")
+
+    def _taux_txt(self, v, dec=2):
+        txt = formater_nombre(round(100 * v, dec), self.langue, dec)
+        return txt + (" %" if self.langue == "fr" else "%")
+
+    def _anim_capitalisation(self, d, scene, plan, zone, t, ctx):
+        """Intérêt simple puis composé : une barre par année. Le capital est posé sur un axe coupé (signalé
+        par un zigzag) pour que les intérêts restent visibles ; au-dessus, les intérêts du capital (une marche
+        égale par an), puis les intérêts des intérêts, qui grossissent d'année en année."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        c0, i, n, unite = conf["capital"], conf["taux"], conf["annees"], conf.get("unite", "")
+        lib = LIBELLES_FINANCE[self.langue]
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom: _ease(self._avancee(par[nom], t)) if nom in par else 0.0
+        fond = self._fond_a(g, bas - 10)
+        pl, pv, pa = self.police("regulier", 32), self.police("gras", 40), self.police("regulier", 30)
+        y_axe = bas - 70
+        h_cap = (y_axe - haut) * 0.22                    # hauteur du capital (axe coupé)
+        haut_i = haut + 150                              # place pour les étiquettes du haut
+        compose_fin = c0 * ((1 + i) ** n - 1)
+        echelle = (y_axe - h_cap - haut_i) / max(compose_fin, n * c0 * i)
+        x0 = g + 20
+        pas = (dr - 40 - x0) / n
+        wb = pas * 0.72
+        # Légende (trois couches) en haut à gauche.
+        couches = (("capital", self.c["barre"], 0.55, av("capital") if "capital" in par else 1.0),
+                   ("simple", self.c["secondaire"], 0.75, av("simple")),
+                   ("compose", self.c["or"], 0.95, av("compose")))
+        yl = haut
+        ecart = c0 * ((1 + i) ** n - 1 - i * n)
+        for cle, couleur, force, k in couches:
+            if k <= 0:
+                continue
+            d.rounded_rectangle((g, yl + 8, g + 34, yl + 38), radius=6, fill=_melange(fond, couleur, force * k))
+            txt = lib["couche_" + cle]
+            d.text((g + 48, yl), txt, font=pl, fill=_melange(fond, self.c["texte"], k))
+            if cle == "compose":
+                d.text((g + 48 + pl.getlength(txt + " "), yl), lib["ecart"].format(self._somme_txt(ecart, unite)),
+                       font=self.police("gras", 32), fill=_melange(fond, self.c["accent"], k))
+            yl += 44
+        for a in range(1, n + 1):
+            x = x0 + (a - 1) * pas + (pas - wb) / 2
+            k_c = _ease((av("capital") * (n + 3) - a) / 3) if "capital" in par else 1.0
+            if t is None:
+                k_c = 1.0
+            if k_c <= 0:
+                continue
+            ybas = y_axe
+            d.rectangle((x, ybas - h_cap, x + wb, ybas), fill=_melange(fond, self.c["barre"], 0.55 * k_c))
+            # Zigzag de l'axe coupé, au milieu du capital.
+            ym = ybas - h_cap * 0.5
+            pts = [(x + wb * j / 6, ym + (6 if j % 2 else -6)) for j in range(7)]
+            d.line(pts, fill=_melange(fond, fond, k_c), width=5)
+            y = ybas - h_cap
+            k_s = _ease((av("simple") * (n + 3) - a) / 3)
+            if k_s > 0:
+                h = c0 * i * a * echelle * k_s
+                d.rectangle((x, y - h, x + wb, y), fill=_melange(fond, self.c["secondaire"], 0.75))
+                # Marches : une par année d'intérêts du capital.
+                for j in (range(1, a) if n <= 12 else ()):
+                    yj = y - c0 * i * j * echelle * k_s
+                    d.line((x + 2, yj, x + wb - 2, yj), fill=_melange(fond, self.c["secondaire"], 0.35), width=2)
+                y -= h
+            k_k = _ease((av("compose") * (n + 3) - a) / 3)
+            if k_k > 0:
+                h = c0 * ((1 + i) ** a - 1 - i * a) * echelle * k_k
+                if h > 0.5:
+                    d.rectangle((x, y - h, x + wb, y), fill=_melange(fond, self.c["or"], 0.95))
+        # Axe et années.
+        d.line((g, y_axe, dr, y_axe), fill=_melange(fond, self.c["texte"], 0.6), width=3)
+        etiquettes = sorted({1, n} | set(range(5, n + 1, 5 if n <= 30 else 10)))
+        for a in etiquettes:
+            xc = x0 + (a - 0.5) * pas
+            self._texte_centre(d, str(a), pa, xc, y_axe + 12, _melange(fond, self.c["texte"], 0.8), g, dr)
+        # Valeur de la dernière barre.
+        xc = x0 + (n - 0.5) * pas
+        k_s, k_k = av("simple"), av("compose")
+        y_top_s = y_axe - h_cap - c0 * i * n * echelle
+        a_s = k_s * (1 - min(1.0, k_k * 4))
+        if a_s > 0.02:      # texte fondu dans la couleur du fond : on ne le dessine plus une fois effacé
+            self._texte_centre(d, self._somme_txt(c0 * (1 + i * n), unite), pv, xc, y_top_s - 54,
+                               _melange(fond, self.c["texte"], a_s), g, dr)
+        if k_k > 0:
+            y_top = y_top_s - c0 * ((1 + i) ** n - 1 - i * n) * echelle
+            self._texte_centre(d, self._somme_txt(c0 * (1 + i) ** n, unite), pv, xc, y_top - 54,
+                               _melange(fond, self.c["accent"], k_k), g, dr)
+        # Capital, écrit dans la première barre.
+        k_c = 1.0 if t is None or "capital" not in par else av("capital")
+        txt = self._somme_txt(c0, unite, 0)
+        d.text((g + 6, y_axe + 54), lib["capital_de"].format(txt), font=pl, fill=_melange(fond, self.c["texte"], k_c))
+
+    def _anim_echeancier(self, d, scene, plan, zone, t, ctx):
+        """Des versements sur une frise du temps ; chacun glisse vers aujourd'hui en rétrécissant (× vᵗ), puis
+        les valeurs actuelles s'empilent à la date 0 : leur hauteur totale est la valeur actuelle."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        montants, dates, i = conf["montants"], conf["dates"], conf["taux"]
+        unite, dec = conf.get("unite", ""), conf.get("decimales", 2)
+        lib = LIBELLES_FINANCE[self.langue]
+        v = 1 / (1 + i)
+        va = [m * v ** a for m, a in zip(montants, dates)]
+        n = len(montants)
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom: (1.0 if t is None else _ease(self._avancee(par[nom], t))) if nom in par else 0.0
+        fond = self._fond_a(g, bas - 10)
+        pa, pv, pt = self.police("regulier", 32), self.police("gras", 36), self.police("gras", 46)
+        y_axe = bas - 80
+        t_max = max(dates + [1])
+        x_col = g + 250                                # colonne de la date 0 (valeurs actuelles à sa gauche)
+        x_de = lambda a: x_col + (dr - 70 - x_col) * a / t_max
+        dispo = y_axe - haut - 110
+        echelle = min(dispo * 0.62 / max(montants), dispo / max(sum(va), 1e-9))
+        wb = min(90.0, (dr - 70 - x_col) / max(t_max, 1) * 0.55, 140.0)
+        d.line((g, y_axe, dr, y_axe), fill=_melange(fond, self.c["texte"], 0.6), width=3)
+        d.polygon(((dr, y_axe), (dr - 20, y_axe - 11), (dr - 20, y_axe + 11)), fill=_melange(fond, self.c["texte"], 0.6))
+        graduations = sorted(set(dates) | {0}) if t_max <= 12 else sorted(set(range(0, t_max + 1, 5)) | set(dates[-1:]))
+        for a in graduations:
+            x = x_de(a)
+            d.line((x, y_axe - 8, x, y_axe + 8), fill=_melange(fond, self.c["texte"], 0.6), width=3)
+            self._texte_centre(d, str(a), pa, x, y_axe + 14, _melange(fond, self.c["texte"], 0.8), g, dr)
+        self._texte_centre(d, lib["aujourdhui"], pa, x_de(0), y_axe + 50, _melange(fond, self.c["accent"], 0.9), g, dr)
+        k_f, k_a, k_s = av("flux"), av("actualisation"), av("somme")
+        if "flux" not in par:
+            k_f = 1.0
+        pile = 0.0
+        etiquettes = n <= 4
+        for j, (m, a, p) in enumerate(zip(montants, dates, va)):
+            kf = _ease((k_f * (n + 2) - j) / 2) if t is not None else 1.0
+            if kf <= 0:
+                continue
+            ka = _ease((k_a * (n + 2) - j) / 2) if t is not None else (1.0 if "actualisation" in par else 0.0)
+            ka = ka if "actualisation" in par else 0.0
+            h0, h1 = m * echelle, p * echelle
+            xa = x_de(a) - wb / 2
+            xb = x_col - wb / 2
+            ya, yb = y_axe, y_axe - pile
+            x = xa + (xb - xa) * ka
+            y_bas = ya + (yb - ya) * ka
+            h = h0 + (h1 - h0) * ka
+            couleur = _melange(self.c["barre"], self.c["or"], ka)
+            if ka > 0 and a > 0:      # fantôme du versement à sa date : on voit ce qu'il est devenu
+                d.rounded_rectangle((xa, ya - h0, xa + wb, ya - 2), radius=8,
+                                    outline=_melange(fond, self.c["barre"], 0.6 * ka), width=3)
+                if etiquettes:
+                    self._texte_centre(d, self._somme_txt(m, unite, 0 if float(m).is_integer() else dec), pv,
+                                       xa + wb / 2, ya - h0 - 48, _melange(fond, self.c["texte"], 0.55 * ka), g, dr)
+                    self._texte_centre(d, f"× v{_exposant(a)}", pv, xa + wb / 2, ya - h0 - 96,
+                                       _melange(fond, self.c["or"], ka), g, dr)
+            if h * kf > 6:
+                d.rounded_rectangle((x, y_bas - h * kf, x + wb, y_bas - 2), radius=min(8, int(h * kf / 3)),
+                                    fill=_melange(fond, couleur, 0.85 * kf + 0.1))
+            if ka < 0.95 and (etiquettes or j in (0, n - 1)):
+                self._texte_centre(d, self._somme_txt(m, unite, 0 if float(m).is_integer() else dec), pv,
+                                   x + wb / 2, y_bas - h - 48, _melange(fond, self.c["texte"], kf * (1 - ka)), g, dr)
+            if ka > 0.95 and etiquettes:
+                txt = self._somme_txt(p, unite, 0 if abs(p - round(p)) < 1e-9 else dec)
+                d.text((x - 16 - pv.getlength(txt), y_bas - h / 2 - 22), txt, font=pv,
+                       fill=_melange(fond, self.c["accent"], 1.0))
+            if ka > 0:
+                pile += h1 * ka
+        if k_s > 0:
+            total = sum(va)
+            y = y_axe - total * echelle - 70
+            txt = lib["valeur_actuelle"].format(self._somme_txt(total, unite, dec))
+            d.text((max(g, x_col - pt.getlength(txt) / 2), max(haut, y - 50 * (1 - k_s))), txt, font=pt,
+                   fill=_melange(fond, self.c["accent"], k_s))
+
+    def _anim_escompte(self, d, scene, plan, zone, t, ctx):
+        """Une facture payable dans un an. La banque la paie aujourd'hui en retenant l'escompte : la même somme
+        vaut d du nominal (taux d'escompte, payé au début) et i du montant versé (taux d'intérêt, payé à la fin)."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        nominal, i, unite = conf["nominal"], conf["taux"], conf.get("unite", "")
+        lib = LIBELLES_FINANCE[self.langue]
+        dd = i / (1 + i)
+        verse, retenue = nominal * (1 - dd), nominal * dd
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom: (1.0 if t is None else _ease(self._avancee(par[nom], t))) if nom in par else 0.0
+        k_f, k_r, k_i = (av("facture") if "facture" in par else 1.0), av("retenue"), av("interet")
+        fond = self._fond_a(g, bas - 10)
+        pa, pv, pg = self.police("regulier", 32), self.police("gras", 38), self.police("gras", 44)
+        y_axe = bas - 80
+        x0, x1 = g + (dr - g) * 0.15, g + (dr - g) * 0.86
+        d.line((g, y_axe, dr, y_axe), fill=_melange(fond, self.c["texte"], 0.6), width=3)
+        for x, txt in ((x0, lib["aujourdhui"]), (x1, lib["dans_un_an"])):
+            d.line((x, y_axe - 8, x, y_axe + 8), fill=_melange(fond, self.c["texte"], 0.6), width=3)
+            self._texte_centre(d, txt, pa, x, y_axe + 16, _melange(fond, self.c["texte"], 0.85), g, dr)
+        # Hauteur : la facture occupe 55 % de la zone ; la retenue est grossie pour rester visible.
+        h_tot = max(120.0, y_axe - haut - 240)
+        h_ret = max(h_tot * dd, 40.0)
+        w = min(220.0, (dr - g) * 0.2)
+        # La facture à un an.
+        if k_f > 0:
+            alpha = k_f * (1 - 0.65 * k_r)
+            d.rounded_rectangle((x1 - w / 2, y_axe - h_tot, x1 + w / 2, y_axe - 2), radius=12,
+                                outline=_melange(fond, self.c["barre"], alpha), width=4,
+                                fill=_melange(fond, self.c["barre"], 0.25 * alpha))
+            self._texte_centre(d, lib["facture"], pa, x1, y_axe - h_tot - 92, _melange(fond, self.c["texte"], alpha), g, dr)
+            self._texte_centre(d, self._somme_txt(nominal, unite, 0), pg, x1, y_axe - h_tot - 52,
+                               _melange(fond, self.c["texte"], alpha), g, dr)
+        if k_r > 0:
+            # Copie ramenée à aujourd'hui, coupée de la retenue.
+            x = x1 + (x0 - x1) * min(1.0, k_r * 1.6)
+            coupe = _ease((k_r - 0.55) / 0.45)
+            h_v = h_tot - h_ret
+            d.rounded_rectangle((x - w / 2, y_axe - h_v, x + w / 2, y_axe - 2), radius=12,
+                                fill=_melange(fond, self.c["barre"], 0.85))
+            yr = y_axe - h_v - 6 * (1 - coupe)
+            xr = x + (w * 1.05) * coupe
+            d.rounded_rectangle((xr - w / 2, yr - h_ret, xr + w / 2, yr), radius=10,
+                                fill=_melange(fond, self.c["or"], 0.95))
+            if coupe > 0:
+                self._texte_centre(d, self._somme_txt(verse, unite), pv, x, y_axe - h_v / 2 - 20,
+                                   _melange(self.c["barre"], (255, 255, 255), coupe), g, dr)
+                d.text((xr + w / 2 + 14, yr - h_ret / 2 - 40), lib["escompte"], font=pa,
+                       fill=_melange(fond, self.c["texte"], coupe))
+                d.text((xr + w / 2 + 14, yr - h_ret / 2 - 2), self._somme_txt(retenue, unite), font=pv,
+                       fill=_melange(fond, self.c["accent"], coupe))
+        if k_i > 0:
+            lignes = (lib["d_egal"].format(self._somme_txt(retenue, unite), self._somme_txt(nominal, unite, 0),
+                                           self._taux_txt(dd)),
+                      lib["i_egal"].format(self._somme_txt(retenue, unite), self._somme_txt(verse, unite),
+                                           self._taux_txt(i)))
+            for j, txt in enumerate(lignes):
+                k = _ease((k_i * 2 - j))
+                d.text((g, haut + j * 52), txt, font=pv,
+                       fill=_melange(fond, self.c["accent"] if j == 0 else self.c["texte"], k))
+
+    def _anim_frequences(self, d, scene, plan, zone, t, ctx):
+        """Un an au même taux effectif : un seul saut en fin d'année, ou m petits sauts au taux équivalent ;
+        les deux arrivent au même point. Le taux proportionnel (i / m) arriverait plus haut."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        i, m, c0, unite = conf["taux"], conf.get("m", 12), conf.get("capital", 1000), conf.get("unite", "")
+        lib = LIBELLES_FINANCE[self.langue]
+        j = (1 + i) ** (1 / m) - 1
+        g, haut, dr, bas = zone
+        par = {p["nature"]: p for p in plan}
+        av = lambda nom: (1.0 if t is None else _ease(self._avancee(par[nom], t))) if nom in par else 0.0
+        k_a, k_m, k_e = (av("annuel") if "annuel" in par else 1.0), av("mensuel"), av("egalite")
+        fond = self._fond_a(g, bas - 10)
+        pa, pv, pl = self.police("regulier", 30), self.police("gras", 38), self.police("regulier", 32)
+        y_axe, y_top = bas - 60, haut + 110
+        gx, dx = g + 170, dr - 30
+        v_max = c0 * (1 + i)
+        y_de = lambda val: y_axe - 24 - (y_axe - 24 - y_top) * (val - c0) / (v_max - c0)
+        x_de = lambda mois: gx + (dx - gx) * mois / m
+        d.line((gx, y_axe, dx, y_axe), fill=_melange(fond, self.c["texte"], 0.6), width=3)
+        for mois in range(m + 1):
+            x = x_de(mois)
+            d.line((x, y_axe - 6, x, y_axe + 6), fill=_melange(fond, self.c["texte"], 0.5), width=2)
+        for mois, txt in ((0, "0"), (m, lib["un_an"])):
+            self._texte_centre(d, txt, pa, x_de(mois), y_axe + 12, _melange(fond, self.c["texte"], 0.8), g, dr)
+        for val in (c0, v_max):
+            txt = self._somme_txt(val, unite, 0 if float(val).is_integer() else 2)
+            fort = k_e if val == v_max else 0.0
+            police = self.police("gras", 34) if fort > 0.5 else pa
+            d.text((g, y_de(val) - 20), txt, font=police,
+                   fill=_melange(fond, _melange(self.c["texte"], self.c["accent"], fort), 0.8 + 0.2 * fort))
+            d.line((gx, y_de(val), dx, y_de(val)), fill=_melange(fond, self.c["texte"], 0.15), width=2)
+        # Annuel : plat, puis un saut à la fin de l'année.
+        if k_a > 0:
+            xe = gx + (dx - gx) * min(1.0, k_a * 1.25)
+            coul = _melange(fond, self.c["secondaire"], 0.9)
+            d.line((gx, y_de(c0), xe, y_de(c0)), fill=coul, width=7)
+            if k_a > 0.8:
+                ks = (k_a - 0.8) / 0.2
+                d.line((dx, y_de(c0), dx, y_de(c0) + (y_de(v_max) - y_de(c0)) * ks), fill=coul, width=7)
+            if k_e < 0.98:
+                d.text((g, haut + 44), lib["une_fois"].format(self._taux_txt(i, 1)), font=pl,
+                       fill=_melange(fond, self.c["secondaire"], 0.9 * (1 - k_e)))
+        # Mensuel : m marches au taux j.
+        if k_m > 0:
+            coul = _melange(fond, self.c["or"], 0.95)
+            pts = [(x_de(0), y_de(c0))]
+            val = c0
+            for mois in range(1, m + 1):
+                if k_m * m < mois - 1:
+                    break
+                x = x_de(min(mois, k_m * m + 0.0001)) if k_m * m < mois else x_de(mois)
+                pts.append((x, y_de(val)))
+                if k_m * m >= mois:
+                    val *= 1 + j
+                    pts.append((x, y_de(val)))
+            d.line(pts, fill=coul, width=6, joint="curve")
+            if k_e < 0.98:
+                d.text((g, haut), lib["chaque_mois"].format(m, self._taux_txt(j, 4)), font=pl,
+                       fill=_melange(fond, self.c["or"], 0.95 * (1 - k_e)))
+        if k_e > 0:
+            txt = lib["meme_arrivee"].format(self._somme_txt(v_max, unite, 0 if float(v_max).is_integer() else 2))
+            d.text((g, haut), txt, font=pv, fill=_melange(fond, self.c["accent"], k_e))
+            txt = lib["proportionnel"].format(m, self._taux_txt(j, 4), self._taux_txt(m * j, 4), self._taux_txt(i, 1))
+            d.text((g, haut + 48), txt, font=pl, fill=_melange(fond, self.c["texte"], k_e))
+
 
 FRACTIONS = {(1, 2): "½", (1, 3): "⅓", (2, 3): "⅔", (1, 4): "¼", (3, 4): "¾", (1, 5): "⅕", (1, 6): "⅙",
              (1, 8): "⅛"}
@@ -1755,3 +2085,31 @@ def _pas_rond(brut: float) -> float:
         return 1.0
     e = 10 ** math.floor(math.log10(brut))
     return next(m * e for m in (1, 2, 5, 10) if m * e >= brut)
+
+
+LIBELLES_FINANCE = {
+    "fr": {"couche_capital": "capital placé", "couche_simple": "intérêts du capital",
+           "couche_compose": "intérêts des intérêts", "ecart": ": + {}",
+           "annees": "années", "capital_de": "Capital : {} (axe coupé)", "aujourdhui": "aujourd'hui",
+           "valeur_actuelle": "Valeur actuelle : {}", "dans_un_an": "dans un an", "facture": "Facture",
+           "escompte": "escompte retenu", "d_egal": "d = {} ÷ {} = {}  (payé au début)",
+           "i_egal": "i = {} ÷ {} = {}  (payé à la fin)", "un_an": "1 an",
+           "une_fois": "une fois par an : {}", "chaque_mois": "{} fois par an : {} chaque mois",
+           "meme_arrivee": "Même arrivée : {}",
+           "proportionnel": "Mais {} × {} = {} : moins que {}"},
+    "en": {"couche_capital": "amount invested", "couche_simple": "interest on the capital",
+           "couche_compose": "interest on interest", "ecart": ": + {}",
+           "annees": "years", "capital_de": "Capital: {} (broken axis)", "aujourdhui": "today",
+           "valeur_actuelle": "Present value: {}", "dans_un_an": "in one year", "facture": "Invoice",
+           "escompte": "discount kept", "d_egal": "d = {} ÷ {} = {}  (paid up front)",
+           "i_egal": "i = {} ÷ {} = {}  (paid at the end)", "un_an": "1 year",
+           "une_fois": "once a year: {}", "chaque_mois": "{} times a year: {} each month",
+           "meme_arrivee": "Same end point: {}",
+           "proportionnel": "But {} × {} = {}: less than {}"},
+}
+
+_EXPOSANTS = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
+
+
+def _exposant(n: int) -> str:
+    return str(n).translate(_EXPOSANTS)
