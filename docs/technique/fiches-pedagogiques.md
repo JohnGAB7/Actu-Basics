@@ -52,6 +52,8 @@ Modèles d'animation et leurs phases :
 | `echeancier` | `montants` et `dates` (1 à 12 versements, dates entières croissantes de 0 à 40), `taux`, `unite`, `decimales` | `flux`, `actualisation`, `somme` | Les versements sur une frise du temps ; chacun glisse vers « aujourd'hui » en rétrécissant (× vᵗ, le fantôme reste à sa date), les valeurs actuelles s'empilent, puis « Valeur actuelle : … ». Montants écrits jusqu'à 4 versements |
 | `escompte` | `nominal`, `taux` (taux d'intérêt i), `unite` | `facture`, `retenue`, `interet` | Une facture payable dans un an ramenée à aujourd'hui : la banque coupe l'escompte (d = i ÷ (1 + i)) ; puis d = escompte ÷ nominal (payé au début) et i = escompte ÷ montant versé (payé à la fin) |
 | `frequences` | `taux` (effectif annuel), `m` (2 à 24, 12 par défaut), `capital`, `unite` | `annuel`, `mensuel`, `egalite` | Un an : un seul saut au taux annuel, puis m petits sauts au taux équivalent ; même arrivée, et le piège du taux proportionnel (m × j < i) |
+| `mystere` | `cartes` : 2 à 4 cartes `{valeur, libelle}` (texte, ou `{fr, en}`) | `revele` (une par carte) | Curiosité : toutes les cartes face cachée avec un « ? » dès le début ; chaque carte se retourne quand la voix l'annonce. Le spectateur devine avant de voir |
+| `barre_cachee` | `barres` : exactement 2 `{valeur > 0, libelle}`, `unite`, `decimales` | `reference`, `cachee`, `revele` | Curiosité : la première barre, puis la place vide de la seconde en pointillés avec un « ? », puis elle se remplit et le rapport s'affiche (× k) |
 
 Le contrôle refuse une animation dont le nombre de légendes (`etapes`) diffère du nombre de phases.
 
