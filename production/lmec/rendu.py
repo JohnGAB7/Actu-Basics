@@ -217,7 +217,8 @@ class Rendu(ScenesPedagogiques):
         return c
 
     def univers_de(self, scene: Scene) -> str:
-        u = scene.extra.get("univers", "editorial")
+        # Univers choisi par la scène, sinon celui de son type (charte « univers_par_type », design Mixte).
+        u = scene.extra.get("univers") or (self.charte.get("univers_par_type") or {}).get(scene.type, "editorial")
         return u if u in self._palettes else "editorial"
 
     def basculer(self, univers: str) -> None:
@@ -467,7 +468,11 @@ class Rendu(ScenesPedagogiques):
                 if a > 0:
                     dy = (1 - a) * police.size * 0.35
                     fond = self._fond.getpixel((int(min(x, self.largeur - 1)), int(min(y, self.hauteur - 1))))
-                    if fort and style_fort == "surligne":
+                    if fort and style_fort == "surligne" and self._univers == "immersif":
+                        # Sur le bleu nuit, le mot fort passe simplement en jaune, comme dans les premières
+                        # vidéos (design Mixte, JG, 28/11/2026) : une bande claire y paraît terne.
+                        d.text((x, y + dy), mot, font=police, fill=_melange(fond, self.c["accent"], a))
+                    elif fort and style_fort == "surligne":
                         # Surligneur doux : bande claire dans la moitié basse du mot, mot en couleur d'accent
                         # (plus de pavé plein, jugé trop lourd par JG le 22/11/2026).
                         marge = police.size * 0.06
