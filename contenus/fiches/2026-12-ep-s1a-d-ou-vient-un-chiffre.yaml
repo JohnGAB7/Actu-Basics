@@ -1,0 +1,1136 @@
+# Épisode long EP-S1A « D'où vient un chiffre ? Données, populations et variables » (YOUTUBE_LESSON).
+# Assemblé le 28/11/2026 à partir des quatre fiches de chapitre validées par JG le 08/11/2026 (S1.01 à S1.04)
+# et de la fiche de conception contenus/conception/EP-S1A.yaml (PR #60, fusionnée le 28/11/2026), changements compris.
+# Généré par contenus/assemblage/assembler_ep_s1a.py : modifier ce script, pas ce fichier.
+# Statut : aperçu FR et EN à valider par JG.
+id: 2026-12-ep-s1a-d-ou-vient-un-chiffre
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: youtube_lesson
+habillage_sonore: true
+theme: EP-S1A · D'où vient un chiffre ?
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+    - Distinguer une question statistique, dont les réponses varient, d'une question à réponse unique
+    - Reconnaître qu'une donnée est une mesure, faite par quelqu'un, selon une définition
+    - Identifier la population, l'individu et la variable, et expliquer pourquoi changer d'individu change le chiffre
+    - Classer une variable (nominale, ordinale, discrète, continue) et dire quelles opérations ont un sens
+    - Distinguer recensement, sondage, fichier administratif et capteurs, avec une force et une limite de chacun
+    en:
+    - Tell a statistical question, whose answers vary, from a question with a single answer
+    - Recognise that a data point is a measurement, made by someone, under a definition
+    - Identify the population, the unit and the variable, and explain why changing the unit changes the number
+    - Classify a variable (nominal, ordinal, discrete, continuous) and say which operations make sense
+    - Tell apart a census, a survey, administrative records and sensors, with one strength and one limit of each
+  prerequis:
+    fr:
+    - 'Aucun : premier épisode du parcours'
+    - Pourcentages (épisode EP-M01), conseillé
+    en:
+    - 'None: first episode of the course'
+    - Percentages (episode EP-M01), recommended
+  hypotheses:
+    fr: Chiffres de l'Insee des chapitres validés (Paris, recensement 2023 ; chômage, 2e trimestre 2026). Entreprise, village et commune fictifs, annoncés comme tels.
+    en: Insee figures from the validated chapters (Paris, 2023 census; unemployment, Q2 2026). The company, village and town are made up, and labelled as such.
+validation:
+  statut: brouillon
+  valide_par: ''
+  date: ''
+sources:
+- nom:
+    fr: Insee, recensement de la population 2023 (comparateur de territoires, 2026)
+    en: Insee, 2023 population census (territory comparison tool, 2026)
+  url: https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001
+  date_consultation: '2026-11-03'
+- nom:
+    fr: Insee, Informations Rapides n° 192, chômage au 2e trimestre 2026
+    en: Insee, Informations Rapides no. 192, unemployment in Q2 2026
+  url: https://www.insee.fr/fr/statistiques/9032359
+  date_consultation: '2026-11-03'
+- nom:
+    fr: Insee, L'essentiel sur... le chômage (août 2026)
+    en: Insee, Key facts on unemployment (August 2026)
+  url: https://www.insee.fr/fr/statistiques/4805248
+  date_consultation: '2026-11-07'
+editions:
+  fr:
+    titre: 2,1 ou 13,3 millions d'habitants ? D'où vient un chiffre
+    legende: 'Combien d''habitants à Paris : 2,1, 11 ou 13,3 millions ? Combien de chômeurs : 2,7 ou 3,3 millions ? Tous ces chiffres sont justes. Avant de calculer quoi que ce soit, il faut savoir d''où vient un chiffre : quelle question, quelle définition, qui a mesuré et comment. Quatre chapitres, deux laboratoires en direct, un exercice de synthèse corrigé. Sources : Insee, recensement de la population 2023 ; Insee, Informations Rapides n° 192 et « L''essentiel sur... le chômage » (2e trimestre 2026). Entreprise, village et commune fictifs. Un exercice vous bloque ? Posez votre question en commentaire.
+
+      '
+    hashtags:
+    - statistiques
+    - donnees
+    - chiffres
+    scenes:
+    - type: accroche
+      texte: 'Paris : *2,1*, *11* ou *13,3 millions* d''habitants ? Chômeurs : *2,7* ou *3,3 millions* ? *Tous justes.*'
+      note: 'Insee : recensement 2023 ; enquête Emploi et France Travail, 2e trimestre 2026.'
+      voix_off: Combien d'habitants à Paris ? Deux virgule un millions. Ou onze millions. Ou treize virgule trois millions. Combien de chômeurs en France ? Deux virgule sept millions. Ou trois virgule trois millions. Ces cinq chiffres sont tous justes. Alors, comment savoir lequel croire ?
+    - type: accueil
+      texte: Bonjour, et *bienvenue* !
+      voix_off: Bonjour, et bienvenue ! Merci d'être là. On cite des chiffres tous les jours, dans les journaux, au travail, en famille. Dans cet épisode, on apprend à poser les bonnes questions à un chiffre, avant même de le calculer.
+    - type: etapes
+      texte: Au programme
+      disposition: cartes
+      etapes:
+      - Qu'est-ce qu'une *donnée* ?
+      - De *qui* parle ce chiffre ?
+      - Quel *type* de variable ?
+      - D'où viennent les *données* ?
+      voix_off: 'Quatre étapes : ce qu''est une donnée ; de qui parle un chiffre ; quel type de variable on manipule ; et d''où viennent les données. Avec deux laboratoires en direct et un exercice de synthèse corrigé.'
+    - type: titre
+      numero: '1'
+      texte: Qu'est-ce qu'une donnée ?
+      voix_off: Combien d'habitants vivent à Paris ? Deux virgule un millions, onze millions, ou treize virgule trois millions ?
+    - type: exercice
+      texte: '2,1, 11 ou 13,3 millions : *lequel* est juste ?'
+      etiquette: DÉFI
+      pause: 4
+      voix_off: Choisissez votre réponse avant la suite. Lequel de ces trois chiffres est le bon ?
+    - type: titre
+      numero: '1.1'
+      texte: Une question statistique
+      voix_off: 'Pour répondre, commençons par une question plus simple : qu''est-ce qu''une question statistique ?'
+    - type: etapes
+      texte: Deux questions, deux natures
+      etapes:
+      - '« Quel âge a ma voisine ? » : *une seule réponse*'
+      - '« Quel âge ont les habitants de ma rue ? » : des réponses qui *varient*'
+      voix_off: Comparons deux questions. Quel âge a ma voisine aujourd'hui ? Il y a une seule réponse, il suffit de la lui demander. Quel âge ont les habitants de ma rue ? Là, les réponses varient d'une personne à l'autre.
+    - type: texte
+      texte: Une question statistique attend des réponses qui *varient*
+      voix_off: C'est la différence essentielle. Une question statistique porte sur un groupe, et elle attend des réponses qui varient. Les statistiques servent à décrire et à comprendre cette variabilité.
+    - type: titre
+      numero: '1.2'
+      texte: Une donnée est une mesure
+      voix_off: 'Deuxième idée : une donnée ne tombe pas du ciel.'
+    - type: etapes
+      texte: Derrière chaque donnée
+      disposition: cartes
+      etapes:
+      - Une *question* précise
+      - Une *définition* de ce qu'on compte
+      - Quelqu'un qui *mesure*, à une date
+      voix_off: Derrière chaque donnée, il y a trois choses. Une question précise. Une définition de ce que l'on compte. Et quelqu'un qui mesure, à une date donnée, avec une méthode.
+    - type: titre
+      numero: '1.3'
+      texte: Combien d'habitants à Paris ?
+      voix_off: Revenons à Paris, avec les chiffres du recensement de l'Insee.
+    - type: etapes
+      texte: Trois définitions de « Paris »
+      etapes:
+      - 'La *commune* de Paris : *2,1 millions*'
+      - 'L''*agglomération*, bâti continu : *11,0 millions*'
+      - 'L''*aire d''attraction*, avec les communes dont au moins 15 % des actifs travaillent dans le pôle : *13,3 millions*'
+      note: 'Insee, recensement 2023 : 2 103 778, 11 013 774 et 13 320 752 habitants.'
+      voix_off: 'L''Insee publie trois chiffres, pour trois définitions de Paris. La commune de Paris, dans ses limites administratives : deux virgule un millions d''habitants. L''agglomération, c''est-à-dire Paris et les communes qui forment avec elle une zone de bâti continu : onze millions. L''aire d''attraction, qui ajoute les communes alentour dont au moins quinze pour cent des actifs viennent travailler dans le pôle parisien : treize virgule trois millions.'
+      verifier:
+      - expression: 2103778 / 1e6
+        attendu: 2.1
+        libelle: Commune de Paris, en millions
+      - expression: 11013774 / 1e6
+        attendu: 11.0
+        libelle: Unité urbaine de Paris, en millions
+      - expression: 13320752 / 1e6
+        attendu: 13.3
+        libelle: Aire d'attraction de Paris, en millions
+    - type: chiffre
+      valeur: 6.3
+      prefixe: ×
+      texte: d'habitants entre la commune et l'aire d'attraction
+      voix_off: 'Réponse au défi : les trois chiffres sont justes. Selon la définition, le nombre d''habitants est multiplié par plus de six.'
+      note: 13 320 752 ÷ 2 103 778 ≈ 6,3. Insee, recensement 2023.
+      verifier:
+      - expression: 13320752 / 2103778
+        attendu: 6.3
+        libelle: Rapport aire d'attraction / commune
+    - type: texte
+      texte: 'Un chiffre ne se suffit pas : il dépend de *la question posée*'
+      voix_off: Un chiffre ne se suffit donc pas à lui-même. Il dépend de la question posée et de la définition choisie. Avant de comparer deux chiffres, vérifiez qu'ils répondent à la même question.
+    - type: exercice
+      texte: 'Deux questions. *A* : la hauteur de la tour Eiffel. *B* : le temps que mettent les Parisiens pour aller travailler.'
+      pause: 5
+      voix_off: 'À vous. A : quelle est la hauteur de la tour Eiffel ? B : combien de temps les Parisiens mettent-ils pour aller travailler ? Laquelle de ces deux questions est une question statistique ?'
+      questions:
+      - Laquelle est une question statistique ?
+    - type: correction
+      etapes:
+      - 'A : *une seule* valeur, à mesurer une fois'
+      - 'B : des durées qui *varient* d''une personne à l''autre'
+      reponse: B est une question statistique
+      voix_off: 'La question A n''a qu''une réponse : on la mesure une fois. La question B porte sur des milliers de personnes, et les durées varient de l''une à l''autre. C''est donc B, la question statistique.'
+    - type: animation
+      texte: 'Une entreprise de *20 salariés* : combien de temps pour venir ?'
+      animation:
+        modele: foule
+        n: 20
+      note: Entreprise fictive de 20 salariés.
+      voix_off: Une entreprise fictive de vingt salariés se pose exactement cette question B pour ses salariés. Nous allons la suivre tout l'épisode.
+    - type: texte
+      texte: Un groupe, oui. Mais *lequel* ?
+      voix_off: Une question statistique porte sur un groupe. Mais lequel, exactement ?
+    - type: titre
+      numero: '2'
+      texte: De qui parle ce chiffre ?
+      voix_off: 'Imaginons ce titre : les Français dorment sept heures par nuit. De qui parle-t-on exactement ? Et qu''a-t-on mesuré ?'
+    - type: titre
+      numero: '2.1'
+      texte: Qui, quelle unité, quelle mesure
+      voix_off: 'Pour comprendre une statistique, posez trois questions : quelle population étudie-t-on, quelle unité observe-t-on, et quelle variable mesure-t-on ?'
+    - type: etapes
+      texte: Les trois briques d'une statistique
+      disposition: cartes
+      etapes:
+      - '*Population* : l''ensemble que l''on étudie'
+      - '*Individu* : chaque élément que l''on compte'
+      - '*Variable* : ce que l''on mesure sur chacun'
+      voix_off: Il y a trois briques. La population, c'est l'ensemble que l'on étudie. L'individu, qu'on appelle aussi l'unité statistique, c'est chaque élément de cette population. La variable, c'est ce que l'on mesure sur chaque individu.
+    - type: etapes
+      texte: « Les Français dorment 7 heures »
+      etapes:
+      - 'Population : *quels* Français ? Adultes ? Enfants ?'
+      - 'Individu : *une personne*'
+      - 'Variable : durée de sommeil, *déclarée ou mesurée* ?'
+      voix_off: 'Appliquons-les à notre titre. La population : de quels Français parle-t-on ? Les adultes, les enfants, tout le monde ? L''individu : ici, une personne. La variable : la durée de sommeil. Mais a-t-elle été déclarée par les personnes, ou mesurée par un appareil ?'
+    - type: etapes
+      texte: Dans notre entreprise
+      etapes:
+      - 'Population : les *20 salariés*'
+      - 'Individu : *un salarié*'
+      - 'Variable : son *temps de trajet*, en minutes, déclaré'
+      note: Entreprise fictive.
+      voix_off: 'Dans notre entreprise fictive, c''est plus simple. La population : les vingt salariés de l''entreprise. L''individu : un salarié. La variable : son temps de trajet, en minutes, un jour donné, tel qu''il le déclare.'
+    - type: texte
+      texte: Un titre court cache souvent *la population* et *la méthode*
+      voix_off: Un titre court cache souvent la population et la méthode. Sans elles, impossible de savoir si deux chiffres sont comparables.
+    - type: titre
+      numero: '2.2'
+      texte: Changer d'unité change le chiffre
+      voix_off: L'individu choisi compte autant que la population. Voyons pourquoi.
+    - type: etapes
+      texte: Un village fictif de 3 ménages
+      etapes:
+      - 'Ménage A : *1* personne, *2 000 €* par mois'
+      - 'Ménage B : *4* personnes, *4 000 €*'
+      - 'Ménage C : *2* personnes, *3 000 €*'
+      note: 'Village fictif : 3 ménages, 7 habitants, 9 000 € de revenus par mois.'
+      voix_off: Prenons un village fictif de trois ménages. Le ménage A, une personne seule, gagne deux mille euros par mois. Le ménage B, quatre personnes, gagne quatre mille euros. Le ménage C, deux personnes, gagne trois mille euros.
+      verifier:
+      - expression: 2000 + 4000 + 3000
+        attendu: 9000
+        libelle: Revenus du village
+      - expression: 1 + 4 + 2
+        attendu: 7
+        libelle: Habitants du village
+    - type: etapes
+      texte: Le revenu moyen du village
+      etapes:
+      - 'Par *ménage* : 9 000 ÷ 3 = *3 000 €*'
+      - 'Par *habitant* : 9 000 ÷ 7 ≈ *1 286 €*'
+      voix_off: 'Quel est le revenu moyen du village ? La moyenne, c''est le total partagé également. Par ménage, neuf mille euros divisés par trois ménages : trois mille euros. Par habitant, les mêmes neuf mille euros divisés par sept habitants : environ mille deux cent quatre-vingt-six euros.'
+      verifier:
+      - expression: 9000 / 3
+        attendu: 3000
+        libelle: Revenu moyen par ménage
+      - expression: 9000 / 7
+        attendu: 1286
+        libelle: Revenu moyen par personne
+    - type: texte
+      texte: 'Même village, deux chiffres : *précisez l''individu*'
+      voix_off: C'est le même village et le même argent. Mais selon l'individu choisi, le ménage ou la personne, le revenu moyen passe de trois mille à moins de mille trois cents euros. Comparer un chiffre par ménage avec un chiffre par personne n'aurait aucun sens.
+    - type: exercice
+      texte: 'Titre fictif : « *30 %* des collégiens ont un téléphone avant 11 ans. »'
+      pause: 6
+      voix_off: 'À vous. Voici un autre titre fictif : trente pour cent des collégiens ont un téléphone avant onze ans. Quelle est la population ? Quel est l''individu ? Quelle est la variable ?'
+      questions:
+      - Quelle est la population ?
+      - Quel est l'individu ?
+      - Quelle est la variable ?
+    - type: correction
+      etapes:
+      - 'Population : *les collégiens*, mais où et quand ?'
+      - 'Individu : *un collégien*'
+      - 'Variable : téléphone *avant 11 ans*, oui ou non'
+      reponse: 'Population, individu, variable : les trois sont à préciser'
+      voix_off: 'La population, ce sont les collégiens, mais il faudrait savoir de quel pays et en quelle année. L''individu, c''est un collégien. La variable, c''est le fait d''avoir eu un téléphone avant onze ans : une réponse par oui ou par non. Dans un vrai article, chacune de ces trois briques doit être précisée.'
+    - type: titre
+      texte: 'Laboratoire : par ménage ou par personne'
+      numero: '2.3'
+      univers: immersif
+      voix_off: Laboratoire. Reprenons le village et faisons-le changer sous nos yeux.
+    - type: animation
+      texte: 'Par *ménage* : 9 000 € partagés entre 3'
+      animation:
+        modele: partage
+        valeurs:
+        - 2000
+        - 4000
+        - 3000
+        unite: €
+      note: Village fictif.
+      voix_off: 'Trois ménages, neuf mille euros par mois. Versons tout dans une cagnotte et partageons également entre les trois ménages : trois mille euros chacun.'
+      verifier:
+      - expression: 9000 / 3
+        attendu: 3000
+        libelle: Par ménage
+    - type: chiffre
+      texte: 'par *personne* : 9 000 € ÷ 7 habitants'
+      valeur: 1286
+      suffixe:
+        fr: ' €'
+        en: ' €'
+      univers: immersif
+      verifier:
+      - expression: 9000 / 7
+        attendu: 1286
+        libelle: Par personne au départ
+      voix_off: 'Partageons maintenant entre les sept habitants : environ mille deux cent quatre-vingt-six euros chacun.'
+    - type: etapes
+      texte: Le ménage B passe de *4 à 6* personnes
+      etapes:
+      - 'Par ménage : 9 000 ÷ 3 = *3 000 €*, inchangé'
+      - 'Par personne : 9 000 ÷ 9 = *1 000 €*'
+      - 'Même argent : *précisez l''individu*'
+      univers: immersif
+      verifier:
+      - expression: 9000 / 3
+        attendu: 3000
+        libelle: Par ménage, à l'arrivée
+      - expression: 9000 / (1 + 6 + 2)
+        attendu: 1000
+        libelle: Par personne, à l'arrivée
+      voix_off: 'Deux enfants naissent dans le ménage B, qui passe de quatre à six personnes. Les revenus ne bougent pas. Par ménage : toujours neuf mille divisé par trois, trois mille euros. Par personne : neuf mille divisé par neuf, mille euros. Même village, même argent : un chiffre ne bouge pas, l''autre baisse d''un quart. Avant de dire « le revenu moyen a baissé », demandez par qui on divise.'
+    - type: texte
+      texte: 'Changer d''individu : *jusqu''où* ?'
+      voix_off: Changer d'individu change le chiffre. Voyons jusqu'où, en direct.
+    - type: titre
+      numero: '3'
+      texte: Quel type de variable ?
+      voix_off: Peut-on calculer la moyenne de deux codes postaux ? Et vingt degrés, est-ce deux fois plus chaud que dix degrés ?
+    - type: exercice
+      texte: (75001 + 13001) ÷ 2 = *44001*. Ce résultat a-t-il *un sens* ?
+      etiquette: DÉFI
+      pause: 4
+      note: '75001 : Paris ; 13001 : Marseille.'
+      voix_off: 'Faisons le calcul avec un code postal de Paris et un de Marseille. Soixante-quinze mille un, plus treize mille un, divisé par deux : quarante-quatre mille un. Ce résultat a-t-il un sens ?'
+      verifier:
+      - expression: (75001 + 13001) / 2
+        attendu: 44001
+        libelle: Moyenne de deux codes postaux
+    - type: titre
+      numero: '3.1'
+      texte: Un nombre n'est pas toujours une quantité
+      voix_off: Pour répondre, il faut savoir quel type de variable on manipule.
+    - type: etapes
+      texte: Quatre types de variables
+      disposition: cartes
+      etapes:
+      - '*Nominale* : une étiquette, sans ordre'
+      - '*Ordinale* : un rang, avec un ordre'
+      - '*Discrète* : on compte'
+      - '*Continue* : on mesure'
+      voix_off: 'Il existe quatre grands types de variables. Une variable nominale est une étiquette, sans ordre : un code postal, une couleur, une nationalité. Une variable ordinale est un rang : une note de satisfaction de un à cinq, une mention à un examen. Une variable discrète se compte : le nombre d''enfants d''une famille. Une variable continue se mesure : une taille, une durée, un poids.'
+    - type: texte
+      texte: Les deux premières sont *qualitatives*, les deux autres *quantitatives*
+      voix_off: 'Les variables nominales et ordinales sont dites qualitatives : elles décrivent une catégorie, même quand on l''écrit avec des chiffres. Les variables discrètes et continues sont quantitatives : elles mesurent une quantité.'
+    - type: etapes
+      texte: Le questionnaire de l'entreprise
+      etapes:
+      - 'Mode de transport : *nominale*'
+      - 'Satisfaction de 1 à 5 : *ordinale*'
+      - 'Nombre de correspondances : *discrète*'
+      - 'Temps de trajet en minutes : *continue*'
+      note: Entreprise fictive.
+      voix_off: 'Notre entreprise envoie un petit questionnaire. Quatre questions, quatre types. Le mode de transport : une étiquette, variable nominale. La satisfaction du trajet, de un à cinq : un rang, variable ordinale. Le nombre de correspondances : on compte, variable discrète. Le temps de trajet en minutes : on mesure, variable continue.'
+    - type: correction
+      etapes:
+      - 'Un code postal est une *étiquette* : variable nominale'
+      - 44 001 ne décrit *aucun* lieu « moyen »
+      reponse: 'Non : la moyenne d''étiquettes n''a pas de sens'
+      voix_off: 'Réponse au défi. Un code postal s''écrit avec des chiffres, mais c''est une étiquette : une variable nominale. Le résultat, quarante-quatre mille un, ne désigne aucun lieu situé entre les deux villes. La moyenne d''étiquettes n''a pas de sens.'
+    - type: titre
+      numero: '3.2'
+      texte: Quelles opérations ont un sens ?
+      voix_off: Chaque type de variable autorise certaines opérations, et pas d'autres. On parle d'échelles de mesure.
+    - type: etapes
+      texte: Quatre échelles, de la moins à la plus informative
+      etapes:
+      - '*Nominale* : égal ou différent'
+      - '*Ordinale* : en plus, classer'
+      - '*Intervalle* : en plus, mesurer des écarts'
+      - '*Rapport* : en plus, dire « deux fois plus »'
+      voix_off: 'Il y a quatre échelles. Sur une échelle nominale, on peut seulement dire si deux valeurs sont égales ou différentes, et compter. Sur une échelle ordinale, on peut en plus les classer. Sur une échelle d''intervalle, on peut en plus mesurer des écarts : la température en degrés Celsius. Sur une échelle de rapport, on peut en plus dire deux fois plus : les kilogrammes, les euros, les durées.'
+    - type: etapes
+      texte: 20 °C, deux fois plus chaud que 10 °C ?
+      etapes:
+      - '20 kg = *2 ×* 10 kg : le zéro veut dire « rien »'
+      - 0 °C n'est *pas* un vrai zéro de température
+      - 'En kelvins : 293,15 ÷ 283,15 ≈ *1,035*'
+      note: 0 °C = 273,15 K ; le zéro des kelvins est le zéro absolu.
+      voix_off: 'Comparons. Vingt kilogrammes, c''est bien deux fois dix kilogrammes, parce que zéro kilogramme veut dire une masse nulle. Mais zéro degré Celsius n''est pas le zéro de la température : c''est la température où l''eau gèle, un repère choisi par convention. Avec une échelle dont le zéro est vraiment nul, les kelvins, passer de dix à vingt degrés, c''est passer de deux cent quatre-vingt-trois à deux cent quatre-vingt-treize kelvins : environ trois virgule cinq pour cent de plus, pas le double. Ce rapport ne décrit pas ce que l''on ressent : il montre seulement que vingt degrés n''est pas le double de dix.'
+      verifier:
+      - expression: 20 / 10
+        attendu: 2
+        libelle: 20 kg ÷ 10 kg
+      - expression: (20 + 273.15) / (10 + 273.15)
+        attendu: 1.035
+        libelle: 20 °C ÷ 10 °C en kelvins
+      - expression: ((20 + 273.15) / (10 + 273.15) - 1) * 100
+        attendu: 3.5
+        libelle: Écart en %
+    - type: texte
+      texte: 'Une note de *1 à 5* : la moyenne suppose des écarts égaux, *dites-le*'
+      voix_off: Et les notes de satisfaction de un à cinq ? On calcule souvent leur moyenne. Mais c'est supposer que l'écart entre un et deux vaut l'écart entre quatre et cinq, ce que rien ne garantit. Si on le fait, il faut le dire, ou donner plutôt la part de chaque note.
+    - type: exercice
+      texte: Les étoiles d'un hôtel, de *1 à 5*.
+      pause: 5
+      voix_off: 'À vous. Les étoiles d''un hôtel, de une à cinq : quel est le type de cette variable ? Et un hôtel quatre étoiles est-il deux fois meilleur qu''un deux étoiles ?'
+      questions:
+      - Quel est le type de cette variable ?
+      - Un 4 étoiles est-il *deux fois* meilleur qu'un 2 étoiles ?
+    - type: correction
+      etapes:
+      - 'Les étoiles sont un *rang* : variable ordinale'
+      - On peut *classer*, pas calculer de rapport
+      reponse: 'Ordinale : « deux fois meilleur » n''a pas de sens'
+      voix_off: 'Les étoiles donnent un rang : c''est une variable ordinale. On peut dire qu''un quatre étoiles est classé au-dessus d''un deux étoiles. Mais dire qu''il est deux fois meilleur n''a pas de sens : les étoiles ne mesurent pas une quantité.'
+    - type: texte
+      texte: '*Qui* a mesuré, et *comment* ?'
+      voix_off: 'On sait maintenant ce qu''on mesure. Reste une question : qui a mesuré, et comment ?'
+    - type: titre
+      numero: '4'
+      texte: D'où viennent les données ?
+      voix_off: Combien y a-t-il de chômeurs en France ? La réponse dépend de qui compte, et de la façon dont on compte.
+    - type: titre
+      numero: '4.1'
+      texte: Quatre façons de collecter
+      voix_off: Il existe quatre grandes façons de produire des données.
+    - type: etapes
+      texte: Les quatre grandes sources
+      disposition: cartes
+      etapes:
+      - '*Recensement* : tout le monde'
+      - '*Sondage* : un échantillon'
+      - '*Fichiers* : enregistrer pour gérer'
+      - '*Capteurs* : garder des traces'
+      voix_off: 'Le recensement interroge toute la population. L''enquête par sondage interroge seulement un échantillon, choisi pour la représenter. Le fichier administratif enregistre des personnes pour gérer un service : les impôts, l''état civil, les inscriptions. Enfin, les capteurs et les plateformes gardent des traces : passages de voitures, achats, connexions.'
+    - type: etapes
+      texte: Une force, une limite
+      etapes:
+      - 'Recensement : *complet*, mais lourd et coûteux'
+      - 'Sondage : *rapide*, mais marge d''erreur'
+      - 'Fichier : *énorme*, mais selon des règles de gestion'
+      - 'Capteurs : *en continu*, mais pas partout'
+      voix_off: Chaque source a une force et une limite. Le recensement est complet, mais lourd et coûteux à organiser. Le sondage est rapide, mais il a une marge d'erreur, et certaines personnes ne répondent pas. Le fichier administratif est énorme et déjà disponible, mais il ne compte que ce que ses règles de gestion lui demandent de compter. Les capteurs mesurent en continu, mais seulement là où ils sont installés. Les plateformes, elles, ne voient que leurs utilisateurs.
+    - type: texte
+      texte: Ce qui n'est *pas collecté* n'apparaît pas dans les données
+      voix_off: 'Retenez l''idée générale : chaque façon de collecter laisse sa trace dans le chiffre. Ce qui n''est pas collecté n''apparaît tout simplement pas dans les données.'
+    - type: titre
+      numero: '4.2'
+      texte: 'Le chômage : enquête ou fichier ?'
+      voix_off: Revenons au chômage, qui se mesure de deux façons différentes.
+    - type: etapes
+      texte: Deux façons de compter
+      etapes:
+      - 'Insee : une *enquête*, définition du BIT'
+      - Sans emploi, *disponible*, en recherche *active*
+      - 'France Travail : un *fichier* de personnes inscrites'
+      voix_off: 'D''un côté, l''Insee mène une enquête auprès d''un échantillon de ménages, et applique la définition du Bureau international du travail. Est chômeur, au sens du BIT, une personne de quinze ans ou plus qui n''a pas travaillé, même une heure, pendant une semaine donnée, qui est disponible pour travailler, et qui cherche activement un emploi. De l''autre côté, France Travail tient un fichier : il compte les personnes inscrites, selon ses propres règles d''inscription.'
+    - type: chiffre
+      valeur: 2.7
+      suffixe:
+        fr: ' millions'
+        en: ' million'
+      texte: de chômeurs au sens du BIT, au 2e trimestre 2026
+      note: 'Insee, enquête Emploi : 2 677 000 personnes, données corrigées des variations saisonnières.'
+      voix_off: Selon l'enquête de l'Insee, la France comptait deux virgule sept millions de chômeurs au sens du BIT au deuxième trimestre deux mille vingt-six.
+      verifier:
+      - expression: 2677 / 1000
+        attendu: 2.7
+        libelle: Chômeurs au sens du BIT, en millions
+    - type: texte
+      texte: Un inscrit n'est pas forcément *chômeur au sens du BIT*, et inversement
+      note: 'Insee : 3,3 millions d''inscrits à France Travail en catégorie A au 2e trimestre 2026 (France hors Mayotte).'
+      voix_off: 'Le nombre d''inscrits à France Travail est différent : trois virgule trois millions en catégorie A, au même trimestre. Ce n''est pas une erreur : les deux chiffres ne mesurent pas la même chose. Une personne qui a travaillé ne serait-ce qu''une heure dans la semaine de référence n''est pas chômeuse au sens du BIT, même si elle reste inscrite. À l''inverse, une personne qui cherche activement un emploi sans être inscrite peut être comptée par l''enquête, mais pas par le fichier.'
+    - type: exercice
+      texte: 'Trois chiffres : les *naissances* de l''année ; la *confiance* dans les scientifiques ; le *trafic* du périphérique à 8 h.'
+      pause: 6
+      voix_off: 'À vous. Trois chiffres : le nombre de naissances de l''année, la part des gens qui font confiance aux scientifiques, et le nombre de voitures sur le périphérique à huit heures du matin. D''où vient chacun de ces trois chiffres ?'
+      questions:
+      - D'où vient chacun de ces trois chiffres ?
+    - type: correction
+      etapes:
+      - 'Naissances : *fichier administratif*, l''état civil'
+      - 'Confiance : *sondage*, avec une marge d''erreur'
+      - 'Trafic : *capteurs*, seulement là où il y en a'
+      reponse: Un fichier, un sondage, des capteurs
+      voix_off: 'Les naissances viennent d''un fichier administratif, l''état civil : chaque naissance est déclarée à la mairie. La confiance dans les scientifiques vient d''un sondage : on ne peut pas interroger tout le monde, d''où une marge d''erreur. Le trafic vient de capteurs posés sur la route : il ne compte que les endroits équipés.'
+    - type: texte
+      texte: '20 salariés : on peut *tous* les interroger'
+      note: Entreprise fictive.
+      voix_off: 'Et notre entreprise ? Avec vingt salariés, on peut tous les interroger : c''est un recensement de l''entreprise. Une entreprise de vingt mille salariés n''interrogerait qu''un échantillon.'
+    - type: titre
+      texte: 'Laboratoire : tout le monde ou un échantillon'
+      numero: '4.3'
+      univers: immersif
+      voix_off: Deuxième laboratoire. Comparons la réponse des vingt salariés à celle de cinq salariés tirés au hasard.
+    - type: animation
+      texte: 'Les *20 salariés* : 10 sous 20 minutes, *50 %*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: &id001
+        - 4
+        - 7
+        - 9
+        - 11
+        - 12
+        - 14
+        - 15
+        - 16
+        - 18
+        - 19
+        - 21
+        - 23
+        - 25
+        - 26
+        - 27
+        - 29
+        - 32
+        - 35
+        - 38
+        - 44
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Les vingt salariés, chacun avec son temps de trajet. Dans la première barre, ceux qui mettent moins de vingt minutes : dix sur vingt, soit cinquante pour cent. C''est la vraie réponse, puisqu''on a interrogé tout le monde.'
+      verifier:
+      - expression: sum(1 for t in [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44] if t < 20)
+        attendu: 10
+        libelle: Sous 20 minutes, les 20
+      - expression: 10 / 20 * 100
+        attendu: 50
+        libelle: Part, les 20
+    - type: animation
+      texte: 'Tirage 1 : 2 sur 5, *40 %*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: &id002
+        - 7
+        - 15
+        - 21
+        - 29
+        - 38
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Premier tirage de cinq salariés : 7, 15, 21, 29 et 38 minutes. 2 sur cinq sous vingt minutes, soit 40 pour cent.'
+      verifier:
+      - expression: 2 / 5 * 100
+        attendu: 40
+        libelle: Tirage 1
+    - type: animation
+      texte: 'Tirage 2 : 3 sur 5, *60 %*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: &id003
+        - 4
+        - 11
+        - 18
+        - 23
+        - 44
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Deuxième tirage de cinq salariés : 4, 11, 18, 23 et 44 minutes. 3 sur cinq sous vingt minutes, soit 60 pour cent.'
+      verifier:
+      - expression: 3 / 5 * 100
+        attendu: 60
+        libelle: Tirage 2
+    - type: animation
+      texte: 'Tirage 3 : 4 sur 5, *80 %*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: &id004
+        - 9
+        - 12
+        - 14
+        - 16
+        - 32
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Troisième tirage de cinq salariés : 9, 12, 14, 16 et 32 minutes. 4 sur cinq sous vingt minutes, soit 80 pour cent.'
+      verifier:
+      - expression: 4 / 5 * 100
+        attendu: 80
+        libelle: Tirage 3
+    - type: etapes
+      texte: Trois échantillons, *trois réponses*
+      etapes:
+      - 'Les 20 : *50 %*'
+      - 'Échantillons de 5 : *40 %*, *60 %*, *80 %*'
+      - 'Personne n''a menti : c''est le *hasard du tirage*'
+      univers: immersif
+      voix_off: 'Trois échantillons, trois réponses, et aucune ne vaut cinquante pour cent. Personne n''a menti : c''est le hasard du tirage. C''est la marge d''erreur d''un sondage, et c''est tout l''objet du prochain épisode.'
+    - type: etapes
+      texte: À retenir
+      etapes:
+      - Une donnée est une *mesure*, selon une définition
+      - 'De qui parle le chiffre : *population, individu, variable*'
+      - 'Étiquette, rang ou quantité : l''*échelle* dit ce qu''on peut calculer'
+      - Chaque source a une *force* et une *limite*
+      - Quelle *question* ? Quelle *définition* ? *Qui* a mesuré, quand et comment ?
+      voix_off: 'Ce qu''il faut retenir. Un : une question statistique attend des réponses qui varient, et une donnée est toujours une mesure, faite par quelqu''un, selon une définition. Deux : avant de comparer, demandez de qui parle le chiffre, la population, l''individu, la variable ; changer d''individu change le chiffre. Trois : un nombre peut être une étiquette, un rang ou une quantité, et l''échelle dit quelles opérations ont un sens. Quatre : recensement, sondage, fichier ou capteurs, chaque source a une force et une limite. Devant n''importe quel chiffre, posez trois questions : quelle question, quelle définition, et qui a mesuré, quand et comment ?'
+    - type: exercice
+      texte: 'Une commune fictive : le *temps quotidien* de ses habitants dans les transports, leur *mode de transport* principal, une note de *satisfaction de 1 à 5*.'
+      pause: 15
+      questions:
+      - Est-ce une question statistique ?
+      - Quelle est la population, l'individu, la variable ?
+      - Quel est le type de chacune des trois variables ?
+      - 'Tous les habitants, 500 tirés au sort, ou les validations de cartes de bus : une force et une limite de chaque source ?'
+      voix_off: 'À vous, et mettez la vidéo en pause pour répondre. Une commune fictive veut savoir combien de temps ses habitants passent chaque jour dans les transports. Elle leur demande aussi leur mode de transport principal et une note de satisfaction de 1 à 5. Un : est-ce une question statistique ? Deux : quelle est la population, l''individu, la variable ? Trois : quel est le type de chacune des trois variables ? Quatre : la commune hésite entre interroger tous les habitants, en interroger 500 tirés au sort, ou compter les validations de cartes de bus ; donnez pour chaque source une force et une limite.'
+    - type: correction
+      voix_off: 'Un : oui, les durées varient d''un habitant à l''autre. Deux : la population, ce sont les habitants de la commune, à préciser (à partir de quel âge ? quelle semaine ?) ; l''individu, un habitant ; la variable, son temps quotidien dans les transports, en minutes. Trois : le temps est quantitatif continu ; le mode de transport est qualitatif nominal ; la satisfaction est qualitative ordinale, et en faire la moyenne suppose des écarts égaux, à dire.'
+      etapes:
+      - 'Oui : les durées *varient* d''un habitant à l''autre'
+      - Habitants (âge ? semaine ?) ; *un habitant* ; *minutes par jour*
+      - 'Temps : *continue* ; mode : *nominale* ; satisfaction : *ordinale*'
+    - type: etapes
+      texte: Correction (suite)
+      etapes:
+      - 'Tous : *recensement*, complet mais lourd'
+      - '500 au hasard : *sondage*, rapide mais marge d''erreur'
+      - 'Validations : *fichier*, énorme, mais seulement le bus, et des *passages*, pas des personnes'
+      voix_off: 'Quatre : tout le monde, c''est un recensement, complet mais lourd et coûteux ; 500 tirés au sort, c''est un sondage, rapide mais avec une marge d''erreur et des non-réponses ; les validations, c''est un fichier, énorme et continu, mais il ne voit que les usagers du bus, et il compte des passages, pas des personnes : l''individu a changé.'
+    - type: cloture
+      texte: 'Prochain épisode : *pourquoi un échantillon peut mentir*. Une question ? *En commentaire*'
+      voix_off: 'Voilà : la prochaine fois qu''on vous lance un chiffre, vous saurez lui demander d''où il vient. Mais un échantillon peut aussi se tromper, et pas seulement par hasard : c''est tout l''enjeu du prochain épisode. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu''un à qui elle servira. Et si un exercice vous résiste, écrivez-nous en commentaire : on vous aide, gratuitement. Merci d''avoir regardé, et à très vite !'
+    - type: fin
+      texte: Éveiller par les chiffres.
+      voix_off: ACTU-BASICS. Éveiller par les chiffres.
+  en:
+    titre: 2.1 or 13.3 million people? Where a number comes from
+    legende: 'How many people live in Paris: 2.1, 11 or 13.3 million? How many are unemployed in France: 2.7 or 3.3 million? All these figures are correct. Before calculating anything, you need to know where a number comes from: which question, which definition, who measured it and how. Four chapters, two live labs, a worked summary exercise. Sources: Insee (the French statistics office), 2023 population census; Insee, Informations Rapides no. 192 and "Key facts on unemployment" (Q2 2026). The company, village and town are made up. Stuck on an exercise? Ask in the comments.
+
+      '
+    hashtags:
+    - statistics
+    - data
+    - numbers
+    scenes:
+    - type: accroche
+      texte: 'Paris: *2.1*, *11* or *13.3 million* people? Unemployed: *2.7* or *3.3 million*? *All correct.*'
+      note: 'Insee: 2023 census; Labour Force Survey and France Travail, Q2 2026.'
+      voix_off: How many people live in Paris? Two point one million. Or eleven million. Or thirteen point three million. How many people are unemployed in France? Two point seven million. Or three point three million. All five figures are correct. So how do you know which one to believe?
+    - type: accueil
+      texte: Hi, and *welcome*!
+      voix_off: Hi, and welcome! Thanks for being here. We quote numbers every day, in the news, at work, at home. In this episode, we learn to ask a number the right questions, before we even calculate anything.
+    - type: etapes
+      texte: Coming up
+      disposition: cartes
+      etapes:
+      - What counts as *data*?
+      - '*Who* is this number about?'
+      - What *type* of variable?
+      - Where do *data* come from?
+      voix_off: 'Four steps: what data are; who a number is about; what type of variable we''re handling; and where data come from. With two live labs and a worked summary exercise.'
+    - type: titre
+      numero: '1'
+      texte: What counts as data?
+      voix_off: How many people live in Paris? Two point one million, eleven million, or thirteen point three million?
+    - type: exercice
+      texte: '2.1, 11 or 13.3 million: *which one* is right?'
+      etiquette: CHALLENGE
+      pause: 4
+      voix_off: Pick your answer before we go on. Which of these three figures is the right one?
+    - type: titre
+      numero: '1.1'
+      texte: A statistical question
+      voix_off: 'To answer, let''s start with a simpler question: what is a statistical question?'
+    - type: etapes
+      texte: Two questions, two kinds
+      etapes:
+      - '"How old is my neighbour?": *a single answer*'
+      - '"How old are the people on my street?": answers that *vary*'
+      voix_off: 'Let''s compare two questions. How old is my neighbour today? There is a single answer: you just ask her. How old are the people on my street? This time, the answers vary from one person to the next.'
+    - type: texte
+      texte: A statistical question expects answers that *vary*
+      voix_off: That's the key difference. A statistical question is about a group, and it expects answers that vary. Statistics are there to describe and understand that variability.
+    - type: titre
+      numero: '1.2'
+      texte: Data are measurements
+      voix_off: 'Second idea: data don''t fall from the sky.'
+    - type: etapes
+      texte: Behind every data point
+      disposition: cartes
+      etapes:
+      - A precise *question*
+      - A *definition* of what is counted
+      - Someone who *measures*, at a given date
+      voix_off: Behind every data point, there are three things. A precise question. A definition of what is being counted. And someone who measures, at a given date, with a method.
+    - type: titre
+      numero: '1.3'
+      texte: How many people live in Paris?
+      voix_off: Let's go back to Paris, with the census figures from Insee, the French statistics office.
+    - type: etapes
+      texte: Three definitions of "Paris"
+      etapes:
+      - 'The *city* of Paris: *2.1 million*'
+      - 'The *built-up area*: *11.0 million*'
+      - 'The *functional area*, adding towns where at least 15% of workers commute to the core: *13.3 million*'
+      note: 'Insee, 2023 census: 2,103,778, 11,013,774 and 13,320,752 people.'
+      voix_off: 'Insee publishes three figures, for three definitions of Paris. The city of Paris, within its official boundaries: two point one million people. The built-up area, meaning Paris and the surrounding towns that form one continuous urban area with it: eleven million. The functional area, which adds the surrounding towns where at least fifteen percent of workers commute to the Paris core: thirteen point three million.'
+      verifier:
+      - expression: 2103778 / 1e6
+        attendu: 2.1
+        libelle: City of Paris, millions
+      - expression: 11013774 / 1e6
+        attendu: 11.0
+        libelle: Paris urban unit, millions
+      - expression: 13320752 / 1e6
+        attendu: 13.3
+        libelle: Paris catchment area, millions
+    - type: chiffre
+      valeur: 6.3
+      prefixe: ×
+      texte: more people, from the city to the functional area
+      voix_off: 'The answer to the challenge: all three figures are right. Depending on the definition, the number of people is multiplied by more than six.'
+      note: 13,320,752 ÷ 2,103,778 ≈ 6.3. Insee, 2023 census.
+      verifier:
+      - expression: 13320752 / 2103778
+        attendu: 6.3
+        libelle: Catchment area / city ratio
+    - type: texte
+      texte: 'A number isn''t enough on its own: it depends on *the question asked*'
+      voix_off: So a figure isn't enough on its own. It depends on the question asked and on the definition chosen. Before comparing two figures, check that they answer the same question.
+    - type: exercice
+      texte: 'Two questions. *A*: the height of the Eiffel Tower. *B*: how long Parisians take to get to work.'
+      pause: 5
+      voix_off: 'Your turn. A: how tall is the Eiffel Tower? B: how long do Parisians take to get to work? Which of these two questions is a statistical question?'
+      questions:
+      - Which one is a statistical question?
+    - type: correction
+      etapes:
+      - 'A: *a single* value, measured once'
+      - 'B: times that *vary* from person to person'
+      reponse: B is a statistical question
+      voix_off: 'Question A has only one answer: you measure it once. Question B is about thousands of people, and the times vary from one to the next. So B is the statistical question.'
+    - type: animation
+      texte: 'A company of *20 employees*: how long to get to work?'
+      animation:
+        modele: foule
+        n: 20
+      note: Fictional company of 20 employees.
+      voix_off: A fictional company of twenty employees is asking exactly question B about its staff. We'll follow it through the whole episode.
+    - type: texte
+      texte: A group, yes. But *which one*?
+      voix_off: A statistical question is about a group. But which group, exactly?
+    - type: titre
+      numero: '2'
+      texte: Who is this number about?
+      voix_off: 'Imagine this headline: people in France sleep seven hours a night. Who exactly are we talking about? And what was measured?'
+    - type: titre
+      numero: '2.1'
+      texte: Who, which unit, which measure
+      voix_off: 'To understand a statistic, ask three questions: which population is studied, which unit is observed, and which variable is measured?'
+    - type: etapes
+      texte: The three building blocks of a statistic
+      disposition: cartes
+      etapes:
+      - '*Population*: the whole group being studied'
+      - '*Unit*: each element being counted'
+      - '*Variable*: what is measured on each one'
+      voix_off: There are three building blocks. The population is the whole group being studied. The unit, also called the statistical unit, is each element of that population. The variable is what is measured on each unit.
+    - type: etapes
+      texte: '"People in France sleep 7 hours"'
+      etapes:
+      - 'Population: *which* people? Adults? Children?'
+      - 'Unit: *one person*'
+      - 'Variable: sleep time, *reported or measured*?'
+      voix_off: 'Let''s apply them to our headline. The population: which people are we talking about? Adults, children, everyone? The unit: here, one person. The variable: sleep time. But was it reported by the people themselves, or measured by a device?'
+    - type: etapes
+      texte: In our company
+      etapes:
+      - 'Population: the *20 employees*'
+      - 'Unit: *one employee*'
+      - 'Variable: their *commuting time*, in minutes, as reported'
+      note: Fictional company.
+      voix_off: 'In our fictional company, it''s simpler. The population: the company''s twenty employees. The unit: one employee. The variable: their commuting time, in minutes, on a given day, as they report it.'
+    - type: texte
+      texte: A short headline often hides *the population* and *the method*
+      voix_off: A short headline often hides the population and the method. Without them, there's no way to know whether two figures can be compared.
+    - type: titre
+      numero: '2.2'
+      texte: Change the unit, change the number
+      voix_off: The unit you choose matters as much as the population. Let's see why.
+    - type: etapes
+      texte: A made-up village of 3 households
+      etapes:
+      - 'Household A: *1* person, *€2,000* a month'
+      - 'Household B: *4* people, *€4,000*'
+      - 'Household C: *2* people, *€3,000*'
+      note: 'Made-up village: 3 households, 7 residents, €9,000 of income a month.'
+      voix_off: Take a made-up village of three households. Household A, one person living alone, earns two thousand euros a month. Household B, four people, earns four thousand euros. Household C, two people, earns three thousand euros.
+      verifier:
+      - expression: 2000 + 4000 + 3000
+        attendu: 9000
+        libelle: Village income
+      - expression: 1 + 4 + 2
+        attendu: 7
+        libelle: Village residents
+    - type: etapes
+      texte: Average income in the village
+      etapes:
+      - 'Per *household*: 9,000 ÷ 3 = *€3,000*'
+      - 'Per *resident*: 9,000 ÷ 7 ≈ *€1,286*'
+      voix_off: 'What is the average income in the village? The average is the total shared out equally. Per household, nine thousand euros divided by three households: three thousand euros. Per resident, the same nine thousand euros divided by seven residents: about one thousand two hundred and eighty-six euros.'
+      verifier:
+      - expression: 9000 / 3
+        attendu: 3000
+        libelle: Average income per household
+      - expression: 9000 / 7
+        attendu: 1286
+        libelle: Average income per person
+    - type: texte
+      texte: 'Same village, two numbers: *state the unit*'
+      voix_off: It's the same village and the same money. But depending on the unit, household or person, the average income goes from three thousand to under one thousand three hundred euros. Comparing a per-household figure with a per-person figure would make no sense.
+    - type: exercice
+      texte: 'Made-up headline: "*30%* of middle-school pupils have a phone before age 11."'
+      pause: 6
+      voix_off: 'Your turn. Here''s another made-up headline: thirty percent of middle-school pupils have a phone before age eleven. What is the population? What is the unit? What is the variable?'
+      questions:
+      - What is the population?
+      - What is the unit?
+      - What is the variable?
+    - type: correction
+      etapes:
+      - 'Population: *middle-school pupils*, but where and when?'
+      - 'Unit: *one pupil*'
+      - 'Variable: a phone *before age 11*, yes or no'
+      reponse: 'Population, unit, variable: all three need to be stated'
+      voix_off: 'The population is middle-school pupils, but we''d need to know which country and which year. The unit is one pupil. The variable is whether they had a phone before age eleven: a yes or no answer. In a real article, each of these three building blocks should be stated.'
+    - type: titre
+      texte: 'Lab: per household or per person'
+      numero: '2.3'
+      univers: immersif
+      voix_off: Lab time. Let's take the village and change it before our eyes.
+    - type: animation
+      texte: 'Per *household*: €9,000 shared among 3'
+      animation:
+        modele: partage
+        valeurs:
+        - 2000
+        - 4000
+        - 3000
+        unite: €
+      note: Fictional village.
+      voix_off: 'Three households, nine thousand euros a month. Pour it all into a pot and share it equally among the three households: three thousand euros each.'
+      verifier:
+      - expression: 9000 / 3
+        attendu: 3000
+        libelle: Par ménage
+    - type: chiffre
+      texte: 'per *person*: €9,000 ÷ 7 people'
+      valeur: 1286
+      suffixe:
+        fr: ' €'
+        en: ' €'
+      univers: immersif
+      verifier:
+      - expression: 9000 / 7
+        attendu: 1286
+        libelle: Par personne au départ
+      voix_off: 'Now let''s share among the seven people: about one thousand two hundred and eighty-six euros each.'
+    - type: etapes
+      texte: Household B grows from *4 to 6* people
+      etapes:
+      - 'Per household: 9,000 ÷ 3 = *€3,000*, unchanged'
+      - 'Per person: 9,000 ÷ 9 = *€1,000*'
+      - 'Same money: *name the unit*'
+      univers: immersif
+      verifier:
+      - expression: 9000 / 3
+        attendu: 3000
+        libelle: Par ménage, à l'arrivée
+      - expression: 9000 / (1 + 6 + 2)
+        attendu: 1000
+        libelle: Par personne, à l'arrivée
+      voix_off: 'Two babies are born in household B, which grows from four to six people. Income doesn''t change. Per household: still nine thousand divided by three, three thousand euros. Per person: nine thousand divided by nine, one thousand euros. Same village, same money: one number stays put, the other falls by a quarter. Before saying ''average income fell'', ask what you''re dividing by.'
+    - type: texte
+      texte: 'Changing the unit: *how far*?'
+      voix_off: Changing the unit changes the number. Let's see how far, live.
+    - type: titre
+      numero: '3'
+      texte: What type of variable?
+      voix_off: Can you take the average of two postcodes? And is twenty degrees twice as hot as ten degrees?
+    - type: exercice
+      texte: (75001 + 13001) ÷ 2 = *44001*. Does this result *mean anything*?
+      etiquette: CHALLENGE
+      pause: 4
+      note: '75001 and 13001: French postcodes in Paris and Marseille.'
+      voix_off: 'Let''s do the sum with two French postcodes, one in Paris and one in Marseille. Seventy-five thousand and one, plus thirteen thousand and one, divided by two: forty-four thousand and one. Does this result mean anything?'
+      verifier:
+      - expression: (75001 + 13001) / 2
+        attendu: 44001
+        libelle: Average of two postcodes
+    - type: titre
+      numero: '3.1'
+      texte: A number isn't always a quantity
+      voix_off: To answer, you need to know what type of variable you're dealing with.
+    - type: etapes
+      texte: Four types of variables
+      disposition: cartes
+      etapes:
+      - '*Nominal*: a label, with no order'
+      - '*Ordinal*: a rank, with an order'
+      - '*Discrete*: you count'
+      - '*Continuous*: you measure'
+      voix_off: 'There are four main types of variables. A nominal variable is a label, with no order: a postcode, a colour, a nationality. An ordinal variable is a rank: a satisfaction score from one to five, an exam grade. A discrete variable is counted: the number of children in a family. A continuous variable is measured: a height, a duration, a weight.'
+    - type: texte
+      texte: The first two are *categorical*, the other two *numerical*
+      voix_off: 'Nominal and ordinal variables are called categorical: they describe a category, even when it''s written with digits. Discrete and continuous variables are numerical: they measure a quantity.'
+    - type: etapes
+      texte: The company's questionnaire
+      etapes:
+      - 'Mode of transport: *nominal*'
+      - 'Satisfaction from 1 to 5: *ordinal*'
+      - 'Number of changes: *discrete*'
+      - 'Travel time in minutes: *continuous*'
+      note: Fictional company.
+      voix_off: 'Our company sends out a short questionnaire. Four questions, four types. The mode of transport: a label, a nominal variable. Satisfaction with the trip, from one to five: a rank, an ordinal variable. The number of changes: we count, a discrete variable. The travel time in minutes: we measure, a continuous variable.'
+    - type: correction
+      etapes:
+      - 'A postcode is a *label*: a nominal variable'
+      - 44,001 describes *no* "average" place
+      reponse: 'No: averaging labels makes no sense'
+      voix_off: 'The answer to the challenge. A postcode is written with digits, but it''s a label: a nominal variable. The result, forty-four thousand and one, doesn''t point to any place halfway between the two cities. Averaging labels makes no sense.'
+    - type: titre
+      numero: '3.2'
+      texte: Which operations make sense?
+      voix_off: Each type of variable allows some operations and not others. These are called measurement scales.
+    - type: etapes
+      texte: Four scales, from least to most informative
+      etapes:
+      - '*Nominal*: equal or different'
+      - '*Ordinal*: also, rank'
+      - '*Interval*: also, measure differences'
+      - '*Ratio*: also, say "twice as much"'
+      voix_off: 'There are four scales. On a nominal scale, you can only say whether two values are equal or different, and count them. On an ordinal scale, you can also rank them. On an interval scale, you can also measure differences: temperature in degrees Celsius. On a ratio scale, you can also say twice as much: kilograms, euros, durations.'
+    - type: etapes
+      texte: Is 20 °C twice as hot as 10 °C?
+      etapes:
+      - '20 kg = *2 ×* 10 kg: zero means "nothing"'
+      - 0 °C is *not* a true zero of temperature
+      - 'In kelvins: 293.15 ÷ 283.15 ≈ *1.035*'
+      note: 0 °C = 273.15 K; zero kelvin is absolute zero.
+      voix_off: 'Let''s compare. Twenty kilograms really is twice ten kilograms, because zero kilograms means zero mass. But zero degrees Celsius isn''t the zero of temperature: it''s the temperature at which water freezes, a reference point chosen by convention. On a scale whose zero truly means nothing, kelvins, going from ten to twenty degrees means going from two hundred and eighty-three to two hundred and ninety-three kelvins: about three and a half percent more, not double. That ratio doesn''t describe how warm it feels: it only shows that twenty degrees isn''t double ten.'
+      verifier:
+      - expression: 20 / 10
+        attendu: 2
+        libelle: 20 kg ÷ 10 kg
+      - expression: (20 + 273.15) / (10 + 273.15)
+        attendu: 1.035
+        libelle: 20 °C ÷ 10 °C in kelvins
+      - expression: ((20 + 273.15) / (10 + 273.15) - 1) * 100
+        attendu: 3.5
+        libelle: Difference in %
+    - type: texte
+      texte: 'A score from *1 to 5*: averaging assumes equal gaps, *say so*'
+      voix_off: What about satisfaction scores from one to five? People often average them. But that assumes the gap between one and two is the same as the gap between four and five, which nothing guarantees. If you do it, say so, or give the share of each score instead.
+    - type: exercice
+      texte: A hotel's stars, from *1 to 5*.
+      pause: 5
+      voix_off: 'Your turn. Hotel stars, from one to five: what type of variable is this? And is a four-star hotel twice as good as a two-star one?'
+      questions:
+      - What type of variable is this?
+      - Is a 4-star hotel *twice* as good as a 2-star one?
+    - type: correction
+      etapes:
+      - 'Stars are a *rank*: an ordinal variable'
+      - You can *rank*, not compute a ratio
+      reponse: 'Ordinal: "twice as good" makes no sense'
+      voix_off: 'Stars give a rank: it''s an ordinal variable. You can say a four-star hotel is ranked above a two-star one. But saying it''s twice as good makes no sense: stars don''t measure a quantity.'
+    - type: texte
+      texte: '*Who* measured it, and *how*?'
+      voix_off: 'We now know what we measure. One question remains: who measured it, and how?'
+    - type: titre
+      numero: '4'
+      texte: Where do data come from?
+      voix_off: How many people are unemployed in France? The answer depends on who is counting, and how.
+    - type: titre
+      numero: '4.1'
+      texte: Four ways to collect data
+      voix_off: There are four main ways to produce data.
+    - type: etapes
+      texte: The four main sources
+      disposition: cartes
+      etapes:
+      - '*Census*: ask everyone'
+      - '*Survey*: ask a sample'
+      - '*Administrative records*: record to manage'
+      - '*Sensors and platforms*: keep traces'
+      voix_off: 'A census asks the whole population. A sample survey asks only a sample, chosen to represent it. Administrative records register people in order to run a service: taxes, births and deaths, registrations. Finally, sensors and platforms keep traces: cars going by, purchases, log-ins.'
+    - type: etapes
+      texte: One strength, one limitation
+      etapes:
+      - 'Census: *complete*, but heavy and costly'
+      - 'Survey: *fast*, but a margin of error'
+      - 'Records: *huge*, but defined by administrative rules'
+      - 'Sensors: *continuous*, but only where installed'
+      voix_off: Each source has a strength and a limitation. A census is complete, but heavy and costly to run. A survey is fast, but it has a margin of error, and some people don't answer. Administrative records are huge and already available, but they only count what their rules ask them to count. Sensors measure continuously, but only where they're installed. Platforms, for their part, only see their own users.
+    - type: texte
+      texte: What *isn't collected* doesn't show up in the data
+      voix_off: 'Remember the general idea: every way of collecting data leaves its mark on the number. What isn''t collected simply doesn''t show up in the data.'
+    - type: titre
+      numero: '4.2'
+      texte: 'Unemployment: survey or register?'
+      voix_off: Back to unemployment, which is measured in two different ways.
+    - type: etapes
+      texte: Two ways of counting
+      etapes:
+      - 'Insee: a *survey*, ILO definition'
+      - No job, *available*, *actively* looking
+      - 'France Travail: a *register* of jobseekers'
+      voix_off: 'On one side, Insee, the French statistics office, surveys a sample of households and applies the definition of the International Labour Organization. Under that definition, a person is unemployed if they have no job, are available to work, and are actively looking for one. On the other side, France Travail, the public employment service, keeps a register: it counts the people who have signed up, under its own rules.'
+    - type: chiffre
+      valeur: 2.7
+      suffixe:
+        fr: ' millions'
+        en: ' million'
+      texte: unemployed people under the ILO definition, Q2 2026
+      note: 'Insee, Labour Force Survey: 2,677,000 people, seasonally adjusted.'
+      voix_off: According to Insee's survey, France had two point seven million unemployed people under the ILO definition in the second quarter of twenty twenty-six.
+      verifier:
+      - expression: 2677 / 1000
+        attendu: 2.7
+        libelle: ILO unemployed, millions
+    - type: texte
+      texte: A registered jobseeker isn't always *ILO-unemployed*, and vice versa
+      note: 'Insee: 3.3 million people registered with France Travail in category A, Q2 2026 (France excluding Mayotte).'
+      voix_off: 'The number of people registered with France Travail is different: three point three million in category A, in the same quarter. That''s not a mistake: the two figures don''t measure the same thing. Someone who worked even one hour in the reference week isn''t unemployed under the ILO definition, even if they stay registered. And someone actively looking for work without registering can be counted by the survey, but not by the register.'
+    - type: exercice
+      texte: 'Three numbers: the year''s *births*; *trust* in scientists; *traffic* on the ring road at 8 a.m.'
+      pause: 6
+      voix_off: 'Your turn. Three numbers: the number of births in the year, the share of people who trust scientists, and the number of cars on the ring road at eight in the morning. Where does each of these three numbers come from?'
+      questions:
+      - Where does each of these three numbers come from?
+    - type: correction
+      etapes:
+      - 'Births: *administrative records*, the civil register'
+      - 'Trust: a *survey*, with a margin of error'
+      - 'Traffic: *sensors*, only where there are some'
+      reponse: A register, a survey, sensors
+      voix_off: 'Births come from administrative records, the civil register: every birth is declared at the town hall. Trust in scientists comes from a survey: you can''t ask everyone, hence a margin of error. Traffic comes from sensors on the road: it only counts the places that are equipped.'
+    - type: texte
+      texte: '20 employees: we can ask *all* of them'
+      note: Fictional company.
+      voix_off: 'And our company? With twenty employees, we can ask every one of them: that''s a census of the company. A company of twenty thousand would only ask a sample.'
+    - type: titre
+      texte: 'Lab: everyone or a sample'
+      numero: '4.3'
+      univers: immersif
+      voix_off: Second lab. Let's compare the answer from all twenty employees with the answer from five drawn at random.
+    - type: animation
+      texte: 'All *20 employees*: 10 under 20 minutes, *50%*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id001
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'The twenty employees, each with their travel time. In the first bar, those who take under twenty minutes: ten out of twenty, so fifty percent. That''s the true answer, since everyone was asked.'
+      verifier:
+      - expression: sum(1 for t in [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44] if t < 20)
+        attendu: 10
+        libelle: Sous 20 minutes, les 20
+      - expression: 10 / 20 * 100
+        attendu: 50
+        libelle: Part, les 20
+    - type: animation
+      texte: 'Draw 1: 2 out of 5, *40%*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id002
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'First draw of five employees: 7, 15, 21, 29 and 38 minutes. 2 out of five under twenty minutes, so 40 percent.'
+      verifier:
+      - expression: 2 / 5 * 100
+        attendu: 40
+        libelle: Tirage 1
+    - type: animation
+      texte: 'Draw 2: 3 out of 5, *60%*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id003
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Second draw of five employees: 4, 11, 18, 23 and 44 minutes. 3 out of five under twenty minutes, so 60 percent.'
+      verifier:
+      - expression: 3 / 5 * 100
+        attendu: 60
+        libelle: Tirage 2
+    - type: animation
+      texte: 'Draw 3: 4 out of 5, *80%*'
+      univers: immersif
+      animation:
+        modele: pastilles
+        valeurs: *id004
+        largeur_classe: 20
+        unite: minutes
+      voix_off: 'Third draw of five employees: 9, 12, 14, 16 and 32 minutes. 4 out of five under twenty minutes, so 80 percent.'
+      verifier:
+      - expression: 4 / 5 * 100
+        attendu: 80
+        libelle: Tirage 3
+    - type: etapes
+      texte: Three samples, *three answers*
+      etapes:
+      - 'All 20: *50%*'
+      - 'Samples of 5: *40%*, *60%*, *80%*'
+      - 'Nobody lied: it''s the *luck of the draw*'
+      univers: immersif
+      voix_off: 'Three samples, three answers, and none of them is fifty percent. Nobody lied: it''s the luck of the draw. That''s a survey''s margin of error, and it''s what the next episode is all about.'
+    - type: etapes
+      texte: Key takeaways
+      etapes:
+      - Data are *measurements*, under a definition
+      - 'Who it''s about: *population, unit, variable*'
+      - 'Label, rank or quantity: the *scale* says what you can compute'
+      - Every source has a *strength* and a *limit*
+      - Which *question*? Which *definition*? *Who* measured it, when and how?
+      voix_off: 'What to remember. One: a statistical question expects answers that vary, and a data point is always a measurement, made by someone, under a definition. Two: before comparing, ask who the number is about, the population, the unit, the variable; changing the unit changes the number. Three: a number can be a label, a rank or a quantity, and the scale tells you which operations make sense. Four: census, survey, records or sensors, each source has a strength and a limit. In front of any number, ask three questions: which question, which definition, and who measured it, when and how?'
+    - type: exercice
+      texte: 'A fictional town: its residents'' *daily time* in transport, their main *mode of transport*, a *satisfaction score from 1 to 5*.'
+      pause: 15
+      questions:
+      - Is this a statistical question?
+      - What are the population, the unit and the variable?
+      - What type is each of the three variables?
+      - 'Every resident, 500 drawn at random, or bus card taps: one strength and one limit of each source?'
+      voix_off: 'Your turn, and pause the video to answer. A fictional town wants to know how long its residents spend in transport each day. It also asks for their main mode of transport and a satisfaction score from 1 to 5. One: is this a statistical question? Two: what are the population, the unit and the variable? Three: what type is each of the three variables? Four: the town is choosing between asking every resident, asking 500 residents drawn at random, or counting bus card taps; give one strength and one limit for each source.'
+    - type: correction
+      voix_off: 'One: yes, the times vary from one resident to another. Two: the population is the town''s residents, to be specified (from what age? which week?); the unit is one resident; the variable is their daily time in transport, in minutes. Three: time is quantitative and continuous; the mode of transport is qualitative and nominal; satisfaction is qualitative and ordinal, and averaging it assumes equal gaps, which you should say.'
+      etapes:
+      - 'Yes: times *vary* from one resident to another'
+      - Residents (age? week?); *one resident*; *minutes a day*
+      - 'Time: *continuous*; mode: *nominal*; satisfaction: *ordinal*'
+    - type: etapes
+      texte: Answer (continued)
+      etapes:
+      - 'Everyone: a *census*, complete but heavy'
+      - '500 at random: a *survey*, quick but with a margin of error'
+      - 'Card taps: *records*, huge, but bus only, and *taps*, not people'
+      voix_off: 'Four: everyone is a census, complete but heavy and costly; 500 at random is a survey, quick but with a margin of error and non-responses; card taps are records, huge and continuous, but they only see bus users, and they count taps, not people: the unit has changed.'
+    - type: cloture
+      texte: 'Next episode: *why a sample can lie*. A question? *Ask in the comments*'
+      voix_off: 'That''s it: next time someone throws a number at you, you''ll know how to ask where it comes from. But a sample can also be wrong, and not just by chance: that''s what the next episode is all about. If this video was useful, subscribe, leave a like and share it with someone it will help. And if an exercise gets the better of you, write to us in the comments: we''ll help you, for free. Thanks for watching, see you very soon!'
+    - type: fin
+      texte: Enlightening through numbers.
+      voix_off: ACTU-BASICS. Enlightening through numbers.
