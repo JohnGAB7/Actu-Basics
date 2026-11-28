@@ -2287,7 +2287,7 @@ def test_glyphes_absents_bloquent():
 
 
 def test_design_mixte_univers_par_type_et_camera():
-    """Design Mixte (JG, 28/11/2026) : accroche, titres, clôture et fin en bleu nuit par défaut ; une scène
+    """Design Mixte (JG, 28/11/2026) : accroche et fin en bleu nuit par défaut ; une scène
     peut choisir son univers ; la caméra lente garde la taille de l'image."""
     from PIL import Image
     from lmec.video import _zoomer

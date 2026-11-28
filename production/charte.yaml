@@ -120,8 +120,9 @@ typographie:
 couleurs:
   # Design « Mixte » (JG, 28/11/2026) : couleurs des premières vidéos (bleu nuit, blanc cassé, jaune, bleu
   # des barres). Univers « éditorial » (défaut) = fond blanc cassé pour les explications, formules et
-  # graphiques ; univers « immersif » = bleu nuit pour l'accroche, les titres de chapitre, la clôture et la
-  # fin (univers_par_type). Le jaune #F2B134 sert aux surfaces et repères (« or ») ; pour du texte doré sur
+  # graphiques ; univers « immersif » = bleu nuit pour l'accroche et la fin (univers_par_type), et pour
+  # les 3 à 6 révélations de l'épisode choisies scène par scène (« univers: immersif »). Moins de bleu
+  # (JG, 28/11/2026) : titres de chapitre et clôture restent clairs. Le jaune #F2B134 sert aux surfaces et repères (« or ») ; pour du texte doré sur
   # le clair, l'or foncé #8A5A00 (« accent », 5,3:1). Contrastes WCAG sur #F5F3EE : texte 16,5:1 ;
   # données 4,0:1 ; secondaire 6,3:1.
   fond: "#F5F3EE"          # blanc cassé des premières vidéos
@@ -150,8 +151,6 @@ univers:
 # Univers par défaut de chaque type de scène (une scène peut toujours choisir le sien avec « univers »).
 univers_par_type:
   accroche: immersif
-  titre: immersif
-  cloture: immersif
   fin: immersif
 # Caméra lente (JG, 28/11/2026 : vidéo continuellement dynamique, comme les vidéos d'impact) : chaque
 # scène avance d'un léger zoom continu vers son centre. Jamais sur la scène de fin (logo intact).
