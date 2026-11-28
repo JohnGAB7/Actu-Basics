@@ -1,0 +1,42 @@
+# Comparaison de voix gratuites (Kokoro actuelle, Kokoro retravaillée, Chatterbox Multilingual V3) sur
+# l'ouverture de la démo EP-S1A. Informatif : ne change pas la chaîne de production. Lancement manuel.
+name: Comparaison de voix
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comparer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Outils système
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng
+      - name: Kokoro
+        run: |
+          pip install -r production/requirements.txt -r production/requirements-voix.txt -c production/contraintes.txt
+          python production/telecharger_voix.py
+      - name: Chatterbox (processeur seulement, licence MIT)
+        continue-on-error: true
+        run: |
+          pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install "git+https://github.com/resemble-ai/chatterbox.git"
+      - name: Synthèse des trois voix
+        run: python production/comparer_voix_demo.py --sortie sortie/comparaison-voix
+      - uses: actions/upload-artifact@v4
+        with:
+          name: comparaison-voix
+          path: sortie/comparaison-voix/*.mp3
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: comparaison-voix-rapport
+          path: sortie/comparaison-voix/rapport.md
+          retention-days: 14
