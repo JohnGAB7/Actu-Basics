@@ -7,7 +7,7 @@
      pauses, timbre calqué sur un extrait de la voix A (référence de 10 s), expressivité modérée.
 
 Informatif : ne change rien à la chaîne de production. Sortie : un MP3 par voix et un rapport.
-Usage : python production/comparer_voix_demo.py --sortie sortie/comparaison-voix [--sans-chatterbox]
+Usage : python production/comparer_voix_demo.py --etape kokoro|chatterbox|rapport [--sortie sortie/comparaison-voix]
 """
 from __future__ import annotations
 
@@ -101,35 +101,46 @@ def voix_c(reference: Path, dossier: Path) -> tuple[Path, float]:
     return w, time.time() - t0
 
 
+NOMS = {"A-kokoro-actuelle": "A, Kokoro actuelle", "B-kokoro-retravaillee": "B, Kokoro retravaillée (rythme, pauses)",
+        "C-chatterbox-v3": "C, Chatterbox Multilingual V3 (MIT)"}
+
+
 def main() -> int:
+    """Trois étapes, chacune dans son propre environnement Python (Kokoro et Chatterbox n'acceptent pas les
+    mêmes versions de numpy) : --etape kokoro (A, B et la référence), --etape chatterbox (C), --etape rapport."""
     a = argparse.ArgumentParser()
     a.add_argument("--sortie", type=Path, default=Path("sortie/comparaison-voix"))
-    a.add_argument("--sans-chatterbox", action="store_true")
+    a.add_argument("--etape", choices=("kokoro", "chatterbox", "rapport"), required=True)
     args = a.parse_args()
-    args.sortie.mkdir(parents=True, exist_ok=True)
-    k = kokoro()
+    d = args.sortie
+    d.mkdir(parents=True, exist_ok=True)
+    temps = d / "temps.txt"
+    if args.etape == "kokoro":
+        k = kokoro()
+        wa, sa = voix_a(k, d)
+        wb, sb = voix_b(k, d)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(wa), "-t", "10", str(d / "reference-10s.wav")], check=True)
+        temps.write_text(f"{wa.stem} {sa:.0f}\n{wb.stem} {sb:.0f}\n", encoding="utf-8")
+        return 0
+    if args.etape == "chatterbox":
+        wc, sc = voix_c(d / "reference-10s.wav", d)
+        with open(temps, "a", encoding="utf-8") as f:
+            f.write(f"{wc.stem} {sc:.0f}\n")
+        return 0
     lignes = ["# Comparaison de voix, ouverture de la démo EP-S1A", "",
               "Même texte pour les trois voix. Toutes gratuites et locales (tts.yaml : gratuit_uniquement).", "",
               "| Voix | Fichier | Durée | Temps de calcul |", "|---|---|---|---|"]
-    w, s = voix_a(k, args.sortie)
-    resultats = [("A, Kokoro actuelle", w, s)]
-    w, s = voix_b(k, args.sortie)
-    resultats.append(("B, Kokoro retravaillée (rythme, pauses)", w, s))
-    reference = args.sortie / "reference-10s.wav"
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(resultats[0][1]), "-t", "10", str(reference)], check=True)
-    if not args.sans_chatterbox:
-        try:
-            w, s = voix_c(reference, args.sortie)
-            resultats.append(("C, Chatterbox Multilingual V3 (MIT)", w, s))
-        except Exception as exc:                        # informatif : on rend A et B quoi qu'il arrive
-            lignes.insert(4, f"Chatterbox indisponible : {exc!r}\n")
-    for nom, w, s in resultats:
+    calc = dict(l.split() for l in temps.read_text(encoding="utf-8").splitlines() if l.strip()) if temps.exists() else {}
+    for stem, nom in NOMS.items():
+        w = d / f"{stem}.wav"
+        if not w.exists():
+            lignes.append(f"| {nom} | absent (voir le journal du workflow) | | |")
+            continue
         with wave.open(str(w)) as f:
             duree = f.getnframes() / f.getframerate()
-        mp3 = _mp3(w)
-        lignes.append(f"| {nom} | {mp3.name} | {duree:.1f} s | {s:.0f} s |")
+        lignes.append(f"| {nom} | {_mp3(w).name} | {duree:.1f} s | {calc.get(stem, '?')} s |")
     lignes += ["", "Texte :", ""] + [f"> {p}" for p, _, _ in PHRASES]
-    (args.sortie / "rapport.md").write_text("\n".join(lignes) + "\n", encoding="utf-8")
+    (d / "rapport.md").write_text("\n".join(lignes) + "\n", encoding="utf-8")
     print("\n".join(lignes))
     return 0
 

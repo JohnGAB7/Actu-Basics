@@ -1,5 +1,6 @@
 # Comparaison de voix gratuites (Kokoro actuelle, Kokoro retravaillée, Chatterbox Multilingual V3) sur
 # l'ouverture de la démo EP-S1A. Informatif : ne change pas la chaîne de production. Lancement manuel.
+# Kokoro et Chatterbox n'acceptent pas les mêmes versions de numpy : deux environnements séparés.
 name: Comparaison de voix
 
 on:
@@ -11,32 +12,38 @@ permissions:
 jobs:
   comparer:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
       - name: Outils système
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng
-      - name: Kokoro
+      - uses: actions/setup-python@v5
+        id: py311
+        with:
+          python-version: "3.11"
+      - name: Chatterbox (environnement séparé, processeur seulement, licence MIT)
+        continue-on-error: true
+        run: |
+          ${{ steps.py311.outputs.python-path }} -m venv /tmp/venv-chatterbox
+          /tmp/venv-chatterbox/bin/pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          /tmp/venv-chatterbox/bin/pip install -q "git+https://github.com/resemble-ai/chatterbox.git"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Kokoro (voix A et B, référence de 10 s)
         run: |
           pip install -r production/requirements.txt -r production/requirements-voix.txt -c production/contraintes.txt
           python production/telecharger_voix.py
-      - name: Chatterbox (processeur seulement, licence MIT)
+          python production/comparer_voix_demo.py --etape kokoro --sortie sortie/comparaison-voix
+      - name: Chatterbox (voix C)
         continue-on-error: true
-        run: |
-          pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-          pip install "git+https://github.com/resemble-ai/chatterbox.git"
-      - name: Synthèse des trois voix
-        run: python production/comparer_voix_demo.py --sortie sortie/comparaison-voix
+        run: /tmp/venv-chatterbox/bin/python production/comparer_voix_demo.py --etape chatterbox --sortie sortie/comparaison-voix
+      - name: Rapport et MP3
+        run: python production/comparer_voix_demo.py --etape rapport --sortie sortie/comparaison-voix
       - uses: actions/upload-artifact@v4
         with:
           name: comparaison-voix
-          path: sortie/comparaison-voix/*.mp3
-          retention-days: 14
-      - uses: actions/upload-artifact@v4
-        with:
-          name: comparaison-voix-rapport
-          path: sortie/comparaison-voix/rapport.md
+          path: |
+            sortie/comparaison-voix/*.mp3
+            sortie/comparaison-voix/rapport.md
           retention-days: 14
