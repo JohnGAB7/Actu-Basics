@@ -307,6 +307,34 @@ def _valider_animation(s: dict, ctx: str, erreurs: list[str], extra: dict) -> No
         else:
             conf["cartes"] = [{"icone": c["icone"], "texte": str(c["texte"])} for c in cartes]
             conf["phases"] = ["carte"] * len(cartes)
+    if modele == "mystere":
+        cartes = a.get("cartes")
+
+        def _txt(v):
+            return isinstance(v, (str, int, float)) and str(v).strip() or (
+                isinstance(v, dict) and v and all(isinstance(x, (str, int, float)) and str(x).strip() for x in v.values()))
+        if (not isinstance(cartes, list) or not 2 <= len(cartes) <= 4
+                or not all(isinstance(c, dict) and _txt(c.get("valeur")) and (c.get("libelle") is None or _txt(c["libelle"]))
+                           for c in cartes)):
+            erreurs.append(f"{ctx}.animation.cartes : 2 à 4 cartes {{valeur, libelle}} (texte, ou {{fr, en}})")
+            conf["cartes"] = None
+        else:
+            conf["cartes"] = [{"valeur": c["valeur"] if isinstance(c["valeur"], dict) else str(c["valeur"]),
+                               "libelle": c.get("libelle")} for c in cartes]
+            conf["phases"] = ["revele"] * len(cartes)
+    if modele == "barre_cachee":
+        barres = a.get("barres")
+        if (not isinstance(barres, list) or len(barres) != 2
+                or not all(isinstance(b, dict) and _nombre(b.get("valeur")) and b["valeur"] > 0 for b in barres)):
+            erreurs.append(f"{ctx}.animation.barres : exactement 2 barres {{valeur > 0, libelle}}")
+            conf["barres"] = None
+        else:
+            conf["barres"] = [{"valeur": float(b["valeur"]), "libelle": b.get("libelle")} for b in barres]
+        if a.get("unite") is not None:
+            conf["unite"] = a["unite"]
+        dec = entier("decimales", 0, 4, requis=False)
+        if dec is not None:
+            conf["decimales"] = dec
     if modele == "cumul":
         cats, fr_ = a.get("categories"), a.get("frequences")
         if (not isinstance(cats, list) or not 2 <= len(cats) <= 8 or not all(str(c).strip() for c in cats)

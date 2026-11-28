@@ -2304,3 +2304,35 @@ def test_design_mixte_univers_par_type_et_camera():
     im = Image.new("RGB", (192, 108), "white")
     assert _zoomer(im, 1.03).size == im.size
     assert CHARTE["logo"]["lecon"]["scenes"] == ["fin"] and CHARTE["logo"]["video"]["scenes"] == ["fin"]
+
+
+def test_curiosite_mystere_et_barre_cachee():
+    """Cartes mystère et barre cachée (curiosité, JG 28/11/2026) : entrées vérifiées, dessin à chaque phase."""
+    from lmec.fiche import Scene
+    from lmec.pedagogie import _valider_animation
+
+    def valider(a):
+        erreurs, extra = [], {}
+        _valider_animation({"animation": a}, "s", erreurs, extra)
+        return erreurs, extra.get("animation")
+    cartes = [{"valeur": {"fr": "2,1 M", "en": "2.1 M"}, "libelle": {"fr": "Paris *intra-muros*", "en": "City of Paris"}},
+              {"valeur": "11 M", "libelle": "Unité urbaine"}, {"valeur": "13,3 M", "libelle": "Aire d'attraction"}]
+    e, m = valider({"modele": "mystere", "cartes": cartes})
+    assert not e and m["phases"] == ["revele"] * 3
+    assert valider({"modele": "mystere", "cartes": cartes[:1]})[0]
+    assert valider({"modele": "mystere", "cartes": [{"libelle": "sans valeur"}] * 2})[0]
+    e, b = valider({"modele": "barre_cachee", "barres": [{"valeur": 2.1, "libelle": "A"},
+                                                         {"valeur": 13.3, "libelle": "B"}], "unite": "M", "decimales": 1})
+    assert not e and b["barres"][1]["valeur"] == 13.3
+    assert valider({"modele": "barre_cachee", "barres": [{"valeur": 2.1}]})[0]
+    fiche = charger_fiche(RACINE / "contenus/fiches/2026-11-act-a1-s01-interet-et-annuites.yaml")
+    for langue in ("fr", "en"):
+        for fmt in ("lecon", "video"):
+            r = Rendu(fiche, langue, CHARTE, fmt, False)
+            for conf in (m, b):
+                s = Scene(type="animation", texte="D'où vient un *chiffre* ?", extra={"animation": conf})
+                plan = r._plan_animation(s)
+                fin = max(p["debut"] + p["duree"] for p in plan) + 0.5
+                for k in range(int(fin * 6) + 1):
+                    r.dessiner(s, 0, 1, k / 6)
+                r.dessiner(s, 0, 1, None)
