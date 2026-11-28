@@ -152,6 +152,11 @@ univers:
 univers_par_type:
   accroche: immersif
   fin: immersif
+# Pied de page « Sources : … » : seulement sur ces scènes, par format (absent = toutes les scènes). Diagnostic
+# TikTok du 21/11/2026 : sources en fin de vidéo, rien de fixe à l'écran ; chaque fait garde sa source en note.
+pied_sources:
+  lecon: [cloture, fin]
+  video: [cloture, fin]
 # Caméra lente (JG, 28/11/2026 : vidéo continuellement dynamique, comme les vidéos d'impact) : chaque
 # scène avance d'un léger zoom continu vers son centre. Jamais sur la scène de fin (logo intact).
 camera:
@@ -160,6 +165,9 @@ camera:
   zoom: 0.03               # +3 % sur la durée de la scène
   sauf_scenes: [fin]
 # Accroches, titres de graphique et sources en capitales (police d'affichage).
+# Première image pleine : la question de l'accroche est entièrement lisible dès 00:00 (diagnostic TikTok du
+# 21/11/2026 : une première image vide est classée « faible qualité »).
+accroche_pleine: true
 accroche_majuscules: false   # ton doux et sobre (JG, 22/11/2026) : casse normale
 polices:
   # Titres : Source Serif, la serif du site (choix de JG, 22/11/2026), licence OFL, production/polices/.

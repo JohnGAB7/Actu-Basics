@@ -551,6 +551,12 @@ class Rendu(ScenesPedagogiques):
         noms = ", ".join(noms_l)
         if not noms:   # fiche pédagogique sans source : pas de pied de page
             return self._cadre_numero(d, index, total)
+        # Pied de page des sources limité à certaines scènes (charte « pied_sources ») : la source de chaque
+        # fait reste dans sa note ; le pied de page de chaque image se lisait comme du texte fixe.
+        seules = (self.charte.get("pied_sources") or {}).get(self.format)
+        scene = getattr(self, "_scene_courante", None)
+        if seules is not None and scene is not None and scene.type not in seules:
+            return
         lib = self.lib["sources" if len(noms_l) > 1 else "source"]
         pied = typographie(f"{lib} : {noms}" if self.langue == "fr" else f"{lib}: {noms}", self.langue)
         pp = self.police("regulier", 26)
@@ -599,7 +605,7 @@ class Rendu(ScenesPedagogiques):
         if scene.type in self.TYPES_PEDAGOGIQUES:
             return self.duree_animation_pedagogique(scene, n)
         return {
-            "accroche": 0.15 + n * DECALAGE_MOT + ENTREE_MOT,
+            "accroche": 0.0 if self.charte.get("accroche_pleine") else 0.15 + n * DECALAGE_MOT + ENTREE_MOT,
             "texte": 0.1 + n * self._decalage_texte(scene) + ENTREE_MOT,
             "chiffre": max(1.9, 1.0 + n * 0.04 + ENTREE_MOT) + (0.6 if scene.extra.get("valeur") is not None else 0),
             "graphique": 0.4 + len(self.fiche.donnees["points"]) * 0.15 + 1.0 if self.fiche.donnees else 0,
@@ -681,6 +687,10 @@ class Rendu(ScenesPedagogiques):
     def _scene_accroche(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
         p, lignes, pas, hh = self.ajuster_riche(scene.texte, "affichage", largeur, bas - haut, 190, 80,
                                                 1.08, ctx, majuscules=self.majuscules)
+        # Première image pleine (diagnostic TikTok du 21/11/2026, charte « accroche_pleine ») : la question est
+        # lisible dès 00:00 ; le mouvement vient de la caméra lente et du décor.
+        if self.charte.get("accroche_pleine"):
+            t = None
         self.ecrire_riche(d, lignes, p, pas, haut + (bas - haut - hh) // 2, self.c["texte"], t, 0.15,
                           style_fort="surligne")
 
