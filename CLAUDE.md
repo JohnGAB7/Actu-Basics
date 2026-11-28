@@ -13,4 +13,6 @@ Ne jamais générer une approximation du logo, le déformer ou modifier ses coul
 
 Ne pas fusionner automatiquement ces changements. Toute modification du moteur de rendu doit passer par une branche et une pull request.
 
+Fusion (décision de JG, 2026-11-23) : Claude peut fusionner lui-même, tests au vert, ce qui n'est pas critique : petites corrections techniques (délais et réglages des workflows, tests, documentation, coquilles, outils internes). Reste soumis à l'accord explicite de JG : le contenu des vidéos et des fiches, leur validation, tout changement visible dans le rendu, la publication, les secrets et les suppressions. En cas de doute, c'est critique : demander à JG.
+
 Parcours Actuariat (pilier A) : l'entreprise fictive des exemples s'appelle « JG's Holding » (demande de JG, 2026-11-11), toujours annoncée comme fictive. Les vidéos sortent en français et en anglais en même temps (décision de JG, 2026-11-11, qui remplace « anglais d'abord »).

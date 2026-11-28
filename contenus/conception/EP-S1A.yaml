@@ -1,0 +1,279 @@
+# Fiche de conception d'ÉPISODE LONG, programme 1.13. Modèle : contenus/conception/EP-S2A.yaml (épisode pilote
+# de référence, LMEC-DEC-017). Écrite par Claude le 2026-11-28, à la demande de JG (26/11/2026 : produire EP-S1A,
+# premier épisode du module S1, sur le modèle d'EP-S2A).
+# Les quatre chapitres reprennent les fiches de production validées par JG le 08/11/2026 (lot 1, S1.01 à S1.04) ;
+# cette fiche ne réécrit que ce qui est propre à l'épisode : ouverture, accueil, plan, fil rouge, transitions,
+# laboratoires, synthèse, exercice de synthèse, clôture. Les seuls chiffres extérieurs sont ceux des chapitres
+# validés (Insee) ; tout le reste est fictif et annoncé comme tel.
+id_programme: EP-S1A
+statut: revue_claude            # à valider par JG avant l'assemblage de la fiche de production
+contient: [S1.01, S1.02, S1.03, S1.04]
+fiches_chapitres:               # fiches de production validées (08/11/2026), reprises telles quelles sauf « changements »
+  S1.01: contenus/fiches/2026-11-n1-s1-01-qu-est-ce-qu-une-donnee.yaml
+  S1.02: contenus/fiches/2026-11-n1-s1-02-population-individu-variable.yaml
+  S1.03: contenus/fiches/2026-11-n1-s1-03-types-de-variables.yaml
+  S1.04: contenus/fiches/2026-11-n1-s1-04-d-ou-viennent-les-donnees.yaml
+fiche_production: "à créer après validation : contenus/fiches/2026-12-ep-s1a-d-ou-vient-un-chiffre.yaml"
+
+titres:
+  fr: "D'où vient un chiffre ? Données, populations et variables"
+  en: "Where does a number come from? Data, populations and variables"
+  # Titre YouTube proposé (court, lisible sur téléphone), le titre long reste sur le site :
+  youtube_fr: "2,1 ou 13,3 millions d'habitants ? D'où vient un chiffre"
+  youtube_en: "2.1 or 13.3 million people? Where a number comes from"
+question_centrale:
+  fr: "Avant de calculer quoi que ce soit, que faut-il savoir d'un chiffre pour lui faire confiance ?"
+  en: "Before calculating anything, what do you need to know about a number to trust it?"
+
+position: {pilier: statistiques, niveau: 1, module: S1, rang_dans_module: 1}
+
+public:
+  prerequis: []                 # premier épisode du pilier statistiques
+  niveau_maths: M0
+  rappel_conseille: [M0.01, M0.02]   # via EP-M01 (fractions, pourcentages, millions)
+  # Complétude (règle 5) : toutes les notions utilisées, même « évidentes ».
+  notions_utilisees:
+    - {notion: "Lire un grand nombre en millions (2 103 778 ≈ 2,1 millions)", episode: EP-M01, rappel: "Montré une fois au chapitre 1 : le nombre exact en note, l'arrondi à l'écran"}
+    - {notion: "Pourcentage (15 % des actifs ; 2 sur 5 = 40 %)", episode: EP-M01, rappel: "Au laboratoire 2 : 2 sur 5, c'est 2 divisé par 5, soit 0,4, soit 40 %"}
+    - {notion: "Moyenne simple : total divisé par le nombre", episode: EP-S2A, rappel: "Dite au chapitre 2 au moment du revenu moyen : « on partage le total également » ; la moyenne est approfondie en EP-S2A. Au chapitre 3, la moyenne des codes postaux est calculée à l'écran, (75001 + 13001) ÷ 2"}
+    - {notion: "Celsius et kelvins (0 °C = 273,15 K)", episode: "", rappel: "Donné à l'écran au chapitre 3, avec la phrase « le zéro des kelvins est le zéro absolu »"}
+    - {notion: "Échantillon, marge d'erreur", episode: EP-S1B, rappel: "Introduits en une phrase au chapitre 4 et montrés au laboratoire 2 ; expliqués en EP-S1B"}
+    # Notions enseignées DANS l'épisode et réutilisées plus loin : question statistique, donnée = mesure (ch. 1) ;
+    # population, individu, variable (ch. 2) ; nominale, ordinale, discrète, continue, échelles (ch. 3) ;
+    # recensement, sondage, fichier, capteurs (ch. 4).
+
+objectifs:
+  fr:
+    - "Distinguer une question statistique, dont les réponses varient, d'une question à réponse unique"
+    - "Reconnaître qu'une donnée est une mesure, faite par quelqu'un, selon une définition"
+    - "Identifier la population, l'individu et la variable, et expliquer pourquoi changer d'individu change le chiffre"
+    - "Classer une variable (nominale, ordinale, discrète, continue) et dire quelles opérations ont un sens"
+    - "Distinguer recensement, sondage, fichier administratif et capteurs, avec une force et une limite de chacun"
+  en:
+    - "Tell a statistical question, whose answers vary, from a question with a single answer"
+    - "Recognise that a data point is a measurement, made by someone, under a definition"
+    - "Identify the population, the unit and the variable, and explain why changing the unit changes the number"
+    - "Classify a variable (nominal, ordinal, discrete, continuous) and say which operations make sense"
+    - "Tell apart a census, a survey, administrative records and sensors, with one strength and one limit of each"
+
+intuition: "Un chiffre est la réponse à une question précise, sur des individus précis, mesurée d'une façon précise. Changez l'une des trois, et le chiffre change, sans que personne ne se trompe."
+exemple_fil_rouge: >-
+  Une entreprise fictive de 20 salariés se demande combien de temps ses salariés mettent pour venir travailler.
+  Elle apparaît à l'exercice du chapitre 1 (temps de trajet : une question statistique), devient l'exemple de
+  population, d'individu et de variable au chapitre 2, prête son questionnaire au chapitre 3 (quatre variables,
+  quatre types), et choisit sa source au chapitre 4 et au laboratoire 2. Ce sont les mêmes 20 salariés et les
+  mêmes 20 temps de trajet qu'en EP-S2A, qui commence là où cet épisode s'arrête : les données sont collectées,
+  il reste à les résumer. Ce n'est pas « JG's Holding », réservée au parcours Actuariat.
+exemple_reel:
+  description: "Ceux des chapitres validés : population de Paris selon trois définitions (Insee, recensement 2023) ; chômage au sens du BIT et inscrits à France Travail au 2e trimestre 2026 (Insee)."
+  source: {organisme: "Insee", titre: "Voir les fiches S1.01 et S1.04", url: "https://www.insee.fr/fr/statistiques/9032359", date_publication: "2026-08-07", periode_donnees: "2023 ; 2e trimestre 2026", consulte_le: "2026-11-03"}
+
+# ------------------------------------------------------------------ données de l'épisode
+donnees_ou_simulation:
+  type: donnees_synthetiques
+  raison_du_choix: "Vingt salariés qu'on peut tous afficher : le spectateur voit chaque individu, et chaque échantillon du laboratoire 2 est recompté sous ses yeux."
+  donnees:
+    temps_trajet_min: [4, 7, 9, 11, 12, 14, 15, 16, 18, 19, 21, 23, 25, 26, 27, 29, 32, 35, 38, 44]
+    # Les mêmes valeurs qu'EP-S2A (validées). Moins de 20 minutes : 4, 7, 9, 11, 12, 14, 15, 16, 18, 19, soit 10 sur 20.
+    echantillons_lab2:          # trois tirages fixés à l'avance (pas de hasard au rendu), 5 salariés chacun
+      tirage_1: [7, 15, 21, 29, 38]     # 2 sous 20 min : 40 %
+      tirage_2: [4, 11, 18, 23, 44]     # 3 sous 20 min : 60 %
+      tirage_3: [9, 12, 14, 16, 32]     # 4 sous 20 min : 80 %
+    village_lab1:               # repris de S1.02 (validé), puis le ménage B passe de 4 à 6 personnes
+      revenus_eur_mois: {A: 2000, B: 4000, C: 3000}
+      personnes_depart: {A: 1, B: 4, C: 2}
+      personnes_arrivee: {A: 1, B: 6, C: 2}
+  source: {organisme: "", url: "", licence: "", population: "Fictive", variables: "temps de trajet (min), revenu (€/mois), taille du ménage", periode: "", limites: "Ne représente aucune population réelle"}
+  parametres_simulation: "Aucun tirage aléatoire dans la vidéo : les trois échantillons du laboratoire 2 sont fixés. Sur le site, le bouton « nouveau tirage » tire 5 salariés au hasard et recompte, avec une graine affichée."
+
+provenance:
+  - chiffre: "Temps de trajet, échantillons, village, valeurs de l'exercice de synthèse"
+    support: ecran
+    nature: parametre_simulation
+    calcul: {entrees: "Valeurs fictives choisies par Claude (trajets repris d'EP-S2A, village repris de S1.02)", formule: "", transformations: ""}
+    definition: "Données construites pour l'épisode"
+    unite: "minutes ; euros par mois ; personnes"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : exemple construit"
+    comparabilite: "Ne représente aucune population réelle"
+  - chiffre: "Parts sous 20 minutes (50 %, 40 %, 60 %, 80 %), revenus par ménage et par personne"
+    support: ecran_et_voix
+    nature: calcul_derive
+    calcul: {entrees: "Données ci-dessus", formule: "effectif / total ; revenu total / nombre de ménages ou de personnes", transformations: "arrondi à l'euro (1 286 €)"}
+    definition: "Proportions et moyennes simples"
+    unite: "% ; € par mois"
+    population: "Fictive"
+    periode: ""
+    couverture: ""
+    revisions: ""
+    source_primaire: {organisme: "", url: "", consulte_le: ""}
+    incertitude: "Aucune : calculs exacts sur des valeurs fixes"
+    comparabilite: ""
+  - chiffre: "Paris : 2,1 ; 11,0 ; 13,3 millions. Chômage : 2,7 millions (BIT) ; 3,3 millions d'inscrits en catégorie A"
+    support: ecran_et_voix
+    nature: donnee_publiee
+    calcul: {entrees: "Voir les fiches S1.01 et S1.04 (validées)", formule: "inchangée", transformations: "inchangées"}
+    definition: "Voir les fiches de chapitre"
+    unite: "habitants ; personnes"
+    population: "Voir les fiches de chapitre"
+    periode: "2023 ; 2e trimestre 2026"
+    couverture: "France"
+    revisions: "Le 3e trimestre 2026 est paru le 10/11/2026 (Insee, IR n° 270) : voir « a_trancher_par_le_relecteur »"
+    source_primaire: {organisme: "Insee", url: "https://www.insee.fr/fr/statistiques/9032359", consulte_le: "2026-11-03"}
+    incertitude: "Enquête Emploi : taux de chômage estimé à ± 0,3 point près (Insee)"
+    comparabilite: "Les deux chiffres du chômage portent sur le même trimestre"
+
+affirmations_qualitatives:      # celles des chapitres validés, plus celles propres à l'épisode
+  - {affirmation: "Les validations de cartes de transport comptent des passages, pas des personnes, et ne voient que les usagers des transports en commun", statut: hypothese, source: "Raisonnement général, sans chiffre", verification: "Formulée comme exemple fictif (commune fictive de l'exercice de synthèse)"}
+  - {affirmation: "Un échantillon de 5 salariés sur 20 peut donner une part très différente de celle des 20", statut: sourcee, source: "Calcul exact sur les tirages fixés (40 %, 60 %, 80 % contre 50 %)", verification: "Recalculé par le moteur (bloc verifier)"}
+
+cycle_enquete:
+  question: "Montrée : combien de temps les salariés mettent-ils pour venir travailler ? (ch. 1)"
+  population_et_mesure: "Montrée : les 20 salariés, un salarié, le temps de trajet un jour donné, déclaré (ch. 2)"
+  origine_des_donnees: "Montrée : interroger les 20 (recensement de l'entreprise) ou 5 d'entre eux (sondage) (ch. 4, laboratoire 2)"
+  exploration: "Annoncée : c'est l'objet d'EP-S2A"
+  methode_et_raison: "Montrée : chaque type de variable autorise certaines opérations (ch. 3)"
+  hypotheses: "Montrée : données fictives ; réponses déclarées, supposées sincères"
+  resultat_et_incertitude: "Montrée au laboratoire 2 : un échantillon de 5 donne 40 %, 60 % ou 80 % quand la vraie part des 20 est 50 % ; la marge d'erreur est expliquée en EP-S1B"
+  interpretation_permise_et_interdite: "Montrée : comparer deux chiffres seulement s'ils répondent à la même question, sur le même individu, mesurés de la même façon"
+  reproductibilite: "Toutes les valeurs à l'écran ; tous les calculs recalculés par le moteur et dans les laboratoires du site"
+
+hypotheses_et_limites:
+  - {hypothese: "Les réponses déclarées sont sincères", intuition: "Un salarié peut arrondir son temps de trajet", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Mesurer plutôt que demander (badges, applications) : c'est une autre variable, avec d'autres limites (ch. 2 et 4)"}
+  - {hypothese: "Un tirage de 5 salariés au hasard", intuition: "Le hasard décide qui répond, pas les salariés", testable: "", non_testable: "", diagnostic: "", si_elle_echoue: "Si seuls les volontaires répondent, l'échantillon peut mentir : c'est l'objet d'EP-S1B"}
+
+reproductibilite: "Valeurs fixes publiées dans la description et sur la page de l'épisode ; les laboratoires du site recalculent sous les yeux de l'apprenant."
+
+# ------------------------------------------------------------------ déroulé de l'épisode
+deroule_episode:
+  - bloc: ouverture
+    duree_s: 20
+    fr: "Combien d'habitants à Paris ? Deux virgule un millions. Ou onze millions. Ou treize virgule trois millions. Combien de chômeurs en France ? Deux virgule sept millions. Ou trois virgule trois millions. Ces cinq chiffres sont tous justes. Alors, comment savoir lequel croire ?"
+    en: "How many people live in Paris? Two point one million. Or eleven million. Or thirteen point three million. How many people are unemployed in France? Two point seven million. Or three point three million. All five figures are correct. So how do you know which one to believe?"
+    ecran: "Les cinq chiffres apparaissent un par un, puis le mot « justes » ; sources Insee en note"
+  - bloc: accueil
+    duree_s: 15
+    fr: "Bonjour, et bienvenue ! Merci d'être là. On cite des chiffres tous les jours, dans les journaux, au travail, en famille. Dans cet épisode, on apprend à poser les bonnes questions à un chiffre, avant même de le calculer."
+    en: "Hi, and welcome! Thanks for being here. We quote numbers every day, in the news, at work, at home. In this episode, we learn to ask a number the right questions, before we even calculate anything."
+  - bloc: plan
+    duree_s: 15
+    fr: "Quatre étapes : ce qu'est une donnée ; de qui parle un chiffre ; quel type de variable on manipule ; et d'où viennent les données. Avec deux laboratoires en direct et un exercice de synthèse corrigé."
+    en: "Four steps: what data are; who a number is about; what type of variable we're handling; and where data come from. With two live labs and a worked summary exercise."
+    ecran: "Plan en 4 lignes ; les chapitres YouTube reprennent ces titres"
+  - bloc: chapitre
+    id: S1.01
+    titre: {fr: "1. Qu'est-ce qu'une donnée ?", en: "1. What counts as data?"}
+    duree_min: [3, 4]
+    changements: "L'accroche du chapitre (Paris) devient son titre numéroté : l'ouverture de l'épisode a déjà posé les trois chiffres. Le défi « lequel est juste ? » est conservé. Exercice validé conservé (tour Eiffel ou temps de trajet) ; sa correction se termine par une phrase qui présente le fil rouge : « Une entreprise fictive de 20 salariés se pose exactement cette question B pour ses salariés. Nous allons la suivre tout l'épisode. » Les trois questions à poser à un chiffre passent dans la synthèse."
+    transition: {fr: "Une question statistique porte sur un groupe. Mais lequel, exactement ?", en: "A statistical question is about a group. But which group, exactly?"}
+  - bloc: chapitre
+    id: S1.02
+    titre: {fr: "2. De qui parle ce chiffre ?", en: "2. Who is this number about?"}
+    duree_min: [4, 5]
+    changements: "Après le titre sur le sommeil, une scène ajoutée applique les trois briques à l'entreprise du fil rouge : population, les 20 salariés de l'entreprise ; individu, un salarié ; variable, son temps de trajet en minutes, un jour donné, déclaré par le salarié. Au revenu moyen du village, la voix dit une fois ce qu'est une moyenne : « on partage le total également » (complétude, la moyenne est approfondie en EP-S2A). Exercice validé conservé (téléphones des collégiens)."
+    transition: {fr: "Changer d'individu change le chiffre. Voyons jusqu'où, en direct.", en: "Changing the unit changes the number. Let's see how far, live."}
+  - bloc: laboratoire
+    id: LAB-1
+    statut_realisation: {storyboard: fait, calcul_teste: a_faire, interface_site: a_faire, animation_video: a_faire, livre: non}
+    titre: {fr: "Laboratoire : par ménage ou par personne", en: "Lab: per household or per person"}
+    duree_s: 50
+    deroulement_fr: "Le village fictif du chapitre : trois ménages, 9 000 € de revenus par mois. Deux compteurs : « par ménage » et « par personne ». Au départ, 3 ménages et 7 habitants : 3 000 € par ménage, environ 1 286 € par personne. Un curseur fait grandir le ménage B, de 4 à 6 personnes (deux enfants naissent) ; les revenus ne bougent pas. Le compteur « par ménage » reste à 3 000 € ; le compteur « par personne » descend à 9 000 ÷ 9 = 1 000 €. Même village, même argent : un chiffre ne bouge pas, l'autre baisse d'un quart. Avant de dire « le revenu moyen a baissé », il faut savoir par qui on divise."
+    deroulement_en: "The fictional village from the chapter: three households, €9,000 of income a month. Two counters: 'per household' and 'per person'. At the start, 3 households and 7 people: €3,000 per household, about €1,286 per person. A slider grows household B from 4 to 6 people (two babies are born); income doesn't change. The 'per household' counter stays at €3,000; the 'per person' counter drops to 9,000 ÷ 9 = €1,000. Same village, same money: one number stays put, the other falls by a quarter. Before saying 'average income fell', you need to know what you're dividing by."
+    site: "Même laboratoire sur la page de l'épisode : l'apprenant règle la taille et le revenu de chaque ménage ; les deux moyennes sont recalculées à chaque position, jamais figées."
+    moteur: "Modèle d'animation « curseur » d'EP-S2A, avec deux compteurs ; à défaut, deux scènes « chiffre » enchaînées."
+  - bloc: chapitre
+    id: S1.03
+    titre: {fr: "3. Quel type de variable ?", en: "3. What type of variable?"}
+    duree_min: [5, 6]
+    changements: "L'accroche du chapitre devient son titre numéroté ; le défi des codes postaux est conservé. Après les quatre types de variables, une scène ajoutée montre le questionnaire de l'entreprise du fil rouge, quatre questions et quatre types : le mode de transport (nominale), la satisfaction du trajet de 1 à 5 (ordinale), le nombre de correspondances (discrète), le temps de trajet en minutes (continue). Le reste du chapitre est inchangé ; exercice validé conservé (étoiles d'hôtel)."
+    transition: {fr: "On sait maintenant ce qu'on mesure. Reste une question : qui a mesuré, et comment ?", en: "We now know what we measure. One question remains: who measured it, and how?"}
+  - bloc: chapitre
+    id: S1.04
+    titre: {fr: "4. D'où viennent les données ?", en: "4. Where do data come from?"}
+    duree_min: [5, 6]
+    changements: "L'accroche du chapitre devient son titre numéroté (l'ouverture a déjà posé les deux chiffres du chômage). Chiffres du 2e trimestre 2026 conservés, comme décidé par JG le 08/11/2026 (voir « a_trancher_par_le_relecteur »). Après l'exercice validé (naissances, confiance, trafic), une scène ajoutée revient à l'entreprise : avec 20 salariés, on peut tous les interroger, c'est un recensement de l'entreprise ; une grande entreprise n'interrogerait qu'un échantillon. Elle annonce le laboratoire 2."
+    transition: {fr: "Et si notre entreprise n'interrogeait que cinq salariés sur vingt ? Essayons.", en: "What if our company only asked five employees out of twenty? Let's try."}
+  - bloc: laboratoire
+    id: LAB-2
+    statut_realisation: {storyboard: fait, calcul_teste: a_faire, interface_site: a_faire, animation_video: a_faire, livre: non}
+    titre: {fr: "Laboratoire : tout le monde ou un échantillon", en: "Lab: everyone or a sample"}
+    duree_s: 60
+    deroulement_fr: "Les 20 salariés en pastilles, chacun avec son temps de trajet ; ceux qui mettent moins de 20 minutes sont allumés : 10 sur 20, soit 50 %. C'est la vraie réponse, puisqu'on a interrogé tout le monde. Puis trois tirages de 5 salariés au hasard. Premier tirage : 7, 15, 21, 29 et 38 minutes, 2 sous 20 minutes sur 5, soit 40 %. Deuxième : 4, 11, 18, 23 et 44, soit 60 %. Troisième : 9, 12, 14, 16 et 32, soit 80 %. Trois échantillons, trois réponses, et aucune ne vaut 50 %. Personne n'a menti : c'est le hasard du tirage. C'est la marge d'erreur d'un sondage, et c'est tout l'objet du prochain épisode."
+    deroulement_en: "The 20 employees as dots, each with their travel time; those who take under 20 minutes light up: 10 out of 20, so 50%. That's the true answer, since everyone was asked. Then three draws of 5 employees at random. First draw: 7, 15, 21, 29 and 38 minutes, 2 under 20 minutes out of 5, so 40%. Second: 4, 11, 18, 23 and 44, so 60%. Third: 9, 12, 14, 16 and 32, so 80%. Three samples, three answers, and none of them is 50%. Nobody lied: it's the luck of the draw. That's a survey's margin of error, and it's what the next episode is all about."
+    site: "Bouton « nouveau tirage » : 5 salariés tirés au hasard, recomptés à chaque fois, avec l'historique des parts obtenues ; un réglage fait passer la taille de l'échantillon de 5 à 10 puis 15, et l'apprenant voit les réponses se resserrer autour de 50 %."
+    moteur: "Modèle « foule » (20 pastilles) d'EP-S2A, avec mise en évidence des 5 tirés ; à défaut, trois scènes « etapes »."
+  - bloc: synthese
+    duree_s: 45
+    fr: "Ce qu'il faut retenir. Un : une question statistique attend des réponses qui varient, et une donnée est toujours une mesure, faite par quelqu'un, selon une définition. Deux : avant de comparer, demandez de qui parle le chiffre, la population, l'individu, la variable ; changer d'individu change le chiffre. Trois : un nombre peut être une étiquette, un rang ou une quantité, et l'échelle dit quelles opérations ont un sens. Quatre : recensement, sondage, fichier ou capteurs, chaque source a une force et une limite. Devant n'importe quel chiffre, posez trois questions : quelle question, quelle définition, et qui a mesuré, quand et comment ?"
+    en: "What to remember. One: a statistical question expects answers that vary, and a data point is always a measurement, made by someone, under a definition. Two: before comparing, ask who the number is about, the population, the unit, the variable; changing the unit changes the number. Three: a number can be a label, a rank or a quantity, and the scale tells you which operations make sense. Four: census, survey, records or sensors, each source has a strength and a limit. In front of any number, ask three questions: which question, which definition, and who measured it, when and how?"
+  - bloc: exercice_de_synthese
+    pause_secondes: 15
+    fr: "À vous. Une commune fictive veut savoir combien de temps ses habitants passent chaque jour dans les transports. Elle leur demande aussi leur mode de transport principal et une note de satisfaction de 1 à 5. Un : est-ce une question statistique ? Deux : quelle est la population, l'individu, la variable ? Trois : quel est le type de chacune des trois variables ? Quatre : la commune hésite entre interroger tous les habitants, en interroger 500 tirés au sort, ou compter les validations de cartes de bus ; donnez pour chaque source une force et une limite. Mettez la vidéo en pause."
+    en: "Your turn. A fictional town wants to know how long its residents spend in transport each day. It also asks for their main mode of transport and a satisfaction score from 1 to 5. One: is this a statistical question? Two: what are the population, the unit and the variable? Three: what type is each of the three variables? Four: the town is choosing between asking every resident, asking 500 residents drawn at random, or counting bus card taps; give one strength and one limit for each source. Pause the video."
+    questions_a_l_ecran: true   # LMEC-DEC-017 : l'énoncé et les quatre questions sont écrits à l'écran, numérotés
+    correction_fr: "Un : oui, les durées varient d'un habitant à l'autre. Deux : la population, ce sont les habitants de la commune, à préciser (à partir de quel âge ? quelle semaine ?) ; l'individu, un habitant ; la variable, son temps quotidien dans les transports, en minutes. Trois : le temps est quantitatif continu ; le mode de transport est qualitatif nominal ; la satisfaction est qualitative ordinale, et en faire la moyenne suppose des écarts égaux, à dire. Quatre : tout le monde, c'est un recensement, complet mais lourd et coûteux ; 500 tirés au sort, c'est un sondage, rapide mais avec une marge d'erreur et des non-réponses ; les validations, c'est un fichier, énorme et continu, mais il ne voit que les usagers du bus, et il compte des passages, pas des personnes : l'individu a changé."
+    correction_en: "One: yes, the times vary from one resident to another. Two: the population is the town's residents, to be specified (from what age? which week?); the unit is one resident; the variable is their daily time in transport, in minutes. Three: time is quantitative and continuous; the mode of transport is qualitative and nominal; satisfaction is qualitative and ordinal, and averaging it assumes equal gaps, which you should say. Four: everyone is a census, complete but heavy and costly; 500 at random is a survey, quick but with a margin of error and non-responses; card taps are records, huge and continuous, but they only see bus users, and they count taps, not people: the unit has changed."
+  - bloc: cloture
+    duree_s: 25
+    fr: "Voilà : la prochaine fois qu'on vous lance un chiffre, vous saurez lui demander d'où il vient. Mais un échantillon peut aussi se tromper, et pas seulement par hasard : c'est tout l'enjeu du prochain épisode. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la avec quelqu'un à qui elle servira. Et si un exercice vous résiste, écrivez-nous en commentaire : on vous aide, gratuitement. Merci d'avoir regardé, et à très vite !"
+    en: "That's it: next time someone throws a number at you, you'll know how to ask where it comes from. But a sample can also be wrong, and not just by chance: that's what the next episode is all about. If this video was useful, subscribe, leave a like and share it with someone it will help. And if an exercise gets the better of you, write to us in the comments: we'll help you, for free. Thanks for watching, see you very soon!"
+    controle_qc: "Contient « bonjour » à l'accueil (rang 2, après l'ouverture), et à la clôture « prochain épisode », « abonnez », « like », « partagez » : conforme à parcours_spectateur (charte.yaml). Prochain épisode : EP-S1B « Pourquoi un échantillon peut mentir »."
+  - bloc: fin
+    duree_s: 4
+    fr: "Fin de marque : logo officiel (variante selon le fond) et « Éveiller par les chiffres. »"
+    en: "Brand end card: official logo (variant for the background) and “Enlightening through numbers.”"
+
+formules:
+  - {formule: "part = effectif / total", explication_symboles: "effectif : nombre d'individus qui vérifient la condition ; total : nombre d'individus", conditions: "2 sur 5 = 0,4 = 40 %"}
+  - {formule: "revenu moyen = revenu total / nombre d'individus", explication_symboles: "l'individu (ménage ou personne) est le dénominateur", conditions: "dire toujours par quel individu on divise"}
+  - {formule: "T(K) = T(°C) + 273,15", explication_symboles: "kelvins et degrés Celsius", conditions: "« deux fois plus » seulement sur une échelle de rapport"}
+
+calculs_a_verifier:             # recalculés par Claude le 28/11/2026 (Python) ; repris dans le bloc « verifier » de la fiche de production
+  - {expression: "sum(1 for t in [4,7,9,11,12,14,15,16,18,19,21,23,25,26,27,29,32,35,38,44] if t < 20)", attendu: 10, libelle: "Laboratoire 2, salariés sous 20 minutes"}
+  - {expression: "10 / 20 * 100", attendu: 50, libelle: "Laboratoire 2, part sous 20 minutes (les 20)"}
+  - {expression: "2 / 5 * 100", attendu: 40, libelle: "Laboratoire 2, tirage 1"}
+  - {expression: "3 / 5 * 100", attendu: 60, libelle: "Laboratoire 2, tirage 2"}
+  - {expression: "4 / 5 * 100", attendu: 80, libelle: "Laboratoire 2, tirage 3"}
+  - {expression: "9000 / 3", attendu: 3000, libelle: "Laboratoire 1, par ménage (inchangé)"}
+  - {expression: "9000 / 7", attendu: 1286, libelle: "Laboratoire 1, par personne au départ"}
+  - {expression: "9000 / (1 + 6 + 2)", attendu: 1000, libelle: "Laboratoire 1, par personne à l'arrivée"}
+  # Les calculs des chapitres restent ceux de leurs fiches validées (S1.01 à S1.04).
+
+idees_fausses:                  # celles des chapitres, plus deux propres à l'épisode
+  - {idee: "Si deux chiffres officiels diffèrent, l'un des deux est faux", desamorcee_a_l_etape: "ouverture et chapitre 4 : deux définitions, deux chiffres justes"}
+  - {idee: "Un sondage donne la vraie réponse", desamorcee_a_l_etape: "laboratoire 2 : 40 %, 60 % ou 80 % pour une vraie part de 50 %"}
+
+preuve_apprentissage:
+  tache: "Réussir l'exercice de synthèse sans revoir la vidéo"
+  question_de_transfert: "« Le panier moyen a baissé de 10 % dans ce supermarché. » Quelles trois questions posez-vous avant de conclure que les clients achètent moins ?"
+  diagnostic_d_erreur: "« Mon sondage auprès de 5 collègues dit 80 %, donc c'est 80 % dans l'entreprise » : pourquoi est-ce hâtif ? (laboratoire 2)"
+  limite_a_enoncer: "Le hasard n'est pas la seule erreur d'un échantillon : qui accepte de répondre compte aussi (épisode suivant)"
+
+duree_estimee_min: [22, 27]     # chapitres resserrés (transitions communes, un seul rappel final) ; à mesurer après synthèse vocale
+format: youtube_lesson
+raison_du_format: "Épisode long du programme 1.13 : quatre notions qui se suivent, deux laboratoires, une synthèse et un exercice commun"
+chapitres_youtube: ["0:00 Ouverture", "Qu'est-ce qu'une donnée ?", "De qui parle ce chiffre ?", "Laboratoire : ménage ou personne", "Quel type de variable ?", "D'où viennent les données ?", "Laboratoire : tout le monde ou un échantillon", "Synthèse et exercice"]   # horodatages après rendu
+derives_short:                  # bandes-annonces, chacune renvoie à l'épisode complet
+  - "Combien d'habitants à Paris ? Trois réponses justes (30 à 40 s)"
+  - "Cinq salariés sur vingt : 40 %, 60 % ou 80 % ? (30 à 40 s)"
+
+adaptation_en: "Mêmes nombres et même raisonnement ; euros conservés. Séparateur décimal anglais (2.1) et de milliers (9,000). Insee et France Travail expliqués à leur première mention (French statistics office ; French public employment service). Textes écrits pour l'anglais, sans calque."
+langue_et_ton: "Vouvoiement (section 2.5 du programme). Pas de programmation (niveau 1)."
+licences: "Données Insee citées en description (réutilisation libre avec mention de la source). Voix Kokoro (Apache 2.0, docs/voice-licenses.md). Habillage sonore synthétisé par le moteur."
+sources_lues:
+  - {ref: "Insee, comparateur de territoires, Paris (RP2023)", url: "https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001", lu_le: "2026-11-03", sert_a: "chapitre 1 et ouverture"}
+  - {ref: "Insee, Informations Rapides n° 192 (chômage au 2e trimestre 2026)", url: "https://www.insee.fr/fr/statistiques/9032359", lu_le: "2026-11-03", sert_a: "chapitre 4 et ouverture"}
+  - {ref: "Insee, L'essentiel sur... le chômage (août 2026)", url: "https://www.insee.fr/fr/statistiques/4805248", lu_le: "2026-11-07", sert_a: "inscrits à France Travail en catégorie A"}
+  - {ref: "Insee, Informations Rapides n° 270 (chômage au 3e trimestre 2026)", url: "https://www.insee.fr/fr/statistiques/9118603", lu_le: "2026-11-28", sert_a: "option de mise à jour : 2,6 millions de chômeurs au sens du BIT au 3e trimestre 2026"}
+
+controle:
+  test_du_debutant: "Pilote avec 3 à 5 débutants avant validation finale : exercice de synthèse, question de transfert, classement de quatre variables ; noter aussi les passages où ils décrochent (durée). La réussite du moteur ou des calculs ne prouve pas l'apprentissage"
+  relecture_definitions: "Claude, 28/11/2026 ; à valider par JG"
+  controle_mobile: "Après rendu : sortie/EP-S1A/fr/inspection"
+  a_trancher_par_le_relecteur:
+    - "Chômage : garder le 2e trimestre 2026 (validé le 08/11, les deux chiffres BIT et France Travail portent sur le même trimestre), ou passer au 3e trimestre (Insee, 10/11/2026 : 2,6 millions au sens du BIT), ce qui oblige à relire aussi le nombre d'inscrits du 3e trimestre ? Proposition de Claude : garder le 2e trimestre, et dire « au 2e trimestre 2026 » à l'écran comme dans la fiche validée."
+    - "Durée 22 à 27 min : acceptable pour un premier épisode, ou faut-il raccourcir le chapitre 3 (quatre échelles) ?"
