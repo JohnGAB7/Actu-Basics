@@ -393,14 +393,15 @@ class Rendu(ScenesPedagogiques):
                    for i, (m, _, c) in enumerate(ligne))
 
     def ajuster_riche(self, texte, style, largeur, hauteur, taille_max, taille_min,
-                      interligne=1.2, contexte="", majuscules=False, equilibre=False):
+                      interligne=1.2, contexte="", majuscules=False, equilibre=False, grille=None):
         """Plus grande taille qui fait tenir le texte (avec mots mis en valeur *…*).
         equilibre : lignes de longueurs voisines (titres)."""
         texte = typographie(texte, self.langue)
         if majuscules:
             texte = texte.upper()
         mots = mots_riches(texte)
-        plafond = ((self.charte.get("typographie") or {}).get(self.format) or {}).get(style)
+        grille_f = (self.charte.get("typographie") or {}).get(self.format) or {}
+        plafond = grille_f.get(grille) or grille_f.get(style)   # grille : entrée propre (ex. « plein »)
         if plafond:   # grille typographique de la charte : jamais de texte surdimensionné
             taille_max = min(taille_max, int(plafond))
             taille_min = min(taille_min, taille_max)
@@ -695,7 +696,9 @@ class Rendu(ScenesPedagogiques):
                           style_fort="surligne")
 
     def _scene_texte(self, d, scene, g, haut, dr, bas, largeur, x_c, t, ctx):
-        p, lignes, pas, hh = self.ajuster_riche(scene.texte, "gras", largeur, bas - haut, 80, 42, 1.25, ctx)
+        # Texte plein écran (démo « niveau YouTube », 28/11/2026) : entrée « plein » de la grille typographique.
+        p, lignes, pas, hh = self.ajuster_riche(scene.texte, "gras", largeur * 0.86, bas - haut, 120, 42, 1.2, ctx,
+                                                grille="plein")
         self.ecrire_riche(d, lignes, p, pas, haut + (bas - haut - hh) // 2, self.c["texte"], t, 0.1,
                           decalage=self._decalage_texte(scene))
 
