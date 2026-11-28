@@ -59,6 +59,11 @@ Modèles :
 - frequences  : un an, un « taux » annuel effectif, « m » périodes ; « annuel » trace un seul saut en fin
                 d'année, « mensuel » les m petits sauts au taux équivalent, « egalite » montre l'arrivée commune
                 et le piège du taux proportionnel (m × j < i) ;
+- mystere     : curiosité (JG, 28/11/2026) ; 2 à 4 cartes face cachée (« cartes » : valeur, libelle), toutes
+                visibles dès le début avec un « ? » ; chaque phase « revele » retourne la carte suivante ;
+- barre_cachee : deux barres (« barres » : valeur, libelle ; « unite », « decimales ») ; « reference » trace
+                la première, « cachee » montre la place de la seconde, vide, avec un « ? », « revele » la remplit
+                et écrit le rapport (× k) ;
 - selection   : n icônes (avions ou entreprises) ; « depart » les montre, « selection » estompe
                 celles qui disparaissent, « echantillon » fait descendre les survivantes dans le cadre
                 des données observées, « filtre » trace la flèche « sélection par la survie ».
@@ -69,12 +74,12 @@ import math
 import random
 from fractions import Fraction
 
-from .formatage import formater_nombre
+from .formatage import _texte_langue, formater_nombre, typographie
 
 MODELES = ("foule", "paires", "doublon", "calendrier", "complement", "selection", "surface", "grille",
            "pastilles", "curseur", "equilibre", "elimination", "densite", "apercu",
            "cumul", "partage", "ponderee", "decoupages", "asymetrie", "melange", "questions",
-           "capitalisation", "echeancier", "escompte", "frequences")
+           "capitalisation", "echeancier", "escompte", "frequences", "mystere", "barre_cachee")
 PHASES = {
     "foule": ("apparition",),
     "paires": ("apparition", "personne", "vous", "reste", "total"),
@@ -101,6 +106,8 @@ PHASES = {
     "echeancier": ("flux", "actualisation", "somme"),
     "escompte": ("facture", "retenue", "interet"),
     "frequences": ("annuel", "mensuel", "egalite"),
+    "mystere": ("revele",),
+    "barre_cachee": ("reference", "cachee", "revele"),
 }
 ICONES_APERCU = ("tableau", "histogramme", "forme", "equilibre", "mediane", "laboratoire")
 PHASES_DEFAUT = {
@@ -129,6 +136,8 @@ PHASES_DEFAUT = {
     "echeancier": ["flux", "actualisation", "somme"],
     "escompte": ["facture", "retenue", "interet"],
     "frequences": ["annuel", "mensuel", "egalite"],
+    "mystere": ["revele"],
+    "barre_cachee": ["reference", "cachee", "revele"],
 }
 LIBELLES = {
     "fr": {"paires": "paires", "paire": "paire", "jours": "jours libres", "tous": "Tous différents",
@@ -215,7 +224,7 @@ class Animations:
                       "question": 1.2, "deux": 0.8,
                       "capital": 1.4, "simple": 2.6, "compose": 2.6, "flux": 1.6, "actualisation": 3.2,
                       "somme": 1.2, "facture": 1.2, "retenue": 2.2, "interet": 1.6, "annuel": 1.6,
-                      "mensuel": 3.2, "egalite": 1.0}
+                      "mensuel": 3.2, "egalite": 1.0, "revele": 1.2, "reference": 1.4, "cachee": 1.0}
             plan = [{"nature": nature, "duree": durees.get(nature, 1.0)} for nature in phases]
         debuts = self._debuts_phases(scene, plan)
         for p, debut in zip(plan, debuts):
@@ -1749,6 +1758,124 @@ class AnimationsDonnees:
             d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=self.c["or"])
             pp = self.police("affichage", int(64 * k_d) + 1)
             self._texte_centre(d, "+", pp, cx, cy - 64 * k_d * 0.66, _melange(self.c["or"], (255, 255, 255), 1.0))
+
+    # ------------------------------------------------------------------ curiosité (JG, 28/11/2026)
+    def _anim_mystere(self, d, scene, plan, zone, t, ctx):
+        """Cartes face cachée retournées une à une quand la voix les annonce : le spectateur devine d'abord."""
+        from .rendu import _melange
+        cartes = scene.extra["animation"]["cartes"]
+        par = [p for p in plan if p["nature"] == "revele"]
+        g, haut, dr, bas = zone
+        n = len(cartes)
+        gap = 40
+        w = (dr - g - (n - 1) * gap) / n
+        h = min(bas - haut, w * 1.35)
+        y0 = haut + (bas - haut - h) / 2
+        courante = self._phase_courante(plan, t)
+        for i, c in enumerate(cartes):
+            p = par[i] if i < len(par) else None
+            k = self._avancee(p, t) if p else 1.0
+            x = g + i * (w + gap)
+            fond = self._fond_a(x, y0)
+            # Retournement : la carte se referme (largeur 1 → 0) puis s'ouvre sur sa face (0 → 1).
+            face = k >= 0.5
+            e = abs(1 - 2 * k) if 0 < k < 1 else 1.0
+            e = max(0.02, _ease(e) if k < 1 else 1.0)
+            cx = x + w / 2
+            x0, x1 = cx - w / 2 * e, cx + w / 2 * e
+            vive = t is not None and p is not None and plan.index(p) == courante
+            if face:
+                carte = _melange(fond, (255, 255, 255), 0.8) if sum(fond) > 380 else _melange(fond, self.c["barre"], 0.16)
+                contour = self.c["or"] if vive else _melange(fond, self.c["barre"], 0.5)
+            else:
+                # Dos de carte sombre et franc : le « ? » doré y ressort (fond clair) ; bleu sur fond sombre.
+                carte = _melange(fond, self.c["texte"], 0.92) if sum(fond) > 380 else _melange(fond, self.c["barre"], 0.45)
+                contour = _melange(fond, self.c["or"], 0.9)
+            d.rounded_rectangle((x0, y0, x1, y0 + h), radius=26, fill=carte, outline=contour, width=4 if vive else 3)
+            if e < 0.35:
+                continue
+            if not face:
+                pq = self.police("affichage", int(min(w, h) * 0.55))
+                self._texte_centre(d, "?", pq, cx, y0 + h / 2 - pq.size * 0.62, self.c["or"])
+                continue
+            valeur = _texte_langue(c["valeur"], self.langue)
+            taille = int(min(h * 0.30, 200))
+            while taille > 40 and self.police("affichage", taille).getlength(valeur) > w * 0.86:
+                taille -= 6
+            pv = self.police("affichage", taille)
+            yv = y0 + h * 0.18
+            self._texte_centre(d, valeur, pv, cx, yv, self.c["accent"])
+            lib = _texte_langue(c.get("libelle") or "", self.langue)
+            if lib:
+                p_t, lignes, pas, hh = self.ajuster_riche(lib, "gras", w * 0.84, h * 0.40, 46, 26, 1.15, ctx,
+                                                          equilibre=True)
+                yt = y0 + h * 0.56 + (h * 0.40 - hh) / 2
+                for ligne in lignes:
+                    lw = self._largeur_ligne(ligne, p_t)
+                    self.ecrire_riche(d, [ligne], p_t, pas, yt, self.c["texte"], None, 0.0, centre=False,
+                                      x_gauche=cx - lw / 2)
+                    yt += pas
+
+    def _anim_barre_cachee(self, d, scene, plan, zone, t, ctx):
+        """Une barre connue, puis la place vide de la seconde avec un « ? » ; la révélation la remplit et
+        donne le rapport. Le spectateur estime avant de voir."""
+        from .rendu import _melange
+        conf = scene.extra["animation"]
+        (b1, b2), unite, dec = conf["barres"], conf.get("unite", ""), conf.get("decimales")
+        ph = {p["nature"]: p for p in plan}
+        k1 = _ease(self._avancee(ph["reference"], t)) if "reference" in ph else 1.0
+        kc = _ease(self._avancee(ph["cachee"], t)) if "cachee" in ph else 1.0
+        kr = _ease(self._avancee(ph["revele"], t)) if "revele" in ph else 1.0
+        g, haut, dr, bas = zone
+        vmax = max(b1["valeur"], b2["valeur"]) or 1
+        pl = self.police("gras", 44)
+        pv = self.police("affichage", 64)
+        u = _texte_langue(unite, self.langue)
+
+        def val(v, k=1.0):
+            dd = dec if dec is not None else (0 if float(v).is_integer() else 1)
+            return formater_nombre(v * k, self.langue, dd) + (" " + u if u else "")
+
+        l_max = dr - g - pv.getlength(val(vmax)) - 40
+        ep = int(min(120, (bas - haut) * 0.16))
+        bloc = 2 * (pl.size * 1.4 + ep) + 80
+        y = haut + max(0, (bas - haut - bloc - 140) / 2)
+        fond = self._fond_a(g, y)
+        for b, k, cachee in ((b1, k1, False), (b2, kr, True)):
+            if not cachee and k <= 0:
+                y += pl.size * 1.4 + ep + 80
+                continue
+            if cachee and kc <= 0:
+                break
+            lib = typographie(_texte_langue(b.get("libelle") or "", self.langue), self.langue)
+            self._ecrire_gauche(d, g, y, [lib], pl, 0, self.c["texte"], min(1.0, (k if not cachee else kc) * 2))
+            yb = y + pl.size * 1.4
+            lg = l_max * b["valeur"] / vmax
+            couleur = self.c["barre"]      # même série : même couleur ; le rapport porte l'accent
+            if cachee:
+                # Place vide en pointillés, à la longueur exacte : on devine, puis elle se remplit.
+                cont = _melange(fond, self.c["or"], kc)
+                xx = g
+                while xx < g + lg:
+                    d.line((xx, yb, min(xx + 24, g + lg), yb), fill=cont, width=4)
+                    d.line((xx, yb + ep, min(xx + 24, g + lg), yb + ep), fill=cont, width=4)
+                    xx += 40
+                d.line((g + lg, yb, g + lg, yb + ep), fill=cont, width=4)
+                d.line((g, yb, g, yb + ep), fill=cont, width=4)
+                if kr < 1:
+                    pq = self.police("affichage", int(ep * 0.9))
+                    self._texte_centre(d, "?", pq, g + lg / 2, yb + ep / 2 - pq.size * 0.62,
+                                       _melange(fond, self.c["or"], kc * (1 - kr)))
+            if k > 0:
+                d.rounded_rectangle((g, yb, g + max(6, lg * k), yb + ep), radius=ep // 5, fill=couleur)
+                d.text((g + lg * (k if not cachee else 1) + 24, yb + (ep - pv.size) / 2 - pv.size * 0.08),
+                       val(b["valeur"], k), font=pv, fill=self.c["accent"] if cachee else self.c["texte"])
+            y = yb + ep + 80
+        if kr >= 1 or t is None:
+            r_ = b2["valeur"] / b1["valeur"] if b1["valeur"] else 0
+            txt = "× " + formater_nombre(round(r_, 1), self.langue, 0 if round(r_, 1).is_integer() else 1)
+            pr = self.police("affichage", 120)
+            self._texte_centre(d, txt, pr, (g + dr) / 2, y, self.c["accent"] if sum(fond) > 380 else self.c["or"])
 
     # ------------------------------------------------------------------ finance (parcours actuariel, 23/11/2026)
     def _somme_txt(self, v, unite, dec=2):

@@ -116,7 +116,8 @@ decor:
 # Grille typographique (px, 1920 × 1080) : tailles maximales par style. Les scènes réduisent si besoin,
 # jamais sous 34 px. Titres 52 à 76 px, texte 40 à 44 px, listes 36 à 48 px.
 typographie:
-  lecon: {affichage: 76, gras: 48, noir: 48, regulier: 44}
+  # « plein » : scènes texte, accueil et clôture, qui remplissent l'écran (démo « niveau YouTube », 28/11/2026).
+  lecon: {affichage: 76, gras: 48, noir: 48, regulier: 44, plein: 104}
 couleurs:
   # Design « Mixte » (JG, 28/11/2026) : couleurs des premières vidéos (bleu nuit, blanc cassé, jaune, bleu
   # des barres). Univers « éditorial » (défaut) = fond blanc cassé pour les explications, formules et
