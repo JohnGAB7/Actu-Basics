@@ -1851,7 +1851,7 @@ class AnimationsDonnees:
             self._ecrire_gauche(d, g, y, [lib], pl, 0, self.c["texte"], min(1.0, (k if not cachee else kc) * 2))
             yb = y + pl.size * 1.4
             lg = l_max * b["valeur"] / vmax
-            couleur = self.c["accent"] if cachee else self.c["barre"]
+            couleur = self.c["barre"]      # même série : même couleur ; le rapport porte l'accent
             if cachee:
                 # Place vide en pointillés, à la longueur exacte : on devine, puis elle se remplit.
                 cont = _melange(fond, self.c["or"], kc)

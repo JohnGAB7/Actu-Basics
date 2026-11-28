@@ -574,7 +574,9 @@ class ScenesPedagogiques(Animations, AnimationsDonnees):
                      cxr + (x1 - x0) / 2 * echelle, cyr + h_rep / 2 * echelle)
             fond = self._fond.getpixel((int(x0), int(min(yb, self.hauteur - 1))))
             # Carte du site : blanche, coins arrondis, liseré discret, filet doré à gauche.
-            d.rounded_rectangle(boite, radius=28, fill=_melange(fond, (255, 255, 255), k),
+            # Sur fond sombre (univers immersif), une carte blanche rendrait le texte clair illisible.
+            carte = (255, 255, 255) if sum(fond) > 380 else _melange(fond, self.c["barre"], 0.25)
+            d.rounded_rectangle(boite, radius=28, fill=_melange(fond, carte, k),
                                 outline=_melange(fond, self.c["secondaire"], 0.25 * k), width=2)
             d.rounded_rectangle((boite[0], boite[1] + 18, boite[0] + 8, boite[3] - 18), radius=4,
                                 fill=_melange(fond, self.c["or"], k))
