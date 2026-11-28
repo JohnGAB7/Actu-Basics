@@ -1,0 +1,496 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2/s03 « Montant d'un sinistre : lois continues »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2/s03.yaml (calcul « À la main » : exponentielle de moyenne 2 000 €,
+# lognormale μ = 7 et σ = 1, seuil 5 000 €). Les exemples utilisent une exponentielle de moyenne 3 000 €, une lognormale
+# μ = 8 et σ = 1 et une Pareto α = 3, θ = 6 000 ; l'exercice final utilise une exponentielle de moyenne 4 000 € et une
+# lognormale μ = 6, σ = 0,5, pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la durée de vie de Léa vue comme une variable continue ; avec le
+# taux de décès fictif et constant de l'épisode A2.01 (0,1 % par an), l'exponentielle donne une espérance absurde de
+# 1 000 ans, ce qui annonce les tables de mortalité (A3).
+# Faits réels : chiffres d'origine (Assuralia, Swiss Re Institute, Statbel). Paramètres des lois : fictifs.
+id: 2026-11-act-a2-s03-lois-continues
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2 · Montant d'un sinistre : lois continues"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Décrire une variable continue par sa densité, sa fonction de répartition et sa fonction de survie"
+      - "Utiliser la loi exponentielle : survie, moyenne, quantile, absence de mémoire"
+      - "Distinguer médiane et moyenne d'une loi lognormale"
+      - "Comparer une queue fine et une queue épaisse (Pareto) à moyenne égale"
+      - "Voir pourquoi une durée de vie n'est pas exponentielle"
+    en:
+      - "Describe a continuous variable by its density, distribution function and survival function"
+      - "Use the exponential distribution: survival, mean, quantile, memorylessness"
+      - "Tell apart the median and the mean of a lognormal distribution"
+      - "Compare a thin tail and a heavy tail (Pareto) with the same mean"
+      - "See why a lifetime is not exponential"
+  prerequis:
+    fr: ["Séance A2.02 : loi, espérance, variance", "Exponentielle et logarithme"]
+    en: ["Session A2.02: distribution, mean, variance", "Exponential and logarithm"]
+  hypotheses:
+    fr: "Paramètres des lois fictifs ; taux de décès de Léa fictif et constant (A2.01) ; statistiques publiques telles que publiées"
+    en: "Made-up distribution parameters; Léa's death rate made up and constant (A2.01); public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Assuralia, « Quatre ans après les inondations : chiffres actualisés et leçons pour l'avenir » (8 juillet 2025)", en: "Assuralia, “Four years after the floods: updated figures and lessons for the future” (8 July 2025)"}
+    court: "Assuralia"
+    url: "https://press.assuralia.be/quatre-ans-apres-les-inondations--chiffres-actualises-et-lecons-pour-lavenir"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Swiss Re Institute, sigma 1/2026, « Global natural catastrophe losses in 2025 »", en: "Swiss Re Institute, sigma 1/2026, “Global natural catastrophe losses in 2025”"}
+    court: "Swiss Re sigma"
+    url: "https://www.swissre.com/institute/research/sigma-research/sigma-2026-01-natcat-2025-wildfire-storm-risk/global-natcat-losses-2025.html"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Statbel, « L'espérance de vie en Belgique atteint 82,5 ans en 2025 »", en: "Statbel, “Life expectancy in Belgium reaches 82.5 years in 2025”"}
+    court: "Statbel"
+    url: "https://statbel.fgov.be/fr/nouvelles/lesperance-de-vie-en-belgique-atteint-825-ans-en-2025"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Lois continues : combien coûte un sinistre ?"
+    legende: |
+      Deux assureurs paient en moyenne 3 000 € par sinistre. Pour l'un, un sinistre de 30 000 € arrive une fois sur 22 000 ; pour l'autre, une fois sur 216. Même moyenne, risque cent fois plus grand : tout est dans la queue de la loi. Cet épisode du parcours Actuariat explique la densité, la fonction de répartition et la fonction de survie, la loi exponentielle et son absence de mémoire, la loi lognormale (médiane et moyenne), la loi de Pareto des gros sinistres (et les 40 milliards de dollars des incendies de Los Angeles en 2025), puis le septième chapitre du fil rouge : pourquoi la durée de vie de Léa n'est pas exponentielle. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les paramètres des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, probabilites, assurance, reassurance]
+    scenes:
+      - type: accroche
+        texte: "Même coût moyen, *risque cent fois plus grand*"
+        voix_off: "Deux assureurs paient en moyenne trois mille euros par sinistre. Pour le premier, un sinistre de trente mille euros arrive une fois sur vingt-deux mille. Pour le second, une fois sur deux cent seize. Même moyenne, et pourtant un risque cent fois plus grand. Comment est-ce possible ? Tout se joue dans la queue de la loi."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce troisième épisode du module probabilités du parcours Actuariat ! Merci d'être là. La dernière fois, on a compté les sinistres. Aujourd'hui, on mesure ce que coûte chacun d'eux. Un montant ne se compte pas : il varie de façon continue, au centime près. Il faut donc de nouveaux outils."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Densité et *survie*"
+          - "La loi *exponentielle*"
+          - "La loi *lognormale*"
+          - "Les queues *épaisses*"
+          - "La vie de *Léa*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. La densité, la fonction de répartition et la fonction de survie. La loi exponentielle. La loi lognormale. Les queues épaisses et la loi de Pareto. Puis le septième chapitre du fil rouge : la durée de vie de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Densité, répartition, survie"
+        voix_off: "Commençons par décrire une variable continue."
+      - type: formule
+        texte: "Trois fonctions pour *une* variable continue"
+        formule:
+          - 'F(x)=P(X\leq x)=\int_0^x f(t)\,dt'
+          - 'S(x)=P(X>x)=1-F(x)'
+          - 'E[X]=\int_0^{\infty} x\,f(x)\,dx=\int_0^{\infty} S(x)\,dx'
+        note: "La densité f n'est pas une probabilité : seule l'aire sous f en est une. P(X = x) = 0 pour une variable continue."
+        voix_off: "Un montant de sinistre peut prendre n'importe quelle valeur positive. On ne donne donc pas la probabilité de chaque valeur, qui serait nulle, mais une densité, f. L'aire sous la densité entre deux montants donne la probabilité de tomber entre les deux. En cumulant cette aire depuis zéro, on obtient la fonction de répartition, F : la probabilité de ne pas dépasser x. Son complément est la fonction de survie, S : la probabilité de dépasser x. C'est elle que l'assureur regarde le plus souvent. Et l'espérance, le coût moyen, est l'aire sous la fonction de survie."
+      - type: etapes
+        texte: "Inondations de *juillet 2021* : le coût d'un sinistre"
+        etapes:
+          - "*73 790* dossiers de sinistres"
+          - "*2,24 milliards* d'euros d'indemnités"
+          - "Coût moyen : ≈ *30 356 €* par dossier"
+          - "Mais chaque dossier a *son* montant"
+        note: "Source : Assuralia, 8 juillet 2025 (dossiers traités et indemnités versées par le secteur belge de l'assurance)."
+        voix_off: "Un fait réel. Après les inondations de juillet 2021 en Belgique, les assureurs ont traité soixante-treize mille sept cent nonante dossiers de sinistres, et versé deux virgule vingt-quatre milliards d'euros d'indemnités, selon Assuralia. Soit environ trente mille trois cent cinquante-six euros par dossier, en moyenne. Mais derrière cette moyenne, une cave inondée et une maison détruite n'ont rien à voir. Le montant d'un sinistre est une variable aléatoire, et c'est sa loi tout entière qui intéresse l'assureur."
+        verifier:
+          - {expression: "2.24e9 / 73790", attendu: 30356, tolerance: 1, libelle: "Coût moyen par dossier"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "La loi exponentielle"
+        voix_off: "La plus simple des lois continues."
+      - type: formule
+        texte: "L'*exponentielle* de moyenne θ"
+        formule:
+          - 'S(x)=e^{-x/\theta}\qquad E[X]=\theta'
+          - 'q_p=F^{-1}(p)=-\theta\,\ln(1-p)'
+          - 'P(X>s+t\mid X>s)=P(X>t)'
+        note: "Le quantile q_p est le montant qui n'est dépassé qu'avec la probabilité 1 − p. On l'appelle aussi Value at Risk."
+        voix_off: "La loi exponentielle n'a qu'un paramètre, thêta, qui est aussi sa moyenne. Sa fonction de survie vaut e puissance moins x sur thêta : elle décroît très vite. Son quantile se calcule directement : moins thêta fois le logarithme de un moins p. Et elle a une propriété unique : elle est sans mémoire. Savoir que le montant dépasse déjà s ne change rien à la probabilité de dépasser encore t de plus. Retenez cette propriété : elle va nous servir avec Léa."
+      - type: courbe
+        texte: "Exponentielle de moyenne *3 000 €* : la survie"
+        courbe:
+          variable: x
+          de: 0
+          a: 15000
+          pas: 100
+          expression: "100 * exp(-x / 3000)"
+          y_max: 100
+          axe_x: "Montant du sinistre x (€)"
+          axe_y: "P(X > x) (%)"
+          reperes:
+            - {x: 3000, label: "3 000 € : 36,8 %"}
+            - {x: 6000, label: "6 000 € : 13,5 %"}
+            - {x: 13800, label: "13 816 € : 1 %"}
+        note: "Loi et montants fictifs, pour l'exemple. Médiane : 3 000 × ln 2 ≈ 2 079 €, sous la moyenne."
+        voix_off: "Un exemple : des sinistres exponentiels de moyenne trois mille euros. Dépasser la moyenne ? Trente-six virgule huit pour cent des sinistres. Dépasser six mille euros, le double de la moyenne : e puissance moins deux, treize virgule cinq pour cent. Et le quantile à quatre-vingt-dix-neuf pour cent : trois mille fois le logarithme de cent, environ treize mille huit cent seize euros. Un sinistre sur cent seulement coûte plus cher."
+        verifier:
+          - {expression: "100 * exp(-1)", attendu: 36.8, tolerance: 0.05, libelle: "P(X > 3 000)"}
+          - {expression: "100 * exp(-2)", attendu: 13.5, tolerance: 0.05, libelle: "P(X > 6 000)"}
+          - {expression: "3000 * log(100)", attendu: 13816, tolerance: 1, libelle: "Quantile 99 %"}
+          - {expression: "3000 * log(2)", attendu: 2079, tolerance: 1, libelle: "Médiane"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La loi lognormale"
+        voix_off: "Quand le logarithme du montant suit une loi normale."
+      - type: formule
+        texte: "La *lognormale* : ln X suit une loi *normale*"
+        formule:
+          - '\ln X\sim\mathcal{N}(\mu,\sigma^2)'
+          - 'P(X>x)=1-\Phi\left(\frac{\ln x-\mu}{\sigma}\right)'
+          - '\mathrm{m\acute{e}diane}=e^{\mu}\qquad E[X]=e^{\mu+\sigma^2/2}'
+        note: "Φ : fonction de répartition de la loi normale centrée réduite. Pour une normale, le quantile à 95 % vaut μ + 1,645 σ."
+        voix_off: "Beaucoup de montants de sinistres ont une forme typique : beaucoup de petits, quelques gros. La loi lognormale capte cette forme. Le logarithme du montant suit une loi normale, de moyenne mu et d'écart-type sigma. Pour une probabilité de dépassement, on passe au logarithme puis on lit la table de la loi normale, Phi. Et attention : la médiane vaut e puissance mu, mais la moyenne vaut e puissance mu plus sigma carré sur deux. La moyenne dépasse toujours la médiane, tirée vers le haut par les gros sinistres."
+      - type: etapes
+        texte: "Lognormale *μ = 8*, *σ = 1* : médiane et moyenne"
+        etapes:
+          - "Médiane : e⁸ ≈ *2 981 €*"
+          - "Moyenne : e^8,5 ≈ *4 915 €*"
+          - "Quantile 95 % : e^(8 + 1,645) ≈ *15 444 €*"
+          - "P(X > 20 000 €) ≈ *2,85 %*"
+        note: "Paramètres fictifs, pour l'exemple. z = ln 20 000 − 8 ≈ 1,904."
+        voix_off: "Un exemple avec mu égal à huit et sigma égal à un. Un sinistre sur deux coûte moins que la médiane, e puissance huit, environ deux mille neuf cent quatre-vingt-un euros. Mais la moyenne vaut e puissance huit virgule cinq, quatre mille neuf cent quinze euros : soixante-cinq pour cent de plus. Le quantile à quatre-vingt-quinze pour cent vaut e puissance huit plus un virgule six quatre cinq, environ quinze mille quatre cent quarante-quatre euros. Et la probabilité de dépasser vingt mille euros : deux virgule quatre-vingt-cinq pour cent."
+        verifier:
+          - {expression: "exp(8)", attendu: 2981, tolerance: 1, libelle: "Médiane"}
+          - {expression: "exp(8.5)", attendu: 4915, tolerance: 1, libelle: "Moyenne"}
+          - {expression: "exp(9.645)", attendu: 15444, tolerance: 1, libelle: "Quantile 95 %"}
+          - {expression: "100 * (1 - 0.5 * (1 + erf((log(20000) - 8) / sqrt(2))))", attendu: 2.85, tolerance: 0.005, libelle: "P(X > 20 000), en %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Les queues épaisses"
+        voix_off: "Et maintenant, les gros sinistres."
+      - type: formule
+        texte: "La loi de *Pareto* : une queue *épaisse*"
+        formule:
+          - 'S(x)=\left(\frac{\theta}{\theta+x}\right)^{\alpha}\qquad E[X]=\frac{\theta}{\alpha-1}\ \ (\alpha>1)'
+          - '\alpha=3,\ \theta=6\,000:\quad E[X]=3\,000\ \text{€}'
+        note: "Nommée d'après l'économiste Vilfredo Pareto. Elle décroît comme une puissance de x, bien plus lentement qu'une exponentielle."
+        voix_off: "Pour les incendies, la responsabilité civile ou les catastrophes naturelles, l'exponentielle sous-estime les gros sinistres. On utilise alors la loi de Pareto. Sa fonction de survie décroît comme une puissance de x, et non comme une exponentielle : beaucoup plus lentement. C'est ce qu'on appelle une queue épaisse. Avec alpha égal à trois et thêta égal à six mille, sa moyenne vaut exactement trois mille euros, comme notre exponentielle."
+        verifier:
+          - {expression: "6000 / (3 - 1)", attendu: 3000, libelle: "Moyenne de la Pareto"}
+      - type: etapes
+        texte: "Même moyenne de *3 000 €* : la queue change *tout*"
+        etapes:
+          - "Exponentielle : P(X > 30 000 €) = e⁻¹⁰ ≈ *0,0045 %*"
+          - "Pareto : P(X > 30 000 €) = (1/6)³ ≈ *0,46 %*"
+          - "Rapport : environ *100 fois* plus probable"
+          - "Quantile 99 % : *13 816 €* contre *21 850 €*"
+        note: "Lois fictives, pour l'exemple : une fois sur 22 026 contre une fois sur 216."
+        voix_off: "Comparons les deux lois, de même moyenne. Probabilité d'un sinistre de plus de trente mille euros, dix fois la moyenne. Avec l'exponentielle : e puissance moins dix, zéro virgule zéro zéro quatre cinq pour cent, une fois sur vingt-deux mille. Avec la Pareto : un sixième au cube, zéro virgule quarante-six pour cent, une fois sur deux cent seize. Cent fois plus probable. Et le quantile à quatre-vingt-dix-neuf pour cent passe de treize mille huit cent seize à vingt et un mille huit cent cinquante euros. Se tromper de queue coûte bien plus cher que se tromper de moyenne."
+        verifier:
+          - {expression: "100 * exp(-10)", attendu: 0.0045, tolerance: 0.00005, libelle: "Exponentielle"}
+          - {expression: "100 * (6000 / 36000)**3", attendu: 0.46, tolerance: 0.005, libelle: "Pareto"}
+          - {expression: "(6000 / 36000)**3 / exp(-10)", attendu: 100, tolerance: 3, libelle: "Rapport"}
+          - {expression: "1 / exp(-10)", attendu: 22026, tolerance: 1, libelle: "Une fois sur…"}
+          - {expression: "6000 * (0.01**(-1 / 3) - 1)", attendu: 21850, tolerance: 1, libelle: "Quantile 99 % Pareto"}
+      - type: etapes
+        texte: "*2025* : un seul événement pèse *37 %* de l'année"
+        etapes:
+          - "*190* catastrophes naturelles dans le monde"
+          - "*107 milliards* de dollars de pertes assurées"
+          - "Incendies de Los Angeles : *40 milliards*"
+          - "Soit *71 fois* la perte moyenne par événement"
+        note: "Source : Swiss Re Institute, sigma 1/2026. Perte moyenne : 107 ÷ 190 ≈ 0,56 milliard de dollars par événement."
+        voix_off: "Un fait réel. Selon le Swiss Re Institute, les catastrophes naturelles de 2025 ont causé cent sept milliards de dollars de pertes assurées, réparties sur cent nonante événements. En moyenne, zéro virgule cinquante-six milliard par événement. Mais un seul d'entre eux, les incendies de Los Angeles, a coûté quarante milliards : trente-sept pour cent de l'année, soixante et onze fois la moyenne. C'est la signature d'une queue épaisse : quelques événements font l'essentiel de la charge. C'est pour eux que les assureurs achètent de la réassurance."
+        verifier:
+          - {expression: "100 * 40 / 107", attendu: 37, tolerance: 0.5, libelle: "Part des incendies, en %"}
+          - {expression: "107 / 190", attendu: 0.56, tolerance: 0.005, libelle: "Perte moyenne par événement"}
+          - {expression: "40 / (107 / 190)", attendu: 71, tolerance: 0.5, libelle: "Rapport à la moyenne"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : la durée de vie de Léa"
+        voix_off: "Retrouvons Léa. Sa durée de vie aussi est une variable continue."
+      - type: etapes
+        texte: "Léa, *40 ans* : sa durée de vie restante T est-elle *exponentielle* ?"
+        etapes:
+          - "Taux de décès constant : *0,1 %* par an (A2.01)"
+          - "P(T > 25) = 0,999²⁵ ≈ *97,5 %*, comme en A2.01"
+          - "Mais E[T] = 1 ÷ 0,0010005 ≈ *1 000 ans* !"
+          - "Espérance de vie réelle des femmes : *84,4 ans* à la naissance"
+        note: "JG's Holding et Léa sont fictifs, taux de décès fictif. Espérance de vie : Statbel, Belgique, 2025."
+        voix_off: "Dans l'épisode A2.01, on a supposé que Léa, quarante ans, avait chaque année la même probabilité fictive de décéder, zéro virgule un pour cent. Sa durée de vie restante suit alors une loi exponentielle. Elle retrouve bien la probabilité de survivre vingt-cinq ans : quatre-vingt-dix-sept virgule cinq pour cent. Mais calculons son espérance : un divisé par zéro virgule zéro zéro un, environ mille ans ! Absurde. Selon Statbel, l'espérance de vie à la naissance des femmes en Belgique est de quatre-vingt-quatre virgule quatre ans en 2025."
+        verifier:
+          - {expression: "100 * 0.999**25", attendu: 97.5, tolerance: 0.05, libelle: "P(T > 25)"}
+          - {expression: "1 / -log(0.999)", attendu: 1000, tolerance: 1, libelle: "E[T]"}
+      - type: etapes
+        texte: "Ce qui cloche : l'*absence de mémoire*"
+        etapes:
+          - "Exponentielle : à 40 ou à 90 ans, *même risque*"
+          - "En réalité, le risque de décès *augmente* avec l'âge"
+          - "Il faut un taux qui *dépend de l'âge*"
+          - "C'est le rôle de la *table de mortalité* (A3)"
+        voix_off: "Où est l'erreur ? Dans l'absence de mémoire. Une durée de vie exponentielle voudrait qu'une femme de quatre-vingt-dix ans ait la même probabilité de décéder dans l'année qu'une femme de quarante ans. C'est faux : le risque de décès augmente fortement avec l'âge. Pour Léa, il faut un taux de décès qui dépend de l'âge. C'est exactement ce que fournit une table de mortalité, au cœur du module A3. L'exponentielle reste parfaite pour des montants de sinistres, pas pour une vie humaine."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "X *exponentielle* de moyenne *4 000 €* ; Y *lognormale* μ = 6, σ = 0,5"
+        pause: 20
+        questions:
+          - "P(X > 6 000 €)"
+          - "Le quantile à 95 % de X"
+          - "La médiane et la moyenne de Y"
+          - "P(Y > 1 000 €)"
+        voix_off: "Mettez la vidéo en pause. X suit une loi exponentielle de moyenne quatre mille euros, et Y une loi lognormale de paramètres mu égal à six et sigma égal à zéro virgule cinq. Calculez la probabilité que X dépasse six mille euros, puis le quantile à quatre-vingt-quinze pour cent de X. Ensuite, la médiane et la moyenne de Y, et la probabilité que Y dépasse mille euros."
+      - type: correction
+        etapes:
+          - "P(X > 6 000) = e^(−1,5) ≈ *0,2231*"
+          - "q₀,₉₅ = 4 000 × ln 20 ≈ *11 982,93 €*"
+          - "Médiane e⁶ ≈ *403,43 €* ; moyenne e^6,125 ≈ *457,14 €*"
+          - "z = (ln 1 000 − 6) ÷ 0,5 ≈ 1,816 ; P ≈ *0,0347*"
+        voix_off: "Correction. P de X supérieur à six mille : e puissance moins six mille sur quatre mille, e puissance moins un virgule cinq, environ zéro virgule deux deux trois un. Le quantile à quatre-vingt-quinze pour cent : quatre mille fois le logarithme de vingt, onze mille neuf cent quatre-vingt-deux euros nonante-trois. Pour Y, la médiane vaut e puissance six, quatre cent trois euros quarante-trois, et la moyenne e puissance six virgule un deux cinq, quatre cent cinquante-sept euros quatorze. Enfin, z vaut logarithme de mille moins six, divisé par zéro virgule cinq, environ un virgule huit un six : la probabilité de dépasser mille euros est d'environ zéro virgule zéro trois quatre sept."
+        verifier:
+          - {expression: "exp(-1.5)", attendu: 0.2231, libelle: "P(X > 6 000)"}
+          - {expression: "4000 * log(20)", attendu: 11982.93, libelle: "Quantile 95 %"}
+          - {expression: "exp(6)", attendu: 403.43, libelle: "Médiane de Y"}
+          - {expression: "exp(6.125)", attendu: 457.14, libelle: "Moyenne de Y"}
+          - {expression: "(log(1000) - 6) / 0.5", attendu: 1.816, tolerance: 0.0005, libelle: "z"}
+          - {expression: "1 - 0.5 * (1 + erf((log(1000) - 6) / 0.5 / sqrt(2)))", attendu: 0.0347, libelle: "P(Y > 1 000)"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Survie S(x) = P(X > x) ; *E[X]* = aire sous S"
+          - "Exponentielle : *sans mémoire*, q_p = −θ ln(1 − p)"
+          - "Lognormale : la moyenne *dépasse* la médiane"
+          - "Pareto : queue *épaisse*, gros sinistres"
+          - "Une vie humaine n'est *pas* exponentielle"
+        voix_off: "Ce qu'il faut retenir. La fonction de survie donne la probabilité de dépasser un montant, et l'espérance est l'aire sous cette courbe. L'exponentielle est sans mémoire, et son quantile se calcule en une ligne. Pour une lognormale, la moyenne dépasse toujours la médiane. La Pareto a une queue épaisse : à moyenne égale, elle rend les gros sinistres bien plus probables. Et la durée de vie de Léa n'est pas exponentielle : son risque augmente avec l'âge."
+      - type: cloture
+        texte: "Prochain épisode : *pourquoi mutualiser ?* Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant décrire le coût d'un sinistre. Prochain épisode : pourquoi un assureur peut-il prévoir la charge de dix mille contrats, alors qu'il ne peut pas prévoir un seul sinistre ? C'est la loi des grands nombres, et la mutualisation. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Continuous distributions: how much does a claim cost?"
+    legende: |
+      Two insurers pay 3,000 € per claim on average. For one, a 30,000 € claim happens once in 22,000; for the other, once in 216. Same average, a risk a hundred times larger: it is all in the tail of the distribution. This episode of the Actuarial track explains the density, the distribution function and the survival function, the exponential distribution and its memorylessness, the lognormal distribution (median and mean), the Pareto distribution of large claims (and the 40 billion dollars of the 2025 Los Angeles wildfires), then the seventh chapter of the common thread: why Léa's lifetime is not exponential. Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the parameters in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, probability, insurance, reinsurance]
+    scenes:
+      - type: accroche
+        texte: "Same average cost, *a risk a hundred times larger*"
+        voix_off: "Two insurers pay three thousand euros per claim on average. For the first, a thirty-thousand-euro claim happens once in twenty-two thousand. For the second, once in two hundred and sixteen. Same average, and yet a risk a hundred times larger. How is that possible? It all comes down to the tail of the distribution."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this third episode of the probability module of the Actuarial track! Thanks for being here. Last time, we counted claims. Today, we measure what each of them costs. An amount is not counted: it varies continuously, down to the cent. So we need new tools."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "Density and *survival*"
+          - "The *exponential*"
+          - "The *lognormal*"
+          - "*Heavy* tails"
+          - "*Léa*'s lifetime"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. The density, the distribution function and the survival function. The exponential distribution. The lognormal distribution. Heavy tails and the Pareto distribution. Then the seventh chapter of the common thread: Léa's lifetime. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Density, distribution, survival"
+        voix_off: "Let's start by describing a continuous variable."
+      - type: formule
+        texte: "Three functions for *one* continuous variable"
+        formule:
+          - 'F(x)=P(X\leq x)=\int_0^x f(t)\,dt'
+          - 'S(x)=P(X>x)=1-F(x)'
+          - 'E[X]=\int_0^{\infty} x\,f(x)\,dx=\int_0^{\infty} S(x)\,dx'
+        note: "The density f is not a probability: only the area under f is. P(X = x) = 0 for a continuous variable."
+        voix_off: "A claim amount can take any positive value. So we do not give the probability of each value, which would be zero, but a density, f. The area under the density between two amounts gives the probability of landing between them. Accumulating that area from zero gives the distribution function, F: the probability of not exceeding x. Its complement is the survival function, S: the probability of exceeding x. That is the one insurers look at most often. And the expectation, the average cost, is the area under the survival function."
+      - type: etapes
+        texte: "The *July 2021* floods: the cost of a claim"
+        etapes:
+          - "*73,790* claim files"
+          - "*2.24 billion* euros paid out"
+          - "Average cost: about *30,356 €* per file"
+          - "But each file has *its own* amount"
+        note: "Source: Assuralia, 8 July 2025 (files handled and benefits paid by the Belgian insurance sector)."
+        voix_off: "A real fact. After the July 2021 floods in Belgium, insurers handled seventy-three thousand seven hundred and ninety claim files, and paid out two point two four billion euros, according to Assuralia. That is about thirty thousand three hundred and fifty-six euros per file, on average. But behind that average, a flooded cellar and a destroyed house have nothing in common. A claim amount is a random variable, and the insurer cares about its whole distribution."
+        verifier:
+          - {expression: "2.24e9 / 73790", attendu: 30356, tolerance: 1, libelle: "Average cost per file"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The exponential distribution"
+        voix_off: "The simplest continuous distribution."
+      - type: formule
+        texte: "The *exponential* with mean θ"
+        formule:
+          - 'S(x)=e^{-x/\theta}\qquad E[X]=\theta'
+          - 'q_p=F^{-1}(p)=-\theta\,\ln(1-p)'
+          - 'P(X>s+t\mid X>s)=P(X>t)'
+        note: "The quantile q_p is the amount exceeded only with probability 1 − p. It is also called the Value at Risk."
+        voix_off: "The exponential distribution has a single parameter, theta, which is also its mean. Its survival function is e to the minus x over theta: it falls very fast. Its quantile comes out directly: minus theta times the logarithm of one minus p. And it has a unique property: it is memoryless. Knowing that the amount already exceeds s changes nothing about the probability of exceeding it by a further t. Remember this property: we will need it with Léa."
+      - type: courbe
+        texte: "Exponential with mean *3,000 €*: the survival"
+        courbe:
+          variable: x
+          de: 0
+          a: 15000
+          pas: 100
+          expression: "100 * exp(-x / 3000)"
+          y_max: 100
+          axe_x: "Claim amount x (€)"
+          axe_y: "P(X > x) (%)"
+          reperes:
+            - {x: 3000, label: "3,000 €: 36.8%"}
+            - {x: 6000, label: "6,000 €: 13.5%"}
+            - {x: 13800, label: "13,816 €: 1%"}
+        note: "Made-up distribution and amounts, for the example. Median: 3,000 × ln 2 ≈ 2,079 €, below the mean."
+        voix_off: "An example: exponential claims with a mean of three thousand euros. Exceeding the mean? Thirty-six point eight percent of claims. Exceeding six thousand euros, twice the mean: e to the minus two, thirteen point five percent. And the ninety-nine percent quantile: three thousand times the logarithm of one hundred, about thirteen thousand eight hundred and sixteen euros. Only one claim in a hundred costs more."
+        verifier:
+          - {expression: "100 * exp(-1)", attendu: 36.8, tolerance: 0.05, libelle: "P(X > 3,000)"}
+          - {expression: "100 * exp(-2)", attendu: 13.5, tolerance: 0.05, libelle: "P(X > 6,000)"}
+          - {expression: "3000 * log(100)", attendu: 13816, tolerance: 1, libelle: "99% quantile"}
+          - {expression: "3000 * log(2)", attendu: 2079, tolerance: 1, libelle: "Median"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The lognormal distribution"
+        voix_off: "When the logarithm of the amount is normal."
+      - type: formule
+        texte: "The *lognormal*: ln X is *normal*"
+        formule:
+          - '\ln X\sim\mathcal{N}(\mu,\sigma^2)'
+          - 'P(X>x)=1-\Phi\left(\frac{\ln x-\mu}{\sigma}\right)'
+          - '\mathrm{median}=e^{\mu}\qquad E[X]=e^{\mu+\sigma^2/2}'
+        note: "Φ: distribution function of the standard normal. For a normal, the 95% quantile is μ + 1.645 σ."
+        voix_off: "Many claim amounts share a typical shape: lots of small ones, a few large ones. The lognormal distribution captures that shape. The logarithm of the amount follows a normal distribution, with mean mu and standard deviation sigma. For an exceedance probability, we take the logarithm and read the normal table, Phi. And watch out: the median is e to the mu, but the mean is e to the mu plus sigma squared over two. The mean always exceeds the median, pulled up by the large claims."
+      - type: etapes
+        texte: "Lognormal *μ = 8*, *σ = 1*: median and mean"
+        etapes:
+          - "Median: e⁸ ≈ *2,981 €*"
+          - "Mean: e^8.5 ≈ *4,915 €*"
+          - "95% quantile: e^(8 + 1.645) ≈ *15,444 €*"
+          - "P(X > 20,000 €) ≈ *2.85%*"
+        note: "Made-up parameters, for the example. z = ln 20,000 − 8 ≈ 1.904."
+        voix_off: "An example with mu equal to eight and sigma equal to one. Half of the claims cost less than the median, e to the eight, about two thousand nine hundred and eighty-one euros. But the mean is e to the eight point five, four thousand nine hundred and fifteen euros: sixty-five percent more. The ninety-five percent quantile is e to the eight plus one point six four five, about fifteen thousand four hundred and forty-four euros. And the probability of exceeding twenty thousand euros: two point eight five percent."
+        verifier:
+          - {expression: "exp(8)", attendu: 2981, tolerance: 1, libelle: "Median"}
+          - {expression: "exp(8.5)", attendu: 4915, tolerance: 1, libelle: "Mean"}
+          - {expression: "exp(9.645)", attendu: 15444, tolerance: 1, libelle: "95% quantile"}
+          - {expression: "100 * (1 - 0.5 * (1 + erf((log(20000) - 8) / sqrt(2))))", attendu: 2.85, tolerance: 0.005, libelle: "P(X > 20,000), in %"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Heavy tails"
+        voix_off: "And now, the large claims."
+      - type: formule
+        texte: "The *Pareto* distribution: a *heavy* tail"
+        formule:
+          - 'S(x)=\left(\frac{\theta}{\theta+x}\right)^{\alpha}\qquad E[X]=\frac{\theta}{\alpha-1}\ \ (\alpha>1)'
+          - '\alpha=3,\ \theta=6\,000:\quad E[X]=3\,000\ \text{€}'
+        note: "Named after the economist Vilfredo Pareto. It falls like a power of x, far more slowly than an exponential."
+        voix_off: "For fires, liability or natural catastrophes, the exponential underestimates large claims. We then use the Pareto distribution. Its survival function falls like a power of x, not like an exponential: much more slowly. That is what we call a heavy tail. With alpha equal to three and theta equal to six thousand, its mean is exactly three thousand euros, like our exponential."
+        verifier:
+          - {expression: "6000 / (3 - 1)", attendu: 3000, libelle: "Pareto mean"}
+      - type: etapes
+        texte: "Same mean of *3,000 €*: the tail changes *everything*"
+        etapes:
+          - "Exponential: P(X > 30,000 €) = e⁻¹⁰ ≈ *0.0045%*"
+          - "Pareto: P(X > 30,000 €) = (1/6)³ ≈ *0.46%*"
+          - "Ratio: about *100 times* more likely"
+          - "99% quantile: *13,816 €* versus *21,850 €*"
+        note: "Made-up distributions, for the example: once in 22,026 versus once in 216."
+        voix_off: "Let's compare the two distributions, with the same mean. The probability of a claim above thirty thousand euros, ten times the mean. With the exponential: e to the minus ten, zero point zero zero four five percent, once in twenty-two thousand. With the Pareto: one sixth cubed, zero point four six percent, once in two hundred and sixteen. A hundred times more likely. And the ninety-nine percent quantile goes from thirteen thousand eight hundred and sixteen to twenty-one thousand eight hundred and fifty euros. Getting the tail wrong costs far more than getting the mean wrong."
+        verifier:
+          - {expression: "100 * exp(-10)", attendu: 0.0045, tolerance: 0.00005, libelle: "Exponential"}
+          - {expression: "100 * (6000 / 36000)**3", attendu: 0.46, tolerance: 0.005, libelle: "Pareto"}
+          - {expression: "(6000 / 36000)**3 / exp(-10)", attendu: 100, tolerance: 3, libelle: "Ratio"}
+          - {expression: "1 / exp(-10)", attendu: 22026, tolerance: 1, libelle: "Once in…"}
+          - {expression: "6000 * (0.01**(-1 / 3) - 1)", attendu: 21850, tolerance: 1, libelle: "Pareto 99% quantile"}
+      - type: etapes
+        texte: "*2025*: a single event weighs *37%* of the year"
+        etapes:
+          - "*190* natural catastrophes worldwide"
+          - "*107 billion* dollars of insured losses"
+          - "Los Angeles wildfires: *40 billion*"
+          - "That is *71 times* the average loss per event"
+        note: "Source: Swiss Re Institute, sigma 1/2026. Average loss: 107 ÷ 190 ≈ 0.56 billion dollars per event."
+        voix_off: "A real fact. According to the Swiss Re Institute, the natural catastrophes of 2025 caused one hundred and seven billion dollars of insured losses, spread over one hundred and ninety events. On average, zero point five six billion per event. But a single one of them, the Los Angeles wildfires, cost forty billion: thirty-seven percent of the year, seventy-one times the average. That is the signature of a heavy tail: a few events make up most of the cost. That is why insurers buy reinsurance."
+        verifier:
+          - {expression: "100 * 40 / 107", attendu: 37, tolerance: 0.5, libelle: "Wildfire share, in %"}
+          - {expression: "107 / 190", attendu: 0.56, tolerance: 0.005, libelle: "Average loss per event"}
+          - {expression: "40 / (107 / 190)", attendu: 71, tolerance: 0.5, libelle: "Ratio to the average"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "The common thread: Léa's lifetime"
+        voix_off: "Let's get back to Léa. Her lifetime is a continuous variable too."
+      - type: etapes
+        texte: "Léa, *40*: is her remaining lifetime T *exponential*?"
+        etapes:
+          - "Constant death rate: *0.1%* a year (A2.01)"
+          - "P(T > 25) = 0.999²⁵ ≈ *97.5%*, as in A2.01"
+          - "But E[T] = 1 ÷ 0.0010005 ≈ *1,000 years*!"
+          - "Real life expectancy of women: *84.4 years* at birth"
+        note: "JG's Holding and Léa are made up, so is the death rate. Life expectancy: Statbel, Belgium, 2025."
+        voix_off: "In episode A2.01, we assumed that Léa, aged forty, had the same made-up probability of dying every year, zero point one percent. Her remaining lifetime then follows an exponential distribution. It does give back the probability of surviving twenty-five years: ninety-seven point five percent. But let's compute its expectation: one divided by zero point zero zero one, about a thousand years! Absurd. According to Statbel, the life expectancy at birth of women in Belgium is eighty-four point four years in 2025."
+        verifier:
+          - {expression: "100 * 0.999**25", attendu: 97.5, tolerance: 0.05, libelle: "P(T > 25)"}
+          - {expression: "1 / -log(0.999)", attendu: 1000, tolerance: 1, libelle: "E[T]"}
+      - type: etapes
+        texte: "What goes wrong: *memorylessness*"
+        etapes:
+          - "Exponential: at 40 or at 90, *the same risk*"
+          - "In reality, the risk of dying *rises* with age"
+          - "We need a rate that *depends on age*"
+          - "That is the job of the *life table* (A3)"
+        voix_off: "Where is the mistake? In memorylessness. An exponential lifetime would mean that a ninety-year-old woman has the same probability of dying within the year as a forty-year-old. That is false: the risk of dying rises sharply with age. For Léa, we need a death rate that depends on age. That is exactly what a life table provides, at the heart of module A3. The exponential remains perfect for claim amounts, not for a human life."
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "X *exponential* with mean *4,000 €*; Y *lognormal* μ = 6, σ = 0.5"
+        pause: 20
+        questions:
+          - "P(X > 6,000 €)"
+          - "The 95% quantile of X"
+          - "The median and the mean of Y"
+          - "P(Y > 1,000 €)"
+        voix_off: "Pause the video. X follows an exponential distribution with a mean of four thousand euros, and Y a lognormal distribution with mu equal to six and sigma equal to zero point five. Compute the probability that X exceeds six thousand euros, then the ninety-five percent quantile of X. Then the median and the mean of Y, and the probability that Y exceeds one thousand euros."
+      - type: correction
+        etapes:
+          - "P(X > 6,000) = e^(−1.5) ≈ *0.2231*"
+          - "q₀.₉₅ = 4,000 × ln 20 ≈ *11,982.93 €*"
+          - "Median e⁶ ≈ *403.43 €*; mean e^6.125 ≈ *457.14 €*"
+          - "z = (ln 1,000 − 6) ÷ 0.5 ≈ 1.816; P ≈ *0.0347*"
+        voix_off: "Solution. P of X above six thousand: e to the minus six thousand over four thousand, e to the minus one point five, about zero point two two three one. The ninety-five percent quantile: four thousand times the logarithm of twenty, eleven thousand nine hundred and eighty-two euros ninety-three. For Y, the median is e to the six, four hundred and three euros forty-three, and the mean e to the six point one two five, four hundred and fifty-seven euros fourteen. Finally, z is the logarithm of one thousand minus six, divided by zero point five, about one point eight one six: the probability of exceeding one thousand euros is about zero point zero three four seven."
+        verifier:
+          - {expression: "exp(-1.5)", attendu: 0.2231, libelle: "P(X > 6,000)"}
+          - {expression: "4000 * log(20)", attendu: 11982.93, libelle: "95% quantile"}
+          - {expression: "exp(6)", attendu: 403.43, libelle: "Median of Y"}
+          - {expression: "exp(6.125)", attendu: 457.14, libelle: "Mean of Y"}
+          - {expression: "(log(1000) - 6) / 0.5", attendu: 1.816, tolerance: 0.0005, libelle: "z"}
+          - {expression: "1 - 0.5 * (1 + erf((log(1000) - 6) / 0.5 / sqrt(2)))", attendu: 0.0347, libelle: "P(Y > 1,000)"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Survival S(x) = P(X > x); *E[X]* = area under S"
+          - "Exponential: *memoryless*, q_p = −θ ln(1 − p)"
+          - "Lognormal: the mean *exceeds* the median"
+          - "Pareto: *heavy* tail, large claims"
+          - "A human life is *not* exponential"
+        voix_off: "What to remember. The survival function gives the probability of exceeding an amount, and the expectation is the area under that curve. The exponential is memoryless, and its quantile takes one line. For a lognormal, the mean always exceeds the median. The Pareto has a heavy tail: with the same mean, it makes large claims far more likely. And Léa's lifetime is not exponential: her risk rises with age."
+      - type: cloture
+        texte: "Next episode: *why pool risks?* A question? *In the comments*"
+        voix_off: "You can now describe the cost of a claim. Next episode: why can an insurer predict the cost of ten thousand policies, when it cannot predict a single claim? That is the law of large numbers, and pooling. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

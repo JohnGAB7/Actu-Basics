@@ -1,0 +1,470 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2b/s01 « Estimer une loi de sinistres : la méthode des moments »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2b.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2b/s01.yaml (calcul « À la main » : échantillon de 8 sinistres).
+# Les exemples utilisent un autre échantillon fictif de 10 sinistres ; l'exercice final un échantillon fictif de 6 sinistres,
+# pour ne pas donner le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : JG's Holding estime le taux de décès de son portefeuille de
+# 10 000 assurés (dont Léa) à partir de cinq années fictives de décès observés.
+# Faits réels : tableau de Bortkiewicz (1898) déjà utilisé en A2.02, chiffres Assuralia 2025. Échantillons : fictifs.
+id: 2026-11-act-a2b-s01-methode-des-moments
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2b · Estimer une loi de sinistres : la méthode des moments"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Distinguer une loi, un échantillon et un estimateur"
+      - "Juger un estimateur par son biais, sa variance et son erreur quadratique moyenne"
+      - "Calculer une moyenne, une variance empirique et une erreur type"
+      - "Estimer les paramètres d'une loi gamma par la méthode des moments"
+      - "Mesurer la précision d'un taux de décès estimé sur peu d'années"
+    en:
+      - "Tell apart a distribution, a sample and an estimator"
+      - "Judge an estimator by its bias, its variance and its mean squared error"
+      - "Compute a sample mean, a sample variance and a standard error"
+      - "Estimate the parameters of a gamma distribution by the method of moments"
+      - "Measure the precision of a death rate estimated over a few years"
+  prerequis:
+    fr: ["Module A2 : espérance, variance, lois de Poisson et continues"]
+    en: ["Module A2: mean, variance, Poisson and continuous distributions"]
+  hypotheses:
+    fr: "Observations indépendantes et de même loi ; échantillons et décès observés fictifs ; données historiques et statistiques publiques telles que publiées"
+    en: "Independent, identically distributed observations; made-up samples and observed deaths; historical data and public statistics as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "L. von Bortkiewicz, Das Gesetz der kleinen Zahlen (1898), tableau repris par S. M. Carr, Memorial University, « Poisson distributions »", en: "L. von Bortkiewicz, Das Gesetz der kleinen Zahlen (1898), table reproduced by S. M. Carr, Memorial University, “Poisson distributions”"}
+    court: "Bortkiewicz 1898"
+    url: "https://www.mun.ca/biology/scarr/smcPoisson_distributions.html"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Assuralia, « L'assurance automobile en Belgique, chiffres clés 2025 » (10 novembre 2026)", en: "Assuralia, “Motor insurance in Belgium, key figures 2025” (10 November 2026)"}
+    court: "Assuralia"
+    url: "https://press.assuralia.be/lassurance-automobile-en-belgique"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Méthode des moments : estimer une loi à partir des sinistres"
+    legende: |
+      Jusqu'ici, on connaissait les lois et leurs paramètres. Dans la réalité, l'actuaire ne voit que des sinistres passés. Comment en tirer une loi ? Ce premier épisode du module statistique du parcours Actuariat explique l'échantillon et l'estimateur, le biais, la variance et l'erreur quadratique moyenne, la moyenne, la variance empirique et l'erreur type, la méthode des moments pour une loi gamma, un retour sur les soldats prussiens de 1898, et le onzième chapitre du fil rouge : JG's Holding estime le taux de décès du portefeuille de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les échantillons des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, statistique, assurance, estimation]
+    scenes:
+      - type: accroche
+        texte: "La loi des sinistres est *invisible*. On n'en voit que *l'échantillon*"
+        voix_off: "Dans les épisodes précédents, on connaissait toujours la loi des sinistres : une Poisson de moyenne douze virgule cinquante-six, une exponentielle de moyenne trois mille euros. Dans la réalité, personne ne donne ces nombres à l'actuaire. Il ne voit que des sinistres passés. À partir d'eux, il doit deviner la loi. C'est le travail de la statistique."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce premier épisode du module statistique du parcours Actuariat ! Merci d'être là. On passe de l'autre côté du miroir : au lieu de calculer des probabilités à partir d'une loi, on remonte des données vers la loi. Et on commence par la méthode la plus simple : la méthode des moments."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "Échantillon et *estimateur*"
+          - "Biais et *variance*"
+          - "L'*erreur type*"
+          - "La méthode des *moments*"
+          - "Les décès du *portefeuille*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. L'échantillon et l'estimateur. Le biais, la variance et l'erreur quadratique moyenne. La moyenne, la variance empirique et l'erreur type. La méthode des moments, appliquée à une loi gamma. Puis le onzième chapitre du fil rouge : JG's Holding estime le taux de décès du portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Échantillon et estimateur"
+        voix_off: "Trois mots à bien distinguer."
+      - type: etapes
+        texte: "Une *loi*, un *échantillon*, un *estimateur*"
+        etapes:
+          - "La *loi* : inconnue, avec un paramètre θ"
+          - "L'*échantillon* : n observations x₁, …, xₙ"
+          - "L'*estimateur* θ estimé : une formule appliquée à l'échantillon"
+          - "Un autre échantillon donnerait un *autre* θ estimé"
+        voix_off: "Trois mots. La loi des sinistres, d'abord : elle existe, mais on ne la voit pas, et elle dépend d'un paramètre inconnu, thêta. L'échantillon ensuite : les n sinistres effectivement observés. Et l'estimateur, thêta chapeau : une formule qui transforme l'échantillon en une valeur du paramètre. Point essentiel : avec d'autres sinistres, on aurait obtenu une autre valeur. Un estimateur est donc lui-même une variable aléatoire, avec sa moyenne et sa variance."
+      - type: formule
+        texte: "Juger un estimateur : *biais*, *variance*, *EQM*"
+        formule:
+          - '\mathrm{biais}(\hat{\theta})=E[\hat{\theta}]-\theta'
+          - '\mathrm{EQM}(\hat{\theta})=E\left[(\hat{\theta}-\theta)^2\right]=\mathrm{Var}(\hat{\theta})+\mathrm{biais}(\hat{\theta})^2'
+        note: "EQM : erreur quadratique moyenne. Un estimateur sans biais mais très dispersé peut être pire qu'un estimateur un peu biaisé."
+        voix_off: "Comment juger un estimateur ? Par deux défauts. Le biais : en moyenne, sur tous les échantillons possibles, l'estimateur vise-t-il juste, ou à côté ? Et la variance : d'un échantillon à l'autre, l'estimateur bouge-t-il beaucoup ? L'erreur quadratique moyenne combine les deux : c'est la variance plus le carré du biais. Comme au tir à l'arc : on veut des flèches groupées, et groupées autour du centre."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Moyenne, variance et erreur type"
+        voix_off: "Les trois premiers calculs sur tout échantillon."
+      - type: formule
+        texte: "Les estimateurs *de base*"
+        formule:
+          - '\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\qquad s^2=\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2'
+          - '\mathrm{se}(\bar{x})=\frac{s}{\sqrt{n}}'
+        note: "On divise par n − 1 pour que s² soit sans biais. Diviser par n donne σ² (÷ n), biaisé : E[σ² (÷ n)] = (n − 1) σ² ÷ n."
+        voix_off: "La moyenne de l'échantillon estime l'espérance de la loi. La variance empirique, s carré, estime sa variance : la somme des carrés des écarts à la moyenne, divisée par n moins un. Pourquoi n moins un ? Parce que les écarts sont mesurés autour de la moyenne de l'échantillon, et non de la vraie moyenne : ils sont un peu trop petits, et diviser par n moins un corrige ce biais. Enfin, l'erreur type de la moyenne, s sur racine de n, mesure la précision de la moyenne elle-même. C'est la formule de mutualisation de l'épisode A2.04, appliquée aux données."
+      - type: courbe
+        texte: "*10* sinistres fictifs : moyenne et médiane"
+        courbe:
+          style: points
+          points: [[1, 900], [2, 1500], [3, 2300], [4, 700], [5, 4800], [6, 1100], [7, 3200], [8, 1900], [9, 600], [10, 2500]]
+          x_min: 0
+          x_max: 11
+          y_min: 0
+          y_max: 5500
+          axe_x: "Sinistre n°"
+          axe_y: "Montant (€)"
+          seuils:
+            - {valeur: 1950, label: "Moyenne 1 950 €"}
+            - {valeur: 1700, label: "Médiane 1 700 €"}
+        note: "Échantillon fictif, pour l'exemple. Le sinistre de 4 800 € tire la moyenne au-dessus de la médiane."
+        voix_off: "Un échantillon fictif de dix sinistres : neuf cents, mille cinq cents, deux mille trois cents, sept cents, quatre mille huit cents, mille cent, trois mille deux cents, mille neuf cents, six cents et deux mille cinq cents euros. Leur moyenne vaut mille neuf cent cinquante euros. Leur médiane, mille sept cents euros, est plus basse : le sinistre de quatre mille huit cents euros tire la moyenne vers le haut. C'est la forme typique des montants de sinistres, vue à l'épisode A2.03."
+        verifier:
+          - {expression: "(900 + 1500 + 2300 + 700 + 4800 + 1100 + 3200 + 1900 + 600 + 2500) / 10", attendu: 1950, libelle: "Moyenne"}
+          - {expression: "(1500 + 1900) / 2", attendu: 1700, libelle: "Médiane"}
+      - type: etapes
+        texte: "Variance et *erreur type* de l'échantillon"
+        etapes:
+          - "Somme des carrés des écarts : *15 525 000*"
+          - "s² = 15 525 000 ÷ 9 ≈ *1 725 000* ; s ≈ *1 313,39 €*"
+          - "Erreur type : 1 313,39 ÷ √10 ≈ *415,33 €*"
+          - "La vraie moyenne : ≈ 1 950 € *± 830 €* (deux erreurs types)"
+        note: "Échantillon fictif. Avec dix sinistres, la moyenne reste très imprécise."
+        voix_off: "Calculons la dispersion. La somme des carrés des écarts à la moyenne vaut quinze millions cinq cent vingt-cinq mille. Divisée par neuf, n moins un, elle donne une variance d'un million sept cent vingt-cinq mille, et un écart-type d'environ mille trois cent treize euros. L'erreur type de la moyenne vaut mille trois cent treize divisé par racine de dix : quatre cent quinze euros trente-trois. En ordre de grandeur, la vraie moyenne se situe donc entre mille cent vingt et deux mille sept cent quatre-vingts euros. Dix sinistres, c'est très peu."
+        verifier:
+          - {expression: "sum((x - 1950)**2 for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 15525000, libelle: "Somme des carrés"}
+          - {expression: "15525000 / 9", attendu: 1725000, libelle: "s²"}
+          - {expression: "sqrt(15525000 / 9)", attendu: 1313.39, libelle: "s"}
+          - {expression: "sqrt(15525000 / 9) / sqrt(10)", attendu: 415.33, libelle: "Erreur type"}
+          - {expression: "2 * sqrt(15525000 / 9) / sqrt(10)", attendu: 830, tolerance: 1, libelle: "Deux erreurs types"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "La méthode des moments"
+        voix_off: "Comment passer des données aux paramètres d'une loi ?"
+      - type: formule
+        texte: "Égaler les moments de la *loi* à ceux de l'*échantillon*"
+        formule:
+          - '\text{Gamma}(\alpha,\theta):\quad E[X]=\alpha\theta\qquad \mathrm{Var}(X)=\alpha\theta^2'
+          - '\alpha\theta=\bar{x},\ \ \alpha\theta^2=\hat{\sigma}^2\ \Rightarrow\ \hat{\theta}=\frac{\hat{\sigma}^2}{\bar{x}},\ \ \hat{\alpha}=\frac{\bar{x}^2}{\hat{\sigma}^2}'
+        note: "Par convention, la méthode des moments utilise σ² (÷ n), la variance divisée par n. La loi gamma généralise l'exponentielle (α = 1)."
+        voix_off: "L'idée de la méthode des moments est très simple. La loi a des moments, sa moyenne et sa variance, qui dépendent des paramètres. L'échantillon a aussi une moyenne et une variance. On les égale, et on résout. Prenons la loi gamma, souple et très utilisée pour les montants de sinistres. Elle a deux paramètres, alpha et thêta, une moyenne alpha thêta et une variance alpha thêta carré. Deux équations, deux inconnues : thêta chapeau vaut la variance divisée par la moyenne, et alpha chapeau la moyenne au carré divisée par la variance."
+      - type: etapes
+        texte: "Nos *10* sinistres : une loi gamma"
+        etapes:
+          - "σ² (÷ n) = 15 525 000 ÷ 10 = *1 552 500*"
+          - "θ estimé = 1 552 500 ÷ 1 950 ≈ *796,15 €*"
+          - "α estimé = 1 950² ÷ 1 552 500 ≈ *2,4493*"
+          - "Contrôle : α × θ estimés = *1 950 €*, la moyenne"
+        note: "Échantillon fictif. α estimé > 1 : la loi a un mode au-dessus de zéro, contrairement à l'exponentielle."
+        voix_off: "Appliquons la méthode à nos dix sinistres. La variance divisée par n vaut un million cinq cent cinquante-deux mille cinq cents. Thêta chapeau vaut cette variance divisée par la moyenne : environ sept cent nonante-six euros quinze. Alpha chapeau vaut la moyenne au carré divisée par la variance : environ deux virgule quatre quatre neuf trois. Vérification : alpha chapeau fois thêta chapeau redonne bien mille neuf cent cinquante euros, la moyenne. On a une loi complète, avec laquelle calculer des probabilités de dépassement."
+        verifier:
+          - {expression: "15525000 / 10", attendu: 1552500, libelle: "σ̂²"}
+          - {expression: "1552500 / 1950", attendu: 796.15, libelle: "θ̂"}
+          - {expression: "1950**2 / 1552500", attendu: 2.4493, libelle: "α̂"}
+          - {expression: "(1950**2 / 1552500) * (1552500 / 1950)", attendu: 1950, libelle: "Contrôle"}
+      - type: etapes
+        texte: "*1898* : la Poisson se vérifie par les *moments*"
+        etapes:
+          - "200 corps-années, *122* décès : moyenne *0,61*"
+          - "Variance de l'échantillon : ≈ *0,61* aussi"
+          - "Poisson : *moyenne = variance*, l'hypothèse tient"
+          - "Méthode des moments : *λ estimé = 0,61*"
+        note: "Bortkiewicz, 1898 (épisode A2.02). Variance divisée par n − 1 : 0,611 ; divisée par n : 0,608."
+        voix_off: "Retour aux soldats prussiens de l'épisode A2.02. Sur deux cents corps-années, cent vingt-deux décès par coup de sabot : une moyenne de zéro virgule soixante et un. Calculons aussi la variance de l'échantillon : environ zéro virgule soixante et un, elle aussi. Or, pour une loi de Poisson, la moyenne et la variance sont égales. Les moments confirment donc l'hypothèse de Poisson, et la méthode des moments donne lambda chapeau égal à zéro virgule soixante et un. Si la variance avait été bien plus grande, on aurait choisi une binomiale négative."
+        verifier:
+          - {expression: "(65 + 2 * 22 + 3 * 3 + 4 * 1) / 200", attendu: 0.61, libelle: "Moyenne"}
+          - {expression: "(65 + 4 * 22 + 9 * 3 + 16 * 1 - 200 * 0.61**2) / 199", attendu: 0.611, tolerance: 0.0005, libelle: "s²"}
+          - {expression: "(65 + 4 * 22 + 9 * 3 + 16 * 1) / 200 - 0.61**2", attendu: 0.608, tolerance: 0.0005, libelle: "σ̂²"}
+      - type: etapes
+        texte: "La limite : les *queues épaisses*"
+        etapes:
+          - "RC auto 2025 : coût moyen *4 865 €*"
+          - "Mais *842* sinistres au-delà de *125 000 €*"
+          - "Quelques sinistres font *bouger* la variance"
+          - "Méthode des moments : un *point de départ*, pas plus"
+        note: "Source : Assuralia, chiffres clés 2025 de l'assurance automobile. Le maximum de vraisemblance est l'objet du prochain épisode."
+        voix_off: "La méthode des moments a une faiblesse. Selon Assuralia, un sinistre en responsabilité civile automobile coûte en moyenne quatre mille huit cent soixante-cinq euros, mais huit cent quarante-deux sinistres ont dépassé cent vingt-cinq mille euros en 2025. Avec une telle queue, la variance de l'échantillon dépend de quelques sinistres énormes, et change beaucoup d'une année à l'autre. Les estimations par les moments deviennent alors instables. Elles restent un bon point de départ, mais l'actuaire leur préfère souvent le maximum de vraisemblance."
+        verifier:
+          - {expression: "125000 / 4865", attendu: 25.7, tolerance: 0.05, libelle: "Seuil en multiples du coût moyen"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Le fil rouge : le taux de décès du portefeuille"
+        voix_off: "Jusqu'ici, on avait supposé le taux de décès du portefeuille de Léa. Estimons-le."
+      - type: etapes
+        texte: "*5* années de décès observés chez JG's Holding"
+        etapes:
+          - "Décès par an : *11, 14, 9, 13, 16*"
+          - "Moyenne : *12,6* décès, soit q̂ = *0,126 %*"
+          - "s² = 29,2 ÷ 4 = *7,3* ; erreur type : 2,70 ÷ √5 ≈ *1,21*"
+          - "q̂ connu à *± 10 %* près seulement"
+        note: "JG's Holding et Léa sont fictifs. Décès observés fictifs, sur 10 000 assurés chaque année."
+        voix_off: "JG's Holding a observé pendant cinq ans les décès de son portefeuille de dix mille assurés, dont Léa. Données fictives : onze, quatorze, neuf, treize et seize décès. La moyenne vaut douze virgule six décès par an : le taux de décès estimé vaut zéro virgule cent vingt-six pour cent, très proche de la valeur supposée jusqu'ici. Mais quelle précision ? La variance empirique vaut sept virgule trois, l'écart-type deux virgule soixante-dix, et l'erreur type de la moyenne un virgule vingt et un décès. Soit près de dix pour cent de la moyenne. Cinq années de données ne suffisent pas pour un taux précis."
+        verifier:
+          - {expression: "(11 + 14 + 9 + 13 + 16) / 5", attendu: 12.6, libelle: "Moyenne"}
+          - {expression: "100 * 12.6 / 10000", attendu: 0.126, libelle: "q̂, en %"}
+          - {expression: "sum((x - 12.6)**2 for x in [11, 14, 9, 13, 16]) / 4", attendu: 7.3, libelle: "s²"}
+          - {expression: "sqrt(7.3) / sqrt(5)", attendu: 1.21, tolerance: 0.005, libelle: "Erreur type"}
+          - {expression: "100 * sqrt(7.3) / sqrt(5) / 12.6", attendu: 10, tolerance: 0.5, libelle: "Erreur type relative, en %"}
+      - type: etapes
+        texte: "Ce que JG's Holding en retient"
+        etapes:
+          - "Un petit portefeuille a une expérience *incertaine*"
+          - "Ne pas s'y fier *entièrement* : c'est la *crédibilité*"
+          - "Combiner avec une *table de référence* (A3)"
+        voix_off: "Que doit en retenir JG's Holding ? Avec dix mille assurés et cinq ans de données, son propre taux de décès reste incertain à environ dix pour cent près. Il serait imprudent de tarifer sur cette seule expérience. L'actuaire la combine avec une table de mortalité de référence, construite sur des millions de vies : c'est l'idée de la crédibilité. On y reviendra dans le module A3."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "*6* sinistres fictifs : 500, 1 300, 2 700, 900, 1 600 et 3 000 €"
+        pause: 20
+        questions:
+          - "La moyenne x̄"
+          - "s et l'erreur type de x̄"
+          - "σ² (÷ n) (variance divisée par n)"
+          - "α estimé et θ estimé d'une loi gamma"
+        voix_off: "Mettez la vidéo en pause. Six sinistres fictifs : cinq cents, mille trois cents, deux mille sept cents, neuf cents, mille six cents et trois mille euros. Calculez leur moyenne, l'écart-type s et l'erreur type de la moyenne. Puis la variance divisée par n, et enfin les paramètres alpha et thêta d'une loi gamma par la méthode des moments."
+      - type: correction
+        etapes:
+          - "x̄ = 10 000 ÷ 6 ≈ *1 666,67 €*"
+          - "s ≈ *993,31 €* ; erreur type ≈ *405,52 €*"
+          - "σ² (÷ n) ≈ *822 222,22*"
+          - "α estimé ≈ *3,3784* ; θ estimé ≈ *493,33 €*"
+        voix_off: "Correction. La somme vaut dix mille euros, donc la moyenne vaut mille six cent soixante-six euros soixante-sept. La somme des carrés des écarts vaut environ quatre millions neuf cent trente-trois mille. Divisée par cinq, elle donne s carré, et s vaut environ neuf cent nonante-trois euros trente et un. L'erreur type : s divisé par racine de six, quatre cent cinq euros cinquante-deux. Divisée par six, la somme des carrés donne sigma chapeau carré, environ huit cent vingt-deux mille deux cent vingt-deux. Alpha chapeau vaut la moyenne au carré divisée par ce nombre, trois virgule trois sept huit quatre, et thêta chapeau, ce nombre divisé par la moyenne, quatre cent nonante-trois euros trente-trois."
+        verifier:
+          - {expression: "(500 + 1300 + 2700 + 900 + 1600 + 3000) / 6", attendu: 1666.67, libelle: "x̄"}
+          - {expression: "sqrt(sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 5)", attendu: 993.31, libelle: "s"}
+          - {expression: "sqrt(sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 5) / sqrt(6)", attendu: 405.52, libelle: "Erreur type"}
+          - {expression: "sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 6", attendu: 822222.22, libelle: "σ̂²"}
+          - {expression: "(10000 / 6)**2 / (sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 6)", attendu: 3.3784, libelle: "α̂"}
+          - {expression: "(sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 6) / (10000 / 6)", attendu: 493.33, libelle: "θ̂"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Un estimateur est une *variable aléatoire*"
+          - "EQM = *variance + biais²*"
+          - "Erreur type de la moyenne : *s ÷ √n*"
+          - "Moments : égaler *moyenne et variance* de la loi et des données"
+          - "Peu de données : estimation *imprécise*"
+        voix_off: "Ce qu'il faut retenir. Un estimateur change avec l'échantillon : c'est une variable aléatoire. On le juge par son erreur quadratique moyenne, la variance plus le carré du biais. L'erreur type de la moyenne vaut s sur racine de n. La méthode des moments égale la moyenne et la variance de la loi à celles des données. Et avec peu de données, toute estimation reste imprécise."
+      - type: cloture
+        texte: "Prochain épisode : *le maximum de vraisemblance*. Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant estimer une loi par la méthode des moments. Prochain épisode : une méthode plus puissante, le maximum de vraisemblance. Quels paramètres rendent les données observées les plus probables ? Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Method of moments: estimating a distribution from claims"
+    legende: |
+      So far, we knew the distributions and their parameters. In reality, the actuary only sees past claims. How do you get a distribution out of them? This first episode of the statistics module of the Actuarial track explains the sample and the estimator, bias, variance and mean squared error, the sample mean, the sample variance and the standard error, the method of moments for a gamma distribution, a return to the Prussian soldiers of 1898, and the eleventh chapter of the common thread: JG's Holding estimates the death rate of Léa's portfolio. Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the samples in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, statistics, insurance, estimation]
+    scenes:
+      - type: accroche
+        texte: "The claim distribution is *invisible*. We only see *the sample*"
+        voix_off: "In the previous episodes, we always knew the claim distribution: a Poisson with mean twelve point five six, an exponential with mean three thousand euros. In reality, nobody hands these numbers to the actuary. All they see is past claims. From those, they have to work out the distribution. That is the job of statistics."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this first episode of the statistics module of the Actuarial track! Thanks for being here. We go to the other side of the mirror: instead of computing probabilities from a distribution, we work back from the data to the distribution. And we start with the simplest method: the method of moments."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "Sample and *estimator*"
+          - "Bias and *variance*"
+          - "The *standard error*"
+          - "The method of *moments*"
+          - "The portfolio's *deaths*"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. The sample and the estimator. Bias, variance and mean squared error. The sample mean, the sample variance and the standard error. The method of moments, applied to a gamma distribution. Then the eleventh chapter of the common thread: JG's Holding estimates the death rate of Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "Sample and estimator"
+        voix_off: "Three words to keep apart."
+      - type: etapes
+        texte: "A *distribution*, a *sample*, an *estimator*"
+        etapes:
+          - "The *distribution*: unknown, with a parameter θ"
+          - "The *sample*: n observations x₁, …, xₙ"
+          - "The *estimator* est. θ: a formula applied to the sample"
+          - "Another sample would give *another* est. θ"
+        voix_off: "Three words. The claim distribution, first: it exists, but we cannot see it, and it depends on an unknown parameter, theta. The sample next: the n claims actually observed. And the estimator, theta hat: a formula that turns the sample into a value of the parameter. The key point: with other claims, we would have got another value. So an estimator is itself a random variable, with its own mean and variance."
+      - type: formule
+        texte: "Judging an estimator: *bias*, *variance*, *MSE*"
+        formule:
+          - '\mathrm{bias}(\hat{\theta})=E[\hat{\theta}]-\theta'
+          - '\mathrm{MSE}(\hat{\theta})=E\left[(\hat{\theta}-\theta)^2\right]=\mathrm{Var}(\hat{\theta})+\mathrm{bias}(\hat{\theta})^2'
+        note: "MSE: mean squared error. An unbiased but very scattered estimator can be worse than a slightly biased one."
+        voix_off: "How do we judge an estimator? By two flaws. Bias: on average, over all possible samples, does the estimator hit the target, or miss it? And variance: from one sample to the next, does the estimator move a lot? The mean squared error combines both: it is the variance plus the square of the bias. Like in archery: we want arrows that are grouped, and grouped around the centre."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Mean, variance and standard error"
+        voix_off: "The first three calculations on any sample."
+      - type: formule
+        texte: "The *basic* estimators"
+        formule:
+          - '\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\qquad s^2=\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2'
+          - '\mathrm{se}(\bar{x})=\frac{s}{\sqrt{n}}'
+        note: "We divide by n − 1 so that s² is unbiased. Dividing by n gives σ² (÷ n), which is biased: E[σ² (÷ n)] = (n − 1) σ² ÷ n."
+        voix_off: "The sample mean estimates the expectation of the distribution. The sample variance, s squared, estimates its variance: the sum of the squared deviations from the mean, divided by n minus one. Why n minus one? Because the deviations are measured around the sample mean, not the true mean: they are a little too small, and dividing by n minus one corrects that bias. Finally, the standard error of the mean, s over the square root of n, measures the precision of the mean itself. It is the pooling formula of episode A2.04, applied to data."
+      - type: courbe
+        texte: "*10* made-up claims: mean and median"
+        courbe:
+          style: points
+          points: [[1, 900], [2, 1500], [3, 2300], [4, 700], [5, 4800], [6, 1100], [7, 3200], [8, 1900], [9, 600], [10, 2500]]
+          x_min: 0
+          x_max: 11
+          y_min: 0
+          y_max: 5500
+          axe_x: "Claim no."
+          axe_y: "Amount (€)"
+          seuils:
+            - {valeur: 1950, label: "Mean 1,950 €"}
+            - {valeur: 1700, label: "Median 1,700 €"}
+        note: "Made-up sample, for the example. The 4,800 € claim pulls the mean above the median."
+        voix_off: "A made-up sample of ten claims: nine hundred, one thousand five hundred, two thousand three hundred, seven hundred, four thousand eight hundred, one thousand one hundred, three thousand two hundred, one thousand nine hundred, six hundred and two thousand five hundred euros. Their mean is one thousand nine hundred and fifty euros. Their median, one thousand seven hundred euros, is lower: the four-thousand-eight-hundred-euro claim pulls the mean up. That is the typical shape of claim amounts, seen in episode A2.03."
+        verifier:
+          - {expression: "(900 + 1500 + 2300 + 700 + 4800 + 1100 + 3200 + 1900 + 600 + 2500) / 10", attendu: 1950, libelle: "Mean"}
+          - {expression: "(1500 + 1900) / 2", attendu: 1700, libelle: "Median"}
+      - type: etapes
+        texte: "Variance and *standard error* of the sample"
+        etapes:
+          - "Sum of squared deviations: *15,525,000*"
+          - "s² = 15,525,000 ÷ 9 ≈ *1,725,000*; s ≈ *1,313.39 €*"
+          - "Standard error: 1,313.39 ÷ √10 ≈ *415.33 €*"
+          - "The true mean: ≈ 1,950 € *± 830 €* (two standard errors)"
+        note: "Made-up sample. With ten claims, the mean stays very imprecise."
+        voix_off: "Let's compute the spread. The sum of the squared deviations from the mean is fifteen million five hundred and twenty-five thousand. Divided by nine, n minus one, it gives a variance of one million seven hundred and twenty-five thousand, and a standard deviation of about one thousand three hundred and thirteen euros. The standard error of the mean is one thousand three hundred and thirteen divided by the square root of ten: four hundred and fifteen euros thirty-three. Roughly, the true mean lies between one thousand one hundred and twenty and two thousand seven hundred and eighty euros. Ten claims is very little."
+        verifier:
+          - {expression: "sum((x - 1950)**2 for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 15525000, libelle: "Sum of squares"}
+          - {expression: "15525000 / 9", attendu: 1725000, libelle: "s²"}
+          - {expression: "sqrt(15525000 / 9)", attendu: 1313.39, libelle: "s"}
+          - {expression: "sqrt(15525000 / 9) / sqrt(10)", attendu: 415.33, libelle: "Standard error"}
+          - {expression: "2 * sqrt(15525000 / 9) / sqrt(10)", attendu: 830, tolerance: 1, libelle: "Two standard errors"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The method of moments"
+        voix_off: "How do we go from the data to the parameters of a distribution?"
+      - type: formule
+        texte: "Match the moments of the *distribution* to those of the *sample*"
+        formule:
+          - '\text{Gamma}(\alpha,\theta):\quad E[X]=\alpha\theta\qquad \mathrm{Var}(X)=\alpha\theta^2'
+          - '\alpha\theta=\bar{x},\ \ \alpha\theta^2=\hat{\sigma}^2\ \Rightarrow\ \hat{\theta}=\frac{\hat{\sigma}^2}{\bar{x}},\ \ \hat{\alpha}=\frac{\bar{x}^2}{\hat{\sigma}^2}'
+        note: "By convention, the method of moments uses σ² (÷ n), the variance divided by n. The gamma generalises the exponential (α = 1)."
+        voix_off: "The idea of the method of moments is very simple. The distribution has moments, its mean and its variance, which depend on the parameters. The sample also has a mean and a variance. We set them equal, and solve. Take the gamma distribution, flexible and widely used for claim amounts. It has two parameters, alpha and theta, a mean alpha theta and a variance alpha theta squared. Two equations, two unknowns: theta hat is the variance divided by the mean, and alpha hat the squared mean divided by the variance."
+      - type: etapes
+        texte: "Our *10* claims: a gamma distribution"
+        etapes:
+          - "σ² (÷ n) = 15,525,000 ÷ 10 = *1,552,500*"
+          - "est. θ = 1,552,500 ÷ 1,950 ≈ *796.15 €*"
+          - "est. α = 1,950² ÷ 1,552,500 ≈ *2.4493*"
+          - "Check: estimated α × θ = *1,950 €*, the mean"
+        note: "Made-up sample. est. α > 1: the distribution has a mode above zero, unlike the exponential."
+        voix_off: "Let's apply the method to our ten claims. The variance divided by n is one million five hundred and fifty-two thousand five hundred. Theta hat is that variance divided by the mean: about seven hundred and ninety-six euros fifteen. Alpha hat is the squared mean divided by the variance: about two point four four nine three. Check: alpha hat times theta hat gives back one thousand nine hundred and fifty euros, the mean. We now have a full distribution, to compute exceedance probabilities with."
+        verifier:
+          - {expression: "15525000 / 10", attendu: 1552500, libelle: "σ̂²"}
+          - {expression: "1552500 / 1950", attendu: 796.15, libelle: "θ̂"}
+          - {expression: "1950**2 / 1552500", attendu: 2.4493, libelle: "α̂"}
+          - {expression: "(1950**2 / 1552500) * (1552500 / 1950)", attendu: 1950, libelle: "Check"}
+      - type: etapes
+        texte: "*1898*: the Poisson checked by its *moments*"
+        etapes:
+          - "200 corps-years, *122* deaths: mean *0.61*"
+          - "Sample variance: ≈ *0.61* as well"
+          - "Poisson: *mean = variance*, the assumption holds"
+          - "Method of moments: *est. λ = 0.61*"
+        note: "Bortkiewicz, 1898 (episode A2.02). Variance divided by n − 1: 0.611; divided by n: 0.608."
+        voix_off: "Back to the Prussian soldiers of episode A2.02. Over two hundred corps-years, one hundred and twenty-two deaths from horse kicks: a mean of zero point six one. Let's also compute the sample variance: about zero point six one, too. Now, for a Poisson distribution, the mean and the variance are equal. So the moments confirm the Poisson assumption, and the method of moments gives lambda hat equal to zero point six one. Had the variance been much larger, we would have chosen a negative binomial."
+        verifier:
+          - {expression: "(65 + 2 * 22 + 3 * 3 + 4 * 1) / 200", attendu: 0.61, libelle: "Mean"}
+          - {expression: "(65 + 4 * 22 + 9 * 3 + 16 * 1 - 200 * 0.61**2) / 199", attendu: 0.611, tolerance: 0.0005, libelle: "s²"}
+          - {expression: "(65 + 4 * 22 + 9 * 3 + 16 * 1) / 200 - 0.61**2", attendu: 0.608, tolerance: 0.0005, libelle: "σ̂²"}
+      - type: etapes
+        texte: "The limit: *heavy tails*"
+        etapes:
+          - "Motor liability 2025: average cost *4,865 €*"
+          - "But *842* claims above *125,000 €*"
+          - "A few claims make the variance *jump*"
+          - "Method of moments: a *starting point*, no more"
+        note: "Source: Assuralia, motor insurance key figures 2025. Maximum likelihood is the topic of the next episode."
+        voix_off: "The method of moments has a weakness. According to Assuralia, a motor liability claim costs four thousand eight hundred and sixty-five euros on average, but eight hundred and forty-two claims exceeded one hundred and twenty-five thousand euros in 2025. With such a tail, the sample variance depends on a few huge claims, and changes a lot from one year to the next. Estimates by the moments then become unstable. They remain a good starting point, but actuaries often prefer maximum likelihood."
+        verifier:
+          - {expression: "125000 / 4865", attendu: 25.7, tolerance: 0.05, libelle: "Threshold in multiples of the average cost"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The common thread: the portfolio's death rate"
+        voix_off: "So far, we assumed the death rate of Léa's portfolio. Let's estimate it."
+      - type: etapes
+        texte: "*5* years of observed deaths at JG's Holding"
+        etapes:
+          - "Deaths per year: *11, 14, 9, 13, 16*"
+          - "Mean: *12.6* deaths, so q̂ = *0.126%*"
+          - "s² = 29.2 ÷ 4 = *7.3*; standard error: 2.70 ÷ √5 ≈ *1.21*"
+          - "q̂ known only to within *± 10%*"
+        note: "JG's Holding and Léa are made up. Observed deaths made up, out of 10,000 insured lives each year."
+        voix_off: "For five years, JG's Holding has observed the deaths in its portfolio of ten thousand insured lives, Léa among them. Made-up data: eleven, fourteen, nine, thirteen and sixteen deaths. The mean is twelve point six deaths a year: the estimated death rate is zero point one two six percent, very close to the value assumed so far. But how precise is it? The sample variance is seven point three, the standard deviation two point seven zero, and the standard error of the mean one point two one deaths. That is nearly ten percent of the mean. Five years of data are not enough for a precise rate."
+        verifier:
+          - {expression: "(11 + 14 + 9 + 13 + 16) / 5", attendu: 12.6, libelle: "Mean"}
+          - {expression: "100 * 12.6 / 10000", attendu: 0.126, libelle: "q̂, in %"}
+          - {expression: "sum((x - 12.6)**2 for x in [11, 14, 9, 13, 16]) / 4", attendu: 7.3, libelle: "s²"}
+          - {expression: "sqrt(7.3) / sqrt(5)", attendu: 1.21, tolerance: 0.005, libelle: "Standard error"}
+          - {expression: "100 * sqrt(7.3) / sqrt(5) / 12.6", attendu: 10, tolerance: 0.5, libelle: "Relative standard error, in %"}
+      - type: etapes
+        texte: "What JG's Holding takes from it"
+        etapes:
+          - "A small portfolio has an *uncertain* experience"
+          - "Don't rely on it *entirely*: that is *credibility*"
+          - "Combine it with a *reference table* (A3)"
+        voix_off: "What should JG's Holding take from this? With ten thousand insured lives and five years of data, its own death rate is uncertain to within about ten percent. It would be unwise to price on that experience alone. The actuary combines it with a reference life table, built on millions of lives: that is the idea of credibility. We will come back to it in module A3."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "*6* made-up claims: 500, 1,300, 2,700, 900, 1,600 and 3,000 €"
+        pause: 20
+        questions:
+          - "The mean x̄"
+          - "s and the standard error of x̄"
+          - "σ² (÷ n) (variance divided by n)"
+          - "est. α and est. θ of a gamma distribution"
+        voix_off: "Pause the video. Six made-up claims: five hundred, one thousand three hundred, two thousand seven hundred, nine hundred, one thousand six hundred and three thousand euros. Compute their mean, the standard deviation s and the standard error of the mean. Then the variance divided by n, and finally the parameters alpha and theta of a gamma distribution by the method of moments."
+      - type: correction
+        etapes:
+          - "x̄ = 10,000 ÷ 6 ≈ *1,666.67 €*"
+          - "s ≈ *993.31 €*; standard error ≈ *405.52 €*"
+          - "σ² (÷ n) ≈ *822,222.22*"
+          - "est. α ≈ *3.3784*; est. θ ≈ *493.33 €*"
+        voix_off: "Solution. The sum is ten thousand euros, so the mean is one thousand six hundred and sixty-six euros sixty-seven. The sum of the squared deviations is about four million nine hundred and thirty-three thousand. Divided by five, it gives s squared, and s is about nine hundred and ninety-three euros thirty-one. The standard error: s divided by the square root of six, four hundred and five euros fifty-two. Divided by six, the sum of squares gives sigma hat squared, about eight hundred and twenty-two thousand two hundred and twenty-two. Alpha hat is the squared mean divided by that number, three point three seven eight four, and theta hat that number divided by the mean, four hundred and ninety-three euros thirty-three."
+        verifier:
+          - {expression: "(500 + 1300 + 2700 + 900 + 1600 + 3000) / 6", attendu: 1666.67, libelle: "x̄"}
+          - {expression: "sqrt(sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 5)", attendu: 993.31, libelle: "s"}
+          - {expression: "sqrt(sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 5) / sqrt(6)", attendu: 405.52, libelle: "Standard error"}
+          - {expression: "sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 6", attendu: 822222.22, libelle: "σ̂²"}
+          - {expression: "(10000 / 6)**2 / (sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 6)", attendu: 3.3784, libelle: "α̂"}
+          - {expression: "(sum((x - 10000 / 6)**2 for x in [500, 1300, 2700, 900, 1600, 3000]) / 6) / (10000 / 6)", attendu: 493.33, libelle: "θ̂"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "An estimator is a *random variable*"
+          - "MSE = *variance + bias²*"
+          - "Standard error of the mean: *s ÷ √n*"
+          - "Moments: match the *mean and variance* of the model and the data"
+          - "Little data: *imprecise* estimates"
+        voix_off: "What to remember. An estimator changes with the sample: it is a random variable. We judge it by its mean squared error, the variance plus the squared bias. The standard error of the mean is s over the square root of n. The method of moments matches the mean and variance of the distribution to those of the data. And with little data, any estimate stays imprecise."
+      - type: cloture
+        texte: "Next episode: *maximum likelihood*. A question? *In the comments*"
+        voix_off: "You can now estimate a distribution by the method of moments. Next episode: a more powerful method, maximum likelihood. Which parameters make the observed data most likely? If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

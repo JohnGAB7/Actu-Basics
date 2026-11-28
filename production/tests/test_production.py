@@ -800,7 +800,7 @@ SOMBRE = dict(couleurs__fond="#0B1526", couleurs__fond_bas="#14284A", couleurs__
 
 def test_logo_choisi_selon_la_langue_et_le_fond():
     clair = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
-                 couleurs__texte="#06152B", logo__sur_fond_clair="clair")
+                 couleurs__texte="#06152B", logo__sur_fond_clair="clair", univers_par_type={})
     attendu = {("fr", "sombre"): "logo-dark.png", ("fr", "clair"): "logo-light.png",
                ("en", "sombre"): "logo-dark-en.png", ("en", "clair"): "logo-light-en.png"}
     for langue in ("fr", "en"):
@@ -892,7 +892,7 @@ def test_logo_sur_fond_clair_selon_la_charte():
     """Par défaut (JG, 22/11/2026) : disque sombre sur fond clair ; `sur_fond_clair: clair` reste possible,
     et le contrôle qualité suit la charte dans les deux cas."""
     base = dict(couleurs__fond="#F5F5F1", couleurs__fond_bas="#FFFFFF", couleurs__barre="#E8EEF5",
-                couleurs__texte="#06152B")
+                couleurs__texte="#06152B", univers_par_type={})
     for voulu in ("sombre", "clair"):
         ch = _charte(logo__sur_fond_clair=voulu, **base)
         r, _, ed = _rendu_fin(ch, "carrousel")
@@ -2266,3 +2266,41 @@ def test_animations_finance():
                 r.dessiner(s, i, len(scenes), k / 8)
             r.dessiner(s, i, len(scenes), None)
         assert vus == {"capitalisation", "echeancier", "escompte", "frequences"}
+
+
+# --------------------------------------------------------------------------- caractères absents des polices
+def test_glyphes_absents_bloquent():
+    from lmec.qc import controler_glyphes
+    fiche = charger_fiche(EXEMPLE)
+    r = Rapport()
+    controler_glyphes(fiche, CHARTE, r)
+    assert not r.bloquants
+    s = fiche.editions[fiche.langues[0]].scenes[0]
+    s.texte = "La valeur accumulée sₙ"
+    r = Rapport()
+    controler_glyphes(fiche, CHARTE, r)
+    assert any("U+2099" in b.message for b in r.bloquants)
+    s.texte = "Estimateur θ̂"
+    r = Rapport()
+    controler_glyphes(fiche, CHARTE, r)
+    assert any("accent combinant" in b.message for b in r.bloquants)
+
+
+def test_design_mixte_univers_par_type_et_camera():
+    """Design Mixte (JG, 28/11/2026) : accroche et fin en bleu nuit par défaut ; une scène
+    peut choisir son univers ; la caméra lente garde la taille de l'image."""
+    from PIL import Image
+    from lmec.video import _zoomer
+    fiche = charger_fiche(EXEMPLE)
+    ed = fiche.editions["fr"]
+    r = Rendu(fiche, "fr", copy.deepcopy(CHARTE), "lecon", False)
+    for s in ed.scenes:
+        attendu = s.extra.get("univers") or CHARTE["univers_par_type"].get(s.type, "editorial")
+        assert r.univers_de(s) == attendu
+    fin = ed.scenes[-1]
+    assert fin.type == "fin" and r.univers_de(fin) == "immersif"
+    fin.extra["univers"] = "editorial"
+    assert r.univers_de(fin) == "editorial"
+    im = Image.new("RGB", (192, 108), "white")
+    assert _zoomer(im, 1.03).size == im.size
+    assert CHARTE["logo"]["lecon"]["scenes"] == ["fin"] and CHARTE["logo"]["video"]["scenes"] == ["fin"]

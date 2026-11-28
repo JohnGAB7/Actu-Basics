@@ -40,7 +40,7 @@ from lmec.inspection import inspection_logo, produire_inspection  # noqa: E402
 from lmec.narration import AMORCE_S, durees_avec_voix, piste_complete, produire_voix, reperes_sous_titres  # noqa: E402
 from lmec.pedagogie import controler_duree_format  # noqa: E402
 from lmec.son import habiller  # noqa: E402
-from lmec.qc import (Rapport, controler_fiche, controler_lisibilite, controler_logo, controler_longueurs, controler_marque,  # noqa: E402
+from lmec.qc import (Rapport, controler_fiche, controler_glyphes, controler_lisibilite, controler_logo, controler_longueurs, controler_marque,  # noqa: E402
                      controler_plateformes, controler_video, ecrire_rapport)
 from lmec.rendu import Rendu  # noqa: E402
 from lmec.textes import ecrire_metadonnees, ecrire_script_voix, ecrire_srt, legende_complete  # noqa: E402
@@ -84,6 +84,7 @@ def produire(chemin: Path, args, charte: dict, plateformes: dict, config_tts: di
     rapport = Rapport()
     controler_fiche(fiche, rapport)
     controler_marque(charte, rapport)
+    controler_glyphes(fiche, charte, rapport)
     langues = [l for l in LANGUES if l in (args.langues or fiche.langues)]
     absentes = [l for l in langues if l not in fiche.langues]
     if absentes:

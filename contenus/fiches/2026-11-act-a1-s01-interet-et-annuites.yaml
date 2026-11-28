@@ -321,7 +321,7 @@ editions:
           - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Paiement 3"}
           - {expression: "1000 * (1 - 1.025**-3) / 0.025", attendu: 2856.02, libelle: "Annuité immédiate × 1 000"}
       - type: formule
-        texte: "L'annuité *immédiate* aₙ"
+        texte: "L'annuité *immédiate*"
         formule:
           - 'a_n=v+v^2+\dots+v^n=\dfrac{1-v^n}{i}'
           - 'a_3\approx 2{,}8560\qquad a_{10}\approx 8{,}7521'
@@ -346,7 +346,7 @@ editions:
         verifier:
           - {expression: "1000 + 1000 / 1.025 + 1000 / 1.025**2", attendu: 2927.42, libelle: "Annuité due × 1 000"}
       - type: formule
-        texte: "L'annuité *due* äₙ"
+        texte: "L'annuité *due*"
         formule:
           - '\ddot{a}_n=1+v+\dots+v^{n-1}=\dfrac{1-v^n}{d}'
           - '\ddot{a}_n=(1+i)\,a_n'
@@ -666,7 +666,7 @@ editions:
           - {expression: "1000 / 1.025**3", attendu: 928.60, libelle: "Payment 3"}
           - {expression: "1000 * (1 - 1.025**-3) / 0.025", attendu: 2856.02, libelle: "Annuity immediate × 1,000"}
       - type: formule
-        texte: "The *annuity immediate* aₙ"
+        texte: "The *annuity immediate*"
         formule:
           - 'a_n=v+v^2+\dots+v^n=\dfrac{1-v^n}{i}'
           - 'a_3\approx 2.8560\qquad a_{10}\approx 8.7521'
@@ -691,7 +691,7 @@ editions:
         verifier:
           - {expression: "1000 + 1000 / 1.025 + 1000 / 1.025**2", attendu: 2927.42, libelle: "Annuity due × 1,000"}
       - type: formule
-        texte: "The *annuity due* äₙ"
+        texte: "The *annuity due*"
         formule:
           - '\ddot{a}_n=1+v+\dots+v^{n-1}=\dfrac{1-v^n}{d}'
           - '\ddot{a}_n=(1+i)\,a_n'

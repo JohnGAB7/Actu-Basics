@@ -1,0 +1,525 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a1/s04 « Prêts, amortissement et taux de rendement »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A1.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a1/s04.yaml (calcul « À la main » : 10 000 € à 6 % sur 5 ans).
+# Les exemples utilisent 4 % (taux du fil rouge) ; l'exercice final utilise 20 000 € à 5 % sur 4 ans.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la valeur du contrat de Léa à 40 ans, calculée de façon
+# rétrospective et prospective, comme un solde de prêt (préparation des provisions mathématiques en A4).
+# Faits réels : chiffres d'origine, devise d'origine dans les deux langues.
+id: 2026-11-act-a1-s04-prets-amortissement
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A1 · Prêts, amortissement et taux de rendement"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Calculer l'annuité constante d'un prêt, P = L ÷ aₙ"
+      - "Découper chaque paiement en intérêts et en capital remboursé, et dresser le tableau d'amortissement"
+      - "Calculer le solde restant dû de façon prospective et rétrospective"
+      - "Définir et estimer un taux de rendement interne (TRI)"
+      - "Calculer la valeur d'un contrat d'épargne des deux façons"
+    en:
+      - "Compute the level payment of a loan, P = L ÷ aₙ"
+      - "Split each payment into interest and principal repaid, and build the amortization schedule"
+      - "Compute the outstanding balance prospectively and retrospectively"
+      - "Define and estimate an internal rate of return (IRR)"
+      - "Compute the value of a savings contract both ways"
+  prerequis:
+    fr: ["Séances A1.01 à A1.03 : annuités, annuités mensuelles, valeur accumulée"]
+    en: ["Sessions A1.01 to A1.03: annuities, monthly annuities, accumulated value"]
+  hypotheses:
+    fr: "Taux fictif et constant de 4 % effectif (5 % dans l'exercice) ; prêt du fait réel : taux moyen de 3,32 %, montant et durée choisis pour l'exemple ; ni frais, ni assurance, ni fiscalité ; paiements certains"
+    en: "Made-up constant effective rate of 4% (5% in the exercise); loan in the real fact: average rate of 3.32%, amount and term chosen for the example; no fees, no insurance, no tax; payments are certain"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "Banque de France, Stat Info « Crédits aux particuliers », septembre 2026 (mis en ligne le 5 novembre 2026)", en: "Banque de France, Stat Info “Loans to individuals”, September 2026 (published 5 November 2026)"}
+    court: "Banque de France"
+    url: "https://www.banque-france.fr/fr/statistiques/credit/credits-aux-particuliers-2026-09"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Service-public.fr, « Qu'est-ce que le TAEG ? »", en: "Service-public.fr, “What is the APR (TAEG)?”"}
+    court: "service-public.fr"
+    url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F2456"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Prêts et amortissement : dans une mensualité, combien rembourse vraiment ?"
+    legende: |
+      En septembre 2026, les nouveaux crédits immobiliers en France coûtaient en moyenne 3,32 % par an (Banque de France). Sur 200 000 € empruntés sur 20 ans, la première mensualité fait 1 136 €, dont 545 € d'intérêts. Pourquoi si peu de remboursement au début ? Toute la réponse est dans cet épisode du parcours Actuariat : l'annuité constante, le tableau d'amortissement, le solde restant dû calculé de deux façons, le taux de rendement interne, et le troisième chapitre du fil rouge, la valeur du contrat de Léa à 40 ans. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les taux des exemples sont fictifs, les faits réels sont sourcés. Aucun conseil de crédit ni de placement. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, amortissement, credit, tauxderendement]
+    scenes:
+      - type: accroche
+        texte: "1 136 € par mois… dont *545 €* d'intérêts"
+        note: "Banque de France, septembre 2026 : nouveaux crédits à l'habitat à 3,32 % en moyenne. Prêt de 200 000 € sur 20 ans : exemple."
+        voix_off: "En septembre 2026, les nouveaux crédits immobiliers en France coûtent en moyenne trois virgule trente-deux pour cent par an, selon la Banque de France. Imaginons deux cent mille euros empruntés sur vingt ans, à ce taux. La mensualité est de mille cent trente-six euros. Mais le premier mois, cinq cent quarante-cinq euros partent en intérêts, et seulement cinq cent quatre-vingt-onze euros remboursent la dette. Pourquoi si peu ? À la fin de cette vidéo, vous saurez faire ce calcul, mois par mois."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce quatrième épisode du parcours Actuariat ! Merci d'être là. Avec les annuités, vous savez déjà calculer ce que vaut une suite de paiements. Aujourd'hui, on s'en sert pour comprendre un prêt de l'intérieur : ce que vous payez, ce que vous devez encore, et ce que rapporte vraiment un placement. Et vous verrez que le contrat de Léa se calcule exactement comme un prêt."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "L'annuité *constante*"
+          - "L'*amortissement*"
+          - "Le solde *restant dû*"
+          - "Le taux de *rendement*"
+          - "Le contrat de *Léa*"
+          - "Un *exercice* corrigé"
+        voix_off: "Voici le programme. L'annuité constante d'un prêt. Le tableau d'amortissement. Le solde restant dû, calculé de deux façons. Le taux de rendement interne. Puis le troisième chapitre du contrat de Léa. Et pour finir, un exercice corrigé."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "L'annuité constante d'un prêt"
+        voix_off: "Commençons par la question de tout emprunteur : combien vais-je payer ?"
+      - type: texte
+        texte: "Le prêt = la *valeur actuelle* des remboursements"
+        note: "Dans les exemples : taux fictif de 4 % effectif par an, le taux du contrat de Léa."
+        voix_off: "Quand une banque vous prête de l'argent, elle accepte d'échanger une somme aujourd'hui contre une suite de remboursements futurs. L'échange est équitable si les deux ont la même valeur aujourd'hui, au taux du prêt. Autrement dit, le montant prêté est la valeur actuelle des remboursements. C'est l'équation de valeur. Dans nos exemples, on prendra un taux fictif de quatre pour cent par an."
+      - type: animation
+        texte: "*10 000 €* sur *5 ans* à 4 % : *2 246,27 €* par an"
+        animation:
+          modele: echeancier
+          montants: [2246.2711, 2246.2711, 2246.2711, 2246.2711, 2246.2711]
+          dates: [1, 2, 3, 4, 5]
+          taux: 0.04
+          unite: "€"
+        etapes:
+          - "Cinq remboursements de *2 246,27 €*"
+          - "Chacun ramené à aujourd'hui : *× vᵏ*"
+          - "Ensemble, ils valent *10 000 €* : le montant prêté"
+        voix_off: "JG's Holding prête dix mille euros à une entreprise, remboursables en cinq annuités égales, à la fin de chaque année, à quatre pour cent. Voici les cinq remboursements sur la frise du temps, de deux mille deux cent quarante-six euros et vingt-sept centimes chacun. Ramenés à aujourd'hui, ils valent exactement dix mille euros. C'est ainsi qu'on a trouvé le montant de l'annuité : celui qui rend les deux côtés égaux."
+        verifier:
+          - {expression: "10000 / ((1 - 1.04**-5) / 0.04)", attendu: 2246.27, libelle: "Annuité constante"}
+          - {expression: "2246.27 * (1 - 1.04**-5) / 0.04", attendu: 10000, tolerance: 0.05, libelle: "Valeur actuelle des remboursements"}
+      - type: formule
+        texte: "L'annuité *constante* P"
+        formule:
+          - 'L=P\,a_n\quad\Longrightarrow\quad P=\dfrac{L}{a_n}'
+          - 'P=\dfrac{10\,000}{a_5}=\dfrac{10\,000}{4{,}4518}\approx 2\,246{,}27\ \text{€}'
+        note: "L : montant prêté ; P : paiement de chaque période ; aₙ : annuité immédiate au taux du prêt."
+        voix_off: "En formule. Le montant prêté L égale P fois a n : n paiements de P, actualisés. Donc P égale L divisé par a n. Ici, a cinq à quatre pour cent vaut quatre virgule quatre cinq un huit, et dix mille divisé par quatre virgule quatre cinq un huit donne deux mille deux cent quarante-six euros et vingt-sept centimes. Au total, l'emprunteur rembourse onze mille deux cent trente et un euros : mille deux cent trente et un euros d'intérêts."
+        verifier:
+          - {expression: "(1 - 1.04**-5) / 0.04", attendu: 4.4518, libelle: "a5 à 4 %"}
+          - {expression: "5 * 10000 / ((1 - 1.04**-5) / 0.04)", attendu: 11231.36, libelle: "Total remboursé"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Le tableau d'amortissement"
+        voix_off: "Ouvrons maintenant chaque paiement, pour voir ce qu'il contient."
+      - type: etapes
+        texte: "Chaque paiement paie d'abord les *intérêts*, puis le *capital*"
+        etapes:
+          - "Intérêts : *i × solde* restant dû"
+          - "Capital remboursé : *P − intérêts*"
+          - "Nouveau solde : *ancien solde − capital*"
+        voix_off: "Chaque paiement suit toujours la même règle, dans cet ordre. D'abord, il paie les intérêts de l'année, calculés sur ce qui reste dû : le taux fois le solde. Ensuite, tout ce qui reste rembourse le capital, on dit qu'il amortit le prêt. Enfin, le solde diminue de ce capital remboursé. Et on recommence l'année suivante, avec un solde plus petit."
+      - type: etapes
+        texte: "Les années *1* et *2* du prêt de *10 000 €*"
+        etapes:
+          - "An 1 : intérêts 4 % × 10 000 = *400 €*, capital *1 846,27 €*"
+          - "Solde : 10 000 − 1 846,27 = *8 153,73 €*"
+          - "An 2 : intérêts 4 % × 8 153,73 = *326,15 €*, capital *1 920,12 €*"
+          - "Solde : *6 233,61 €*"
+        voix_off: "Appliquons la règle. Première année : les intérêts valent quatre pour cent de dix mille euros, soit quatre cents euros. Le reste du paiement, mille huit cent quarante-six euros et vingt-sept centimes, rembourse le capital. Il reste dû huit mille cent cinquante-trois euros et soixante-treize centimes. Deuxième année : les intérêts ne portent plus que sur ce solde, trois cent vingt-six euros et quinze centimes. Le capital remboursé grimpe donc à mille neuf cent vingt euros et douze centimes, et le solde tombe à six mille deux cent trente-trois euros et soixante et un centimes."
+        verifier:
+          - {expression: "0.04 * 10000", attendu: 400, libelle: "Intérêts an 1"}
+          - {expression: "10000 / ((1 - 1.04**-5) / 0.04) - 400", attendu: 1846.27, libelle: "Capital an 1"}
+          - {expression: "10000 - (10000 / ((1 - 1.04**-5) / 0.04) - 400)", attendu: 8153.73, libelle: "Solde an 1"}
+          - {expression: "0.04 * 8153.73", attendu: 326.15, libelle: "Intérêts an 2"}
+          - {expression: "2246.27 - 326.15", attendu: 1920.12, libelle: "Capital an 2"}
+          - {expression: "8153.73 - 1920.12", attendu: 6233.61, libelle: "Solde an 2"}
+      - type: etapes
+        texte: "Le tableau *complet* : les intérêts *fondent*, le capital *grandit*"
+        etapes:
+          - "Intérêts : 400 → 326 → 249 → 169 → *86 €*"
+          - "Capital : 1 846 → 1 920 → 1 997 → 2 077 → *2 160 €*"
+          - "Solde : 8 154 → 6 234 → 4 237 → 2 160 → *0 €*"
+          - "Le capital remboursé croît de *4 %* par an : PRₖ₊₁ = (1 + i) PRₖ"
+        voix_off: "Voici les cinq années. À chaque ligne, les intérêts diminuent, puisque la dette diminue : de quatre cents euros la première année à quatre-vingt-six euros la dernière. Comme le paiement reste fixe, la part de capital augmente d'autant : de mille huit cent quarante-six euros à deux mille cent soixante euros. Et le solde arrive exactement à zéro après le cinquième paiement. Une jolie propriété : le capital remboursé augmente chaque année de quatre pour cent, exactement le taux du prêt."
+        verifier:
+          - {expression: "1846.27 * 1.04", attendu: 1920.12, libelle: "PR2 = 1,04 × PR1"}
+          - {expression: "1846.2711 * 1.04**4", attendu: 2159.88, libelle: "PR5"}
+          - {expression: "0.04 * 2159.88", attendu: 86.40, libelle: "Intérêts an 5"}
+      - type: etapes
+        texte: "Retour au crédit immobilier : *200 000 €*, *20 ans*, *3,32 %*"
+        etapes:
+          - "Taux mensuel : 1,0332^(1/12) − 1 ≈ *0,2725 %*"
+          - "Mensualité : *1 136,48 €*"
+          - "1er mois : *545,09 €* d'intérêts, *591,39 €* de capital"
+          - "Sur 20 ans : *72 754 €* d'intérêts"
+        note: "Banque de France, septembre 2026 : 3,32 % hors renégociations. Montant et durée : exemple, sans frais ni assurance."
+        voix_off: "Revenons au crédit immobilier. Le taux de trois virgule trente-deux pour cent est un taux annuel effectif ; on le convertit en taux mensuel, comme dans l'épisode deux : environ zéro virgule deux sept deux cinq pour cent. La mensualité, deux cent mille euros divisés par l'annuité mensuelle sur deux cent quarante mois, vaut mille cent trente-six euros et quarante-huit centimes. Le premier mois, les intérêts portent sur toute la dette : cinq cent quarante-cinq euros. Il ne reste que cinq cent quatre-vingt-onze euros pour rembourser. Sur vingt ans, l'emprunteur paiera soixante-douze mille sept cent cinquante-quatre euros d'intérêts. C'est le prix du temps."
+        verifier:
+          - {expression: "100 * (1.0332**(1/12) - 1)", attendu: 0.2725, libelle: "Taux mensuel, en %"}
+          - {expression: "200000 * (1.0332**(1/12) - 1) / (1 - 1.0332**-20)", attendu: 1136.48, libelle: "Mensualité"}
+          - {expression: "200000 * (1.0332**(1/12) - 1)", attendu: 545.09, libelle: "Intérêts du 1er mois"}
+          - {expression: "1136.48 - 545.09", attendu: 591.39, libelle: "Capital du 1er mois"}
+          - {expression: "240 * 200000 * (1.0332**(1/12) - 1) / (1 - 1.0332**-20) - 200000", attendu: 72754, tolerance: 1, libelle: "Intérêts sur 20 ans"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Le solde restant dû, de deux façons"
+        voix_off: "Combien doit-on encore, à une date donnée ?"
+      - type: formule
+        texte: "*Prospectif* : ce qui reste à payer. *Rétrospectif* : ce qui a été payé"
+        formule:
+          - 'B_k=P\,a_{n-k}\qquad\text{(prospectif)}'
+          - 'B_k=L\,(1+i)^k-P\,s_k\qquad\text{(rétrospectif)}'
+        note: "Bₖ : solde restant dû juste après le k-ième paiement."
+        voix_off: "Pour connaître le solde restant dû sans refaire tout le tableau, il y a deux méthodes. La méthode prospective regarde vers l'avenir : la dette, c'est la valeur actuelle des paiements qui restent, P fois a n moins k. La méthode rétrospective regarde le passé : on capitalise le prêt jusqu'à aujourd'hui, et on retire les paiements déjà faits, capitalisés eux aussi, P fois s k. Ce sont deux façons de raconter la même histoire."
+      - type: etapes
+        texte: "Après *2 ans* : les deux méthodes donnent *6 233,61 €*"
+        etapes:
+          - "Prospectif : 2 246,27 × a₃ = *6 233,61 €*"
+          - "Rétrospectif : 10 000 × 1,04² − 2 246,27 × s₂ = *6 233,61 €*"
+          - "Le même nombre que dans le *tableau*"
+        voix_off: "Vérifions après deux ans. En prospectif : il reste trois paiements de deux mille deux cent quarante-six euros et vingt-sept centimes, qui valent aujourd'hui six mille deux cent trente-trois euros et soixante et un centimes. En rétrospectif : dix mille euros capitalisés deux ans font dix mille huit cent seize euros ; les deux paiements faits, capitalisés, valent quatre mille cinq cent quatre-vingt-deux euros ; la différence est encore six mille deux cent trente-trois euros et soixante et un centimes. Exactement le solde du tableau. Retenez bien ce double calcul : c'est la base des provisions des assureurs."
+        verifier:
+          - {expression: "2246.2711 * (1 - 1.04**-3) / 0.04", attendu: 6233.61, libelle: "Prospectif"}
+          - {expression: "10000 * 1.04**2", attendu: 10816, libelle: "Prêt capitalisé"}
+          - {expression: "2246.2711 * (1.04**2 - 1) / 0.04", attendu: 4582.39, libelle: "Paiements capitalisés"}
+          - {expression: "10000 * 1.04**2 - 2246.2711 * (1.04**2 - 1) / 0.04", attendu: 6233.61, libelle: "Rétrospectif"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Le taux de rendement interne"
+        voix_off: "Et si l'on connaît les flux, mais pas le taux ?"
+      - type: formule
+        texte: "Le *TRI* : le taux qui *annule* la valeur actuelle nette"
+        formule:
+          - '\text{VAN}(j)=\sum_t C_t\,(1+j)^{-t}'
+          - '\text{TRI}:\ \text{VAN}(j)=0'
+        note: "Cₜ : flux à la date t, négatif quand on paie, positif quand on reçoit."
+        voix_off: "Jusqu'ici, on connaissait le taux, et on cherchait un montant. Souvent, c'est l'inverse : on connaît tous les flux d'un placement, et on veut savoir ce qu'il rapporte vraiment. On calcule alors la valeur actuelle nette, la VAN : la somme de tous les flux actualisés, en comptant négativement ce qu'on paie et positivement ce qu'on reçoit. Le taux de rendement interne, le TRI, est le taux qui rend cette VAN égale à zéro. À ce taux, le placement est exactement équitable."
+      - type: etapes
+        texte: "Payer *1 000 €*, recevoir *300*, *400*, *500 €*"
+        etapes:
+          - "VAN à 4 % : *+ 102,78 €* : rapporte plus que 4 %"
+          - "VAN à 10 % : *− 21,04 €* : rapporte moins que 10 %"
+          - "On resserre l'intervalle : TRI ≈ *8,90 %*"
+        voix_off: "Un exemple. On paie mille euros aujourd'hui, et on reçoit trois cents euros dans un an, quatre cents dans deux ans, cinq cents dans trois ans. À quatre pour cent, la VAN est positive, cent deux euros : le placement rapporte plus que quatre pour cent. À dix pour cent, elle est négative, moins vingt et un euros : il rapporte moins. Le TRI est donc entre les deux. En resserrant pas à pas, ou avec un tableur, on trouve environ huit virgule quatre-vingt-dix pour cent. Il n'y a pas de formule directe : on cherche par essais successifs."
+        verifier:
+          - {expression: "-1000 + 300 / 1.04 + 400 / 1.04**2 + 500 / 1.04**3", attendu: 102.78, libelle: "VAN à 4 %"}
+          - {expression: "-1000 + 300 / 1.1 + 400 / 1.1**2 + 500 / 1.1**3", attendu: -21.04, libelle: "VAN à 10 %"}
+          - {expression: "-1000 + 300 / 1.08896 + 400 / 1.08896**2 + 500 / 1.08896**3", attendu: 0, tolerance: 0.05, libelle: "VAN au TRI"}
+      - type: texte
+        texte: "Le *TAEG* d'un crédit, c'est un *TRI*"
+        note: "Source : service-public.fr, « Qu'est-ce que le TAEG ? », consulté le 24/11/2026."
+        voix_off: "Vous connaissez déjà un TRI sans le savoir. En France, tout crédit doit afficher son TAEG, le taux annuel effectif global, qui intègre les intérêts, mais aussi les frais de dossier, l'assurance obligatoire et les autres frais. Comment le calcule-t-on ? C'est le taux qui égalise ce que la banque vous verse et tout ce que vous lui payez : exactement un taux de rendement interne, vu du côté de la banque."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Le fil rouge : la valeur du contrat de Léa à 40 ans"
+        voix_off: "Retrouvons Léa, dix ans après la signature."
+      - type: texte
+        texte: "Léa a *40 ans*. Que vaut son contrat *aujourd'hui* ?"
+        note: "JG's Holding est un assureur fictif, Léa une cliente fictive. Prime indexée de 2 % par an, taux fictif de 4 %, sans frais ni mortalité."
+        voix_off: "Léa a maintenant quarante ans. Depuis dix ans, elle verse sa prime chaque mois, indexée de deux pour cent par an, comme on l'a vu dans l'épisode précédent. JG's Holding doit savoir, chaque année, combien vaut son contrat : c'est l'argent que l'assureur doit garder de côté pour elle. Comme pour le solde d'un prêt, il y a deux façons de le calculer."
+      - type: etapes
+        texte: "*Rétrospectif* : ce que Léa a déjà versé, capitalisé"
+        etapes:
+          - "10 ans de primes indexées : *13 139,67 €* versés"
+          - "Capitalisées à 4 % jusqu'à ses 40 ans"
+          - "Valeur du contrat : *16 012,58 €*"
+        voix_off: "La méthode rétrospective regarde le passé. En dix ans, Léa a versé treize mille cent trente-neuf euros. Chaque mensualité a été placée à quatre pour cent depuis son versement. En capitalisant tout jusqu'à aujourd'hui, on obtient seize mille douze euros et cinquante-huit centimes. C'est ce qu'il y a sur son compte."
+        verifier:
+          - {expression: "1200 * (1.02**10 - 1) / 0.02", attendu: 13139.67, libelle: "Versé en 10 ans"}
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**10) / 0.02 * 1.04**10", attendu: 16012.58, libelle: "Valeur rétrospective"}
+      - type: etapes
+        texte: "*Prospectif* : ce que JG's Holding devra, moins ce que Léa paiera encore"
+        etapes:
+          - "Capital promis à 65 ans, vu d'aujourd'hui : 119 286,87 × v²⁵ = *44 746,51 €*"
+          - "Primes des 25 années restantes, vues d'aujourd'hui : *28 733,93 €*"
+          - "Différence : *16 012,58 €* : le même nombre"
+        voix_off: "La méthode prospective regarde l'avenir. JG's Holding devra verser cent dix-neuf mille deux cent quatre-vingt-sept euros dans vingt-cinq ans : vu d'aujourd'hui, à quatre pour cent, cela vaut quarante-quatre mille sept cent quarante-sept euros. Mais Léa va encore payer vingt-cinq ans de primes, qui valent aujourd'hui vingt-huit mille sept cent trente-quatre euros. Ce qui manque, la différence, c'est seize mille douze euros et cinquante-huit centimes. Exactement le même nombre. Ce que l'assureur doit mettre de côté pour Léa porte un nom : la provision mathématique. On la retrouvera en détail dans le module A4, avec la mortalité en plus."
+        verifier:
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**35) / 0.02 * 1.04**10", attendu: 44746.51, libelle: "Capital promis, vu à 40 ans"}
+          - {expression: "1200 * 1.02**10 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**25) / 0.02", attendu: 28733.93, libelle: "Primes futures, vues à 40 ans"}
+          - {expression: "44746.51 - 28733.93", attendu: 16012.58, libelle: "Valeur prospective"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Prêt de *20 000 €* à *5 %* sur *4 ans*, annuités en fin d'année. Calculez :"
+        pause: 20
+        questions:
+          - "L'annuité constante P"
+          - "Le solde après 1 an, B₁"
+          - "Les intérêts de l'an 2, I₂"
+          - "Le capital remboursé en an 2, PR₂"
+        voix_off: "Mettez la vidéo en pause. Un prêt de vingt mille euros à cinq pour cent, remboursé en quatre annuités constantes en fin d'année. Calculez l'annuité P, le solde restant dû après un an, les intérêts de la deuxième année, et le capital remboursé la deuxième année."
+      - type: correction
+        etapes:
+          - "P = 20 000 ÷ a₄ = 20 000 ÷ 3,5460 ≈ *5 640,24 €*"
+          - "B₁ = 20 000 × 1,05 − 5 640,24 ≈ *15 359,76 €*"
+          - "I₂ = 5 % × 15 359,76 ≈ *767,99 €*"
+          - "PR₂ = 5 640,24 − 767,99 ≈ *4 872,25 €*"
+        voix_off: "Correction. a quatre à cinq pour cent vaut trois virgule cinq quatre six zéro : l'annuité est de cinq mille six cent quarante euros et vingt-quatre centimes. Le solde après un an, en rétrospectif : vingt mille fois un virgule zéro cinq, moins un paiement, quinze mille trois cent cinquante-neuf euros et soixante-seize centimes. Vérifiez en prospectif : P fois a trois donne le même nombre. Les intérêts de la deuxième année : cinq pour cent de ce solde, sept cent soixante-sept euros et quatre-vingt-dix-neuf centimes. Et le capital remboursé : quatre mille huit cent soixante-douze euros et vingt-cinq centimes."
+        verifier:
+          - {expression: "(1 - 1.05**-4) / 0.05", attendu: 3.5460, libelle: "a4 à 5 %"}
+          - {expression: "20000 / ((1 - 1.05**-4) / 0.05)", attendu: 5640.24, libelle: "Annuité"}
+          - {expression: "20000 * 1.05 - 20000 / ((1 - 1.05**-4) / 0.05)", attendu: 15359.76, libelle: "B1"}
+          - {expression: "20000 / ((1 - 1.05**-4) / 0.05) * (1 - 1.05**-3) / 0.05", attendu: 15359.76, libelle: "B1 prospectif"}
+          - {expression: "0.05 * 15359.76", attendu: 767.99, libelle: "I2"}
+          - {expression: "5640.24 - 767.99", attendu: 4872.25, libelle: "PR2"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Annuité constante : *P = L ÷ aₙ*"
+          - "Intérêts sur le *solde*, le reste *amortit*"
+          - "Solde : *P aₙ₋ₖ* = *L (1 + i)ᵏ − P sₖ*"
+          - "TRI : le taux qui *annule* la VAN"
+          - "Léa à 40 ans : *16 012,58 €*, des deux façons"
+        voix_off: "Ce qu'il faut retenir. L'annuité constante d'un prêt est le montant prêté divisé par a n. Chaque paiement couvre d'abord les intérêts du solde, et le reste amortit le capital. Le solde restant dû se calcule en prospectif, avec les paiements futurs, ou en rétrospectif, avec le passé, et les deux coïncident toujours. Le taux de rendement interne est le taux qui annule la valeur actuelle nette. Et le contrat de Léa vaut seize mille douze euros à quarante ans, quelle que soit la méthode."
+      - type: cloture
+        texte: "Prochain épisode : *pourquoi le prix d'une obligation baisse quand les taux montent ?* Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant lire un prêt de l'intérieur. Prochain épisode : les obligations. Pourquoi leur prix baisse quand les taux montent, et où JG's Holding place-t-elle l'argent de Léa pour tenir sa promesse de quatre pour cent ? Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Loans and amortization: in a loan payment, how much really repays?"
+    legende: |
+      In September 2026, new home loans in France cost on average 3.32% a year (Banque de France). On €200,000 borrowed over 20 years, the first monthly payment is €1,136, of which €545 is interest. Why so little repayment at the start? The full answer is in this episode of the Actuarial path: the level payment, the amortization schedule, the outstanding balance computed two ways, the internal rate of return, and the third chapter of our running case, the value of Léa's contract at 40. Animations, worked numbers, a solved exercise. JG's Holding is a fictional insurer and Léa a fictional client; the example rates are made up, the real facts are sourced. No credit or investment advice. Got a question? Ask in the comments.
+    hashtags: [actuarial, amortization, loans, yieldrate]
+    scenes:
+      - type: accroche
+        texte: "€1,136 a month… of which *€545* is interest"
+        note: "Banque de France, September 2026: average rate on new home loans of 3.32%. Loan of €200,000 over 20 years, chosen for the example."
+        voix_off: "In September 2026, new home loans in France cost on average three point three two percent a year, according to the Banque de France. Imagine two hundred thousand euros borrowed over twenty years, at that rate. The monthly payment is one thousand one hundred and thirty-six euros. But in the first month, five hundred and forty-five euros go to interest, and only five hundred and ninety-one euros repay the debt. Why so little? By the end of this video, you will be able to do this calculation, month by month."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this fourth episode of the Actuarial path! Thanks for being here. With annuities, you can already value a stream of payments. Today, we use them to understand a loan from the inside: what you pay, what you still owe, and what an investment really earns. And you will see that Léa's contract is computed exactly like a loan."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *level* payment"
+          - "The *amortization* schedule"
+          - "The *outstanding* balance"
+          - "The *yield* rate"
+          - "*Léa*'s contract"
+          - "A solved *exercise*"
+        voix_off: "Here is the plan. The level payment of a loan. The amortization schedule. The outstanding balance, computed two ways. The internal rate of return. Then the third chapter of Léa's contract. And to finish, a solved exercise."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The level payment of a loan"
+        voix_off: "Let's start with every borrower's question: how much will I pay?"
+      - type: texte
+        texte: "The loan = the *present value* of the repayments"
+        note: "In the examples: made-up rate of 4% effective a year, the rate of Léa's contract."
+        voix_off: "When a bank lends you money, it agrees to swap an amount today for a series of future repayments. The swap is fair if both have the same value today, at the loan rate. In other words, the amount lent is the present value of the repayments. That is the equation of value. In our examples, we use a made-up rate of four percent a year."
+      - type: animation
+        texte: "*€10,000* over *5 years* at 4%: *€2,246.27* a year"
+        animation:
+          modele: echeancier
+          montants: [2246.2711, 2246.2711, 2246.2711, 2246.2711, 2246.2711]
+          dates: [1, 2, 3, 4, 5]
+          taux: 0.04
+          unite: "€"
+        etapes:
+          - "Five repayments of *€2,246.27*"
+          - "Each one brought back to today: *× vᵏ*"
+          - "Together, they are worth *€10,000*: the amount lent"
+        voix_off: "JG's Holding lends ten thousand euros to a company, repayable in five equal payments, at the end of each year, at four percent. Here are the five repayments on the timeline, two thousand two hundred and forty-six euros twenty-seven each. Brought back to today, they are worth exactly ten thousand euros. That is how we found the payment: the amount that makes both sides equal."
+        verifier:
+          - {expression: "10000 / ((1 - 1.04**-5) / 0.04)", attendu: 2246.27, libelle: "Level payment"}
+          - {expression: "2246.27 * (1 - 1.04**-5) / 0.04", attendu: 10000, tolerance: 0.05, libelle: "Present value of repayments"}
+      - type: formule
+        texte: "The *level* payment P"
+        formule:
+          - 'L=P\,a_n\quad\Longrightarrow\quad P=\dfrac{L}{a_n}'
+          - 'P=\dfrac{10{,}000}{a_5}=\dfrac{10{,}000}{4.4518}\approx \text{€}2{,}246.27'
+        note: "L: amount lent; P: payment each period; aₙ: annuity immediate at the loan rate."
+        voix_off: "As a formula. The amount lent L equals P times a n: n payments of P, discounted. So P equals L divided by a n. Here, a five at four percent is four point four five one eight, and ten thousand divided by four point four five one eight gives two thousand two hundred and forty-six euros twenty-seven. In total, the borrower repays eleven thousand two hundred and thirty-one euros: one thousand two hundred and thirty-one euros of interest."
+        verifier:
+          - {expression: "(1 - 1.04**-5) / 0.04", attendu: 4.4518, libelle: "a5 at 4%"}
+          - {expression: "5 * 10000 / ((1 - 1.04**-5) / 0.04)", attendu: 11231.36, libelle: "Total repaid"}
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "The amortization schedule"
+        voix_off: "Now let's open each payment, to see what it contains."
+      - type: etapes
+        texte: "Each payment covers the *interest* first, then the *principal*"
+        etapes:
+          - "Interest: *i × balance* outstanding"
+          - "Principal repaid: *P − interest*"
+          - "New balance: *old balance − principal*"
+        voix_off: "Each payment always follows the same rule, in this order. First, it pays the year's interest, computed on what is still owed: the rate times the balance. Then, everything left repays the principal; we say it amortizes the loan. Finally, the balance falls by that principal repaid. And we start again the next year, with a smaller balance."
+      - type: etapes
+        texte: "Years *1* and *2* of the *€10,000* loan"
+        etapes:
+          - "Year 1: interest 4% × 10,000 = *€400*, principal *€1,846.27*"
+          - "Balance: 10,000 − 1,846.27 = *€8,153.73*"
+          - "Year 2: interest 4% × 8,153.73 = *€326.15*, principal *€1,920.12*"
+          - "Balance: *€6,233.61*"
+        voix_off: "Let's apply the rule. Year one: interest is four percent of ten thousand euros, that is four hundred euros. The rest of the payment, one thousand eight hundred and forty-six euros twenty-seven, repays principal. Eight thousand one hundred and fifty-three euros seventy-three remain owed. Year two: interest is now only on that balance, three hundred and twenty-six euros fifteen. So the principal repaid rises to one thousand nine hundred and twenty euros twelve, and the balance falls to six thousand two hundred and thirty-three euros sixty-one."
+        verifier:
+          - {expression: "0.04 * 10000", attendu: 400, libelle: "Interest year 1"}
+          - {expression: "10000 / ((1 - 1.04**-5) / 0.04) - 400", attendu: 1846.27, libelle: "Principal year 1"}
+          - {expression: "10000 - (10000 / ((1 - 1.04**-5) / 0.04) - 400)", attendu: 8153.73, libelle: "Balance year 1"}
+          - {expression: "0.04 * 8153.73", attendu: 326.15, libelle: "Interest year 2"}
+          - {expression: "2246.27 - 326.15", attendu: 1920.12, libelle: "Principal year 2"}
+          - {expression: "8153.73 - 1920.12", attendu: 6233.61, libelle: "Balance year 2"}
+      - type: etapes
+        texte: "The *full* schedule: interest *melts*, principal *grows*"
+        etapes:
+          - "Interest: 400 → 326 → 249 → 169 → *€86*"
+          - "Principal: 1,846 → 1,920 → 1,997 → 2,077 → *€2,160*"
+          - "Balance: 8,154 → 6,234 → 4,237 → 2,160 → *€0*"
+          - "Principal repaid grows by *4%* a year: PRₖ₊₁ = (1 + i) PRₖ"
+        voix_off: "Here are the five years. On each line, interest falls, since the debt falls: from four hundred euros in year one to eighty-six euros in the last year. As the payment stays fixed, the principal part rises by as much: from one thousand eight hundred and forty-six euros to two thousand one hundred and sixty euros. And the balance reaches exactly zero after the fifth payment. A neat property: the principal repaid rises every year by four percent, exactly the loan rate."
+        verifier:
+          - {expression: "1846.27 * 1.04", attendu: 1920.12, libelle: "PR2 = 1.04 × PR1"}
+          - {expression: "1846.2711 * 1.04**4", attendu: 2159.88, libelle: "PR5"}
+          - {expression: "0.04 * 2159.88", attendu: 86.40, libelle: "Interest year 5"}
+      - type: etapes
+        texte: "Back to the home loan: *€200,000*, *20 years*, *3.32%*"
+        etapes:
+          - "Monthly rate: 1.0332^(1/12) − 1 ≈ *0.2725%*"
+          - "Monthly payment: *€1,136.48*"
+          - "Month 1: *€545.09* interest, *€591.39* principal"
+          - "Over 20 years: *€72,754* of interest"
+        note: "Banque de France, September 2026: 3.32% excluding renegotiations. Amount and term: example, no fees or insurance."
+        voix_off: "Back to the home loan. The three point three two percent rate is an annual effective rate; we convert it to a monthly rate, as in episode two: about zero point two seven two five percent. The monthly payment, two hundred thousand euros divided by the monthly annuity over two hundred and forty months, is one thousand one hundred and thirty-six euros forty-eight. In the first month, interest is charged on the whole debt: five hundred and forty-five euros. Only five hundred and ninety-one euros are left to repay. Over twenty years, the borrower will pay seventy-two thousand seven hundred and fifty-four euros of interest. That is the price of time."
+        verifier:
+          - {expression: "100 * (1.0332**(1/12) - 1)", attendu: 0.2725, libelle: "Monthly rate, %"}
+          - {expression: "200000 * (1.0332**(1/12) - 1) / (1 - 1.0332**-20)", attendu: 1136.48, libelle: "Monthly payment"}
+          - {expression: "200000 * (1.0332**(1/12) - 1)", attendu: 545.09, libelle: "Interest in month 1"}
+          - {expression: "1136.48 - 545.09", attendu: 591.39, libelle: "Principal in month 1"}
+          - {expression: "240 * 200000 * (1.0332**(1/12) - 1) / (1 - 1.0332**-20) - 200000", attendu: 72754, tolerance: 1, libelle: "Interest over 20 years"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "The outstanding balance, two ways"
+        voix_off: "How much is still owed, on a given date?"
+      - type: formule
+        texte: "*Prospective*: what is left to pay. *Retrospective*: what has been paid"
+        formule:
+          - 'B_k=P\,a_{n-k}\qquad\text{(prospective)}'
+          - 'B_k=L\,(1+i)^k-P\,s_k\qquad\text{(retrospective)}'
+        note: "Bₖ: outstanding balance just after the k-th payment."
+        voix_off: "To find the outstanding balance without redoing the whole schedule, there are two methods. The prospective method looks ahead: the debt is the present value of the remaining payments, P times a n minus k. The retrospective method looks back: we accumulate the loan to today, and subtract the payments already made, accumulated too, P times s k. Two ways of telling the same story."
+      - type: etapes
+        texte: "After *2 years*: both methods give *€6,233.61*"
+        etapes:
+          - "Prospective: 2,246.27 × a₃ = *€6,233.61*"
+          - "Retrospective: 10,000 × 1.04² − 2,246.27 × s₂ = *€6,233.61*"
+          - "The same number as in the *schedule*"
+        voix_off: "Let's check after two years. Prospectively: three payments of two thousand two hundred and forty-six euros twenty-seven remain, worth six thousand two hundred and thirty-three euros sixty-one today. Retrospectively: ten thousand euros accumulated for two years make ten thousand eight hundred and sixteen euros; the two payments made, accumulated, are worth four thousand five hundred and eighty-two euros; the difference is again six thousand two hundred and thirty-three euros sixty-one. Exactly the balance in the schedule. Remember this double calculation well: it is the basis of insurers' reserves."
+        verifier:
+          - {expression: "2246.2711 * (1 - 1.04**-3) / 0.04", attendu: 6233.61, libelle: "Prospective"}
+          - {expression: "10000 * 1.04**2", attendu: 10816, libelle: "Loan accumulated"}
+          - {expression: "2246.2711 * (1.04**2 - 1) / 0.04", attendu: 4582.39, libelle: "Payments accumulated"}
+          - {expression: "10000 * 1.04**2 - 2246.2711 * (1.04**2 - 1) / 0.04", attendu: 6233.61, libelle: "Retrospective"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The internal rate of return"
+        voix_off: "What if we know the cash flows, but not the rate?"
+      - type: formule
+        texte: "The *IRR*: the rate that *cancels* the net present value"
+        formule:
+          - '\text{NPV}(j)=\sum_t C_t\,(1+j)^{-t}'
+          - '\text{IRR}:\ \text{NPV}(j)=0'
+        note: "Cₜ: cash flow at time t, negative when you pay, positive when you receive."
+        voix_off: "So far, we knew the rate and looked for an amount. Often, it is the other way round: we know all the cash flows of an investment, and we want to know what it really earns. We then compute the net present value, the NPV: the sum of all discounted cash flows, counting what we pay as negative and what we receive as positive. The internal rate of return, the IRR, is the rate that makes this NPV equal to zero. At that rate, the investment is exactly fair."
+      - type: etapes
+        texte: "Pay *€1,000*, receive *300*, *400*, *€500*"
+        etapes:
+          - "NPV at 4%: *+ €102.78*: earns more than 4%"
+          - "NPV at 10%: *− €21.04*: earns less than 10%"
+          - "Narrow the interval: IRR ≈ *8.90%*"
+        voix_off: "An example. We pay one thousand euros today, and receive three hundred euros in one year, four hundred in two years, five hundred in three years. At four percent, the NPV is positive, one hundred and two euros: the investment earns more than four percent. At ten percent, it is negative, minus twenty-one euros: it earns less. So the IRR lies in between. Narrowing step by step, or with a spreadsheet, we find about eight point nine zero percent. There is no direct formula: we search by trial and error."
+        verifier:
+          - {expression: "-1000 + 300 / 1.04 + 400 / 1.04**2 + 500 / 1.04**3", attendu: 102.78, libelle: "NPV at 4%"}
+          - {expression: "-1000 + 300 / 1.1 + 400 / 1.1**2 + 500 / 1.1**3", attendu: -21.04, libelle: "NPV at 10%"}
+          - {expression: "-1000 + 300 / 1.08896 + 400 / 1.08896**2 + 500 / 1.08896**3", attendu: 0, tolerance: 0.05, libelle: "NPV at the IRR"}
+      - type: texte
+        texte: "The *APR* of a loan is an *IRR*"
+        note: "Source: service-public.fr, “What is the APR (TAEG)?”, accessed 24/11/2026."
+        voix_off: "You already know an IRR without realising it. In France, every loan must show its TAEG, the annual percentage rate of charge, which includes interest, but also arrangement fees, compulsory insurance and other costs. How is it computed? It is the rate that equates what the bank pays you with everything you pay it: exactly an internal rate of return, seen from the bank's side."
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Our running case: the value of Léa's contract at 40"
+        voix_off: "Let's meet Léa again, ten years after signing."
+      - type: texte
+        texte: "Léa is *40*. What is her contract worth *today*?"
+        note: "JG's Holding is a fictional insurer, Léa a fictional client. Premium indexed by 2% a year, made-up rate of 4%, no fees, no mortality."
+        voix_off: "Léa is now forty. For ten years, she has paid her premium every month, indexed by two percent a year, as we saw in the previous episode. JG's Holding needs to know, every year, what her contract is worth: it is the money the insurer must set aside for her. As with a loan balance, there are two ways to compute it."
+      - type: etapes
+        texte: "*Retrospective*: what Léa has paid so far, accumulated"
+        etapes:
+          - "10 years of indexed premiums: *€13,139.67* paid"
+          - "Accumulated at 4% up to age 40"
+          - "Value of the contract: *€16,012.58*"
+        voix_off: "The retrospective method looks back. In ten years, Léa has paid thirteen thousand one hundred and thirty-nine euros. Each monthly premium has been invested at four percent since it was paid. Accumulating everything to today, we get sixteen thousand and twelve euros fifty-eight. That is what is in her account."
+        verifier:
+          - {expression: "1200 * (1.02**10 - 1) / 0.02", attendu: 13139.67, libelle: "Paid in 10 years"}
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**10) / 0.02 * 1.04**10", attendu: 16012.58, libelle: "Retrospective value"}
+      - type: etapes
+        texte: "*Prospective*: what JG's Holding will owe, minus what Léa will still pay"
+        etapes:
+          - "Capital promised at 65, seen today: 119,286.87 × v²⁵ = *€44,746.51*"
+          - "Premiums for the remaining 25 years, seen today: *€28,733.93*"
+          - "Difference: *€16,012.58*: the same number"
+        voix_off: "The prospective method looks ahead. JG's Holding will have to pay one hundred and nineteen thousand two hundred and eighty-seven euros in twenty-five years: seen from today, at four percent, that is worth forty-four thousand seven hundred and forty-seven euros. But Léa will still pay twenty-five years of premiums, worth twenty-eight thousand seven hundred and thirty-four euros today. What is missing, the difference, is sixteen thousand and twelve euros fifty-eight. Exactly the same number. What the insurer must set aside for Léa has a name: the mathematical reserve. We will cover it in detail in module A4, with mortality added."
+        verifier:
+          - {expression: "1200 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**35) / 0.02 * 1.04**10", attendu: 44746.51, libelle: "Promised capital, seen at 40"}
+          - {expression: "1200 * 1.02**10 * (0.04 / 1.04) / (12 * (1 - 1.04**(-1/12))) * 1.04 * (1 - (1.02 / 1.04)**25) / 0.02", attendu: 28733.93, libelle: "Future premiums, seen at 40"}
+          - {expression: "44746.51 - 28733.93", attendu: 16012.58, libelle: "Prospective value"}
+      # ---------------------------------------------------------------- 6
+      - type: titre
+        numero: 6
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Loan of *€20,000* at *5%* over *4 years*, payments at year end. Compute:"
+        pause: 20
+        questions:
+          - "The level payment P"
+          - "The balance after 1 year, B₁"
+          - "The interest in year 2, I₂"
+          - "The principal repaid in year 2, PR₂"
+        voix_off: "Pause the video. A loan of twenty thousand euros at five percent, repaid in four level payments at year end. Compute the payment P, the outstanding balance after one year, the interest in the second year, and the principal repaid in the second year."
+      - type: correction
+        etapes:
+          - "P = 20,000 ÷ a₄ = 20,000 ÷ 3.5460 ≈ *€5,640.24*"
+          - "B₁ = 20,000 × 1.05 − 5,640.24 ≈ *€15,359.76*"
+          - "I₂ = 5% × 15,359.76 ≈ *€767.99*"
+          - "PR₂ = 5,640.24 − 767.99 ≈ *€4,872.25*"
+        voix_off: "Solution. a four at five percent is three point five four six zero: the payment is five thousand six hundred and forty euros twenty-four. The balance after one year, retrospectively: twenty thousand times one point zero five, minus one payment, fifteen thousand three hundred and fifty-nine euros seventy-six. Check it prospectively: P times a three gives the same number. Interest in year two: five percent of that balance, seven hundred and sixty-seven euros ninety-nine. And the principal repaid: four thousand eight hundred and seventy-two euros twenty-five."
+        verifier:
+          - {expression: "(1 - 1.05**-4) / 0.05", attendu: 3.5460, libelle: "a4 at 5%"}
+          - {expression: "20000 / ((1 - 1.05**-4) / 0.05)", attendu: 5640.24, libelle: "Payment"}
+          - {expression: "20000 * 1.05 - 20000 / ((1 - 1.05**-4) / 0.05)", attendu: 15359.76, libelle: "B1"}
+          - {expression: "20000 / ((1 - 1.05**-4) / 0.05) * (1 - 1.05**-3) / 0.05", attendu: 15359.76, libelle: "B1 prospective"}
+          - {expression: "0.05 * 15359.76", attendu: 767.99, libelle: "I2"}
+          - {expression: "5640.24 - 767.99", attendu: 4872.25, libelle: "PR2"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Level payment: *P = L ÷ aₙ*"
+          - "Interest on the *balance*, the rest *amortizes*"
+          - "Balance: *P aₙ₋ₖ* = *L (1 + i)ᵏ − P sₖ*"
+          - "IRR: the rate that *cancels* the NPV"
+          - "Léa at 40: *€16,012.58*, both ways"
+        voix_off: "What to remember. The level payment of a loan is the amount lent divided by a n. Each payment first covers the interest on the balance, and the rest amortizes the principal. The outstanding balance is computed prospectively, with future payments, or retrospectively, with the past, and the two always agree. The internal rate of return is the rate that cancels the net present value. And Léa's contract is worth sixteen thousand and twelve euros at forty, whichever method you use."
+      - type: cloture
+        texte: "Next episode: *why do bond prices fall when rates rise?* A question? *In the comments*"
+        voix_off: "You can now read a loan from the inside. Next episode: bonds. Why do their prices fall when rates rise, and where does JG's Holding invest Léa's money to keep its four percent promise? If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."

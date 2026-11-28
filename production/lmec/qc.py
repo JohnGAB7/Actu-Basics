@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import datetime as dt
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -731,3 +732,62 @@ def ecrire_rapport(fiche: Fiche, r: Rapport, destination: Path, mode: str) -> st
     texte = "\n".join(lignes)
     destination.write_text(texte, encoding="utf-8")
     return etat
+
+
+_CHAMPS_TEXTE = ("etapes", "note", "questions", "etiquettes", "etiquettes_valeurs", "axe_x", "axe_y")
+
+
+@lru_cache(maxsize=None)
+def _glyphe_absent(chemin: str, car: str) -> bool:
+    """True when the font has no glyph for `car`: it then renders like an unassigned code point (.notdef box)."""
+    from PIL import ImageFont
+    police = ImageFont.truetype(chemin, 48)
+    def masque(c):
+        m = police.getmask(c)
+        return m.size, bytes(m)
+    return masque(car) == masque("￿")
+
+
+def _textes_scene(s) -> tuple[list[str], list[str]]:
+    """Texts drawn for a scene: (titles, drawn in every font) and (body texts)."""
+    corps: list[str] = []
+    for cle in _CHAMPS_TEXTE:
+        v = s.extra.get(cle)
+        if isinstance(v, str):
+            corps.append(v)
+        elif isinstance(v, list):
+            corps += [x for x in v if isinstance(x, str)]
+    courbe = s.extra.get("courbe") or {}
+    for cle in ("etiquettes", "etiquettes_valeurs"):
+        corps += [x for x in courbe.get(cle) or [] if isinstance(x, str)]
+    corps += [courbe[c] for c in ("axe_x", "axe_y") if isinstance(courbe.get(c), str)]
+    corps += [x["label"] for cle in ("reperes", "seuils") for x in courbe.get(cle) or []
+              if isinstance(x, dict) and isinstance(x.get("label"), str)]
+    return [s.texte] if s.texte else [], corps
+
+
+def controler_glyphes(fiche: Fiche, charte: dict, r: Rapport, langues=None) -> None:
+    """Every character drawn on screen must exist in the charter fonts, or it shows as an empty box."""
+    from .rendu import trouver_police
+    try:
+        polices = {style: str(trouver_police(c)) for style, c in charte["polices"].items()}
+    except (KeyError, FileNotFoundError):
+        return
+    corps_polices = [p for st, p in polices.items() if st != "affichage"] or list(polices.values())
+    for l in langues or fiche.langues:
+        manquants: dict[str, set[str]] = {}
+        for i, s in enumerate(fiche.editions[l].scenes, 1):
+            titres, corps = _textes_scene(s)
+            for textes, chemins in ((titres, list(polices.values())), (corps, corps_polices)):
+                for t in textes:
+                    for car in set(t) - {"*", " ", "\n"}:
+                        if ord(car) > 127 and any(_glyphe_absent(p, car) for p in chemins):
+                            manquants.setdefault(f"« {car} » (U+{ord(car):04X})", set()).add(i)
+                    # A combining accent is only placed correctly on a Latin letter (θ̂ and σ̂ come out shifted).
+                    for a, b in zip(t, t[1:]):
+                        if unicodedata.combining(b) and not ("a" <= a.lower() <= "z"):
+                            manquants.setdefault(f"« {a}{b} » (accent combinant mal placé)", set()).add(i)
+        r.verifier(not manquants, f"[{l}] Tous les caractères affichés existent dans les polices de la charte",
+                   f"[{l}] Caractères absents des polices, affichés comme une case vide : "
+                   + " ; ".join(f"{c}, scène(s) {', '.join(map(str, sorted(v)))}" for c, v in manquants.items()),
+                   BLOQUANT)

@@ -1,0 +1,431 @@
+# Parcours Actuariat (pilier A), vidéo longue de la séance a2b/s02 « Le maximum de vraisemblance »
+# (YOUTUBE_LESSON 16:9, FR et EN). Commande : JohnGAB7/AB-Actuarial-Lab PR #27 (a-produire/A2b.md), format de JG du 23/11/2026.
+# Séance source : JohnGAB7/AB-Actuarial-Lab:contenus/a2b/s02.yaml (calcul « À la main » : les 8 sinistres de la séance 1,
+# Pareto θ = 2 000 € connu, puis exponentielle). Les exemples utilisent les 10 sinistres fictifs de l'épisode A2b.01 avec une
+# Pareto θ = 3 000 € ; l'exercice final les 6 sinistres fictifs de l'exercice A2b.01 avec θ = 1 500 €, pour ne pas donner
+# le calcul de la séance.
+# Fil rouge (LMEC-DEC-020, docs/actuariat/FIL-ROUGE.md) : la vraisemblance du taux de décès du portefeuille de Léa,
+# à partir des cinq années fictives de décès de l'épisode A2b.01.
+# Faits réels : Fisher (1922) via D. J. Hand (2015), expérience de Kerrich (UiO). Échantillons : fictifs.
+id: 2026-11-act-a2b-s02-maximum-de-vraisemblance
+type_fiche: pedagogique
+famille: statistiques_en_pratique
+format: youtube_lesson
+habillage_sonore: true
+theme: "A2b · Le maximum de vraisemblance"
+
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+      - "Écrire la vraisemblance et la log-vraisemblance d'un échantillon"
+      - "Trouver l'estimateur du maximum de vraisemblance en annulant le score"
+      - "Estimer une Poisson, une exponentielle et une Pareto à seuil connu"
+      - "Calculer une erreur type par l'information de Fisher"
+      - "Utiliser l'invariance pour estimer une probabilité de dépassement"
+    en:
+      - "Write the likelihood and the log-likelihood of a sample"
+      - "Find the maximum likelihood estimator by setting the score to zero"
+      - "Estimate a Poisson, an exponential and a Pareto with a known scale"
+      - "Compute a standard error from the Fisher information"
+      - "Use invariance to estimate an exceedance probability"
+  prerequis:
+    fr: ["Séance A2b.01 : estimateurs, méthode des moments", "Logarithme et dérivée"]
+    en: ["Session A2b.01: estimators, method of moments", "Logarithm and derivative"]
+  hypotheses:
+    fr: "Observations indépendantes et de même loi ; échantillons et décès observés fictifs ; faits historiques tels que publiés"
+    en: "Independent, identically distributed observations; made-up samples and observed deaths; historical facts as published"
+
+validation:
+  statut: brouillon
+
+sources:
+  - nom: {fr: "D. J. Hand, « From evidence to understanding: a commentary on Fisher (1922) », Philosophical Transactions of the Royal Society A (2015)", en: "D. J. Hand, “From evidence to understanding: a commentary on Fisher (1922)”, Philosophical Transactions of the Royal Society A (2015)"}
+    court: "Hand 2015"
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4360088/"
+    date_consultation: "2026-11-24"
+  - nom: {fr: "Université d'Oslo, « John Kerrich's coin-tossing Experiment » (notes de cours MAT4010)", en: "University of Oslo, “John Kerrich's coin-tossing Experiment” (MAT4010 lecture notes)"}
+    court: "Kerrich, UiO"
+    url: "https://www.uio.no/studier/emner/matnat/math/MAT4010/data/forelesningsnotater/kerrich.pdf"
+    date_consultation: "2026-11-24"
+
+editions:
+  fr:
+    titre: "Le maximum de vraisemblance : les paramètres qui expliquent le mieux les données"
+    legende: |
+      Parmi toutes les valeurs possibles d'un paramètre, laquelle rend les sinistres observés les plus probables ? C'est l'idée du maximum de vraisemblance, popularisée par Ronald Fisher en 1922, et la méthode d'estimation la plus utilisée en actuariat. Cet épisode du parcours Actuariat explique la vraisemblance et la log-vraisemblance, le score, les estimateurs de la Poisson, de l'exponentielle et de la Pareto, l'information de Fisher et l'erreur type, l'invariance, et le douzième chapitre du fil rouge : la vraisemblance du taux de décès du portefeuille de Léa. Animations, exemples chiffrés, exercice corrigé. JG's Holding est un assureur fictif et Léa une cliente fictive ; les échantillons des exemples sont fictifs, les faits réels sont sourcés. Une question ? Posez-la en commentaire.
+    hashtags: [actuariat, statistique, vraisemblance, assurance]
+    scenes:
+      - type: accroche
+        texte: "Quel paramètre rend les données *les plus probables* ?"
+        voix_off: "Imaginez un détective. Plusieurs suspects, un seul indice. Il retient celui qui rend l'indice le plus probable. Le statisticien fait pareil : parmi toutes les valeurs possibles d'un paramètre, il retient celle qui rend les données observées les plus probables. Cette idée simple porte un nom : le maximum de vraisemblance."
+      - type: accueil
+        texte: "Bonjour, et *bienvenue* !"
+        voix_off: "Bonjour, et bienvenue dans ce deuxième épisode du module statistique du parcours Actuariat ! Merci d'être là. La dernière fois, on a estimé des lois par la méthode des moments. Aujourd'hui, on passe à la méthode que les actuaires utilisent le plus : le maximum de vraisemblance."
+      - type: etapes
+        texte: "Ce que vous allez *apprendre*"
+        disposition: cartes
+        etapes:
+          - "La *vraisemblance*"
+          - "Le *score*"
+          - "Trois *estimateurs*"
+          - "L'information de *Fisher*"
+          - "L'*invariance*"
+          - "Les décès de *Léa*"
+        voix_off: "Voici le programme. La vraisemblance et la log-vraisemblance. Le score, dont on cherche le zéro. Trois estimateurs classiques : Poisson, exponentielle et Pareto. L'information de Fisher et l'erreur type. La propriété d'invariance. Puis le douzième chapitre du fil rouge : la vraisemblance du taux de décès du portefeuille de Léa. Et un exercice corrigé pour finir."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "La vraisemblance"
+        voix_off: "Retournons la question des probabilités."
+      - type: formule
+        texte: "La *vraisemblance* : la probabilité des données, vue comme une fonction de θ"
+        formule:
+          - 'L(\theta)=\prod_{i=1}^n f(x_i;\theta)'
+          - '\ell(\theta)=\ln L(\theta)=\sum_{i=1}^n \ln f(x_i;\theta)'
+          - '\ell^{\prime}(\hat{\theta})=0'
+        note: "f : densité, ou probabilité pour une loi discrète. Le logarithme transforme le produit en somme, plus facile à dériver."
+        voix_off: "En probabilités, le paramètre est connu et on calcule la chance des données. La vraisemblance retourne la question : les données sont fixées, et on regarde leur probabilité comme une fonction du paramètre thêta. Pour des observations indépendantes, c'est le produit des densités. On préfère son logarithme, la log-vraisemblance, qui transforme le produit en somme. L'estimateur du maximum de vraisemblance, thêta chapeau, est la valeur qui la rend maximale. On le trouve en annulant la dérivée, qu'on appelle le score."
+      - type: etapes
+        texte: "*1922* : Ronald Fisher nomme la méthode"
+        etapes:
+          - "Article : « On the mathematical foundations of theoretical statistics »"
+          - "Il y nomme le *maximum de vraisemblance*"
+          - "Il y pose aussi le biais, l'*efficacité*, l'*information*"
+          - "Un siècle plus tard : la méthode *standard*"
+        note: "Source : D. J. Hand, commentaire de l'article de Fisher (1922), Philosophical Transactions of the Royal Society A, 2015."
+        voix_off: "Un fait réel. En 1922, le statisticien britannique Ronald Fisher publie un article fondateur : « Sur les fondements mathématiques de la statistique théorique ». Il y donne son nom au maximum de vraisemblance, et y pose les notions qui servent encore à juger un estimateur : la cohérence, l'efficacité, l'information. Un siècle plus tard, c'est la méthode d'estimation standard, en assurance comme ailleurs."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Trois estimateurs classiques"
+        voix_off: "Appliquons la méthode aux lois du module A2."
+      - type: formule
+        texte: "*Poisson*, *exponentielle*, *Pareto* : les formules"
+        formule:
+          - '\text{Poisson : }\ \hat{\lambda}=\bar{x}\qquad \text{Exponentielle : }\ \hat{\theta}=\bar{x}'
+          - '\text{Pareto, }\theta\text{ connu : }\ \hat{\alpha}=\frac{n}{\sum_i \ln(1+x_i/\theta)}'
+        note: "Pour la Poisson et l'exponentielle, le maximum de vraisemblance et la méthode des moments donnent le même résultat."
+        voix_off: "Pour une loi de Poisson, annuler le score donne lambda chapeau égal à la moyenne de l'échantillon. Pour une exponentielle, thêta chapeau égal à la moyenne aussi : ici, les deux méthodes coïncident. Pour une Pareto dont le paramètre d'échelle thêta est connu, c'est différent : alpha chapeau vaut n divisé par la somme des logarithmes de un plus x i sur thêta. Cette formule n'a rien à voir avec la méthode des moments."
+      - type: etapes
+        texte: "Kerrich, *10 000* lancers : la proportion de « face »"
+        etapes:
+          - "Bernoulli : p̂ = 5 067 ÷ 10 000 = *0,5067*"
+          - "Le maximum de vraisemblance : la *proportion observée*"
+          - "Erreur type : √(p̂ (1 − p̂) ÷ n) ≈ *0,0050*"
+          - "p = 0,5 est à *1,34* erreur type : rien de suspect"
+        note: "Source : Université d'Oslo, notes de cours sur l'expérience de John Kerrich (épisode A2.04)."
+        voix_off: "Un exemple réel, vu dans l'épisode A2.04. John Kerrich a lancé une pièce dix mille fois et obtenu cinq mille soixante-sept fois face. Pour une loi de Bernoulli, le maximum de vraisemblance donne simplement la proportion observée : zéro virgule cinq zéro six sept. Son erreur type vaut la racine de p chapeau fois un moins p chapeau, divisé par n : environ zéro virgule zéro zéro cinq. La valeur d'une pièce équilibrée, zéro virgule cinq, n'est qu'à un virgule trente-quatre erreur type : rien de suspect."
+        verifier:
+          - {expression: "5067 / 10000", attendu: 0.5067, libelle: "p̂"}
+          - {expression: "sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.005, tolerance: 0.00005, libelle: "Erreur type"}
+          - {expression: "0.0067 / sqrt(0.5067 * 0.4933 / 10000)", attendu: 1.34, tolerance: 0.005, libelle: "Écart en erreurs types"}
+      - type: etapes
+        texte: "Nos *10* sinistres fictifs : exponentielle ou *Pareto* ?"
+        etapes:
+          - "Exponentielle : θ estimé = x̄ = *1 950 €* ; ℓ ≈ *−85,76*"
+          - "Pareto, θ = 3 000 € : Σ ln(1 + xᵢ/θ) ≈ 4,7195 ; α estimé ≈ *2,1188*"
+          - "Log-vraisemblance de la Pareto : ≈ *−87,27*"
+          - "Ici, l'exponentielle *colle mieux* aux données"
+        note: "Échantillon fictif de l'épisode A2b.01. À nombre égal de paramètres, la plus grande log-vraisemblance l'emporte."
+        voix_off: "Reprenons les dix sinistres fictifs de l'épisode précédent. Pour l'exponentielle, thêta chapeau vaut la moyenne, mille neuf cent cinquante euros, et la log-vraisemblance vaut environ moins quatre-vingt-cinq virgule soixante-seize. Pour une Pareto dont l'échelle est fixée à trois mille euros, la somme des logarithmes vaut quatre virgule sept un neuf cinq, donc alpha chapeau vaut dix divisé par ce nombre, deux virgule un un huit huit. Sa log-vraisemblance : moins quatre-vingt-sept virgule vingt-sept. Plus faible : sur ces dix sinistres, l'exponentielle explique mieux les données."
+        verifier:
+          - {expression: "-10 * log(1950) - 10", attendu: -85.76, libelle: "ℓ exponentielle"}
+          - {expression: "sum(log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 4.7195, libelle: "Somme des logarithmes"}
+          - {expression: "10 / sum(log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 2.1188, libelle: "α̂"}
+          - {expression: "sum(log(2.1188 / 3000) - 3.1188 * log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: -87.27, tolerance: 0.01, libelle: "ℓ Pareto"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Précision et invariance"
+        voix_off: "Combien vaut l'estimation, et que peut-on en tirer ?"
+      - type: formule
+        texte: "L'*information de Fisher* donne l'erreur type"
+        formule:
+          - 'I(\theta)=-E\left[\ell^{\prime\prime}(\theta)\right]\qquad \mathrm{Var}(\hat{\theta})\approx\frac{1}{I(\theta)}'
+          - '\text{Poisson : }\ I(\lambda)=\frac{n}{\lambda}\ \Rightarrow\ \mathrm{se}(\hat{\lambda})=\sqrt{\hat{\lambda}/n}'
+        note: "Pour un grand échantillon, l'estimateur est presque sans biais et suit à peu près une loi normale."
+        voix_off: "Plus la log-vraisemblance est pointue autour de son maximum, plus l'estimation est précise. Cette courbure s'appelle l'information de Fisher : moins l'espérance de la dérivée seconde. Pour un grand échantillon, la variance de l'estimateur vaut environ un divisé par l'information, et l'estimateur suit à peu près une loi normale. Pour la Poisson, l'information vaut n sur lambda : l'erreur type vaut la racine de lambda chapeau sur n."
+      - type: formule
+        texte: "L'*invariance* : estimer toute grandeur dérivée"
+        formule:
+          - '\widehat{g(\theta)}=g(\hat{\theta})'
+          - '\text{Exponentielle : }\ \widehat{P}(X>5\,000)=e^{-5\,000/1\,950}\approx 0{,}0770'
+          - '\text{Pareto : }\ \widehat{P}(X>5\,000)=(3\,000/8\,000)^{2{,}1188}\approx 0{,}1252'
+        note: "Échantillon fictif. Deux lois proches sur les données peuvent diverger nettement dans la queue."
+        voix_off: "La propriété d'invariance est très pratique : pour estimer une grandeur qui dépend du paramètre, une probabilité, un quantile, une prime pure, il suffit d'y remplacer le paramètre par son estimation. Avec nos dix sinistres, la probabilité de dépasser cinq mille euros vaut environ sept virgule sept pour cent selon l'exponentielle, mais douze virgule cinq pour cent selon la Pareto. Les deux lois décrivent à peu près les mêmes données, et pourtant elles divergent dans la queue. C'est là que l'actuaire doit être prudent."
+        verifier:
+          - {expression: "exp(-5000 / 1950)", attendu: 0.077, tolerance: 0.00005, libelle: "Exponentielle"}
+          - {expression: "(3000 / 8000)**2.1188", attendu: 0.1252, tolerance: 0.00005, libelle: "Pareto"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "Le fil rouge : la vraisemblance des décès"
+        voix_off: "Retrouvons les cinq années de décès du portefeuille de Léa."
+      - type: courbe
+        texte: "Décès 11, 14, 9, 13, 16 : la *vraisemblance* de λ"
+        courbe:
+          variable: x
+          de: 8
+          a: 18
+          pas: 0.1
+          expression: "100 * exp(63 * log(x / 12.6) - 5 * (x - 12.6))"
+          y_max: 110
+          axe_x: "Nombre moyen de décès par an, λ"
+          axe_y: "Vraisemblance relative (%)"
+          reperes:
+            - {x: 10, label: "λ = 10 : 21 %"}
+            - {x: 12.6, label: "λ estimé = 12,6 : 100 %"}
+            - {x: 15, label: "λ = 15 : 36 %"}
+        note: "JG's Holding et Léa sont fictifs. Décès observés fictifs (A2b.01). Vraisemblance divisée par sa valeur maximale."
+        voix_off: "Les cinq années fictives de décès de JG's Holding, onze, quatorze, neuf, treize et seize, suivent une loi de Poisson de paramètre lambda inconnu. Voici leur vraisemblance, divisée par sa valeur maximale. Elle culmine à lambda égal à douze virgule six, la moyenne : c'est l'estimateur du maximum de vraisemblance. Avec lambda égal à dix, les données seraient cinq fois moins vraisemblables : vingt et un pour cent du maximum. Avec quinze, trente-six pour cent. La courbe est large : cinq années laissent beaucoup de valeurs plausibles."
+        verifier:
+          - {expression: "(11 + 14 + 9 + 13 + 16) / 5", attendu: 12.6, libelle: "λ̂"}
+          - {expression: "100 * exp(63 * log(10 / 12.6) - 5 * (10 - 12.6))", attendu: 21, tolerance: 0.05, libelle: "λ = 10"}
+          - {expression: "100 * exp(63 * log(15 / 12.6) - 5 * (15 - 12.6))", attendu: 36.2, tolerance: 0.05, libelle: "λ = 15"}
+      - type: etapes
+        texte: "Ce que la vraisemblance apprend à *JG's Holding*"
+        etapes:
+          - "Erreur type : √(12,6 ÷ 5) ≈ *1,59* décès"
+          - "Taux de décès : *0,126 %* ± 0,016 point environ"
+          - "Invariance : P(N ≥ 20) estimée à ≈ *3,3 %*"
+          - "La Poisson donne une erreur type *plus large* que s ÷ √n (1,21)"
+        note: "JG's Holding et Léa sont fictifs. Avec 5 années, l'erreur type de Fisher est plus prudente que celle de l'échantillon."
+        voix_off: "Que nous dit la vraisemblance ? Par l'information de Fisher, l'erreur type de lambda chapeau vaut la racine de douze virgule six divisé par cinq : environ un virgule cinquante-neuf décès. Le taux de décès vaut donc zéro virgule cent vingt-six pour cent, à plus ou moins zéro virgule zéro seize point environ. Par invariance, la probabilité d'une année à vingt décès ou plus est estimée à trois virgule trois pour cent. Et l'erreur type de Fisher est plus large que celle calculée à l'épisode précédent avec l'écart-type de l'échantillon : avec cinq années seulement, c'est la plus prudente."
+        verifier:
+          - {expression: "sqrt(12.6 / 5)", attendu: 1.59, tolerance: 0.005, libelle: "Erreur type"}
+          - {expression: "100 * sqrt(12.6 / 5) / 10000", attendu: 0.016, tolerance: 0.0005, libelle: "Erreur type du taux, en points"}
+          - {expression: "100 * (1 - sum(exp(-12.6) * 12.6**k / factorial(k) for k in range(20)))", attendu: 3.3, tolerance: 0.05, libelle: "P(N ≥ 20), en %"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercice"
+        voix_off: "À vous de jouer."
+      - type: exercice
+        texte: "Sinistres *500, 1 300, 2 700, 900, 1 600, 3 000 €*. Estimez :"
+        pause: 20
+        questions:
+          - "Le θ estimé de l'exponentielle, et sa log-vraisemblance"
+          - "P(X > 4 000 €) selon l'exponentielle"
+          - "α estimé d'une Pareto de θ = 1 500 € connu"
+          - "P(X > 4 000 €) selon la Pareto"
+        voix_off: "Mettez la vidéo en pause. Reprenez les six sinistres fictifs de l'exercice précédent : cinq cents, mille trois cents, deux mille sept cents, neuf cents, mille six cents et trois mille euros. Estimez le paramètre d'une exponentielle et calculez sa log-vraisemblance. Puis la probabilité de dépasser quatre mille euros. Ensuite, estimez alpha pour une Pareto d'échelle mille cinq cents euros, connue, et la probabilité de dépasser quatre mille euros selon cette loi."
+      - type: correction
+        etapes:
+          - "θ estimé = x̄ ≈ *1 666,67 €* ; ℓ = −6 ln θ estimé − 6 ≈ *−50,5115*"
+          - "P(X > 4 000) = e^(−2,4) ≈ *0,0907*"
+          - "Σ ln(1 + xᵢ/1 500) ≈ 4,2360 ; α estimé ≈ *1,4164*"
+          - "P(X > 4 000) = (1 500 ÷ 5 500)^1,4164 ≈ *0,1588*"
+        voix_off: "Correction. Pour l'exponentielle, thêta chapeau vaut la moyenne, mille six cent soixante-six euros soixante-sept. La log-vraisemblance vaut moins six fois le logarithme de thêta chapeau, moins six : environ moins cinquante virgule cinq un un cinq. La probabilité de dépasser quatre mille euros vaut e puissance moins deux virgule quatre, zéro virgule zéro neuf zéro sept. Pour la Pareto, la somme des logarithmes vaut quatre virgule deux trois six zéro, donc alpha chapeau vaut six divisé par ce nombre, un virgule quatre un six quatre. Et la probabilité de dépasser quatre mille euros : mille cinq cents sur cinq mille cinq cents, puissance un virgule quatre un six quatre, zéro virgule un cinq huit huit."
+        verifier:
+          - {expression: "10000 / 6", attendu: 1666.67, libelle: "θ̂"}
+          - {expression: "-6 * log(10000 / 6) - 6", attendu: -50.5115, libelle: "ℓ"}
+          - {expression: "exp(-4000 / (10000 / 6))", attendu: 0.0907, libelle: "P(X > 4 000), exponentielle"}
+          - {expression: "sum(log(1 + x / 1500) for x in [500, 1300, 2700, 900, 1600, 3000])", attendu: 4.236, libelle: "Somme des logarithmes"}
+          - {expression: "6 / sum(log(1 + x / 1500) for x in [500, 1300, 2700, 900, 1600, 3000])", attendu: 1.4164, libelle: "α̂"}
+          - {expression: "(1500 / 5500)**(6 / sum(log(1 + x / 1500) for x in [500, 1300, 2700, 900, 1600, 3000]))", attendu: 0.1588, libelle: "P(X > 4 000), Pareto"}
+      - type: etapes
+        texte: "À retenir"
+        etapes:
+          - "Vraisemblance : la probabilité des données, *fonction de θ*"
+          - "On maximise *ℓ(θ)* : le score s'annule"
+          - "Poisson et exponentielle : *θ estimé = x̄*"
+          - "Erreur type : *1 ÷ √I(θ)* ; Poisson : √(λ estimé ÷ n)"
+          - "Invariance : *g(θ estimé)* estime g(θ)"
+        voix_off: "Ce qu'il faut retenir. La vraisemblance est la probabilité des données, vue comme une fonction du paramètre. On maximise la log-vraisemblance en annulant le score. Pour la Poisson et l'exponentielle, l'estimateur est la moyenne. L'information de Fisher donne l'erreur type : pour la Poisson, la racine de lambda chapeau sur n. Et par invariance, toute grandeur dérivée s'estime en remplaçant le paramètre par son estimation."
+      - type: cloture
+        texte: "Prochain épisode : *les intervalles de confiance*. Une question ? *En commentaire*"
+        voix_off: "Vous savez maintenant estimer une loi par le maximum de vraisemblance. Prochain épisode : comment dire, avec rigueur, à quel point une estimation est précise. Ce sont les intervalles de confiance. Si cette vidéo vous a été utile, abonnez-vous, laissez un like et partagez-la. Et si l'exercice vous résiste, écrivez-nous en commentaire : on vous aide. Merci d'avoir regardé, et à très vite !"
+      - type: fin
+        texte: "Éveiller par les chiffres."
+        voix_off: "ACTU-BASICS. Éveiller par les chiffres."
+
+  en:
+    titre: "Maximum likelihood: the parameters that best explain the data"
+    legende: |
+      Among all possible values of a parameter, which one makes the observed claims most likely? That is the idea of maximum likelihood, popularised by Ronald Fisher in 1922, and the most widely used estimation method in actuarial work. This episode of the Actuarial track explains the likelihood and the log-likelihood, the score, the estimators of the Poisson, the exponential and the Pareto, the Fisher information and the standard error, invariance, and the twelfth chapter of the common thread: the likelihood of the death rate of Léa's portfolio. Animations, worked examples, a solved exercise. JG's Holding is a made-up insurer and Léa a made-up client; the samples in the examples are made up, the real facts are sourced. A question? Ask it in the comments.
+    hashtags: [actuarial, statistics, likelihood, insurance]
+    scenes:
+      - type: accroche
+        texte: "Which parameter makes the data *most likely*?"
+        voix_off: "Picture a detective. Several suspects, a single clue. They keep the one who makes the clue most likely. The statistician does the same: among all possible values of a parameter, they keep the one that makes the observed data most likely. This simple idea has a name: maximum likelihood."
+      - type: accueil
+        texte: "Hello, and *welcome*!"
+        voix_off: "Hello, and welcome to this second episode of the statistics module of the Actuarial track! Thanks for being here. Last time, we estimated distributions by the method of moments. Today, we move to the method actuaries use most: maximum likelihood."
+      - type: etapes
+        texte: "What you will *learn*"
+        disposition: cartes
+        etapes:
+          - "The *likelihood*"
+          - "The *score*"
+          - "Three *estimators*"
+          - "*Fisher* information"
+          - "*Invariance*"
+          - "*Léa*'s deaths"
+        voix_off: "Here is the plan. The likelihood and the log-likelihood. The score, whose zero we look for. Three classic estimators: Poisson, exponential and Pareto. The Fisher information and the standard error. The invariance property. Then the twelfth chapter of the common thread: the likelihood of the death rate of Léa's portfolio. And a solved exercise to finish."
+      # ---------------------------------------------------------------- 1
+      - type: titre
+        numero: 1
+        texte: "The likelihood"
+        voix_off: "Let's turn the probability question around."
+      - type: formule
+        texte: "The *likelihood*: the probability of the data, as a function of θ"
+        formule:
+          - 'L(\theta)=\prod_{i=1}^n f(x_i;\theta)'
+          - '\ell(\theta)=\ln L(\theta)=\sum_{i=1}^n \ln f(x_i;\theta)'
+          - '\ell^{\prime}(\hat{\theta})=0'
+        note: "f: density, or probability for a discrete distribution. The logarithm turns the product into a sum, easier to differentiate."
+        voix_off: "In probability, the parameter is known and we compute the chance of the data. The likelihood turns the question around: the data are fixed, and we look at their probability as a function of the parameter theta. For independent observations, it is the product of the densities. We prefer its logarithm, the log-likelihood, which turns the product into a sum. The maximum likelihood estimator, theta hat, is the value that makes it largest. We find it by setting the derivative, called the score, to zero."
+      - type: etapes
+        texte: "*1922*: Ronald Fisher names the method"
+        etapes:
+          - "Paper: “On the mathematical foundations of theoretical statistics”"
+          - "He names *maximum likelihood* in it"
+          - "He also sets out *efficiency* and *information*"
+          - "A century later: the *standard* method"
+        note: "Source: D. J. Hand, commentary on Fisher's 1922 paper, Philosophical Transactions of the Royal Society A, 2015."
+        voix_off: "A real fact. In 1922, the British statistician Ronald Fisher published a founding paper: “On the mathematical foundations of theoretical statistics”. In it, he named maximum likelihood, and set out the notions still used to judge an estimator: consistency, efficiency, information. A century later, it is the standard estimation method, in insurance as elsewhere."
+      # ---------------------------------------------------------------- 2
+      - type: titre
+        numero: 2
+        texte: "Three classic estimators"
+        voix_off: "Let's apply the method to the distributions of module A2."
+      - type: formule
+        texte: "*Poisson*, *exponential*, *Pareto*: the formulas"
+        formule:
+          - '\text{Poisson: }\ \hat{\lambda}=\bar{x}\qquad \text{Exponential: }\ \hat{\theta}=\bar{x}'
+          - '\text{Pareto, }\theta\text{ known: }\ \hat{\alpha}=\frac{n}{\sum_i \ln(1+x_i/\theta)}'
+        note: "For the Poisson and the exponential, maximum likelihood and the method of moments give the same result."
+        voix_off: "For a Poisson distribution, setting the score to zero gives lambda hat equal to the sample mean. For an exponential, theta hat equal to the mean as well: here, the two methods agree. For a Pareto whose scale parameter theta is known, it is different: alpha hat is n divided by the sum of the logarithms of one plus x i over theta. This formula has nothing to do with the method of moments."
+      - type: etapes
+        texte: "Kerrich, *10,000* tosses: the share of heads"
+        etapes:
+          - "Bernoulli: p̂ = 5,067 ÷ 10,000 = *0.5067*"
+          - "Maximum likelihood: the *observed share*"
+          - "Standard error: √(p̂ (1 − p̂) ÷ n) ≈ *0.0050*"
+          - "p = 0.5 is *1.34* standard errors away: nothing suspicious"
+        note: "Source: University of Oslo, lecture notes on John Kerrich's experiment (episode A2.04)."
+        voix_off: "A real example, seen in episode A2.04. John Kerrich tossed a coin ten thousand times and got heads five thousand and sixty-seven times. For a Bernoulli distribution, maximum likelihood simply gives the observed share: zero point five zero six seven. Its standard error is the square root of p hat times one minus p hat, divided by n: about zero point zero zero five. The value for a fair coin, zero point five, is only one point three four standard errors away: nothing suspicious."
+        verifier:
+          - {expression: "5067 / 10000", attendu: 0.5067, libelle: "p̂"}
+          - {expression: "sqrt(0.5067 * 0.4933 / 10000)", attendu: 0.005, tolerance: 0.00005, libelle: "Standard error"}
+          - {expression: "0.0067 / sqrt(0.5067 * 0.4933 / 10000)", attendu: 1.34, tolerance: 0.005, libelle: "Gap in standard errors"}
+      - type: etapes
+        texte: "Our *10* made-up claims: exponential or *Pareto*?"
+        etapes:
+          - "Exponential: est. θ = x̄ = *1,950 €*; ℓ ≈ *−85.76*"
+          - "Pareto, θ = 3,000 €: Σ ln(1 + xᵢ/θ) ≈ 4.7195; est. α ≈ *2.1188*"
+          - "Pareto log-likelihood: ≈ *−87.27*"
+          - "Here, the exponential *fits better*"
+        note: "Made-up sample from episode A2b.01. With the same number of parameters, the larger log-likelihood wins."
+        voix_off: "Let's take the ten made-up claims of the previous episode. For the exponential, theta hat is the mean, one thousand nine hundred and fifty euros, and the log-likelihood is about minus eighty-five point seven six. For a Pareto with its scale fixed at three thousand euros, the sum of the logarithms is four point seven one nine five, so alpha hat is ten divided by that number, two point one one eight eight. Its log-likelihood: minus eighty-seven point two seven. Lower: on these ten claims, the exponential explains the data better."
+        verifier:
+          - {expression: "-10 * log(1950) - 10", attendu: -85.76, libelle: "Exponential ℓ"}
+          - {expression: "sum(log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 4.7195, libelle: "Sum of logarithms"}
+          - {expression: "10 / sum(log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: 2.1188, libelle: "α̂"}
+          - {expression: "sum(log(2.1188 / 3000) - 3.1188 * log(1 + x / 3000) for x in [900, 1500, 2300, 700, 4800, 1100, 3200, 1900, 600, 2500])", attendu: -87.27, tolerance: 0.01, libelle: "Pareto ℓ"}
+      # ---------------------------------------------------------------- 3
+      - type: titre
+        numero: 3
+        texte: "Precision and invariance"
+        voix_off: "How good is the estimate, and what can we get from it?"
+      - type: formule
+        texte: "The *Fisher information* gives the standard error"
+        formule:
+          - 'I(\theta)=-E\left[\ell^{\prime\prime}(\theta)\right]\qquad \mathrm{Var}(\hat{\theta})\approx\frac{1}{I(\theta)}'
+          - '\text{Poisson: }\ I(\lambda)=\frac{n}{\lambda}\ \Rightarrow\ \mathrm{se}(\hat{\lambda})=\sqrt{\hat{\lambda}/n}'
+        note: "For a large sample, the estimator is nearly unbiased and roughly normal."
+        voix_off: "The sharper the log-likelihood around its maximum, the more precise the estimate. That curvature is called the Fisher information: minus the expectation of the second derivative. For a large sample, the variance of the estimator is about one divided by the information, and the estimator is roughly normal. For the Poisson, the information is n over lambda: the standard error is the square root of lambda hat over n."
+      - type: formule
+        texte: "*Invariance*: estimate any derived quantity"
+        formule:
+          - '\widehat{g(\theta)}=g(\hat{\theta})'
+          - '\text{Exponential: }\ \widehat{P}(X>5\,000)=e^{-5\,000/1\,950}\approx 0.0770'
+          - '\text{Pareto: }\ \widehat{P}(X>5\,000)=(3\,000/8\,000)^{2.1188}\approx 0.1252'
+        note: "Made-up sample. Two distributions close on the data can differ sharply in the tail."
+        voix_off: "The invariance property is very handy: to estimate a quantity that depends on the parameter, a probability, a quantile, a pure premium, just plug in the estimate. With our ten claims, the probability of exceeding five thousand euros is about seven point seven percent under the exponential, but twelve point five percent under the Pareto. The two distributions describe roughly the same data, and yet they differ in the tail. That is where the actuary must be careful."
+        verifier:
+          - {expression: "exp(-5000 / 1950)", attendu: 0.077, tolerance: 0.00005, libelle: "Exponential"}
+          - {expression: "(3000 / 8000)**2.1188", attendu: 0.1252, tolerance: 0.00005, libelle: "Pareto"}
+      # ---------------------------------------------------------------- 4
+      - type: titre
+        numero: 4
+        texte: "The common thread: the likelihood of deaths"
+        voix_off: "Let's get back to the five years of deaths in Léa's portfolio."
+      - type: courbe
+        texte: "Deaths 11, 14, 9, 13, 16: the *likelihood* of λ"
+        courbe:
+          variable: x
+          de: 8
+          a: 18
+          pas: 0.1
+          expression: "100 * exp(63 * log(x / 12.6) - 5 * (x - 12.6))"
+          y_max: 110
+          axe_x: "Average number of deaths a year, λ"
+          axe_y: "Relative likelihood (%)"
+          reperes:
+            - {x: 10, label: "λ = 10: 21%"}
+            - {x: 12.6, label: "est. λ = 12.6: 100%"}
+            - {x: 15, label: "λ = 15: 36%"}
+        note: "JG's Holding and Léa are made up. Observed deaths made up (A2b.01). Likelihood divided by its maximum value."
+        voix_off: "JG's Holding's five made-up years of deaths, eleven, fourteen, nine, thirteen and sixteen, follow a Poisson distribution with unknown parameter lambda. Here is their likelihood, divided by its maximum value. It peaks at lambda equal to twelve point six, the mean: that is the maximum likelihood estimator. With lambda equal to ten, the data would be five times less likely: twenty-one percent of the maximum. With fifteen, thirty-six percent. The curve is wide: five years leave many plausible values."
+        verifier:
+          - {expression: "(11 + 14 + 9 + 13 + 16) / 5", attendu: 12.6, libelle: "λ̂"}
+          - {expression: "100 * exp(63 * log(10 / 12.6) - 5 * (10 - 12.6))", attendu: 21, tolerance: 0.05, libelle: "λ = 10"}
+          - {expression: "100 * exp(63 * log(15 / 12.6) - 5 * (15 - 12.6))", attendu: 36.2, tolerance: 0.05, libelle: "λ = 15"}
+      - type: etapes
+        texte: "What the likelihood tells *JG's Holding*"
+        etapes:
+          - "Standard error: √(12.6 ÷ 5) ≈ *1.59* deaths"
+          - "Death rate: *0.126%* ± about 0.016 points"
+          - "Invariance: P(N ≥ 20) estimated at ≈ *3.3%*"
+          - "The Poisson gives a *wider* standard error than s ÷ √n (1.21)"
+        note: "JG's Holding and Léa are made up. With 5 years, the Fisher standard error is more cautious than the sample one."
+        voix_off: "What does the likelihood tell us? From the Fisher information, the standard error of lambda hat is the square root of twelve point six divided by five: about one point five nine deaths. So the death rate is zero point one two six percent, give or take about zero point zero one six points. By invariance, the probability of a year with twenty deaths or more is estimated at three point three percent. And the Fisher standard error is wider than the one computed in the previous episode from the sample standard deviation: with only five years, it is the more cautious one."
+        verifier:
+          - {expression: "sqrt(12.6 / 5)", attendu: 1.59, tolerance: 0.005, libelle: "Standard error"}
+          - {expression: "100 * sqrt(12.6 / 5) / 10000", attendu: 0.016, tolerance: 0.0005, libelle: "Standard error of the rate, in points"}
+          - {expression: "100 * (1 - sum(exp(-12.6) * 12.6**k / factorial(k) for k in range(20)))", attendu: 3.3, tolerance: 0.05, libelle: "P(N ≥ 20), in %"}
+      # ---------------------------------------------------------------- 5
+      - type: titre
+        numero: 5
+        texte: "Exercise"
+        voix_off: "Your turn."
+      - type: exercice
+        texte: "Claims *500, 1,300, 2,700, 900, 1,600, 3,000 €*. Estimate:"
+        pause: 20
+        questions:
+          - "Exponential est. θ and its log-likelihood"
+          - "P(X > 4,000 €) under the exponential"
+          - "est. α of a Pareto with known θ = 1,500 €"
+          - "P(X > 4,000 €) under the Pareto"
+        voix_off: "Pause the video. Take the six made-up claims of the previous exercise: five hundred, one thousand three hundred, two thousand seven hundred, nine hundred, one thousand six hundred and three thousand euros. Estimate the parameter of an exponential and compute its log-likelihood. Then the probability of exceeding four thousand euros. Next, estimate alpha for a Pareto with a known scale of one thousand five hundred euros, and the probability of exceeding four thousand euros under that distribution."
+      - type: correction
+        etapes:
+          - "est. θ = x̄ ≈ *1,666.67 €*; ℓ = −6 ln est. θ − 6 ≈ *−50.5115*"
+          - "P(X > 4,000) = e^(−2.4) ≈ *0.0907*"
+          - "Σ ln(1 + xᵢ/1,500) ≈ 4.2360; est. α ≈ *1.4164*"
+          - "P(X > 4,000) = (1,500 ÷ 5,500)^1.4164 ≈ *0.1588*"
+        voix_off: "Solution. For the exponential, theta hat is the mean, one thousand six hundred and sixty-six euros sixty-seven. The log-likelihood is minus six times the logarithm of theta hat, minus six: about minus fifty point five one one five. The probability of exceeding four thousand euros is e to the minus two point four, zero point zero nine zero seven. For the Pareto, the sum of the logarithms is four point two three six zero, so alpha hat is six divided by that number, one point four one six four. And the probability of exceeding four thousand euros: one thousand five hundred over five thousand five hundred, to the power one point four one six four, zero point one five eight eight."
+        verifier:
+          - {expression: "10000 / 6", attendu: 1666.67, libelle: "θ̂"}
+          - {expression: "-6 * log(10000 / 6) - 6", attendu: -50.5115, libelle: "ℓ"}
+          - {expression: "exp(-4000 / (10000 / 6))", attendu: 0.0907, libelle: "P(X > 4,000), exponential"}
+          - {expression: "sum(log(1 + x / 1500) for x in [500, 1300, 2700, 900, 1600, 3000])", attendu: 4.236, libelle: "Sum of logarithms"}
+          - {expression: "6 / sum(log(1 + x / 1500) for x in [500, 1300, 2700, 900, 1600, 3000])", attendu: 1.4164, libelle: "α̂"}
+          - {expression: "(1500 / 5500)**(6 / sum(log(1 + x / 1500) for x in [500, 1300, 2700, 900, 1600, 3000]))", attendu: 0.1588, libelle: "P(X > 4,000), Pareto"}
+      - type: etapes
+        texte: "Key takeaways"
+        etapes:
+          - "Likelihood: the probability of the data, *as a function of θ*"
+          - "We maximise *ℓ(θ)*: the score is zero"
+          - "Poisson and exponential: *est. θ = x̄*"
+          - "Standard error: *1 ÷ √I(θ)*; Poisson: √(est. λ ÷ n)"
+          - "Invariance: *g(est. θ)* estimates g(θ)"
+        voix_off: "What to remember. The likelihood is the probability of the data, seen as a function of the parameter. We maximise the log-likelihood by setting the score to zero. For the Poisson and the exponential, the estimator is the mean. The Fisher information gives the standard error: for the Poisson, the square root of lambda hat over n. And by invariance, any derived quantity is estimated by plugging in the estimate."
+      - type: cloture
+        texte: "Next episode: *confidence intervals*. A question? *In the comments*"
+        voix_off: "You can now estimate a distribution by maximum likelihood. Next episode: how to say, rigorously, how precise an estimate is. Those are confidence intervals. If this video helped, subscribe, leave a like and share it. And if the exercise gives you trouble, write to us in the comments: we will help. Thanks for watching, and see you very soon!"
+      - type: fin
+        texte: "Enlightening through numbers."
+        voix_off: "ACTU-BASICS. Enlightening through numbers."
