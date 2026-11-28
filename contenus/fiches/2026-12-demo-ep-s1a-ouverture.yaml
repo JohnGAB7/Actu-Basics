@@ -1,0 +1,185 @@
+# DÉMO (1 min environ) : ouverture d'EP-S1A refaite pour relever le niveau (JG, 28/11/2026, « Tout à la fois » :
+# voix, images, rythme, histoire). Mystère d'abord, révélations une à une, presque pas de texte à l'écran.
+# Chiffres : Insee, recensement 2023 (fiche validée S1.01). Ne se publie pas : sert à juger la direction.
+id: 2026-12-demo-ep-s1a-ouverture
+type_fiche: pedagogique
+famille: apprendre_les_statistiques
+format: youtube_lesson
+habillage_sonore: true
+theme: Démo · ouverture d'EP-S1A
+pedagogie:
+  niveau: decouverte
+  objectifs:
+    fr:
+    - Voir qu'un même lieu peut avoir trois chiffres justes, selon la définition
+    en:
+    - See that one place can have three correct numbers, depending on the definition
+  prerequis:
+    fr:
+    - Aucun
+    en:
+    - None
+  hypotheses:
+    fr: Populations de l'Insee (recensement 2023) arrondies au dixième de million
+    en: Insee populations (2023 census) rounded to a tenth of a million
+validation:
+  statut: brouillon
+  valide_par: ''
+  date: ''
+sources:
+- nom:
+    fr: Insee, recensement de la population 2023 (comparateur de territoires, 2026)
+    en: Insee, 2023 population census (territory comparison tool, 2026)
+  url: https://www.insee.fr/fr/statistiques/1405599?geo=COM-75056+UU2020-00851+AAV2020-001
+  date_consultation: '2026-11-03'
+editions:
+  fr:
+    titre: 'Démo : 2,1 ou 13,3 millions d''habitants ?'
+    legende: 'Démo interne de l''ouverture d''EP-S1A. Source : Insee, recensement de la population 2023.
+
+      '
+    hashtags:
+    - statistiques
+    scenes:
+    - type: accroche
+      texte: Combien d'habitants à *Paris* ?
+      voix_off: Paris. Combien d'habitants ?
+    - type: accueil
+      texte: Bonjour, et *bienvenue* !
+      voix_off: Bonjour, et bienvenue ! Merci d'être là. Pour commencer, une énigme.
+    - type: animation
+      texte: Un institut, *trois* réponses officielles
+      animation:
+        modele: mystere
+        cartes:
+        - valeur: 2,1 M
+          libelle: Insee 2023
+        - valeur: 11 M
+          libelle: Insee 2023
+        - valeur: 13,3 M
+          libelle: Insee 2023
+      voix_off: L'Insee, l'institut officiel de la statistique, publie trois réponses. Deux virgule un millions. Onze millions. Treize virgule trois millions.
+      verifier:
+      - expression: 2103778 / 1e6
+        attendu: 2.1
+        libelle: Premier chiffre
+      - expression: 11013774 / 1e6
+        attendu: 11.0
+        libelle: Deuxième chiffre
+      - expression: 13320752 / 1e6
+        attendu: 13.3
+        libelle: Troisième chiffre
+    - type: animation
+      texte: 'Même ville, même année : *combien de fois plus* ?'
+      animation:
+        modele: barre_cachee
+        barres:
+        - valeur: 2.1
+          libelle: Premier chiffre
+        - valeur: 13.3
+          libelle: Troisième chiffre
+        unite: M
+        decimales: 1
+      voix_off: Même institut, même année, même ville. Et pourtant, entre le premier et le dernier, on multiplie par plus de six.
+      verifier:
+      - expression: 13320752 / 2103778
+        attendu: 6.3
+        libelle: Rapport
+    - type: exercice
+      texte: Trois chiffres officiels pour *une seule ville*.
+      questions:
+      - Qui s'est trompé ?
+      pause: 3
+      voix_off: Faites une hypothèse avant la suite. Alors, qui s'est trompé ?
+    - type: correction
+      etapes:
+      - 'La *commune* de Paris : *2,1 M*'
+      - 'L''*agglomération*, bâti continu : *11 M*'
+      - 'L''*aire d''attraction*, avec les navetteurs : *13,3 M*'
+      reponse: 'Personne : trois définitions de « Paris »'
+      univers: immersif
+      voix_off: Personne. Ces trois chiffres sont justes. Le premier compte la commune de Paris. Le deuxième, toute l'agglomération. Le troisième ajoute les communes dont les habitants viennent travailler à Paris. Trois définitions, trois réponses.
+    - type: texte
+      texte: Démasquer un chiffre en *trois questions*
+      voix_off: Dans l'épisode, vous apprendrez à démasquer n'importe quel chiffre, avec trois questions simples.
+    - type: cloture
+      texte: 'Prochain épisode : *d''où vient un chiffre*'
+      voix_off: 'Ceci n''est qu''un avant-goût. Le prochain épisode, en entier, arrive bientôt : abonnez-vous, laissez un like et partagez-le, pour ne pas le manquer.'
+    - type: fin
+      texte: Éveiller par les chiffres.
+      voix_off: ACTU-BASICS. Éveiller par les chiffres.
+  en:
+    titre: 'Demo: 2.1 or 13.3 million people?'
+    legende: 'Internal demo of the EP-S1A opening. Source: Insee, 2023 population census.
+
+      '
+    hashtags:
+    - statistics
+    scenes:
+    - type: accroche
+      texte: How many people live in *Paris*?
+      voix_off: Paris. How many people live there?
+    - type: accueil
+      texte: Hi, and *welcome*!
+      voix_off: Hi, and welcome! Thanks for being here. Let's start with a puzzle.
+    - type: animation
+      texte: One institute, *three* official answers
+      animation:
+        modele: mystere
+        cartes:
+        - valeur: 2.1 M
+          libelle: Insee 2023
+        - valeur: 11 M
+          libelle: Insee 2023
+        - valeur: 13.3 M
+          libelle: Insee 2023
+      voix_off: Insee, the French statistics office, publishes three answers. Two point one million. Eleven million. Thirteen point three million.
+      verifier:
+      - expression: 2103778 / 1e6
+        attendu: 2.1
+        libelle: First number
+      - expression: 11013774 / 1e6
+        attendu: 11.0
+        libelle: Second number
+      - expression: 13320752 / 1e6
+        attendu: 13.3
+        libelle: Third number
+    - type: animation
+      texte: 'Same city, same year: *how many times more*?'
+      animation:
+        modele: barre_cachee
+        barres:
+        - valeur: 2.1
+          libelle: First number
+        - valeur: 13.3
+          libelle: Third number
+        unite: M
+        decimales: 1
+      voix_off: Same institute, same year, same city. And yet, from the first to the last, it's multiplied by more than six.
+      verifier:
+      - expression: 13320752 / 2103778
+        attendu: 6.3
+        libelle: Ratio
+    - type: exercice
+      texte: Three official numbers for *one city*.
+      questions:
+      - Who got it wrong?
+      pause: 3
+      voix_off: Make a guess before we go on. So, who got it wrong?
+    - type: correction
+      etapes:
+      - 'The *city* of Paris: *2.1 M*'
+      - 'The *built-up area*: *11 M*'
+      - 'The *functional area*, with commuters: *13.3 M*'
+      reponse: 'Nobody: three definitions of "Paris"'
+      univers: immersif
+      voix_off: Nobody. All three numbers are right. The first counts the city of Paris. The second, the whole built-up area. The third adds the towns whose residents commute to Paris. Three definitions, three answers.
+    - type: texte
+      texte: See through any number with *three questions*
+      voix_off: In the episode, you'll learn to see through any number, with three simple questions.
+    - type: cloture
+      texte: 'Next episode: *where a number comes from*'
+      voix_off: 'This is just a taste. The next episode, in full, is coming soon: subscribe, leave a like and share it, so you don''t miss it.'
+    - type: fin
+      texte: Enlightening through numbers.
+      voix_off: ACTU-BASICS. Enlightening through numbers.
